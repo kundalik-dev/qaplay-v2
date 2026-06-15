@@ -4,15 +4,17 @@ import { JobHuntSection } from "@/components/home/job-hunt-section";
 import { PracticeSection } from "@/components/home/practice-section";
 import { TrustSection } from "@/components/trust-section";
 import { FaqSection } from "@/components/home/faq-section";
+import { CtaSection } from "@/components/home/cta-section";
 
 export default function Home() {
   return (
     <>
       <HomeHero />
       <TrustSection />
-      <HomeFeaturePreview />
       <PracticeSection />
+      <HomeFeaturePreview />
       <JobHuntSection />
+      <CtaSection />
       <FaqSection />
     </>
   );

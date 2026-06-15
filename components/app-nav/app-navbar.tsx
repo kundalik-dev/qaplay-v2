@@ -44,7 +44,7 @@ export function AppNavbar() {
     <>
       {/* ── Fixed outer shell — padding creates detached-from-top gap ── */}
       <nav
-        className={`nav${scrolled ? "scrolled" : ""}`}
+        className={`nav${scrolled ? " scrolled" : ""}`}
         role="navigation"
         aria-label="Main navigation"
         id="nav"
@@ -68,7 +68,7 @@ export function AppNavbar() {
             {/* Hamburger — mobile only */}
             <button
               type="button"
-              className={`nav-menu-btn${mobileOpen ? "open" : ""}`}
+              className={`nav-menu-btn${mobileOpen ? " open" : ""}`}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
               aria-controls="nav-mobile"
@@ -85,7 +85,7 @@ export function AppNavbar() {
       {/* ── Mobile full-screen overlay ── */}
       <div
         id="nav-mobile"
-        className={`nav-mobile${mobileOpen ? "open" : ""}`}
+        className={`nav-mobile${mobileOpen ? " open" : ""}`}
         aria-label="Mobile navigation"
         aria-hidden={!mobileOpen}
         role="dialog"
