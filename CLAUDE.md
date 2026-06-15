@@ -20,6 +20,7 @@
 - Use full widht of screen for landing page design.
 - Docs folder have all design and UI information about what i want to build so if needed check it.
 - Always try to creaet server side render components for better performance if permitted.
+- Alwats creat data inside data folder so it can be maintained and updated easily.
 
 ### Don't
 
