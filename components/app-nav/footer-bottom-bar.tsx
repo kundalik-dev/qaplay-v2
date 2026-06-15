@@ -11,9 +11,8 @@ export function FooterBottomBar({ data }: FooterBottomBarProps) {
         &copy; {data.year} QA Playground. Built by{" "}
         <a href={data.authorHref} target="_blank" rel="noopener noreferrer">
           {data.authorName}
-        </a>
-        {" · "}
-        {data.location}
+        </a>{" "}
+        - {data.location}
       </span>
       <span>{data.rights}</span>
     </div>
