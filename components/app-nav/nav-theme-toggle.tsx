@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useSyncExternalStore } from "react"
 
 function SunIcon() {
   return (
@@ -24,31 +24,28 @@ function MoonIcon() {
 }
 
 export function NavThemeToggle() {
-  const [isDark, setIsDark] = useState<boolean | null>(null)
-
-  // Read initial theme from html class after mount
-  useEffect(() => {
-    setIsDark(document.documentElement.classList.contains("dark"))
-  }, [])
+  const isDark = useSyncExternalStore(
+    (onStoreChange) => {
+      window.addEventListener("qap-theme-change", onStoreChange)
+      return () => window.removeEventListener("qap-theme-change", onStoreChange)
+    },
+    () => document.documentElement.classList.contains("dark"),
+    () => true,
+  )
 
   const toggle = () => {
     const html = document.documentElement
     const next = !html.classList.contains("dark")
     html.classList.toggle("dark", next)
     try { localStorage.setItem("qap-theme", next ? "dark" : "light") } catch {}
-    setIsDark(next)
-  }
-
-  // Avoid mismatch on first render
-  if (isDark === null) {
-    return <div className="nav-theme-toggle" aria-hidden="true" />
+    window.dispatchEvent(new Event("qap-theme-change"))
   }
 
   return (
     <button
       type="button"
       onClick={toggle}
-      className="nav-theme-toggle"
+      className="theme-toggle"
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       title={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >

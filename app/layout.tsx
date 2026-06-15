@@ -60,7 +60,7 @@ export default function RootLayout({
         {/* Fixed navbar sits above all page content */}
         <AppNavbar />
 
-        {/* Page content — padding-top handled by CSS (.page-body or pt-20) */}
+        {/* Page content — padding-top handled by CSS */}
         <main>{children}</main>
 
         {/* Footer at the very bottom */}

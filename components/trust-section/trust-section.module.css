@@ -1,0 +1,165 @@
+.section {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 30%, var(--background));
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) 28%, transparent) 30%,
+    color-mix(in srgb, var(--primary) 28%, transparent) 70%,
+    transparent 100%
+  );
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.label {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--muted-foreground) 82%, transparent);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.arrow {
+  color: var(--primary);
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.trackWrap {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+}
+
+.trackWrap:hover .track {
+  animation-play-state: paused;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 12px;
+  will-change: transform;
+  animation: trustMarquee 28s linear infinite;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  cursor: default;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card) 82%, transparent);
+  padding: 10px 16px;
+  color: var(--muted-foreground);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.pill:hover {
+  color: var(--foreground);
+  border-color: var(--ring);
+  background: color-mix(in srgb, var(--primary) 6%, var(--card));
+  transform: translateY(-1px);
+}
+
+.separator {
+  flex-shrink: 0;
+  padding: 0 10px;
+  color: color-mix(in srgb, var(--muted-foreground) 55%, transparent);
+  font-size: 8px;
+}
+
+@keyframes trustMarquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 900px) {
+  .inner {
+    gap: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 18px 0;
+  }
+
+  .inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .trackWrap {
+    width: 100%;
+  }
+
+  .label {
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation-duration: 0s;
+  }
+
+  .pill:hover {
+    transform: none;
+  }
+}

@@ -10,10 +10,10 @@ import { NavLinks } from "./nav-links"
 import { NavThemeToggle } from "./nav-theme-toggle"
 
 export function AppNavbar() {
-  const [scrolled, setScrolled]       = useState(false)
-  const [mobileOpen, setMobileOpen]   = useState(false)
+  const [scrolled, setScrolled]     = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
-  // Scroll detection
+  // Scroll detection — adds .scrolled to shrink the gap
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener("scroll", onScroll, { passive: true })
@@ -38,14 +38,15 @@ export function AppNavbar() {
 
   return (
     <>
-      {/* ── Fixed navbar ── */}
+      {/* ── Fixed outer shell — padding creates detached-from-top gap ── */}
       <nav
-        className={`nav-bar${scrolled ? " nav-bar--scrolled" : ""}`}
+        className={`nav${scrolled ? " scrolled" : ""}`}
         role="navigation"
         aria-label="Main navigation"
         id="nav"
       >
-        <div className="nav-pill">
+        {/* ── Glassmorphism floating pill ── */}
+        <div className="nav-inner">
 
           {/* Brand */}
           <NavBrand brand={navBrand} />
@@ -64,7 +65,7 @@ export function AppNavbar() {
             {/* Hamburger — mobile only */}
             <button
               type="button"
-              className={`nav-hamburger${mobileOpen ? " nav-hamburger--open" : ""}`}
+              className={`nav-menu-btn${mobileOpen ? " open" : ""}`}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
               aria-controls="nav-mobile"
@@ -79,19 +80,19 @@ export function AppNavbar() {
         </div>
       </nav>
 
-      {/* ── Mobile overlay ── */}
+      {/* ── Mobile full-screen overlay ── */}
       <div
         id="nav-mobile"
-        className={`nav-mobile${mobileOpen ? " nav-mobile--open" : ""}`}
+        className={`nav-mobile${mobileOpen ? " open" : ""}`}
         aria-label="Mobile navigation"
         aria-hidden={!mobileOpen}
         role="dialog"
       >
         <NavLinks links={navLinks} mobile onLinkClick={closeMobile} />
 
-        <div className="nav-mobile-cta">
+        <div className="btn-row">
           <Link href={navCta.href} className="nav-cta" onClick={closeMobile}>
-            \u26a1 {navCta.label}
+            ⚡ {navCta.label}
           </Link>
         </div>
       </div>

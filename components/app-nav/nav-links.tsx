@@ -26,7 +26,7 @@ export function NavLinks({ links, mobile = false, onLinkClick }: NavLinksProps) 
           <Link
             href={link.href}
             onClick={onLinkClick}
-            className={`nav-link${isActive(link.href) ? " nav-link--active" : ""}`}
+            className={`nav-link${isActive(link.href) ? " active" : ""}`}
           >
             {link.label}
           </Link>
