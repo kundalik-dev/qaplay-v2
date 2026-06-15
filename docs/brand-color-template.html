@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QA Playground Brand Color Template</title>
+    <style>
+      :root {
+        --radius-xl: 28px;
+        --radius-lg: 20px;
+        --radius-md: 12px;
+        --shadow-card: 0 22px 50px rgba(20, 42, 62, 0.12);
+        --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+        --font-body: "Inter", "Segoe UI", sans-serif;
+        --light-background: #f4f8fb;
+        --light-foreground: #17324d;
+        --light-card: rgba(255, 255, 255, 0.82);
+        --light-card-foreground: #17324d;
+        --light-popover: #ffffff;
+        --light-primary: #1f5f6b;
+        --light-primary-foreground: #ffffff;
+        --light-secondary: #6758dd;
+        --light-secondary-foreground: #ffffff;
+        --light-muted: #edf3f7;
+        --light-muted-foreground: #597187;
+        --light-accent: #edf3f7;
+        --light-accent-foreground: #17324d;
+        --light-destructive: #ff5f56;
+        --light-border: rgba(20, 42, 62, 0.09);
+        --light-input: rgba(20, 42, 62, 0.16);
+        --light-ring: rgba(18, 116, 76, 0.2);
+        --light-brand-tertiary: #d9652f;
+        --dark-background: #0a0c10;
+        --dark-foreground: #e8edf5;
+        --dark-card: #161b24;
+        --dark-card-foreground: #e8edf5;
+        --dark-popover: #1e2433;
+        --dark-primary: #00ffaa;
+        --dark-primary-foreground: #0a0c10;
+        --dark-secondary: #7b61ff;
+        --dark-secondary-foreground: #0a0c10;
+        --dark-muted: #1e2433;
+        --dark-muted-foreground: #7a8499;
+        --dark-accent: #1e2433;
+        --dark-accent-foreground: #e8edf5;
+        --dark-destructive: #ff5f56;
+        --dark-border: rgba(255, 255, 255, 0.07);
+        --dark-input: rgba(255, 255, 255, 0.13);
+        --dark-ring: rgba(0, 255, 170, 0.25);
+        --dark-brand-tertiary: #ff6b35;
+        --success: #27c93f;
+        --warning: #ffbd2e;
+        --info: #44d9e8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-body);
+        background:
+          radial-gradient(circle at top left, rgba(31, 95, 107, 0.1), transparent 30%),
+          linear-gradient(180deg, #eef4f8 0%, #e7eef5 100%);
+        color: #102538;
+      }
+
+      .page {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 48px 24px 72px;
+      }
+
+      .hero {
+        margin-bottom: 28px;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(31, 95, 107, 0.18);
+        background: rgba(255, 255, 255, 0.7);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #1f5f6b;
+      }
+
+      h1 {
+        margin: 18px 0 10px;
+        font-family: var(--font-display);
+        font-size: clamp(34px, 5vw, 56px);
+        line-height: 0.95;
+        letter-spacing: -0.04em;
+      }
+
+      .hero p {
+        max-width: 760px;
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.7;
+        color: #47637a;
+      }
+
+      .themes {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .theme-card {
+        border-radius: var(--radius-xl);
+        border: 1px solid rgba(20, 42, 62, 0.1);
+        overflow: hidden;
+        box-shadow: var(--shadow-card);
+      }
+
+      .theme {
+        padding: 24px;
+      }
+
+      .theme h2 {
+        margin: 0 0 8px;
+        font-family: var(--font-display);
+        font-size: 28px;
+        letter-spacing: -0.03em;
+      }
+
+      .theme p {
+        margin: 0 0 24px;
+        line-height: 1.65;
+        font-size: 14px;
+      }
+
+      .swatch-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .swatch {
+        border-radius: var(--radius-lg);
+        border: 1px solid currentColor;
+        overflow: hidden;
+      }
+
+      .swatch-color {
+        min-height: 108px;
+        padding: 16px;
+        display: flex;
+        align-items: end;
+        font-family: var(--font-display);
+        font-size: 14px;
+        letter-spacing: -0.01em;
+      }
+
+      .swatch-meta {
+        padding: 14px 16px 16px;
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .swatch-token {
+        margin: 0 0 6px;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.78;
+      }
+
+      .swatch-value {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.5;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      .sample-card {
+        margin-top: 24px;
+        padding: 20px;
+        border-radius: var(--radius-xl);
+        border: 1px solid;
+      }
+
+      .sample-card h3 {
+        margin: 0 0 10px;
+        font-family: var(--font-display);
+        font-size: 22px;
+        letter-spacing: -0.02em;
+      }
+
+      .sample-card p {
+        margin: 0 0 16px;
+      }
+
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .chip {
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .light {
+        background: var(--light-background);
+        color: var(--light-foreground);
+      }
+
+      .light .swatch {
+        border-color: rgba(20, 42, 62, 0.09);
+      }
+
+      .light .swatch-meta,
+      .light .sample-card {
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .light .sample-card {
+        border-color: var(--light-border);
+      }
+
+      .dark {
+        background:
+          radial-gradient(circle at top right, rgba(0, 255, 170, 0.08), transparent 28%),
+          var(--dark-background);
+        color: var(--dark-foreground);
+      }
+
+      .dark .swatch {
+        border-color: rgba(255, 255, 255, 0.08);
+      }
+
+      .dark .swatch-meta,
+      .dark .sample-card {
+        background: rgba(22, 27, 36, 0.88);
+      }
+
+      .dark .sample-card {
+        border-color: var(--dark-border);
+      }
+
+      .chip-success {
+        background: color-mix(in srgb, var(--success) 16%, transparent);
+        color: var(--success);
+      }
+
+      .chip-warning {
+        background: color-mix(in srgb, var(--warning) 16%, transparent);
+        color: var(--warning);
+      }
+
+      .chip-info {
+        background: color-mix(in srgb, var(--info) 16%, transparent);
+        color: var(--info);
+      }
+
+      .chip-danger {
+        background: color-mix(in srgb, var(--light-destructive) 16%, transparent);
+        color: var(--light-destructive);
+      }
+
+      @media (max-width: 900px) {
+        .themes {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <span class="eyebrow">QA Playground Brand Palette</span>
+        <h1>Light and dark brand color template</h1>
+        <p>
+          This reference page shows the current semantic brand colors from
+          <code>app/globals.css</code> with practical previews for background,
+          text, cards, and key UI tokens.
+        </p>
+      </section>
+
+      <section class="themes">
+        <article class="theme-card light">
+          <div class="theme">
+            <h2>Light Theme</h2>
+            <p>Teal-led light palette with clean white surfaces and slate text.</p>
+
+            <div class="swatch-grid">
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--light-background); color: var(--light-foreground);">Background</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--background</p>
+                  <p class="swatch-value">#f4f8fb</p>
+                </div>
+              </div>
+
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--light-foreground); color: #ffffff;">Foreground</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--foreground</p>
+                  <p class="swatch-value">#17324d</p>
+                </div>
+              </div>
+
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--light-card); color: var(--light-card-foreground);">Card</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--card</p>
+                  <p class="swatch-value">rgba(255, 255, 255, 0.82)</p>
+                </div>
+              </div>
+
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--light-popover); color: var(--light-foreground);">Popover</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--popover</p>
+                  <p class="swatch-value">#ffffff</p>
+                </div>
+              </div>
+
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--light-primary); color: var(--light-primary-foreground);">Primary</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--primary</p>
+                  <p class="swatch-value">#1f5f6b</p>
+                </div>
+              </div>
+
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--light-secondary); color: var(--light-secondary-foreground);">Secondary</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--secondary</p>
+                  <p class="swatch-value">#6758dd</p>
+                </div>
+              </div>
+
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--light-brand-tertiary); color: #ffffff;">Brand Tertiary</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--brand-tertiary</p>
+                  <p class="swatch-value">#d9652f</p>
+                </div>
+              </div>
+
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--light-muted); color: var(--light-muted-foreground);">Muted</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--muted</p>
+                  <p class="swatch-value">#edf3f7</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="sample-card">
+              <h3>Card and text sample</h3>
+              <p>
+                This sample shows how heading text, body copy, card surface, and
+                supporting status colors feel together in the light theme.
+              </p>
+              <div class="chip-row">
+                <span class="chip chip-success">Success</span>
+                <span class="chip chip-warning">Warning</span>
+                <span class="chip chip-info">Info</span>
+                <span class="chip chip-danger">Danger</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="theme-card dark">
+          <div class="theme">
+            <h2>Dark Theme</h2>
+            <p>Neon-mint dark palette with deep surfaces and high-contrast text.</p>
+
+            <div class="swatch-grid">
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--dark-background); color: var(--dark-foreground);">Background</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--background</p>
+                  <p class="swatch-value">#0a0c10</p>
+                </div>
+              </div>
+
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--dark-foreground); color: #0a0c10;">Foreground</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--foreground</p>
+                  <p class="swatch-value">#e8edf5</p>
+                </div>
+              </div>
+
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--dark-card); color: var(--dark-card-foreground);">Card</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--card</p>
+                  <p class="swatch-value">#161b24</p>
+                </div>
+              </div>
+
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--dark-popover); color: var(--dark-foreground);">Popover</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--popover</p>
+                  <p class="swatch-value">#1e2433</p>
+                </div>
+              </div>
+
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--dark-primary); color: var(--dark-primary-foreground);">Primary</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--primary</p>
+                  <p class="swatch-value">#00ffaa</p>
+                </div>
+              </div>
+
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--dark-secondary); color: var(--dark-secondary-foreground);">Secondary</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--secondary</p>
+                  <p class="swatch-value">#7b61ff</p>
+                </div>
+              </div>
+
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--dark-brand-tertiary); color: #ffffff;">Brand Tertiary</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--brand-tertiary</p>
+                  <p class="swatch-value">#ff6b35</p>
+                </div>
+              </div>
+
+              <div class="swatch">
+                <div class="swatch-color" style="background: var(--dark-muted); color: var(--dark-muted-foreground);">Muted</div>
+                <div class="swatch-meta">
+                  <p class="swatch-token">--muted</p>
+                  <p class="swatch-value">#1e2433</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="sample-card">
+              <h3>Card and text sample</h3>
+              <p>
+                This sample shows the dark theme's text hierarchy, surface depth,
+                and accent energy with the same semantic roles.
+              </p>
+              <div class="chip-row">
+                <span class="chip chip-success">Success</span>
+                <span class="chip chip-warning">Warning</span>
+                <span class="chip chip-info">Info</span>
+                <span class="chip chip-danger">Danger</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

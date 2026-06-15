@@ -1,8 +1,8 @@
+import { AppFooter } from "@/components/app-nav/app-footer";
 import { Button } from "@/components/ui/button";
-
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+    <div className="flex min-h-screen w-full flex-1 flex-col items-center justify-center bg-transparent font-sans">
       <div className="flex space-x-1.5">
         <Button variant={"default"}>Hello World!</Button>
         <Button variant="destructive">Hello World!</Button>
