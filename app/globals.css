@@ -374,9 +374,9 @@
 }
 
 .home-section-header {
-  max-width: 760px;
-  margin: 0 auto 32px;
-  text-align: center;
+  max-width: 620px;
+  margin: 0 0 40px;
+  text-align: left;
 }
 
 .home-section-tag {
@@ -403,11 +403,12 @@
 }
 
 .home-section-description {
-  margin: 18px auto 0;
-  max-width: 680px;
+  margin: 18px 0 0;
+  max-width: 560px;
   color: var(--muted-foreground);
-  font-size: 1rem;
-  line-height: 1.8;
+  font-size: clamp(1rem, 1.45vw, 1.08rem);
+  line-height: 1.7;
+  text-wrap: pretty;
 }
 
 .feature-bento-grid {
@@ -636,6 +637,7 @@
 
 .practice-section {
   padding: 72px 0 96px;
+  border-top: 1px solid var(--border);
 }
 
 .practice-section-header {
@@ -909,216 +911,182 @@
     color-mix(in srgb, var(--brand-tertiary) 10%, transparent);
 }
 
-.practice-pill-marker {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  flex-shrink: 0;
-  font-size: 1.25rem;
-  line-height: 1;
-}
+.practice-pill-marker 
+/* ═══════════════════════════════════════════════════════════
+   FAQ SECTION
+═══════════════════════════════════════════════════════════ */
 
-.practice-pill-copy {
-  min-width: 0;
-}
-
-.practice-pill-name {
-  color: var(--foreground);
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 0.98rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.25;
-}
-
-.practice-pill-level {
-  margin-top: 5px;
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.practice-pill-level-beginner {
-  color: var(--success);
-}
-
-.practice-pill-level-intermediate {
-  color: var(--warning);
-}
-
-.practice-pill-level-advanced {
-  color: var(--brand-tertiary);
-}
-
-.jobs-hunt-section {
-  padding: 24px 0 96px;
+.faq-section {
+  padding: 80px 0 96px;
   border-top: 1px solid var(--border);
 }
 
-.jobs-hunt-header {
-  max-width: 640px;
-  margin: 0 auto 44px;
-  text-align: center;
+.faq-layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 48px;
+  align-items: start;
 }
 
-.jobs-hunt-title {
-  margin: 14px 0 0;
+/* ── Left sticky lead ── */
+.faq-lead {
+  position: sticky;
+  top: 110px;
+}
+
+.faq-heading {
+  margin: 16px 0 0;
   color: var(--foreground);
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(2.05rem, 4vw, 3.15rem);
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.05em;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
 }
 
-.jobs-hunt-title-line {
-  display: block;
-}
-
-.jobs-hunt-description {
-  max-width: 580px;
-  margin: 18px auto 0;
+.faq-subheading {
+  margin: 16px 0 0;
   color: var(--muted-foreground);
-  font-size: clamp(0.98rem, 1.45vw, 1.06rem);
-  line-height: 1.7;
-  text-wrap: pretty;
+  font-size: 15px;
+  line-height: 1.75;
+  max-width: 380px;
 }
 
-.jobs-hunt-flow {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0;
-}
-
-.jobs-hunt-flow::before {
-  content: "";
-  position: absolute;
-  top: 28px;
-  left: 10%;
-  right: 10%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in srgb, var(--primary) 65%, transparent),
-    color-mix(in srgb, var(--secondary) 55%, transparent),
-    transparent
-  );
-  opacity: 0.45;
-}
-
-.job-step-card {
-  position: relative;
-  z-index: 1;
-  padding: 0 14px;
-  text-align: center;
-}
-
-.job-step-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 18px;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  background: color-mix(in srgb, var(--card) 82%, transparent);
-  font-size: 1.45rem;
-  box-shadow: 0 10px 24px rgba(20, 42, 62, 0.06);
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.dark .job-step-icon {
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-}
-
-.job-step-card:hover .job-step-icon {
-  transform: translateY(-3px);
-  border-color: color-mix(in srgb, var(--primary) 24%, var(--border));
-  box-shadow: 0 16px 28px color-mix(in srgb, var(--primary) 10%, transparent);
-}
-
-.job-step-title {
-  margin: 0;
-  color: var(--foreground);
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 0.96rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.job-step-description {
-  margin: 10px 0 0;
-  color: var(--muted-foreground);
-  font-size: 0.82rem;
-  line-height: 1.62;
-}
-
-.jobs-hunt-panels {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
-  margin-top: 40px;
-}
-
-.jobs-panel {
-  position: relative;
-  border: 1px solid var(--border);
-  border-radius: 28px;
+/* ── Side card ── */
+.faq-side-card {
+  margin-top: 28px;
   background: color-mix(in srgb, var(--card) 74%, transparent);
-  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 22px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 16px 36px rgba(20, 42, 62, 0.08);
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
-.dark .jobs-panel {
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
+.faq-side-title {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  margin-bottom: 14px;
 }
 
-.jobs-panel:hover {
-  transform: translateY(-3px);
-  border-color: color-mix(in srgb, var(--primary) 24%, var(--border));
-}
-
-.jobs-panel-future {
-  border-style: dashed;
-  border-color: color-mix(in srgb, var(--secondary) 28%, var(--border));
-}
-
-.jobs-panel-future:hover {
-  border-color: color-mix(in srgb, var(--secondary) 38%, var(--border));
-}
-
-.jobs-panel-head {
+.faq-chip-list {
   display: flex;
-  align-items: center;
-  gap: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-bottom: 16px;
 }
 
-.jobs-panel-icon {
+.faq-chip {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.faq-chip-accent  { background: color-mix(in srgb, var(--primary)   12%, transparent); color: var(--primary);        border: 1px solid color-mix(in srgb, var(--primary)   25%, transparent); }
+.faq-chip-accent2 { background: color-mix(in srgb, var(--secondary) 12%, transparent); color: var(--secondary);      border: 1px solid color-mix(in srgb, var(--secondary) 25%, transparent); }
+.faq-chip-info    { background: color-mix(in srgb, var(--info)      12%, transparent); color: var(--info);           border: 1px solid color-mix(in srgb, var(--info)      25%, transparent); }
+.faq-chip-warning { background: color-mix(in srgb, var(--warning)   12%, transparent); color: var(--warning);        border: 1px solid color-mix(in srgb, var(--warning)   25%, transparent); }
+
+.faq-side-copy {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+/* ── Accordion ── */
+.faq-accordion {
+  display: grid;
+  gap: 10px;
+}
+
+.faq-item {
+  background: color-mix(in srgb, var(--card) 74%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.faq-item.open {
+  border-color: color-mix(in srgb, var(--primary) 35%, transparent);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--primary) 8%, transparent);
+}
+
+.faq-trigger {
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--primary) 10%, transparent);
-  border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
-  font-size: 1.3rem;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+  text-align: left;
+  transition: color 0.15s ease;
+}
+
+.faq-trigger:hover {
+  color: var(--primary);
+}
+
+.faq-item.open .faq-trigger {
+  color: var(--primary);
+}
+
+.faq-icon {
+  font-size: 20px;
+  line-height: 1;
+  color: var(--muted-foreground);
   flex-shrink: 0;
+  transition: transform 0.22s ease, color 0.15s ease;
+}
+
+.faq-item.open .faq-icon {
+  transform: rotate(45deg);
+  color: var(--primary);
+}
+
+.faq-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.faq-inner {
+  padding: 0 20px 18px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--muted-foreground);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .faq-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .faq-lead {
+    position: static;
+  }
+  .faq-subheading {
+    max-width: none;
+  }
 }
 
 .jobs-panel-icon-future {
@@ -1911,6 +1879,10 @@
 }
 
 @media (max-width: 1024px) {
+  .home-section-header {
+    max-width: 100%;
+  }
+
   .feature-bento-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -1972,6 +1944,15 @@
 
   .practice-grid {
     grid-template-columns: 1fr;
+  }
+
+  .home-section-header {
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .home-section-description {
+    margin-inline: auto;
   }
 
   .practice-section-header {

@@ -3,6 +3,7 @@ import { HomeFeaturePreview } from "@/components/home/home-feature-preview";
 import { JobHuntSection } from "@/components/home/job-hunt-section";
 import { PracticeSection } from "@/components/home/practice-section";
 import { TrustSection } from "@/components/trust-section";
+import { FaqSection } from "@/components/home/faq-section";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <HomeFeaturePreview />
       <PracticeSection />
       <JobHuntSection />
+      <FaqSection />
     </>
   );
 }
