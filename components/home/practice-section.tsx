@@ -6,48 +6,116 @@ import { PracticePill } from "./practice-pill";
 const difficultyCards = [
   {
     title: "Beginner",
-    count: "3 elements",
-    description: "Forms and Inputs - Dropdowns - Modal Windows",
+    count: "3 Elements",
+    description: "Forms & Inputs · Dropdowns · Modal Windows",
     tone: "beginner" as const,
   },
   {
     title: "Intermediate",
-    count: "5 elements",
-    description: "Alerts - iFrames - Data Tables - Date Pickers - Multi-Tab",
+    count: "5 Elements",
+    description: "Alerts · iFrames · Data Tables · Date Pickers · Multi-Tab",
     tone: "intermediate" as const,
   },
   {
     title: "Advanced",
-    count: "4 elements",
-    description: "Shadow DOM - Drag and Drop - Dynamic Waits - Infinite Scroll",
+    count: "4 Elements",
+    description: "Shadow DOM · Drag & Drop · Dynamic Waits · Infinite Scroll",
     tone: "advanced" as const,
   },
 ];
 
 const practicePills = [
-  { href: "/practice/input", label: "Forms & Inputs", level: "Beginner" as const, icon: "📝" },
-  { href: "/practice/alert", label: "Alerts & Dialogs", level: "Intermediate" as const, icon: "⚠️" },
-  { href: "/practice", label: "Drag & Drop", level: "Advanced" as const, icon: "🖱️" },
-  { href: "/practice", label: "iFrames", level: "Intermediate" as const, icon: "🪟" },
-  { href: "/practice", label: "Shadow DOM", level: "Advanced" as const, icon: "🌑" },
-  { href: "/practice", label: "Dynamic Waits", level: "Advanced" as const, icon: "⏱️" },
-  { href: "/practice/simple-table", label: "Data Tables", level: "Intermediate" as const, icon: "📊" },
-  { href: "/practice", label: "Dropdowns", level: "Beginner" as const, icon: "🔽" },
-  { href: "/practice", label: "Date Pickers", level: "Intermediate" as const, icon: "🗓️" },
-  { href: "/practice", label: "Modal Windows", level: "Beginner" as const, icon: "🪟" },
-  { href: "/practice", label: "Infinite Scroll", level: "Advanced" as const, icon: "🔄" },
-  { href: "/practice", label: "Multi-Tab Windows", level: "Intermediate" as const, icon: "🔗" },
+  {
+    href: "/practice/input",
+    label: "Forms & Inputs",
+    level: "Beginner" as const,
+    icon: "📝",
+  },
+  {
+    href: "/practice/alert",
+    label: "Alerts & Dialogs",
+    level: "Intermediate" as const,
+    icon: "⚠️",
+  },
+  {
+    href: "/practice",
+    label: "Drag & Drop",
+    level: "Advanced" as const,
+    icon: "🖱️",
+  },
+  {
+    href: "/practice",
+    label: "iFrames",
+    level: "Intermediate" as const,
+    icon: "🪟",
+  },
+  {
+    href: "/practice",
+    label: "Shadow DOM",
+    level: "Advanced" as const,
+    icon: "🌑",
+  },
+  {
+    href: "/practice",
+    label: "Dynamic Waits",
+    level: "Advanced" as const,
+    icon: "⏱️",
+  },
+  {
+    href: "/practice/simple-table",
+    label: "Data Tables",
+    level: "Intermediate" as const,
+    icon: "📊",
+  },
+  {
+    href: "/practice",
+    label: "Dropdowns",
+    level: "Beginner" as const,
+    icon: "🔽",
+  },
+  {
+    href: "/practice",
+    label: "Date Pickers",
+    level: "Intermediate" as const,
+    icon: "🗓️",
+  },
+  {
+    href: "/practice",
+    label: "Modal Windows",
+    level: "Beginner" as const,
+    icon: "🪟",
+  },
+  {
+    href: "/practice",
+    label: "Infinite Scroll",
+    level: "Advanced" as const,
+    icon: "🔄",
+  },
+  {
+    href: "/practice",
+    label: "Multi-Tab Windows",
+    level: "Intermediate" as const,
+    icon: "🔗",
+  },
 ];
 
 export function PracticeSection() {
   return (
-    <section id="practice" className="practice-section" aria-labelledby="practice-title">
+    <section
+      id="practice"
+      className="practice-section"
+      aria-labelledby="practice-title"
+    >
       <div className="home-shell">
         <div className="practice-section-header">
           <div className="home-section-tag">{"// 22+ practice elements"}</div>
           <h2 id="practice-title" className="practice-section-title">
-            <span className="practice-section-title-line">Pick Your Challenge,</span>
-            <span className="practice-section-title-line">Level Up Your Skills</span>
+            <span className="practice-section-title-line">
+              Pick Your Challenge,
+            </span>
+            <span className="practice-section-title-line">
+              Level Up Your Skills
+            </span>
           </h2>
           <p className="practice-section-description">
             Practice SEO-friendly, crawlable QA learning content with real UI
@@ -68,15 +136,18 @@ export function PracticeSection() {
               <span className="practice-note-badge" aria-hidden="true">
                 ⚡
               </span>
-              Framework-agnostic targets with stable selectors for Selenium,
-              Playwright, Cypress, and pytest workflows.
+              Framework-agnostic — stable IDs &amp; selectors work with
+              Selenium, Playwright, Cypress, and pytest.
             </p>
 
             <div className="practice-actions">
               <Link href="/practice" className="home-btn home-btn-primary">
                 View All 22+ Elements
               </Link>
-              <Link href="/practice#challenges" className="home-btn home-btn-secondary">
+              <Link
+                href="/practice#challenges"
+                className="home-btn home-btn-secondary"
+              >
                 Browse by Level
               </Link>
             </div>

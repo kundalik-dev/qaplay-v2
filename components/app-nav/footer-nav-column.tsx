@@ -1,9 +1,9 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import type { FooterNavColumn } from "@/data/footer-data"
+import type { FooterNavColumn } from "@/data/footer-data";
 
 interface FooterNavColumnProps {
-  column: FooterNavColumn
+  column: FooterNavColumn;
 }
 
 export function FooterNavColumn({ column }: FooterNavColumnProps) {
@@ -15,17 +15,21 @@ export function FooterNavColumn({ column }: FooterNavColumnProps) {
         {column.links.map((link) => {
           const externalProps = link.external
             ? { target: "_blank", rel: "noopener noreferrer" }
-            : {}
+            : {};
 
           return (
             <li key={link.href}>
-              <Link href={link.href} className="footer-nav-link" {...externalProps}>
+              <Link
+                href={link.href}
+                className="footer-nav-link"
+                {...externalProps}
+              >
                 {link.label}
               </Link>
             </li>
-          )
+          );
         })}
       </ul>
     </div>
-  )
+  );
 }

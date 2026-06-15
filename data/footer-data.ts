@@ -7,35 +7,35 @@
 // ── Types ──────────────────────────────────────
 
 export interface FooterBrand {
-  name: string
-  badge: string
-  description: string
-  href: string
+  name: string;
+  badge: string;
+  description: string;
+  href: string;
 }
 
 export interface FooterSocialLink {
-  label: string
-  href: string
-  icon: "youtube" | "github" | "x-twitter" | "telegram"
+  label: string;
+  href: string;
+  icon: "youtube" | "github" | "x-twitter" | "telegram";
 }
 
 export interface FooterNavLink {
-  label: string
-  href: string
-  external?: boolean
+  label: string;
+  href: string;
+  external?: boolean;
 }
 
 export interface FooterNavColumn {
-  title: string
-  links: FooterNavLink[]
+  title: string;
+  links: FooterNavLink[];
 }
 
 export interface FooterBottomBar {
-  year: number
-  authorName: string
-  authorHref: string
-  location: string
-  rights: string
+  year: number;
+  authorName: string;
+  authorHref: string;
+  location: string;
+  rights: string;
 }
 
 // ── Data ───────────────────────────────────────
@@ -46,7 +46,7 @@ export const footerBrand: FooterBrand = {
   href: "/",
   description:
     "A purpose-built platform for QA engineers — practice automation on real UI elements, rehearse interviews with AI agents, and track every job application through to the offer.",
-}
+};
 
 export const footerSocialLinks: FooterSocialLink[] = [
   {
@@ -69,7 +69,7 @@ export const footerSocialLinks: FooterSocialLink[] = [
     href: "https://t.me",
     icon: "telegram",
   },
-]
+];
 
 export const footerNavColumns: FooterNavColumn[] = [
   {
@@ -113,7 +113,7 @@ export const footerNavColumns: FooterNavColumn[] = [
       { label: "Login", href: "/login" },
     ],
   },
-]
+];
 
 export const footerBottomBar: FooterBottomBar = {
   year: 2026,
@@ -121,4 +121,4 @@ export const footerBottomBar: FooterBottomBar = {
   authorHref: "https://github.com/kundalik-dev",
   location: "Pune, India 🇮🇳",
   rights: "All rights reserved.",
-}
+};

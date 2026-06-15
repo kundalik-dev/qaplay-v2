@@ -19,16 +19,18 @@ export function HomeHero() {
           </div>
 
           <h1 id="home-hero-title" className="home-hero-title">
-            The Only<br />
+            The Only
+            <br />
             <span className="home-hero-title-accent">Playground You</span>
             <br />
             Need to Get Hired
           </h1>
 
           <p className="home-hero-description">
-            Stop reading. Start doing. Practice Selenium, Playwright &amp; Cypress on real
-            UI elements, sharpen your answers in AI-powered mock interviews, then
-            track every job you apply to — all the way to the offer.
+            Stop reading. Start doing. Practice Selenium, Playwright &amp;
+            Cypress on real UI elements, sharpen your answers in AI-powered mock
+            interviews, then track every job you apply to — all the way to the
+            offer.
           </p>
 
           <div className="home-hero-actions">

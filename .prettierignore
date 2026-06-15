@@ -20,3 +20,6 @@ yarn.lock
 coverage/
 .vercel/
 public/
+
+# Design reference material (kept verbatim, not formatted)
+docs/

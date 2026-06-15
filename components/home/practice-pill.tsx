@@ -7,12 +7,7 @@ type PracticePillProps = {
   level: "Beginner" | "Intermediate" | "Advanced";
 };
 
-export function PracticePill({
-  href,
-  icon,
-  label,
-  level,
-}: PracticePillProps) {
+export function PracticePill({ href, icon, label, level }: PracticePillProps) {
   const levelClassName = level.toLowerCase();
 
   return (
@@ -23,7 +18,9 @@ export function PracticePill({
 
       <div className="practice-pill-copy">
         <div className="practice-pill-name">{label}</div>
-        <div className={`practice-pill-level practice-pill-level-${levelClassName}`}>
+        <div
+          className={`practice-pill-level practice-pill-level-${levelClassName}`}
+        >
           {level}
         </div>
       </div>

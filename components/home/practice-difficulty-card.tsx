@@ -12,7 +12,9 @@ export function PracticeDifficultyCard({
   title,
 }: PracticeDifficultyCardProps) {
   return (
-    <article className={`practice-difficulty-card practice-difficulty-card-${tone}`}>
+    <article
+      className={`practice-difficulty-card practice-difficulty-card-${tone}`}
+    >
       <div className="practice-difficulty-top">
         <span className="practice-difficulty-dot" aria-hidden="true" />
         <span className="practice-difficulty-title">{title}</span>

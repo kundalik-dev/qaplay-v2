@@ -1,7 +1,7 @@
-import type { FooterBottomBar } from "@/data/footer-data"
+import type { FooterBottomBar } from "@/data/footer-data";
 
 interface FooterBottomBarProps {
-  data: FooterBottomBar
+  data: FooterBottomBar;
 }
 
 export function FooterBottomBar({ data }: FooterBottomBarProps) {
@@ -16,5 +16,5 @@ export function FooterBottomBar({ data }: FooterBottomBarProps) {
       </span>
       <span>{data.rights}</span>
     </div>
-  )
+  );
 }
