@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QA Playground Practice Variant B</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (() => {
+        const savedTheme = localStorage.getItem("qap-practice-variant-b-theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        const theme = savedTheme || (prefersDark ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <style>
+      :root {
+        --bg: #f4efe6;
+        --bg-soft: #fbf8f2;
+        --surface: rgba(255, 255, 255, 0.82);
+        --surface-strong: #ffffff;
+        --text: #182027;
+        --muted: #677481;
+        --line: rgba(24, 32, 39, 0.12);
+        --accent: #0ea56f;
+        --accent-2: #ff8a3d;
+        --accent-3: #3b82f6;
+        --radius-xl: 34px;
+        --radius-lg: 24px;
+        --radius-md: 18px;
+        --shadow: 0 24px 70px rgba(24, 32, 39, 0.08);
+        --font-display: "Space Grotesk", sans-serif;
+        --font-body: "Manrope", sans-serif;
+        --font-mono: "IBM Plex Mono", monospace;
+      }
+
+      html {
+        color-scheme: light;
+        scroll-behavior: smooth;
+      }
+
+      html[data-theme="dark"] {
+        color-scheme: dark;
+        --bg: #0f1318;
+        --bg-soft: #141a20;
+        --surface: rgba(23, 29, 36, 0.86);
+        --surface-strong: #1a2027;
+        --text: #eef2f6;
+        --muted: #97a5b3;
+        --line: rgba(255, 255, 255, 0.1);
+        --accent: #2ad59a;
+        --accent-2: #ff9a57;
+        --accent-3: #6ca7ff;
+        --shadow: 0 26px 70px rgba(0, 0, 0, 0.28);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-body);
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(14, 165, 111, 0.08), transparent 24%),
+          radial-gradient(circle at 85% 12%, rgba(255, 138, 61, 0.08), transparent 18%),
+          linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(24, 32, 39, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(24, 32, 39, 0.03) 1px, transparent 1px);
+        background-size: 30px 30px;
+        pointer-events: none;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 88%);
+      }
+
+      html[data-theme="dark"] body::before {
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1200px, calc(100% - 36px));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(16px);
+        background: rgba(244, 239, 230, 0.78);
+        border-bottom: 1px solid var(--line);
+      }
+
+      html[data-theme="dark"] .topbar {
+        background: rgba(15, 19, 24, 0.78);
+      }
+
+      .nav {
+        min-height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: -0.04em;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+        border-radius: 13px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--accent-2), #ffd686);
+        color: #111;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 22px;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      .nav-links a.active,
+      .nav-links a:hover {
+        color: var(--text);
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .theme-toggle,
+      .mini-btn {
+        min-height: 42px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--text);
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .theme-toggle {
+        padding: 0 14px;
+        font-size: 13px;
+      }
+
+      .mini-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 18px;
+        font-size: 13px;
+      }
+
+      .content {
+        padding: 22px 0 50px;
+      }
+
+      .control-bar,
+      .practice-card {
+        border: 1px solid var(--line);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .control-bar {
+        display: grid;
+        grid-template-columns: 0.95fr 0.55fr;
+        gap: 14px;
+        align-items: center;
+        border-radius: 28px;
+        padding: 16px;
+      }
+
+      .section-copy h2 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 30px;
+        letter-spacing: -0.04em;
+      }
+
+      .section-copy p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .search-box {
+        position: relative;
+      }
+
+      .search-box input {
+        width: 100%;
+        min-height: 52px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--surface-strong);
+        color: var(--text);
+        padding: 0 18px;
+        font-size: 15px;
+        outline: none;
+      }
+
+      .practice-grid {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .practice-card {
+        border-radius: 26px;
+        overflow: hidden;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          border-color 0.2s ease;
+      }
+
+      .practice-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 26px 52px rgba(24, 32, 39, 0.1);
+      }
+
+      .card-top {
+        min-height: 84px;
+        padding: 18px 18px 14px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+        background:
+          radial-gradient(circle at top right, rgba(14, 165, 111, 0.12), transparent 30%),
+          linear-gradient(180deg, var(--surface-strong) 0%, rgba(255, 255, 255, 0.65) 100%);
+        border-bottom: 1px solid var(--line);
+      }
+
+      html[data-theme="dark"] .card-top {
+        background:
+          radial-gradient(circle at top right, rgba(42, 213, 154, 0.12), transparent 30%),
+          linear-gradient(180deg, var(--surface-strong) 0%, rgba(255, 255, 255, 0.01) 100%);
+      }
+
+      .card-top h3 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 22px;
+        line-height: 1;
+        letter-spacing: -0.04em;
+      }
+
+      .card-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        font-size: 22px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.62);
+        flex-shrink: 0;
+      }
+
+      html[data-theme="dark"] .card-icon {
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .card-meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 11px;
+        font-family: var(--font-mono);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .level-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      .card-body {
+        padding: 18px;
+      }
+
+      .card-body p {
+        margin: 0;
+        min-height: 72px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.62;
+      }
+
+      .card-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .action-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent-3);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .tag {
+        padding: 8px 10px;
+        border-radius: 999px;
+        background: rgba(14, 165, 111, 0.1);
+        color: var(--accent);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .empty-state {
+        display: none;
+        margin-top: 18px;
+        padding: 24px;
+        border-radius: 24px;
+        border: 1px dashed var(--line);
+        color: var(--muted);
+        text-align: center;
+        background: rgba(255, 255, 255, 0.36);
+      }
+
+      html[data-theme="dark"] .empty-state {
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      @media (max-width: 1080px) {
+        .control-bar {
+          grid-template-columns: 1fr;
+        }
+
+        .practice-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 780px) {
+        .container {
+          width: min(1200px, calc(100% - 24px));
+        }
+
+        .nav {
+          min-height: auto;
+          padding: 12px 0;
+          flex-wrap: wrap;
+        }
+
+        .nav-links {
+          order: 3;
+          width: 100%;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+
+        .control-bar,
+        .practice-card {
+          border-radius: 24px;
+        }
+
+        .practice-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .nav-actions {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .hero h1 {
+          font-size: 38px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <a href="#" class="brand">
+          <span class="brand-mark">Q</span>
+          <span>QA Playground</span>
+        </a>
+
+        <nav class="nav-links">
+          <a href="#">Home</a>
+          <a href="#">Study Tracker</a>
+          <a href="#">Bank Demo</a>
+          <a href="#" class="active">Practice</a>
+          <a href="#">QA Tools</a>
+          <a href="#">Blog</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button
+            type="button"
+            class="theme-toggle"
+            id="theme-toggle"
+            aria-label="Switch color theme"
+            title="Switch color theme"
+          >
+            Light
+          </button>
+          <a href="#" class="mini-btn">Browse All 22+</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="content">
+        <div class="container">
+          <div class="control-bar">
+            <div class="section-copy">
+              <h2>Practice Elements</h2>
+              <p>
+                Search, scan, and open the exact interaction you want to practice.
+              </p>
+            </div>
+            <div class="search-box">
+              <input
+                id="practice-search"
+                type="search"
+                placeholder="Search practice elements..."
+                aria-label="Search practice elements"
+              />
+            </div>
+          </div>
+
+          <div class="practice-grid" id="practice-grid">
+            <article class="practice-card" data-title="Input Fields">
+              <div class="card-top">
+                <div>
+                  <h3>Input Fields</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Beginner</div>
+                </div>
+                <span class="card-icon">✏️</span>
+              </div>
+              <div class="card-body">
+                <p>Practice typing, clearing, validation states, and different input field types.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Form</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Buttons">
+              <div class="card-top">
+                <div>
+                  <h3>Buttons</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Beginner</div>
+                </div>
+                <span class="card-icon">🔹</span>
+              </div>
+              <div class="card-body">
+                <p>Click, double-click, right-click, and test disabled button behavior.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Clicks</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Forms">
+              <div class="card-top">
+                <div>
+                  <h3>Forms</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Intermediate</div>
+                </div>
+                <span class="card-icon">📝</span>
+              </div>
+              <div class="card-body">
+                <p>Work through fill, submit, error, and validation scenarios in one place.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Flow</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Dropdowns">
+              <div class="card-top">
+                <div>
+                  <h3>Dropdowns</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Beginner</div>
+                </div>
+                <span class="card-icon">🪄</span>
+              </div>
+              <div class="card-body">
+                <p>Handle single and multi-option dropdown selection patterns cleanly.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Select</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Data Table">
+              <div class="card-top">
+                <div>
+                  <h3>Data Table</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Intermediate</div>
+                </div>
+                <span class="card-icon">📊</span>
+              </div>
+              <div class="card-body">
+                <p>Read, sort, filter, and assert table data like real test cases do.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Table</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Alerts and Dialogs">
+              <div class="card-top">
+                <div>
+                  <h3>Alerts & Dialogs</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Intermediate</div>
+                </div>
+                <span class="card-icon">🚨</span>
+              </div>
+              <div class="card-body">
+                <p>Handle confirm, alert, and prompt dialogs with predictable outcomes.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Browser</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Radio and Checkbox">
+              <div class="card-top">
+                <div>
+                  <h3>Radio & Checkbox</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Beginner</div>
+                </div>
+                <span class="card-icon">📻</span>
+              </div>
+              <div class="card-body">
+                <p>Check toggled, disabled, selected, and multi-choice states reliably.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">State</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Date Picker">
+              <div class="card-top">
+                <div>
+                  <h3>Date Picker</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Intermediate</div>
+                </div>
+                <span class="card-icon">📅</span>
+              </div>
+              <div class="card-body">
+                <p>Practice date and time selection where automation often gets tricky.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Calendar</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Links">
+              <div class="card-top">
+                <div>
+                  <h3>Links</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Beginner</div>
+                </div>
+                <span class="card-icon">🔗</span>
+              </div>
+              <div class="card-body">
+                <p>Test navigation, href behavior, and different link interaction patterns.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Nav</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Tabs and Windows">
+              <div class="card-top">
+                <div>
+                  <h3>Tabs & Windows</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Intermediate</div>
+                </div>
+                <span class="card-icon">🪟</span>
+              </div>
+              <div class="card-body">
+                <p>Switch context between tabs, windows, and pop-up experiences.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Window</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Dynamic Waits">
+              <div class="card-top">
+                <div>
+                  <h3>Dynamic Waits</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Advanced</div>
+                </div>
+                <span class="card-icon">⏱️</span>
+              </div>
+              <div class="card-body">
+                <p>Handle timing, waits, and dynamic loading states more safely.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Timing</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Multi Select">
+              <div class="card-top">
+                <div>
+                  <h3>Multi Select</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Intermediate</div>
+                </div>
+                <span class="card-icon">🛩️</span>
+              </div>
+              <div class="card-body">
+                <p>Select multiple values from lists and test grouped selection flows.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">List</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="mDocs.dev">
+              <div class="card-top">
+                <div>
+                  <h3>mDocs.dev</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Intermediate</div>
+                </div>
+                <span class="card-icon">📚</span>
+              </div>
+              <div class="card-body">
+                <p>Practice docs-like page interactions and structured content navigation.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Docs</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="File Upload">
+              <div class="card-top">
+                <div>
+                  <h3>File Upload</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Intermediate</div>
+                </div>
+                <span class="card-icon">📂</span>
+              </div>
+              <div class="card-body">
+                <p>Upload files, validate state transitions, and assert result messaging.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Files</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Bank App">
+              <div class="card-top">
+                <div>
+                  <h3>Bank App</h3>
+                  <div class="card-meta"><span class="level-dot"></span> E2E</div>
+                </div>
+                <span class="card-icon">🏦</span>
+              </div>
+              <div class="card-body">
+                <p>Jump into realistic end-to-end flows when isolated elements are not enough.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Demo</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Drag and Drop">
+              <div class="card-top">
+                <div>
+                  <h3>Drag & Drop</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Advanced</div>
+                </div>
+                <span class="card-icon">🧲</span>
+              </div>
+              <div class="card-body">
+                <p>Move elements, verify drop zones, and test more physical UI interactions.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Move</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="iFrames">
+              <div class="card-top">
+                <div>
+                  <h3>iFrames</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Intermediate</div>
+                </div>
+                <span class="card-icon">🖼️</span>
+              </div>
+              <div class="card-body">
+                <p>Switch into embedded documents and work with nested browsing contexts.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Frame</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Shadow DOM">
+              <div class="card-top">
+                <div>
+                  <h3>Shadow DOM</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Advanced</div>
+                </div>
+                <span class="card-icon">🌗</span>
+              </div>
+              <div class="card-body">
+                <p>Practice selectors and interactions inside web component boundaries.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Web Component</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Slider">
+              <div class="card-top">
+                <div>
+                  <h3>Slider</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Intermediate</div>
+                </div>
+                <span class="card-icon">🎚️</span>
+              </div>
+              <div class="card-body">
+                <p>Adjust ranges precisely and verify value changes across states.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Range</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Simple Table">
+              <div class="card-top">
+                <div>
+                  <h3>Simple Table</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Beginner</div>
+                </div>
+                <span class="card-icon">📋</span>
+              </div>
+              <div class="card-body">
+                <p>Practice straightforward row and column assertions with clear structure.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Read</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Advanced Table">
+              <div class="card-top">
+                <div>
+                  <h3>Advanced Table</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Advanced</div>
+                </div>
+                <span class="card-icon">🧮</span>
+              </div>
+              <div class="card-body">
+                <p>Work through complex data table behavior and richer filtering conditions.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Advanced</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="File Download">
+              <div class="card-top">
+                <div>
+                  <h3>File Download</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Intermediate</div>
+                </div>
+                <span class="card-icon">📥</span>
+              </div>
+              <div class="card-body">
+                <p>Verify downloads, generated assets, and successful file retrieval flows.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Download</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="practice-card" data-title="Wait Conditions">
+              <div class="card-top">
+                <div>
+                  <h3>Wait Conditions</h3>
+                  <div class="card-meta"><span class="level-dot"></span> Advanced</div>
+                </div>
+                <span class="card-icon">⌛</span>
+              </div>
+              <div class="card-body">
+                <p>Practice conditional rendering and loading-state synchronization patterns.</p>
+                <div class="card-actions">
+                  <a href="#" class="action-link">Practice now</a>
+                  <span class="tag">Sync</span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="empty-state" id="empty-state">
+            No practice elements matched that search. Try a simpler keyword.
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById("theme-toggle");
+        const searchInput = document.getElementById("practice-search");
+        const cards = Array.from(document.querySelectorAll(".practice-card"));
+        const emptyState = document.getElementById("empty-state");
+
+        function setTheme(theme) {
+          root.setAttribute("data-theme", theme);
+          localStorage.setItem("qap-practice-variant-b-theme", theme);
+          if (themeToggle) {
+            const isDark = theme === "dark";
+            themeToggle.textContent = isDark ? "Dark" : "Light";
+            themeToggle.setAttribute(
+              "aria-label",
+              isDark ? "Switch to light mode" : "Switch to dark mode",
+            );
+            themeToggle.setAttribute(
+              "title",
+              isDark ? "Switch to light mode" : "Switch to dark mode",
+            );
+          }
+        }
+
+        if (themeToggle) {
+          setTheme(root.getAttribute("data-theme") || "light");
+          themeToggle.addEventListener("click", () => {
+            const nextTheme =
+              root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            setTheme(nextTheme);
+          });
+        }
+
+        function filterCards() {
+          const query = (searchInput?.value || "").trim().toLowerCase();
+          let visibleCount = 0;
+
+          cards.forEach((card) => {
+            const title = (card.dataset.title || "").toLowerCase();
+            const text = card.textContent.toLowerCase();
+            const visible = !query || title.includes(query) || text.includes(query);
+            card.style.display = visible ? "" : "none";
+            if (visible) visibleCount += 1;
+          });
+
+          if (emptyState) {
+            emptyState.style.display = visibleCount === 0 ? "block" : "none";
+          }
+        }
+
+        if (searchInput) {
+          searchInput.addEventListener("input", filterCards);
+        }
+      });
+    </script>
+  </body>
+</html>

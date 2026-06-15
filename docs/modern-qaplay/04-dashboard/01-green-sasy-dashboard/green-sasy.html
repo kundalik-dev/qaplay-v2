@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QA Playground — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <!-- theme: set before paint to avoid flash -->
+  <script>
+    (() => {
+      const t = localStorage.getItem('qap-theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ======================================================
+       SIDEBAR
+       ====================================================== -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- Logo -->
+    <a href="#" class="sidebar-logo" onclick="navigate('dashboard'); return false;">
+      <div class="logo-badge">⚡</div>
+      <span class="logo-text">QA Playground</span>
+    </a>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+
+      <div class="nav-section-label">Main</div>
+
+      <a class="nav-item active" data-route="dashboard" onclick="navigate('dashboard'); return false;" href="#">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Dashboard</span>
+      </a>
+
+      <div class="nav-section-label">Practice</div>
+
+      <a class="nav-item" data-route="interview" onclick="navigate('interview'); return false;" href="#">
+        <span class="nav-icon">🎙️</span>
+        <span class="nav-label">Interview Practice</span>
+        <span class="nav-count">1</span>
+      </a>
+
+      <a class="nav-item" data-route="challenges" onclick="navigate('challenges'); return false;" href="#">
+        <span class="nav-icon">🎯</span>
+        <span class="nav-label">Challenges</span>
+        <span class="nav-count">22+</span>
+      </a>
+
+      <a class="nav-item" data-route="iq" onclick="navigate('iq'); return false;" href="#">
+        <span class="nav-icon">❓</span>
+        <span class="nav-label">Interview Questions</span>
+      </a>
+
+      <div class="nav-section-label">Tools & Career</div>
+
+      <a class="nav-item" data-route="qatools" onclick="navigate('qatools'); return false;" href="#">
+        <span class="nav-icon">🛠️</span>
+        <span class="nav-label">QA Tools</span>
+        <span class="nav-badge">New</span>
+      </a>
+
+      <a class="nav-item" data-route="jobcrm" onclick="navigate('jobcrm'); return false;" href="#">
+        <span class="nav-icon">💼</span>
+        <span class="nav-label">Job CRM</span>
+        <span class="nav-count">8</span>
+      </a>
+
+      <a class="nav-item" data-route="resources" onclick="navigate('resources'); return false;" href="#">
+        <span class="nav-icon">📚</span>
+        <span class="nav-label">Resources</span>
+      </a>
+
+    </nav>
+
+    <!-- Footer -->
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="user-avatar">K</div>
+        <div class="user-info">
+          <div class="user-name">Admin Kundalik</div>
+          <div class="user-role">QA Engineer</div>
+        </div>
+      </div>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+        <span id="themeIcon">☀️</span>
+        <span>Toggle Theme</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ======================================================
+       MAIN CONTENT
+       ====================================================== -->
+  <div class="main-content">
+
+    <!-- Top Bar -->
+    <div class="topbar" id="topbar">
+      <div class="topbar-left">
+        <div>
+          <div class="topbar-title" id="topbarTitle">Dashboard</div>
+          <div class="topbar-sub" id="topbarSub">// overview</div>
+        </div>
+      </div>
+      <div class="topbar-right" id="topbarActions">
+        <button class="topbar-btn" onclick="navigate('interview')">🎙️ New Interview</button>
+        <button class="topbar-btn primary" onclick="navigate('challenges')">⚡ Start Practicing</button>
+      </div>
+    </div>
+
+    <!-- Page Area -->
+    <div class="page-area">
+
+      <!-- ==================================================
+           DASHBOARD VIEW
+           ================================================== -->
+      <section class="view active" id="view-dashboard">
+
+        <div class="stat-row">
+          <div class="stat-card" style="--c: var(--accent)">
+            <div class="s-label">Interview Sessions</div>
+            <div class="s-value">9<span></span></div>
+            <div class="s-sub">+1 this week</div>
+          </div>
+          <div class="stat-card" style="--c: var(--accent2)">
+            <div class="s-label">Jobs Tracked</div>
+            <div class="s-value">8<span></span></div>
+            <div class="s-sub">3 active applications</div>
+          </div>
+          <div class="stat-card" style="--c: var(--accent3)">
+            <div class="s-label">Challenges Done</div>
+            <div class="s-value">14<span>/22</span></div>
+            <div class="s-sub">64% complete</div>
+          </div>
+          <div class="stat-card" style="--c: var(--clr-info)">
+            <div class="s-label">Study Streak</div>
+            <div class="s-value">7<span>d</span></div>
+            <div class="s-sub">Keep it going 🔥</div>
+          </div>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="section-tag">// quick actions</div>
+        <div class="quick-actions" style="margin-top:8px;">
+          <a class="quick-action" onclick="navigate('interview'); return false;" href="#">
+            <span class="qa-icon">🎙️</span>
+            <div>
+              <div class="qa-label">Start Interview</div>
+              <div class="qa-sub">Mock AI session</div>
+            </div>
+          </a>
+          <a class="quick-action" onclick="navigate('challenges'); return false;" href="#">
+            <span class="qa-icon">🎯</span>
+            <div>
+              <div class="qa-label">Practice Element</div>
+              <div class="qa-sub">22+ elements</div>
+            </div>
+          </a>
+          <a class="quick-action" onclick="navigate('qatools'); return false;" href="#">
+            <span class="qa-icon">🛠️</span>
+            <div>
+              <div class="qa-label">Open QA Tool</div>
+              <div class="qa-sub">JSON, Regex, JWT…</div>
+            </div>
+          </a>
+          <a class="quick-action" onclick="navigate('jobcrm'); return false;" href="#">
+            <span class="qa-icon">💼</span>
+            <div>
+              <div class="qa-label">Log Application</div>
+              <div class="qa-sub">Track your pipeline</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Two-col panels -->
+        <div class="two-col" style="margin-top:24px;">
+
+          <!-- Recent activity -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Recent Activity</h3>
+              <a class="see-all" onclick="navigate('interview'); return false;">See all →</a>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--clr-success)"></div>
+              <div class="activity-text"><strong>Interview session</strong> completed — 5/5 questions</div>
+              <div class="activity-time">May 18</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--clr-warn)"></div>
+              <div class="activity-text"><strong>Job applied</strong> to Stripe — QA Engineer</div>
+              <div class="activity-time">Jun 2</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--accent2)"></div>
+              <div class="activity-text"><strong>Challenge solved</strong> — Drag & Drop element</div>
+              <div class="activity-time">Jun 5</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--clr-info)"></div>
+              <div class="activity-text"><strong>Resource saved</strong> — Playwright Docs v1.44</div>
+              <div class="activity-time">Jun 8</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div class="activity-text"><strong>Interview session</strong> started — 1 min</div>
+              <div class="activity-time">Jun 12</div>
+            </div>
+          </div>
+
+          <!-- Study progress -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Study Progress</h3>
+              <a class="see-all" onclick="navigate('resources'); return false;">Resources →</a>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label"><span>Playwright</span><span>75%</span></div>
+              <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:75%; --c:var(--accent)"></div></div>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label"><span>API Testing</span><span>60%</span></div>
+              <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:60%; --c:var(--accent2)"></div></div>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label"><span>CI/CD</span><span>40%</span></div>
+              <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:40%; --c:var(--accent3)"></div></div>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label"><span>Manual Testing</span><span>90%</span></div>
+              <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:90%; --c:var(--clr-success)"></div></div>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label"><span>Security Testing</span><span>25%</span></div>
+              <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:25%; --c:var(--clr-info)"></div></div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ==================================================
+           INTERVIEW PRACTICE VIEW
+           ================================================== -->
+      <section class="view" id="view-interview">
+
+        <div class="page-header">
+          <div class="section-tag">// interview practice</div>
+          <h1>Interview Practice</h1>
+          <p>Set up, run, review, and tune your interview practice workspace.</p>
+        </div>
+
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="itab-interview" onclick="switchTab(this, 'itab-interview')">🎙️ Interview</button>
+          <button class="tab-btn" data-tab="itab-session"   onclick="switchTab(this, 'itab-session')">📊 Session</button>
+          <button class="tab-btn" data-tab="itab-history"   onclick="switchTab(this, 'itab-history')">🕐 History</button>
+          <button class="tab-btn" data-tab="itab-analytics" onclick="switchTab(this, 'itab-analytics')">📈 Analytics</button>
+          <button class="tab-btn" data-tab="itab-settings"  onclick="switchTab(this, 'itab-settings')">⚙️ Settings</button>
+        </div>
+
+        <!-- Interview Setup Tab -->
+        <div class="tab-panel active" id="itab-interview">
+          <div class="interview-setup-card">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;">
+              <div>
+                <div class="section-tag">// interview setup</div>
+                <h2 style="font-family:var(--font-display); font-size:18px; font-weight:700; margin-top:4px;">Interview Setup</h2>
+                <p style="font-size:13px; color:var(--text-muted); margin-top:3px;">Add role details and any questions or context you want the AI interviewer to focus on.</p>
+              </div>
+              <button class="btn-ghost" style="font-family:var(--font-mono); font-size:11px;">🔑 Platform key</button>
+            </div>
+
+            <div class="form-grid">
+              <div>
+                <div class="form-group">
+                  <label>Target role</label>
+                  <input class="form-input" type="text" value="QA Automation Engineer" placeholder="e.g. QA Automation Engineer" />
+                </div>
+                <div class="form-group" style="margin-top:16px;">
+                  <label>Company style</label>
+                  <input class="form-input" type="text" value="SaaS product company" placeholder="e.g. SaaS product company" />
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;">
+                  <div class="form-group">
+                    <label>Duration</label>
+                    <select class="form-select">
+                      <option>10 minutes</option>
+                      <option>20 minutes</option>
+                      <option>30 minutes</option>
+                      <option>45 minutes</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Question limit</label>
+                    <select class="form-select">
+                      <option>5 questions</option>
+                      <option>8 questions</option>
+                      <option>10 questions</option>
+                      <option>15 questions</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Interview details, questions, or short description</label>
+                <textarea class="form-textarea" style="height:200px;">I want a realistic QA automation interview. Ask practical questions about Playwright, API testing, debugging flaky tests, CI/CD, test strategy, and real project scenarios. Include follow-up questions when my answer is too short.</textarea>
+                <span class="form-hint">This is sent to the AI interviewer so it can tailor the session to your target interview.</span>
+              </div>
+            </div>
+
+            <div class="setup-footer">
+              <a href="#" style="font-size:12px; color:var(--accent); font-family:var(--font-mono); text-decoration:none;">Manage Deepgram key and free quota in Settings</a>
+              <button class="btn-primary" onclick="switchTab(document.querySelector('[data-tab=\'itab-session\']'), 'itab-session')">▶ Start session</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Session Tab -->
+        <div class="tab-panel" id="itab-session">
+          <div class="session-active">
+            <div class="session-timer" id="sessionTimer">00:00</div>
+            <div class="session-status">
+              <span class="chat-live-dot" style="display:inline-block; margin-right:6px;"></span>
+              Session Active — QA Automation Engineer
+            </div>
+            <div style="display:flex; gap:10px; justify-content:center;">
+              <button class="btn-ghost" onclick="toggleSession()">⏸ Pause</button>
+              <button class="btn-ghost" style="color:var(--clr-danger); border-color:rgba(255,95,86,.3);" onclick="endSession()">⏹ End Session</button>
+            </div>
+
+            <div class="session-chat">
+              <div class="chat-header">
+                <div class="chat-live-dot"></div>
+                <div class="chat-title">AI Interviewer — QA Automation Engineer</div>
+              </div>
+              <div class="chat-messages" id="chatMessages">
+                <div class="chat-msg ai">Hello! I'm your AI interviewer today. Let's start with a practical question: Can you walk me through how you would set up a Playwright test framework from scratch for a SaaS product?</div>
+              </div>
+              <div class="chat-input-row">
+                <input class="chat-input" id="chatInput" type="text" placeholder="Type your answer or use voice…" onkeydown="if(event.key==='Enter') sendChat()" />
+                <button class="btn-primary" style="padding:9px 16px;" onclick="sendChat()">Send →</button>
+                <button class="topbar-btn" title="Voice input">🎙️</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- History Tab -->
+        <div class="tab-panel" id="itab-history">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+            <div>
+              <div class="section-tag">// session history</div>
+              <h2 style="font-family:var(--font-display); font-size:16px; font-weight:700;">Session History</h2>
+              <p style="font-size:12px; color:var(--text-muted);">Review previous interview sessions and open analytics by ID.</p>
+            </div>
+            <button class="topbar-btn" onclick="this.textContent='↻ Refreshed'">↻ Refresh history</button>
+          </div>
+
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Role</th>
+                  <th>Status</th>
+                  <th>Duration</th>
+                  <th>Questions</th>
+                  <th>Created</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="row-id">cmppr…8819h</span></td>
+                  <td>QA Automation Engineer</td>
+                  <td><span class="badge badge-muted">ENDED_BY_USER</span></td>
+                  <td>10 min</td>
+                  <td>0 / 5</td>
+                  <td>May 28, 2026, 11:04 PM</td>
+                  <td><button class="btn-icon" onclick="switchTab(document.querySelector('[data-tab=\'itab-analytics\']'), 'itab-analytics')">📈 Analytics</button></td>
+                </tr>
+                <tr>
+                  <td><span class="row-id">cmppr…i4sb</span></td>
+                  <td>QA Automation Engineer</td>
+                  <td><span class="badge badge-info">ACTIVE</span></td>
+                  <td>10 min</td>
+                  <td>0 / 5</td>
+                  <td>May 28, 2026, 10:56 PM</td>
+                  <td><button class="btn-icon">📈 Analytics</button></td>
+                </tr>
+                <tr>
+                  <td><span class="row-id">cmppr…wtog</span></td>
+                  <td>QA Automation Engineer</td>
+                  <td><span class="badge badge-danger">FAILED</span></td>
+                  <td>10 min</td>
+                  <td>0 / 5</td>
+                  <td>May 28, 2026, 10:55 PM</td>
+                  <td><button class="btn-icon">📈 Analytics</button></td>
+                </tr>
+                <tr>
+                  <td><span class="row-id">cmppr…ypsv</span></td>
+                  <td>QA Automation Engineer</td>
+                  <td><span class="badge badge-danger">FAILED</span></td>
+                  <td>10 min</td>
+                  <td>0 / 5</td>
+                  <td>May 28, 2026, 10:55 PM</td>
+                  <td><button class="btn-icon">📈 Analytics</button></td>
+                </tr>
+                <tr>
+                  <td><span class="row-id">cmppr…jb2</span></td>
+                  <td>QA Automation Engineer</td>
+                  <td><span class="badge badge-info">ACTIVE</span></td>
+                  <td>10 min</td>
+                  <td>0 / 5</td>
+                  <td>May 28, 2026, 10:48 PM</td>
+                  <td><button class="btn-icon">📈 Analytics</button></td>
+                </tr>
+                <tr>
+                  <td><span class="row-id">cmpbh…wn1k</span></td>
+                  <td>QA Automation Engineer</td>
+                  <td><span class="badge badge-success">COMPLETED</span></td>
+                  <td>10 min</td>
+                  <td>5 / 5</td>
+                  <td>May 18, 2026, 10:54 PM</td>
+                  <td><button class="btn-icon" onclick="switchTab(document.querySelector('[data-tab=\'itab-analytics\']'), 'itab-analytics')">📈 Analytics</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div class="tab-panel" id="itab-analytics">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+            <div>
+              <div class="section-tag">// session analytics</div>
+              <h2 style="font-family:var(--font-display); font-size:16px; font-weight:700;">Session Analytics</h2>
+              <p style="font-size:12px; color:var(--text-muted);">Analysis for cmpbh4j5700020…</p>
+            </div>
+            <span class="badge badge-success">COMPLETED</span>
+          </div>
+
+          <div class="stat-row" style="margin-bottom:20px;">
+            <div class="stat-card" style="--c:var(--accent)">
+              <div class="s-label">Interview time</div>
+              <div class="s-value">10<span>/10 min</span></div>
+            </div>
+            <div class="stat-card" style="--c:var(--accent2)">
+              <div class="s-label">Questions</div>
+              <div class="s-value">5<span>/5</span></div>
+            </div>
+            <div class="stat-card" style="--c:var(--clr-info)">
+              <div class="s-label">Key source</div>
+              <div class="s-value" style="font-size:18px;">PLATFORM</div>
+            </div>
+            <div class="stat-card" style="--c:var(--clr-success)">
+              <div class="s-label">Ended</div>
+              <div class="s-value" style="font-size:18px;">Yes</div>
+            </div>
+          </div>
+
+          <div class="interview-setup-card" style="margin-bottom:20px;">
+            <h2 style="font-family:var(--font-display); font-size:16px; font-weight:700; margin-bottom:4px;">Interview Review</h2>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Summary and structured feedback generated from the saved transcript.</p>
+            <div class="analytics-grid">
+              <div class="analytics-card" style="grid-row: span 2;">
+                <h3>Overall Score</h3>
+                <div class="score-display">
+                  <div class="score-big">4</div>
+                  <div class="score-denom">/ 5</div>
+                </div>
+                <div class="score-label" style="margin-bottom:12px;">Good performance</div>
+                <p style="font-size:13px; color:var(--text-muted); line-height:1.6;">Candidate demonstrated strong understanding of Playwright framework setup, API testing strategies, and CI/CD pipelines. Follow-up answers showed depth in debugging experience.</p>
+              </div>
+              <div class="analytics-card">
+                <h3>Communication <span style="float:right; color:var(--accent); font-family:var(--font-mono);">4/5</span></h3>
+                <p style="font-size:13px; color:var(--text-muted);">Clear and structured responses with good technical vocabulary throughout the session.</p>
+              </div>
+              <div class="analytics-card">
+                <h3>Technical Depth <span style="float:right; color:var(--accent2); font-family:var(--font-mono);">4/5</span></h3>
+                <p style="font-size:13px; color:var(--text-muted);">Good evidence provided on automation, API, CI/CD, and debugging topics.</p>
+              </div>
+              <div class="analytics-card">
+                <h3>Problem Solving <span style="float:right; color:var(--accent3); font-family:var(--font-mono);">3/5</span></h3>
+                <p style="font-size:13px; color:var(--text-muted);">Scenario-based answers were given but could include more specific edge cases.</p>
+              </div>
+              <div class="analytics-card">
+                <h3>Interview Coverage <span style="float:right; color:var(--clr-info); font-family:var(--font-mono);">5/5</span></h3>
+                <p style="font-size:13px; color:var(--text-muted);">All 5 questions were addressed with substantive responses.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div class="tab-panel" id="itab-settings">
+          <div class="interview-setup-card">
+            <div class="section-tag">// configuration</div>
+            <h2 style="font-family:var(--font-display); font-size:18px; font-weight:700; margin:6px 0 20px;">Interview Settings</h2>
+
+            <div style="display:flex; flex-direction:column; gap:16px;">
+              <div class="form-group">
+                <label>Deepgram API Key (voice transcription)</label>
+                <input class="form-input" type="password" placeholder="Enter your Deepgram API key…" />
+                <span class="form-hint">Used for real-time voice-to-text. Get a free key at deepgram.com</span>
+              </div>
+              <div class="form-group">
+                <label>Claude / OpenAI API Key</label>
+                <input class="form-input" type="password" placeholder="sk-…" />
+                <span class="form-hint">Powers the AI interviewer responses. Leave blank to use Platform key.</span>
+              </div>
+              <div class="form-group">
+                <label>Default interview language</label>
+                <select class="form-select">
+                  <option>English</option>
+                  <option>Hindi</option>
+                  <option>Spanish</option>
+                </select>
+              </div>
+              <div style="display:flex; gap:10px; padding-top:8px;">
+                <button class="btn-primary">💾 Save Settings</button>
+                <button class="btn-ghost">Reset to defaults</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ==================================================
+           JOB CRM VIEW
+           ================================================== -->
+      <section class="view" id="view-jobcrm">
+
+        <div class="page-header">
+          <div class="section-tag">// job crm</div>
+          <h1>Job CRM</h1>
+          <p>Track every application from first contact to offer.</p>
+        </div>
+
+        <div class="pipeline-bar">
+          <div class="pipeline-stage" style="--c: var(--clr-info)">
+            <div class="stage-count">3</div>
+            <div class="stage-label">Applied</div>
+          </div>
+          <div class="pipeline-stage" style="--c: var(--clr-warn)">
+            <div class="stage-count">2</div>
+            <div class="stage-label">HR Opened</div>
+          </div>
+          <div class="pipeline-stage" style="--c: var(--accent2)">
+            <div class="stage-count">2</div>
+            <div class="stage-label">Technical Round</div>
+          </div>
+          <div class="pipeline-stage" style="--c: var(--accent3)">
+            <div class="stage-count">1</div>
+            <div class="stage-label">Final Round</div>
+          </div>
+          <div class="pipeline-stage" style="--c: var(--clr-success)">
+            <div class="stage-count">0</div>
+            <div class="stage-label">Offer</div>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+          <div class="section-tag" style="margin-bottom:0;">// all applications</div>
+          <button class="topbar-btn primary">+ Add Application</button>
+        </div>
+
+        <div class="job-cards">
+          <div class="job-card">
+            <div class="job-logo">🏢</div>
+            <div class="job-info">
+              <div class="job-title">QA Automation Engineer</div>
+              <div class="job-company">Stripe · Remote</div>
+            </div>
+            <div class="job-meta">
+              <span class="badge badge-info">Applied</span>
+              <span class="job-tag">Playwright</span>
+              <span class="job-tag">Jun 2</span>
+            </div>
+          </div>
+          <div class="job-card">
+            <div class="job-logo">🚀</div>
+            <div class="job-info">
+              <div class="job-title">Senior SDET</div>
+              <div class="job-company">Vercel · Hybrid</div>
+            </div>
+            <div class="job-meta">
+              <span class="badge badge-warn">HR Opened</span>
+              <span class="job-tag">Cypress</span>
+              <span class="job-tag">Jun 4</span>
+            </div>
+          </div>
+          <div class="job-card">
+            <div class="job-logo">💜</div>
+            <div class="job-info">
+              <div class="job-title">QA Lead</div>
+              <div class="job-company">Figma · On-site, SF</div>
+            </div>
+            <div class="job-meta">
+              <span class="badge" style="background:rgba(123,97,255,.15);color:var(--accent2);border:1px solid rgba(123,97,255,.25);">Technical Round</span>
+              <span class="job-tag">Selenium</span>
+              <span class="job-tag">May 28</span>
+            </div>
+          </div>
+          <div class="job-card">
+            <div class="job-logo">🌊</div>
+            <div class="job-info">
+              <div class="job-title">Automation QA Engineer</div>
+              <div class="job-company">Linear · Remote</div>
+            </div>
+            <div class="job-meta">
+              <span class="badge" style="background:rgba(255,107,53,.12);color:var(--accent3);border:1px solid rgba(255,107,53,.25);">Final Round</span>
+              <span class="job-tag">Playwright</span>
+              <span class="job-tag">Jun 1</span>
+            </div>
+          </div>
+          <div class="job-card">
+            <div class="job-logo">🔵</div>
+            <div class="job-info">
+              <div class="job-title">QA Engineer II</div>
+              <div class="job-company">Notion · Remote</div>
+            </div>
+            <div class="job-meta">
+              <span class="badge badge-info">Applied</span>
+              <span class="job-tag">Cypress</span>
+              <span class="job-tag">Jun 10</span>
+            </div>
+          </div>
+          <div class="job-card">
+            <div class="job-logo">⚫</div>
+            <div class="job-info">
+              <div class="job-title">Test Automation Engineer</div>
+              <div class="job-company">Supabase · Remote</div>
+            </div>
+            <div class="job-meta">
+              <span class="badge badge-info">Applied</span>
+              <span class="job-tag">Playwright</span>
+              <span class="job-tag">Jun 11</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ==================================================
+           QA TOOLS VIEW
+           ================================================== -->
+      <section class="view" id="view-qatools">
+
+        <div class="page-header">
+          <div class="section-tag">// qa tools</div>
+          <h1>QA Tools</h1>
+          <p>Practical utilities for QA engineers — click any tool to open it.</p>
+        </div>
+
+        <div class="tool-grid">
+
+          <div class="feature-card" style="--card-color: var(--accent)" onclick="openTool('json')">
+            <div class="card-icon">📋</div>
+            <div class="card-title">JSON Formatter</div>
+            <div class="card-desc">Paste raw JSON to prettify, minify, or validate it instantly in-browser.</div>
+            <div class="card-footer">
+              <span class="card-tag">Free</span>
+              <span class="card-arrow">Open tool →</span>
+            </div>
+          </div>
+
+          <div class="feature-card" style="--card-color: var(--accent2)" onclick="openTool('base64')">
+            <div class="card-icon">🔒</div>
+            <div class="card-title">Base64 Encoder / Decoder</div>
+            <div class="card-desc">Encode any string or file to Base64, or decode Base64 back to plain text.</div>
+            <div class="card-footer">
+              <span class="card-tag">Free</span>
+              <span class="card-arrow">Open tool →</span>
+            </div>
+          </div>
+
+          <div class="feature-card" style="--card-color: var(--accent3)" onclick="openTool('jwt')">
+            <div class="card-icon">🔑</div>
+            <div class="card-title">JWT Token Decoder</div>
+            <div class="card-desc">Decode and inspect JWT header, payload, and signature without a secret.</div>
+            <div class="card-footer">
+              <span class="card-tag">Free</span>
+              <span class="card-arrow">Open tool →</span>
+            </div>
+          </div>
+
+          <div class="feature-card" style="--card-color: var(--clr-info)" onclick="openTool('regex')">
+            <div class="card-icon">🔍</div>
+            <div class="card-title">Regex Tester</div>
+            <div class="card-desc">Write and test regular expressions against sample text with live match highlighting.</div>
+            <div class="card-footer">
+              <span class="card-tag">Free</span>
+              <span class="card-arrow">Open tool →</span>
+            </div>
+          </div>
+
+          <div class="feature-card" style="--card-color: var(--clr-success)" onclick="openTool('uuid')">
+            <div class="card-icon">🆔</div>
+            <div class="card-title">UUID Generator</div>
+            <div class="card-desc">Generate one or multiple UUIDs (v1, v4) for use in test data and fixtures.</div>
+            <div class="card-footer">
+              <span class="card-tag">Free</span>
+              <span class="card-arrow">Open tool →</span>
+            </div>
+          </div>
+
+          <div class="feature-card" style="--card-color: var(--clr-warn)" onclick="openTool('csv')">
+            <div class="card-icon">📊</div>
+            <div class="card-title">CSV to JSON</div>
+            <div class="card-desc">Convert CSV test data to JSON format with configurable delimiter and header options.</div>
+            <div class="card-footer">
+              <span class="card-tag">Free</span>
+              <span class="card-arrow">Open tool →</span>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ==================================================
+           CHALLENGES VIEW
+           ================================================== -->
+      <section class="view" id="view-challenges">
+
+        <div class="page-header">
+          <div class="section-tag">// practice elements</div>
+          <h1>Challenges</h1>
+          <p>22+ interactive automation challenges — practice Playwright, Cypress, Selenium.</p>
+        </div>
+
+        <div class="stat-row" style="margin-bottom:20px;">
+          <div class="stat-card" style="--c:var(--clr-success)">
+            <div class="s-label">Completed</div>
+            <div class="s-value">14<span></span></div>
+            <div class="s-sub">Keep going!</div>
+          </div>
+          <div class="stat-card" style="--c:var(--clr-warn)">
+            <div class="s-label">In Progress</div>
+            <div class="s-value">3<span></span></div>
+            <div class="s-sub">Pick up where you left off</div>
+          </div>
+          <div class="stat-card" style="--c:var(--text-dim)">
+            <div class="s-label">Remaining</div>
+            <div class="s-value">5<span></span></div>
+            <div class="s-sub">Locked until previous done</div>
+          </div>
+        </div>
+
+        <div class="iq-filters" style="margin-bottom:16px;">
+          <button class="filter-chip active">All</button>
+          <button class="filter-chip">Beginner</button>
+          <button class="filter-chip">Intermediate</button>
+          <button class="filter-chip">Advanced</button>
+          <button class="filter-chip">Completed</button>
+        </div>
+
+        <div class="challenge-list">
+          <div class="challenge-item"><span class="challenge-num">#01</span><div class="challenge-info"><div class="challenge-title">Input Fields</div><div class="challenge-sub">Text inputs, placeholder, disabled, read-only</div></div><span class="difficulty diff-beginner">Beginner</span><span class="badge badge-success" style="margin-left:8px;">✓ Done</span></div>
+          <div class="challenge-item"><span class="challenge-num">#02</span><div class="challenge-info"><div class="challenge-title">Buttons</div><div class="challenge-sub">Click, double-click, right-click interactions</div></div><span class="difficulty diff-beginner">Beginner</span><span class="badge badge-success" style="margin-left:8px;">✓ Done</span></div>
+          <div class="challenge-item"><span class="challenge-num">#03</span><div class="challenge-info"><div class="challenge-title">Forms & Validation</div><div class="challenge-sub">Submit, reset, required fields, error messages</div></div><span class="difficulty diff-beginner">Beginner</span><span class="badge badge-success" style="margin-left:8px;">✓ Done</span></div>
+          <div class="challenge-item"><span class="challenge-num">#04</span><div class="challenge-info"><div class="challenge-title">Dropdowns & Select</div><div class="challenge-sub">Single select, multi-select, custom dropdowns</div></div><span class="difficulty diff-beginner">Beginner</span><span class="badge badge-success" style="margin-left:8px;">✓ Done</span></div>
+          <div class="challenge-item"><span class="challenge-num">#05</span><div class="challenge-info"><div class="challenge-title">Checkboxes & Radio Buttons</div><div class="challenge-sub">Select, deselect, group validation</div></div><span class="difficulty diff-beginner">Beginner</span><span class="badge badge-success" style="margin-left:8px;">✓ Done</span></div>
+          <div class="challenge-item"><span class="challenge-num">#06</span><div class="challenge-info"><div class="challenge-title">Alerts & Dialogs</div><div class="challenge-sub">Alert, confirm, prompt — accept and dismiss</div></div><span class="difficulty diff-intermediate">Intermediate</span><span class="badge badge-success" style="margin-left:8px;">✓ Done</span></div>
+          <div class="challenge-item"><span class="challenge-num">#07</span><div class="challenge-info"><div class="challenge-title">Date Picker</div><div class="challenge-sub">Calendar widget, date range, keyboard navigation</div></div><span class="difficulty diff-intermediate">Intermediate</span><span class="badge badge-success" style="margin-left:8px;">✓ Done</span></div>
+          <div class="challenge-item"><span class="challenge-num">#08</span><div class="challenge-info"><div class="challenge-title">Data Tables</div><div class="challenge-sub">Sorting, filtering, pagination, row selection</div></div><span class="difficulty diff-intermediate">Intermediate</span><span class="badge badge-warn" style="margin-left:8px;">In Progress</span></div>
+          <div class="challenge-item"><span class="challenge-num">#09</span><div class="challenge-info"><div class="challenge-title">Drag and Drop</div><div class="challenge-sub">Mouse drag, touch drag, drop zones</div></div><span class="difficulty diff-intermediate">Intermediate</span><span class="badge badge-warn" style="margin-left:8px;">In Progress</span></div>
+          <div class="challenge-item"><span class="challenge-num">#10</span><div class="challenge-info"><div class="challenge-title">File Upload & Download</div><div class="challenge-sub">Single/multiple files, validation, download trigger</div></div><span class="difficulty diff-intermediate">Intermediate</span><span class="badge badge-warn" style="margin-left:8px;">In Progress</span></div>
+          <div class="challenge-item"><span class="challenge-num">#11</span><div class="challenge-info"><div class="challenge-title">iFrame Handling</div><div class="challenge-sub">Switch context, nested frames, cross-origin</div></div><span class="difficulty diff-advanced">Advanced</span></div>
+          <div class="challenge-item"><span class="challenge-num">#12</span><div class="challenge-info"><div class="challenge-title">Shadow DOM</div><div class="challenge-sub">Pierce shadow root, interact with shadow elements</div></div><span class="difficulty diff-advanced">Advanced</span></div>
+          <div class="challenge-item"><span class="challenge-num">#13</span><div class="challenge-info"><div class="challenge-title">Dynamic Waits & Async</div><div class="challenge-sub">waitFor, network idle, element visibility</div></div><span class="difficulty diff-advanced">Advanced</span></div>
+          <div class="challenge-item"><span class="challenge-num">#14</span><div class="challenge-info"><div class="challenge-title">Page Object Model</div><div class="challenge-sub">Build a POM for the Bank Demo App</div></div><span class="difficulty diff-advanced">Advanced</span></div>
+        </div>
+
+      </section>
+
+      <!-- ==================================================
+           RESOURCES VIEW
+           ================================================== -->
+      <section class="view" id="view-resources">
+
+        <div class="page-header">
+          <div class="section-tag">// learning resources</div>
+          <h1>Resources</h1>
+          <p>Curated docs, guides, and references for QA engineers.</p>
+        </div>
+
+        <div class="iq-filters" style="margin-bottom:20px;">
+          <button class="filter-chip active">All</button>
+          <button class="filter-chip">Playwright</button>
+          <button class="filter-chip">Selenium</button>
+          <button class="filter-chip">API Testing</button>
+          <button class="filter-chip">CI/CD</button>
+          <button class="filter-chip">Security</button>
+        </div>
+
+        <div class="resource-grid">
+
+          <div class="resource-card">
+            <span class="resource-type" style="background:rgba(0,255,170,.1);color:var(--accent);border:1px solid rgba(0,255,170,.2);">📖 Docs</span>
+            <div class="resource-title">Playwright Official Documentation</div>
+            <div class="resource-desc">Complete API reference, guides, and examples for Playwright v1.44. Includes trace viewer, codegen, and component testing.</div>
+            <div class="resource-footer">
+              <span>playwright.dev</span>
+              <span style="color:var(--accent);">→</span>
+            </div>
+          </div>
+
+          <div class="resource-card">
+            <span class="resource-type" style="background:rgba(123,97,255,.1);color:var(--accent2);border:1px solid rgba(123,97,255,.2);">🎓 Course</span>
+            <div class="resource-title">Playwright: The Complete Guide</div>
+            <div class="resource-desc">From zero to CI/CD with Playwright. Covers page objects, fixtures, API mocking, parallel execution, and GitHub Actions.</div>
+            <div class="resource-footer">
+              <span>udemy.com</span>
+              <span style="color:var(--accent2);">→</span>
+            </div>
+          </div>
+
+          <div class="resource-card">
+            <span class="resource-type" style="background:rgba(255,107,53,.1);color:var(--accent3);border:1px solid rgba(255,107,53,.2);">📝 Article</span>
+            <div class="resource-title">Debugging Flaky Tests — A Practical Guide</div>
+            <div class="resource-desc">Root cause analysis for flakiness: timing issues, test isolation, network mocking, and deterministic data setup.</div>
+            <div class="resource-footer">
+              <span>qaplayground blog</span>
+              <span style="color:var(--accent3);">→</span>
+            </div>
+          </div>
+
+          <div class="resource-card">
+            <span class="resource-type" style="background:rgba(68,217,232,.1);color:var(--clr-info);border:1px solid rgba(68,217,232,.2);">🔗 Reference</span>
+            <div class="resource-title">REST API Testing with Playwright</div>
+            <div class="resource-desc">Use Playwright's APIRequestContext for full API test coverage alongside your UI tests in the same framework.</div>
+            <div class="resource-footer">
+              <span>playwright.dev/api</span>
+              <span style="color:var(--clr-info);">→</span>
+            </div>
+          </div>
+
+          <div class="resource-card">
+            <span class="resource-type" style="background:rgba(39,201,63,.1);color:var(--clr-success);border:1px solid rgba(39,201,63,.2);">🎬 Video</span>
+            <div class="resource-title">CI/CD for QA Engineers — GitHub Actions</div>
+            <div class="resource-desc">Set up automated test runs on pull requests with Playwright and GitHub Actions including HTML report artifacts.</div>
+            <div class="resource-footer">
+              <span>youtube.com</span>
+              <span style="color:var(--clr-success);">→</span>
+            </div>
+          </div>
+
+          <div class="resource-card">
+            <span class="resource-type" style="background:rgba(255,189,46,.1);color:var(--clr-warn);border:1px solid rgba(255,189,46,.2);">⚡ Cheatsheet</span>
+            <div class="resource-title">Playwright Locator Strategies Cheatsheet</div>
+            <div class="resource-desc">Quick reference for getByRole, getByLabel, getByText, getByTestId, and CSS/XPath selectors with priority guidance.</div>
+            <div class="resource-footer">
+              <span>qaplayground.com</span>
+              <span style="color:var(--clr-warn);">→</span>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ==================================================
+           INTERVIEW QUESTIONS VIEW
+           ================================================== -->
+      <section class="view" id="view-iq">
+
+        <div class="page-header">
+          <div class="section-tag">// q&amp;a bank</div>
+          <h1>Interview Questions</h1>
+          <p>Curated QA interview questions with model answers. Click to expand.</p>
+        </div>
+
+        <div class="iq-filters">
+          <button class="filter-chip active" onclick="filterIQ(this, 'all')">All</button>
+          <button class="filter-chip" onclick="filterIQ(this, 'playwright')">Playwright</button>
+          <button class="filter-chip" onclick="filterIQ(this, 'api')">API Testing</button>
+          <button class="filter-chip" onclick="filterIQ(this, 'cicd')">CI/CD</button>
+          <button class="filter-chip" onclick="filterIQ(this, 'strategy')">Test Strategy</button>
+          <button class="filter-chip" onclick="filterIQ(this, 'general')">General QA</button>
+        </div>
+
+        <div class="iq-list" id="iqList">
+
+          <div class="iq-item" data-category="playwright">
+            <button class="iq-question" onclick="toggleIQ(this)">
+              <span>How would you set up a Playwright test framework from scratch for a SaaS product?</span>
+              <span class="iq-icon">+</span>
+            </button>
+            <div class="iq-answer">
+              <div class="iq-answer-inner">
+                Start by installing Playwright: <code>npm init playwright@latest</code>. Set up a folder structure with <code>tests/</code>, <code>pages/</code> (Page Objects), <code>fixtures/</code>, and <code>utils/</code>. Configure <code>playwright.config.ts</code> with base URL, multiple browsers, retries, and screenshot-on-failure. Use <code>test.extend()</code> for custom fixtures that handle auth state. Store credentials in <code>.env</code> and load via <code>dotenv</code>. Finally wire up a GitHub Actions workflow to run tests on every PR.
+              </div>
+            </div>
+          </div>
+
+          <div class="iq-item" data-category="playwright">
+            <button class="iq-question" onclick="toggleIQ(this)">
+              <span>What locator strategies do you use in Playwright and which do you prefer?</span>
+              <span class="iq-icon">+</span>
+            </button>
+            <div class="iq-answer">
+              <div class="iq-answer-inner">
+                Playwright recommends user-facing locators in priority order: <code>getByRole()</code> → <code>getByLabel()</code> → <code>getByPlaceholder()</code> → <code>getByText()</code> → <code>getByTestId()</code>. I prefer <code>getByRole</code> because it reflects accessibility and is resilient to style changes. I avoid CSS selectors tied to class names that change frequently, and use <code>data-testid</code> attributes as a fallback when the element has no semantic role.
+              </div>
+            </div>
+          </div>
+
+          <div class="iq-item" data-category="api">
+            <button class="iq-question" onclick="toggleIQ(this)">
+              <span>How do you approach API testing alongside UI tests in Playwright?</span>
+              <span class="iq-icon">+</span>
+            </button>
+            <div class="iq-answer">
+              <div class="iq-answer-inner">
+                Playwright's <code>APIRequestContext</code> lets you make HTTP requests in the same test. I use API calls for test setup (creating users, seeding data) and teardown rather than navigating through UI flows — this makes tests faster and less flaky. For asserting API responses directly I use <code>expect(response).toBeOK()</code> and check <code>response.json()</code>. I also use <code>page.route()</code> to mock specific endpoints when testing edge cases like 500 errors or slow responses.
+              </div>
+            </div>
+          </div>
+
+          <div class="iq-item" data-category="strategy">
+            <button class="iq-question" onclick="toggleIQ(this)">
+              <span>How do you debug and fix flaky tests?</span>
+              <span class="iq-icon">+</span>
+            </button>
+            <div class="iq-answer">
+              <div class="iq-answer-inner">
+                My process: (1) reproduce reliably by running with <code>--repeat-each=5</code>. (2) Check Playwright traces (<code>trace: 'on-first-retry'</code>) to see exactly what happened. (3) Common causes: race conditions fixed by replacing <code>waitForTimeout</code> with <code>waitForSelector</code> or <code>waitForLoadState</code>; shared state fixed by test isolation (separate storage state per test); environment issues addressed by consistent test data setup via API. I never use hard <code>sleep()</code> — always wait for observable application state.
+              </div>
+            </div>
+          </div>
+
+          <div class="iq-item" data-category="cicd">
+            <button class="iq-question" onclick="toggleIQ(this)">
+              <span>Describe your CI/CD setup for automated tests.</span>
+              <span class="iq-icon">+</span>
+            </button>
+            <div class="iq-answer">
+              <div class="iq-answer-inner">
+                I use GitHub Actions with a workflow that triggers on <code>pull_request</code> and <code>push to main</code>. The job runs Playwright with <code>--reporter=github,html</code>. HTML report artifacts are uploaded with <code>actions/upload-artifact</code> so anyone can download and view them. For speed I run tests in parallel with sharding: <code>--shard=1/4</code> across 4 matrix jobs. Failing PRs block merge via branch protection rules. I also run a nightly full regression against the staging environment.
+              </div>
+            </div>
+          </div>
+
+          <div class="iq-item" data-category="strategy">
+            <button class="iq-question" onclick="toggleIQ(this)">
+              <span>What is the test pyramid and how do you apply it in practice?</span>
+              <span class="iq-icon">+</span>
+            </button>
+            <div class="iq-answer">
+              <div class="iq-answer-inner">
+                The test pyramid has three layers: unit tests (many, fast, cheap) → integration/API tests (medium) → UI/E2E tests (few, slow, expensive). In practice I use E2E tests only for critical user journeys (login → checkout, CRUD flows), API tests for business logic and edge cases, and rely on unit tests from devs for individual functions. This keeps the test suite fast. A common anti-pattern I avoid is an "ice-cream cone" where E2E tests dominate, causing slow pipelines and high flakiness.
+              </div>
+            </div>
+          </div>
+
+          <div class="iq-item" data-category="general">
+            <button class="iq-question" onclick="toggleIQ(this)">
+              <span>How do you decide what NOT to automate?</span>
+              <span class="iq-icon">+</span>
+            </button>
+            <div class="iq-answer">
+              <div class="iq-answer-inner">
+                I skip automation for: (1) exploratory testing — human intuition finds unexpected issues better. (2) One-time tests that won't run again. (3) Rapidly changing UI where maintenance cost exceeds value. (4) Tests that need visual/UX judgment — screenshot tools help but aren't perfect. (5) Tests that are inherently flaky due to third-party dependencies (payment gateways, email). The ROI formula is: (frequency × time saved per run) > (cost to automate + maintenance cost).
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </div><!-- /.page-area -->
+  </div><!-- /.main-content -->
+
+</div><!-- /.app-shell -->
+
+
+<!-- ============================================================
+     QA TOOL MODALS
+     ============================================================ -->
+
+<!-- JSON Formatter -->
+<div class="modal-backdrop" id="modal-json">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-icon">📋</span>
+      <h2>JSON Formatter</h2>
+      <button class="modal-close" onclick="closeTool('json')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="tool-row">
+        <div class="tool-input-group">
+          <label>Input JSON</label>
+          <textarea class="tool-textarea" id="json-input" placeholder='{"name":"test","value":42}'></textarea>
+        </div>
+        <div class="tool-input-group">
+          <label>Output</label>
+          <div class="result-area" id="json-output">// output will appear here</div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="runJSON('pretty')">✨ Prettify</button>
+        <button class="btn-ghost" onclick="runJSON('minify')">⚡ Minify</button>
+        <button class="btn-ghost" onclick="runJSON('validate')">✅ Validate</button>
+        <button class="btn-ghost" onclick="copyResult('json-output')">📋 Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Base64 -->
+<div class="modal-backdrop" id="modal-base64">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-icon">🔒</span>
+      <h2>Base64 Encoder / Decoder</h2>
+      <button class="modal-close" onclick="closeTool('base64')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="tool-row">
+        <div class="tool-input-group">
+          <label>Input</label>
+          <textarea class="tool-textarea" id="b64-input" placeholder="Enter text to encode or Base64 to decode…"></textarea>
+        </div>
+        <div class="tool-input-group">
+          <label>Output</label>
+          <div class="result-area" id="b64-output">// output will appear here</div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="runBase64('encode')">🔒 Encode</button>
+        <button class="btn-ghost" onclick="runBase64('decode')">🔓 Decode</button>
+        <button class="btn-ghost" onclick="copyResult('b64-output')">📋 Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JWT Decoder -->
+<div class="modal-backdrop" id="modal-jwt">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-icon">🔑</span>
+      <h2>JWT Token Decoder</h2>
+      <button class="modal-close" onclick="closeTool('jwt')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="tool-input-group">
+        <label>JWT Token</label>
+        <textarea class="tool-textarea" id="jwt-input" placeholder="Paste your JWT token here…" style="min-height:80px;"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="runJWT()">🔓 Decode</button>
+        <button class="btn-ghost" onclick="document.getElementById('jwt-input').value=''; document.getElementById('jwt-header').textContent=''; document.getElementById('jwt-payload').textContent=''; ">Clear</button>
+      </div>
+      <div class="tool-row">
+        <div class="tool-input-group">
+          <label>Header</label>
+          <div class="result-area" id="jwt-header">// header</div>
+        </div>
+        <div class="tool-input-group">
+          <label>Payload</label>
+          <div class="result-area" id="jwt-payload">// payload</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Regex Tester -->
+<div class="modal-backdrop" id="modal-regex">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-icon">🔍</span>
+      <h2>Regex Tester</h2>
+      <button class="modal-close" onclick="closeTool('regex')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="tool-input-group">
+        <label>Pattern</label>
+        <input class="tool-textarea" id="regex-pattern" type="text" placeholder="^[a-z]+$" style="min-height:auto; padding:10px 14px;" oninput="runRegex()" />
+      </div>
+      <div class="tool-input-group">
+        <label>Flags</label>
+        <input class="tool-textarea" id="regex-flags" type="text" placeholder="gi" style="min-height:auto; padding:10px 14px; max-width:120px;" oninput="runRegex()" />
+      </div>
+      <div class="tool-input-group">
+        <label>Test String</label>
+        <textarea class="tool-textarea" id="regex-input" placeholder="Enter text to test against the pattern…" oninput="runRegex()"></textarea>
+      </div>
+      <div class="tool-input-group">
+        <label>Matches</label>
+        <div class="result-area" id="regex-output">// matches will appear here</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UUID Generator -->
+<div class="modal-backdrop" id="modal-uuid">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-icon">🆔</span>
+      <h2>UUID Generator</h2>
+      <button class="modal-close" onclick="closeTool('uuid')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="tool-input-group">
+        <label>Count</label>
+        <input class="tool-textarea" id="uuid-count" type="number" value="5" min="1" max="50" style="min-height:auto; padding:10px 14px; max-width:120px;" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="runUUID()">⚡ Generate</button>
+        <button class="btn-ghost" onclick="copyResult('uuid-output')">📋 Copy All</button>
+      </div>
+      <div class="tool-input-group">
+        <label>Generated UUIDs</label>
+        <div class="result-area" id="uuid-output" style="min-height:140px;">// click Generate</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CSV to JSON -->
+<div class="modal-backdrop" id="modal-csv">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-icon">📊</span>
+      <h2>CSV to JSON</h2>
+      <button class="modal-close" onclick="closeTool('csv')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="tool-row">
+        <div class="tool-input-group">
+          <label>CSV Input</label>
+          <textarea class="tool-textarea" id="csv-input" placeholder="name,age,role&#10;Alice,30,QA Engineer&#10;Bob,28,Developer"></textarea>
+        </div>
+        <div class="tool-input-group">
+          <label>JSON Output</label>
+          <div class="result-area" id="csv-output">// output will appear here</div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="runCSV()">⚡ Convert</button>
+        <button class="btn-ghost" onclick="copyResult('csv-output')">📋 Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="./app.js"></script>
+</body>
+</html>

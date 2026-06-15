@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QA Playground — Advanced UI Elements</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ─── DESIGN TOKENS ───────────────────────────────── */
+    :root {
+      --bg: #f4f8fb;
+      --bg-alt: #edf3f7;
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-strong: #ffffff;
+      --line: #d8e4ec;
+      --line-strong: #bfd1dc;
+      --ink: #17324d;
+      --text: #597187;
+      --muted: #7c93a6;
+      --primary: #1f5f6b;
+      --primary-2: #3b82a0;
+      --teal: #14b8a6;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --violet: #6366f1;
+      --cyan: #06b6d4;
+      --rose: #d97786;
+      --danger: #ef4444;
+      --shadow: 0 22px 50px rgba(20, 42, 62, 0.10);
+      --shadow-soft: 0 12px 28px rgba(20, 42, 62, 0.08);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(59,130,160,0.10), transparent 30%),
+        radial-gradient(circle at top right, rgba(20,184,166,0.08), transparent 24%),
+        linear-gradient(180deg, #f7fbfd 0%, var(--bg) 55%, #eef4f8 100%);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    h1,h2,h3,h4,h5,h6 { margin: 0; }
+
+    /* ─── LAYOUT ──────────────────────────────────────── */
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 80px;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 22px;
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.68);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex; align-items: center; gap: 12px;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700; letter-spacing: -0.03em;
+    }
+
+    .brand-badge {
+      width: 38px; height: 38px; border-radius: 12px;
+      display: grid; place-items: center; color: white;
+      background: linear-gradient(135deg, var(--primary), var(--teal));
+      box-shadow: 0 14px 24px rgba(31,95,107,0.25);
+    }
+
+    .nav-links {
+      display: flex; gap: 10px; color: var(--text);
+      font-size: 0.9rem; flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      padding: 8px 12px; border-radius: 999px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-links a:hover { background: rgba(31,95,107,0.08); color: var(--ink); }
+
+    /* ─── SECTION SHELL ───────────────────────────────── */
+    .section {
+      margin-top: 24px; padding: 32px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.62);
+      border: 1px solid rgba(255,255,255,0.88);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .section-head {
+      display: flex; align-items: end;
+      justify-content: space-between;
+      gap: 16px; margin-bottom: 26px; flex-wrap: wrap;
+    }
+
+    .section-head h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 2rem; letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      margin: 6px 0 0; color: var(--text);
+      max-width: 560px; line-height: 1.7;
+    }
+
+    .label {
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.09em; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 5px;
+    }
+
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 999px;
+      background: rgba(31,95,107,0.08); color: var(--primary);
+      font-size: 0.82rem; font-weight: 700; white-space: nowrap;
+    }
+
+    /* ─── GRID HELPERS ────────────────────────────────── */
+    .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .stack  { display: grid; gap: 14px; }
+
+    /* ─── SAMPLE PANEL ─────────────────────────────────── */
+    .sample-panel {
+      border-radius: 24px; padding: 22px;
+      background: linear-gradient(180deg,rgba(255,255,255,0.88),rgba(255,255,255,0.70));
+      border: 1px solid rgba(255,255,255,0.94);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .panel-label {
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px;
+    }
+
+    /* ──────────────────────────────────────────────────── */
+    /*  1. ADVANCED TABLE                                   */
+    /* ──────────────────────────────────────────────────── */
+    .table-toolbar {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      gap: 14px; margin-bottom: 16px; flex-wrap: wrap;
+    }
+
+    .search-shell {
+      display: flex; align-items: center; gap: 10px;
+      border: 1px solid var(--line); border-radius: 14px;
+      background: rgba(255,255,255,0.96); padding: 10px 14px;
+      flex: 1; max-width: 320px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-shell:focus-within {
+      border-color: rgba(31,95,107,0.45);
+      box-shadow: 0 0 0 4px rgba(31,95,107,0.08);
+    }
+
+    .search-shell svg { flex-shrink: 0; color: var(--muted); }
+
+    .search-input {
+      border: none; background: transparent; outline: none;
+      width: 100%; color: var(--ink); font-size: 0.92rem;
+    }
+
+    .filter-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .filter-btn {
+      border: 1px solid var(--line); background: rgba(255,255,255,0.78);
+      color: var(--text); padding: 8px 14px; border-radius: 999px;
+      cursor: pointer; font-size: 0.82rem; font-weight: 600;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .filter-btn.active {
+      background: rgba(31,95,107,0.10);
+      border-color: rgba(31,95,107,0.25);
+      color: var(--primary);
+    }
+
+    .filter-btn:hover:not(.active) { background: rgba(31,95,107,0.05); }
+
+    /* Table */
+    .adv-table-wrap {
+      border: 1px solid var(--line); border-radius: 20px;
+      overflow: hidden; background: var(--surface-strong);
+    }
+
+    .adv-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    .adv-table thead {
+      background: rgba(31,95,107,0.05);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .adv-table th {
+      padding: 14px 16px; text-align: left;
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--primary); white-space: nowrap;
+      user-select: none;
+    }
+
+    .th-inner {
+      display: inline-flex; align-items: center; gap: 6px;
+      cursor: pointer; padding: 4px 0;
+      transition: color 0.2s;
+    }
+
+    .th-inner:hover { color: var(--ink); }
+
+    .sort-icon {
+      display: flex; flex-direction: column; gap: 1px;
+      opacity: 0.4; transition: opacity 0.2s;
+    }
+
+    .th-inner:hover .sort-icon,
+    .adv-table th.sort-asc .sort-icon,
+    .adv-table th.sort-desc .sort-icon { opacity: 1; }
+
+    .adv-table th.sort-asc .sort-up,
+    .adv-table th.sort-desc .sort-down { color: var(--primary); }
+
+    .sort-up, .sort-down {
+      width: 0; height: 0; border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+    }
+
+    .sort-up { border-bottom: 5px solid currentColor; }
+    .sort-down { border-top: 5px solid currentColor; }
+
+    .adv-table tbody tr {
+      border-bottom: 1px solid rgba(216,228,236,0.55);
+      transition: background 0.15s;
+    }
+
+    .adv-table tbody tr:last-child { border-bottom: none; }
+    .adv-table tbody tr:hover { background: rgba(31,95,107,0.03); }
+    .adv-table tbody tr.selected { background: rgba(20,184,166,0.06); }
+
+    .adv-table td { padding: 14px 16px; color: var(--ink); }
+
+    .adv-table td.muted { color: var(--text); font-size: 0.88rem; }
+
+    /* Checkbox col */
+    .adv-table th:first-child,
+    .adv-table td:first-child {
+      width: 44px; text-align: center; padding: 14px 0 14px 16px;
+    }
+
+    .row-check {
+      width: 17px; height: 17px; accent-color: var(--primary);
+      cursor: pointer; border-radius: 4px;
+    }
+
+    /* Cell content */
+    .cell-title { font-weight: 600; display: block; margin-bottom: 2px; }
+    .cell-sub   { font-size: 0.83rem; color: var(--text); }
+
+    .cell-avatar {
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .c-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg,rgba(31,95,107,0.14),rgba(20,184,166,0.22));
+      color: var(--primary); font-weight: 700; font-size: 0.82rem;
+      flex-shrink: 0;
+    }
+
+    /* Difficulty badge inline */
+    .diff {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.75rem; font-weight: 500;
+    }
+
+    .diff-dot { width: 7px; height: 7px; border-radius: 50%; }
+
+    /* Progress bar in cell */
+    .progress-track {
+      height: 6px; border-radius: 999px;
+      background: rgba(31,95,107,0.10); overflow: hidden;
+      width: 100%; max-width: 120px;
+    }
+
+    .progress-fill {
+      height: 100%; border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), var(--teal));
+      transition: width 0.6s ease;
+    }
+
+    .prog-label { font-size: 0.8rem; color: var(--text); margin-top: 4px; }
+
+    /* Action cell */
+    .cell-actions { display: flex; gap: 6px; align-items: center; }
+
+    .act-btn {
+      border: 1px solid var(--line); background: rgba(255,255,255,0.78);
+      color: var(--text); width: 32px; height: 32px;
+      border-radius: 10px; cursor: pointer; font-size: 0.82rem;
+      display: grid; place-items: center;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .act-btn:hover { background: rgba(31,95,107,0.08); color: var(--primary); border-color: rgba(31,95,107,0.2); }
+    .act-btn.danger:hover { background: rgba(239,68,68,0.08); color: var(--danger); border-color: rgba(239,68,68,0.2); }
+
+    /* Table footer */
+    .table-footer {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px; border-top: 1px solid var(--line);
+      background: rgba(244,248,251,0.6); flex-wrap: wrap; gap: 12px;
+    }
+
+    .table-info { font-size: 0.85rem; color: var(--text); }
+
+    .pagination { display: flex; gap: 6px; align-items: center; }
+
+    .page-btn {
+      border: 1px solid var(--line); background: rgba(255,255,255,0.78);
+      color: var(--text); padding: 7px 12px; border-radius: 10px;
+      cursor: pointer; font-size: 0.83rem; font-weight: 600;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .page-btn:hover { background: rgba(31,95,107,0.06); }
+    .page-btn.current { background: rgba(31,95,107,0.10); color: var(--primary); border-color: rgba(31,95,107,0.2); }
+    .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ──────────────────────────────────────────────────── */
+    /*  2. PILLS & BADGES                                   */
+    /* ──────────────────────────────────────────────────── */
+    .pill-demo-grid { display: grid; gap: 24px; }
+    .pill-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+    /* Base pill */
+    .p {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 12px; border-radius: 999px;
+      font-size: 0.8rem; font-weight: 700; white-space: nowrap;
+      cursor: default; transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .p:hover { transform: translateY(-1px); }
+
+    /* Sizes */
+    .p-xs { padding: 4px 9px; font-size: 0.72rem; }
+    .p-sm { padding: 6px 10px; font-size: 0.78rem; }
+    .p-md { padding: 8px 14px; font-size: 0.84rem; }
+    .p-lg { padding: 10px 18px; font-size: 0.92rem; }
+
+    /* Filled variants */
+    .p-primary   { background: rgba(31,95,107,0.12);  color: var(--primary); }
+    .p-teal      { background: rgba(20,184,166,0.14); color: #0e8c7e; }
+    .p-green     { background: rgba(34,197,94,0.14);  color: #158e44; }
+    .p-amber     { background: rgba(245,158,11,0.14); color: #b67209; }
+    .p-violet    { background: rgba(99,102,241,0.14); color: var(--violet); }
+    .p-cyan      { background: rgba(6,182,212,0.14);  color: #0698b5; }
+    .p-rose      { background: rgba(217,119,134,0.18);color: #b35363; }
+    .p-danger    { background: rgba(239,68,68,0.12);  color: var(--danger); }
+    .p-neutral   { background: rgba(31,95,107,0.06);  color: var(--text); }
+
+    /* Outlined variants */
+    .p-outline {
+      background: transparent;
+      box-shadow: inset 0 0 0 1.5px currentColor;
+      opacity: 0.85;
+    }
+
+    /* With dot */
+    .p-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: currentColor; flex-shrink: 0;
+    }
+
+    /* Pulsing live dot */
+    .p-live-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: currentColor; flex-shrink: 0;
+      animation: livePulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes livePulse {
+      0%, 100% { box-shadow: 0 0 0 0 currentColor; opacity: 1; }
+      50% { box-shadow: 0 0 0 5px transparent; opacity: 0.7; }
+    }
+
+    /* Dismissible pill */
+    .p-dismiss {
+      border: none; cursor: pointer;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: rgba(0,0,0,0.12); color: inherit;
+      display: grid; place-items: center;
+      font-size: 0.7rem; font-weight: 800; padding: 0;
+      line-height: 1; transition: background 0.15s;
+      flex-shrink: 0;
+    }
+
+    .p-dismiss:hover { background: rgba(0,0,0,0.25); }
+
+    /* Number badge */
+    .num-badge {
+      display: inline-grid; place-items: center;
+      width: 22px; height: 22px; border-radius: 50%;
+      font-size: 0.72rem; font-weight: 800;
+      background: var(--primary); color: white;
+    }
+
+    /* Corner badge (for icons/avatars) */
+    .badge-corner-wrap { position: relative; display: inline-block; }
+
+    .badge-corner {
+      position: absolute; top: -5px; right: -5px;
+      min-width: 18px; height: 18px; border-radius: 999px;
+      padding: 0 5px; font-size: 0.68rem; font-weight: 800;
+      background: var(--danger); color: white;
+      display: grid; place-items: center;
+      border: 2px solid white;
+    }
+
+    /* Status dot pill */
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 14px;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      font-size: 0.85rem;
+    }
+
+    .status-dot {
+      width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+    }
+
+    /* Interactive filter group */
+    .filter-group {
+      display: flex; border: 1px solid var(--line);
+      border-radius: 14px; overflow: hidden;
+      background: var(--surface-strong);
+    }
+
+    .fg-btn {
+      border: none; background: transparent; color: var(--text);
+      padding: 10px 16px; cursor: pointer; font-size: 0.85rem;
+      font-weight: 600; transition: background 0.15s, color 0.15s;
+      border-right: 1px solid var(--line);
+    }
+
+    .fg-btn:last-child { border-right: none; }
+    .fg-btn.active { background: rgba(31,95,107,0.10); color: var(--primary); }
+    .fg-btn:hover:not(.active) { background: rgba(31,95,107,0.04); }
+
+    /* ──────────────────────────────────────────────────── */
+    /*  3. ADVANCED BUTTONS                                 */
+    /* ──────────────────────────────────────────────────── */
+    .btn {
+      border: none; border-radius: 999px;
+      padding: 13px 22px; font: inherit; font-weight: 700;
+      cursor: pointer; display: inline-flex; align-items: center;
+      justify-content: center; gap: 8px; white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, opacity 0.2s;
+    }
+
+    .btn:hover:not(:disabled) { transform: translateY(-2px); }
+
+    /* Core styles */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: white; box-shadow: 0 14px 26px rgba(31,95,107,0.24);
+    }
+
+    .btn-primary:hover { box-shadow: 0 18px 32px rgba(31,95,107,0.32); }
+
+    .btn-secondary {
+      background: white; color: var(--ink);
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 18px rgba(23,50,77,0.06);
+    }
+
+    .btn-ghost   { background: rgba(99,102,241,0.10); color: var(--violet); }
+    .btn-teal    { background: rgba(20,184,166,0.12); color: #0e8c7e; }
+    .btn-danger  { background: rgba(239,68,68,0.10); color: var(--danger); }
+
+    /* Solid filled with gradient glow variants */
+    .btn-glow-teal {
+      background: linear-gradient(135deg, #0a7a71, var(--teal));
+      color: white; box-shadow: 0 12px 28px rgba(20,184,166,0.35);
+    }
+
+    .btn-glow-violet {
+      background: linear-gradient(135deg, #4f52c8, var(--violet));
+      color: white; box-shadow: 0 12px 28px rgba(99,102,241,0.35);
+    }
+
+    .btn-glow-amber {
+      background: linear-gradient(135deg, #c47c08, var(--amber));
+      color: white; box-shadow: 0 12px 28px rgba(245,158,11,0.35);
+    }
+
+    /* Sizes */
+    .btn-xs { padding: 7px 14px; font-size: 0.78rem; }
+    .btn-sm { padding: 10px 16px; font-size: 0.87rem; }
+    .btn-md { padding: 13px 22px; }
+    .btn-lg { padding: 16px 28px; font-size: 1.05rem; }
+
+    /* Icon-only */
+    .btn-icon {
+      width: 42px; height: 42px; padding: 0; border-radius: 14px;
+    }
+    .btn-icon-sm { width: 34px; height: 34px; padding: 0; border-radius: 10px; }
+    .btn-icon-lg { width: 52px; height: 52px; padding: 0; border-radius: 18px; }
+
+    /* Pill icon group */
+    .btn-icon-pill { width: 42px; height: 42px; padding: 0; border-radius: 999px; }
+
+    /* Disabled */
+    .btn:disabled { opacity: 0.42; cursor: not-allowed; transform: none !important; }
+
+    /* Loading state */
+    .btn-loading { position: relative; color: transparent !important; }
+
+    .btn-loading::after {
+      content: "";
+      position: absolute;
+      width: 17px; height: 17px;
+      border: 2.5px solid rgba(255,255,255,0.35);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    .btn-secondary.btn-loading::after {
+      border-color: rgba(31,95,107,0.25);
+      border-top-color: var(--primary);
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Button group */
+    .btn-group {
+      display: inline-flex; border: 1px solid var(--line);
+      border-radius: 16px; overflow: hidden;
+      background: white; box-shadow: 0 8px 18px rgba(23,50,77,0.06);
+    }
+
+    .btn-group .g-btn {
+      border: none; border-right: 1px solid var(--line);
+      background: transparent; color: var(--text);
+      padding: 11px 16px; font: inherit; font-weight: 600;
+      cursor: pointer; font-size: 0.9rem;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .btn-group .g-btn:last-child { border-right: none; }
+    .btn-group .g-btn.active { background: rgba(31,95,107,0.10); color: var(--primary); }
+    .btn-group .g-btn:hover:not(.active) { background: rgba(31,95,107,0.04); }
+
+    /* Split button */
+    .split-btn { display: inline-flex; border-radius: 999px; overflow: hidden; }
+
+    .split-main {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: white; border: none; padding: 12px 20px;
+      font: inherit; font-weight: 700; cursor: pointer;
+      transition: filter 0.2s; white-space: nowrap;
+    }
+
+    .split-main:hover { filter: brightness(1.08); }
+
+    .split-arrow {
+      background: var(--primary-2); color: white;
+      border: none; padding: 12px 14px; cursor: pointer;
+      border-left: 1px solid rgba(255,255,255,0.2);
+      font-size: 0.75rem; transition: background 0.2s;
+    }
+
+    .split-arrow:hover { background: var(--primary); }
+
+    /* Pill toggle */
+    .pill-toggle { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .p-toggle {
+      padding: 9px 16px; border-radius: 999px;
+      border: 1.5px solid var(--line);
+      background: rgba(255,255,255,0.78);
+      color: var(--text); cursor: pointer; font-size: 0.86rem; font-weight: 600;
+      transition: all 0.18s;
+    }
+
+    .p-toggle.on {
+      background: rgba(31,95,107,0.10);
+      border-color: rgba(31,95,107,0.30);
+      color: var(--primary);
+    }
+
+    /* Social / contextual */
+    .btn-social {
+      background: white; border: 1px solid var(--line);
+      color: var(--ink); padding: 11px 18px;
+      border-radius: 14px; font-weight: 600; font-size: 0.9rem;
+      box-shadow: 0 6px 14px rgba(23,50,77,0.06);
+    }
+
+    /* ──────────────────────────────────────────────────── */
+    /*  4. SOUND WAVE ANIMATIONS                           */
+    /* ──────────────────────────────────────────────────── */
+    .wave-showcase { display: grid; gap: 28px; }
+
+    /* --- Equalizer Bars --- */
+    .eq-card {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--surface-strong);
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .eq-info { flex: 1; min-width: 160px; }
+    .eq-info strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+    .eq-info span { font-size: 0.88rem; color: var(--text); }
+
+    .eq-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 52px;
+    }
+
+    .eq-bar {
+      width: 6px;
+      border-radius: 3px;
+      background: linear-gradient(180deg, var(--teal), var(--primary));
+      transform-origin: bottom;
+      animation: eqPulse var(--dur, 1s) ease-in-out infinite alternate;
+      animation-delay: var(--delay, 0s);
+    }
+
+    /* paused state */
+    .eq-bars.paused .eq-bar { animation-play-state: paused; }
+
+    @keyframes eqPulse {
+      from { height: 8px;  opacity: 0.5; }
+      to   { height: 100%; opacity: 1;   }
+    }
+
+    /* Teal variant */
+    .eq-bar.teal {
+      background: linear-gradient(180deg, #5eead4, var(--teal));
+    }
+
+    /* Violet variant */
+    .eq-bar.violet {
+      background: linear-gradient(180deg, #a5b4fc, var(--violet));
+    }
+
+    /* Amber variant */
+    .eq-bar.amber {
+      background: linear-gradient(180deg, #fcd34d, var(--amber));
+    }
+
+    .eq-controls { display: flex; gap: 8px; align-items: center; }
+
+    /* --- Waveform (sine-like) --- */
+    .waveform-card {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--surface-strong);
+      padding: 24px;
+    }
+
+    .waveform-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+    }
+
+    .waveform-track { font-weight: 600; }
+    .waveform-time { font-family: "IBM Plex Mono", monospace; font-size: 0.85rem; color: var(--text); }
+
+    .waveform-canvas {
+      width: 100%; height: 72px;
+      display: flex; align-items: center;
+      gap: 2px; overflow: hidden;
+    }
+
+    .wf-bar {
+      flex: 1; border-radius: 2px; min-height: 4px;
+      background: linear-gradient(180deg, var(--primary-2), var(--primary));
+      opacity: 0.35;
+      animation: wfAnim var(--dur, 1.2s) ease-in-out infinite alternate;
+      animation-delay: var(--delay, 0s);
+    }
+
+    .wf-bar.played {
+      opacity: 1;
+      background: linear-gradient(180deg, var(--teal), var(--primary));
+    }
+
+    .wf-bar.cursor {
+      background: var(--teal); opacity: 1; width: 2px !important; flex: 0 0 2px;
+    }
+
+    @keyframes wfAnim {
+      from { transform: scaleY(0.3); }
+      to   { transform: scaleY(1); }
+    }
+
+    .waveform-canvas.paused .wf-bar { animation-play-state: paused; }
+
+    .waveform-footer {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-top: 16px; flex-wrap: wrap; gap: 10px;
+    }
+
+    .playback-controls { display: flex; gap: 8px; align-items: center; }
+
+    /* Play button */
+    .play-btn {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--teal));
+      color: white; border: none; cursor: pointer;
+      display: grid; place-items: center;
+      box-shadow: 0 10px 20px rgba(31,95,107,0.25);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .play-btn:hover { transform: scale(1.08); box-shadow: 0 14px 26px rgba(31,95,107,0.32); }
+
+    .play-btn svg { width: 18px; height: 18px; }
+
+    /* Scrub bar */
+    .scrub-row { display: flex; align-items: center; gap: 12px; flex: 1; }
+
+    .scrub-bar {
+      flex: 1; height: 4px; border-radius: 999px;
+      background: var(--line); position: relative; cursor: pointer;
+    }
+
+    .scrub-fill {
+      height: 100%; border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), var(--teal));
+      width: 38%;
+      position: relative;
+    }
+
+    .scrub-fill::after {
+      content: "";
+      position: absolute; right: -6px; top: 50%;
+      transform: translateY(-50%);
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 2px 8px rgba(31,95,107,0.4);
+    }
+
+    /* --- Mic / Voice Input Wave --- */
+    .mic-wave-card {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--surface-strong);
+      padding: 24px;
+    }
+
+    .mic-wave-inner {
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
+      padding: 16px 0;
+    }
+
+    .mic-orb {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--teal));
+      display: grid; place-items: center; color: white;
+      box-shadow: 0 12px 28px rgba(31,95,107,0.30);
+      position: relative; cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .mic-orb:hover { transform: scale(1.06); }
+
+    .mic-orb.recording {
+      animation: micPulseRing 1.5s ease-in-out infinite;
+    }
+
+    @keyframes micPulseRing {
+      0%, 100% {
+        box-shadow:
+          0 12px 28px rgba(31,95,107,0.30),
+          0 0 0 0 rgba(20,184,166,0.4);
+      }
+      50% {
+        box-shadow:
+          0 12px 28px rgba(31,95,107,0.30),
+          0 0 0 18px rgba(20,184,166,0);
+      }
+    }
+
+    .mic-icon { font-size: 1.5rem; }
+
+    /* Ring wave rings around mic */
+    .mic-rings {
+      position: absolute; inset: 0;
+      border-radius: 50%; pointer-events: none;
+    }
+
+    .mic-rings::before,
+    .mic-rings::after {
+      content: "";
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(20,184,166,0.4);
+      animation: ringExpand 1.8s ease-out infinite;
+    }
+
+    .mic-rings::after { animation-delay: 0.9s; }
+
+    @keyframes ringExpand {
+      from { transform: scale(1); opacity: 0.8; }
+      to   { transform: scale(2.2); opacity: 0; }
+    }
+
+    .mic-label {
+      font-size: 0.92rem; color: var(--text);
+      text-align: center;
+    }
+
+    .mic-label strong { display: block; color: var(--ink); font-size: 1rem; }
+
+    /* Voice bars around mic */
+    .mic-bars {
+      display: flex; align-items: center; gap: 4px; height: 36px;
+    }
+
+    .mic-bar {
+      width: 4px; border-radius: 999px;
+      background: linear-gradient(180deg, var(--teal), var(--primary));
+      animation: micBarAnim var(--dur, 0.8s) ease-in-out infinite alternate;
+      animation-delay: var(--delay, 0s);
+    }
+
+    @keyframes micBarAnim {
+      from { height: 4px;  opacity: 0.4; }
+      to   { height: 30px; opacity: 1;   }
+    }
+
+    /* --- Mini Compact Wave Chips --- */
+    .wave-chips { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .wave-chip {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 9px 14px; border-radius: 14px;
+      border: 1px solid var(--line);
+      background: var(--surface-strong);
+      font-size: 0.88rem; font-weight: 600;
+    }
+
+    .chip-bars { display: flex; align-items: center; gap: 2px; height: 20px; }
+
+    .chip-bar {
+      width: 3px; border-radius: 999px; min-height: 3px;
+      animation: chipBarAnim var(--dur, 0.9s) ease-in-out infinite alternate;
+      animation-delay: var(--delay, 0s);
+    }
+
+    @keyframes chipBarAnim {
+      from { height: 3px;  opacity: 0.5; }
+      to   { height: 18px; opacity: 1;   }
+    }
+
+    /* Paused bars */
+    .chip-bars.paused .chip-bar,
+    .mic-bars.paused .mic-bar,
+    .eq-bars.paused .eq-bar { animation-play-state: paused; }
+
+    /* ─── GLOBAL BUTTON HELPERS (SHARED) ────────────────── */
+    .mono { font-family: "IBM Plex Mono", monospace; }
+
+    /* ─── PAGE HEADER ─────────────────────────────────────── */
+    .page-hero {
+      padding: 40px 0 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 9px 14px; border-radius: 999px;
+      background: rgba(20,184,166,0.10); color: var(--primary);
+      font-weight: 600; font-size: 0.88rem; margin-bottom: 14px;
+    }
+
+    .eyebrow-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 0 5px rgba(20,184,166,0.14);
+    }
+
+    .page-hero h1 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1; letter-spacing: -0.04em;
+    }
+
+    .page-hero h1 .soft { color: var(--primary); }
+    .page-hero p { color: var(--text); line-height: 1.75; margin-top: 12px; font-size: 1rem; }
+
+    /* ─── TINY HELPERS ───────────────────────────────────── */
+    .tiny { font-size: 0.82rem; color: var(--muted); }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .page { width: calc(100% - 20px); }
+      .nav  { position: static; }
+      .section { padding: 20px; }
+      .adv-table { font-size: 0.82rem; }
+      .adv-table td, .adv-table th { padding: 11px 10px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ─── NAV ────────────────────────────────────────── -->
+  <nav class="nav">
+    <div class="brand">
+      <div class="brand-badge">QA</div>
+      <div>QA Playground</div>
+    </div>
+    <div class="nav-links">
+      <a href="#tables">Tables</a>
+      <a href="#pills">Pills</a>
+      <a href="#buttons">Buttons</a>
+      <a href="#waves">Sound Wave</a>
+    </div>
+    <button class="btn btn-primary btn-sm">Start Free</button>
+  </nav>
+
+  <!-- ─── PAGE HERO ───────────────────────────────────── -->
+  <div class="page-hero">
+    <div>
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        Advanced component library
+      </div>
+      <h1>
+        UI elements
+        <span class="soft">for complex<br>interactions</span>
+      </h1>
+      <p>Tables, pills, button systems, and animated sound-wave components<br>built on the QA Playground Modern-Sasy design language.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 1 — ADVANCED TABLE
+  ════════════════════════════════════════════════════════ -->
+  <section class="section" id="tables">
+    <div class="section-head">
+      <div>
+        <div class="label">Advanced Table</div>
+        <h2>Sortable, filterable data table</h2>
+        <p>Full-featured table with row selection, sort indicators, status pills, inline progress, and pagination controls.</p>
+      </div>
+      <div class="section-tag">Data Display</div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="table-toolbar">
+      <div class="search-shell">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input class="search-input" type="text" placeholder="Search scenarios…" id="tableSearch">
+      </div>
+      <div class="filter-row">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="beginner">Beginner</button>
+        <button class="filter-btn" data-filter="intermediate">Intermediate</button>
+        <button class="filter-btn" data-filter="advanced">Advanced</button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="adv-table-wrap">
+      <table class="adv-table" id="mainTable">
+        <thead>
+          <tr>
+            <th><input type="checkbox" class="row-check" id="checkAll"></th>
+            <th><span class="th-inner" data-col="scenario">Scenario <span class="sort-icon"><span class="sort-up"></span><span class="sort-down"></span></span></span></th>
+            <th><span class="th-inner" data-col="type">Type <span class="sort-icon"><span class="sort-up"></span><span class="sort-down"></span></span></span></th>
+            <th><span class="th-inner" data-col="difficulty">Difficulty <span class="sort-icon"><span class="sort-up"></span><span class="sort-down"></span></span></span></th>
+            <th><span class="th-inner" data-col="progress">Progress <span class="sort-icon"><span class="sort-up"></span><span class="sort-down"></span></span></span></th>
+            <th><span class="th-inner" data-col="status">Status <span class="sort-icon"><span class="sort-up"></span><span class="sort-down"></span></span></span></th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- JS-generated rows -->
+        </tbody>
+      </table>
+
+      <div class="table-footer">
+        <span class="table-info" id="tableInfo">Showing 1–8 of 12 results</span>
+        <div class="pagination">
+          <button class="page-btn" id="prevPage" disabled>← Prev</button>
+          <button class="page-btn current" data-page="1">1</button>
+          <button class="page-btn" data-page="2">2</button>
+          <button class="page-btn" id="nextPage">Next →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 2 — PILLS & BADGES
+  ════════════════════════════════════════════════════════ -->
+  <section class="section" id="pills">
+    <div class="section-head">
+      <div>
+        <div class="label">Pills &amp; Badges</div>
+        <h2>Complete pill, tag, and badge system</h2>
+        <p>Sizes, color variants, outlined styles, live dots, dismissible chips, number badges, corner counts, and interactive filter groups.</p>
+      </div>
+      <div class="section-tag">Labels &amp; Signals</div>
+    </div>
+
+    <div class="pill-demo-grid">
+
+      <!-- Sizes -->
+      <div class="sample-panel stack">
+        <div class="panel-label">Sizes</div>
+        <div class="pill-row">
+          <span class="p p-primary p-xs">XSmall</span>
+          <span class="p p-primary p-sm">Small</span>
+          <span class="p p-primary p-md">Medium</span>
+          <span class="p p-primary p-lg">Large</span>
+        </div>
+      </div>
+
+      <!-- Color variants -->
+      <div class="sample-panel stack">
+        <div class="panel-label">Color Variants — Filled</div>
+        <div class="pill-row">
+          <span class="p p-primary">Primary</span>
+          <span class="p p-teal">Practice</span>
+          <span class="p p-green">Passed</span>
+          <span class="p p-amber">Pending</span>
+          <span class="p p-violet">Interview</span>
+          <span class="p p-cyan">Applied</span>
+          <span class="p p-rose">Live</span>
+          <span class="p p-danger">Failed</span>
+          <span class="p p-neutral">Neutral</span>
+        </div>
+      </div>
+
+      <!-- Outlined variants -->
+      <div class="sample-panel stack">
+        <div class="panel-label">Outlined Variants</div>
+        <div class="pill-row">
+          <span class="p p-primary p-outline">Primary</span>
+          <span class="p p-teal p-outline">Practice</span>
+          <span class="p p-violet p-outline">Interview</span>
+          <span class="p p-amber p-outline">Warning</span>
+          <span class="p p-danger p-outline">Error</span>
+          <span class="p p-cyan p-outline">Info</span>
+        </div>
+      </div>
+
+      <!-- With status dots -->
+      <div class="sample-panel stack">
+        <div class="panel-label">With Status Dots</div>
+        <div class="pill-row">
+          <span class="p p-green"><span class="p-dot"></span>Active</span>
+          <span class="p p-amber"><span class="p-dot"></span>In Progress</span>
+          <span class="p p-danger"><span class="p-dot"></span>Failed</span>
+          <span class="p p-neutral"><span class="p-dot"></span>Paused</span>
+          <span class="p p-violet"><span class="p-dot"></span>Review</span>
+          <!-- Pulsing live dot -->
+          <span class="p p-rose"><span class="p-live-dot"></span>Live Now</span>
+          <span class="p p-green"><span class="p-live-dot"></span>Recording</span>
+        </div>
+      </div>
+
+      <!-- Dismissible -->
+      <div class="sample-panel stack">
+        <div class="panel-label">Dismissible Pills</div>
+        <div class="pill-row" id="dismissRow">
+          <span class="p p-primary">Playwright <button class="p-dismiss" onclick="this.closest('.p').remove()">×</button></span>
+          <span class="p p-teal">Selenium <button class="p-dismiss" onclick="this.closest('.p').remove()">×</button></span>
+          <span class="p p-violet">Cypress <button class="p-dismiss" onclick="this.closest('.p').remove()">×</button></span>
+          <span class="p p-amber">Appium <button class="p-dismiss" onclick="this.closest('.p').remove()">×</button></span>
+          <span class="p p-cyan">WebdriverIO <button class="p-dismiss" onclick="this.closest('.p').remove()">×</button></span>
+        </div>
+        <span class="tiny">Click × to remove a pill</span>
+      </div>
+
+      <!-- Badges & number counts -->
+      <div class="grid-2">
+        <div class="sample-panel stack">
+          <div class="panel-label">Number Badges</div>
+          <div class="pill-row" style="align-items:center;">
+            <span class="num-badge">3</span>
+            <span class="num-badge" style="background:var(--teal);">12</span>
+            <span class="num-badge" style="background:var(--violet);">99</span>
+            <span class="num-badge" style="background:var(--amber); color:white;">5</span>
+            <!-- Corner badge example -->
+            <div class="badge-corner-wrap">
+              <span class="p p-neutral" style="padding:10px 14px;">Notifications</span>
+              <span class="badge-corner">4</span>
+            </div>
+            <div class="badge-corner-wrap">
+              <span class="p p-primary" style="padding:10px 14px;">Messages</span>
+              <span class="badge-corner" style="background:var(--teal);">2</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sample-panel stack">
+          <div class="panel-label">Status Rows</div>
+          <div class="stack" style="gap:8px;">
+            <div class="status-pill">
+              <span class="status-dot" style="background:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,0.18);"></span>
+              All systems operational
+            </div>
+            <div class="status-pill">
+              <span class="status-dot" style="background:var(--amber);"></span>
+              Partial outage detected
+            </div>
+            <div class="status-pill">
+              <span class="status-dot" style="background:var(--danger);animation:livePulse 1.4s infinite;"></span>
+              Incident in progress
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter groups -->
+      <div class="sample-panel stack">
+        <div class="panel-label">Interactive Filter Groups</div>
+        <div class="stack" style="gap:14px;">
+          <div class="filter-group">
+            <button class="fg-btn active" onclick="setActive(this)">All</button>
+            <button class="fg-btn" onclick="setActive(this)">Practice</button>
+            <button class="fg-btn" onclick="setActive(this)">Challenges</button>
+            <button class="fg-btn" onclick="setActive(this)">Interview</button>
+            <button class="fg-btn" onclick="setActive(this)">Jobs CRM</button>
+          </div>
+          <div class="pill-row">
+            <div class="pill-toggle">
+              <button class="p-toggle on" onclick="this.classList.toggle('on')">Playwright</button>
+              <button class="p-toggle" onclick="this.classList.toggle('on')">Selenium</button>
+              <button class="p-toggle on" onclick="this.classList.toggle('on')">Cypress</button>
+              <button class="p-toggle" onclick="this.classList.toggle('on')">Puppeteer</button>
+              <button class="p-toggle" onclick="this.classList.toggle('on')">WebdriverIO</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 3 — ADVANCED BUTTONS
+  ════════════════════════════════════════════════════════ -->
+  <section class="section" id="buttons">
+    <div class="section-head">
+      <div>
+        <div class="label">Advanced Buttons</div>
+        <h2>States, sizes, groups, and interaction patterns</h2>
+        <p>Loading states, icon variants, split buttons, button groups, pill toggles, and glow-gradient CTAs.</p>
+      </div>
+      <div class="section-tag">Actions</div>
+    </div>
+
+    <div class="grid-2">
+
+      <!-- Core variants + sizes -->
+      <div class="sample-panel stack">
+        <div class="panel-label">Core Variants</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-primary">Primary</button>
+          <button class="btn btn-secondary">Secondary</button>
+          <button class="btn btn-ghost">Ghost</button>
+          <button class="btn btn-teal">Teal</button>
+          <button class="btn btn-danger">Danger</button>
+        </div>
+        <div class="panel-label" style="margin-top:6px;">Sizes</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-primary btn-xs">XSmall</button>
+          <button class="btn btn-primary btn-sm">Small</button>
+          <button class="btn btn-primary btn-md">Medium</button>
+          <button class="btn btn-primary btn-lg">Large</button>
+        </div>
+      </div>
+
+      <!-- Loading states -->
+      <div class="sample-panel stack">
+        <div class="panel-label">Loading States</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-primary btn-loading">Saving…</button>
+          <button class="btn btn-secondary btn-loading">Loading…</button>
+          <button class="btn btn-teal btn-loading">Fetching…</button>
+        </div>
+        <div class="panel-label" style="margin-top:6px;">Disabled</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-primary" disabled>Disabled</button>
+          <button class="btn btn-secondary" disabled>Unavailable</button>
+          <button class="btn btn-ghost" disabled>Locked</button>
+        </div>
+      </div>
+
+      <!-- Icon buttons -->
+      <div class="sample-panel stack">
+        <div class="panel-label">Icon Buttons</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+          <!-- Icon-only, square -->
+          <button class="btn btn-primary btn-icon" title="Search">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </button>
+          <button class="btn btn-secondary btn-icon" title="Settings">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          </button>
+          <button class="btn btn-teal btn-icon" title="Download">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          </button>
+          <button class="btn btn-danger btn-icon" title="Delete">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6M10 11v6M14 11v6M9 6V4h6v2"/></svg>
+          </button>
+          <!-- Pill icon -->
+          <button class="btn btn-primary btn-icon-pill" title="Add">+</button>
+          <button class="btn btn-secondary btn-icon-pill" title="More">•••</button>
+        </div>
+
+        <div class="panel-label" style="margin-top:6px;">Icon + Text</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-primary">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7-7 7 7"/></svg>
+            Upload File
+          </button>
+          <button class="btn btn-secondary">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            Search
+          </button>
+          <button class="btn btn-teal">
+            ▶ Run Test
+          </button>
+        </div>
+      </div>
+
+      <!-- Gradient glow variants -->
+      <div class="sample-panel stack">
+        <div class="panel-label">Gradient Glow CTAs</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-glow-teal btn-lg">Start Practice</button>
+          <button class="btn btn-glow-violet btn-lg">Open Interview Bank</button>
+          <button class="btn btn-glow-amber btn-lg">Today's Challenge</button>
+        </div>
+        <span class="tiny">Use sparingly — one dominant CTA per section maximum</span>
+      </div>
+
+      <!-- Button groups -->
+      <div class="sample-panel stack">
+        <div class="panel-label">Button Groups</div>
+        <div class="stack" style="gap:12px;">
+          <div class="btn-group">
+            <button class="g-btn active" onclick="groupSelect(this)">Day</button>
+            <button class="g-btn" onclick="groupSelect(this)">Week</button>
+            <button class="g-btn" onclick="groupSelect(this)">Month</button>
+            <button class="g-btn" onclick="groupSelect(this)">All Time</button>
+          </div>
+          <div class="btn-group">
+            <button class="g-btn active" onclick="groupSelect(this)">Practice</button>
+            <button class="g-btn" onclick="groupSelect(this)">Challenges</button>
+            <button class="g-btn" onclick="groupSelect(this)">Interview</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Split button -->
+      <div class="sample-panel stack">
+        <div class="panel-label">Split Button</div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+          <div class="split-btn">
+            <button class="split-main">Run All Tests</button>
+            <button class="split-arrow" title="More options">▾</button>
+          </div>
+          <div class="split-btn">
+            <button class="split-main" style="background:linear-gradient(135deg,#0a7a71,var(--teal));">Save Progress</button>
+            <button class="split-arrow" style="background:#0a7a71;" title="More options">▾</button>
+          </div>
+        </div>
+        <div class="panel-label" style="margin-top:6px;">Social / Contextual</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-social">🔗 Share Result</button>
+          <button class="btn btn-social">⭐ Bookmark</button>
+          <button class="btn btn-social">📋 Copy Link</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 4 — SOUND WAVE ANIMATIONS
+  ════════════════════════════════════════════════════════ -->
+  <section class="section" id="waves">
+    <div class="section-head">
+      <div>
+        <div class="label">Sound Wave Animations</div>
+        <h2>Equalizer bars, waveforms, and voice UI</h2>
+        <p>CSS-animated audio visualizers — equalizer columns, audio scrubber waveform, mic pulse rings, and compact wave chips.</p>
+      </div>
+      <div class="section-tag">Animation</div>
+    </div>
+
+    <div class="wave-showcase">
+
+      <!-- ── Equalizer cards ── -->
+      <div class="grid-3">
+
+        <!-- EQ 1: Primary gradient, playing -->
+        <div class="eq-card">
+          <div class="eq-info">
+            <strong>Practice Session</strong>
+            <span>Interactive element — listening</span>
+          </div>
+          <div class="eq-bars" id="eq1">
+            <div class="eq-bar" style="--dur:.55s;--delay:0s;"></div>
+            <div class="eq-bar" style="--dur:.80s;--delay:.1s;"></div>
+            <div class="eq-bar" style="--dur:.65s;--delay:.05s;"></div>
+            <div class="eq-bar" style="--dur:.90s;--delay:.15s;"></div>
+            <div class="eq-bar" style="--dur:.50s;--delay:.08s;"></div>
+            <div class="eq-bar" style="--dur:.75s;--delay:.2s;"></div>
+            <div class="eq-bar" style="--dur:.60s;--delay:.03s;"></div>
+            <div class="eq-bar" style="--dur:.85s;--delay:.12s;"></div>
+          </div>
+          <div class="eq-controls">
+            <button class="btn btn-secondary btn-icon-sm" onclick="toggleEq('eq1', this)" title="Pause">⏸</button>
+          </div>
+        </div>
+
+        <!-- EQ 2: Violet bars -->
+        <div class="eq-card">
+          <div class="eq-info">
+            <strong>Interview Audio</strong>
+            <span>Voice recognition active</span>
+          </div>
+          <div class="eq-bars" id="eq2">
+            <div class="eq-bar violet" style="--dur:.70s;--delay:.05s;"></div>
+            <div class="eq-bar violet" style="--dur:.55s;--delay:.2s;"></div>
+            <div class="eq-bar violet" style="--dur:.90s;--delay:0s;"></div>
+            <div class="eq-bar violet" style="--dur:.65s;--delay:.1s;"></div>
+            <div class="eq-bar violet" style="--dur:.80s;--delay:.15s;"></div>
+            <div class="eq-bar violet" style="--dur:.50s;--delay:.08s;"></div>
+            <div class="eq-bar violet" style="--dur:.75s;--delay:.25s;"></div>
+            <div class="eq-bar violet" style="--dur:.60s;--delay:.03s;"></div>
+          </div>
+          <div class="eq-controls">
+            <button class="btn btn-secondary btn-icon-sm" onclick="toggleEq('eq2', this)" title="Pause">⏸</button>
+          </div>
+        </div>
+
+        <!-- EQ 3: Amber bars -->
+        <div class="eq-card">
+          <div class="eq-info">
+            <strong>Daily Challenge</strong>
+            <span>Notification incoming</span>
+          </div>
+          <div class="eq-bars" id="eq3">
+            <div class="eq-bar amber" style="--dur:.60s;--delay:.15s;"></div>
+            <div class="eq-bar amber" style="--dur:.85s;--delay:0s;"></div>
+            <div class="eq-bar amber" style="--dur:.50s;--delay:.1s;"></div>
+            <div class="eq-bar amber" style="--dur:.70s;--delay:.05s;"></div>
+            <div class="eq-bar amber" style="--dur:.90s;--delay:.2s;"></div>
+            <div class="eq-bar amber" style="--dur:.65s;--delay:.08s;"></div>
+            <div class="eq-bar amber" style="--dur:.55s;--delay:.12s;"></div>
+            <div class="eq-bar amber" style="--dur:.75s;--delay:.03s;"></div>
+          </div>
+          <div class="eq-controls">
+            <button class="btn btn-secondary btn-icon-sm" onclick="toggleEq('eq3', this)" title="Pause">⏸</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Audio Waveform Scrubber ── -->
+      <div class="waveform-card" id="waveCard">
+        <div class="waveform-header">
+          <div>
+            <div class="p p-teal p-sm" style="margin-bottom:8px;"><span class="p-live-dot"></span>Now Playing</div>
+            <div class="waveform-track">QA Automation — Episode 14: Playwright Deep Dive</div>
+          </div>
+          <div class="waveform-time mono" id="waveTime">02:14 / 05:48</div>
+        </div>
+
+        <!-- Waveform bars -->
+        <div class="waveform-canvas" id="waveCanvas"></div>
+
+        <div class="waveform-footer">
+          <div class="playback-controls">
+            <button class="btn btn-secondary btn-icon-sm" title="Skip back">⏮</button>
+            <button class="play-btn" id="wavePlayBtn" onclick="toggleWave()" title="Pause">
+              <svg viewBox="0 0 24 24" fill="white"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+            </button>
+            <button class="btn btn-secondary btn-icon-sm" title="Skip forward">⏭</button>
+          </div>
+          <div class="scrub-row">
+            <span class="tiny mono">02:14</span>
+            <div class="scrub-bar">
+              <div class="scrub-fill"></div>
+            </div>
+            <span class="tiny mono">05:48</span>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="tiny">Speed</span>
+            <div class="btn-group">
+              <button class="g-btn" onclick="groupSelect(this)">0.5×</button>
+              <button class="g-btn active" onclick="groupSelect(this)">1×</button>
+              <button class="g-btn" onclick="groupSelect(this)">1.5×</button>
+              <button class="g-btn" onclick="groupSelect(this)">2×</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Mic / Voice Input ── -->
+      <div class="grid-2">
+        <div class="mic-wave-card">
+          <div class="panel-label">Voice Input Mic</div>
+          <div class="mic-wave-inner">
+            <div class="mic-orb recording" id="micOrb" onclick="toggleMic()" title="Click to toggle">
+              <div class="mic-rings"></div>
+              <span class="mic-icon">🎙️</span>
+            </div>
+            <div class="mic-bars" id="micBars">
+              <div class="mic-bar" style="--dur:.55s;--delay:0s;"></div>
+              <div class="mic-bar" style="--dur:.80s;--delay:.1s;"></div>
+              <div class="mic-bar" style="--dur:.65s;--delay:.05s;"></div>
+              <div class="mic-bar" style="--dur:.90s;--delay:.15s;"></div>
+              <div class="mic-bar" style="--dur:.50s;--delay:.08s;"></div>
+              <div class="mic-bar" style="--dur:.75s;--delay:.2s;"></div>
+              <div class="mic-bar" style="--dur:.60s;--delay:.03s;"></div>
+              <div class="mic-bar" style="--dur:.85s;--delay:.12s;"></div>
+              <div class="mic-bar" style="--dur:.70s;--delay:.07s;"></div>
+            </div>
+            <div class="mic-label">
+              <strong id="micLabel">Listening…</strong>
+              Click the mic to toggle recording
+            </div>
+          </div>
+        </div>
+
+        <div class="mic-wave-card stack" style="justify-content:center;">
+          <div class="panel-label">Compact Wave Chips</div>
+          <div class="wave-chips" id="waveChips">
+            <!-- JS renders these -->
+          </div>
+          <span class="tiny">Click a chip to toggle its animation</span>
+
+          <div class="panel-label" style="margin-top:8px;">Inline Loading Waves</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="status-pill">
+              <div class="chip-bars">
+                <div class="chip-bar" style="background:var(--green);--dur:.6s;--delay:0s;"></div>
+                <div class="chip-bar" style="background:var(--green);--dur:.8s;--delay:.1s;"></div>
+                <div class="chip-bar" style="background:var(--green);--dur:.5s;--delay:.05s;"></div>
+                <div class="chip-bar" style="background:var(--green);--dur:.7s;--delay:.15s;"></div>
+              </div>
+              <span>Test suite running</span>
+              <span class="p p-green p-xs">Live</span>
+            </div>
+            <div class="status-pill">
+              <div class="chip-bars">
+                <div class="chip-bar" style="background:var(--violet);--dur:.7s;--delay:.05s;"></div>
+                <div class="chip-bar" style="background:var(--violet);--dur:.5s;--delay:.2s;"></div>
+                <div class="chip-bar" style="background:var(--violet);--dur:.9s;--delay:0s;"></div>
+                <div class="chip-bar" style="background:var(--violet);--dur:.6s;--delay:.1s;"></div>
+              </div>
+              <span>AI grading response</span>
+              <span class="p p-violet p-xs">Processing</span>
+            </div>
+            <div class="status-pill">
+              <div class="chip-bars">
+                <div class="chip-bar" style="background:var(--amber);--dur:.8s;--delay:.1s;"></div>
+                <div class="chip-bar" style="background:var(--amber);--dur:.6s;--delay:0s;"></div>
+                <div class="chip-bar" style="background:var(--amber);--dur:.7s;--delay:.15s;"></div>
+                <div class="chip-bar" style="background:var(--amber);--dur:.5s;--delay:.08s;"></div>
+              </div>
+              <span>Waiting for server</span>
+              <span class="p p-amber p-xs">Queued</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- /page -->
+
+<!-- ─── SCRIPTS ──────────────────────────────────────── -->
+<script>
+/* ─────────────────────────────────────────────────────── *
+ *  TABLE DATA & LOGIC                                     *
+ * ─────────────────────────────────────────────────────── */
+const rows = [
+  { scenario:"Dynamic Data Table", type:"Practice", difficulty:"Intermediate", progress:72, status:"In Progress" },
+  { scenario:"File Upload Flow",   type:"Practice", difficulty:"Beginner",     progress:100,status:"Completed" },
+  { scenario:"Shadow DOM Search",  type:"Practice", difficulty:"Advanced",     progress:28, status:"In Progress" },
+  { scenario:"Playwright Waits",   type:"Practice", difficulty:"Intermediate", progress:55, status:"In Progress" },
+  { scenario:"Network Mocking",    type:"Challenge",difficulty:"Advanced",     progress:0,  status:"Locked" },
+  { scenario:"Drag & Drop Flow",   type:"Practice", difficulty:"Intermediate", progress:88, status:"In Progress" },
+  { scenario:"API Auth Testing",   type:"Challenge",difficulty:"Advanced",     progress:40, status:"In Progress" },
+  { scenario:"Selector Strategy",  type:"Practice", difficulty:"Beginner",     progress:100,status:"Completed" },
+  { scenario:"iFrame Handling",    type:"Practice", difficulty:"Intermediate", progress:15, status:"In Progress" },
+  { scenario:"CI/CD Integration",  type:"Challenge",difficulty:"Advanced",     progress:0,  status:"Locked" },
+  { scenario:"Visual Regression",  type:"Challenge",difficulty:"Intermediate", progress:60, status:"In Progress" },
+  { scenario:"Mobile Web QA",      type:"Practice", difficulty:"Beginner",     progress:100,status:"Completed" },
+];
+
+const statusColor = {
+  "Completed":  { bg:"rgba(34,197,94,0.14)",  c:"#158e44" },
+  "In Progress":{ bg:"rgba(245,158,11,0.14)", c:"#b67209" },
+  "Locked":     { bg:"rgba(99,102,241,0.12)", c:"#5357c8" },
+};
+
+const diffColor = {
+  "Beginner":    { c:"var(--green)",  bg:"rgba(34,197,94,0.08)"  },
+  "Intermediate":{ c:"var(--amber)",  bg:"rgba(245,158,11,0.08)" },
+  "Advanced":    { c:"#ff6b35",       bg:"rgba(255,107,53,0.08)" },
+};
+
+const initials = s => s.split(" ").slice(0,2).map(w=>w[0]).join("").toUpperCase();
+
+const PAGE_SIZE = 6;
+let currentPage = 1;
+let filterDiff  = "all";
+let searchTerm  = "";
+
+function getFiltered() {
+  return rows.filter(r => {
+    const matchSearch = r.scenario.toLowerCase().includes(searchTerm.toLowerCase())
+                     || r.type.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchDiff   = filterDiff === "all" || r.difficulty.toLowerCase() === filterDiff;
+    return matchSearch && matchDiff;
+  });
+}
+
+function renderTable() {
+  const filtered = getFiltered();
+  const total    = filtered.length;
+  const pages    = Math.ceil(total / PAGE_SIZE);
+  currentPage    = Math.min(currentPage, Math.max(1, pages));
+
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const slice = filtered.slice(start, start + PAGE_SIZE);
+
+  const tbody = document.getElementById("tableBody");
+  tbody.innerHTML = slice.map(r => {
+    const sc = statusColor[r.status] || statusColor["In Progress"];
+    const dc = diffColor[r.difficulty] || diffColor["Intermediate"];
+    return `
+    <tr>
+      <td><input type="checkbox" class="row-check" onchange="toggleRow(this)"></td>
+      <td>
+        <div class="cell-avatar">
+          <div class="c-avatar">${initials(r.scenario)}</div>
+          <div>
+            <span class="cell-title">${r.scenario}</span>
+            <span class="cell-sub">${r.type} scenario</span>
+          </div>
+        </div>
+      </td>
+      <td class="muted">${r.type}</td>
+      <td>
+        <span class="diff">
+          <span class="diff-dot" style="background:${dc.c};"></span>
+          ${r.difficulty}
+        </span>
+      </td>
+      <td>
+        <div class="progress-track">
+          <div class="progress-fill" style="width:${r.progress}%;"></div>
+        </div>
+        <div class="prog-label">${r.progress}%</div>
+      </td>
+      <td>
+        <span class="p p-sm" style="background:${sc.bg};color:${sc.c};">${r.status}</span>
+      </td>
+      <td>
+        <div class="cell-actions">
+          <button class="act-btn" title="Open">▶</button>
+          <button class="act-btn" title="Edit">✎</button>
+          <button class="act-btn danger" title="Delete">✕</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join("");
+
+  // Info
+  const end = Math.min(start + PAGE_SIZE, total);
+  document.getElementById("tableInfo").textContent =
+    total === 0 ? "No results found"
+    : `Showing ${start+1}–${end} of ${total} result${total !== 1 ? "s":""} `;
+
+  // Pagination buttons
+  document.getElementById("prevPage").disabled = currentPage <= 1;
+  document.getElementById("nextPage").disabled = currentPage >= pages;
+
+  document.querySelectorAll(".page-btn[data-page]").forEach(btn => {
+    btn.classList.toggle("current", Number(btn.dataset.page) === currentPage);
+  });
+}
+
+// Row select
+function toggleRow(cb) { cb.closest("tr").classList.toggle("selected", cb.checked); }
+
+document.getElementById("checkAll").addEventListener("change", function() {
+  document.querySelectorAll("#tableBody .row-check").forEach(cb => {
+    cb.checked = this.checked;
+    cb.closest("tr").classList.toggle("selected", this.checked);
+  });
+});
+
+// Search
+document.getElementById("tableSearch").addEventListener("input", function() {
+  searchTerm = this.value; currentPage = 1; renderTable();
+});
+
+// Filter buttons
+document.querySelectorAll(".filter-btn[data-filter]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn[data-filter]").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    filterDiff = btn.dataset.filter; currentPage = 1; renderTable();
+  });
+});
+
+// Pagination
+document.getElementById("prevPage").addEventListener("click", () => { currentPage--; renderTable(); });
+document.getElementById("nextPage").addEventListener("click", () => { currentPage++; renderTable(); });
+document.querySelectorAll(".page-btn[data-page]").forEach(btn => {
+  btn.addEventListener("click", () => { currentPage = Number(btn.dataset.page); renderTable(); });
+});
+
+renderTable();
+
+
+/* ─────────────────────────────────────────────────────── *
+ *  BUTTON GROUP SELECT                                    *
+ * ─────────────────────────────────────────────────────── */
+function groupSelect(btn) {
+  btn.closest(".btn-group").querySelectorAll(".g-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+function setActive(btn) {
+  btn.closest(".filter-group").querySelectorAll(".fg-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+
+/* ─────────────────────────────────────────────────────── *
+ *  EQUALIZER TOGGLE                                       *
+ * ─────────────────────────────────────────────────────── */
+function toggleEq(id, btn) {
+  const bars = document.getElementById(id);
+  const paused = bars.classList.toggle("paused");
+  btn.textContent = paused ? "▶" : "⏸";
+  btn.title = paused ? "Play" : "Pause";
+}
+
+
+/* ─────────────────────────────────────────────────────── *
+ *  WAVEFORM BARS BUILD                                    *
+ * ─────────────────────────────────────────────────────── */
+(function buildWaveform() {
+  const canvas = document.getElementById("waveCanvas");
+  const durations = [1.4,0.9,1.1,0.7,1.3,0.8,1.5,1.0,1.2,0.6,1.4,0.85,1.1,0.95,1.3,0.75,1.0,1.2,0.65,1.4,0.9,1.1,1.35,0.8,1.0,1.2,0.7,0.95,1.3,1.15,0.85,1.05,1.25,0.9,1.4,0.75,1.1,1.0,0.8,1.3,0.65,1.15,1.05,0.9,1.4,0.8,1.2,0.7,1.1,1.3,0.85,1.0,0.95,0.7,1.15,1.3,0.8,1.05,1.25,0.9];
+  const total = durations.length;
+  const playedCount = Math.floor(total * 0.38);
+
+  durations.forEach((dur, i) => {
+    const bar = document.createElement("div");
+    const heights = [0.2,0.45,0.7,0.55,0.85,0.6,0.9,0.4,0.75,0.35,0.95,0.5,0.65,0.8,0.45,0.7,0.3,0.85,0.55,0.75,0.4,0.65,0.9,0.5,0.8,0.35,0.6,0.7,0.45,0.85,0.25,0.55,0.7,0.9,0.4,0.65,0.8,0.5,0.35,0.75,0.6,0.45,0.85,0.55,0.7,0.3,0.9,0.5,0.65,0.8,0.45,0.75,0.35,0.6,0.85,0.4,0.7,0.55,0.9,0.5];
+    const h = Math.round((heights[i % heights.length] ?? 0.5) * 64) + "px";
+
+    if (i === playedCount) {
+      bar.className = "wf-bar cursor";
+    } else {
+      bar.className = "wf-bar" + (i < playedCount ? " played" : "");
+      bar.style.cssText = `height:${h};--dur:${dur}s;--delay:${(i * 0.015).toFixed(3)}s;`;
+    }
+    canvas.appendChild(bar);
+  });
+})();
+
+let wavePlaying = true;
+function toggleWave() {
+  wavePlaying = !wavePlaying;
+  const canvas = document.getElementById("waveCanvas");
+  canvas.classList.toggle("paused", !wavePlaying);
+  const btn = document.getElementById("wavePlayBtn");
+  btn.innerHTML = wavePlaying
+    ? `<svg viewBox="0 0 24 24" fill="white"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>`
+    : `<svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>`;
+}
+
+
+/* ─────────────────────────────────────────────────────── *
+ *  MIC TOGGLE                                             *
+ * ─────────────────────────────────────────────────────── */
+let micRecording = true;
+function toggleMic() {
+  micRecording = !micRecording;
+  const orb   = document.getElementById("micOrb");
+  const bars  = document.getElementById("micBars");
+  const label = document.getElementById("micLabel");
+  orb.classList.toggle("recording", micRecording);
+  bars.classList.toggle("paused", !micRecording);
+  label.textContent = micRecording ? "Listening…" : "Microphone paused";
+}
+
+
+/* ─────────────────────────────────────────────────────── *
+ *  WAVE CHIPS BUILD                                       *
+ * ─────────────────────────────────────────────────────── */
+(function buildWaveChips() {
+  const chips = [
+    { label:"QA Tools",    color:"var(--primary)",  bars:5 },
+    { label:"Challenges",  color:"var(--amber)",    bars:4 },
+    { label:"AI Grading",  color:"var(--violet)",   bars:6 },
+    { label:"Live Sync",   color:"var(--teal)",     bars:5 },
+    { label:"Test Run",    color:"var(--green)",    bars:4 },
+  ];
+  const container = document.getElementById("waveChips");
+  chips.forEach(chip => {
+    const el = document.createElement("div");
+    el.className = "wave-chip";
+    el.style.cursor = "pointer";
+
+    const barsDiv = document.createElement("div");
+    barsDiv.className = "chip-bars";
+    const durations = [0.6,0.85,0.5,0.75,0.65,0.9];
+    for (let i = 0; i < chip.bars; i++) {
+      const b = document.createElement("div");
+      b.className = "chip-bar";
+      b.style.cssText = `background:${chip.color};--dur:${durations[i % durations.length]}s;--delay:${(i*0.09).toFixed(2)}s;`;
+      barsDiv.appendChild(b);
+    }
+
+    el.appendChild(barsDiv);
+    el.appendChild(document.createTextNode(chip.label));
+    el.addEventListener("click", () => {
+      barsDiv.classList.toggle("paused");
+    });
+    container.appendChild(el);
+  });
+})();
+</script>
+</body>
+</html>
