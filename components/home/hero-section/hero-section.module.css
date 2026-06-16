@@ -47,10 +47,8 @@
 
 .titleNowrap {
   white-space: nowrap;
-  /* Stays at parent size on large screens.
-     Below ~500px it scales down fluidly so "Need For Practice"
-     never wraps — dividing by 11 covers the ~17-char phrase width. */
-  font-size: min(1em, calc(100vw / 11));
+  color: var(--muted-foreground);
+  font-weight: 500;
 }
 
 .description {
