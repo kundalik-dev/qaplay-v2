@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 const heroStats = [
   { value: "10K+", label: "Active Engineers" },
@@ -45,6 +46,10 @@ export function HomeHero() {
               <span aria-hidden="true">🎤</span>
               Mock Interview
             </Link>
+            <Button variant="default" className="home-btn home-btn-primary">
+              <span aria-hidden="true">⚡</span>
+              Start Practicing Free
+            </Button>
           </div>
 
           <div className="home-stats" aria-label="QA Playground highlights">
