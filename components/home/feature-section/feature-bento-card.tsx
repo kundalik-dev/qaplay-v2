@@ -3,6 +3,7 @@ import type { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
+import shared from "../shared/home-shared.module.css";
 import styles from "./feature-section.module.css";
 
 type FeatureBentoCardProps = {
@@ -32,9 +33,14 @@ export function FeatureBentoCard({
       )}
     >
       {badge ? (
-        <span className={styles["feature-bento-badge"]}>{badge}</span>
+        <span className={cn(shared.homeBadge, styles["feature-bento-badge"])}>
+          {badge}
+        </span>
       ) : null}
-      <div className={styles["feature-bento-icon"]} aria-hidden="true">
+      <div
+        className={cn(shared.homeIconBox, styles["feature-bento-icon"])}
+        aria-hidden="true"
+      >
         <Icon strokeWidth={2} />
       </div>
       <div className={styles["feature-bento-content"]}>

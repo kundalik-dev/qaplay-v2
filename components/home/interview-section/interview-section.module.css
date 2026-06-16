@@ -35,10 +35,10 @@
   isolation: isolate;
   border: 1px solid var(--border);
   border-radius: 20px;
-  background: color-mix(in srgb, var(--card) 74%, transparent);
+  background: var(--home-card-bg);
   padding: 18px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(var(--home-card-blur));
+  -webkit-backdrop-filter: blur(var(--home-card-blur));
   transition:
     transform 0.28s ease,
     box-shadow 0.28s ease,
@@ -93,11 +93,8 @@
 }
 
 .cardIcon {
-  width: 44px;
-  height: 44px;
   margin-bottom: 14px;
   border: 1px solid color-mix(in srgb, var(--interview-accent) 24%, transparent);
-  border-radius: 14px;
   background: color-mix(in srgb, var(--interview-accent) 11%, transparent);
   display: flex;
   align-items: center;
@@ -110,8 +107,8 @@
 }
 
 .cardIcon svg {
-  width: 20px;
-  height: 20px;
+  width: var(--home-icon-size);
+  height: var(--home-icon-size);
 }
 
 .card:hover .cardIcon {

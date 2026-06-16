@@ -1,6 +1,7 @@
 import type { ReviewItem } from "@/data/home/review-section-data";
 import { cn } from "@/lib/utils";
 
+import shared from "../shared/home-shared.module.css";
 import styles from "./review-section.module.css";
 
 interface ReviewCardProps {
@@ -37,7 +38,9 @@ export function ReviewCard({ duplicate = false, review }: ReviewCardProps) {
           <div className={styles.name}>{review.name}</div>
           <div className={styles.role}>{review.role}</div>
         </div>
-        {review.featured ? <div className={styles.badge}>Featured</div> : null}
+        {review.featured ? (
+          <div className={cn(shared.homeBadge, styles.badge)}>Featured</div>
+        ) : null}
       </div>
     </article>
   );

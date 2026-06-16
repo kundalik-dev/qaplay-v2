@@ -53,10 +53,10 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 24px;
+  padding: var(--home-card-padding);
   border: 1px solid var(--border);
-  border-radius: 24px;
-  background: color-mix(in srgb, var(--card) 82%, transparent);
+  border-radius: var(--home-card-radius);
+  background: var(--home-card-bg-strong);
   transition:
     transform 0.3s ease,
     border-color 0.3s ease,
@@ -201,14 +201,8 @@
   white-space: nowrap;
   color: var(--primary);
   border: 1px solid color-mix(in srgb, var(--primary) 22%, transparent);
-  border-radius: 8px;
   background: color-mix(in srgb, var(--primary) 10%, transparent);
-  padding: 3px 10px;
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
 }
 
 .metrics {
@@ -235,19 +229,10 @@
 
 .metricValue {
   color: var(--primary);
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(22px, 2.5vw, 28px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1;
 }
 
 .metricLabel {
   color: var(--muted-foreground);
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 @keyframes reviewMarquee {

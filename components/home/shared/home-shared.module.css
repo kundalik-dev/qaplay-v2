@@ -107,6 +107,82 @@
   box-shadow: 0 0 0 5px color-mix(in srgb, var(--primary) 15%, transparent);
 }
 
+.homeCard {
+  border: 1px solid var(--home-card-border);
+  border-radius: var(--home-card-radius);
+  background: var(--home-card-bg);
+  backdrop-filter: blur(var(--home-card-blur));
+  -webkit-backdrop-filter: blur(var(--home-card-blur));
+  box-shadow: var(--home-card-shadow);
+}
+
+.homeCardStrong {
+  background: var(--home-card-bg-strong);
+}
+
+.homeBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  padding: var(--home-badge-padding-y) var(--home-badge-padding-x);
+  border-radius: var(--home-badge-radius);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: var(--home-badge-font-size);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.homePill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  padding: var(--home-pill-padding-y) var(--home-pill-padding-x);
+  border-radius: var(--home-pill-radius);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: var(--home-pill-font-size);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.homeIconBox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--home-icon-box-size);
+  height: var(--home-icon-box-size);
+  border-radius: var(--home-icon-box-radius);
+  flex-shrink: 0;
+}
+
+.homeIconBoxLg {
+  width: calc(var(--home-icon-box-size) + 4px);
+  height: calc(var(--home-icon-box-size) + 4px);
+  border-radius: var(--home-icon-box-radius-lg);
+}
+
+.homeIconBox svg {
+  width: var(--home-icon-size);
+  height: var(--home-icon-size);
+}
+
+.homeMetricValue {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: var(--home-metric-value-size);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.homeMetricLabel {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: var(--home-metric-label-size);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 @media (max-width: 900px) {
   .sectionHeader {
     text-align: center;
@@ -125,5 +201,10 @@
 
   .sectionCtaPadding {
     padding: 64px 0 48px;
+  }
+
+  .homeIconBox {
+    width: var(--home-icon-box-size-sm);
+    height: var(--home-icon-box-size-sm);
   }
 }
