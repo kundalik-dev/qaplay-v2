@@ -113,6 +113,10 @@
     font-size: 1rem;
   }
 
+  .titleNowrap {
+    white-space: normal;
+  }
+
   .actions {
     width: 100%;
     flex-direction: column;

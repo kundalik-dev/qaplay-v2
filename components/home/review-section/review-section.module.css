@@ -1,5 +1,6 @@
 .section {
   position: relative;
+  overflow-x: clip;
 }
 
 .header {

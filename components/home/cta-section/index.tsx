@@ -73,7 +73,7 @@ export function CtaSection() {
 
               <ButtonGroup
                 variant="home"
-                className={styles.actions}
+                className={cn(styles.actions)}
                 data-testid="cta-actions"
               >
                 <Link
@@ -112,7 +112,8 @@ export function CtaSection() {
               </ButtonGroup>
 
               <div className={styles.note}>
-                Always free · Sign up to save scores, track progress &amp; unlock more
+                Always free · Sign up to save scores, track progress &amp;
+                unlock more
               </div>
             </div>
 

@@ -78,6 +78,8 @@
 
 .actions {
   margin-top: 28px;
+  flex-wrap: wrap;
+  align-items: stretch;
 }
 
 .note {
@@ -210,11 +212,31 @@
     border-radius: 24px;
   }
 
+  .eyebrow {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    max-width: 100%;
+  }
+
+  .subtitle,
+  .note {
+    padding-left: 4px;
+  }
+
+  .actions {
+    width: 100%;
+    gap: 12px;
+  }
+
   .actions :global(a),
   .actions :global(button),
   .actions :global([data-slot="button-group-text"]) {
     width: 100%;
     justify-content: center;
+    min-width: 0;
   }
 
   .metrics {

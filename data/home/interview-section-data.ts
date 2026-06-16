@@ -90,13 +90,14 @@ export const interviewSectionContent: InterviewSectionContent = {
       accent: "success",
       icon: BadgeCheck,
       title: "Free to Start",
-      description: "Jump in without an account. Sign up to save scores and track your improvement over time.",
+      description:
+        "Jump in without an account. Sign up to save scores and track your improvement over time.",
     },
   ],
   ctas: [
     {
       href: "/interview",
-      label: "Start a Mock Interview",
+      label: "Start Interview",
       variant: "homePrimary",
     },
     {

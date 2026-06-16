@@ -220,12 +220,32 @@
 @media (max-width: 640px) {
   .timeline {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 36px;
   }
 
   .step {
-    max-width: 420px;
+    max-width: 100%;
+    width: 100%;
     margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .stepTitle {
+    font-size: 16px;
+  }
+
+  .stepDescription {
+    font-size: 14px;
+    max-width: 100%;
+    line-height: 1.6;
+  }
+
+  .stepLabel {
+    font-size: 11px;
+  }
+
+  .stepLink {
+    font-size: 12px;
   }
 
   .cta {

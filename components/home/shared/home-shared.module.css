@@ -102,6 +102,12 @@
   text-overflow: ellipsis;
 }
 
+@media (max-width: 640px) {
+  .sectionTitle {
+    font-size: clamp(1.75rem, 7vw, 2.1rem);
+  }
+}
+
 @media (max-width: 480px) {
   .eyebrow {
     font-size: 9px;

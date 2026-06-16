@@ -78,10 +78,13 @@ export function InterviewSection() {
                   <Link
                     key={cta.label}
                     href={cta.href}
-                    className={buttonVariants({
-                      variant: cta.variant,
-                      size: "home",
-                    })}
+                    className={cn(
+                      buttonVariants({
+                        variant: cta.variant,
+                        size: "home",
+                      }),
+                      "m-0",
+                    )}
                     data-testid={`interview-cta-${token}`}
                     data-cta={token}
                   >
@@ -96,6 +99,7 @@ export function InterviewSection() {
                       iconPosition={
                         cta.variant === "homePrimary" ? "start" : "end"
                       }
+                      className={"ml-0"}
                     >
                       {cta.label}
                     </ButtonContent>
