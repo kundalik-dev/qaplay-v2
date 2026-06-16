@@ -100,8 +100,8 @@
   --home-type-spotlight-size: clamp(1.764rem, 3.78vw, 3.024rem);
   --home-type-spotlight-line: 0.96;
   --home-type-spotlight-tracking: -0.06em;
-  --home-type-hero-size: clamp(2.142rem, 4.41vw, 3.654rem);
-  --home-type-hero-line: 0.95;
+  --home-type-hero-size: clamp(2.8rem, 5.5vw, 4.75rem);
+  --home-type-hero-line: 1.0;
   --home-type-hero-tracking: -0.06em;
   --home-button-font-size: 0.9rem;
   --home-button-font-size-sm: 0.85rem;

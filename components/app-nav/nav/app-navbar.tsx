@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
-import { navBrand, navLinks, navCta } from "@/data/nav-data";
+import { navBrand, navLinks, navCta, navAuth } from "@/data/nav-data";
 import { buttonVariants } from "@/components/ui/button";
 import { ButtonContent } from "@/components/ui/button-components";
 
@@ -26,7 +26,7 @@ export function AppNavbar() {
 
   useEffect(() => {
     const onResize = () => {
-      if (window.innerWidth > 900) setMobileOpen(false);
+      if (window.innerWidth > 1050) setMobileOpen(false);
     };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
@@ -55,6 +55,16 @@ export function AppNavbar() {
 
           <div className={styles.actions}>
             <NavThemeToggle />
+
+            <Link
+              href={navAuth.href}
+              className={cn(
+                buttonVariants({ variant: "homeSecondary", size: "home-sm" }),
+                styles.cta,
+              )}
+            >
+              {navAuth.label}
+            </Link>
 
             <Link
               href={navCta.href}
@@ -96,6 +106,17 @@ export function AppNavbar() {
 
         <div className={styles.mobileActions}>
           <Link
+            href={navAuth.href}
+            className={cn(
+              buttonVariants({ variant: "homeSecondary", size: "home" }),
+              styles.mobileCta,
+            )}
+            onClick={closeMobile}
+          >
+            {navAuth.label}
+          </Link>
+
+          <Link
             href={navCta.href}
             className={cn(
               buttonVariants({ variant: "homePrimary", size: "home" }),
@@ -103,8 +124,13 @@ export function AppNavbar() {
             )}
             onClick={closeMobile}
           >
-            <ButtonContent icon={<span>+</span>}>{navCta.label}</ButtonContent>
+            {navCta.label}
           </Link>
+
+          <div className={styles.mobileThemeRow}>
+            <span className={styles.mobileThemeLabel}>Switch theme</span>
+            <NavThemeToggle />
+          </div>
         </div>
       </div>
     </>

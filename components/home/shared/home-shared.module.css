@@ -96,6 +96,19 @@
   font-size: var(--home-type-label-size);
   letter-spacing: var(--home-type-label-spacing);
   text-transform: uppercase;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 480px) {
+  .eyebrow {
+    font-size: 9px;
+    padding: 6px 10px;
+    gap: 7px;
+    letter-spacing: 0.08em;
+  }
 }
 
 .eyebrowDot {

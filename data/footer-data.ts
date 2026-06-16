@@ -45,7 +45,7 @@ export const footerBrand: FooterBrand = {
   badge: "⚡",
   href: "/",
   description:
-    "A purpose-built platform for QA engineers — practice automation on real UI elements, rehearse interviews with AI agents, and track every job application through to the offer.",
+    "A purpose-built platform for QA engineers. Learn Selenium, Playwright and Cypress through practice on real UI elements, demo apps. Rehearse interviews with AI agents, and track every job application through to the offer.",
 };
 
 export const footerSocialLinks: FooterSocialLink[] = [

@@ -164,12 +164,10 @@
   color: var(--step-color);
   font-family: var(--font-ibm-plex-mono), monospace;
   font-size: 11px;
+  font-weight: 600;
   letter-spacing: 0.04em;
   text-decoration: none;
-  opacity: 0.78;
-  transition:
-    opacity 0.15s ease,
-    gap 0.22s ease;
+  transition: gap 0.22s ease;
 }
 
 .stepLink::after {
@@ -177,8 +175,8 @@
 }
 
 .stepLink:hover {
-  opacity: 1;
   gap: 10px;
+  text-decoration: underline;
 }
 
 .cta {

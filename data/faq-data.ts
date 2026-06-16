@@ -27,7 +27,7 @@ export const faqItems: FaqItem[] = [
   {
     question: "Which automation frameworks does it support?",
     answer:
-      "The UI targets are framework-agnostic. You can practice with Selenium, Playwright, Cypress, or pytest using stable selectors, IDs, and realistic interaction patterns.",
+      "The UI targets are framework-agnostic. You can practice with Selenium, Playwright, Cypress, or Pytest using stable selectors, IDs, and realistic interaction patterns.",
   },
   {
     question: "Do I need to install anything before using it?",

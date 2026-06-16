@@ -557,6 +557,10 @@
   .cards {
     grid-template-columns: 1fr 1fr;
   }
+
+  .cardWide {
+    grid-column: span 1;
+  }
 }
 
 @media (max-width: 640px) {
