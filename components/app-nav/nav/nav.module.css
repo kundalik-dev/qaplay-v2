@@ -133,13 +133,52 @@
   transition:
     background 0.15s ease,
     border-color 0.15s ease,
-    transform 0.22s ease;
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 .themeToggle:hover {
   background: color-mix(in srgb, var(--primary) 10%, var(--muted));
   border-color: color-mix(in srgb, var(--primary) 30%, transparent);
   transform: rotate(22deg);
+}
+
+.themeToggle::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--primary) 18%, transparent),
+    transparent 62%
+  );
+  opacity: 0;
+  transform: scale(0.5);
+  pointer-events: none;
+}
+
+.themeToggleIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transform-origin: center;
+}
+
+.themeToggleSwitching {
+  animation: themeToggleSpin 560ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--primary) 24%, transparent),
+    0 0 24px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+.themeToggleSwitching::after {
+  animation: themeToggleFlash 560ms ease;
+}
+
+.themeToggleSwitching .themeToggleIcon {
+  animation: themeIconSwap 560ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .cta {

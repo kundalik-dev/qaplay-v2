@@ -1,14 +1,15 @@
+import type { LucideIcon } from "lucide-react";
+
 import { cn } from "@/lib/utils";
+import type { JobCrmItem } from "@/data/home/job-section-data";
 
 import styles from "./job-hunt-section.module.css";
 
-type JobCrmItem = {
-  company: string;
-  stage: "Applied" | "HR Opened" | "Interview" | "AI Draft Ready";
-};
-
 type JobCrmPanelProps = {
+  description: string;
+  icon: LucideIcon;
   items: JobCrmItem[];
+  title: string;
 };
 
 const stageClassMap: Record<JobCrmItem["stage"], string> = {
@@ -18,20 +19,22 @@ const stageClassMap: Record<JobCrmItem["stage"], string> = {
   "AI Draft Ready": "draft",
 };
 
-export function JobCrmPanel({ items }: JobCrmPanelProps) {
+export function JobCrmPanel({
+  description,
+  icon: Icon,
+  items,
+  title,
+}: JobCrmPanelProps) {
   return (
     <article className={styles["jobs-panel"]}>
       <div className={styles["jobs-panel-head"]}>
         <div className={styles["jobs-panel-icon"]} aria-hidden="true">
-          CRM
+          <Icon strokeWidth={2} />
         </div>
-        <h3 className={styles["jobs-panel-title"]}>Your Job CRM</h3>
+        <h3 className={styles["jobs-panel-title"]}>{title}</h3>
       </div>
 
-      <p className={styles["jobs-panel-description"]}>
-        A Kanban-style tracker for your QA job search. See where every
-        application stands at a glance, from drafted to interview.
-      </p>
+      <p className={styles["jobs-panel-description"]}>{description}</p>
 
       <div className={styles["jobs-crm-list"]}>
         {items.map((item) => (

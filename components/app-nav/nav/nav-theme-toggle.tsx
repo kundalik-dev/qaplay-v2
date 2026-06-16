@@ -1,8 +1,118 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useRef, useSyncExternalStore } from "react";
 
 import styles from "./nav.module.css";
+
+const THEME_KEY = "qap-theme";
+const THEME_REVEAL_DURATION = 760;
+const THEME_ICON_DURATION = 620;
+
+function dispatchThemeChange() {
+  window.dispatchEvent(new Event("qap-theme-change"));
+}
+
+function setTheme(isDark: boolean) {
+  const html = document.documentElement;
+  html.classList.toggle("dark", isDark);
+
+  try {
+    localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
+  } catch {}
+
+  dispatchThemeChange();
+}
+
+function clearThemeTransitionLayers() {
+  document.querySelectorAll(".theme-transition-layer").forEach((layer) => {
+    layer.remove();
+  });
+}
+
+function setThemeTransitionGeometry(button: HTMLButtonElement) {
+  const html = document.documentElement;
+  const rect = button.getBoundingClientRect();
+  const originX =
+    rect.left + rect.width / 2 >= window.innerWidth / 2 ? window.innerWidth : 0;
+  const originY =
+    rect.top + rect.height / 2 >= window.innerHeight / 2
+      ? window.innerHeight
+      : 0;
+  const farthestX = Math.max(originX, window.innerWidth - originX);
+  const farthestY = Math.max(originY, window.innerHeight - originY);
+  const finalRadius = Math.hypot(farthestX, farthestY);
+
+  html.style.setProperty("--theme-origin-x", `${originX}px`);
+  html.style.setProperty("--theme-origin-y", `${originY}px`);
+  html.style.setProperty("--theme-final-radius", `${finalRadius}px`);
+
+  return { originX, originY, finalRadius };
+}
+
+function runThemeReveal(
+  nextDark: boolean,
+  button: HTMLButtonElement,
+  timeoutRefs: { revealTimerRef: { current: number | null } },
+) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    setTheme(nextDark);
+    return;
+  }
+
+  const html = document.documentElement;
+  const geometry = setThemeTransitionGeometry(button);
+  const nextThemeClass = nextDark ? "to-dark" : "to-light";
+
+  if ("startViewTransition" in document) {
+    html.classList.add("theme-transition-active");
+
+    const transition = (
+      document as Document & {
+        startViewTransition?: (
+          updateCallback: () => void,
+        ) => { finished: Promise<void> };
+      }
+    ).startViewTransition?.(() => {
+      setTheme(nextDark);
+    });
+
+    if (transition) {
+      transition.finished.finally(() => {
+        html.classList.remove("theme-transition-active");
+      });
+      return;
+    }
+  }
+
+  clearThemeTransitionLayers();
+
+  const layer = document.createElement("span");
+  layer.className = `theme-transition-layer ${nextThemeClass}`;
+  layer.style.setProperty("--theme-origin-x", `${geometry.originX}px`);
+  layer.style.setProperty("--theme-origin-y", `${geometry.originY}px`);
+  layer.style.setProperty("--theme-final-radius", `${geometry.finalRadius}px`);
+  document.body.appendChild(layer);
+
+  requestAnimationFrame(() => {
+    layer.classList.add("is-active");
+  });
+
+  if (timeoutRefs.revealTimerRef.current) {
+    window.clearTimeout(timeoutRefs.revealTimerRef.current);
+  }
+
+  timeoutRefs.revealTimerRef.current = window.setTimeout(() => {
+    setTheme(nextDark);
+  }, Math.round(THEME_REVEAL_DURATION * 0.38));
+
+  layer.addEventListener(
+    "animationend",
+    () => {
+      layer.remove();
+    },
+    { once: true },
+  );
+}
 
 function SunIcon() {
   return (
@@ -42,6 +152,9 @@ function MoonIcon() {
 }
 
 export function NavThemeToggle() {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const iconTimerRef = useRef<number | null>(null);
+  const revealTimerRef = useRef<number | null>(null);
   const isDark = useSyncExternalStore(
     (onStoreChange) => {
       window.addEventListener("qap-theme-change", onStoreChange);
@@ -53,24 +166,37 @@ export function NavThemeToggle() {
   );
 
   const toggle = () => {
-    const html = document.documentElement;
-    const next = !html.classList.contains("dark");
-    html.classList.toggle("dark", next);
-    try {
-      localStorage.setItem("qap-theme", next ? "dark" : "light");
-    } catch {}
-    window.dispatchEvent(new Event("qap-theme-change"));
+    const button = buttonRef.current;
+    if (!button) return;
+
+    const nextDark = !document.documentElement.classList.contains("dark");
+
+    button.classList.remove(styles.themeToggleSwitching);
+    void button.offsetWidth;
+    button.classList.add(styles.themeToggleSwitching);
+
+    runThemeReveal(nextDark, button, { revealTimerRef });
+
+    if (iconTimerRef.current) {
+      window.clearTimeout(iconTimerRef.current);
+    }
+    iconTimerRef.current = window.setTimeout(() => {
+      button.classList.remove(styles.themeToggleSwitching);
+    }, THEME_ICON_DURATION);
   };
 
   return (
     <button
+      ref={buttonRef}
       type="button"
       onClick={toggle}
       className={styles.themeToggle}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       title={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
-      {isDark ? <SunIcon /> : <MoonIcon />}
+      <span className={styles.themeToggleIcon}>
+        {isDark ? <SunIcon /> : <MoonIcon />}
+      </span>
     </button>
   );
 }
