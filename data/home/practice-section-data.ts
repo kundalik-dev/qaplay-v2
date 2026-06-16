@@ -1,6 +1,22 @@
+import type { LucideIcon } from "lucide-react";
+import {
+  AlarmClock,
+  ArrowDownWideNarrow,
+  BellRing,
+  CalendarDays,
+  ChartNoAxesCombined,
+  FileStack,
+  FormInput,
+  Grip,
+  Infinity,
+  MonitorCog,
+  PanelsTopLeft,
+  ScanSearch,
+} from "lucide-react";
+
 export interface PracticeElement {
   href: string;
-  icon: string;
+  icon: LucideIcon;
   title: string;
   level: "Beginner" | "Intermediate" | "Advanced";
 }
@@ -8,73 +24,73 @@ export interface PracticeElement {
 export const practiceElements: PracticeElement[] = [
   {
     href: "/practice/input",
-    icon: "📝",
+    icon: FormInput,
     title: "Forms & Inputs",
     level: "Beginner",
   },
   {
     href: "/practice/alert",
-    icon: "⚠️",
+    icon: BellRing,
     title: "Alerts & Dialogs",
     level: "Intermediate",
   },
   {
     href: "/practice",
-    icon: "🖱️",
+    icon: Grip,
     title: "Drag & Drop",
     level: "Advanced",
   },
   {
     href: "/practice",
-    icon: "🪟",
+    icon: PanelsTopLeft,
     title: "iFrames",
     level: "Intermediate",
   },
   {
     href: "/practice",
-    icon: "🟣",
+    icon: ScanSearch,
     title: "Shadow DOM",
     level: "Advanced",
   },
   {
     href: "/practice",
-    icon: "⏱️",
+    icon: AlarmClock,
     title: "Dynamic Waits",
     level: "Advanced",
   },
   {
     href: "/practice/simple-table",
-    icon: "📊",
+    icon: ChartNoAxesCombined,
     title: "Data Tables",
     level: "Intermediate",
   },
   {
     href: "/practice",
-    icon: "🔽",
+    icon: ArrowDownWideNarrow,
     title: "Dropdowns",
     level: "Beginner",
   },
   {
     href: "/practice",
-    icon: "🗓️",
+    icon: CalendarDays,
     title: "Date Pickers",
     level: "Intermediate",
   },
   {
     href: "/practice",
-    icon: "🪟",
+    icon: MonitorCog,
     title: "Modal Windows",
     level: "Beginner",
   },
   {
     href: "/practice",
-    icon: "🔁",
+    icon: Infinity,
     title: "Infinite Scroll",
     level: "Advanced",
   },
   {
     href: "/practice",
-    icon: "🔗",
+    icon: FileStack,
     title: "Multi-Tab Windows",
     level: "Intermediate",
   },

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -6,7 +7,7 @@ import styles from "./practice-new-section.module.css";
 
 type PracticeNewCardProps = {
   href: string;
-  icon: string;
+  icon: LucideIcon;
   level: "Beginner" | "Intermediate" | "Advanced";
   title: string;
 };
@@ -20,7 +21,7 @@ function toTestIdValue(value: string) {
 
 export function PracticeNewCard({
   href,
-  icon,
+  icon: Icon,
   level,
   title,
 }: PracticeNewCardProps) {
@@ -36,7 +37,9 @@ export function PracticeNewCard({
       data-supported-frameworks="playwright selenium cypress"
     >
       <span className={styles.iconWrap} aria-hidden="true">
-        <span className={styles.icon}>{icon}</span>
+        <span className={styles.icon}>
+          <Icon strokeWidth={2} />
+        </span>
       </span>
 
       <div className={styles.copy}>
