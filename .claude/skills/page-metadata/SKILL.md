@@ -35,9 +35,10 @@ Data flow: `basicDetails` ➜ `createPageMetadata(pageInput)` ➜ `export const 
    import { createPageMetadata } from "./create-page-metadata";
 
    export const practicePageMetadata = createPageMetadata({
-     title: "Practice",                 // -> "Practice | QA Playground" via template
-     description: "Hands-on Selenium, Playwright & Cypress challenges on real UI.",
-     path: "/practice",                 // used for the canonical URL
+     title: "Practice", // -> "Practice | QA Playground" via template
+     description:
+       "Hands-on Selenium, Playwright & Cypress challenges on real UI.",
+     path: "/practice", // used for the canonical URL
    });
    ```
 

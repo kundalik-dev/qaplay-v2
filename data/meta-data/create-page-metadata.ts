@@ -45,7 +45,9 @@ export function createPageMetadata(input: PageMetadataInput): Metadata {
     description,
 
     // Site-wide keywords first, then page-specific ones (de-duplicated).
-    keywords: Array.from(new Set([...basicDetails.defaultKeywords, ...keywords])),
+    keywords: Array.from(
+      new Set([...basicDetails.defaultKeywords, ...keywords]),
+    ),
 
     authors: [basicDetails.author],
     creator: basicDetails.author.name,

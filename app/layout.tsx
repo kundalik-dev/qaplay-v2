@@ -64,11 +64,20 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body suppressHydrationWarning>
+        {/* Skip to main content — accessibility */}
+        <a
+          href="#main-content"
+          data-testid="skip-to-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-black focus:shadow-lg"
+        >
+          Skip to content
+        </a>
+
         {/* Fixed navbar sits above all page content */}
         <AppNavbar />
 
         {/* Page content — padding-top handled by CSS */}
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
 
         {/* Footer at the very bottom */}
         <AppFooter />

@@ -1,11 +1,13 @@
-import React from "react";
+import { practiceCards } from "@/data/practice-data/practice-elements-data";
+import { practicePageMetadata } from "@/data/meta-data/practice-page-meta-data";
+import { PracticeGrid } from "./_components/practice-grid";
 
-const PracticePage = () => {
+export const metadata = practicePageMetadata;
+
+export default function PracticePage() {
   return (
-    <div className="flex min-h-screen items-center p-16">
-      <h1>Practice Page</h1>
-    </div>
+    <main data-testid="practice-page" data-section="practice">
+      <PracticeGrid cards={practiceCards} />
+    </main>
   );
-};
-
-export default PracticePage;
+}

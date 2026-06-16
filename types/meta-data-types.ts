@@ -60,6 +60,29 @@ export type SiteBasicDetails = {
 };
 
 /**
+ * A single crawlable route entry used to generate `app/sitemap.ts`.
+ * Keep these in `data/meta-data/site-routes.ts` so the sitemap stays
+ * easy to maintain — add a route here and it appears in the sitemap.
+ */
+export type SiteRoute = {
+  /** Route path relative to the site origin, e.g. "/" or "/practice". */
+  path: string;
+  /** How often the page is likely to change. Hints crawler frequency. */
+  changeFrequency?:
+    | "always"
+    | "hourly"
+    | "daily"
+    | "weekly"
+    | "monthly"
+    | "yearly"
+    | "never";
+  /** Relative importance from 0.0 to 1.0. Home is typically 1.0. */
+  priority?: number;
+  /** ISO 8601 date the page was last meaningfully updated, e.g. "2026-06-16". */
+  lastModified?: string;
+};
+
+/**
  * Input for building Article JSON-LD (schema.org/Article) structured data.
  * Page-specific values; everything optional falls back to `SiteBasicDetails`.
  * Used by `createArticleJsonLd` so dates and publisher info stay in one place.

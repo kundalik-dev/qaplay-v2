@@ -1,7 +1,10 @@
 import type { MetadataRoute } from "next";
 
+import { basicDetails } from "@/data/meta-data/basic-details-data";
+
 export default function robots(): MetadataRoute.Robots {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  // Use the canonical origin so robots, sitemap, and canonical tags all agree.
+  const siteUrl = basicDetails.websiteURL.replace(/\/$/, "");
 
   return {
     rules: [
