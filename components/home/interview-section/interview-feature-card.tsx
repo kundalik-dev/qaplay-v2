@@ -39,7 +39,10 @@ export function InterviewFeatureCard({
       data-testid={`interview-card-${token}`}
       data-card={token}
     >
-      <div className={cn(shared.homeIconBox, styles.cardIcon)} aria-hidden="true">
+      <div
+        className={cn(shared.homeIconBox, styles.cardIcon)}
+        aria-hidden="true"
+      >
         <Icon strokeWidth={2} />
       </div>
       <h3 className={styles.cardTitle}>{title}</h3>

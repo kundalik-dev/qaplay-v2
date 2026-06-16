@@ -38,6 +38,13 @@ Also use the `docs` folder whenever more design or UI context is needed.
 - Only use client components when interactivity, browser APIs, or client-only state are actually needed.
 - Keep content/config/data in the `data` folder whenever possible so it stays easy to maintain and update.
 
+### Component Colocation
+
+- For every page except the landing page (`app/page.tsx`), keep that route's components in a route-local `_components` folder (e.g. `app/demo/_components`, `app/practice/_components`).
+- The `_components` folder is a private folder (excluded from routing) and should hold the components plus their scoped CSS modules used only by that route.
+- Import route-local components with relative paths (e.g. `./_components/...`), not the global `@/components` alias.
+- Reserve the top-level `components` folder for genuinely shared, cross-route components (such as `app-nav`, `ui`, `seo`) and landing-page sections.
+
 ### Styling
 
 - Follow the existing design tokens, CSS variables, and theme system already defined in the project.
