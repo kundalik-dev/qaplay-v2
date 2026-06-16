@@ -45,6 +45,12 @@
   color: var(--primary);
 }
 
+.titleNowrap {
+  white-space: nowrap;
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
 .description {
   max-width: 560px;
   margin: 20px auto 0;

@@ -22,7 +22,7 @@ export const faqItems: FaqItem[] = [
   {
     question: "Is QA Playground really free?",
     answer:
-      "Yes. The practice elements, interview prep, and core learning flows are built to be usable without signup friction. The goal is to help QA engineers start practicing immediately.",
+      "Yes. Practice elements, AI mock interviews, and job tools are free to use — no credit card, no paywall. Creating a free account lets you save your progress, track interview scores, and pick up where you left off.",
   },
   {
     question: "Which automation frameworks does it support?",

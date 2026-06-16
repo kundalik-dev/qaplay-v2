@@ -61,7 +61,7 @@ export const interviewSectionContent: InterviewSectionContent = {
   titleLineOne: "Stop Studying.",
   titleAccent: "Start Performing.",
   description:
-    "Knowing the answer is not the same as saying it under pressure. Realtime AI agents role-play your interviewer - completely free, unlimited rounds.",
+    "Knowing the answer is not the same as saying it under pressure. Realtime AI agents role-play your interviewer — free to start, unlimited rounds. Sign up to track your scores.",
   cards: [
     {
       accent: "secondary",
@@ -89,8 +89,8 @@ export const interviewSectionContent: InterviewSectionContent = {
     {
       accent: "success",
       icon: BadgeCheck,
-      title: "100% Free",
-      description: "No account. No limit. Practice as many rounds as you need.",
+      title: "Free to Start",
+      description: "Jump in without an account. Sign up to save scores and track your improvement over time.",
     },
   ],
   ctas: [
@@ -121,7 +121,7 @@ export const interviewSectionContent: InterviewSectionContent = {
     footerStats: [
       { key: "Score", value: "8.5" },
       { key: "Question", value: "Q3" },
-      { key: "Free", value: "∞" },
+      { key: "Always Free", value: "∞" },
     ],
   },
 };

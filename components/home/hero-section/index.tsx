@@ -34,7 +34,7 @@ export function HomeHero() {
             <span className={styles.titleAccent}>Playground </span>
             You{" "}
             <br />
-            Need For Practice
+            <span className={styles.titleNowrap}>Need For Practice</span>
           </h1>
 
           <p className={styles.description}>
