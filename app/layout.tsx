@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 
 import { AppFooter, AppNavbar } from "@/components/app-nav";
+import { basicDetails } from "@/data/meta-data/basic-details-data";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -22,10 +23,17 @@ const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-ibm-plex-mono",
 });
 
+// Site-wide defaults. The title template applies to child pages that supply a
+// plain string title (e.g. "Practice" -> "Practice | QA Playground"); the home
+// page overrides it with an absolute title. Page-specific values come from
+// `createPageMetadata` (see data/meta-data).
 export const metadata: Metadata = {
-  title: "QA Playground — Master Automation Testing",
-  description:
-    "Practice Selenium, Playwright & Cypress on real UI elements, rehearse with AI mock interviews, and track every job application. Free for QA engineers.",
+  metadataBase: new URL(basicDetails.websiteURL),
+  title: {
+    default: `${basicDetails.websiteName} — ${basicDetails.tagline}`,
+    template: `%s | ${basicDetails.websiteName}`,
+  },
+  description: basicDetails.websiteDescription,
 };
 
 // Inline script injected before page paint to prevent theme FOUC.
