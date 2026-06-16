@@ -55,8 +55,10 @@
 }
 
 .actions {
+  width: fit-content;
+  align-items: center;
   justify-content: center;
-  margin-top: 28px;
+  margin: 28px auto 0;
 }
 
 .stats {
@@ -110,6 +112,7 @@
   }
 
   .actions {
+    width: 100%;
     flex-direction: column;
   }
 

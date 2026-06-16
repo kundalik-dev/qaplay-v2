@@ -3,7 +3,7 @@
 }
 
 .sectionDefaultPadding {
-  padding: clamp(72px, 9vw, 108px) 0;
+  padding: clamp(55px, 9vw, 55px) 0;
 }
 
 .sectionCtaPadding {

@@ -146,6 +146,11 @@
     box-shadow 0.22s ease;
 }
 
+.feature-bento-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
 .feature-bento-card:hover .feature-bento-icon {
   transform: scale(1.08) translateY(-2px);
   box-shadow: 0 10px 28px
@@ -166,6 +171,11 @@
   border-radius: 22px;
   font-size: 2.2rem;
   margin-bottom: 24px;
+}
+
+.feature-bento-practice .feature-bento-icon svg {
+  width: 34px;
+  height: 34px;
 }
 
 .feature-bento-bank .feature-bento-icon {

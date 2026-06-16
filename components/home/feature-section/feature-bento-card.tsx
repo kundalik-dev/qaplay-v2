@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -8,7 +9,7 @@ type FeatureBentoCardProps = {
   badge?: string;
   className?: string;
   description: string;
-  emoji: string;
+  icon: LucideIcon;
   href: string;
   linkLabel: string;
   title: string;
@@ -18,7 +19,7 @@ export function FeatureBentoCard({
   badge,
   className,
   description,
-  emoji,
+  icon: Icon,
   href,
   linkLabel,
   title,
@@ -34,7 +35,7 @@ export function FeatureBentoCard({
         <span className={styles["feature-bento-badge"]}>{badge}</span>
       ) : null}
       <div className={styles["feature-bento-icon"]} aria-hidden="true">
-        {emoji}
+        <Icon strokeWidth={2} />
       </div>
       <div className={styles["feature-bento-content"]}>
         <h3 className={styles["feature-bento-title"]}>{title}</h3>

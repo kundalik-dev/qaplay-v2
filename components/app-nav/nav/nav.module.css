@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 14px 24px;
+  padding: 8px 24px;
   transition: padding 0.35s ease;
 }
 
@@ -48,35 +48,15 @@
   flex-shrink: 0;
 }
 
-.badge {
+.brandLogo {
   width: 36px;
   height: 36px;
-  border-radius: 11px;
-  display: grid;
-  place-items: center;
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  color: #0a0c10;
   flex-shrink: 0;
-  background: linear-gradient(
-    135deg,
-    var(--primary),
-    color-mix(in srgb, var(--primary) 58%, var(--secondary))
-  );
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--primary) 30%, transparent);
-  transition:
-    box-shadow 0.22s ease,
-    transform 0.22s ease;
+  transition: transform 0.22s ease;
 }
 
-.brand:hover .badge {
+.brand:hover .brandLogo {
   transform: scale(1.05);
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) 40%, transparent);
-}
-
-:global(:root:not(.dark)) .badge {
-  color: #fff;
 }
 
 .name {

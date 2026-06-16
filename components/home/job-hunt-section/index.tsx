@@ -63,6 +63,9 @@ export function JobHuntSection() {
         shared.sectionDividerBlend,
       )}
       aria-labelledby="jobs-title"
+      data-testid="home-jobs"
+      data-section="jobs"
+      data-supported-frameworks="playwright selenium cypress"
     >
       <div className="home-shell">
         <div className={styles.header}>
@@ -78,9 +81,19 @@ export function JobHuntSection() {
           </p>
         </div>
 
-        <div className={styles.flow} role="list" aria-label="Job hunt workflow">
+        <div
+          className={styles.flow}
+          role="list"
+          aria-label="Job hunt workflow"
+          data-testid="jobs-workflow"
+        >
           {jobSteps.map((step) => (
-            <div key={step.title} role="listitem">
+            <div
+              key={step.title}
+              role="listitem"
+              data-testid={`job-step-${step.emoji}`}
+              data-step={step.emoji}
+            >
               <JobStepCard {...step} />
             </div>
           ))}

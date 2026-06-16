@@ -1,27 +1,27 @@
+import { Mic, Play, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { Mic, Sparkles, Zap } from "lucide-react";
 
-import { ButtonGroup } from "@/components/ui/button-group";
-import { ButtonContent } from "@/components/ui/button-components";
 import { buttonVariants } from "@/components/ui/button";
+import { ButtonContent } from "@/components/ui/button-components";
+import { ButtonGroup } from "@/components/ui/button-group";
 
-import styles from "./hero-section.module.css";
 import shared from "../shared/home-shared.module.css";
-
-const heroStats = [
-  { value: "10K+", label: "Active Engineers" },
-  { value: "22+", label: "Practice Elements" },
-  { value: "AI x7", label: "Interview Agents" },
-  { value: "100%", label: "Always Free" },
-];
+import styles from "./hero-section.module.css";
+import { heroStats } from "@/data/home/hero-section-data";
 
 export function HomeHero() {
   return (
-    <section className={styles.section} aria-labelledby="home-hero-title">
+    <section
+      className={styles.section}
+      aria-labelledby="home-hero-title"
+      data-testid="home-hero"
+      data-section="hero"
+      data-supported-frameworks="playwright selenium cypress"
+    >
       <div className={styles.glow} aria-hidden="true" />
       <div className="home-shell">
         <div className={styles.copy}>
-          <div className={shared.eyebrow}>
+          <div className={shared.eyebrow} data-testid="home-hero-eyebrow">
             <span className={shared.eyebrowDot} aria-hidden="true" />
             Free for QA Engineers - 10,000+ Practitioners
           </div>
@@ -29,24 +29,35 @@ export function HomeHero() {
           <h1 id="home-hero-title" className={styles.title}>
             The Only
             <br />
-            <span className={styles.titleAccent}>Playground You</span>
+            <span className={styles.titleAccent}>Automation </span>
             <br />
-            Need to Get Hired
+            <span className={styles.titleAccent}>Playground </span>
+            You
+            <br />
+            Need For Practice
           </h1>
 
           <p className={styles.description}>
-            Stop reading. Start doing. Practice Selenium, Playwright &amp;
-            Cypress on real UI elements, sharpen your answers in AI-powered
-            mock interviews, then track every job you apply to - all the way to
-            the offer.
+            Stop Reading. Start Automating. Practice Selenium, Playwright &amp;
+            Cypress with 22+ interactive UI elements, demo apps and rehersal
+            AI-powered mock interviews.
           </p>
 
-          <ButtonGroup variant="home" className={styles.actions}>
+          <ButtonGroup
+            variant="home"
+            className={styles.actions}
+            data-testid="home-hero-actions"
+          >
             <Link
               href="/practice"
-              className={buttonVariants({ variant: "homePrimary", size: "home" })}
+              className={buttonVariants({
+                variant: "homePrimary",
+                size: "home",
+              })}
+              data-testid="hero-start-practicing"
+              data-cta="start-practicing"
             >
-              <ButtonContent icon={<Zap className="size-4" />}>
+              <ButtonContent icon={<Play className="size-4" />}>
                 Start Practicing Free
               </ButtonContent>
             </Link>
@@ -56,6 +67,8 @@ export function HomeHero() {
                 variant: "homeSecondary",
                 size: "home",
               })}
+              data-testid="hero-see-features"
+              data-cta="see-features"
             >
               <ButtonContent
                 icon={<Sparkles className="size-4" />}
@@ -67,6 +80,8 @@ export function HomeHero() {
             <Link
               href="#interview"
               className={buttonVariants({ variant: "homeGhost", size: "home" })}
+              data-testid="hero-mock-interview"
+              data-cta="mock-interview"
             >
               <ButtonContent icon={<Mic className="size-4" />}>
                 Mock Interview
@@ -74,9 +89,18 @@ export function HomeHero() {
             </Link>
           </ButtonGroup>
 
-          <div className={styles.stats} aria-label="QA Playground highlights">
+          <div
+            className={styles.stats}
+            aria-label="QA Playground highlights"
+            data-testid="home-hero-stats"
+          >
             {heroStats.map((stat) => (
-              <div key={stat.label} className={styles.stat}>
+              <div
+                key={stat.label}
+                className={styles.stat}
+                data-testid={`hero-stat-${stat.label.toLowerCase().replaceAll(" ", "-")}`}
+                data-stat-label={stat.label.toLowerCase().replaceAll(" ", "-")}
+              >
                 <div className={styles.statValue}>{stat.value}</div>
                 <div className={styles.statLabel}>{stat.label}</div>
               </div>

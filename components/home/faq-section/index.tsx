@@ -31,6 +31,9 @@ export function FaqSection() {
         styles.section,
       )}
       aria-labelledby="faq-title"
+      data-testid="home-faq"
+      data-section="faq"
+      data-supported-frameworks="playwright selenium cypress"
     >
       <div className="home-shell">
         <div className={styles.layout}>
@@ -65,6 +68,7 @@ export function FaqSection() {
           <div
             className={styles.accordion}
             aria-label="Frequently asked questions"
+            data-testid="faq-accordion"
           >
             {faqItems.map((item, index) => {
               const isOpen = openIndex === index;
@@ -73,12 +77,15 @@ export function FaqSection() {
                 <div
                   key={item.question}
                   className={cn(styles.item, isOpen && styles.itemOpen)}
+                  data-testid={`faq-item-${index + 1}`}
+                  data-state={isOpen ? "open" : "closed"}
                 >
                   <button
                     type="button"
                     className={styles.trigger}
                     aria-expanded={isOpen}
                     onClick={() => toggle(index)}
+                    data-testid={`faq-trigger-${index + 1}`}
                   >
                     <span>{item.question}</span>
                     <span className={styles.icon} aria-hidden="true">

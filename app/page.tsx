@@ -4,7 +4,7 @@ import {
   HomeFeaturePreview,
   HomeHero,
   JobHuntSection,
-  PracticeSection,
+  PracticeNewSection,
 } from "@/components/home";
 import { TrustSection } from "@/components/home/trust-section";
 
@@ -13,7 +13,8 @@ export default function Home() {
     <>
       <HomeHero />
       <TrustSection />
-      <PracticeSection />
+      {/* <PracticeSection /> */}
+      <PracticeNewSection />
       <HomeFeaturePreview />
       <JobHuntSection />
       <CtaSection />

@@ -44,6 +44,9 @@ export function CtaSection() {
         shared.sectionDividerBlend,
       )}
       aria-labelledby="cta-title"
+      data-testid="home-cta"
+      data-section="cta"
+      data-supported-frameworks="playwright selenium cypress"
     >
       <div className="home-shell">
         <div className={styles.shell}>
@@ -67,13 +70,19 @@ export function CtaSection() {
                 and move from preparation to offers with more confidence.
               </p>
 
-              <ButtonGroup variant="home" className={styles.actions}>
+              <ButtonGroup
+                variant="home"
+                className={styles.actions}
+                data-testid="cta-actions"
+              >
                 <Link
                   href="/practice"
                   className={buttonVariants({
                     variant: "homePrimary",
                     size: "home",
                   })}
+                  data-testid="cta-start-practicing"
+                  data-cta="start-practicing"
                 >
                   Start Practicing Free
                 </Link>
@@ -83,6 +92,8 @@ export function CtaSection() {
                     variant: "homeSecondary",
                     size: "home",
                   })}
+                  data-testid="cta-mock-interview"
+                  data-cta="mock-interview"
                 >
                   Try a Mock Interview
                 </Link>
@@ -92,6 +103,8 @@ export function CtaSection() {
                     variant: "homeGhost",
                     size: "home",
                   })}
+                  data-testid="cta-browse-jobs"
+                  data-cta="browse-jobs"
                 >
                   Browse Jobs
                 </Link>

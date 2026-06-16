@@ -11,7 +11,7 @@ const buttonGroupVariants = cva(
     variants: {
       variant: {
         connected: "w-fit",
-        home: "w-full flex-wrap gap-3 sm:w-fit",
+        home: "w-full flex-wrap items-center justify-center gap-3 sm:w-fit",
       },
       orientation: {
         horizontal: "",

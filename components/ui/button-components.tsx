@@ -21,7 +21,7 @@ function ButtonContent({
     <span
       aria-hidden="true"
       className={cn(
-        "inline-flex items-center justify-center text-current",
+        "inline-flex shrink-0 items-center justify-center leading-none text-current",
         iconClassName,
       )}
     >
@@ -30,9 +30,14 @@ function ButtonContent({
   ) : null;
 
   return (
-    <span className={cn("inline-flex items-center gap-2", className)}>
+    <span
+      className={cn(
+        "inline-flex items-center justify-center gap-2 leading-none whitespace-nowrap",
+        className,
+      )}
+    >
       {iconPosition === "start" ? iconMarkup : null}
-      <span>{children}</span>
+      <span className="inline-flex items-center leading-none">{children}</span>
       {iconPosition === "end" ? iconMarkup : null}
     </span>
   );

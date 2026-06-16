@@ -3,4 +3,5 @@ export { FaqSection } from "./faq-section";
 export { HomeFeaturePreview } from "./feature-section";
 export { HomeHero } from "./hero-section";
 export { JobHuntSection } from "./job-hunt-section";
+export { PracticeNewSection } from "./practice-new-section";
 export { PracticeSection } from "./practice-section";
