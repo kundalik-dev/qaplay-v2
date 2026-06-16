@@ -3,7 +3,7 @@
   min-height: 100svh;
   display: flex;
   align-items: center;
-  padding: 90px 0 48px;
+  padding: 148px 0 48px;
   overflow: clip;
 }
 
@@ -93,7 +93,7 @@
 
 @media (max-width: 900px) {
   .section {
-    padding-top: 90px;
+    padding-top: 124px;
     min-height: 100svh;
   }
 

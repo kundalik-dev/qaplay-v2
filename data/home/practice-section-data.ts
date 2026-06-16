@@ -5,11 +5,13 @@ import {
   BellRing,
   CalendarDays,
   ChartNoAxesCombined,
+  ChevronDown,
   FileStack,
-  FormInput,
-  Grip,
+  FileText,
+  GalleryHorizontalEnd,
   Infinity,
   MonitorCog,
+  Move,
   PanelsTopLeft,
   ScanSearch,
 } from "lucide-react";
@@ -24,7 +26,7 @@ export interface PracticeElement {
 export const practiceElements: PracticeElement[] = [
   {
     href: "/practice/input",
-    icon: FormInput,
+    icon: FileText,
     title: "Forms & Inputs",
     level: "Beginner",
   },
@@ -36,7 +38,7 @@ export const practiceElements: PracticeElement[] = [
   },
   {
     href: "/practice",
-    icon: Grip,
+    icon: Move,
     title: "Drag & Drop",
     level: "Advanced",
   },
@@ -66,7 +68,7 @@ export const practiceElements: PracticeElement[] = [
   },
   {
     href: "/practice",
-    icon: ArrowDownWideNarrow,
+    icon: ChevronDown,
     title: "Dropdowns",
     level: "Beginner",
   },
@@ -90,7 +92,7 @@ export const practiceElements: PracticeElement[] = [
   },
   {
     href: "/practice",
-    icon: FileStack,
+    icon: GalleryHorizontalEnd,
     title: "Multi-Tab Windows",
     level: "Intermediate",
   },

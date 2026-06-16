@@ -1,6 +1,8 @@
 .header {
   max-width: 680px;
+  margin-inline: auto;
   margin-bottom: 48px;
+  text-align: center;
 }
 
 .title {
@@ -19,6 +21,7 @@
 
 .description {
   margin-top: 16px;
+  margin-inline: auto;
   color: var(--muted-foreground);
   font-size: 15px;
   line-height: 1.75;

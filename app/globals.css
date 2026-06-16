@@ -90,8 +90,8 @@
   --hero-glow-1: rgba(20, 184, 166, 0.08);
   --hero-glow-2: rgba(99, 102, 241, 0.05);
   --page-glow-center: rgba(255, 255, 255, 0.72);
-  --nav-bg: rgba(255, 255, 255, 0.8);
-  --nav-border: rgba(255, 255, 255, 0.94);
+  --nav-bg: rgba(255, 255, 255, 0.92);
+  --nav-border: rgba(255, 255, 255, 0.98);
   --shadow-float: 0 22px 50px rgba(20, 42, 62, 0.12);
   --sidebar: #ffffff;
   --sidebar-foreground: #17324d;
@@ -136,8 +136,8 @@
   --hero-glow-1: rgba(0, 255, 170, 0.08);
   --hero-glow-2: rgba(123, 97, 255, 0.05);
   --page-glow-center: rgba(255, 255, 255, 0.035);
-  --nav-bg: rgba(10, 12, 16, 0.8);
-  --nav-border: rgba(255, 255, 255, 0.06);
+  --nav-bg: rgba(10, 12, 16, 0.9);
+  --nav-border: rgba(255, 255, 255, 0.1);
   --shadow-float: 0 22px 50px rgba(0, 0, 0, 0.4);
   --sidebar: #161b24;
   --sidebar-foreground: #e8edf5;
@@ -202,6 +202,10 @@
   flex: 1;
 }
 
+section[id] {
+  scroll-margin-top: 112px;
+}
+
 html.theme-transition-active::view-transition-group(root) {
   animation: none;
 }
@@ -234,9 +238,21 @@ html.theme-transition-active::view-transition-new(root) {
   opacity: 1;
   clip-path: circle(0 at var(--theme-origin-x) var(--theme-origin-y));
   background:
-    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.08), transparent 28%),
-    radial-gradient(circle at 82% 12%, rgba(123, 97, 255, 0.12), transparent 24%),
-    radial-gradient(circle at 28% 78%, rgba(0, 255, 170, 0.08), transparent 26%),
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(255, 255, 255, 0.08),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 82% 12%,
+      rgba(123, 97, 255, 0.12),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 28% 78%,
+      rgba(0, 255, 170, 0.08),
+      transparent 26%
+    ),
     var(--theme-transition-bg);
   will-change: clip-path, opacity;
 }
