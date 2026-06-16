@@ -1,0 +1,219 @@
+.shell {
+  width: 100%;
+  margin-top: auto;
+  background: #eaf0f5;
+  border-top: 1px solid rgba(20, 42, 62, 0.08);
+  position: relative;
+  z-index: 1;
+}
+
+:global(.dark) .shell {
+  background: var(--popover);
+  border-top-color: var(--border);
+}
+
+.inner {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(48px, 6vw, 64px) clamp(24px, 4vw, 48px) 28px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
+  gap: clamp(28px, 4vw, 52px);
+  padding-bottom: clamp(32px, 5vw, 52px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brandCol {
+  min-width: 0;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  text-decoration: none;
+}
+
+.logoBadge {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: #0a0c10;
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    color-mix(in srgb, var(--primary) 60%, var(--secondary))
+  );
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+:global(:root:not(.dark)) .logoBadge {
+  color: #ffffff;
+}
+
+.logoName {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--foreground);
+  transition: color 0.15s ease;
+}
+
+.logo:hover .logoName {
+  color: var(--primary);
+}
+
+.brandDesc {
+  max-width: 310px;
+  margin: 0 0 24px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--muted-foreground);
+}
+
+.socialRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.socialBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(20, 42, 62, 0.1);
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.22s ease;
+}
+
+:global(.dark) .socialBtn {
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  border-color: var(--border);
+}
+
+.socialBtn:hover {
+  color: var(--foreground);
+  border-color: color-mix(in srgb, var(--primary) 32%, transparent);
+  background: color-mix(in srgb, var(--primary) 8%, white);
+  transform: translateY(-1px);
+}
+
+:global(.dark) .socialBtn:hover {
+  background: color-mix(in srgb, var(--primary) 10%, var(--card));
+}
+
+.colTitle {
+  display: block;
+  margin-bottom: 18px;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--foreground);
+}
+
+.linkList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.navLink {
+  display: inline-block;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.navLink:hover {
+  color: var(--primary);
+}
+
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  padding-top: 22px;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--muted-foreground) 80%, transparent);
+}
+
+.bottom a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.bottom a:hover {
+  color: var(--foreground);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px;
+  }
+
+  .brandCol {
+    grid-column: 1 / -1;
+  }
+
+  .brandDesc {
+    max-width: 460px;
+  }
+}
+
+@media (max-width: 640px) {
+  .inner {
+    padding: 44px 16px 24px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-bottom: 28px;
+  }
+
+  .brandDesc {
+    max-width: none;
+  }
+
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
