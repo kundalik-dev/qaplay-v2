@@ -45,8 +45,8 @@ export function FaqSection() {
               Answered clearly.
             </h2>
             <p className={styles.subheading}>
-              Everything important before you start practicing, interviewing,
-              or tracking jobs inside QA Playground.
+              Everything important before you start practicing, interviewing, or
+              tracking jobs inside QA Playground.
             </p>
 
             <div className={styles.sideCard}>
@@ -92,9 +92,7 @@ export function FaqSection() {
                       +
                     </span>
                   </button>
-                  <div
-                    className={cn(styles.body, isOpen && styles.bodyOpen)}
-                  >
+                  <div className={cn(styles.body, isOpen && styles.bodyOpen)}>
                     <div className={styles.inner}>{item.answer}</div>
                   </div>
                 </div>

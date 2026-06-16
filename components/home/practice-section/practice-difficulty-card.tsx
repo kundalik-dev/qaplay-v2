@@ -23,7 +23,10 @@ export function PracticeDifficultyCard({
       )}
     >
       <div className={styles["practice-difficulty-top"]}>
-        <span className={styles["practice-difficulty-dot"]} aria-hidden="true" />
+        <span
+          className={styles["practice-difficulty-dot"]}
+          aria-hidden="true"
+        />
         <span className={styles["practice-difficulty-title"]}>{title}</span>
         <span className={styles["practice-difficulty-count"]}>{count}</span>
       </div>

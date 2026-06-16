@@ -112,8 +112,8 @@ export function CtaSection() {
               </ButtonGroup>
 
               <div className={styles.note}>
-                Always free - No account needed - Built for QA engineers in
-                real workflows
+                Always free - No account needed - Built for QA engineers in real
+                workflows
               </div>
             </div>
 

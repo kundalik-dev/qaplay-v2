@@ -68,9 +68,9 @@ function runThemeReveal(
 
     const transition = (
       document as Document & {
-        startViewTransition?: (
-          updateCallback: () => void,
-        ) => { finished: Promise<void> };
+        startViewTransition?: (updateCallback: () => void) => {
+          finished: Promise<void>;
+        };
       }
     ).startViewTransition?.(() => {
       setTheme(nextDark);
@@ -101,9 +101,12 @@ function runThemeReveal(
     window.clearTimeout(timeoutRefs.revealTimerRef.current);
   }
 
-  timeoutRefs.revealTimerRef.current = window.setTimeout(() => {
-    setTheme(nextDark);
-  }, Math.round(THEME_REVEAL_DURATION * 0.38));
+  timeoutRefs.revealTimerRef.current = window.setTimeout(
+    () => {
+      setTheme(nextDark);
+    },
+    Math.round(THEME_REVEAL_DURATION * 0.38),
+  );
 
   layer.addEventListener(
     "animationend",

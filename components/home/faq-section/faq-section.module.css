@@ -112,7 +112,9 @@
   overflow: hidden;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  transition: border-color 0.22s ease, box-shadow 0.22s ease;
+  transition:
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 .itemOpen {
@@ -148,7 +150,9 @@
   line-height: 1;
   color: var(--muted-foreground);
   flex-shrink: 0;
-  transition: transform 0.22s ease, color 0.15s ease;
+  transition:
+    transform 0.22s ease,
+    color 0.15s ease;
 }
 
 .itemOpen .icon {

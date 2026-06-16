@@ -1,10 +1,6 @@
 import React from "react";
 
-const PracticeLayout = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+const PracticeLayout = ({ children }: { children: React.ReactNode }) => {
   return <div>{children}</div>;
 };
 

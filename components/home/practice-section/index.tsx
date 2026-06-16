@@ -31,18 +31,78 @@ const difficultyCards = [
 ];
 
 const practicePills = [
-  { href: "/practice/input", label: "Forms & Inputs", level: "Beginner" as const, icon: "IN" },
-  { href: "/practice/alert", label: "Alerts & Dialogs", level: "Intermediate" as const, icon: "AL" },
-  { href: "/practice", label: "Drag & Drop", level: "Advanced" as const, icon: "DD" },
-  { href: "/practice", label: "iFrames", level: "Intermediate" as const, icon: "IF" },
-  { href: "/practice", label: "Shadow DOM", level: "Advanced" as const, icon: "SD" },
-  { href: "/practice", label: "Dynamic Waits", level: "Advanced" as const, icon: "DW" },
-  { href: "/practice/simple-table", label: "Data Tables", level: "Intermediate" as const, icon: "DT" },
-  { href: "/practice", label: "Dropdowns", level: "Beginner" as const, icon: "DR" },
-  { href: "/practice", label: "Date Pickers", level: "Intermediate" as const, icon: "DP" },
-  { href: "/practice", label: "Modal Windows", level: "Beginner" as const, icon: "MW" },
-  { href: "/practice", label: "Infinite Scroll", level: "Advanced" as const, icon: "IS" },
-  { href: "/practice", label: "Multi-Tab Windows", level: "Intermediate" as const, icon: "MT" },
+  {
+    href: "/practice/input",
+    label: "Forms & Inputs",
+    level: "Beginner" as const,
+    icon: "IN",
+  },
+  {
+    href: "/practice/alert",
+    label: "Alerts & Dialogs",
+    level: "Intermediate" as const,
+    icon: "AL",
+  },
+  {
+    href: "/practice",
+    label: "Drag & Drop",
+    level: "Advanced" as const,
+    icon: "DD",
+  },
+  {
+    href: "/practice",
+    label: "iFrames",
+    level: "Intermediate" as const,
+    icon: "IF",
+  },
+  {
+    href: "/practice",
+    label: "Shadow DOM",
+    level: "Advanced" as const,
+    icon: "SD",
+  },
+  {
+    href: "/practice",
+    label: "Dynamic Waits",
+    level: "Advanced" as const,
+    icon: "DW",
+  },
+  {
+    href: "/practice/simple-table",
+    label: "Data Tables",
+    level: "Intermediate" as const,
+    icon: "DT",
+  },
+  {
+    href: "/practice",
+    label: "Dropdowns",
+    level: "Beginner" as const,
+    icon: "DR",
+  },
+  {
+    href: "/practice",
+    label: "Date Pickers",
+    level: "Intermediate" as const,
+    icon: "DP",
+  },
+  {
+    href: "/practice",
+    label: "Modal Windows",
+    level: "Beginner" as const,
+    icon: "MW",
+  },
+  {
+    href: "/practice",
+    label: "Infinite Scroll",
+    level: "Advanced" as const,
+    icon: "IS",
+  },
+  {
+    href: "/practice",
+    label: "Multi-Tab Windows",
+    level: "Intermediate" as const,
+    icon: "MT",
+  },
 ] as const;
 
 export function PracticeSection() {

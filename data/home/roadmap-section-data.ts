@@ -15,12 +15,7 @@ export interface RoadmapStep {
   linkLabel: string;
   stage: string;
   title: string;
-  tone:
-    | "success"
-    | "warning"
-    | "brand-tertiary"
-    | "secondary"
-    | "primary";
+  tone: "success" | "warning" | "brand-tertiary" | "secondary" | "primary";
 }
 
 export interface RoadmapSectionContent {
@@ -95,7 +90,8 @@ export const roadmapSectionContent: RoadmapSectionContent = {
       tone: "primary",
     },
   ],
-  ctaText: "Ready to start? It's 100% free and built to be useful from day one.",
+  ctaText:
+    "Ready to start? It's 100% free and built to be useful from day one.",
   ctaLabel: "Start your roadmap",
   ctaHref: "/practice",
 };

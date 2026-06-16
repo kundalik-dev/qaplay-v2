@@ -11,7 +11,11 @@ interface NavBrandProps {
 
 export function NavBrand({ brand }: NavBrandProps) {
   return (
-    <Link href={brand.href} aria-label={`${brand.name} home`} className={styles.brand}>
+    <Link
+      href={brand.href}
+      aria-label={`${brand.name} home`}
+      className={styles.brand}
+    >
       <Image
         src="/logo/logo.svg"
         alt={`${brand.name} logo`}

@@ -44,9 +44,7 @@ export function PracticeNewCard({
 
       <div className={styles.copy}>
         <h3 className={styles.cardTitle}>{title}</h3>
-        <span
-          className={cn(styles.level, styles[`level-${levelClassName}`])}
-        >
+        <span className={cn(styles.level, styles[`level-${levelClassName}`])}>
           {level}
         </span>
       </div>

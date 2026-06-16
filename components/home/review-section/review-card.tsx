@@ -22,7 +22,11 @@ export function ReviewCard({ duplicate = false, review }: ReviewCardProps) {
         &quot;
       </div>
       <blockquote className={styles.quote}>{review.quote}</blockquote>
-      <div className={styles.stars} aria-label={duplicate ? undefined : "5 out of 5 stars"} role={duplicate ? undefined : "img"}>
+      <div
+        className={styles.stars}
+        aria-label={duplicate ? undefined : "5 out of 5 stars"}
+        role={duplicate ? undefined : "img"}
+      >
         <span aria-hidden="true">★★★★★</span>
       </div>
       <div className={styles.author}>

@@ -50,7 +50,10 @@ export function InterviewVisualizer({
 
       <div className={styles.visualizerBody}>
         <div className={styles.speakerRow}>
-          <div className={`${styles.avatar} ${styles.avatarAi}`} aria-hidden="true">
+          <div
+            className={`${styles.avatar} ${styles.avatarAi}`}
+            aria-hidden="true"
+          >
             <AiIcon strokeWidth={2} />
           </div>
           <div className={styles.speakerInfo}>
@@ -80,7 +83,10 @@ export function InterviewVisualizer({
             <div className={styles.speakerName}>{userLabel}</div>
             <div className={styles.listeningTag}>● Listening...</div>
           </div>
-          <div className={`${styles.wave} ${styles.userWave}`} aria-hidden="true">
+          <div
+            className={`${styles.wave} ${styles.userWave}`}
+            aria-hidden="true"
+          >
             {userWaveBars.map((bar) => (
               <span key={bar} className={styles.waveBar} />
             ))}
@@ -88,7 +94,11 @@ export function InterviewVisualizer({
         </div>
       </div>
 
-      <div className={styles.visualizerFooter} role="group" aria-label="Session stats">
+      <div
+        className={styles.visualizerFooter}
+        role="group"
+        aria-label="Session stats"
+      >
         {footerStats.map((stat) => (
           <div key={stat.key} className={styles.visualizerFooterStat}>
             <div className={styles.visualizerStatValue}>{stat.value}</div>

@@ -21,7 +21,11 @@ export function FooterNavColumn({ column }: FooterNavColumnProps) {
 
           return (
             <li key={link.href}>
-              <Link href={link.href} className={styles.navLink} {...externalProps}>
+              <Link
+                href={link.href}
+                className={styles.navLink}
+                {...externalProps}
+              >
                 {link.label}
               </Link>
             </li>

@@ -6,12 +6,7 @@ import styles from "./roadmap-section.module.css";
 import shared from "../shared/home-shared.module.css";
 
 export function RoadmapSection() {
-  const {
-    description,
-    sectionTag,
-    steps,
-    titleLines,
-  } = roadmapSectionContent;
+  const { description, sectionTag, steps, titleLines } = roadmapSectionContent;
 
   return (
     <section

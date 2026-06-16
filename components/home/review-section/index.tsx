@@ -53,7 +53,11 @@ export function ReviewSection() {
           </div>
         </div>
 
-        <div className={styles.metrics} aria-label="Community stats" data-testid="reviews-metrics">
+        <div
+          className={styles.metrics}
+          aria-label="Community stats"
+          data-testid="reviews-metrics"
+        >
           {metrics.map((metric) => (
             <div
               key={metric.label}

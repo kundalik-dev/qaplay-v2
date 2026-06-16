@@ -10,7 +10,11 @@ interface FooterLogoProps {
 
 export function FooterLogo({ brand }: FooterLogoProps) {
   return (
-    <Link href={brand.href} aria-label={`${brand.name} home`} className={styles.logo}>
+    <Link
+      href={brand.href}
+      aria-label={`${brand.name} home`}
+      className={styles.logo}
+    >
       <div className={styles.logoBadge} aria-hidden="true">
         {brand.badge}
       </div>

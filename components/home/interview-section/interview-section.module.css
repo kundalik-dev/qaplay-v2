@@ -116,7 +116,8 @@
 
 .card:hover .cardIcon {
   transform: scale(1.12) translateY(-2px);
-  box-shadow: 0 8px 22px color-mix(in srgb, var(--interview-accent) 28%, transparent);
+  box-shadow: 0 8px 22px
+    color-mix(in srgb, var(--interview-accent) 28%, transparent);
 }
 
 .cardTitle {
@@ -218,7 +219,8 @@
   height: 8px;
   border-radius: 999px;
   background: var(--visualizer-accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--visualizer-accent) 22%, transparent);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--visualizer-accent) 22%, transparent);
   animation: pulse-live 2s ease infinite;
   flex-shrink: 0;
 }
@@ -237,7 +239,8 @@
   align-items: center;
   gap: 6px;
   padding: 3px 9px;
-  border: 1px solid color-mix(in srgb, var(--visualizer-accent) 30%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--visualizer-accent) 30%, transparent);
   border-radius: 10px;
   background: color-mix(in srgb, var(--visualizer-accent) 12%, transparent);
   color: var(--visualizer-accent);
@@ -275,7 +278,8 @@
 }
 
 .avatarAi {
-  border: 1px solid color-mix(in srgb, var(--visualizer-accent) 28%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--visualizer-accent) 28%, transparent);
   background: color-mix(in srgb, var(--visualizer-accent) 12%, transparent);
   color: var(--visualizer-accent);
 }
@@ -524,11 +528,13 @@
 @keyframes pulse-live {
   0%,
   100% {
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--visualizer-accent) 22%, transparent);
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--visualizer-accent) 22%, transparent);
   }
 
   50% {
-    box-shadow: 0 0 0 7px color-mix(in srgb, var(--visualizer-accent) 6%, transparent);
+    box-shadow: 0 0 0 7px
+      color-mix(in srgb, var(--visualizer-accent) 6%, transparent);
   }
 }
 

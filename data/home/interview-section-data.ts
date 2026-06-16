@@ -8,11 +8,7 @@ import {
   Mic,
 } from "lucide-react";
 
-export type InterviewCardAccent =
-  | "primary"
-  | "secondary"
-  | "info"
-  | "success";
+export type InterviewCardAccent = "primary" | "secondary" | "info" | "success";
 
 export interface InterviewFeatureCard {
   accent: InterviewCardAccent;
@@ -94,8 +90,7 @@ export const interviewSectionContent: InterviewSectionContent = {
       accent: "success",
       icon: BadgeCheck,
       title: "100% Free",
-      description:
-        "No account. No limit. Practice as many rounds as you need.",
+      description: "No account. No limit. Practice as many rounds as you need.",
     },
   ],
   ctas: [

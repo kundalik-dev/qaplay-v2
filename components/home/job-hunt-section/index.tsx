@@ -71,24 +71,35 @@ export function JobHuntSection() {
             title={crmPanel.title}
           />
 
-          <article className={cn(styles["jobs-panel"], styles["jobs-panel-future"])}>
+          <article
+            className={cn(styles["jobs-panel"], styles["jobs-panel-future"])}
+          >
             {futurePanel.badge ? (
-              <div className={styles["jobs-future-badge"]}>{futurePanel.badge}</div>
+              <div className={styles["jobs-future-badge"]}>
+                {futurePanel.badge}
+              </div>
             ) : null}
 
             <div className={styles["jobs-panel-head"]}>
               <div className={styles["jobs-panel-icon"]} aria-hidden="true">
                 <FuturePanelIcon strokeWidth={2} />
               </div>
-              <h3 className={styles["jobs-panel-title"]}>{futurePanel.title}</h3>
+              <h3 className={styles["jobs-panel-title"]}>
+                {futurePanel.title}
+              </h3>
             </div>
 
-            <p className={styles["jobs-panel-description"]}>{futurePanel.description}</p>
+            <p className={styles["jobs-panel-description"]}>
+              {futurePanel.description}
+            </p>
 
             <div className={styles["jobs-track-list"]}>
               {futureChecklist.map((item) => (
                 <div key={item} className={styles["jobs-track-row"]}>
-                  <span className={styles["jobs-track-tick"]} aria-hidden="true">
+                  <span
+                    className={styles["jobs-track-tick"]}
+                    aria-hidden="true"
+                  >
                     <Check strokeWidth={2.25} />
                   </span>
                   <span>{item}</span>
