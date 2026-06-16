@@ -22,10 +22,7 @@ export const practicePageMetadata = createPageMetadata({
     "practice dropdowns",
     "practice date picker",
     "practice file upload",
-    "Selenium practice elements",
     "Playwright practice elements",
     "Cypress practice elements",
-    "QA automation practice elements",
-    "automation testing UI",
   ],
 });

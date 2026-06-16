@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { navBrand, navLinks, navCta, navAuth } from "@/data/nav-data";
 import { buttonVariants } from "@/components/ui/button";
-import { ButtonContent } from "@/components/ui/button-components";
 
 import { NavBrand } from "./nav-brand";
 import { NavLinks } from "./nav-links";
