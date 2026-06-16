@@ -27,12 +27,12 @@ export function HomeHero() {
           </div>
 
           <h1 id="home-hero-title" className={styles.title}>
-            The Only
+            The Only{" "}
             <br />
             <span className={styles.titleAccent}>Automation </span>
             <br />
             <span className={styles.titleAccent}>Playground </span>
-            You
+            You{" "}
             <br />
             Need For Practice
           </h1>

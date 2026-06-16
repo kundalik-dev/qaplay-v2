@@ -2,6 +2,7 @@ import type { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
+import shared from "../shared/home-shared.module.css";
 import styles from "./interview-section.module.css";
 
 type InterviewFeatureCardProps = {
@@ -38,7 +39,7 @@ export function InterviewFeatureCard({
       data-testid={`interview-card-${token}`}
       data-card={token}
     >
-      <div className={styles.cardIcon} aria-hidden="true">
+      <div className={cn(shared.homeIconBox, styles.cardIcon)} aria-hidden="true">
         <Icon strokeWidth={2} />
       </div>
       <h3 className={styles.cardTitle}>{title}</h3>

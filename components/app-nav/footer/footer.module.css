@@ -39,27 +39,11 @@
   text-decoration: none;
 }
 
-.logoBadge {
+.logoImage {
   width: 32px;
   height: 32px;
-  border-radius: 10px;
-  display: grid;
-  place-items: center;
   flex-shrink: 0;
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 14px;
-  font-weight: 800;
-  color: #0a0c10;
-  background: linear-gradient(
-    135deg,
-    var(--primary),
-    color-mix(in srgb, var(--primary) 60%, var(--secondary))
-  );
-  box-shadow: 0 8px 20px color-mix(in srgb, var(--primary) 18%, transparent);
-}
-
-:global(:root:not(.dark)) .logoBadge {
-  color: #ffffff;
+  object-fit: contain;
 }
 
 .logoName {

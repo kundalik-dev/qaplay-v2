@@ -29,7 +29,7 @@ export function ReviewSection() {
         <div className={cn(shared.sectionHeader, styles.header)}>
           <div className={shared.sectionTag}>{sectionTag}</div>
           <h2 id="reviews-title" className={shared.sectionTitle}>
-            <span className={shared.sectionTitleLine}>{titleLines[0]}</span>
+            <span className={shared.sectionTitleLine}>{titleLines[0]}</span>{" "}
             <span className={cn(shared.sectionTitleLine, styles.titleAccent)}>
               {titleLines[1]}
             </span>
@@ -64,8 +64,12 @@ export function ReviewSection() {
               className={styles.metricItem}
               data-testid={`review-metric-${metric.label.toLowerCase().replaceAll(" ", "-")}`}
             >
-              <span className={styles.metricValue}>{metric.value}</span>
-              <span className={styles.metricLabel}>{metric.label}</span>
+              <span className={cn(shared.homeMetricValue, styles.metricValue)}>
+                {metric.value}
+              </span>
+              <span className={cn(shared.homeMetricLabel, styles.metricLabel)}>
+                {metric.label}
+              </span>
             </div>
           ))}
         </div>

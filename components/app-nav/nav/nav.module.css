@@ -270,6 +270,9 @@
 
 .mobileActions {
   margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .mobileCta {
@@ -277,13 +280,39 @@
   justify-content: center;
 }
 
-@media (max-width: 900px) {
+.mobileThemeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--muted);
+}
+
+.mobileThemeLabel {
+  color: var(--muted-foreground);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@media (max-width: 1050px) {
   .links {
     display: none;
   }
 
   .menuButton {
     display: flex;
+  }
+
+  .themeToggle,
+  .cta {
+    display: none;
+  }
+
+  /* show theme toggle when it's inside the mobile sheet */
+  .mobileThemeRow .themeToggle {
+    display: grid;
   }
 }
 
@@ -297,6 +326,6 @@
   }
 
   .name {
-    display: none;
+    font-size: 13px;
   }
 }

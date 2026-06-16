@@ -89,12 +89,9 @@
   white-space: nowrap;
   cursor: default;
   border: 1px solid var(--border);
-  border-radius: 999px;
   background: color-mix(in srgb, var(--card) 82%, transparent);
-  padding: 10px 16px;
   color: var(--muted-foreground);
   font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.04em;
   transition:

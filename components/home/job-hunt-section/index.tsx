@@ -39,7 +39,7 @@ export function JobHuntSection() {
         <div className={styles.header}>
           <div className={shared.sectionTag}>{sectionTag}</div>
           <h2 id="jobs-title" className={styles.title}>
-            <span className={styles.titleLine}>{titleLines[0]}</span>
+            <span className={styles.titleLine}>{titleLines[0]}</span>{" "}
             <span className={styles.titleLine}>{titleLines[1]}</span>
           </h2>
           <p className={styles.description}>{description}</p>

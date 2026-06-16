@@ -7,10 +7,10 @@
 
 .title {
   font-family: var(--font-space-grotesk), var(--font-geist-sans), sans-serif;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: var(--home-type-title-size);
   font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
+  letter-spacing: var(--home-type-title-tracking);
+  line-height: var(--home-type-title-line);
   color: var(--foreground);
   margin: 8px 0 0;
 }
@@ -23,8 +23,8 @@
   margin-top: 16px;
   margin-inline: auto;
   color: var(--muted-foreground);
-  font-size: 15px;
-  line-height: 1.75;
+  font-size: var(--home-type-body-size);
+  line-height: var(--home-type-body-line);
   max-width: 600px;
 }
 
@@ -361,12 +361,6 @@
 
   .panels {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 900px) {
-  .title {
-    font-size: clamp(2rem, 6vw, 2.6rem);
   }
 }
 

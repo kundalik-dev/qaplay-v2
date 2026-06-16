@@ -19,11 +19,11 @@ const buttonVariants = cva(
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
         homePrimary:
-          "rounded-full font-heading font-semibold text-[0.9rem] text-primary-foreground shadow-[0_16px_34px_color-mix(in_srgb,var(--primary)_18%,transparent)] bg-[linear-gradient(135deg,var(--primary),color-mix(in_srgb,var(--primary)_68%,var(--secondary)))] hover:-translate-y-0.5 hover:shadow-[0_20px_40px_color-mix(in_srgb,var(--primary)_24%,transparent)]",
+          "rounded-full font-heading font-semibold text-[length:var(--home-button-font-size)] text-primary-foreground shadow-[0_16px_34px_color-mix(in_srgb,var(--primary)_18%,transparent)] bg-[linear-gradient(135deg,var(--primary),color-mix(in_srgb,var(--primary)_68%,var(--secondary)))] hover:-translate-y-0.5 hover:shadow-[0_20px_40px_color-mix(in_srgb,var(--primary)_24%,transparent)]",
         homeSecondary:
-          "rounded-full border-[rgba(20,42,62,0.12)] bg-white/72 font-heading font-semibold text-[0.9rem] text-foreground shadow-[0_10px_24px_rgba(20,42,62,0.08)] hover:-translate-y-0.5 hover:border-[rgba(20,42,62,0.18)] dark:border-border dark:bg-[color-mix(in_srgb,var(--card)_82%,transparent)] dark:shadow-[0_10px_24px_rgba(0,0,0,0.2)]",
+          "rounded-full border-[rgba(20,42,62,0.12)] bg-white/72 font-heading font-semibold text-[length:var(--home-button-font-size)] text-foreground shadow-[0_10px_24px_rgba(20,42,62,0.08)] hover:-translate-y-0.5 hover:border-[rgba(20,42,62,0.18)] dark:border-border dark:bg-[color-mix(in_srgb,var(--card)_82%,transparent)] dark:shadow-[0_10px_24px_rgba(0,0,0,0.2)]",
         homeGhost:
-          "rounded-full border-[color-mix(in_srgb,var(--secondary)_22%,transparent)] bg-[color-mix(in_srgb,var(--secondary)_12%,transparent)] font-heading font-semibold text-[0.9rem] text-secondary hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--secondary)_18%,transparent)]",
+          "rounded-full border-[color-mix(in_srgb,var(--secondary)_22%,transparent)] bg-[color-mix(in_srgb,var(--secondary)_12%,transparent)] font-heading font-semibold text-[length:var(--home-button-font-size)] text-secondary hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--secondary)_18%,transparent)]",
       },
       size: {
         default:
@@ -37,8 +37,9 @@ const buttonVariants = cva(
         "icon-sm":
           "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
         "icon-lg": "size-9",
-        home: "min-h-11 gap-2 px-[22px] font-heading",
-        "home-sm": "min-h-10 gap-2 px-[18px] text-[0.85rem] font-heading",
+        home: "min-h-[var(--home-button-height)] gap-2 px-[var(--home-button-padding-x)] font-heading [&_svg:not([class*='size-'])]:size-[var(--home-button-icon-size)]",
+        "home-sm":
+          "min-h-[var(--home-button-height-sm)] gap-2 px-[var(--home-button-padding-x-sm)] text-[length:var(--home-button-font-size-sm)] font-heading [&_svg:not([class*='size-'])]:size-[var(--home-button-icon-size)]",
       },
     },
     defaultVariants: {

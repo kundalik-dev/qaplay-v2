@@ -1,7 +1,18 @@
 .feature-bento-grid {
+  --feature-card-padding: 13px;
+  --feature-card-padding-mobile: 12px;
+  --feature-card-gap: 8px;
+  --feature-card-title-size: 0.94rem;
+  --feature-card-body-size: 0.76rem;
+  --feature-card-body-line: 1.48;
+  --feature-card-icon-size: 24px;
+  --feature-card-icon-box-size: 54px;
+  --feature-card-practice-icon-box-size: 54px;
+  --feature-card-practice-title-size: clamp(1.02rem, 1.55vw, 1.28rem);
+  --feature-card-practice-body-size: 0.82rem;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
+  gap: var(--feature-card-gap);
 }
 
 .feature-bento-card {
@@ -11,11 +22,11 @@
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border);
-  border-radius: 28px;
-  background: color-mix(in srgb, var(--card) 74%, transparent);
-  padding: 24px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--home-card-radius-lg);
+  background: var(--home-card-bg);
+  padding: var(--feature-card-padding);
+  backdrop-filter: blur(var(--home-card-blur));
+  -webkit-backdrop-filter: blur(var(--home-card-blur));
   isolation: isolate;
   transition:
     transform 0.22s ease,
@@ -82,8 +93,8 @@
   grid-row: 2 / 3;
   flex-direction: row;
   align-items: center;
-  gap: 24px;
-  padding: 24px 32px;
+  gap: 14px;
+  padding: 14px 18px;
 }
 
 .feature-bento-jobs {
@@ -112,19 +123,13 @@
 
 .feature-bento-badge {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 12px;
+  right: 12px;
   z-index: 1;
   border: 1px solid color-mix(in srgb, var(--feature-accent) 24%, transparent);
-  border-radius: 10px;
   background: color-mix(in srgb, var(--feature-accent) 10%, transparent);
   color: var(--feature-accent);
-  padding: 4px 9px;
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
 }
 
 .feature-bento-icon {
@@ -133,13 +138,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
   border: 1px solid color-mix(in srgb, var(--feature-accent) 22%, transparent);
-  border-radius: 16px;
   background: color-mix(in srgb, var(--feature-accent) 10%, transparent);
-  font-size: 1.5rem;
+  width: var(--feature-card-icon-box-size);
+  height: var(--feature-card-icon-box-size);
+  font-size: 0.95rem;
   flex-shrink: 0;
   transition:
     transform 0.22s ease,
@@ -147,8 +151,8 @@
 }
 
 .feature-bento-icon svg {
-  width: 24px;
-  height: 24px;
+  width: var(--feature-card-icon-size);
+  height: var(--feature-card-icon-size);
 }
 
 .feature-bento-card:hover .feature-bento-icon {
@@ -166,16 +170,16 @@
 }
 
 .feature-bento-practice .feature-bento-icon {
-  width: 72px;
-  height: 72px;
-  border-radius: 22px;
-  font-size: 2.2rem;
-  margin-bottom: 24px;
+  width: var(--feature-card-practice-icon-box-size);
+  height: var(--feature-card-practice-icon-box-size);
+  border-radius: 14px;
+  font-size: 1.25rem;
+  margin-bottom: 12px;
 }
 
 .feature-bento-practice .feature-bento-icon svg {
-  width: 34px;
-  height: 34px;
+  width: 24px;
+  height: 24px;
 }
 
 .feature-bento-bank .feature-bento-icon {
@@ -183,17 +187,17 @@
 }
 
 .feature-bento-title {
-  margin: 0 0 10px;
+  margin: 0 0 5px;
   color: var(--foreground);
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 1.12rem;
+  font-size: var(--feature-card-title-size);
   font-weight: 700;
   letter-spacing: -0.03em;
   transition: color 0.18s ease;
 }
 
 .feature-bento-practice .feature-bento-title {
-  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  font-size: var(--feature-card-practice-title-size);
 }
 
 .feature-bento-card:hover .feature-bento-title {
@@ -201,16 +205,16 @@
 }
 
 .feature-bento-description {
-  margin: 0 0 18px;
+  margin: 0 0 10px;
   flex: 1;
   color: var(--muted-foreground);
-  font-size: 0.88rem;
-  line-height: 1.68;
+  font-size: var(--feature-card-body-size);
+  line-height: var(--feature-card-body-line);
 }
 
 .feature-bento-practice .feature-bento-description {
-  max-width: 40ch;
-  font-size: 0.96rem;
+  max-width: 42ch;
+  font-size: var(--feature-card-practice-body-size);
 }
 
 .feature-bento-link {
@@ -241,6 +245,7 @@
 
 @media (max-width: 1024px) {
   .feature-bento-grid {
+    --feature-card-padding: 13px;
     grid-template-columns: 1fr 1fr;
   }
 
@@ -264,7 +269,7 @@
     grid-row: auto;
     flex-direction: column;
     align-items: flex-start;
-    padding: 24px;
+    padding: 14px;
   }
 }
 
@@ -279,6 +284,6 @@
   }
 
   .feature-bento-card {
-    padding: 20px;
+    padding: var(--feature-card-padding-mobile);
   }
 }

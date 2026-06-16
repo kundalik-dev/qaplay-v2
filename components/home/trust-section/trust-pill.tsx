@@ -1,3 +1,6 @@
+import { cn } from "@/lib/utils";
+
+import shared from "../shared/home-shared.module.css";
 import styles from "./trust-section.module.css";
 
 interface TrustPillProps {
@@ -5,5 +8,5 @@ interface TrustPillProps {
 }
 
 export function TrustPill({ label }: TrustPillProps) {
-  return <div className={styles.pill}>{label}</div>;
+  return <div className={cn(shared.homePill, styles.pill)}>{label}</div>;
 }

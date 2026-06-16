@@ -37,3 +37,8 @@ export const navCta: NavCta = {
   label: "Start Practicing \u2192",
   href: "/practice",
 };
+
+export const navAuth: NavCta = {
+  label: "Log in / Sign up",
+  href: "/auth",
+};
