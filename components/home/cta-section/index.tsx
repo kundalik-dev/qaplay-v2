@@ -55,7 +55,7 @@ export function CtaSection() {
             <div className={styles.copy}>
               <div className={cn(shared.eyebrow, styles.eyebrow)}>
                 <span className={shared.eyebrowDot} aria-hidden="true" />
-                No signup. No credit card. Just practice.
+                Free to start — sign up to track your progress
               </div>
 
               <h2 id="cta-title" className={styles.title}>
@@ -112,8 +112,7 @@ export function CtaSection() {
               </ButtonGroup>
 
               <div className={styles.note}>
-                Always free - No account needed - Built for QA engineers in real
-                workflows
+                Always free · Sign up to save scores, track progress &amp; unlock more
               </div>
             </div>
 

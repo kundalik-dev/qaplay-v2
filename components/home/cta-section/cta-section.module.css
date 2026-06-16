@@ -192,6 +192,10 @@
     grid-template-columns: 1fr;
     gap: 28px;
   }
+
+  .side {
+    display: none;
+  }
 }
 
 @media (max-width: 900px) {

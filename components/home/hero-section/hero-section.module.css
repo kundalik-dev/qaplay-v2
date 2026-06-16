@@ -45,6 +45,14 @@
   color: var(--primary);
 }
 
+.titleNowrap {
+  white-space: nowrap;
+  /* Stays at parent size on large screens.
+     Below ~500px it scales down fluidly so "Need For Practice"
+     never wraps — dividing by 11 covers the ~17-char phrase width. */
+  font-size: min(1em, calc(100vw / 11));
+}
+
 .description {
   max-width: 560px;
   margin: 20px auto 0;
