@@ -53,8 +53,8 @@
 .sectionTag {
   color: var(--primary);
   font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  font-size: var(--home-type-label-size);
+  letter-spacing: var(--home-type-label-spacing);
   text-transform: uppercase;
 }
 
@@ -62,10 +62,10 @@
   margin: 18px 0 0;
   color: var(--foreground);
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-size: var(--home-type-title-size);
   font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.05em;
+  line-height: var(--home-type-title-line);
+  letter-spacing: var(--home-type-title-tracking);
   text-wrap: balance;
 }
 
@@ -77,8 +77,8 @@
   margin: 18px 0 0;
   max-width: 560px;
   color: var(--muted-foreground);
-  font-size: clamp(1rem, 1.45vw, 1.08rem);
-  line-height: 1.7;
+  font-size: var(--home-type-body-size);
+  line-height: var(--home-type-body-line);
   text-wrap: pretty;
 }
 
@@ -93,8 +93,8 @@
   background: color-mix(in srgb, var(--primary) 9%, transparent);
   color: var(--primary);
   font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  font-size: var(--home-type-label-size);
+  letter-spacing: var(--home-type-label-spacing);
   text-transform: uppercase;
 }
 

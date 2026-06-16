@@ -53,10 +53,10 @@
   margin: 0 0 18px;
   color: var(--foreground);
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(2.3rem, 4.9vw, 4rem);
+  font-size: var(--home-type-spotlight-size);
   font-weight: 600;
-  line-height: 0.97;
-  letter-spacing: -0.055em;
+  line-height: var(--home-type-spotlight-line);
+  letter-spacing: var(--home-type-spotlight-tracking);
 }
 
 .titleLine {
@@ -71,8 +71,8 @@
   max-width: 560px;
   margin: 0;
   color: var(--muted-foreground);
-  font-size: clamp(1rem, 1.5vw, 1.08rem);
-  line-height: 1.78;
+  font-size: var(--home-type-body-size);
+  line-height: calc(var(--home-type-body-line) + 0.08);
   text-wrap: pretty;
 }
 
@@ -197,10 +197,6 @@
 @media (max-width: 900px) {
   .copy {
     max-width: 100%;
-  }
-
-  .title {
-    font-size: clamp(2.1rem, 7vw, 3.2rem);
   }
 }
 

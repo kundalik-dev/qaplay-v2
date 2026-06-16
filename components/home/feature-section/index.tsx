@@ -27,7 +27,7 @@ export function HomeFeaturePreview() {
           <h2 id="features-title" className={shared.sectionTitle}>
             <span className={shared.sectionTitleLine}>
               Everything You Need.
-            </span>
+            </span>{" "}
             <span className={shared.sectionTitleLine}>Nothing You Do Not.</span>
           </h2>
           <p className={shared.sectionDescription}>

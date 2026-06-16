@@ -18,17 +18,17 @@
   margin: 16px 0 0;
   color: var(--foreground);
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-size: var(--home-type-title-size);
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
+  line-height: var(--home-type-title-line);
+  letter-spacing: var(--home-type-title-tracking);
 }
 
 .subheading {
   margin: 16px 0 0;
   color: var(--muted-foreground);
-  font-size: 15px;
-  line-height: 1.75;
+  font-size: var(--home-type-body-size);
+  line-height: var(--home-type-body-line);
   max-width: 380px;
 }
 

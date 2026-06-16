@@ -59,7 +59,7 @@ export function CtaSection() {
               </div>
 
               <h2 id="cta-title" className={styles.title}>
-                <span className={styles.titleLine}>Your Next QA Role</span>
+                <span className={styles.titleLine}>Your Next QA Role</span>{" "}
                 <span className={cn(styles.titleLine, styles.titleAccent)}>
                   Starts Here.
                 </span>

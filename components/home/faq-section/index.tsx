@@ -40,7 +40,7 @@ export function FaqSection() {
           <div className={styles.lead}>
             <div className={shared.sectionTag}>{"// frequently asked"}</div>
             <h2 id="faq-title" className={styles.heading}>
-              Questions?
+              Questions?{" "}
               <br />
               Answered clearly.
             </h2>

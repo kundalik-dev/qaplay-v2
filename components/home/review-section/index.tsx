@@ -29,7 +29,7 @@ export function ReviewSection() {
         <div className={cn(shared.sectionHeader, styles.header)}>
           <div className={shared.sectionTag}>{sectionTag}</div>
           <h2 id="reviews-title" className={shared.sectionTitle}>
-            <span className={shared.sectionTitleLine}>{titleLines[0]}</span>
+            <span className={shared.sectionTitleLine}>{titleLines[0]}</span>{" "}
             <span className={cn(shared.sectionTitleLine, styles.titleAccent)}>
               {titleLines[1]}
             </span>

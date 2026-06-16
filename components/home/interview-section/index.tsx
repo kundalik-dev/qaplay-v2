@@ -50,7 +50,7 @@ export function InterviewSection() {
         <div className={shared.sectionHeader}>
           <div className={shared.sectionTag}>{sectionTag}</div>
           <h2 id="interview-title" className={shared.sectionTitle}>
-            <span className={shared.sectionTitleLine}>{titleLineOne}</span>
+            <span className={shared.sectionTitleLine}>{titleLineOne}</span>{" "}
             <span className={shared.sectionTitleLine}>
               <span className={styles.titleAccent}>{titleAccent}</span>
             </span>

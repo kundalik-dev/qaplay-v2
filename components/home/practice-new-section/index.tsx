@@ -34,7 +34,7 @@ export function PracticeNewSection() {
           </div>
 
           <h2 id="practice-new-title" className={styles.title}>
-            <span className={styles.titleLine}>Pick Your Challenge,</span>
+            <span className={styles.titleLine}>Pick Your Challenge,</span>{" "}
             <span className={styles.titleLine}>
               Level Up Your Automation Testing.
             </span>
