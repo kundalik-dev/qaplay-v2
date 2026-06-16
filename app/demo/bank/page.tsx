@@ -1,5 +1,9 @@
 import React from "react";
 
+import { demoBankPageMetadata } from "@/data/meta-data/demo/demo-bank-page-meta-data";
+
+export const metadata = demoBankPageMetadata;
+
 const BankDemoApp = () => {
   return (
     <section data-testid="demo-bank-page">

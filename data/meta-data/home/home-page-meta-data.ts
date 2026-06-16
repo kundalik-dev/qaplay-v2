@@ -1,5 +1,5 @@
-import { basicDetails } from "./basic-details-data";
-import { createPageMetadata } from "./create-page-metadata";
+import { basicDetails } from "../basic-details-data";
+import { createPageMetadata } from "../create-page-metadata";
 
 /**
  * Homepage metadata.

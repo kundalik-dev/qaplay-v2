@@ -1,5 +1,9 @@
 import React from "react";
 
+import { demoShoppingPageMetadata } from "@/data/meta-data/demo/demo-shopping-page-meta-data";
+
+export const metadata = demoShoppingPageMetadata;
+
 const ShoppingDemoApp = () => {
   return (
     <section data-testid="demo-shopping-page">

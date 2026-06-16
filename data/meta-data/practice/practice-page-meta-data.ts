@@ -1,4 +1,4 @@
-import { createPageMetadata } from "./create-page-metadata";
+import { createPageMetadata } from "../create-page-metadata";
 
 /**
  * Metadata for the /practice page.
