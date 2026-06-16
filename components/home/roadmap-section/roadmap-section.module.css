@@ -16,18 +16,20 @@
 }
 
 .timeline {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 0;
-  max-width: 780px;
-  margin: 0 auto;
+  margin-top: 48px;
+  position: relative;
 }
 
 .step {
   --step-color: var(--success);
-  display: grid;
-  grid-template-columns: 72px 1fr;
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 14px;
   position: relative;
 }
 
@@ -51,92 +53,75 @@
   --step-color: var(--primary);
 }
 
-.stepLeft {
-  display: flex;
-  justify-content: center;
+/* horizontal connector running through the icon row */
+.step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 27px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  transform: translateY(-1px);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--step-color) 40%, transparent),
+    color-mix(in srgb, var(--step-color) 12%, transparent)
+  );
+  z-index: 0;
 }
 
-.numberWrap {
+.stepIcon {
   display: flex;
-  flex-direction: column;
   align-items: center;
-}
-
-.number {
-  width: 48px;
-  height: 48px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  background: color-mix(in srgb, var(--step-color) 10%, transparent);
-  border: 1.5px solid color-mix(in srgb, var(--step-color) 35%, transparent);
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 18px;
+  border: 1px solid color-mix(in srgb, var(--step-color) 22%, transparent);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--step-color) 10%, var(--card));
   color: var(--step-color);
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  box-shadow:
+    0 12px 26px rgba(20, 42, 62, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  position: relative;
+  z-index: 1;
   transition:
     transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
     border-color 0.22s ease,
     box-shadow 0.22s ease;
 }
 
-.step:hover .number {
-  transform: scale(1.08);
-  border-color: color-mix(in srgb, var(--step-color) 60%, transparent);
-  box-shadow: 0 0 20px color-mix(in srgb, var(--step-color) 30%, transparent);
-}
-
-.connector {
-  width: 1px;
-  min-height: 42px;
-  flex: 1;
-  margin-top: 4px;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--primary) 25%, transparent),
-    color-mix(in srgb, var(--primary) 5%, transparent)
-  );
-}
-
-.stepBody {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding-bottom: 48px;
-}
-
-.step:last-child .stepBody {
-  padding-bottom: 0;
-}
-
-.stepIcon {
-  width: 48px;
-  height: 48px;
-  flex-shrink: 0;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  color: var(--step-color);
-  background: color-mix(in srgb, var(--step-color) 10%, transparent);
-  border: 1px solid color-mix(in srgb, var(--step-color) 22%, transparent);
-  transition:
-    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.22s ease;
-}
-
 .stepIcon svg {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
 }
 
 .step:hover .stepIcon {
-  transform: translateY(-3px) scale(1.08);
-  box-shadow: 0 8px 22px color-mix(in srgb, var(--step-color) 24%, transparent);
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--step-color) 42%, transparent);
+  box-shadow:
+    0 18px 36px rgba(20, 42, 62, 0.12),
+    0 0 0 1px color-mix(in srgb, var(--step-color) 14%, transparent);
 }
 
-.stepContent {
-  flex: 1;
+.stepNumber {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--card);
+  border: 1.5px solid color-mix(in srgb, var(--step-color) 45%, transparent);
+  color: var(--step-color);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .stepLabel {
@@ -150,13 +135,13 @@
 }
 
 .stepTitle {
-  margin: 0 0 12px;
+  margin: 0 0 8px;
   color: var(--foreground);
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 20px;
+  font-family: var(--font-space-grotesk), var(--font-geist-sans), sans-serif;
+  font-size: 14.5px;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
   transition: color 0.15s ease;
 }
 
@@ -165,24 +150,26 @@
 }
 
 .stepDescription {
-  margin: 0 0 16px;
-  max-width: 52ch;
+  margin: 0 0 14px;
+  max-width: 24ch;
   color: var(--muted-foreground);
-  font-size: 14.5px;
-  line-height: 1.7;
+  font-size: 12.5px;
+  line-height: 1.55;
 }
 
 .stepLink {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   color: var(--step-color);
   font-family: var(--font-ibm-plex-mono), monospace;
   font-size: 11px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   text-decoration: none;
   opacity: 0.78;
-  transition: opacity 0.15s ease, gap 0.22s ease;
+  transition:
+    opacity 0.15s ease,
+    gap 0.22s ease;
 }
 
 .stepLink::after {
@@ -191,7 +178,7 @@
 
 .stepLink:hover {
   opacity: 1;
-  gap: 12px;
+  gap: 10px;
 }
 
 .cta {
@@ -214,11 +201,18 @@
   line-height: 1.5;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .timeline {
-    max-width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 18px;
   }
 
+  .step:not(:last-child)::after {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
   .cta {
     flex-direction: column;
     align-items: flex-start;
@@ -226,35 +220,14 @@
 }
 
 @media (max-width: 640px) {
+  .timeline {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
   .step {
-    grid-template-columns: 40px 1fr;
-    gap: 12px;
-  }
-
-  .number {
-    width: 36px;
-    height: 36px;
-    font-size: 11px;
-  }
-
-  .stepIcon {
-    width: 36px;
-    height: 36px;
-    border-radius: 12px;
-  }
-
-  .stepIcon svg {
-    width: 16px;
-    height: 16px;
-  }
-
-  .stepBody {
-    gap: 12px;
-    padding-bottom: 36px;
-  }
-
-  .stepTitle {
-    font-size: 17px;
+    max-width: 420px;
+    margin: 0 auto;
   }
 
   .cta {

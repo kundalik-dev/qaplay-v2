@@ -1,6 +1,3 @@
-import Link from "next/link";
-
-import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { roadmapSectionContent } from "@/data/home/roadmap-section-data";
 
@@ -9,8 +6,12 @@ import styles from "./roadmap-section.module.css";
 import shared from "../shared/home-shared.module.css";
 
 export function RoadmapSection() {
-  const { ctaHref, ctaLabel, ctaText, description, sectionTag, steps, titleLines } =
-    roadmapSectionContent;
+  const {
+    description,
+    sectionTag,
+    steps,
+    titleLines,
+  } = roadmapSectionContent;
 
   return (
     <section
@@ -40,22 +41,17 @@ export function RoadmapSection() {
         </div>
 
         <div
-          className={styles.timeline}
+          className={cn(styles.timeline)}
           role="list"
           aria-label="QA roadmap timeline"
           data-testid="roadmap-timeline"
         >
           {steps.map((step, index) => (
-            <RoadmapStep
-              key={step.id}
-              index={index}
-              isLast={index === steps.length - 1}
-              step={step}
-            />
+            <RoadmapStep key={step.id} index={index} step={step} />
           ))}
         </div>
 
-        <div className={styles.cta} data-testid="roadmap-cta">
+        {/* <div className={styles.cta} data-testid="roadmap-cta">
           <p className={styles.ctaText}>{ctaText}</p>
           <Link
             href={ctaHref}
@@ -65,7 +61,7 @@ export function RoadmapSection() {
           >
             {ctaLabel}
           </Link>
-        </div>
+        </div> */}
       </div>
     </section>
   );

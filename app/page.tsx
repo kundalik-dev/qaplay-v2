@@ -3,6 +3,7 @@ import {
   FaqSection,
   HomeFeaturePreview,
   HomeHero,
+  InterviewSection,
   JobHuntSection,
   PracticeNewSection,
   ReviewSection,
@@ -19,6 +20,7 @@ export default function Home() {
       <PracticeNewSection />
       <HomeFeaturePreview />
       <JobHuntSection />
+      <InterviewSection />
       <RoadmapSection />
       <ReviewSection />
       <CtaSection />

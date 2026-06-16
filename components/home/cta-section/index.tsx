@@ -37,7 +37,7 @@ const ctaMetrics = [
 export function CtaSection() {
   return (
     <section
-      id="interview"
+      id="cta"
       className={cn(
         shared.section,
         shared.sectionCtaPadding,

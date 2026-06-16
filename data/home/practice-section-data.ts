@@ -1,12 +1,10 @@
 import type { LucideIcon } from "lucide-react";
 import {
   AlarmClock,
-  ArrowDownWideNarrow,
   BellRing,
   CalendarDays,
   ChartNoAxesCombined,
   ChevronDown,
-  FileStack,
   FileText,
   GalleryHorizontalEnd,
   Infinity,
