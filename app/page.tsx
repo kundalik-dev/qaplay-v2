@@ -1,19 +1,28 @@
-import { HomeHero } from "@/components/home/home-hero";
-import { HomeFeaturePreview } from "@/components/home/home-feature-preview";
-import { JobHuntSection } from "@/components/home/job-hunt-section";
-import { PracticeSection } from "@/components/home/practice-section";
-import { TrustSection } from "@/components/trust-section";
-import { FaqSection } from "@/components/home/faq-section";
-import { CtaSection } from "@/components/home/cta-section";
+import {
+  CtaSection,
+  FaqSection,
+  HomeFeaturePreview,
+  HomeHero,
+  InterviewSection,
+  JobHuntSection,
+  PracticeNewSection,
+  ReviewSection,
+  RoadmapSection,
+} from "@/components/home";
+import { TrustSection } from "@/components/home/trust-section";
 
 export default function Home() {
   return (
     <>
       <HomeHero />
       <TrustSection />
-      <PracticeSection />
+      {/* <PracticeSection /> */}
+      <PracticeNewSection />
       <HomeFeaturePreview />
       <JobHuntSection />
+      <InterviewSection />
+      <RoadmapSection />
+      <ReviewSection />
       <CtaSection />
       <FaqSection />
     </>

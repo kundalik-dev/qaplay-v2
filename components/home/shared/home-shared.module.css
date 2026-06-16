@@ -1,0 +1,129 @@
+.section {
+  position: relative;
+}
+
+.sectionDefaultPadding {
+  padding: clamp(55px, 9vw, 55px) 0;
+}
+
+.sectionCtaPadding {
+  padding: clamp(72px, 9vw, 108px) 0 clamp(56px, 8vw, 88px);
+}
+
+.sectionDivider::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, 1180px);
+  height: 1px;
+  background: var(--section-divider-gradient);
+}
+
+.sectionDividerBlend {
+  --section-divider-gradient: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) 20%, transparent) 18%,
+    color-mix(in srgb, var(--primary) 44%, transparent) 50%,
+    color-mix(in srgb, var(--secondary) 18%, transparent) 82%,
+    transparent 100%
+  );
+}
+
+.sectionDividerPrimary {
+  --section-divider-gradient: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) 30%, transparent) 30%,
+    color-mix(in srgb, var(--primary) 50%, transparent) 50%,
+    color-mix(in srgb, var(--primary) 30%, transparent) 70%,
+    transparent 100%
+  );
+}
+
+.sectionHeader {
+  max-width: 620px;
+  margin: 0 0 40px;
+  text-align: left;
+}
+
+.sectionTag {
+  color: var(--primary);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.sectionTitle {
+  margin: 18px 0 0;
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+
+.sectionTitleLine {
+  display: block;
+}
+
+.sectionDescription {
+  margin: 18px 0 0;
+  max-width: 560px;
+  color: var(--muted-foreground);
+  font-size: clamp(1rem, 1.45vw, 1.08rem);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  margin-bottom: 20px;
+  border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 9%, transparent);
+  color: var(--primary);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.eyebrowDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  background: var(--primary);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--primary) 15%, transparent);
+}
+
+@media (max-width: 900px) {
+  .sectionHeader {
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .sectionDescription {
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .sectionDefaultPadding {
+    padding-block: 64px;
+  }
+
+  .sectionCtaPadding {
+    padding: 64px 0 48px;
+  }
+}

@@ -1,0 +1,353 @@
+.header {
+  max-width: 620px;
+  margin: 0 0 40px;
+  text-align: left;
+}
+
+.title {
+  margin: 14px 0 0;
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: clamp(2.2rem, 4.7vw, 3.45rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.titleLine {
+  display: block;
+}
+
+.description {
+  margin: 18px 0 0;
+  max-width: 560px;
+  color: var(--muted-foreground);
+  font-size: clamp(1rem, 1.5vw, 1.08rem);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.difficultyGrid {
+  display: grid;
+  gap: 10px;
+}
+
+.practice-difficulty-card {
+  border: 1px solid var(--border);
+  border-left-width: 2px;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--card) 74%, transparent);
+  padding: 12px 16px;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.practice-difficulty-card:hover {
+  transform: translateY(-2px);
+}
+
+.practice-difficulty-card-beginner {
+  border-left-color: var(--success);
+}
+
+.practice-difficulty-card-intermediate {
+  border-left-color: var(--warning);
+}
+
+.practice-difficulty-card-advanced {
+  border-left-color: var(--brand-tertiary);
+}
+
+.practice-difficulty-card-beginner:hover {
+  border-color: color-mix(in srgb, var(--success) 30%, var(--border));
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--success) 8%, transparent);
+}
+
+.practice-difficulty-card-intermediate:hover {
+  border-color: color-mix(in srgb, var(--warning) 30%, var(--border));
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--warning) 8%, transparent);
+}
+
+.practice-difficulty-card-advanced:hover {
+  border-color: color-mix(in srgb, var(--brand-tertiary) 30%, var(--border));
+  box-shadow: 0 14px 30px
+    color-mix(in srgb, var(--brand-tertiary) 8%, transparent);
+}
+
+.practice-difficulty-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.practice-difficulty-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.practice-difficulty-card-beginner .practice-difficulty-dot,
+.practice-difficulty-card-beginner .practice-difficulty-title {
+  color: var(--success);
+  background: var(--success);
+}
+
+.practice-difficulty-card-intermediate .practice-difficulty-dot,
+.practice-difficulty-card-intermediate .practice-difficulty-title {
+  color: var(--warning);
+  background: var(--warning);
+}
+
+.practice-difficulty-card-advanced .practice-difficulty-dot,
+.practice-difficulty-card-advanced .practice-difficulty-title {
+  color: var(--brand-tertiary);
+  background: var(--brand-tertiary);
+}
+
+.practice-difficulty-title {
+  flex: 1;
+  background: none !important;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.practice-difficulty-count {
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.practice-difficulty-card-beginner .practice-difficulty-count {
+  background: color-mix(in srgb, var(--success) 10%, transparent);
+  color: var(--success);
+  border: 1px solid color-mix(in srgb, var(--success) 28%, transparent);
+}
+
+.practice-difficulty-card-intermediate .practice-difficulty-count {
+  background: color-mix(in srgb, var(--warning) 10%, transparent);
+  color: var(--warning);
+  border: 1px solid color-mix(in srgb, var(--warning) 28%, transparent);
+}
+
+.practice-difficulty-card-advanced .practice-difficulty-count {
+  background: color-mix(in srgb, var(--brand-tertiary) 10%, transparent);
+  color: var(--brand-tertiary);
+  border: 1px solid color-mix(in srgb, var(--brand-tertiary) 28%, transparent);
+}
+
+.practice-difficulty-description {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.6;
+  padding-left: 14px;
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 12px 16px;
+  border: 1px solid color-mix(in srgb, var(--primary) 14%, transparent);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--card));
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.noteBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.actions {
+  margin-top: 4px;
+}
+
+.gridShell {
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  background: color-mix(in srgb, var(--card) 68%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 18px 40px rgba(20, 42, 62, 0.08);
+  padding: 20px;
+}
+
+:global(.dark) .gridShell {
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.practice-pill {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: color-mix(in srgb, var(--background) 40%, var(--card));
+  padding: 14px 16px;
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.practice-pill:hover {
+  transform: translateY(-2px);
+}
+
+.grid .practice-pill:nth-child(3n + 1):hover {
+  border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.grid .practice-pill:nth-child(3n + 2):hover {
+  border-color: color-mix(in srgb, var(--warning) 30%, var(--border));
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--warning) 10%, transparent);
+}
+
+.grid .practice-pill:nth-child(3n + 3):hover {
+  border-color: color-mix(in srgb, var(--brand-tertiary) 30%, var(--border));
+  box-shadow: 0 12px 24px
+    color-mix(in srgb, var(--brand-tertiary) 10%, transparent);
+}
+
+.practice-pill-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.practice-pill-copy {
+  min-width: 0;
+}
+
+.practice-pill-name {
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 0.96rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.practice-pill-level {
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.practice-pill-level-beginner {
+  background: color-mix(in srgb, var(--success) 10%, transparent);
+  color: var(--success);
+}
+
+.practice-pill-level-intermediate {
+  background: color-mix(in srgb, var(--warning) 10%, transparent);
+  color: var(--warning);
+}
+
+.practice-pill-level-advanced {
+  background: color-mix(in srgb, var(--brand-tertiary) 10%, transparent);
+  color: var(--brand-tertiary);
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .description {
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .gridShell {
+    padding: 18px;
+    border-radius: 24px;
+  }
+
+  .practice-pill {
+    min-height: 74px;
+  }
+
+  .actions :global(a),
+  .actions :global(button) {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -9,10 +9,10 @@ export type FaqSideChip = {
 };
 
 export const faqSideChips: FaqSideChip[] = [
-  { label: "Beginners",          tone: "accent"   },
-  { label: "Automation QA",      tone: "accent2"  },
-  { label: "SDET Prep",          tone: "info"     },
-  { label: "Interview Practice", tone: "warning"  },
+  { label: "Beginners", tone: "accent" },
+  { label: "Automation QA", tone: "accent2" },
+  { label: "SDET Prep", tone: "info" },
+  { label: "Interview Practice", tone: "warning" },
 ];
 
 export const faqSideCopy =

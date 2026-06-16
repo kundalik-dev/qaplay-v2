@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 
-import { AppNavbar } from "@/components/app-nav/app-navbar";
-import { AppFooter } from "@/components/app-nav/app-footer";
+import { AppFooter, AppNavbar } from "@/components/app-nav";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -56,7 +55,7 @@ export default function RootLayout({
         {/* Theme init — must run before first paint to avoid flash */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         {/* Fixed navbar sits above all page content */}
         <AppNavbar />
 

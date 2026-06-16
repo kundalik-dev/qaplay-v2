@@ -1,0 +1,227 @@
+.section {
+  padding: 80px 0;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 52px;
+  align-items: start;
+}
+
+.lead {
+  position: sticky;
+  top: 110px;
+}
+
+.heading {
+  margin: 16px 0 0;
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.subheading {
+  margin: 16px 0 0;
+  color: var(--muted-foreground);
+  font-size: 15px;
+  line-height: 1.75;
+  max-width: 380px;
+}
+
+.sideCard {
+  margin-top: 28px;
+  background: color-mix(in srgb, var(--card) 74%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 22px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.sideTitle {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  margin-bottom: 14px;
+}
+
+.chipList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.chip {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.chipAccent {
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  border: 1px solid color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+.chipAccent2 {
+  background: color-mix(in srgb, var(--secondary) 12%, transparent);
+  color: var(--secondary);
+  border: 1px solid color-mix(in srgb, var(--secondary) 25%, transparent);
+}
+
+.chipInfo {
+  background: color-mix(in srgb, var(--info) 12%, transparent);
+  color: var(--info);
+  border: 1px solid color-mix(in srgb, var(--info) 25%, transparent);
+}
+
+.chipWarning {
+  background: color-mix(in srgb, var(--warning) 12%, transparent);
+  color: var(--warning);
+  border: 1px solid color-mix(in srgb, var(--warning) 25%, transparent);
+}
+
+.sideCopy {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+.accordion {
+  display: grid;
+  gap: 10px;
+}
+
+.item {
+  background: color-mix(in srgb, var(--card) 74%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition:
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.itemOpen {
+  border-color: color-mix(in srgb, var(--primary) 35%, transparent);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--primary) 8%, transparent);
+}
+
+.trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+  text-align: left;
+  transition: color 0.15s ease;
+}
+
+.trigger:hover,
+.itemOpen .trigger {
+  color: var(--primary);
+}
+
+.icon {
+  font-size: 20px;
+  line-height: 1;
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+  transition:
+    transform 0.22s ease,
+    color 0.15s ease;
+}
+
+.itemOpen .icon {
+  transform: rotate(45deg);
+  color: var(--primary);
+}
+
+.body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.bodyOpen {
+  max-height: 320px;
+}
+
+.inner {
+  padding: 0 20px 18px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--muted-foreground);
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: 1fr 1.2fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 800px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .lead {
+    position: static;
+  }
+
+  .subheading {
+    max-width: none;
+  }
+
+  .heading {
+    font-size: clamp(1.8rem, 7vw, 2.4rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 56px 0 72px;
+  }
+
+  .sideCard {
+    padding: 16px;
+  }
+
+  .trigger {
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+
+  .inner {
+    padding: 0 16px 14px;
+  }
+
+  .accordion {
+    gap: 8px;
+  }
+}
