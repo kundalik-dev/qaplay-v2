@@ -94,7 +94,9 @@ export const privacyPolicySections: PrivacySection[] = [
           ],
           [
             { text: "Device information: ", bold: true },
-            { text: "Device type, screen resolution, and language preferences." },
+            {
+              text: "Device type, screen resolution, and language preferences.",
+            },
           ],
           [
             { text: "Cookies and similar technologies: ", bold: true },
@@ -334,7 +336,9 @@ export const privacyPolicySections: PrivacySection[] = [
           ],
           [
             { text: "Legal obligations: ", bold: true },
-            { text: "If required by law, court order, or governmental authority." },
+            {
+              text: "If required by law, court order, or governmental authority.",
+            },
           ],
           [
             { text: "Business transfers: ", bold: true },
@@ -423,7 +427,9 @@ export const privacyPolicySections: PrivacySection[] = [
           ],
           [
             { text: "Session data: ", bold: true },
-            { text: "Authentication sessions expire after 7 days of inactivity." },
+            {
+              text: "Authentication sessions expire after 7 days of inactivity.",
+            },
           ],
           [
             { text: "Analytics data: ", bold: true },

@@ -75,10 +75,46 @@ export const aboutOfferings: AboutOffering[] = [
       "Interactive UI elements designed for Selenium, Playwright, and Cypress practice — including inputs, buttons, tables, calendars, drag-and-drop, alerts, file uploads, shadow DOM, and more.",
   },
   {
-    id: "bank-demo",
-    title: "Bank Demo Application",
+    id: "demo-apps",
+    title: "Demo Applications",
     description:
-      "A simulated banking app with login, dashboard, accounts, and transactions — built to practice end-to-end test automation scenarios in a realistic multi-page flow.",
+      "Two full-featured demo apps for end-to-end automation practice: a Bank App (login, dashboard, accounts, transactions) and a Shopping App (product listings, cart, checkout, order history).",
+  },
+  {
+    id: "ai-mock-interviews",
+    title: "AI Mock Interviews",
+    description:
+      "Rehearse QA interview scenarios with an AI-powered interviewer. Get asked real interview questions, respond in your own words, and receive instant feedback to sharpen your answers.",
+  },
+  {
+    id: "job-crm",
+    title: "Job Application CRM",
+    description:
+      "Track every job application in one place — add roles, update statuses, log interview rounds, and keep notes. Designed specifically for QA engineers managing an active job search.",
+  },
+  {
+    id: "daily-challenges",
+    title: "Daily Challenges",
+    description:
+      "A fresh automation challenge every day to keep your scripting skills sharp. Challenges cover a range of difficulty levels and frameworks — perfect for consistent, low-pressure practice.",
+  },
+  {
+    id: "interview-questions",
+    title: "Interview Questions Bank",
+    description:
+      "A curated library of QA interview questions spanning manual testing, Selenium, Playwright, Cypress, API testing, and testing strategy — with model answers to study and compare against.",
+  },
+  {
+    id: "role-play",
+    title: "Role Play Scenarios",
+    description:
+      "Practise real QA workplace scenarios — bug triage conversations, sprint planning discussions, stakeholder pushback, and more — to build the soft skills that matter as much as technical ones.",
+  },
+  {
+    id: "chrome-extensions",
+    title: "QA Chrome Extensions",
+    description:
+      "A hand-picked list of Chrome extensions that QA engineers actually use daily — plus our own QA Capture and QA Clipper extensions for faster bug reporting and element inspection.",
   },
   {
     id: "study-tracker",
