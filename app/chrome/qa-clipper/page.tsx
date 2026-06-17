@@ -1,748 +1,497 @@
 import Link from "next/link";
-import {
-  Bookmark,
-  Key,
-  Tag,
-  CheckCircle,
-  ArrowRight,
-  Chrome,
-  Zap,
-  ExternalLink,
-  Settings,
-  Globe,
-  BookOpen,
-  Video,
-  Code2,
-  FileText,
-  ShieldCheck,
-  UserCheck,
-  LogIn,
-} from "lucide-react";
+
+import { JsonLd } from "@/components/seo";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  qaClipperApiKeyHighlights,
+  qaClipperBackLinks,
+  qaClipperChromeWebStoreUrl,
+  qaClipperFaqItems,
+  qaClipperFeatures,
+  qaClipperHeroBadges,
+  qaClipperHeroStats,
+  qaClipperHowItWorks,
+  qaClipperResourceTypes,
+  qaClipperUseCases,
+} from "@/data/chrome/qa-clipper-page-data";
+import { qaClipperPageMetadata } from "@/data/meta-data/chrome/qa-clipper-page-meta-data";
+import {
+  qaClipperBreadcrumbJsonLd,
+  qaClipperFaqJsonLd,
+  qaClipperWebPageJsonLd,
+} from "@/data/meta-data/chrome/qa-clipper-structured-jsonld-data";
+import {
+  chromeIconMap,
+  chromeToneClasses,
+} from "../_shared/chrome-page-helpers";
 
-export const metadata = {
-  title: "QA Playground Clipper — Save Any Webpage to Your Study Tracker",
-  description:
-    "QA Playground Clipper is a free Chrome extension that lets QA engineers clip any webpage — articles, videos, courses, and docs — directly into their QA Playground Study Tracker with one click.",
-  keywords: [
-    "QA learning resources",
-    "Chrome extension bookmark",
-    "save webpage to study tracker",
-    "QA resource manager",
-    "clip articles for QA",
-    "QA Playground extension",
-    "learning library chrome extension",
-    "QA engineer tools",
-    "save videos for QA learning",
-    "automation testing resources",
-  ],
-  openGraph: {
-    title: "QA Playground Clipper — Clip Any Webpage to Your Study Tracker",
-    description:
-      "One-click Chrome extension to save articles, videos, courses, and docs directly into your QA Playground Study Tracker. Smart type detection. Zero copy-pasting.",
-    type: "website",
-    url: "https://www.qaplayground.com/chrome/qa-clipper",
-    siteName: "QA PlayGround",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "QA Playground Clipper — Free Chrome Extension for QA Engineers",
-    description:
-      "Clip any webpage to your QA Playground Study Tracker in one click. Smart resource type detection included.",
-    site: "@qaplayground",
-  },
-  alternates: {
-    canonical: "https://www.qaplayground.com/chrome/qa-clipper",
-  },
-};
-
-// ── Data ─────────────────────────────────────────────────────────────────────
-
-const FEATURES = [
-  {
-    icon: Zap,
-    color: "text-blue-600",
-    bg: "bg-blue-50 dark:bg-blue-950/30",
-    title: "One-Click Clip",
-    description:
-      "Click the extension icon on any tab and your resource is ready to save. Title, description, and image are auto-extracted from the page — no copy-pasting required.",
-  },
-  {
-    icon: Globe,
-    color: "text-violet-600",
-    bg: "bg-violet-50 dark:bg-violet-950/30",
-    title: "Smart Resource Type Detection",
-    description:
-      "Automatically identifies YouTube and Vimeo as VIDEO, GitHub as TOOL, Udemy/Coursera as COURSE, /docs/ paths as DOCUMENTATION, and everything else as ARTICLE. Override any time.",
-  },
-  {
-    icon: Tag,
-    color: "text-emerald-600",
-    bg: "bg-emerald-50 dark:bg-emerald-950/30",
-    title: "Review & Edit Before Saving",
-    description:
-      "Every field is editable before you hit Save — title, type, description, tags, and image URL. Add tags with Enter or comma to organise your library exactly the way you want.",
-  },
-  {
-    icon: Key,
-    color: "text-orange-600",
-    bg: "bg-orange-50 dark:bg-orange-950/30",
-    title: "API Key Connection",
-    description:
-      "Uses your personal API key (qapg_...) generated from your QA Playground Study Tracker. Clips appear instantly in your tracker — no sync delay, no third-party cloud.",
-  },
-  {
-    icon: Settings,
-    color: "text-slate-600",
-    bg: "bg-slate-100 dark:bg-slate-800/40",
-    title: "Settings with Connection Test",
-    description:
-      "Enter your name and API key once and you're set. Use the Test Connection button to verify your key is valid — shows your connected account name on success.",
-  },
-  {
-    icon: ShieldCheck,
-    color: "text-teal-600",
-    bg: "bg-teal-50 dark:bg-teal-950/30",
-    title: "Privacy First",
-    description:
-      "Your API key is stored in chrome.storage.local — isolated from page scripts and never logged or sent anywhere except the QA Playground API. No analytics, no telemetry.",
-  },
-];
-
-const HOW_IT_WORKS = [
-  {
-    step: "01",
-    color: "bg-blue-600",
-    title: "Install & Sign In",
-    description:
-      "Install QA Playground Clipper from the Chrome Web Store. Sign in or create a free account at qaplayground.com if you haven't already.",
-  },
-  {
-    step: "02",
-    color: "bg-violet-600",
-    title: "Generate Your API Key",
-    description:
-      "Go to QA Playground → Study Tracker → Resources → Settings → API Keys. Generate a new key (starts with qapg_). Copy it.",
-  },
-  {
-    step: "03",
-    color: "bg-emerald-600",
-    title: "Paste Key into Extension",
-    description:
-      "Open the extension and click the gear icon to open Settings. Paste your API key and hit Test Connection — you'll see your account name on success.",
-  },
-  {
-    step: "04",
-    color: "bg-orange-600",
-    title: "Clip Anything, Instantly",
-    description:
-      "Browse any page — article, video, course, or docs. Click the extension icon, review the auto-filled fields, add tags, and hit Save. Done.",
-  },
-];
-
-const RESOURCE_TYPES = [
-  {
-    icon: Video,
-    label: "VIDEO",
-    color: "text-red-600",
-    border: "border-red-200 dark:border-red-800",
-    bg: "bg-red-50 dark:bg-red-950/30",
-    badge: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
-    description:
-      "YouTube, Vimeo, and other video platforms are automatically detected. Perfect for saving tutorial videos, conference talks, and screencasts.",
-    sites: ["YouTube", "Vimeo", "Loom"],
-  },
-  {
-    icon: BookOpen,
-    label: "COURSE",
-    color: "text-violet-600",
-    border: "border-violet-200 dark:border-violet-800",
-    bg: "bg-violet-50 dark:bg-violet-950/30",
-    badge:
-      "bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-400",
-    description:
-      "Udemy, Coursera, Pluralsight, and Frontend Masters are recognised as courses automatically. Save your entire learning roadmap in one place.",
-    sites: ["Udemy", "Coursera", "Pluralsight", "Frontend Masters"],
-  },
-  {
-    icon: Code2,
-    label: "TOOL",
-    color: "text-slate-600",
-    border: "border-slate-200 dark:border-slate-700",
-    bg: "bg-slate-100 dark:bg-slate-800/40",
-    badge: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400",
-    description:
-      "GitHub repos and tool pages are detected as TOOL resources. Keep a curated list of frameworks, libraries, and utilities you rely on.",
-    sites: ["GitHub", "npm", "PyPI"],
-  },
-  {
-    icon: FileText,
-    label: "DOCUMENTATION",
-    color: "text-blue-600",
-    border: "border-blue-200 dark:border-blue-800",
-    bg: "bg-blue-50 dark:bg-blue-950/30",
-    badge: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-    description:
-      "URLs containing /docs/, /documentation, or /api-reference are auto-tagged as DOCUMENTATION — official Playwright, Selenium, and Cypress docs land here.",
-    sites: ["Playwright Docs", "Selenium Docs", "Cypress Docs"],
-  },
-];
-
-const USE_CASES = [
-  {
-    icon: CheckCircle,
-    color: "text-emerald-600",
-    title: "Build Your QA Learning Library",
-    description:
-      "Spot a great Playwright tutorial mid-test? Clip it in one click. Your Study Tracker becomes the single source of truth for every resource you've ever found valuable.",
-  },
-  {
-    icon: BookOpen,
-    color: "text-blue-600",
-    title: "Curate a Tag-Based Reference System",
-    description:
-      "Add tags like 'selenium', 'api-testing', or 'ci-cd' to every clip. When you need resources for a specific topic, your tagged library surfaces them instantly.",
-  },
-  {
-    icon: Video,
-    color: "text-red-600",
-    title: "Save Videos for Later, Not Browser Tabs",
-    description:
-      "Stop living with 40 browser tabs open. Clip YouTube tutorials and course pages to your tracker so you can close the tab and come back when you're ready to learn.",
-  },
-  {
-    icon: Globe,
-    color: "text-violet-600",
-    title: "Never Lose a Good Doc Page Again",
-    description:
-      "Found a perfect Cypress API reference or a tricky Selenium Grid config guide? Clip it to Documentation in your tracker and it's searchable and accessible forever.",
-  },
-];
-
-const FAQ = [
-  {
-    q: "Do I need a QA Playground account to use this extension?",
-    a: "Yes — a free QA Playground account is required. The extension saves your clipped resources directly to your Study Tracker via the API, so it needs a verified account to associate resources with.",
-  },
-  {
-    q: "Where do I get my API key?",
-    a: "Log in to QA Playground, go to Study Tracker → Resources, and look for the Settings or API Keys section. Generate a new key there — it starts with 'qapg_'. Copy and paste it into the extension's Settings page.",
-  },
-  {
-    q: "Is the API key stored securely?",
-    a: "Yes. The key is stored in chrome.storage.local, which is isolated from page scripts and cannot be accessed by websites you visit. It is only sent to the QA Playground API (qaplayground.com) when you save a resource.",
-  },
-  {
-    q: "Can I edit the auto-detected fields before saving?",
-    a: "Yes — every field is editable in the extension popup before you hit Save. Title, description, resource type, tags, and image URL can all be changed. The auto-extracted values are just a starting point.",
-  },
-  {
-    q: "What happens if the extension can't detect the resource type?",
-    a: "It defaults to ARTICLE — the most common type. You can override it to VIDEO, COURSE, TOOL, DOCUMENTATION, BOOK, or OTHER from the type dropdown before saving.",
-  },
-  {
-    q: "Where do my clipped resources appear?",
-    a: "They appear immediately in the Resources section of your QA Playground Study Tracker at qaplayground.com/study-tracker. No sync delay — the resource is saved directly via the API on click.",
-  },
-  {
-    q: "Does this work on all websites?",
-    a: "The extension works on all standard HTTPS and HTTP pages. It cannot operate on browser-native pages (chrome://, chrome-extension://, or the Chrome Web Store) due to Chrome's security restrictions. All regular websites including localhost work normally.",
-  },
-];
-
-// ── Page ──────────────────────────────────────────────────────────────────────
+export const metadata = qaClipperPageMetadata;
 
 export default function QAClipperPage() {
+  const ArrowRightIcon = chromeIconMap["arrow-right"];
+  const BookmarkIcon = chromeIconMap.bookmark;
+  const CheckCircleIcon = chromeIconMap["check-circle"];
+  const ChromeIcon = chromeIconMap.chrome;
+  const ExternalLinkIcon = chromeIconMap["external-link"];
+  const LogInIcon = chromeIconMap["log-in"];
+  const SettingsIcon = chromeIconMap.settings;
+  const UserCheckIcon = chromeIconMap["user-check"];
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* ── HERO ────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden border-b border-border">
-        {/* Subtle grid background */}
-        <div
-          className="absolute inset-0 opacity-[0.03] dark:opacity-[0.06]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
+    <>
+      <JsonLd data={qaClipperWebPageJsonLd} />
+      <JsonLd data={qaClipperBreadcrumbJsonLd} />
+      <JsonLd data={qaClipperFaqJsonLd} />
 
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 py-20 text-center">
-          {/* Badges */}
-          <div className="flex items-center justify-center gap-2 mb-6 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800 px-3 py-1 rounded-full">
-              <Chrome className="h-3.5 w-3.5" />
-              Chrome Extension
-            </span>
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 px-3 py-1 rounded-full">
-              <CheckCircle className="h-3.5 w-3.5" />
-              Free to Install
-            </span>
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider bg-violet-50 dark:bg-violet-950/40 text-violet-700 dark:text-violet-400 border border-violet-200 dark:border-violet-800 px-3 py-1 rounded-full">
-              <Bookmark className="h-3.5 w-3.5" />
-              Study Tracker Connected
-            </span>
-          </div>
+      <div className="min-h-screen bg-background">
+        <section className="relative overflow-hidden border-b border-border">
+          <div className="absolute inset-0 bg-[linear-gradient(#000_1px,transparent_1px),linear-gradient(90deg,#000_1px,transparent_1px)] bg-[size:40px_40px] opacity-[0.03] dark:opacity-[0.06]" />
 
-          {/* Heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-5">
-            <span className="gradient-title">QA Playground Clipper</span>
-            <br />
-            <span className="text-foreground text-3xl sm:text-4xl md:text-5xl font-bold">
-              Clip Any Webpage to Your Study Tracker
-            </span>
-          </h1>
+          <div className="relative mx-auto max-w-5xl px-4 py-20 text-center sm:px-6">
+            <div className="mb-6 flex flex-wrap items-center justify-center gap-2">
+              {qaClipperHeroBadges.map(({ icon, label, tone }) => {
+                const Icon = chromeIconMap[icon];
+                const toneClasses = chromeToneClasses[tone];
 
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
-            Spot a great testing article, Playwright tutorial, or automation
-            course? Clip it instantly to your{" "}
-            <span className="font-semibold text-foreground">
-              QA Playground Study Tracker
-            </span>{" "}
-            without breaking your flow — one click, zero copy-pasting.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a
-              href="https://chromewebstore.google.com/detail/jegdkegbomfbmhhimfjgacdblcoodfpd?utm_source=item-share-cb"
-              target="_blank"
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg text-base transition-colors shadow-sm"
-            >
-              <Chrome className="h-5 w-5" />
-              Add to Chrome — It&apos;s Free
-              <ExternalLink className="h-4 w-4 opacity-70" />
-            </a>
-            <a
-              href="#how-it-works"
-              className="inline-flex items-center gap-2 bg-muted hover:bg-muted/80 text-foreground font-semibold px-6 py-3 rounded-lg text-base transition-colors border border-border"
-            >
-              See How It Works
-              <ArrowRight className="h-4 w-4" />
-            </a>
-          </div>
-
-          {/* Stats bar */}
-          <div className="mt-14 grid grid-cols-3 gap-4 max-w-xl mx-auto">
-            {[
-              { value: "7", label: "Resource Types" },
-              { value: "1", label: "Click to Clip" },
-              { value: "0", label: "Third-Party Cloud" },
-            ].map(({ value, label }) => (
-              <div
-                key={label}
-                className="bg-card border border-border rounded-xl px-4 py-4 shadow-sm"
-              >
-                <div className="text-2xl font-extrabold text-foreground">
-                  {value}
-                </div>
-                <div className="text-xs text-muted-foreground mt-0.5 leading-tight">
-                  {label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── HOW IT WORKS ────────────────────────────────────────────────── */}
-      <section id="how-it-works" className="py-16 px-4 bg-muted/30">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">
-              Simple Setup
-            </p>
-            <h2 className="text-3xl font-bold text-foreground mb-3">
-              How It Works
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              From install to your first clip in four steps. Requires a free QA
-              Playground account.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {HOW_IT_WORKS.map(({ step, color, title, description }) => (
-              <div
-                key={step}
-                className="bg-card border border-border rounded-xl p-6 shadow-sm flex gap-4"
-              >
-                <div
-                  className={`${color} text-white text-xs font-extrabold w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0`}
-                >
-                  {step}
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-1">
-                    {title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Account required callout */}
-          <div className="mt-8 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-xl p-5 flex items-start gap-3">
-            <UserCheck className="h-5 w-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="text-sm font-semibold text-amber-800 dark:text-amber-300 mb-0.5">
-                Free Account Required
-              </p>
-              <p className="text-sm text-amber-700 dark:text-amber-400 leading-relaxed">
-                The extension connects directly to your personal Study Tracker
-                via an API key. You&apos;ll need a free account at{" "}
-                <Link
-                  href="/signup"
-                  className="underline underline-offset-2 hover:text-amber-900 dark:hover:text-amber-200"
-                >
-                  qaplayground.com/signup
-                </Link>{" "}
-                to generate your key.
-              </p>
+                return (
+                  <span
+                    key={label}
+                    className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold tracking-wider uppercase ${toneClasses.bg} ${toneClasses.text} ${toneClasses.border}`}
+                  >
+                    <Icon className="h-3.5 w-3.5" />
+                    {label}
+                  </span>
+                );
+              })}
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ── FEATURES ────────────────────────────────────────────────────── */}
-      <section className="py-16 px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">
-              Everything You Need
-            </p>
-            <h2 className="text-3xl font-bold text-foreground mb-3">
-              Built for QA Engineers
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Every feature was designed to help QA engineers build a personal
-              learning library without ever leaving the page they&apos;re on.
-            </p>
-          </div>
+            <h1 className="mb-5 text-4xl leading-[1.1] font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+              <span className="gradient-title">QA Playground Clipper</span>
+              <br />
+              <span className="text-3xl font-bold text-foreground sm:text-4xl md:text-5xl">
+                Clip Any Webpage to Your Study Tracker
+              </span>
+            </h1>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {FEATURES.map(({ icon: Icon, color, bg, title, description }) => (
-              <div
-                key={title}
-                className="bg-card border border-border rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow"
+            <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+              Spot a great testing article, Playwright tutorial, or automation
+              course and clip it directly to your{" "}
+              <span className="font-semibold text-foreground">
+                QA Playground Study Tracker
+              </span>{" "}
+              without breaking your flow.
+            </p>
+
+            <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <a
+                href={qaClipperChromeWebStoreUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-blue-700"
               >
-                <div
-                  className={`${bg} ${color} w-10 h-10 rounded-lg flex items-center justify-center mb-4`}
-                >
-                  <Icon className="h-5 w-5" />
-                </div>
-                <h3 className="font-semibold text-foreground mb-1.5">
-                  {title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+                <ChromeIcon className="h-5 w-5" />
+                Add to Chrome - It&apos;s Free
+                <ExternalLinkIcon className="h-4 w-4 opacity-70" />
+              </a>
+              <a
+                href="#how-it-works"
+                className="inline-flex items-center gap-2 rounded-lg border border-border bg-muted px-6 py-3 text-base font-semibold text-foreground transition-colors hover:bg-muted/80"
+              >
+                See How It Works
+                <ArrowRightIcon className="h-4 w-4" />
+              </a>
+            </div>
 
-      {/* ── RESOURCE TYPES ──────────────────────────────────────────────── */}
-      <section className="py-16 px-4 bg-muted/30">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">
-              Smart Detection
-            </p>
-            <h2 className="text-3xl font-bold text-foreground mb-3">
-              Auto-Detected Resource Types
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              The extension reads the URL and page content to identify what
-              you&apos;re saving. Override the detected type any time before
-              saving.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {RESOURCE_TYPES.map(
-              ({
-                icon: Icon,
-                label,
-                color,
-                border,
-                bg,
-                badge,
-                description,
-                sites,
-              }) => (
+            <div className="mx-auto mt-14 grid max-w-xl grid-cols-3 gap-4">
+              {qaClipperHeroStats.map(({ value, label }) => (
                 <div
                   key={label}
-                  className={`bg-card border ${border} rounded-xl p-6 shadow-sm`}
+                  className="rounded-xl border border-border bg-card px-4 py-4 shadow-sm"
                 >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div
-                      className={`${bg} ${color} w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0`}
-                    >
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <span
-                      className={`inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${badge} ${border}`}
-                    >
-                      {label}
-                    </span>
+                  <div className="text-2xl font-extrabold text-foreground">
+                    {value}
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                    {description}
-                  </p>
-                  <ul className="space-y-1">
-                    {sites.map((site) => (
-                      <li
-                        key={site}
-                        className="text-xs text-muted-foreground flex items-center gap-1.5"
-                      >
-                        <CheckCircle className="h-3.5 w-3.5 text-emerald-500 flex-shrink-0" />
-                        {site}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="mt-0.5 text-xs leading-tight text-muted-foreground">
+                    {label}
+                  </div>
                 </div>
-              ),
-            )}
+              ))}
+            </div>
           </div>
+        </section>
 
-          {/* Fallback note */}
-          <p className="mt-6 text-center text-sm text-muted-foreground">
-            Everything else defaults to{" "}
-            <span className="font-semibold text-foreground">ARTICLE</span>. You
-            can also save as{" "}
-            <span className="font-semibold text-foreground">BOOK</span> or{" "}
-            <span className="font-semibold text-foreground">OTHER</span> by
-            changing the type dropdown before saving.
-          </p>
-        </div>
-      </section>
-
-      {/* ── API KEY SETUP ────────────────────────────────────────────────── */}
-      <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            {/* Text */}
-            <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3">
-                API Key Setup
+        <section id="how-it-works" className="bg-muted/30 px-4 py-16">
+          <div className="mx-auto max-w-4xl">
+            <div className="mb-12 text-center">
+              <p className="mb-2 text-xs font-bold tracking-widest text-muted-foreground uppercase">
+                Simple Setup
               </p>
-              <h2 className="text-3xl font-bold text-foreground mb-4 leading-tight">
-                Your Key.
-                <br />
-                Your Data.
+              <h2 className="mb-3 text-3xl font-bold text-foreground">
+                How It Works
               </h2>
-              <p className="text-muted-foreground mb-6 leading-relaxed">
-                QA Playground Clipper connects to your account using a personal
-                API key you generate inside the Study Tracker. Paste it once —
-                the extension remembers it. Your clips go directly to your
-                library with no intermediary.
+              <p className="mx-auto max-w-xl text-muted-foreground">
+                From install to your first clip in four steps. This extension
+                connects directly to a free QA Playground account.
               </p>
-              <ul className="space-y-3">
-                {[
-                  "API key starts with qapg_ for easy identification",
-                  "Stored only in chrome.storage.local on your device",
-                  "Test Connection verifies the key before you start clipping",
-                  "Revoke and regenerate keys any time from Study Tracker",
-                  "Never sent to any server except qaplayground.com",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm">
-                    <CheckCircle className="h-4 w-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-muted-foreground">{item}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
 
-            {/* Visual mock — settings panel */}
-            <div className="bg-card border border-border rounded-2xl shadow-md overflow-hidden">
-              {/* Header bar */}
-              <div className="bg-muted/50 border-b border-border px-4 py-3 flex items-center gap-2">
-                <Settings className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm font-semibold text-foreground">
-                  Extension Settings
-                </span>
-              </div>
-              {/* Fields */}
-              <div className="p-5 space-y-4">
-                <div>
-                  <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide block mb-1.5">
-                    Your Name
-                  </label>
-                  <div className="bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm text-foreground">
-                    Jane QA Engineer
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              {qaClipperHowItWorks.map(({ step, title, description, tone }) => (
+                <div
+                  key={step}
+                  className="flex gap-4 rounded-xl border border-border bg-card p-6 shadow-sm"
+                >
+                  <div
+                    className={`${chromeToneClasses[tone].solid} flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg text-xs font-extrabold text-white`}
+                  >
+                    {step}
                   </div>
-                </div>
-                <div>
-                  <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide block mb-1.5">
-                    API Key
-                  </label>
-                  <div className="bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm font-mono text-muted-foreground tracking-wide">
-                    qapg_••••••••••••••••••••
-                  </div>
-                </div>
-                {/* Connection status */}
-                <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-lg px-4 py-3 flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                   <div>
-                    <p className="text-xs font-semibold text-emerald-800 dark:text-emerald-300">
-                      Connected
-                    </p>
-                    <p className="text-xs text-emerald-700 dark:text-emerald-400">
-                      Signed in as Jane QA Engineer
-                    </p>
-                  </div>
-                </div>
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 rounded-lg transition-colors">
-                  Test Connection
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── USE CASES ───────────────────────────────────────────────────── */}
-      <section className="py-16 px-4 bg-muted/30">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">
-              Real QA Workflows
-            </p>
-            <h2 className="text-3xl font-bold text-foreground mb-3">
-              How QA Engineers Use It
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {USE_CASES.map(({ icon: Icon, color, title, description }) => (
-              <div
-                key={title}
-                className="bg-card border border-border rounded-xl p-6 shadow-sm"
-              >
-                <div className="flex items-start gap-3">
-                  <Icon className={`h-5 w-5 ${color} flex-shrink-0 mt-0.5`} />
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-1.5">
+                    <h3 className="mb-1 font-semibold text-foreground">
                       {title}
                     </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <p className="text-sm leading-relaxed text-muted-foreground">
                       {description}
                     </p>
                   </div>
                 </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-5 dark:border-amber-800 dark:bg-amber-950/30">
+              <UserCheckIcon className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600 dark:text-amber-400" />
+              <div>
+                <p className="mb-0.5 text-sm font-semibold text-amber-800 dark:text-amber-300">
+                  Free Account Required
+                </p>
+                <p className="text-sm leading-relaxed text-amber-700 dark:text-amber-400">
+                  The extension connects directly to your personal Study Tracker
+                  by API key, so you will need a free QA Playground account to
+                  generate that key.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-16">
+          <div className="mx-auto max-w-5xl">
+            <div className="mb-12 text-center">
+              <p className="mb-2 text-xs font-bold tracking-widest text-muted-foreground uppercase">
+                Everything You Need
+              </p>
+              <h2 className="mb-3 text-3xl font-bold text-foreground">
+                Built for QA Engineers
+              </h2>
+              <p className="mx-auto max-w-xl text-muted-foreground">
+                Every feature is designed to help you build a personal learning
+                library without ever leaving the page you are reading.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {qaClipperFeatures.map(({ icon, title, description, tone }) => {
+                const Icon = chromeIconMap[icon];
+                const toneClasses = chromeToneClasses[tone];
+
+                return (
+                  <div
+                    key={title}
+                    className="rounded-xl border border-border bg-card p-5 shadow-sm transition-shadow hover:shadow-md"
+                  >
+                    <div
+                      className={`${toneClasses.bg} ${toneClasses.text} mb-4 flex h-10 w-10 items-center justify-center rounded-lg`}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="mb-1.5 font-semibold text-foreground">
+                      {title}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-muted/30 px-4 py-16">
+          <div className="mx-auto max-w-4xl">
+            <div className="mb-12 text-center">
+              <p className="mb-2 text-xs font-bold tracking-widest text-muted-foreground uppercase">
+                Smart Detection
+              </p>
+              <h2 className="mb-3 text-3xl font-bold text-foreground">
+                Auto-Detected Resource Types
+              </h2>
+              <p className="mx-auto max-w-xl text-muted-foreground">
+                The extension reads the current page and URL to identify what
+                you are saving, while still letting you override the type before
+                submission.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              {qaClipperResourceTypes.map(
+                ({ icon, label, tone, description, items }) => {
+                  const Icon = chromeIconMap[icon];
+                  const toneClasses = chromeToneClasses[tone];
+
+                  return (
+                    <div
+                      key={label}
+                      className={`rounded-xl border bg-card p-6 shadow-sm ${toneClasses.border}`}
+                    >
+                      <div className="mb-3 flex items-center gap-3">
+                        <div
+                          className={`${toneClasses.bg} ${toneClasses.text} flex h-10 w-10 items-center justify-center rounded-lg`}
+                        >
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <span
+                          className={`inline-block rounded-full border px-2.5 py-0.5 text-xs font-bold tracking-wider uppercase ${toneClasses.badge} ${toneClasses.border}`}
+                        >
+                          {label}
+                        </span>
+                      </div>
+                      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+                        {description}
+                      </p>
+                      <ul className="space-y-1">
+                        {items.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-center gap-1.5 text-xs text-muted-foreground"
+                          >
+                            <CheckCircleIcon className="h-3.5 w-3.5 flex-shrink-0 text-emerald-500" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                },
+              )}
+            </div>
+
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              Everything else defaults to{" "}
+              <span className="font-semibold text-foreground">ARTICLE</span>.
+              You can still change it to BOOK or OTHER before saving.
+            </p>
+          </div>
+        </section>
+
+        <section className="px-4 py-16">
+          <div className="mx-auto max-w-4xl">
+            <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
+              <div>
+                <p className="mb-3 text-xs font-bold tracking-widest text-muted-foreground uppercase">
+                  API Key Setup
+                </p>
+                <h2 className="mb-4 text-3xl leading-tight font-bold text-foreground">
+                  Your Key.
+                  <br />
+                  Your Data.
+                </h2>
+                <p className="mb-6 leading-relaxed text-muted-foreground">
+                  QA Playground Clipper talks to your account through a personal
+                  API key you generate inside the Study Tracker. Paste it once,
+                  then clip resources straight into your library.
+                </p>
+                <ul className="space-y-3">
+                  {qaClipperApiKeyHighlights.map((item) => (
+                    <li key={item} className="flex items-start gap-2.5 text-sm">
+                      <CheckCircleIcon className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-500" />
+                      <span className="text-muted-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-md">
+                <div className="flex items-center gap-2 border-b border-border bg-muted/50 px-4 py-3">
+                  <SettingsIcon className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm font-semibold text-foreground">
+                    Extension Settings
+                  </span>
+                </div>
+                <div className="space-y-4 p-5">
+                  <div>
+                    <label className="mb-1.5 block text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                      Your Name
+                    </label>
+                    <div className="rounded-lg border border-border bg-muted/50 px-3 py-2 text-sm text-foreground">
+                      Jane QA Engineer
+                    </div>
+                  </div>
+                  <div>
+                    <label className="mb-1.5 block text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                      API Key
+                    </label>
+                    <div className="rounded-lg border border-border bg-muted/50 px-3 py-2 font-mono text-sm tracking-wide text-muted-foreground">
+                      qapg_********************
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 dark:border-emerald-800 dark:bg-emerald-950/30">
+                    <CheckCircleIcon className="h-4 w-4 flex-shrink-0 text-emerald-600 dark:text-emerald-400" />
+                    <div>
+                      <p className="text-xs font-semibold text-emerald-800 dark:text-emerald-300">
+                        Connected
+                      </p>
+                      <p className="text-xs text-emerald-700 dark:text-emerald-400">
+                        Signed in as Jane QA Engineer
+                      </p>
+                    </div>
+                  </div>
+                  <button className="w-full rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700">
+                    Test Connection
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-muted/30 px-4 py-16">
+          <div className="mx-auto max-w-4xl">
+            <div className="mb-12 text-center">
+              <p className="mb-2 text-xs font-bold tracking-widest text-muted-foreground uppercase">
+                Real QA Workflows
+              </p>
+              <h2 className="mb-3 text-3xl font-bold text-foreground">
+                How QA Engineers Use It
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              {qaClipperUseCases.map(({ icon, title, description, tone }) => {
+                const Icon = chromeIconMap[icon];
+
+                return (
+                  <div
+                    key={title}
+                    className="rounded-xl border border-border bg-card p-6 shadow-sm"
+                  >
+                    <div className="flex items-start gap-3">
+                      <Icon
+                        className={`mt-0.5 h-5 w-5 flex-shrink-0 ${chromeToneClasses[tone].text}`}
+                      />
+                      <div>
+                        <h3 className="mb-1.5 font-semibold text-foreground">
+                          {title}
+                        </h3>
+                        <p className="text-sm leading-relaxed text-muted-foreground">
+                          {description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-16">
+          <div className="mx-auto max-w-2xl">
+            <div className="mb-10 text-center">
+              <p className="mb-2 text-xs font-bold tracking-widest text-muted-foreground uppercase">
+                FAQ
+              </p>
+              <h2 className="mb-3 text-3xl font-bold text-foreground">
+                Common Questions
+              </h2>
+            </div>
+
+            <Accordion defaultValue={[]} className="w-full space-y-2">
+              {qaClipperFaqItems.map(({ question, answer }) => (
+                <AccordionItem
+                  key={question}
+                  value={question}
+                  className="rounded-xl border border-border bg-card px-5 transition-colors data-[state=open]:border-blue-300 dark:data-[state=open]:border-blue-700"
+                >
+                  <AccordionTrigger className="py-4 text-left text-sm font-semibold text-foreground hover:no-underline">
+                    {question}
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4 text-sm leading-relaxed text-muted-foreground">
+                    {answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </section>
+
+        <section className="px-4 py-16">
+          <div className="mx-auto max-w-2xl text-center">
+            <div className="rounded-2xl bg-gradient-to-br from-blue-600 to-violet-600 p-10 text-white shadow-xl">
+              <BookmarkIcon className="mx-auto mb-4 h-10 w-10 opacity-90" />
+              <h2 className="mb-3 text-2xl font-extrabold sm:text-3xl">
+                Start Clipping in Minutes
+              </h2>
+              <p className="mx-auto mb-7 max-w-md leading-relaxed text-blue-100">
+                Install the extension, connect your API key, and clip your
+                first resource. Your QA learning library starts building itself
+                as you browse.
+              </p>
+              <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <a
+                  href={qaClipperChromeWebStoreUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-base font-bold text-blue-700 shadow-sm transition-colors hover:bg-blue-50"
+                >
+                  <ChromeIcon className="h-5 w-5" />
+                  Add to Chrome - Free
+                  <ExternalLinkIcon className="h-4 w-4 opacity-60" />
+                </a>
+                <Link
+                  href="/signup"
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white/20"
+                >
+                  <LogInIcon className="h-4 w-4" />
+                  Create Free Account
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="border-t border-border px-4 py-6">
+          <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-4 text-sm">
+            {qaClipperBackLinks.map((link, index) => (
+              <div key={link.href} className="contents">
+                {index === 0 ? (
+                  <Link
+                    href={link.href}
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    ← {link.label}
+                  </Link>
+                ) : (
+                  <Link
+                    href={link.href}
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {link.label}
+                  </Link>
+                )}
+                {index < qaClipperBackLinks.length - 1 ? (
+                  <span className="text-border">|</span>
+                ) : null}
               </div>
             ))}
           </div>
         </div>
-      </section>
-
-      {/* ── FAQ ─────────────────────────────────────────────────────────── */}
-      <section className="py-16 px-4">
-        <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-10">
-            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">
-              FAQ
-            </p>
-            <h2 className="text-3xl font-bold text-foreground mb-3">
-              Common Questions
-            </h2>
-          </div>
-
-          <Accordion type="single" collapsible className="w-full space-y-2">
-            {FAQ.map(({ q, a }, i) => (
-              <AccordionItem
-                key={i}
-                value={`faq-${i}`}
-                className="bg-card border border-border rounded-xl px-5 data-[state=open]:border-blue-300 dark:data-[state=open]:border-blue-700 transition-colors"
-              >
-                <AccordionTrigger className="text-sm font-semibold text-foreground text-left hover:no-underline py-4">
-                  {q}
-                </AccordionTrigger>
-                <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
-                  {a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </section>
-
-      {/* ── CTA BOTTOM ──────────────────────────────────────────────────── */}
-      <section className="py-16 px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="bg-gradient-to-br from-blue-600 to-violet-600 rounded-2xl p-10 shadow-xl text-white">
-            <Bookmark className="h-10 w-10 mx-auto mb-4 opacity-90" />
-            <h2 className="text-2xl sm:text-3xl font-extrabold mb-3">
-              Start Clipping in Minutes
-            </h2>
-            <p className="text-blue-100 mb-7 max-w-md mx-auto leading-relaxed">
-              Install the extension, connect your API key, and clip your first
-              resource. Your QA learning library builds itself as you browse.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
-                href="https://chromewebstore.google.com/detail/jegdkegbomfbmhhimfjgacdblcoodfpd?utm_source=item-share-cb"
-                target="_blank"
-                className="inline-flex items-center gap-2 bg-white text-blue-700 hover:bg-blue-50 font-bold px-7 py-3.5 rounded-xl text-base transition-colors shadow-sm"
-              >
-                <Chrome className="h-5 w-5" />
-                Add to Chrome — Free
-                <ExternalLink className="h-4 w-4 opacity-60" />
-              </a>
-              <Link
-                href="/signup"
-                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-3.5 rounded-xl text-base transition-colors border border-white/20"
-              >
-                <LogIn className="h-4 w-4" />
-                Create Free Account
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── BACK LINKS ──────────────────────────────────────────────────── */}
-      <div className="py-6 px-4 border-t border-border">
-        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-4 text-sm">
-          <Link
-            href="/"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            ← QA Playground Home
-          </Link>
-          <span className="text-border">|</span>
-          <Link
-            href="/study-tracker"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Study Tracker
-          </Link>
-          <span className="text-border">|</span>
-          <Link
-            href="/chrome/qa-capture"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            QA Capture Extension
-          </Link>
-          <span className="text-border">|</span>
-          <Link
-            href="/qa-tools"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            QA Tools
-          </Link>
-        </div>
       </div>
-    </div>
+    </>
   );
 }
