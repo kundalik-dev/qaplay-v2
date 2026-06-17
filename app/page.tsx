@@ -1,5 +1,9 @@
 import { homePageMetadata } from "@/data/meta-data/home/home-page-meta-data";
-import { homePageJsonLd } from "@/data/meta-data/home/home-structured-data";
+import {
+  homePageArticleJsonLd,
+  homePageFaqJsonLd,
+  homePageWebPageJsonLd,
+} from "@/data/meta-data/home/home-structured-jsonld-data";
 
 import {
   CtaSection,
@@ -20,7 +24,9 @@ export const metadata = homePageMetadata;
 export default function Home() {
   return (
     <>
-      <JsonLd data={homePageJsonLd} />
+      <JsonLd data={homePageWebPageJsonLd} />
+      <JsonLd data={homePageArticleJsonLd} />
+      <JsonLd data={homePageFaqJsonLd} />
       <HomeHero />
       <TrustSection />
       {/* <PracticeSection /> */}

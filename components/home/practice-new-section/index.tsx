@@ -62,7 +62,7 @@ export function PracticeNewSection() {
             data-testid="practice-new-view-all"
             data-cta="view-all-practice-elements"
           >
-            View All 22+ Elements →
+            View All 14+ Elements →
           </Link>
         </div>
       </div>

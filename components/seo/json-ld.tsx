@@ -6,7 +6,7 @@
  * Pass any schema.org-shaped object (see `data/meta-data/structured-data.ts`).
  * The payload is escaped (`<` -> `<`) to avoid XSS via injected markup.
  */
-export function JsonLd({ data }: { data: Record<string, unknown> }) {
+export function JsonLd({ data }: { data: unknown }) {
   return (
     <script
       type="application/ld+json"

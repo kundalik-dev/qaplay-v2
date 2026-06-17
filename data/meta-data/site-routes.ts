@@ -23,4 +23,34 @@ export const siteRoutes: SiteRoute[] = [
     priority: 0.9,
     lastModified: "2026-06-16",
   },
+  {
+    path: "/chrome",
+    changeFrequency: "weekly",
+    priority: 0.8,
+    lastModified: "2026-06-17",
+  },
+  {
+    path: "/chrome/qa-capture",
+    changeFrequency: "monthly",
+    priority: 0.75,
+    lastModified: "2026-06-17",
+  },
+  {
+    path: "/chrome/qa-clipper",
+    changeFrequency: "monthly",
+    priority: 0.75,
+    lastModified: "2026-06-17",
+  },
+  {
+    path: "/about-us",
+    changeFrequency: "yearly",
+    priority: 0.5,
+    lastModified: "2026-06-17",
+  },
+  {
+    path: "/privacy-policy",
+    changeFrequency: "yearly",
+    priority: 0.3,
+    lastModified: "2026-06-06",
+  },
 ];

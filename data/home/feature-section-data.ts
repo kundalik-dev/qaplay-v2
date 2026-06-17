@@ -77,8 +77,8 @@ export const featureCards: FeatureCard[] = [
     icon: AppWindow,
     title: "Browser Extensions",
     description:
-      "Free Chrome tools built for testers, from capture helpers to workflow accelerators.",
-    href: "/chrome/qa-capture",
+      "Find Chrome tools that help QA in daily workflows, from capture helpers to workflow accelerators.",
+    href: "/chrome",
     linkLabel: "Add to Chrome",
   },
   {

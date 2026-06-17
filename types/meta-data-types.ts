@@ -39,6 +39,8 @@ export type SiteBasicDetails = {
   websiteURL: string;
   /** Default meta description used when a page does not supply its own. */
   websiteDescription: string;
+  /** Public contact email shown on contact and legal pages. */
+  websiteEmail: string;
   /** Short marketing tagline used in titles / OG when helpful. */
   tagline: string;
   /** OG locale, e.g. "en_US". */
@@ -94,12 +96,82 @@ export type ArticleStructuredDataInput = {
   description?: string;
   /** Route path used to build the canonical article URL. Defaults to "/". */
   path?: string;
-  /** Representative image URL (relative or absolute). Falls back to default OG. */
-  image?: string;
+  /**
+   * Representative image URL (relative or absolute) or a full image object.
+   * Falls back to the default OG image when omitted.
+   */
+  image?: string | OpenGraphImage;
   /** ISO 8601 date the content was first published, e.g. "2026-01-01". */
   datePublished: string;
   /** ISO 8601 date the content was last updated. Defaults to `datePublished`. */
   dateModified?: string;
+};
+
+/** A single breadcrumb item used by `BreadcrumbList` JSON-LD. */
+export type BreadcrumbItemStructuredDataInput = {
+  /** Human-readable breadcrumb label, e.g. "Practice". */
+  name: string;
+  /** Relative path or absolute URL for the breadcrumb target. */
+  path: string;
+};
+
+/** A single FAQ row used by `FAQPage` JSON-LD. */
+export type FaqStructuredDataItemInput = {
+  /** Visible question text. */
+  question: string;
+  /** Visible answer text. */
+  answer: string;
+};
+
+/** Input for building `WebPage` JSON-LD. */
+export type WebPageStructuredDataInput = {
+  /** Page name shown in structured data, e.g. "Practice Elements". */
+  name: string;
+  /** Page summary. Falls back to the site description when omitted. */
+  description?: string;
+  /** Route path used to build the canonical page URL. Defaults to "/". */
+  path?: string;
+  /**
+   * Representative image URL (relative or absolute) or a full image object.
+   * Falls back to the default OG image when omitted.
+   */
+  image?: string | OpenGraphImage;
+  /** Optional high-level topics the page is about. */
+  about?: string[];
+  /** Optional primary entity or entities represented on the page. */
+  mainEntity?: Record<string, unknown> | Array<Record<string, unknown>>;
+};
+
+/** Input for building site-level `Organization` JSON-LD. */
+export type OrganizationStructuredDataInput = {
+  /** Override the organization name. Falls back to the site name. */
+  name?: string;
+  /** Override the canonical organization URL. Falls back to the site URL. */
+  url?: string;
+  /** Brand description. Falls back to the site description. */
+  description?: string;
+  /** Optional public social profile URLs. */
+  sameAs?: string[];
+  /**
+   * Organization logo URL (relative or absolute) or full image object.
+   * Falls back to the publisher logo.
+   */
+  logo?: string | OpenGraphImage;
+};
+
+/** Input for building site-level `WebSite` JSON-LD. */
+export type WebSiteStructuredDataInput = {
+  /** Override the site name. Falls back to the site name. */
+  name?: string;
+  /** Override the canonical site URL. Falls back to the site URL. */
+  url?: string;
+  /** Site description. Falls back to the site description. */
+  description?: string;
+  /**
+   * Relative path or absolute URL for site search results, with a `{search_term_string}`
+   * placeholder when real site search exists.
+   */
+  searchTarget?: string;
 };
 
 /**
