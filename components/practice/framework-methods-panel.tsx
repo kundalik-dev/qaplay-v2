@@ -14,10 +14,10 @@ const DOT_COLORS: Record<string, string> = {
   yellow: "bg-[#eab308]",
 };
 
-const FW_TABS: Array<{ id: FwKey; short: string; sub: string }> = [
-  { id: "selenium",   short: "Selenium",   sub: "Java" },
-  { id: "playwright", short: "Playwright", sub: "JS / PY" },
-  { id: "cypress",    short: "Cypress",    sub: "JS" },
+const FW_TABS: Array<{ id: FwKey; short: string }> = [
+  { id: "selenium", short: "Selenium" },
+  { id: "playwright", short: "Playwright" },
+  { id: "cypress", short: "Cypress" },
 ];
 
 interface FrameworkMethodsPanelProps {
@@ -45,7 +45,7 @@ export function FrameworkMethodsPanel({ methods }: FrameworkMethodsPanelProps) {
               onClick={() => setActive(fw.id)}
               data-fw={fw.id}
               className={cn(
-                "flex-1 py-[7px] text-[11.5px] font-semibold text-center transition-all",
+                "flex-1 px-2 py-[11px] text-[11.5px] font-semibold text-center transition-all",
                 "border-r border-border last:border-r-0",
                 active === fw.id
                   ? "bg-primary text-primary-foreground"
@@ -53,8 +53,6 @@ export function FrameworkMethodsPanel({ methods }: FrameworkMethodsPanelProps) {
               )}
             >
               {fw.short}
-              <br />
-              <small className="text-[10px] font-normal opacity-75">{fw.sub}</small>
             </button>
           ))}
         </div>
