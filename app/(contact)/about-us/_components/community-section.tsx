@@ -2,11 +2,7 @@ import Link from "next/link";
 
 import type { aboutCommunity } from "@/data/about-us/about-us-data";
 
-export function CommunitySection({
-  data,
-}: {
-  data: typeof aboutCommunity;
-}) {
+export function CommunitySection({ data }: { data: typeof aboutCommunity }) {
   const { youtube, contact } = data.links;
 
   return (
