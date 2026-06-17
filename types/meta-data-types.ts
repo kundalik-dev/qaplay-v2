@@ -39,6 +39,8 @@ export type SiteBasicDetails = {
   websiteURL: string;
   /** Default meta description used when a page does not supply its own. */
   websiteDescription: string;
+  /** Public contact email shown on contact and legal pages. */
+  websiteEmail: string;
   /** Short marketing tagline used in titles / OG when helpful. */
   tagline: string;
   /** OG locale, e.g. "en_US". */
