@@ -41,7 +41,7 @@ export function FaqBlock({ items }: FaqBlockProps) {
               <span
                 className={cn(
                   "mt-[1px] flex-shrink-0 text-[16px] text-muted-foreground transition-transform duration-200",
-                  isOpen ? "rotate-90" : ""
+                  isOpen ? "rotate-90" : "",
                 )}
               >
                 {">"}
@@ -49,7 +49,7 @@ export function FaqBlock({ items }: FaqBlockProps) {
             </button>
 
             {isOpen && (
-              <div className="border-t border-border/50 bg-card px-4 pb-4 pt-3">
+              <div className="border-t border-border/50 bg-card px-4 pt-3 pb-4">
                 <p
                   className="text-[13px] leading-[1.65] text-muted-foreground"
                   dangerouslySetInnerHTML={{ __html: item.answer }}

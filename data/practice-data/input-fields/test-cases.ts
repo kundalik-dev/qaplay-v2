@@ -10,8 +10,8 @@ export const inputFieldsTestCases: TestCase[] = [
     steps: [
       "Navigate to <code>/practice/input-fields</code>",
       'Locate the input <code>[data-testid="input-movie-name"]</code>',
-      'Type <code>Interstellar</code> via <code>fill()</code> / <code>sendKeys()</code>',
-      'Assert <code>inputValue()</code> equals <code>Interstellar</code>',
+      "Type <code>Interstellar</code> via <code>fill()</code> / <code>sendKeys()</code>",
+      "Assert <code>inputValue()</code> equals <code>Interstellar</code>",
     ],
   },
   {
@@ -109,7 +109,7 @@ export const inputFieldsTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Locate <code>[data-testid="input-readonly"]</code>',
-      'Assert the <code>readonly</code> attribute is present',
+      "Assert the <code>readonly</code> attribute is present",
       "Attempt to type and confirm the value stays unchanged",
     ],
   },

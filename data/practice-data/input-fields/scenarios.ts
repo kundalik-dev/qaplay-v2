@@ -1,4 +1,7 @@
-import type { ScenarioMeta, FrameworkMethods } from "@/data/practice-data/types";
+import type {
+  ScenarioMeta,
+  FrameworkMethods,
+} from "@/data/practice-data/types";
 
 export const inputFieldScenarios: ScenarioMeta[] = [
   {
@@ -53,14 +56,17 @@ export const inputFieldScenarios: ScenarioMeta[] = [
   },
 ];
 
-export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", FrameworkMethods> = {
+export const frameworkMethods: Record<
+  "selenium" | "playwright" | "cypress",
+  FrameworkMethods
+> = {
   selenium: {
     label: "Selenium (Java)",
     methods: [
       { color: "purple", label: "sendKeys()" },
-      { color: "blue",   label: "clear()" },
+      { color: "blue", label: "clear()" },
       { color: "orange", label: 'getAttribute("value")' },
-      { color: "green",  label: "isEnabled()" },
+      { color: "green", label: "isEnabled()" },
       { color: "yellow", label: 'getAttribute("readonly")' },
     ],
   },
@@ -68,9 +74,9 @@ export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", Fra
     label: "Playwright JS / PY",
     methods: [
       { color: "purple", label: "fill()" },
-      { color: "blue",   label: "clear()" },
+      { color: "blue", label: "clear()" },
       { color: "orange", label: "inputValue()" },
-      { color: "green",  label: "toBeDisabled()" },
+      { color: "green", label: "toBeDisabled()" },
       { color: "yellow", label: "toHaveAttribute()" },
     ],
   },
@@ -78,9 +84,9 @@ export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", Fra
     label: "Cypress JS",
     methods: [
       { color: "purple", label: ".type()" },
-      { color: "blue",   label: ".clear()" },
+      { color: "blue", label: ".clear()" },
       { color: "orange", label: ".invoke('val')" },
-      { color: "green",  label: "should('be.disabled')" },
+      { color: "green", label: "should('be.disabled')" },
       { color: "yellow", label: "should('have.attr')" },
     ],
   },

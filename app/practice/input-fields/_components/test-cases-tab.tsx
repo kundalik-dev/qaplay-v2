@@ -7,7 +7,7 @@ interface TestCasesTabProps {
 
 export function TestCasesTab({ testCases }: TestCasesTabProps) {
   return (
-    <div className="w-full max-w-[1280px] mx-auto px-7 py-6 pb-16">
+    <div className="mx-auto w-full max-w-[1280px] px-7 py-6 pb-16">
       <TestCasesTable testCases={testCases} />
     </div>
   );

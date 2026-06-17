@@ -21,7 +21,7 @@ export function MethodSummaryTable({ rows }: MethodSummaryTableProps) {
             {headers.map((header) => (
               <th
                 key={header}
-                className="border-b border-border bg-muted px-3 py-[9px] text-left text-[11px] font-bold uppercase tracking-[0.06em] text-muted-foreground"
+                className="border-b border-border bg-muted px-3 py-[9px] text-left text-[11px] font-bold tracking-[0.06em] text-muted-foreground uppercase"
               >
                 {header}
               </th>
@@ -31,11 +31,19 @@ export function MethodSummaryTable({ rows }: MethodSummaryTableProps) {
 
         <tbody>
           {rows.map((row) => (
-            <tr key={row.action} className="transition-colors hover:bg-muted/50">
+            <tr
+              key={row.action}
+              className="transition-colors hover:bg-muted/50"
+            >
               <td className="border-b border-border/50 px-3 py-[9px] text-foreground">
                 {row.action}
               </td>
-              {[row.selenium, row.playwrightJs, row.playwrightPy, row.cypress].map((cell) => (
+              {[
+                row.selenium,
+                row.playwrightJs,
+                row.playwrightPy,
+                row.cypress,
+              ].map((cell) => (
                 <td
                   key={`${row.action}-${cell}`}
                   className="border-b border-border/50 px-3 py-[9px]"

@@ -79,7 +79,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .button {
-    transition: opacity 120ms ease, visibility 120ms ease;
+    transition:
+      opacity 120ms ease,
+      visibility 120ms ease;
     transform: none;
   }
 

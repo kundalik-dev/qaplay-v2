@@ -2,23 +2,32 @@ import type { PracticePageMeta } from "@/data/practice-data/types";
 
 type UpNextCardProps = PracticePageMeta["upNext"];
 
-export function UpNextCard({ icon, title, description, href }: UpNextCardProps) {
+export function UpNextCard({
+  icon,
+  title,
+  description,
+  href,
+}: UpNextCardProps) {
   return (
     <div>
       <a
         href={href}
         data-testid="up-next-card"
-        className="flex items-center gap-3 px-4 py-[14px] bg-card border border-border rounded-[10px] transition-all hover:border-primary/30 hover:shadow-sm group"
+        className="group flex items-center gap-3 rounded-[10px] border border-border bg-card px-4 py-[14px] transition-all hover:border-primary/30 hover:shadow-sm"
         style={{ textDecoration: "none" }}
       >
-        <div className="w-9 h-9 bg-muted rounded-[6px] flex items-center justify-center text-[18px] flex-shrink-0">
+        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[6px] bg-muted text-[18px]">
           {icon}
         </div>
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           <div className="text-[13px] font-bold text-foreground">{title}</div>
-          <div className="text-[11.5px] text-muted-foreground">{description}</div>
+          <div className="text-[11.5px] text-muted-foreground">
+            {description}
+          </div>
         </div>
-        <span className="text-muted-foreground text-[16px] group-hover:text-primary transition-colors">›</span>
+        <span className="text-[16px] text-muted-foreground transition-colors group-hover:text-primary">
+          ›
+        </span>
       </a>
     </div>
   );

@@ -1,7 +1,20 @@
 /* Syntax highlight tokens — used in dark code blocks */
-.codeBody :global(.kw)  { color: #c792ea; }           /* keywords: await, const, new */
-.codeBody :global(.fn)  { color: #82aaff; }           /* function calls */
-.codeBody :global(.str) { color: #c3e88d; }           /* string literals */
-.codeBody :global(.cmt) { color: #546e7a; font-style: italic; } /* comments */
-.codeBody :global(.cls) { color: #ffcb6b; }           /* class names */
-.codeBody :global(.num) { color: #f78c6c; }           /* numbers */
+.codeBody :global(.kw) {
+  color: #c792ea;
+} /* keywords: await, const, new */
+.codeBody :global(.fn) {
+  color: #82aaff;
+} /* function calls */
+.codeBody :global(.str) {
+  color: #c3e88d;
+} /* string literals */
+.codeBody :global(.cmt) {
+  color: #546e7a;
+  font-style: italic;
+} /* comments */
+.codeBody :global(.cls) {
+  color: #ffcb6b;
+} /* class names */
+.codeBody :global(.num) {
+  color: #f78c6c;
+} /* numbers */

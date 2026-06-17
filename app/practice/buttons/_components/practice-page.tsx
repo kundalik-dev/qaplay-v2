@@ -1,9 +1,9 @@
 "use client";
 
 import { PageHeader, MainTabs } from "@/components/practice";
-import { PracticeTab }   from "./practice-tab";
-import { TestCasesTab }  from "./test-cases-tab";
-import { LearnTab }      from "./learn-tab";
+import { PracticeTab } from "./practice-tab";
+import { TestCasesTab } from "./test-cases-tab";
+import { LearnTab } from "./learn-tab";
 import type { PracticePageMeta, TestCase } from "@/data/practice-data/types";
 
 interface PracticePageProps {

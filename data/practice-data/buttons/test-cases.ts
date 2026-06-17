@@ -91,7 +91,8 @@ export const buttonsTestCases: TestCase[] = [
   {
     id: "BTN_008",
     scenario: "Button stays usable across viewport sizes",
-    expected: "Button remains visible and clickable on mobile and desktop widths",
+    expected:
+      "Button remains visible and clickable on mobile and desktop widths",
     type: "edge",
     priority: "medium",
     steps: [

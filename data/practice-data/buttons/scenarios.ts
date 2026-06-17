@@ -1,4 +1,7 @@
-import type { ScenarioMeta, FrameworkMethods } from "@/data/practice-data/types";
+import type {
+  ScenarioMeta,
+  FrameworkMethods,
+} from "@/data/practice-data/types";
 
 export const buttonScenarios: ScenarioMeta[] = [
   {
@@ -68,14 +71,17 @@ export const buttonScenarios: ScenarioMeta[] = [
   },
 ];
 
-export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", FrameworkMethods> = {
+export const frameworkMethods: Record<
+  "selenium" | "playwright" | "cypress",
+  FrameworkMethods
+> = {
   selenium: {
     label: "Selenium (Java)",
     methods: [
       { color: "purple", label: "click()" },
-      { color: "blue",   label: "doubleClick()" },
+      { color: "blue", label: "doubleClick()" },
       { color: "orange", label: "contextClick()" },
-      { color: "green",  label: "isEnabled()" },
+      { color: "green", label: "isEnabled()" },
       { color: "yellow", label: "getLocation()" },
     ],
   },
@@ -83,9 +89,9 @@ export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", Fra
     label: "Playwright JS / PY",
     methods: [
       { color: "purple", label: "click()" },
-      { color: "blue",   label: "dblclick()" },
+      { color: "blue", label: "dblclick()" },
       { color: "orange", label: "click({ button: 'right' })" },
-      { color: "green",  label: "toBeDisabled()" },
+      { color: "green", label: "toBeDisabled()" },
       { color: "yellow", label: "boundingBox()" },
     ],
   },
@@ -93,9 +99,9 @@ export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", Fra
     label: "Cypress JS",
     methods: [
       { color: "purple", label: ".click()" },
-      { color: "blue",   label: ".dblclick()" },
+      { color: "blue", label: ".dblclick()" },
       { color: "orange", label: ".rightclick()" },
-      { color: "green",  label: "should('be.disabled')" },
+      { color: "green", label: "should('be.disabled')" },
       { color: "yellow", label: ".invoke('text')" },
     ],
   },

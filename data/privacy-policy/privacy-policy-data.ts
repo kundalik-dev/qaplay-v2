@@ -196,7 +196,7 @@ export const privacyPolicySections: PrivacySection[] = [
       {
         type: "paragraph",
         content:
-          "Your consent choice is stored in your browser and respected on all subsequent visits. You can change your preference at any time by clicking the \"Cookie Settings\" link in the footer.",
+          'Your consent choice is stored in your browser and respected on all subsequent visits. You can change your preference at any time by clicking the "Cookie Settings" link in the footer.',
       },
       {
         type: "paragraph",

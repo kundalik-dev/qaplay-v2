@@ -30,9 +30,9 @@ export function MainTabs({
   const [active, setActive] = useState<TabId>("practice");
 
   const tabs: TabDef[] = [
-    { id: "practice",  label: "Practice",   emoji: "🎮", count: scenarioCount },
+    { id: "practice", label: "Practice", emoji: "🎮", count: scenarioCount },
     { id: "testcases", label: "Test Cases", emoji: "🧪", count: testCaseCount },
-    { id: "learn",     label: "Learn",      emoji: "📖" },
+    { id: "learn", label: "Learn", emoji: "📖" },
   ];
 
   return (
@@ -55,8 +55,8 @@ export function MainTabs({
                 data-tab={tab.id}
                 onClick={() => setActive(tab.id)}
                 className={cn(
-                  "flex items-center gap-[6px] whitespace-nowrap -mb-px border-b-2",
-                  "px-4 py-[10px] text-[13.5px] font-medium outline-none transition-colors",
+                  "-mb-px flex items-center gap-[6px] border-b-2 whitespace-nowrap",
+                  "px-4 py-[10px] text-[13.5px] font-medium transition-colors outline-none",
                   "focus-visible:ring-2 focus-visible:ring-primary/30",
                   isActive
                     ? "border-primary font-semibold text-primary"

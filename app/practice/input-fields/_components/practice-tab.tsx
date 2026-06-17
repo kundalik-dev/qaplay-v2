@@ -8,7 +8,10 @@ import {
   UpNextCard,
   type ProgressItem,
 } from "@/components/practice";
-import { inputFieldScenarios, frameworkMethods } from "@/data/practice-data/input-fields/scenarios";
+import {
+  inputFieldScenarios,
+  frameworkMethods,
+} from "@/data/practice-data/input-fields/scenarios";
 import type { PracticePageMeta } from "@/data/practice-data/types";
 import styles from "./input-fields.module.css";
 
@@ -38,20 +41,24 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
 
   return (
     <div
-      className="w-full max-w-[1280px] mx-auto px-7"
+      className="mx-auto w-full max-w-[1280px] px-7"
       data-testid="practice-tab"
       data-section="practice"
     >
-      <div className="grid gap-6 pt-6 pb-16" style={{ gridTemplateColumns: "1fr 280px" }}>
-
+      <div
+        className="grid gap-6 pt-6 pb-16"
+        style={{ gridTemplateColumns: "1fr 280px" }}
+      >
         {/* ── Left: scenarios ─────────────────────────────────────────── */}
         <section aria-label="Interactive Scenarios">
-          <p className="text-[10.5px] font-bold uppercase tracking-[0.08em] text-muted-foreground mb-3">
+          <p className="mb-3 text-[10.5px] font-bold tracking-[0.08em] text-muted-foreground uppercase">
             Interactive Scenarios
           </p>
 
-          <div className="flex flex-col gap-[10px]" data-testid="scenarios-list">
-
+          <div
+            className="flex flex-col gap-[10px]"
+            data-testid="scenarios-list"
+          >
             {/* S01 — Type a Movie Name */}
             <ScenarioCard
               {...inputFieldScenarios[0]}
@@ -197,17 +204,18 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                 />
               )}
             </ScenarioCard>
-
           </div>
         </section>
 
         {/* ── Right: sticky sidebar ────────────────────────────────────── */}
-        <aside className="flex flex-col gap-4 sticky top-[120px] self-start" data-testid="practice-sidebar">
+        <aside
+          className="sticky top-[120px] flex flex-col gap-4 self-start"
+          data-testid="practice-sidebar"
+        >
           <ProgressWidget items={progressItems} />
           <FrameworkMethodsPanel methods={frameworkMethods} />
           <UpNextCard {...upNext} />
         </aside>
-
       </div>
     </div>
   );

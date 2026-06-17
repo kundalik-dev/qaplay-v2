@@ -28,8 +28,7 @@ export const buttonsLearnDesc: Record<string, string> = {
     "Right click is useful for context-menu style flows. Framework support differs slightly, but all three can handle it.",
   disabled:
     "For disabled controls, assert state instead of forcing interaction. This is more stable and more realistic.",
-  text:
-    "Text-change validation is a good way to assert that a button action actually caused a visible UI update.",
+  text: "Text-change validation is a good way to assert that a button action actually caused a visible UI update.",
   keyboard:
     "Keyboard support matters for accessibility and test realism. A focused button should respond to Enter consistently.",
 };

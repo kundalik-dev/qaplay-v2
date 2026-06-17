@@ -20,12 +20,10 @@ export const inputFieldsTocItems: TocItem[] = [
 export const inputFieldsLearnDesc: Record<string, string> = {
   overview:
     "Text inputs are the most common element you will automate. This page covers the core actions across Playwright, Selenium, and Cypress: typing, appending, reading values, clearing, and detecting disabled & readonly states.",
-  type:
-    "Typing is the baseline interaction. Selenium's sendKeys() appends to existing content, while Playwright's fill() replaces the whole value first.",
+  type: "Typing is the baseline interaction. Selenium's sendKeys() appends to existing content, while Playwright's fill() replaces the whole value first.",
   append:
     "To add to existing text instead of replacing it, avoid fill(). Click into the field and type with the keyboard so the current value is preserved, then press Tab to trigger blur events.",
-  read:
-    "Reading the current value lets you assert what the user (or your script) actually entered. Use the value attribute or the framework's input-value helper.",
+  read: "Reading the current value lets you assert what the user (or your script) actually entered. Use the value attribute or the framework's input-value helper.",
   clear:
     "Clearing removes the existing content so a fresh value can be entered. Always assert the field is empty afterwards.",
   disabled:

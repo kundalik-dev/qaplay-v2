@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { PracticePage }       from "./_components/practice-page";
-import { buttonsMeta }        from "@/data/practice-data/buttons/meta";
-import { buttonsTestCases }   from "@/data/practice-data/buttons/test-cases";
+import { PracticePage } from "./_components/practice-page";
+import { buttonsMeta } from "@/data/practice-data/buttons/meta";
+import { buttonsTestCases } from "@/data/practice-data/buttons/test-cases";
 
 export const metadata: Metadata = {
   title: `${buttonsMeta.title} | QA Playground`,
@@ -21,10 +21,5 @@ export const metadata: Metadata = {
 };
 
 export default function ButtonsPage() {
-  return (
-    <PracticePage
-      meta={buttonsMeta}
-      testCases={buttonsTestCases}
-    />
-  );
+  return <PracticePage meta={buttonsMeta} testCases={buttonsTestCases} />;
 }

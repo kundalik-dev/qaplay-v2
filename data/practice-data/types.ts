@@ -1,15 +1,15 @@
 // ─── Core enumerations ──────────────────────────────────────────────────────
-export type PracticeLevel    = "Beginner" | "Intermediate" | "Advanced";
-export type TestCaseType     = "positive" | "negative" | "edge";
+export type PracticeLevel = "Beginner" | "Intermediate" | "Advanced";
+export type TestCaseType = "positive" | "negative" | "edge";
 export type TestCasePriority = "high" | "medium" | "low";
-export type Framework        = "playwright" | "selenium" | "cypress";
-export type DotColor         = "green" | "blue" | "orange" | "yellow" | "purple";
+export type Framework = "playwright" | "selenium" | "cypress";
+export type DotColor = "green" | "blue" | "orange" | "yellow" | "purple";
 
 // ─── Page header / meta ─────────────────────────────────────────────────────
 export interface PracticePageMeta {
-  element: string;           // route slug, e.g. "buttons"
-  title: string;             // H1 text
-  description: string;       // subtitle paragraph
+  element: string; // route slug, e.g. "buttons"
+  title: string; // H1 text
+  description: string; // subtitle paragraph
   level: PracticeLevel;
   durationMin: number;
   scenarioCount: number;
@@ -25,13 +25,13 @@ export interface PracticePageMeta {
 
 // ─── Practice tab ────────────────────────────────────────────────────────────
 export interface ScenarioMeta {
-  id: string;               // "S01", "S02" …
+  id: string; // "S01", "S02" …
   title: string;
-  testId: string;           // data-testid for card root
-  resultId: string;         // id for result <span>
+  testId: string; // data-testid for card root
+  resultId: string; // id for result <span>
   initialResult: string;
-  badge?: string;           // e.g. "DISABLED"
-  hint: string;             // shown when hint button pressed (HTML allowed)
+  badge?: string; // e.g. "DISABLED"
+  hint: string; // shown when hint button pressed (HTML allowed)
 }
 
 export interface CodeSnippets {
@@ -46,18 +46,18 @@ export interface KeyMethod {
 }
 
 export interface FrameworkMethods {
-  label: string;            // e.g. "Selenium (Java)"
+  label: string; // e.g. "Selenium (Java)"
   methods: KeyMethod[];
 }
 
 // ─── Test Cases tab ──────────────────────────────────────────────────────────
 export interface TestCase {
-  id: string;               // e.g. "BTN_001"
+  id: string; // e.g. "BTN_001"
   scenario: string;
   expected: string;
   type: TestCaseType;
   priority: TestCasePriority;
-  steps: string[];          // HTML-safe strings
+  steps: string[]; // HTML-safe strings
   note?: string;
 }
 
@@ -78,12 +78,12 @@ export interface MethodRow {
 
 export interface FaqItem {
   question: string;
-  answer: string;           // plain text; <code> tags allowed
+  answer: string; // plain text; <code> tags allowed
   testId?: string;
 }
 
 export interface TocItem {
-  id: string;               // matches DocSection id prop
+  id: string; // matches DocSection id prop
   label: string;
   dividerBefore?: boolean;
 }

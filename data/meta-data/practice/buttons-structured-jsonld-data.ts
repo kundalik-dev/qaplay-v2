@@ -5,7 +5,8 @@ import {
 } from "../structured-data";
 import { buttonsFaq } from "@/data/practice-data/buttons";
 
-const buttonsPageName = "How to Handle Button Clicks in Selenium and Playwright";
+const buttonsPageName =
+  "How to Handle Button Clicks in Selenium and Playwright";
 const buttonsPageDescription =
   "Practice button automation — single click, double-click, right-click, disabled state, click-and-hold, coordinates, and computed styles in Selenium, Playwright, and Cypress.";
 

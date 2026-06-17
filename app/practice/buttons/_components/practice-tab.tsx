@@ -5,7 +5,10 @@ import { ScenarioCard } from "@/components/practice";
 import { ProgressWidget, type ProgressItem } from "@/components/practice";
 import { FrameworkMethodsPanel } from "@/components/practice";
 import { UpNextCard } from "@/components/practice";
-import { buttonScenarios, frameworkMethods } from "@/data/practice-data/buttons/scenarios";
+import {
+  buttonScenarios,
+  frameworkMethods,
+} from "@/data/practice-data/buttons/scenarios";
 import type { PracticePageMeta } from "@/data/practice-data/types";
 import styles from "./buttons.module.css";
 
@@ -27,26 +30,33 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
   }));
 
   // Click-and-hold state for S06
-  const holdTimerRef    = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const heldEnoughRef   = useRef(false);
-  const [holdResult, setHoldResult] = useState<{ id: string; text: string } | null>(null);
+  const holdTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const heldEnoughRef = useRef(false);
+  const [holdResult, setHoldResult] = useState<{
+    id: string;
+    text: string;
+  } | null>(null);
 
   return (
     <div
-      className="w-full max-w-[1280px] mx-auto px-7"
+      className="mx-auto w-full max-w-[1280px] px-7"
       data-testid="practice-tab"
       data-section="practice"
     >
-      <div className="grid gap-6 pt-6 pb-16" style={{ gridTemplateColumns: "1fr 280px" }}>
-
+      <div
+        className="grid gap-6 pt-6 pb-16"
+        style={{ gridTemplateColumns: "1fr 280px" }}
+      >
         {/* ── Left: scenarios ─────────────────────────────────────────── */}
         <section aria-label="Interactive Scenarios">
-          <p className="text-[10.5px] font-bold uppercase tracking-[0.08em] text-muted-foreground mb-3">
+          <p className="mb-3 text-[10.5px] font-bold tracking-[0.08em] text-muted-foreground uppercase">
             Interactive Scenarios
           </p>
 
-          <div className="flex flex-col gap-[10px]" data-testid="scenarios-list">
-
+          <div
+            className="flex flex-col gap-[10px]"
+            data-testid="scenarios-list"
+          >
             {/* S01 — Navigate to Home Page */}
             <ScenarioCard
               {...buttonScenarios[0]}
@@ -75,8 +85,12 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                   data-testid="btn-get-coordinates"
                   className={styles.practiceBtn + " " + styles.btnTeal}
                   onClick={(e) => {
-                    const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
-                    setResult(`X: ${Math.round(r.x)}px, Y: ${Math.round(r.y)}px`);
+                    const r = (
+                      e.currentTarget as HTMLElement
+                    ).getBoundingClientRect();
+                    setResult(
+                      `X: ${Math.round(r.x)}px, Y: ${Math.round(r.y)}px`,
+                    );
                   }}
                 >
                   Find Location
@@ -95,7 +109,9 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                   data-testid="btn-get-color"
                   className={styles.practiceBtn + " " + styles.btnViolet}
                   onClick={(e) => {
-                    const bg = getComputedStyle(e.currentTarget).backgroundColor;
+                    const bg = getComputedStyle(
+                      e.currentTarget,
+                    ).backgroundColor;
                     setResult(`Background: ${bg}`);
                   }}
                 >
@@ -116,7 +132,9 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                   className={styles.practiceBtn + " " + styles.btnDark}
                   onClick={(e) => {
                     const el = e.currentTarget as HTMLElement;
-                    setResult(`W: ${el.offsetWidth}px, H: ${el.offsetHeight}px`);
+                    setResult(
+                      `W: ${el.offsetWidth}px, H: ${el.offsetHeight}px`,
+                    );
                   }}
                 >
                   Do you know my size?
@@ -149,7 +167,9 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                   data-testid="btn-click-hold"
                   className={styles.practiceBtn + " " + styles.btnBlue}
                   onPointerDown={(e) => {
-                    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+                    (e.currentTarget as HTMLElement).setPointerCapture(
+                      e.pointerId,
+                    );
                     heldEnoughRef.current = false;
                     setResult("Holding… keep pressing");
                     holdTimerRef.current = setTimeout(() => {
@@ -159,13 +179,19 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     }, 1500);
                   }}
                   onPointerUp={() => {
-                    if (holdTimerRef.current) { clearTimeout(holdTimerRef.current); holdTimerRef.current = null; }
+                    if (holdTimerRef.current) {
+                      clearTimeout(holdTimerRef.current);
+                      holdTimerRef.current = null;
+                    }
                     if (!heldEnoughRef.current) {
                       setResult("Released too early — hold for 1.5s");
                     }
                   }}
                   onPointerLeave={() => {
-                    if (holdTimerRef.current) { clearTimeout(holdTimerRef.current); holdTimerRef.current = null; }
+                    if (holdTimerRef.current) {
+                      clearTimeout(holdTimerRef.current);
+                      holdTimerRef.current = null;
+                    }
                     if (!heldEnoughRef.current) {
                       setResult("Released too early — hold for 1.5s");
                     }
@@ -212,17 +238,18 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                 </button>
               )}
             </ScenarioCard>
-
           </div>
         </section>
 
         {/* ── Right: sticky sidebar ────────────────────────────────────── */}
-        <aside className="flex flex-col gap-4 sticky top-[120px] self-start" data-testid="practice-sidebar">
+        <aside
+          className="sticky top-[120px] flex flex-col gap-4 self-start"
+          data-testid="practice-sidebar"
+        >
           <ProgressWidget items={progressItems} />
           <FrameworkMethodsPanel methods={frameworkMethods} />
           <UpNextCard {...upNext} />
         </aside>
-
       </div>
     </div>
   );

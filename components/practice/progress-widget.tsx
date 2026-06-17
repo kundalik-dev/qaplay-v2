@@ -23,8 +23,10 @@ export function ProgressWidget({ items }: ProgressWidgetProps) {
       data-testid="progress-widget"
     >
       <div className="mb-2.5 flex items-center justify-between">
-        <span className="text-[12.5px] font-bold text-foreground">Your Progress</span>
-        <span className="text-[12px] text-muted-foreground font-[family-name:var(--font-ibm-plex-mono)]">
+        <span className="text-[12.5px] font-bold text-foreground">
+          Your Progress
+        </span>
+        <span className="font-[family-name:var(--font-ibm-plex-mono)] text-[12px] text-muted-foreground">
           {done} / {total}
         </span>
       </div>
@@ -50,9 +52,16 @@ export function ProgressWidget({ items }: ProgressWidgetProps) {
                 "flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full text-[9px]",
                 item.done
                   ? "text-white"
-                  : "border border-border text-transparent"
+                  : "border border-border text-transparent",
               )}
-              style={item.done ? { background: "var(--success)", borderColor: "var(--success)" } : undefined}
+              style={
+                item.done
+                  ? {
+                      background: "var(--success)",
+                      borderColor: "var(--success)",
+                    }
+                  : undefined
+              }
               aria-hidden="true"
             >
               {"✓"}

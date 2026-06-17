@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { PracticePage }          from "./_components/practice-page";
-import { inputFieldsMeta }       from "@/data/practice-data/input-fields/meta";
-import { inputFieldsTestCases }  from "@/data/practice-data/input-fields/test-cases";
+import { PracticePage } from "./_components/practice-page";
+import { inputFieldsMeta } from "@/data/practice-data/input-fields/meta";
+import { inputFieldsTestCases } from "@/data/practice-data/input-fields/test-cases";
 
 export const metadata: Metadata = {
   title: `${inputFieldsMeta.title} | QA Playground`,
@@ -22,9 +22,6 @@ export const metadata: Metadata = {
 
 export default function InputFieldsPage() {
   return (
-    <PracticePage
-      meta={inputFieldsMeta}
-      testCases={inputFieldsTestCases}
-    />
+    <PracticePage meta={inputFieldsMeta} testCases={inputFieldsTestCases} />
   );
 }

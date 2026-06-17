@@ -31,7 +31,10 @@
   color: var(--foreground);
   border: 1.5px solid var(--border);
 }
-.btnOutline:hover { border-color: var(--primary); color: var(--primary); }
+.btnOutline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
 
 /* Teal */
 .btnTeal {
@@ -39,7 +42,9 @@
   color: #0f766e;
   border: 1.5px solid #99f6e4;
 }
-.btnTeal:hover { background: #99f6e4; }
+.btnTeal:hover {
+  background: #99f6e4;
+}
 
 /* Violet */
 .btnViolet {
@@ -47,7 +52,9 @@
   color: #6d28d9;
   border: 1.5px solid #ddd6fe;
 }
-.btnViolet:hover { background: #ede9fe; }
+.btnViolet:hover {
+  background: #ede9fe;
+}
 
 /* Dark */
 .btnDark {
@@ -55,7 +62,9 @@
   color: #fff;
   border: none;
 }
-.btnDark:hover { background: #374151; }
+.btnDark:hover {
+  background: #374151;
+}
 
 /* Disabled (red-tinted) */
 .btnDisabled {
@@ -72,7 +81,9 @@
   color: #1d4ed8;
   border: 1.5px solid #bfdbfe;
 }
-.btnBlue:hover { background: #dbeafe; }
+.btnBlue:hover {
+  background: #dbeafe;
+}
 
 /* Rose */
 .btnRose {
@@ -80,4 +91,6 @@
   color: #be123c;
   border: 1.5px solid #fecdd3;
 }
-.btnRose:hover { background: #ffe4e6; }
+.btnRose:hover {
+  background: #ffe4e6;
+}
