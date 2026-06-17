@@ -65,8 +65,8 @@ export default function QACapturePage() {
                 <div className="space-y-5">
                   <p className="capture-kicker">Capture · Label · Export</p>
                   <h1 className="font-heading text-5xl leading-[var(--home-type-hero-line)] font-bold tracking-[var(--home-type-hero-tracking)] text-balance text-foreground md:text-5xl">
-                    Capture screenshots continuously, label every step, and
-                    export clean QA proof.
+                    QA Capture turns browser testing into clean, export-ready
+                    proof.
                   </h1>
                   <p className="capture-copy max-w-156 text-pretty">
                     QA Capture stores every screenshot locally while you test,
