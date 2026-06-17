@@ -24,7 +24,7 @@ Per-page metadata is **grouped by top-level route** in its own folder under
 
 | File                                     | Responsibility                                                                                                                                    |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `types/meta-data-types.ts`               | Types: `SiteBasicDetails`, `PageMetadataInput`, `OpenGraphImage`, `SiteAuthor`.                                                                    |
+| `types/meta-data-types.ts`               | Types: `SiteBasicDetails`, `PageMetadataInput`, `OpenGraphImage`, `SiteAuthor`.                                                                   |
 | `data/meta-data/basic-details-data.ts`   | **Single source of truth** for site-wide values (name, URL, locale, author, twitter handle, default keywords, default OG image).                  |
 | `data/meta-data/create-page-metadata.ts` | `createPageMetadata(input)` — merges page input with `basicDetails`, returns a full `Metadata` (canonical, robots, OG, Twitter, keywords, icons). |
 | `data/meta-data/structured-data.ts`      | Generic, reusable JSON-LD **builders** (e.g. `createArticleJsonLd`). No page-specific instances live here.                                        |
@@ -32,10 +32,10 @@ Per-page metadata is **grouped by top-level route** in its own folder under
 
 **Per-route folders — one folder per top-level route segment:**
 
-| Path                                                  | Responsibility                                                                  |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `data/meta-data/<route>/<page>-meta-data.ts`          | Thin per-page file that calls `createPageMetadata`.                             |
-| `data/meta-data/<route>/<route>-structured-data.ts`   | Page-specific JSON-LD instances for that route (only if the route needs them).  |
+| Path                                                | Responsibility                                                                 |
+| --------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `data/meta-data/<route>/<page>-meta-data.ts`        | Thin per-page file that calls `createPageMetadata`.                            |
+| `data/meta-data/<route>/<route>-structured-data.ts` | Page-specific JSON-LD instances for that route (only if the route needs them). |
 
 Current layout (keep new files consistent with this):
 
@@ -47,7 +47,7 @@ data/meta-data/
 ├── structured-data.ts             (shared JSON-LD builders)
 ├── home/
 │   ├── home-page-meta-data.ts
-│   └── home-structured-data.ts    (homePageJsonLd — uses createArticleJsonLd)
+│   └── home-structured-jsonld-data.ts    (homePageJsonLd — uses createArticleJsonLd)
 ├── practice/
 │   └── practice-page-meta-data.ts
 └── demo/
@@ -56,10 +56,10 @@ data/meta-data/
     └── demo-shopping-page-meta-data.ts (/demo/shopping)
 ```
 
-| File                | Responsibility                                                                                                  |
-| ------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `app/layout.tsx`    | Site-wide defaults + title **template** (`%s \| QA Playground`) and `metadataBase`.                             |
-| `app/**/page.tsx`   | `export const metadata = ...` for that route, imported from its route folder.                                   |
+| File              | Responsibility                                                                      |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| `app/layout.tsx`  | Site-wide defaults + title **template** (`%s \| QA Playground`) and `metadataBase`. |
+| `app/**/page.tsx` | `export const metadata = ...` for that route, imported from its route folder.       |
 
 Data flow: `basicDetails` ➜ `createPageMetadata(pageInput)` in `data/meta-data/<route>/<page>-meta-data.ts` ➜ `export const metadata` in `page.tsx`. The root layout's template wraps child page titles automatically.
 

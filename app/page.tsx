@@ -1,5 +1,5 @@
 import { homePageMetadata } from "@/data/meta-data/home/home-page-meta-data";
-import { homePageJsonLd } from "@/data/meta-data/home/home-structured-data";
+import { homePageJsonLd } from "@/data/meta-data/home/home-structured-jsonld-data";
 
 import {
   CtaSection,
