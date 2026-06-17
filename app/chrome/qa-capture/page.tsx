@@ -13,12 +13,9 @@ import {
   qaCaptureFeatures,
   qaCaptureHeroBadges,
   qaCaptureHeroStats,
-  qaCaptureHowItWorks,
-  qaCaptureOverviewHighlights,
   qaCaptureSessionHistoryHighlights,
   qaCaptureSessionHistoryPreview,
   qaCaptureUseCases,
-  qaCaptureWorkflowHighlights,
 } from "@/data/chrome/qa-capture-page-data";
 import { qaCapturePageMetadata } from "@/data/meta-data/chrome/qa-capture-page-meta-data";
 import {
@@ -36,7 +33,6 @@ import {
   SectionHeading,
   SessionPreviewCard,
   StatGrid,
-  StepCard,
   UseCaseCard,
 } from "./components";
 import { chromeIconMap } from "../_shared/chrome-page-helpers";
@@ -47,8 +43,10 @@ export default function QACapturePage() {
   const ArrowRightIcon = chromeIconMap["arrow-right"];
   const CameraIcon = chromeIconMap.camera;
   const CheckCircleIcon = chromeIconMap["check-circle"];
+  const DownloadIcon = chromeIconMap.download;
   const ExternalLinkIcon = chromeIconMap["external-link"];
   const GlobeIcon = chromeIconMap.globe;
+  const TagIcon = chromeIconMap.tag;
 
   return (
     <>
@@ -57,30 +55,29 @@ export default function QACapturePage() {
       <JsonLd data={qaCaptureFaqJsonLd} />
 
       <div className="capture-page min-h-screen pb-12">
+        {/* hero section */}
         <section className="capture-grid relative border-b border-border/80">
           <div className="capture-shell relative z-10 py-16 sm:py-20 lg:py-24">
             <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(360px,32rem)] xl:gap-14">
-              <div className="max-w-[43rem] space-y-8">
+              <div className="max-w-172 space-y-8">
                 <BadgeRow badges={qaCaptureHeroBadges} />
 
                 <div className="space-y-5">
-                  <p className="capture-kicker">
-                    Chrome extension for QA evidence and step-by-step
-                    documentation
-                  </p>
-                  <h1 className="font-heading text-[clamp(1.96rem,3.85vw,3.325rem)] leading-[var(--home-type-hero-line)] font-bold tracking-[var(--home-type-hero-tracking)] text-balance text-foreground">
-                    QA Capture turns browser testing into clean, export-ready
-                    proof.
+                  <p className="capture-kicker">Capture · Label · Export</p>
+                  <h1 className="font-heading text-5xl leading-[var(--home-type-hero-line)] font-bold tracking-[var(--home-type-hero-tracking)] text-balance text-foreground md:text-5xl">
+                    Capture screenshots continuously, label every step, and
+                    export clean QA proof.
                   </h1>
-                  <p className="capture-copy max-w-[39rem] text-pretty">
-                    Capture screenshots while you test, name each step in plain
-                    English, and export the whole session as a polished PDF,
-                    Markdown guide, or standalone HTML handoff. It is built for
-                    bug reporting, regression evidence, onboarding walkthroughs,
-                    and repeatable QA documentation.
+                  <p className="capture-copy max-w-156 text-pretty">
+                    QA Capture stores every screenshot locally while you test,
+                    lets you name each step as you capture it, and exports the
+                    full session as HTML, Markdown, or PDF. It is free to use
+                    and built for bug reports, regression evidence, and
+                    repeatable QA documentation.
                   </p>
                 </div>
 
+                {/* Buttons */}
                 <div className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                   <CtaLink
                     href={qaCaptureChromeWebStoreUrl}
@@ -103,12 +100,13 @@ export default function QACapturePage() {
                 <StatGrid stats={qaCaptureHeroStats} />
               </div>
 
-              <div className="capture-card-strong self-start p-6 sm:p-8">
+              {/* Workflow Preview */}
+              <div className="self-start p-0 md:rounded-[var(--home-card-radius-lg)] md:border md:border-[color-mix(in_srgb,var(--primary)_12%,var(--border))] md:bg-[color-mix(in_srgb,var(--card)_86%,transparent)] md:p-6 md:shadow-[var(--shadow-float)] lg:p-8">
                 <div className="mb-6 flex items-center justify-between gap-3">
                   <div>
                     <p className="capture-kicker">Workflow Preview</p>
                     <h2 className="mt-2 font-heading text-2xl font-semibold tracking-[-0.04em] text-foreground">
-                      Capture, label, export
+                      Capture, Label & Export
                     </h2>
                   </div>
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary">
@@ -116,41 +114,53 @@ export default function QACapturePage() {
                   </div>
                 </div>
 
-                <ol className="space-y-4">
+                <ol className="space-y-1 md:space-y-4">
                   {[
                     {
                       step: "01",
+                      Icon: CameraIcon,
                       title: "Capture the exact state",
                       description:
                         "Freeze the moment a bug appears, a form validates, or a flow reaches a key checkpoint.",
                     },
                     {
                       step: "02",
+                      Icon: TagIcon,
                       title: "Name every screenshot",
                       description:
                         "Add step labels that explain what the developer or reviewer is looking at without extra back-and-forth.",
                     },
                     {
                       step: "03",
+                      Icon: DownloadIcon,
                       title: "Export once the session is done",
                       description:
-                        "Ship documentation in the format your team already uses for tickets, docs, or sign-off.",
+                        "Export the finished session as HTML, Markdown, or PDF for tickets, docs, sign-off, or handoff.",
                     },
-                  ].map((item) => (
+                  ].map(({ step, Icon, title, description }) => (
                     <li
-                      key={item.step}
-                      className="capture-card grid grid-cols-[auto_1fr] gap-4 px-5 py-5"
+                      key={step}
+                      /* Mobile: no card bg — md+: card styles via Tailwind arbitrary values */
+                      className="px-4 py-5 md:rounded-[var(--home-card-radius)] md:border md:border-border md:bg-[color-mix(in_srgb,var(--card)_78%,transparent)] md:px-5 md:shadow-[var(--home-card-shadow)]"
                     >
-                      <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-sm font-bold text-primary-foreground">
-                        {item.step}
-                      </div>
-                      <div>
-                        <h3 className="font-heading text-lg font-semibold tracking-[-0.03em] text-foreground">
-                          {item.title}
-                        </h3>
-                        <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                          {item.description}
-                        </p>
+                      {/* Mobile: icon in white box, centered, vertical — md+: number circle, horizontal grid */}
+                      <div className="flex flex-col items-center gap-3 text-center md:grid md:grid-cols-[auto_1fr] md:items-start md:gap-4 md:text-left">
+                        {/* Mobile icon box */}
+                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card shadow-sm md:hidden">
+                          <Icon className="h-6 w-6 text-foreground" />
+                        </div>
+                        {/* Desktop number circle */}
+                        <div className="hidden h-11 w-11 items-center justify-center rounded-2xl bg-primary text-sm font-bold text-primary-foreground md:flex">
+                          {step}
+                        </div>
+                        <div>
+                          <h3 className="font-heading text-lg font-semibold tracking-[-0.03em] text-foreground">
+                            {title}
+                          </h3>
+                          <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                            {description}
+                          </p>
+                        </div>
                       </div>
                     </li>
                   ))}
@@ -158,7 +168,13 @@ export default function QACapturePage() {
 
                 <div className="mt-6 rounded-[22px] border border-primary/20 bg-primary/10 px-5 py-4">
                   <p className="text-sm leading-7 text-muted-foreground">
-                    Best for{" "}
+                    Everything stays{" "}
+                    <span className="font-semibold text-foreground">local</span>,
+                    remains{" "}
+                    <span className="font-semibold text-foreground">
+                      free to use
+                    </span>
+                    , and works best for{" "}
                     <span className="font-semibold text-foreground">
                       bug reports
                     </span>
@@ -178,79 +194,30 @@ export default function QACapturePage() {
           </div>
         </section>
 
+        {/* Use cases */}
         <section
-          id="what-is-qa-capture"
-          aria-labelledby="qa-capture-overview-title"
-          className="py-16 sm:py-20"
-        >
-          <div className="capture-shell">
-            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-              <div className="capture-card-strong p-6 sm:p-8">
-                <SectionHeading
-                  id="qa-capture-overview-title"
-                  eyebrow="What QA Capture is"
-                  title="A lightweight QA workflow for documenting what happened in the browser."
-                  description="QA Capture is not just a screenshot tool. It is a structured capture flow that helps you preserve context, sequence, and intent while you are testing."
-                  className="max-w-none"
-                />
-
-                <ul className="mt-8 space-y-4">
-                  {qaCaptureOverviewHighlights.map((item) => (
-                    <li key={item} className="flex items-start gap-3">
-                      <CheckCircleIcon className="mt-1 h-4 w-4 shrink-0 text-primary" />
-                      <span className="text-sm leading-7 text-muted-foreground">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="capture-card p-6 sm:p-8">
-                <p className="capture-kicker">What the workflow feels like</p>
-                <div className="mt-4 space-y-5">
-                  {qaCaptureWorkflowHighlights.map((item, index) => (
-                    <div
-                      key={item}
-                      className="grid grid-cols-[auto_1fr] gap-4 rounded-[22px] border border-border/80 bg-background/30 px-4 py-4"
-                    >
-                      <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-border bg-card text-xs font-bold tracking-[0.16em] text-foreground">
-                        0{index + 1}
-                      </div>
-                      <p className="text-sm leading-7 text-muted-foreground">
-                        {item}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="how-it-works"
-          aria-labelledby="qa-capture-how-it-works-title"
+          aria-labelledby="qa-capture-use-cases-title"
           className="border-y border-border/70 bg-muted/20 py-16 sm:py-20"
         >
           <div className="capture-shell">
             <SectionHeading
-              id="qa-capture-how-it-works-title"
-              eyebrow="How it works"
-              title="A simple four-step flow that fits into real testing sessions."
-              description="Install it, start a session, capture key checkpoints, and export the final story when you are done."
+              id="qa-capture-use-cases-title"
+              eyebrow="Real QA workflows"
+              title="Where QA Capture fits into day-to-day testing work."
+              description="The extension is especially useful when evidence needs to be clear, sequential, and easy for someone else to understand fast."
               align="center"
               className="mb-10 sm:mb-12"
             />
 
-            <div className="grid gap-5 md:grid-cols-2">
-              {qaCaptureHowItWorks.map((item) => (
-                <StepCard key={item.step} {...item} />
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+              {qaCaptureUseCases.map((useCase) => (
+                <UseCaseCard key={useCase.title} {...useCase} />
               ))}
             </div>
           </div>
         </section>
 
+        {/* Built for qa engineers */}
         <section
           aria-labelledby="qa-capture-features-title"
           className="py-16 sm:py-20"
@@ -273,6 +240,7 @@ export default function QACapturePage() {
           </div>
         </section>
 
+        {/* Export Options */}
         <section
           aria-labelledby="qa-capture-export-title"
           className="border-y border-border/70 bg-muted/20 py-16 sm:py-20"
@@ -295,6 +263,7 @@ export default function QACapturePage() {
           </div>
         </section>
 
+        {/* Session history */}
         <section
           aria-labelledby="qa-capture-history-title"
           className="py-16 sm:py-20"
@@ -327,28 +296,7 @@ export default function QACapturePage() {
           </div>
         </section>
 
-        <section
-          aria-labelledby="qa-capture-use-cases-title"
-          className="border-y border-border/70 bg-muted/20 py-16 sm:py-20"
-        >
-          <div className="capture-shell">
-            <SectionHeading
-              id="qa-capture-use-cases-title"
-              eyebrow="Real QA workflows"
-              title="Where QA Capture fits into day-to-day testing work."
-              description="The extension is especially useful when evidence needs to be clear, sequential, and easy for someone else to understand fast."
-              align="center"
-              className="mb-10 sm:mb-12"
-            />
-
-            <div className="grid gap-5 md:grid-cols-2">
-              {qaCaptureUseCases.map((useCase) => (
-                <UseCaseCard key={useCase.title} {...useCase} />
-              ))}
-            </div>
-          </div>
-        </section>
-
+        {/* FAQ */}
         <section
           aria-labelledby="qa-capture-faq-title"
           className="py-16 sm:py-20"
@@ -384,6 +332,7 @@ export default function QACapturePage() {
           </div>
         </section>
 
+        {/* CTA */}
         <section
           aria-labelledby="qa-capture-cta-title"
           className="pt-4 pb-16 sm:pb-20"
@@ -415,11 +364,11 @@ export default function QACapturePage() {
                     Add to Chrome - It&apos;s Free
                   </CtaLink>
                   <CtaLink
-                    href="#how-it-works"
+                    href="#qa-capture-use-cases-title"
                     variant="secondary"
                     iconEnd={<ArrowRightIcon className="h-4 w-4" />}
                   >
-                    Review the workflow
+                    See real workflows
                   </CtaLink>
                 </div>
               </div>
@@ -427,6 +376,7 @@ export default function QACapturePage() {
           </div>
         </section>
 
+        {/* Footer nav */}
         <div className="border-t border-border/80 px-4 py-6">
           <div className="capture-shell">
             <FooterLinks links={qaCaptureBackLinks} />

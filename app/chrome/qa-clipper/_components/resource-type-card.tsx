@@ -5,7 +5,7 @@ import {
   chromeToneClasses,
 } from "../../_shared/chrome-page-helpers";
 
-export function ExportFormatCard({
+export function ResourceTypeCard({
   icon,
   label,
   tone,
@@ -18,11 +18,11 @@ export function ExportFormatCard({
 
   return (
     <article className="capture-card group flex h-full flex-col overflow-hidden p-0 transition-shadow duration-200 hover:shadow-md">
-      {/* Card header with colored top accent */}
+      {/* Coloured top accent */}
       <div className={`h-1 w-full ${toneClasses.solid}`} aria-hidden="true" />
 
       <div className="flex flex-1 flex-col p-6 sm:p-7">
-        {/* Icon + label row */}
+        {/* Icon + badge */}
         <div className="mb-5 flex items-start justify-between gap-4">
           <div
             className={`${toneClasses.bg} ${toneClasses.border} ${toneClasses.text} flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border-2`}
@@ -36,13 +36,11 @@ export function ExportFormatCard({
           </span>
         </div>
 
-        {/* Description */}
         <p className="text-sm leading-7 text-muted-foreground">{description}</p>
 
-        {/* Spacer pushes use-cases to bottom */}
         <div className="flex-1" />
 
-        {/* Use-cases footer */}
+        {/* Examples footer */}
         <ul
           className={`mt-6 space-y-2 rounded-xl border p-4 ${toneClasses.bg} ${toneClasses.border}`}
         >

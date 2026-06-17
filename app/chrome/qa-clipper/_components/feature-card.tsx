@@ -1,11 +1,11 @@
-import type { ChromeUseCase } from "@/data/chrome/types";
+import type { ChromeFeature } from "@/data/chrome/types";
 
 import {
   chromeIconMap,
   chromeToneClasses,
 } from "../../_shared/chrome-page-helpers";
 
-export function UseCaseCard({ icon, title, description, tone }: ChromeUseCase) {
+export function FeatureCard({ icon, title, description, tone }: ChromeFeature) {
   const Icon = chromeIconMap[icon];
   const toneClasses = chromeToneClasses[tone];
 

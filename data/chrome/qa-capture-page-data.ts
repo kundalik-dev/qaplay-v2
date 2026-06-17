@@ -14,7 +14,7 @@ export const qaCapturePageTitle =
   "QA Capture Chrome Extension for QA Screenshot Documentation";
 
 export const qaCapturePageDescription =
-  "QA Capture is a free Chrome extension for QA engineers to capture browser screenshots step by step, label every action, and export clean documentation as PDF, Markdown, or HTML.";
+  "QA Capture is a free Chrome extension for QA engineers to capture browser screenshots continuously, label each step while testing, and export clean documentation as HTML, Markdown, or PDF.";
 
 export const qaCaptureChromeWebStoreUrl =
   "https://chromewebstore.google.com/detail/jhgkhnokloeklnagbkgkgcfphafifefg?utm_source=item-share-cb";

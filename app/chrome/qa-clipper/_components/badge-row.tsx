@@ -15,7 +15,7 @@ export function BadgeRow({ badges }: { badges: ChromeBadge[] }) {
         return (
           <span
             key={label}
-            className={`hidden items-center gap-2 rounded-full border px-3.5 py-2 text-[11px] font-semibold tracking-[0.12em] uppercase md:inline-flex ${toneClasses.bg} ${toneClasses.text} ${toneClasses.border}`}
+            className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-[11px] font-semibold tracking-[0.12em] uppercase ${toneClasses.bg} ${toneClasses.text} ${toneClasses.border}`}
           >
             <Icon className="h-3.5 w-3.5" />
             {label}
