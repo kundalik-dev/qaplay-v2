@@ -1,0 +1,96 @@
+/* ── Practice Button Variants ─────────────────────────────────────────────── */
+/* These colours are intentionally stable across themes so automation        */
+/* practitioners can target them reliably.                                   */
+
+.practiceBtn {
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+  white-space: nowrap;
+  font-family: inherit;
+  line-height: 1;
+}
+
+/* Primary — uses project primary */
+.btnPrimary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: none;
+}
+.btnPrimary:hover {
+  filter: brightness(0.96);
+}
+
+/* Outline */
+.btnOutline {
+  background: transparent;
+  color: var(--foreground);
+  border: 1.5px solid var(--border);
+}
+.btnOutline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Teal */
+.btnTeal {
+  background: #ccfbf1;
+  color: #0f766e;
+  border: 1.5px solid #99f6e4;
+}
+.btnTeal:hover {
+  background: #99f6e4;
+}
+
+/* Violet */
+.btnViolet {
+  background: #f5f3ff;
+  color: #6d28d9;
+  border: 1.5px solid #ddd6fe;
+}
+.btnViolet:hover {
+  background: #ede9fe;
+}
+
+/* Dark */
+.btnDark {
+  background: #1f2937;
+  color: #fff;
+  border: none;
+}
+.btnDark:hover {
+  background: #374151;
+}
+
+/* Disabled (red-tinted) */
+.btnDisabled {
+  background: #fef2f2;
+  color: #f87171;
+  border: 1.5px solid #fecaca;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Blue */
+.btnBlue {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1.5px solid #bfdbfe;
+}
+.btnBlue:hover {
+  background: #dbeafe;
+}
+
+/* Rose */
+.btnRose {
+  background: #fff1f2;
+  color: #be123c;
+  border: 1.5px solid #fecdd3;
+}
+.btnRose:hover {
+  background: #ffe4e6;
+}

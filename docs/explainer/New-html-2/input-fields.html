@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Input Field Automation Practice | QA Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Input field practice additions ─────────────────── */
+    .prac-input {
+      width: 100%;
+      max-width: 260px;
+      padding: 9px 13px;
+      background: var(--bg);
+      border: 1.5px solid var(--border-s);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .prac-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0, 204, 136, 0.12);
+    }
+    .prac-input:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      border-color: var(--border);
+    }
+    .prac-input[readonly] {
+      border-color: var(--border-s);
+      color: var(--text-muted);
+      cursor: default;
+    }
+    [data-theme="light"] .prac-input {
+      background: #f0f2f5;
+      border-color: #d0d5e1;
+    }
+    [data-theme="light"] .prac-input:focus {
+      background: #fff;
+      border-color: var(--accent);
+    }
+    /* Stack sc-body vertically for input scenarios */
+    .sc-body-col {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 10px !important;
+    }
+    .sc-body-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+    /* Read-only badge */
+    .tag-readonly-pill {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(250, 200, 50, 0.12);
+      color: #fac832;
+      border: 1px solid rgba(250, 200, 50, 0.25);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    /* Tab key hint badge */
+    .tab-key-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      background: var(--surface2);
+      border: 1px solid var(--border-s);
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent2);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* inline input in learn panels */
+    .panel-input {
+      width: 100%;
+      padding: 8px 12px;
+      background: var(--bg2);
+      border: 1.5px solid var(--border-s);
+      border-radius: 7px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s;
+      box-sizing: border-box;
+    }
+    .panel-input:focus {
+      border-color: var(--accent);
+    }
+    .panel-input:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    .panel-input[readonly] {
+      color: var(--text-muted);
+      cursor: default;
+    }
+    [data-theme="light"] .panel-input {
+      background: #f0f2f5;
+      border-color: #d0d5e1;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     TOP NAV
+══════════════════════════════════════════ -->
+<nav class="top-nav">
+  <div class="page-wrap">
+    <span class="nav-logo">QA <span>Play</span>ground</span>
+    <span class="nav-sep">/</span>
+    <span class="nav-context">Practice → Input Fields</span>
+    <div class="nav-spacer"></div>
+    <button class="theme-toggle" id="theme-toggle">
+      <span class="t-icon">🌙</span>
+      <span class="t-label">Dark</span>
+    </button>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE HEADER  (breadcrumb · title · pills)
+══════════════════════════════════════════ -->
+<header class="page-header">
+  <div class="page-wrap">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="#">Home</a>
+      <span class="sep">›</span>
+      <a href="#">Practice</a>
+      <span class="sep">›</span>
+      <span>Input Field Automation Practice</span>
+    </nav>
+
+    <h1 class="page-title">Input Field Automation Practice</h1>
+    <p class="page-desc">Master text input interactions in Selenium &amp; Playwright — typing, clearing, reading values, and detecting disabled/readonly states.</p>
+
+    <div class="pill-row">
+      <span class="pill pill-level">🌱 Beginner</span>
+      <span class="pill pill-time">⏱ 15 min</span>
+      <span class="pill pill-count">⚡ 6 scenarios</span>
+    </div>
+  </div>
+</header>
+
+
+<!-- ══════════════════════════════════════════
+     MAIN TABS
+══════════════════════════════════════════ -->
+<div class="main-tabs" role="tablist">
+  <div class="page-wrap">
+    <button class="main-tab active" data-tab="tab-practice" role="tab">
+      🎮 Practice
+      <span class="tab-badge">6</span>
+    </button>
+    <button class="main-tab" data-tab="tab-testcases" role="tab">
+      🧪 Test Cases
+      <span class="tab-badge">12</span>
+    </button>
+    <button class="main-tab" data-tab="tab-learn" role="tab">
+      📖 Learn
+    </button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     TAB 1 — PRACTICE
+══════════════════════════════════════════ -->
+<div id="tab-practice" class="tab-view active" role="tabpanel">
+  <div class="practice-layout">
+
+    <!-- ── Left: Scenario cards ── -->
+    <section class="scenarios-col">
+      <div class="col-heading">Interactive Scenarios</div>
+
+      <!-- S01 -->
+      <div class="scenario-card" data-testid="scenario-type-text">
+        <div class="sc-head">
+          <div class="sc-label">
+            <span class="sc-num">S01</span>
+            <span class="sc-title">Movie Name Input</span>
+          </div>
+          <div class="sc-actions"><button class="bm-btn" title="Bookmark">🔖</button></div>
+        </div>
+        <div class="sc-body sc-body-col">
+          <input class="prac-input" type="text" id="inp-movie" placeholder="e.g. Inception"
+            data-testid="inp-movie-name" autocomplete="off" />
+          <span class="sc-result" id="res-movie">Start typing above…</span>
+        </div>
+      </div>
+
+      <!-- S02 -->
+      <div class="scenario-card" data-testid="scenario-append-tab">
+        <div class="sc-head">
+          <div class="sc-label">
+            <span class="sc-num">S02</span>
+            <span class="sc-title">Append Text &amp; Press Tab</span>
+          </div>
+          <div class="sc-actions"><button class="bm-btn">🔖</button></div>
+        </div>
+        <div class="sc-body sc-body-col">
+          <div class="sc-body-row">
+            <input class="prac-input" type="text" id="inp-append" value="I love QA"
+              data-testid="inp-append-text" autocomplete="off" />
+            <span class="tab-key-badge">Tab →</span>
+          </div>
+          <span class="sc-result" id="res-append">Type more text, then press Tab…</span>
+        </div>
+      </div>
+
+      <!-- S03 -->
+      <div class="scenario-card" data-testid="scenario-verify-value">
+        <div class="sc-head">
+          <div class="sc-label">
+            <span class="sc-num">S03</span>
+            <span class="sc-title">Verify Text Inside Field</span>
+          </div>
+          <div class="sc-actions"><button class="bm-btn">🔖</button></div>
+        </div>
+        <div class="sc-body sc-body-col">
+          <div class="sc-body-row">
+            <input class="prac-input" type="text" id="inp-verify" value="QA PlayGround"
+              data-testid="inp-verify-text" autocomplete="off" />
+            <button class="pb pb-cyan" id="btn-verify" data-testid="btn-verify-value">Verify</button>
+          </div>
+          <span class="sc-result" id="res-verify">Click Verify to read value…</span>
+        </div>
+      </div>
+
+      <!-- S04 -->
+      <div class="scenario-card" data-testid="scenario-clear-field">
+        <div class="sc-head">
+          <div class="sc-label">
+            <span class="sc-num">S04</span>
+            <span class="sc-title">Clear the Text</span>
+          </div>
+          <div class="sc-actions"><button class="bm-btn">🔖</button></div>
+        </div>
+        <div class="sc-body sc-body-col">
+          <div class="sc-body-row">
+            <input class="prac-input" type="text" id="inp-clear" value="Clear this text!"
+              data-testid="inp-clear-text" autocomplete="off" />
+            <button class="pb pb-red" id="btn-clear" data-testid="btn-clear-input">Clear</button>
+          </div>
+          <span class="sc-result" id="res-clear">Click Clear to empty the field…</span>
+        </div>
+      </div>
+
+      <!-- S05 -->
+      <div class="scenario-card" data-testid="scenario-disabled-input">
+        <div class="sc-head">
+          <div class="sc-label">
+            <span class="sc-num">S05</span>
+            <span class="sc-title">Disabled Input Field</span>
+          </div>
+          <span class="tag-disabled-pill">DISABLED</span>
+        </div>
+        <div class="sc-body sc-body-col">
+          <input class="prac-input" type="text" id="inp-disabled" value="You can't edit me"
+            disabled data-testid="inp-disabled" />
+          <span class="sc-result" style="color:var(--text-dim)">isEnabled() → false — assert, don't type</span>
+        </div>
+      </div>
+
+      <!-- S06 -->
+      <div class="scenario-card" data-testid="scenario-readonly-input">
+        <div class="sc-head">
+          <div class="sc-label">
+            <span class="sc-num">S06</span>
+            <span class="sc-title">Readonly Input Field</span>
+          </div>
+          <span class="tag-readonly-pill">READ-ONLY</span>
+        </div>
+        <div class="sc-body sc-body-col">
+          <input class="prac-input" type="text" id="inp-readonly" value="This text is readonly"
+            readonly data-testid="inp-readonly" />
+          <span class="sc-result" style="color:var(--text-dim)">getAttribute("readonly") → "" (present)</span>
+        </div>
+      </div>
+
+    </section><!-- /scenarios-col -->
+
+
+    <!-- ── Right: Sticky code panel ── -->
+    <aside class="code-panel">
+
+      <!-- Progress -->
+      <div class="progress-widget">
+        <div class="prog-top"><span>Scenarios done</span><strong>2 / 6</strong></div>
+        <div class="prog-track"><div class="prog-fill" style="width:33%"></div></div>
+      </div>
+
+      <!-- Framework switcher -->
+      <div class="fw-switcher">
+        <button class="fw-btn active" data-fw="fw-pw">PW JS</button>
+        <button class="fw-btn" data-fw="fw-sel">Selenium</button>
+        <button class="fw-btn" data-fw="fw-cy">Cypress</button>
+      </div>
+
+      <!-- Playwright -->
+      <div id="fw-pw" class="fw-panel active">
+        <div class="code-block">
+          <div class="code-hdr">
+            <span class="code-lang">Playwright · JS</span>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <pre class="code-body"><span class="cm">// Type text (fill clears first)</span>
+<span class="kw">await</span> page.<span class="fn">fill</span>(<span class="str">'#movieName'</span>, <span class="str">'Inception'</span>);
+
+<span class="cm">// Append text + press Tab</span>
+<span class="kw">await</span> page.<span class="fn">locator</span>(<span class="str">'#appendText'</span>).<span class="fn">click</span>();
+<span class="kw">await</span> page.keyboard.<span class="fn">press</span>(<span class="str">'End'</span>);
+<span class="kw">await</span> page.keyboard.<span class="fn">type</span>(<span class="str">' and Playwright'</span>);
+<span class="kw">await</span> page.<span class="fn">locator</span>(<span class="str">'#appendText'</span>).<span class="fn">press</span>(<span class="str">'Tab'</span>);
+
+<span class="cm">// Read value</span>
+<span class="kw">const</span> val = <span class="kw">await</span> page.<span class="fn">inputValue</span>(<span class="str">'#insideText'</span>);
+<span class="kw">await</span> <span class="fn">expect</span>(page.<span class="fn">locator</span>(<span class="str">'#insideText'</span>))
+  .<span class="fn">toHaveValue</span>(<span class="str">'QA PlayGround'</span>);
+
+<span class="cm">// Clear field</span>
+<span class="kw">await</span> page.<span class="fn">fill</span>(<span class="str">'#clearText'</span>, <span class="str">''</span>);
+
+<span class="cm">// Assert disabled</span>
+<span class="kw">await</span> <span class="fn">expect</span>(page.<span class="fn">locator</span>(<span class="str">'#disabledInput'</span>))
+  .<span class="fn">toBeDisabled</span>();
+
+<span class="cm">// Assert readonly</span>
+<span class="kw">await</span> <span class="fn">expect</span>(page.<span class="fn">locator</span>(<span class="str">'#readonlyInput'</span>))
+  .<span class="fn">toHaveAttribute</span>(<span class="str">'readonly'</span>, <span class="str">''</span>);</pre>
+        </div>
+      </div>
+
+      <!-- Selenium -->
+      <div id="fw-sel" class="fw-panel">
+        <div class="code-block">
+          <div class="code-hdr">
+            <span class="code-lang">Selenium · Java</span>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <pre class="code-body"><span class="cm">// Type text</span>
+driver.<span class="fn">findElement</span>(By.<span class="fn">id</span>(<span class="str">"movieName"</span>))
+  .<span class="fn">sendKeys</span>(<span class="str">"Inception"</span>);
+
+<span class="cm">// Append + Tab</span>
+WebElement field = driver.<span class="fn">findElement</span>(
+  By.<span class="fn">id</span>(<span class="str">"appendText"</span>));
+field.<span class="fn">sendKeys</span>(<span class="str">" and Selenium"</span>);
+field.<span class="fn">sendKeys</span>(Keys.TAB);
+
+<span class="cm">// Read value</span>
+String val = driver.<span class="fn">findElement</span>(
+  By.<span class="fn">id</span>(<span class="str">"insideText"</span>))
+  .<span class="fn">getAttribute</span>(<span class="str">"value"</span>);
+
+<span class="cm">// Clear field</span>
+driver.<span class="fn">findElement</span>(By.<span class="fn">id</span>(<span class="str">"clearText"</span>)).<span class="fn">clear</span>();
+
+<span class="cm">// Assert disabled</span>
+<span class="fn">assertFalse</span>(driver.<span class="fn">findElement</span>(
+  By.<span class="fn">id</span>(<span class="str">"disabledInput"</span>)).<span class="fn">isEnabled</span>());
+
+<span class="cm">// Assert readonly attr present</span>
+<span class="fn">assertNotNull</span>(driver.<span class="fn">findElement</span>(
+  By.<span class="fn">id</span>(<span class="str">"readonlyInput"</span>))
+  .<span class="fn">getAttribute</span>(<span class="str">"readonly"</span>));</pre>
+        </div>
+      </div>
+
+      <!-- Cypress -->
+      <div id="fw-cy" class="fw-panel">
+        <div class="code-block">
+          <div class="code-hdr">
+            <span class="code-lang">Cypress</span>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <pre class="code-body"><span class="cm">// Type text</span>
+cy.<span class="fn">get</span>(<span class="str">"[data-testid='inp-movie-name']"</span>)
+  .<span class="fn">type</span>(<span class="str">'Inception'</span>);
+
+<span class="cm">// Append + Tab</span>
+cy.<span class="fn">get</span>(<span class="str">"[data-testid='inp-append-text']"</span>)
+  .<span class="fn">type</span>(<span class="str">' and Cypress{tab}'</span>);
+
+<span class="cm">// Assert value</span>
+cy.<span class="fn">get</span>(<span class="str">"[data-testid='inp-verify-text']"</span>)
+  .<span class="fn">should</span>(<span class="str">'have.value'</span>, <span class="str">'QA PlayGround'</span>);
+
+<span class="cm">// Clear field</span>
+cy.<span class="fn">get</span>(<span class="str">"[data-testid='inp-clear-text']"</span>).<span class="fn">clear</span>();
+
+<span class="cm">// Assert disabled</span>
+cy.<span class="fn">get</span>(<span class="str">"[data-testid='inp-disabled']"</span>)
+  .<span class="fn">should</span>(<span class="str">'be.disabled'</span>);
+
+<span class="cm">// Assert readonly</span>
+cy.<span class="fn">get</span>(<span class="str">"[data-testid='inp-readonly']"</span>)
+  .<span class="fn">should</span>(<span class="str">'have.attr'</span>, <span class="str">'readonly'</span>);</pre>
+        </div>
+      </div>
+
+      <!-- Key methods -->
+      <div class="panel-section-label">Key Methods</div>
+      <div class="method-row"><span class="dot dot-g"></span>sendKeys() / fill() / type()</div>
+      <div class="method-row"><span class="dot dot-b"></span>clear() / fill("")</div>
+      <div class="method-row"><span class="dot dot-o"></span>getAttribute("value") / inputValue()</div>
+      <div class="method-row"><span class="dot dot-y"></span>isEnabled() / toBeDisabled()</div>
+      <div class="method-row"><span class="dot dot-p"></span>sendKeys(Keys.TAB) / press("Tab")</div>
+
+      <!-- Up Next -->
+      <div class="up-next" style="margin-top:16px">
+        <div class="up-next-inner">
+          <span class="un-icon">🖱️</span>
+          <div class="un-text">
+            <div class="un-name">Buttons</div>
+            <div class="un-desc">Click, double-click, right-click</div>
+          </div>
+          <span class="un-arrow">›</span>
+        </div>
+      </div>
+
+    </aside><!-- /code-panel -->
+  </div><!-- /practice-layout -->
+</div><!-- /tab-practice -->
+
+
+<!-- ══════════════════════════════════════════
+     TAB 2 — TEST CASES
+══════════════════════════════════════════ -->
+<div id="tab-testcases" class="tab-view" role="tabpanel">
+  <div class="test-cases-layout">
+
+    <table class="tc-table" data-testid="test-cases-table">
+      <thead>
+        <tr>
+          <th style="width:40px"></th>
+          <th>Test ID</th>
+          <th>Scenario</th>
+          <th>Expected Result</th>
+          <th>Type</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- TC 01 -->
+        <tr data-testid="tc-row-001">
+          <td><button class="expand-btn" data-row="001">▸</button></td>
+          <td class="tc-id">INP_001</td>
+          <td class="tc-scenario">Verify successful movie name input</td>
+          <td>Field value matches typed text</td>
+          <td><span class="tag tag-positive">positive</span></td>
+          <td><span class="tag tag-high">high</span></td>
+        </tr>
+        <tr id="steps-001" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-desc">Verify that typing into a text input correctly sets the field value.</div>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Navigate to <code>/practice/input-fields</code></span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Locate input with <code>data-testid="inp-movie-name"</code></span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Call <code>sendKeys("Inception")</code> or <code>fill("Inception")</code></span></div>
+              <div class="step-item"><span class="step-num">4</span><span class="step-text">Assert <code>getAttribute("value")</code> equals "Inception"</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 02 -->
+        <tr data-testid="tc-row-002">
+          <td><button class="expand-btn" data-row="002">▸</button></td>
+          <td class="tc-id">INP_002</td>
+          <td class="tc-scenario">Verify placeholder disappears on typing</td>
+          <td>Placeholder text hidden once user types</td>
+          <td><span class="tag tag-positive">positive</span></td>
+          <td><span class="tag tag-medium">medium</span></td>
+        </tr>
+        <tr id="steps-002" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-desc">Confirm placeholder attribute is visible before typing and hidden after input.</div>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Assert <code>getAttribute("placeholder")</code> returns "e.g. Inception"</span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Type any character into the field</span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Assert placeholder is no longer visually displayed</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 03 -->
+        <tr data-testid="tc-row-003">
+          <td><button class="expand-btn" data-row="003">▸</button></td>
+          <td class="tc-id">INP_003</td>
+          <td class="tc-scenario">Verify Tab key triggers focus change after append</td>
+          <td>Focus moves to next focusable element</td>
+          <td><span class="tag tag-positive">positive</span></td>
+          <td><span class="tag tag-medium">medium</span></td>
+        </tr>
+        <tr id="steps-003" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-desc">Verify pressing Tab after typing moves focus away from the append field.</div>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Click <code>data-testid="inp-append-text"</code> to focus</span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Call <code>sendKeys(Keys.TAB)</code> or <code>press("Tab")</code></span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Assert the append input no longer has focus</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 04 -->
+        <tr data-testid="tc-row-004">
+          <td><button class="expand-btn" data-row="004">▸</button></td>
+          <td class="tc-id">INP_004</td>
+          <td class="tc-scenario">Verify appended text value is retained in field</td>
+          <td>Field value contains original + appended text</td>
+          <td><span class="tag tag-positive">positive</span></td>
+          <td><span class="tag tag-high">high</span></td>
+        </tr>
+        <tr id="steps-004" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Focus field with <code>data-testid="inp-append-text"</code> (value: "I love QA")</span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Press End key to move cursor to end</span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Type " and Playwright" using keyboard</span></div>
+              <div class="step-item"><span class="step-num">4</span><span class="step-text">Assert <code>getAttribute("value")</code> equals "I love QA and Playwright"</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 05 -->
+        <tr data-testid="tc-row-005">
+          <td><button class="expand-btn" data-row="005">▸</button></td>
+          <td class="tc-id">INP_005</td>
+          <td class="tc-scenario">Verify text present inside input field matches expected</td>
+          <td>getAttribute("value") returns "QA PlayGround"</td>
+          <td><span class="tag tag-positive">positive</span></td>
+          <td><span class="tag tag-high">high</span></td>
+        </tr>
+        <tr id="steps-005" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Locate <code>data-testid="inp-verify-text"</code></span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Call <code>getAttribute("value")</code> or <code>inputValue()</code></span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Assert value equals "QA PlayGround"</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 06 -->
+        <tr data-testid="tc-row-006">
+          <td><button class="expand-btn" data-row="006">▸</button></td>
+          <td class="tc-id">INP_006</td>
+          <td class="tc-scenario">Verify getAttribute returns the correct input value</td>
+          <td>Returned string matches the pre-filled value exactly</td>
+          <td><span class="tag tag-positive">positive</span></td>
+          <td><span class="tag tag-medium">medium</span></td>
+        </tr>
+        <tr id="steps-006" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Locate verify field by <code>data-testid</code></span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Get value via <code>getAttribute("value")</code> (Selenium) or <code>toHaveValue()</code> (Playwright)</span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Assert string match is case-sensitive and exact</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 07 -->
+        <tr data-testid="tc-row-007">
+          <td><button class="expand-btn" data-row="007">▸</button></td>
+          <td class="tc-id">INP_007</td>
+          <td class="tc-scenario">Verify input field text can be cleared successfully</td>
+          <td>Field becomes empty after clear action</td>
+          <td><span class="tag tag-positive">positive</span></td>
+          <td><span class="tag tag-high">high</span></td>
+        </tr>
+        <tr id="steps-007" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Locate <code>data-testid="inp-clear-text"</code> (pre-filled)</span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Call <code>clear()</code> or <code>fill("")</code></span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Assert <code>getAttribute("value")</code> returns ""</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 08 -->
+        <tr data-testid="tc-row-008">
+          <td><button class="expand-btn" data-row="008">▸</button></td>
+          <td class="tc-id">INP_008</td>
+          <td class="tc-scenario">Verify field is empty after clear action</td>
+          <td>toHaveValue("") assertion passes</td>
+          <td><span class="tag tag-positive">positive</span></td>
+          <td><span class="tag tag-medium">medium</span></td>
+        </tr>
+        <tr id="steps-008" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Clear the input field</span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Assert <code>toHaveValue("")</code> (Playwright) passes</span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Assert placeholder text reappears visually</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 09 -->
+        <tr data-testid="tc-row-009">
+          <td><button class="expand-btn" data-row="009">▸</button></td>
+          <td class="tc-id">INP_009</td>
+          <td class="tc-scenario">Verify disabled input field cannot be edited</td>
+          <td>Typing into disabled input has no effect</td>
+          <td><span class="tag tag-negative">negative</span></td>
+          <td><span class="tag tag-high">high</span></td>
+        </tr>
+        <tr id="steps-009" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-desc">Confirm a disabled input rejects interaction and its state is detectable.</div>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Locate <code>data-testid="inp-disabled"</code></span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Assert <code>!isEnabled()</code> is true (Selenium) / <code>toBeDisabled()</code> (Playwright)</span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Attempt to type — assert value unchanged</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 10 -->
+        <tr data-testid="tc-row-010">
+          <td><button class="expand-btn" data-row="010">▸</button></td>
+          <td class="tc-id">INP_010</td>
+          <td class="tc-scenario">Verify isEnabled() returns false for disabled input</td>
+          <td>Boolean assertion passes</td>
+          <td><span class="tag tag-negative">negative</span></td>
+          <td><span class="tag tag-high">high</span></td>
+        </tr>
+        <tr id="steps-010" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Get disabled input element</span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Call <code>isEnabled()</code> and assert result is false</span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Alternatively: assert <code>getAttribute("disabled") != null</code></span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 11 -->
+        <tr data-testid="tc-row-011">
+          <td><button class="expand-btn" data-row="011">▸</button></td>
+          <td class="tc-id">INP_011</td>
+          <td class="tc-scenario">Verify readonly field does not accept user typing</td>
+          <td>Value unchanged after sendKeys attempt</td>
+          <td><span class="tag tag-edge">edge</span></td>
+          <td><span class="tag tag-high">high</span></td>
+        </tr>
+        <tr id="steps-011" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-desc">Readonly fields accept focus and Tab but reject keyboard input changes.</div>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Locate <code>data-testid="inp-readonly"</code></span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Attempt <code>sendKeys("test")</code> — observe value is unchanged</span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Assert <code>getAttribute("value")</code> still equals "This text is readonly"</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 12 -->
+        <tr data-testid="tc-row-012">
+          <td><button class="expand-btn" data-row="012">▸</button></td>
+          <td class="tc-id">INP_012</td>
+          <td class="tc-scenario">Verify getAttribute returns correct readonly attribute value</td>
+          <td>getAttribute("readonly") returns "" (empty string = present)</td>
+          <td><span class="tag tag-edge">edge</span></td>
+          <td><span class="tag tag-medium">medium</span></td>
+        </tr>
+        <tr id="steps-012" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Locate readonly input field</span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Call <code>getAttribute("readonly")</code> — returns <code>""</code> in Selenium if attribute is present</span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Use <code>assertNotNull()</code> (Selenium) or <code>toHaveAttribute("readonly", "")</code> (Playwright)</span></div>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div><!-- /tab-testcases -->
+
+
+<!-- ══════════════════════════════════════════
+     TAB 3 — LEARN  (doc + right-side TOC)
+══════════════════════════════════════════ -->
+<div id="tab-learn" class="tab-view" role="tabpanel">
+  <div class="learn-layout">
+
+    <!-- ── Main doc content ── -->
+    <main class="learn-main">
+
+      <!-- Overview -->
+      <div class="doc-section" id="learn-overview">
+        <h2 class="doc-h2"><span class="sec-num">→</span>Overview</h2>
+        <p class="doc-p">Input fields are the foundation of form automation. The core scenarios you'll encounter in every real-world test suite are: <strong>typing text</strong>, <strong>clearing a field</strong>, <strong>reading the current value</strong>, <strong>checking disabled state</strong>, and <strong>asserting readonly behaviour</strong>.</p>
+        <p class="doc-p">Selenium uses <code>sendKeys()</code>, <code>clear()</code>, and <code>getAttribute("value")</code>. Playwright has <code>fill()</code> (which clears first), <code>inputValue()</code>, and built-in assertions like <code>toHaveValue()</code>. Cypress uses <code>type()</code>, <code>clear()</code>, and <code>should("have.value")</code>.</p>
+      </div>
+
+      <!-- 1. Type Text -->
+      <div class="doc-section" id="learn-type">
+        <h2 class="doc-h2"><span class="sec-num">1</span>Type Text into an Input</h2>
+        <p class="doc-p">The most common input action. In Selenium, <code>sendKeys()</code> appends to whatever is already in the field. Playwright's <code>fill()</code> clears first then types — use <code>keyboard.type()</code> to truly append. Cypress's <code>type()</code> appends like Selenium.</p>
+
+        <div class="inline-panel">
+          <div class="panel-titlebar">
+            <div class="panel-dots"><span class="dot-red"></span><span class="dot-yel"></span><span class="dot-grn"></span></div>
+            <span class="panel-label">Try it — Type Text</span>
+            <span class="panel-tag">S01</span>
+          </div>
+          <div class="panel-body">
+            <div class="panel-col-left">
+              <div class="zone-label">Element</div>
+              <div class="el-zone">
+                <input class="panel-input" type="text" id="lc-inp-type"
+                  placeholder="Type something here…"
+                  data-testid="lc-inp-type" autocomplete="off" />
+              </div>
+              <div class="out-hint">Type into the field above</div>
+            </div>
+            <div class="panel-col-right">
+              <div class="zone-label">Output</div>
+              <div class="out-zone">
+                <div class="out-zone-bar">WAITING</div>
+                <div class="out-zone-body">
+                  <div class="out-line"><span class="out-arrow">›</span><span class="out-idle" id="lc-res-type">No input yet…</span></div>
+                </div>
+              </div>
+              <div class="inline-code">
+                <div class="inline-code-bar">
+                  <span class="inline-code-lang">PW · Selenium · Cypress</span>
+                  <button class="inline-copy copy-btn">Copy</button>
+                </div>
+                <pre><span class="cm">// Playwright JS</span>
+<span class="kw">await</span> page.<span class="fn">fill</span>(<span class="str">'#field'</span>, <span class="str">'text'</span>);
+<span class="cm">// Selenium Java</span>
+el.<span class="fn">sendKeys</span>(<span class="str">"text"</span>);
+<span class="cm">// Cypress</span>
+cy.<span class="fn">get</span>(sel).<span class="fn">type</span>(<span class="str">'text'</span>);</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Append + Tab -->
+      <div class="doc-section" id="learn-append">
+        <h2 class="doc-h2"><span class="sec-num">2</span>Append Text and Press Tab</h2>
+        <p class="doc-p">Playwright's <code>fill()</code> clears the field before typing, so to append you must use <code>locator.click()</code> to focus, then <code>keyboard.press("End")</code> to move the cursor, then <code>keyboard.type()</code> to append. Selenium's <code>sendKeys()</code> naturally appends. In Cypress, include <code>{tab}</code> in the type string.</p>
+
+        <div class="inline-panel">
+          <div class="panel-titlebar">
+            <div class="panel-dots"><span class="dot-red"></span><span class="dot-yel"></span><span class="dot-grn"></span></div>
+            <span class="panel-label">Try it — Append &amp; Tab</span>
+            <span class="panel-tag">S02</span>
+          </div>
+          <div class="panel-body">
+            <div class="panel-col-left">
+              <div class="zone-label">Element</div>
+              <div class="el-zone">
+                <input class="panel-input" type="text" id="lc-inp-append"
+                  value="I love QA"
+                  data-testid="lc-inp-append" autocomplete="off" />
+              </div>
+              <div class="out-hint">Type more text, then press Tab key</div>
+            </div>
+            <div class="panel-col-right">
+              <div class="zone-label">Output</div>
+              <div class="out-zone">
+                <div class="out-zone-bar">WAITING</div>
+                <div class="out-zone-body">
+                  <div class="out-line"><span class="out-arrow">›</span><span class="out-idle" id="lc-res-append">No Tab yet…</span></div>
+                </div>
+              </div>
+              <div class="inline-code">
+                <div class="inline-code-bar">
+                  <span class="inline-code-lang">PW JS</span>
+                  <button class="inline-copy copy-btn">Copy</button>
+                </div>
+                <pre><span class="kw">await</span> loc.<span class="fn">click</span>();
+<span class="kw">await</span> page.keyboard.<span class="fn">press</span>(<span class="str">'End'</span>);
+<span class="kw">await</span> page.keyboard.<span class="fn">type</span>(<span class="str">' Rocks!'</span>);
+<span class="kw">await</span> loc.<span class="fn">press</span>(<span class="str">'Tab'</span>);</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Read Value -->
+      <div class="doc-section" id="learn-read">
+        <h2 class="doc-h2"><span class="sec-num">3</span>Read the Field Value</h2>
+        <p class="doc-p">Getting the current text of an input requires reading the <code>value</code> property, not the element's visible text. In Selenium use <code>getAttribute("value")</code>. Playwright has a dedicated <code>inputValue()</code> method and the <code>toHaveValue()</code> assertion. Cypress chains <code>should("have.value", "expected")</code>.</p>
+
+        <div class="inline-panel">
+          <div class="panel-titlebar">
+            <div class="panel-dots"><span class="dot-red"></span><span class="dot-yel"></span><span class="dot-grn"></span></div>
+            <span class="panel-label">Try it — Read Value</span>
+            <span class="panel-tag">S03</span>
+          </div>
+          <div class="panel-body">
+            <div class="panel-col-left">
+              <div class="zone-label">Element</div>
+              <div class="el-zone">
+                <input class="panel-input" type="text" id="lc-inp-read"
+                  value="QA PlayGround"
+                  data-testid="lc-inp-read" autocomplete="off" />
+                <button class="pb pb-cyan" id="lc-btn-read" data-testid="lc-btn-read">Read Value</button>
+              </div>
+              <div class="out-hint">Click the button to read the value</div>
+            </div>
+            <div class="panel-col-right">
+              <div class="zone-label">Output</div>
+              <div class="out-zone">
+                <div class="out-zone-bar">WAITING</div>
+                <div class="out-zone-body">
+                  <div class="out-line"><span class="out-arrow">›</span><span class="out-idle" id="lc-res-read">No action yet…</span></div>
+                </div>
+              </div>
+              <div class="inline-code">
+                <div class="inline-code-bar">
+                  <span class="inline-code-lang">PW · Selenium</span>
+                  <button class="inline-copy copy-btn">Copy</button>
+                </div>
+                <pre><span class="cm">// Playwright JS</span>
+<span class="kw">const</span> v = <span class="kw">await</span> loc.<span class="fn">inputValue</span>();
+<span class="kw">await</span> <span class="fn">expect</span>(loc)
+  .<span class="fn">toHaveValue</span>(<span class="str">'QA PlayGround'</span>);
+<span class="cm">// Selenium Java</span>
+String v = el.<span class="fn">getAttribute</span>(<span class="str">"value"</span>);
+<span class="fn">assertEquals</span>(<span class="str">"QA PlayGround"</span>, v);</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Clear Field -->
+      <div class="doc-section" id="learn-clear">
+        <h2 class="doc-h2"><span class="sec-num">4</span>Clear an Input Field</h2>
+        <p class="doc-p">Always clear an input before typing new text to avoid appending to stale data. Selenium's <code>clear()</code> method empties the field and triggers the change event. Playwright uses <code>fill("")</code> — passing an empty string. Cypress has a dedicated <code>clear()</code> command.</p>
+
+        <div class="inline-panel">
+          <div class="panel-titlebar">
+            <div class="panel-dots"><span class="dot-red"></span><span class="dot-yel"></span><span class="dot-grn"></span></div>
+            <span class="panel-label">Try it — Clear Field</span>
+            <span class="panel-tag">S04</span>
+          </div>
+          <div class="panel-body">
+            <div class="panel-col-left">
+              <div class="zone-label">Element</div>
+              <div class="el-zone">
+                <input class="panel-input" type="text" id="lc-inp-clear"
+                  value="Clear this text!"
+                  data-testid="lc-inp-clear" autocomplete="off" />
+                <button class="pb pb-red" id="lc-btn-clear" data-testid="lc-btn-clear">Clear</button>
+              </div>
+              <div class="out-hint">Click Clear to empty the field</div>
+            </div>
+            <div class="panel-col-right">
+              <div class="zone-label">Output</div>
+              <div class="out-zone">
+                <div class="out-zone-bar">WAITING</div>
+                <div class="out-zone-body">
+                  <div class="out-line"><span class="out-arrow">›</span><span class="out-idle" id="lc-res-clear">No action yet…</span></div>
+                </div>
+              </div>
+              <div class="inline-code">
+                <div class="inline-code-bar">
+                  <span class="inline-code-lang">All frameworks</span>
+                  <button class="inline-copy copy-btn">Copy</button>
+                </div>
+                <pre><span class="cm">// Playwright JS</span>
+<span class="kw">await</span> loc.<span class="fn">fill</span>(<span class="str">''</span>);
+<span class="cm">// Selenium Java</span>
+el.<span class="fn">clear</span>();
+<span class="cm">// Cypress</span>
+cy.<span class="fn">get</span>(sel).<span class="fn">clear</span>();</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Disabled Input -->
+      <div class="doc-section" id="learn-disabled">
+        <h2 class="doc-h2"><span class="sec-num">5</span>Disabled Input Field</h2>
+        <p class="doc-p">A disabled input has the HTML <code>disabled</code> attribute. It is visible but cannot receive keyboard input or be focused. The automation goal is to <strong>assert this state</strong> — Playwright will throw if you attempt <code>fill()</code> on a disabled element due to actionability checks.</p>
+
+        <div class="inline-panel">
+          <div class="panel-titlebar">
+            <div class="panel-dots"><span class="dot-red"></span><span class="dot-yel"></span><span class="dot-grn"></span></div>
+            <span class="panel-label">Disabled Input — Assert, don't type</span>
+            <span class="tag-disabled-pill">DISABLED</span>
+          </div>
+          <div class="panel-body">
+            <div class="panel-col-left">
+              <div class="zone-label">Element</div>
+              <div class="el-zone">
+                <input class="panel-input" type="text" id="lc-inp-disabled"
+                  value="You can't edit me"
+                  disabled data-testid="lc-inp-disabled" />
+              </div>
+              <div class="out-hint" style="color:var(--danger)">Cannot receive input — that's the point</div>
+            </div>
+            <div class="panel-col-right">
+              <div class="zone-label">Assertion Code</div>
+              <div class="inline-code">
+                <div class="inline-code-bar">
+                  <span class="inline-code-lang">All frameworks</span>
+                  <button class="inline-copy copy-btn">Copy</button>
+                </div>
+                <pre><span class="cm">// Playwright JS</span>
+<span class="kw">await</span> <span class="fn">expect</span>(loc)
+  .<span class="fn">toBeDisabled</span>();
+
+<span class="cm">// Selenium Java</span>
+<span class="fn">assertFalse</span>(el.<span class="fn">isEnabled</span>());
+
+<span class="cm">// Cypress</span>
+cy.<span class="fn">get</span>(sel)
+  .<span class="fn">should</span>(<span class="str">'be.disabled'</span>);</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Readonly Input -->
+      <div class="doc-section" id="learn-readonly">
+        <h2 class="doc-h2"><span class="sec-num">6</span>Readonly Input Field</h2>
+        <p class="doc-p">A readonly input <em>can</em> be focused and selected, but keyboard input does not change its value. Unlike disabled, <code>isEnabled()</code> returns <em>true</em> for readonly fields. Detect readonly by checking the <code>readonly</code> attribute via <code>getAttribute("readonly")</code>, which returns an empty string <code>""</code> when present.</p>
+
+        <div class="inline-panel">
+          <div class="panel-titlebar">
+            <div class="panel-dots"><span class="dot-red"></span><span class="dot-yel"></span><span class="dot-grn"></span></div>
+            <span class="panel-label">Readonly Input — Focusable, but immutable</span>
+            <span class="tag-readonly-pill">READ-ONLY</span>
+          </div>
+          <div class="panel-body">
+            <div class="panel-col-left">
+              <div class="zone-label">Element</div>
+              <div class="el-zone">
+                <input class="panel-input" type="text" id="lc-inp-readonly"
+                  value="This text is readonly"
+                  readonly data-testid="lc-inp-readonly" />
+              </div>
+              <div class="out-hint" style="color:var(--accent3)">Click to focus — can't change the value</div>
+            </div>
+            <div class="panel-col-right">
+              <div class="zone-label">Assertion Code</div>
+              <div class="inline-code">
+                <div class="inline-code-bar">
+                  <span class="inline-code-lang">PW · Selenium</span>
+                  <button class="inline-copy copy-btn">Copy</button>
+                </div>
+                <pre><span class="cm">// Playwright JS</span>
+<span class="kw">await</span> <span class="fn">expect</span>(loc)
+  .<span class="fn">toHaveAttribute</span>(<span class="str">'readonly'</span>, <span class="str">''</span>);
+
+<span class="cm">// Selenium Java</span>
+<span class="fn">assertNotNull</span>(
+  el.<span class="fn">getAttribute</span>(<span class="str">"readonly"</span>));
+
+<span class="cm">// Cypress</span>
+cy.<span class="fn">get</span>(sel)
+  .<span class="fn">should</span>(<span class="str">'have.attr'</span>, <span class="str">'readonly'</span>);</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Method Summary -->
+      <div class="doc-section" id="learn-methods">
+        <h2 class="doc-h2"><span class="sec-num">7</span>Key Methods Summary</h2>
+        <table class="method-table">
+          <thead>
+            <tr>
+              <th>Action</th>
+              <th>Selenium (Java)</th>
+              <th>Playwright (JS)</th>
+              <th>Playwright (Python)</th>
+              <th>Cypress</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Type text</td>
+              <td><code>sendKeys("text")</code></td>
+              <td><code>fill("text")</code></td>
+              <td><code>fill("text")</code></td>
+              <td><code>.type('text')</code></td>
+            </tr>
+            <tr>
+              <td>Clear field</td>
+              <td><code>clear()</code></td>
+              <td><code>fill("")</code></td>
+              <td><code>fill("")</code></td>
+              <td><code>.clear()</code></td>
+            </tr>
+            <tr>
+              <td>Read value</td>
+              <td><code>getAttribute("value")</code></td>
+              <td><code>inputValue()</code></td>
+              <td><code>input_value()</code></td>
+              <td><code>.invoke('val')</code></td>
+            </tr>
+            <tr>
+              <td>Assert value</td>
+              <td><code>assertEquals(v, el.getAttribute("value"))</code></td>
+              <td><code>toHaveValue("v")</code></td>
+              <td><code>to_have_value("v")</code></td>
+              <td><code>.should('have.value','v')</code></td>
+            </tr>
+            <tr>
+              <td>Is disabled</td>
+              <td><code>!isEnabled()</code></td>
+              <td><code>toBeDisabled()</code></td>
+              <td><code>to_be_disabled()</code></td>
+              <td><code>.should('be.disabled')</code></td>
+            </tr>
+            <tr>
+              <td>Is readonly</td>
+              <td><code>getAttribute("readonly")</code></td>
+              <td><code>toHaveAttribute("readonly","")</code></td>
+              <td><code>to_have_attribute("readonly","")</code></td>
+              <td><code>.should('have.attr','readonly')</code></td>
+            </tr>
+            <tr>
+              <td>Press Tab</td>
+              <td><code>sendKeys(Keys.TAB)</code></td>
+              <td><code>press("Tab")</code></td>
+              <td><code>press("Tab")</code></td>
+              <td><code>.type('{tab}')</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 8. FAQ -->
+      <div class="doc-section" id="learn-faq">
+        <h2 class="doc-h2"><span class="sec-num">8</span>FAQ</h2>
+
+        <div class="faq-item" data-testid="faq-1">
+          <div class="faq-trigger">
+            What's the difference between fill() and type() in Playwright?
+            <span class="faq-chevron">⌄</span>
+          </div>
+          <div class="faq-body">
+            <code>fill()</code> clears the input first, then sets the value atomically — it does not fire keyboard events. <code>type()</code> (via <code>keyboard.type()</code>) simulates real keystrokes and appends to the existing value. Use <code>fill()</code> for most form interactions; use <code>keyboard.type()</code> when you need to test key-by-key event handling or genuinely append text.
+          </div>
+        </div>
+
+        <div class="faq-item" data-testid="faq-2">
+          <div class="faq-trigger">
+            Why does Playwright fail when calling fill() on a disabled input?
+            <span class="faq-chevron">⌄</span>
+          </div>
+          <div class="faq-body">
+            Playwright runs actionability checks before interacting with an element: it confirms the element is visible, stable, and <strong>enabled</strong>. A disabled input fails the enabled check and the <code>fill()</code> call throws after the configured timeout. Assert the disabled state with <code>toBeDisabled()</code> instead of attempting to interact with it.
+          </div>
+        </div>
+
+        <div class="faq-item" data-testid="faq-3">
+          <div class="faq-trigger">
+            How do I check if an input is readonly vs disabled in Selenium?
+            <span class="faq-chevron">⌄</span>
+          </div>
+          <div class="faq-body">
+            <strong>Disabled:</strong> <code>!element.isEnabled()</code> returns <code>true</code>. The element cannot be focused or interacted with.<br/>
+            <strong>Readonly:</strong> <code>element.isEnabled()</code> returns <code>true</code> (it IS enabled!), but <code>element.getAttribute("readonly")</code> returns a non-null value. The key difference: readonly accepts focus and selection but not value changes.
+          </div>
+        </div>
+
+        <div class="faq-item" data-testid="faq-4">
+          <div class="faq-trigger">
+            How do I append text to an existing value in Playwright without clearing it?
+            <span class="faq-chevron">⌄</span>
+          </div>
+          <div class="faq-body">
+            Playwright's <code>fill()</code> always clears first. To truly append: (1) click the locator to focus, (2) press <code>End</code> to move cursor to end, (3) use <code>page.keyboard.type("append text")</code>. This simulates real keystroke events and preserves the existing value.
+          </div>
+        </div>
+
+        <div class="faq-item" data-testid="faq-5">
+          <div class="faq-trigger">
+            What selector strategy is best for input fields in automation?
+            <span class="faq-chevron">⌄</span>
+          </div>
+          <div class="faq-body">
+            Prefer <code>data-testid</code> attributes — they're stable across styling and layout changes. In Playwright: <code>page.getByTestId("inp-movie-name")</code>. In Selenium: <code>By.cssSelector("[data-testid='inp-movie-name']")</code>. For forms with clear semantic labels, Playwright's <code>getByLabel("Movie Name")</code> is even more human-readable and resilient.
+          </div>
+        </div>
+
+        <div class="faq-item" data-testid="faq-6">
+          <div class="faq-trigger">
+            How do I simulate pressing Enter after typing in an input?
+            <span class="faq-chevron">⌄</span>
+          </div>
+          <div class="faq-body">
+            Playwright: <code>await locator.press("Enter")</code> after <code>fill()</code>. Selenium: <code>element.sendKeys(Keys.ENTER)</code>. Cypress: include <code>{enter}</code> in the type string — <code>cy.get(sel).type("text{enter}")</code>. This is commonly needed for search forms and login flows.
+          </div>
+        </div>
+
+      </div>
+    </main><!-- /learn-main -->
+
+
+    <!-- ── Right: TOC ── -->
+    <nav class="learn-toc" aria-label="Table of contents">
+      <div class="toc-label">On This Page</div>
+      <a class="toc-link active" href="#learn-overview">Overview</a>
+      <a class="toc-link" href="#learn-type">1 · Type Text</a>
+      <a class="toc-link" href="#learn-append">2 · Append &amp; Tab</a>
+      <a class="toc-link" href="#learn-read">3 · Read Value</a>
+      <a class="toc-link" href="#learn-clear">4 · Clear Field</a>
+      <a class="toc-link" href="#learn-disabled">5 · Disabled Input</a>
+      <a class="toc-link" href="#learn-readonly">6 · Readonly Input</a>
+      <div class="toc-divider"></div>
+      <a class="toc-link" href="#learn-methods">Method Summary</a>
+      <a class="toc-link" href="#learn-faq">FAQ</a>
+    </nav>
+
+  </div><!-- /learn-layout -->
+</div><!-- /tab-learn -->
+
+
+<script src="app.js"></script>
+<script>
+/* ── Input field practice interactions ──────────────────
+   This file-specific script handles input events not
+   covered by the shared app.js (which handles buttons).
+────────────────────────────────────────────────────────── */
+(function () {
+  "use strict";
+
+  /* Helper: update the terminal-style status bar */
+  function setBarReady(resId) {
+    var resEl = document.getElementById(resId);
+    var bar = resEl && resEl.closest && resEl.closest(".out-zone-body")
+      ? resEl.closest(".out-zone-body").previousElementSibling
+      : null;
+    if (bar && bar.classList.contains("out-zone-bar")) {
+      bar.textContent = "FIRED";
+      bar.classList.add("ready");
+    }
+  }
+
+  /* Helper: show a success result in sc-result spans */
+  function showSc(resId, msg) {
+    var el = document.getElementById(resId);
+    if (!el) return;
+    el.textContent = "✓ " + msg;
+    el.style.color = "var(--accent)";
+  }
+
+  /* Helper: show success in out-zone body spans */
+  function showOut(resId, msg) {
+    var el = document.getElementById(resId);
+    if (!el) return;
+    el.textContent = "✓ " + msg;
+    el.classList.remove("out-idle");
+    el.classList.add("out-success");
+    setBarReady(resId);
+  }
+
+  /* ── Practice Tab ────────────────────────────────── */
+
+  /* S01 — live type feedback */
+  var s01 = document.getElementById("inp-movie");
+  if (s01) {
+    s01.addEventListener("input", function () {
+      var res = document.getElementById("res-movie");
+      if (!res) return;
+      if (s01.value) {
+        res.textContent = "✓ value = \"" + s01.value + "\"";
+        res.style.color = "var(--accent)";
+      } else {
+        res.textContent = "Start typing above…";
+        res.style.color = "";
+      }
+    });
+  }
+
+  /* S02 — Tab key detection */
+  var s02 = document.getElementById("inp-append");
+  if (s02) {
+    s02.addEventListener("keydown", function (e) {
+      if (e.key === "Tab") {
+        showSc("res-append", "Tab pressed! value = \"" + s02.value + "\"");
+      }
+    });
+  }
+
+  /* S03 — verify value on button click */
+  var s03btn = document.getElementById("btn-verify");
+  if (s03btn) {
+    s03btn.addEventListener("click", function () {
+      var inp = document.getElementById("inp-verify");
+      if (inp) showSc("res-verify", "getAttribute(\"value\") = \"" + inp.value + "\"");
+    });
+  }
+
+  /* S04 — clear on button click */
+  var s04btn = document.getElementById("btn-clear");
+  if (s04btn) {
+    s04btn.addEventListener("click", function () {
+      var inp = document.getElementById("inp-clear");
+      if (inp) {
+        inp.value = "";
+        showSc("res-clear", "Cleared! getAttribute(\"value\") = \"\"");
+      }
+    });
+  }
+
+  /* ── Learn Tab inline panels ─────────────────────── */
+
+  /* Type panel — live feedback */
+  var lc01 = document.getElementById("lc-inp-type");
+  if (lc01) {
+    lc01.addEventListener("input", function () {
+      if (lc01.value) showOut("lc-res-type", "value = \"" + lc01.value + "\"");
+    });
+  }
+
+  /* Append panel — Tab detection */
+  var lc02 = document.getElementById("lc-inp-append");
+  if (lc02) {
+    lc02.addEventListener("keydown", function (e) {
+      if (e.key === "Tab") showOut("lc-res-append", "Tab! value = \"" + lc02.value + "\"");
+    });
+  }
+
+  /* Read Value panel — button click */
+  var lcReadBtn = document.getElementById("lc-btn-read");
+  if (lcReadBtn) {
+    lcReadBtn.addEventListener("click", function () {
+      var inp = document.getElementById("lc-inp-read");
+      if (inp) showOut("lc-res-read", "inputValue() = \"" + inp.value + "\"");
+    });
+  }
+
+  /* Clear panel — button click */
+  var lcClearBtn = document.getElementById("lc-btn-clear");
+  if (lcClearBtn) {
+    lcClearBtn.addEventListener("click", function () {
+      var inp = document.getElementById("lc-inp-clear");
+      if (inp) {
+        inp.value = "";
+        showOut("lc-res-clear", "Cleared! value = \"\"");
+      }
+    });
+  }
+
+})();
+</script>
+</body>
+</html>
