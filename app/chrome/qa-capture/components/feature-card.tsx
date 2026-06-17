@@ -5,12 +5,7 @@ import {
   chromeToneClasses,
 } from "../../_shared/chrome-page-helpers";
 
-export function FeatureCard({
-  icon,
-  title,
-  description,
-  tone,
-}: ChromeFeature) {
+export function FeatureCard({ icon, title, description, tone }: ChromeFeature) {
   const Icon = chromeIconMap[icon];
   const toneClasses = chromeToneClasses[tone];
 

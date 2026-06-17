@@ -59,7 +59,7 @@ export default function QACapturePage() {
       <div className="capture-page min-h-screen pb-12">
         <section className="capture-grid relative border-b border-border/80">
           <div className="capture-shell relative z-10 py-16 sm:py-20 lg:py-24">
-            <div className="grid items-start gap-10 xl:gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(360px,32rem)]">
+            <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(360px,32rem)] xl:gap-14">
               <div className="max-w-[43rem] space-y-8">
                 <BadgeRow badges={qaCaptureHeroBadges} />
 
@@ -85,7 +85,9 @@ export default function QACapturePage() {
                   <CtaLink
                     href={qaCaptureChromeWebStoreUrl}
                     iconStart={<GlobeIcon className="h-5 w-5" />}
-                    iconEnd={<ExternalLinkIcon className="h-4 w-4 opacity-70" />}
+                    iconEnd={
+                      <ExternalLinkIcon className="h-4 w-4 opacity-70" />
+                    }
                   >
                     Add to Chrome - Free
                   </CtaLink>
@@ -156,7 +158,11 @@ export default function QACapturePage() {
 
                 <div className="mt-6 rounded-[22px] border border-primary/20 bg-primary/10 px-5 py-4">
                   <p className="text-sm leading-7 text-muted-foreground">
-                    Best for <span className="font-semibold text-foreground">bug reports</span>,{" "}
+                    Best for{" "}
+                    <span className="font-semibold text-foreground">
+                      bug reports
+                    </span>
+                    ,{" "}
                     <span className="font-semibold text-foreground">
                       regression evidence
                     </span>
@@ -378,7 +384,10 @@ export default function QACapturePage() {
           </div>
         </section>
 
-        <section aria-labelledby="qa-capture-cta-title" className="pt-4 pb-16 sm:pb-20">
+        <section
+          aria-labelledby="qa-capture-cta-title"
+          className="pt-4 pb-16 sm:pb-20"
+        >
           <div className="capture-shell">
             <div className="capture-card-strong px-6 py-8 text-center sm:px-10 sm:py-12">
               <div className="mx-auto max-w-3xl">
@@ -399,7 +408,9 @@ export default function QACapturePage() {
                   <CtaLink
                     href={qaCaptureChromeWebStoreUrl}
                     iconStart={<GlobeIcon className="h-5 w-5" />}
-                    iconEnd={<ExternalLinkIcon className="h-4 w-4 opacity-70" />}
+                    iconEnd={
+                      <ExternalLinkIcon className="h-4 w-4 opacity-70" />
+                    }
                   >
                     Add to Chrome - It&apos;s Free
                   </CtaLink>

@@ -21,27 +21,27 @@ fields, the recommended schema types for this site, and what matters most for SE
 
 Shared infrastructure:
 
-| File | Responsibility |
-| --- | --- |
-| `data/meta-data/structured-data.ts` | Shared JSON-LD builders such as `createWebPageJsonLd`, `createBreadcrumbJsonLd`, `createFaqPageJsonLd`, `createArticleJsonLd`, `createOrganizationJsonLd`, `createWebSiteJsonLd`. |
-| `types/meta-data-types.ts` | Shared input types for JSON-LD builders. |
-| `components/seo/json-ld.tsx` | Renders JSON-LD as a native `<script type="application/ld+json">`. |
-| `data/meta-data/basic-details-data.ts` | Site-wide source of truth for brand name, origin, author, default image, publisher logo, locale. |
-| `data/meta-data/site-structured-jsonld-data.ts` | Site-level `Organization` / `WebSite` instances used by `app/layout.tsx`. |
+| File                                            | Responsibility                                                                                                                                                                    |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data/meta-data/structured-data.ts`             | Shared JSON-LD builders such as `createWebPageJsonLd`, `createBreadcrumbJsonLd`, `createFaqPageJsonLd`, `createArticleJsonLd`, `createOrganizationJsonLd`, `createWebSiteJsonLd`. |
+| `types/meta-data-types.ts`                      | Shared input types for JSON-LD builders.                                                                                                                                          |
+| `components/seo/json-ld.tsx`                    | Renders JSON-LD as a native `<script type="application/ld+json">`.                                                                                                                |
+| `data/meta-data/basic-details-data.ts`          | Site-wide source of truth for brand name, origin, author, default image, publisher logo, locale.                                                                                  |
+| `data/meta-data/site-structured-jsonld-data.ts` | Site-level `Organization` / `WebSite` instances used by `app/layout.tsx`.                                                                                                         |
 
 Page-specific JSON-LD files:
 
-| Path | Responsibility |
-| --- | --- |
+| Path                                                       | Responsibility                                                                      |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | `data/meta-data/<route>/<route>-structured-jsonld-data.ts` | JSON-LD objects exported for a top-level route page such as `/practice` or `/home`. |
-| `data/meta-data/<route>/<slug>-structured-jsonld-data.ts` | JSON-LD objects for nested routes such as `/demo/bank`. |
+| `data/meta-data/<route>/<slug>-structured-jsonld-data.ts`  | JSON-LD objects for nested routes such as `/demo/bank`.                             |
 
 Wiring:
 
-| File | Responsibility |
-| --- | --- |
-| `app/layout.tsx` | Renders site-level JSON-LD like `Organization` and `WebSite`. |
-| `app/**/page.tsx` | Renders page-level JSON-LD with `<JsonLd data={...} />`. |
+| File              | Responsibility                                                |
+| ----------------- | ------------------------------------------------------------- |
+| `app/layout.tsx`  | Renders site-level JSON-LD like `Organization` and `WebSite`. |
+| `app/**/page.tsx` | Renders page-level JSON-LD with `<JsonLd data={...} />`.      |
 
 ## File placement and naming patterns
 
@@ -189,7 +189,10 @@ Important fields:
 ### Pattern: page-level JSON-LD file
 
 ```ts
-import { createBreadcrumbJsonLd, createWebPageJsonLd } from "../structured-data";
+import {
+  createBreadcrumbJsonLd,
+  createWebPageJsonLd,
+} from "../structured-data";
 
 export const examplePageWebPageJsonLd = createWebPageJsonLd({
   name: "Example Page",

@@ -1,4 +1,7 @@
-import { qaCaptureFaqItems, qaCapturePageDescription } from "@/data/chrome/qa-capture-page-data";
+import {
+  qaCaptureFaqItems,
+  qaCapturePageDescription,
+} from "@/data/chrome/qa-capture-page-data";
 
 import {
   createBreadcrumbJsonLd,

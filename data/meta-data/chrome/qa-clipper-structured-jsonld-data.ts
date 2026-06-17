@@ -1,4 +1,7 @@
-import { qaClipperFaqItems, qaClipperPageDescription } from "@/data/chrome/qa-clipper-page-data";
+import {
+  qaClipperFaqItems,
+  qaClipperPageDescription,
+} from "@/data/chrome/qa-clipper-page-data";
 
 import {
   createBreadcrumbJsonLd,

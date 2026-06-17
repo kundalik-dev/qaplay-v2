@@ -513,12 +513,11 @@ html.theme-transition-active::view-transition-new(root) {
     font-weight: 700;
     white-space: nowrap;
     color: var(--primary-foreground);
-    background:
-      linear-gradient(
-        135deg,
-        var(--primary),
-        color-mix(in srgb, var(--primary) 68%, var(--secondary))
-      );
+    background: linear-gradient(
+      135deg,
+      var(--primary),
+      color-mix(in srgb, var(--primary) 68%, var(--secondary))
+    );
     box-shadow: 0 16px 34px color-mix(in srgb, var(--primary) 18%, transparent);
     transition:
       transform 180ms ease,

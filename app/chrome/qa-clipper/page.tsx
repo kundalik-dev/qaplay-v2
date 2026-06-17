@@ -438,9 +438,9 @@ export default function QAClipperPage() {
                 Start Clipping in Minutes
               </h2>
               <p className="mx-auto mb-7 max-w-md leading-relaxed text-blue-100">
-                Install the extension, connect your API key, and clip your
-                first resource. Your QA learning library starts building itself
-                as you browse.
+                Install the extension, connect your API key, and clip your first
+                resource. Your QA learning library starts building itself as you
+                browse.
               </p>
               <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <a

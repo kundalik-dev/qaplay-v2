@@ -5,12 +5,7 @@ import {
   chromeToneClasses,
 } from "../../_shared/chrome-page-helpers";
 
-export function UseCaseCard({
-  icon,
-  title,
-  description,
-  tone,
-}: ChromeUseCase) {
+export function UseCaseCard({ icon, title, description, tone }: ChromeUseCase) {
   const Icon = chromeIconMap[icon];
 
   return (

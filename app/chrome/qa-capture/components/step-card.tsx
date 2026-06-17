@@ -2,12 +2,7 @@ import type { ChromeStep } from "@/data/chrome/types";
 
 import { chromeToneClasses } from "../../_shared/chrome-page-helpers";
 
-export function StepCard({
-  step,
-  title,
-  description,
-  tone,
-}: ChromeStep) {
+export function StepCard({ step, title, description, tone }: ChromeStep) {
   return (
     <article className="capture-card h-full p-6">
       <div className="flex items-start gap-4">
