@@ -37,7 +37,7 @@ export type PrivacySection = {
 export const privacyPolicyHeader = {
   title: "Privacy Policy",
   effectiveDate: "6 June 2026",
-  lastUpdated: "6 June 2026",
+  lastUpdated: "17 June 2026",
   intro: [
     { text: "Welcome to " },
     { text: basicDetails.websiteName, bold: true },
@@ -170,6 +170,56 @@ export const privacyPolicySections: PrivacySection[] = [
           ],
         ],
       },
+      { type: "subheading", text: "Cookie Consent" },
+      {
+        type: "paragraph",
+        content:
+          "When you first visit the Platform, a cookie consent banner is displayed before any non-essential cookies (analytics or advertising) are set on your device. You may:",
+      },
+      {
+        type: "list",
+        items: [
+          [
+            { text: "Accept all cookies", bold: true },
+            {
+              text: " — enables analytics (Google Analytics) and personalised advertising (Google AdSense).",
+            },
+          ],
+          [
+            { text: "Reject all non-essential cookies", bold: true },
+            {
+              text: " — only strictly necessary cookies are set. Ads, if shown, will be non-personalised.",
+            },
+          ],
+        ],
+      },
+      {
+        type: "paragraph",
+        content:
+          "Your consent choice is stored in your browser and respected on all subsequent visits. You can change your preference at any time by clicking the \"Cookie Settings\" link in the footer.",
+      },
+      {
+        type: "paragraph",
+        content: [
+          {
+            text: "Our consent banner is powered by ",
+          },
+          {
+            text: "Google Funding Choices",
+            href: "https://support.google.com/fundingchoices/answer/9180084",
+            external: true,
+          },
+          {
+            text: ", Google's own consent management platform. Google's handling of the consent data is governed by ",
+          },
+          {
+            text: "Google's Privacy Policy",
+            href: "https://policies.google.com/privacy",
+            external: true,
+          },
+          { text: "." },
+        ],
+      },
       { type: "subheading", text: "Managing Cookies" },
       {
         type: "paragraph",
@@ -263,6 +313,15 @@ export const privacyPolicySections: PrivacySection[] = [
             {
               text: "Google's Advertising Privacy Policy",
               href: "https://policies.google.com/technologies/ads",
+              external: true,
+            },
+            { text: "." },
+          ],
+          [
+            { text: "To read Google's full Privacy Policy, visit " },
+            {
+              text: "policies.google.com/privacy",
+              href: "https://policies.google.com/privacy",
               external: true,
             },
             { text: "." },
