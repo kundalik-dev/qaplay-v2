@@ -15,7 +15,7 @@ export const basicDetails: SiteBasicDetails = {
   websiteURL: "https://qaplayground.com",
 
   websiteDescription:
-    "Practice Selenium, Playwright & Cypress with 22+ interactive UI elements, demo apps and rehersal AI-powered mock interviews.",
+    "Practice Selenium, Playwright & Cypress with 14+ interactive UI elements, demo apps and rehersal AI-powered mock interviews.",
 
   tagline: "Master Automation Testing",
 

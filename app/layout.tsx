@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Inter, Space_Grotesk } from "next/font/google";
 
 import { AppFooter, AppNavbar } from "@/components/app-nav";
+import { JsonLd } from "@/components/seo";
 import { basicDetails } from "@/data/meta-data/basic-details-data";
+import {
+  siteOrganizationJsonLd,
+  siteWebSiteJsonLd,
+} from "@/data/meta-data/site-structured-jsonld-data";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -30,7 +35,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(basicDetails.websiteURL),
   title: {
-    default: `${basicDetails.websiteName} — ${basicDetails.tagline}`,
+    default: `${basicDetails.websiteName} - ${basicDetails.tagline}`,
     template: `%s | ${basicDetails.websiteName}`,
   },
   description: basicDetails.websiteDescription,
@@ -60,11 +65,13 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* Theme init — must run before first paint to avoid flash */}
+        {/* Theme init must run before first paint to avoid flash. */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <JsonLd data={siteOrganizationJsonLd} />
+        <JsonLd data={siteWebSiteJsonLd} />
       </head>
       <body suppressHydrationWarning>
-        {/* Skip to main content — accessibility */}
+        {/* Skip to main content for keyboard and screen reader users. */}
         <a
           href="#main-content"
           data-testid="skip-to-content"
@@ -73,13 +80,13 @@ export default function RootLayout({
           Skip to content
         </a>
 
-        {/* Fixed navbar sits above all page content */}
+        {/* Fixed navbar sits above all page content. */}
         <AppNavbar />
 
-        {/* Page content — padding-top handled by CSS */}
+        {/* Page content; top spacing is handled in global styles. */}
         <main id="main-content">{children}</main>
 
-        {/* Footer at the very bottom */}
+        {/* Footer stays at the bottom of every page. */}
         <AppFooter />
       </body>
     </html>

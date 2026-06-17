@@ -4,6 +4,7 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { ButtonContent } from "@/components/ui/button-components";
 import { ButtonGroup } from "@/components/ui/button-group";
+import { cn } from "@/lib/utils";
 
 import shared from "../shared/home-shared.module.css";
 import styles from "./hero-section.module.css";
@@ -32,12 +33,14 @@ export function HomeHero() {
             <br />
             <span className={styles.titleAccent}>Playground </span>
             You <br />
-            <span className={styles.titleNowrap}>Need For Practice</span>
+            <span className={cn(styles.titleNowrap, "max-[364px]:text-[44px]")}>
+              Need to Practice
+            </span>
           </h1>
 
           <p className={styles.description}>
             Stop Reading. Start Automating. Practice Selenium, Playwright &amp;
-            Cypress with 22+ interactive UI elements, demo apps and rehersal
+            Cypress with 14+ interactive UI elements, demo apps and rehersal
             AI-powered mock interviews.
           </p>
 
