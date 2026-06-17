@@ -322,10 +322,7 @@ export default function QAClipperPage() {
         </section>
 
         {/* ── FAQ ──────────────────────────────────────────────── */}
-        <section
-          aria-labelledby="clipper-faq-title"
-          className="py-16 sm:py-20"
-        >
+        <section aria-labelledby="clipper-faq-title" className="py-16 sm:py-20">
           <div className="capture-shell">
             <SectionHeading
               id="clipper-faq-title"

@@ -32,29 +32,31 @@ export function ContactSidebar() {
         <p className={styles.sideCardHeading}>Other Ways to Reach Us</p>
 
         <nav aria-label="Contact channels">
-          {contactChannels.map(({ id, iconId, label, display, href, external }) => {
-            const Icon = CHANNEL_ICONS[iconId];
-            return (
-              <Link
-                key={id}
-                href={href}
-                {...(external
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-                className={styles.channelRow}
-                data-testid={`contact-channel-${id}`}
-                aria-label={`${label}: ${display}`}
-              >
-                <span className={styles.channelIconWrap} aria-hidden="true">
-                  <Icon className="h-4 w-4" />
-                </span>
-                <div className={styles.channelMeta}>
-                  <p className={styles.channelLabel}>{label}</p>
-                  <p className={styles.channelDisplay}>{display}</p>
-                </div>
-              </Link>
-            );
-          })}
+          {contactChannels.map(
+            ({ id, iconId, label, display, href, external }) => {
+              const Icon = CHANNEL_ICONS[iconId];
+              return (
+                <Link
+                  key={id}
+                  href={href}
+                  {...(external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                  className={styles.channelRow}
+                  data-testid={`contact-channel-${id}`}
+                  aria-label={`${label}: ${display}`}
+                >
+                  <span className={styles.channelIconWrap} aria-hidden="true">
+                    <Icon className="h-4 w-4" />
+                  </span>
+                  <div className={styles.channelMeta}>
+                    <p className={styles.channelLabel}>{label}</p>
+                    <p className={styles.channelDisplay}>{display}</p>
+                  </div>
+                </Link>
+              );
+            },
+          )}
         </nav>
       </div>
 

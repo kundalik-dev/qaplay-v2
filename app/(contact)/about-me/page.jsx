@@ -1,16 +1,15 @@
 import Link from "next/link";
 import {
   Mail,
-  Linkedin,
-  Github,
-  Youtube,
-  Twitter,
+  Briefcase,
+  Code,
+  Video,
+  Bird,
   Globe,
   CalendarDays,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Database } from "lucide-react";
 
 export const metadata = {
   title: "About Me",
@@ -29,22 +28,22 @@ const ProfilePage = () => {
     },
     {
       href: "https://www.linkedin.com/in/kundalikjadhav1516",
-      icon: <Linkedin />,
+      icon: <Briefcase />,
       label: "LinkedIn",
     },
     {
       href: "https://github.com/kundalik-dev",
-      icon: <Github />,
+      icon: <Code />,
       label: "GitHub",
     },
     {
       href: "https://www.youtube.com/@qaplayground",
-      icon: <Youtube />,
+      icon: <Video />,
       label: "YouTube",
     },
     {
       href: "https://twitter.com/qaplayground",
-      icon: <Twitter />,
+      icon: <Bird />,
       label: "Twitter",
     },
     {
@@ -133,19 +132,19 @@ const ProfilePage = () => {
   ];
 
   return (
-    <div className="bg-background text-foreground py-12 px-6">
+    <div className="bg-background px-6 py-12 text-foreground">
       <div className="container mx-auto max-w-3xl">
         {/* Profile Header */}
         <div className="text-center">
           <h1 className="text-3xl font-bold">Kundalik R. Jadhav</h1>
-          <div className="flex justify-center gap-4 mt-4">
+          <div className="mt-4 flex justify-center gap-4">
             {socialLinks.map((link, index) => (
               <Link
                 key={index}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center transition-transform duration-300 transform hover:scale-110 hover:text-primary"
+                className="flex h-10 w-10 transform items-center justify-center transition-transform duration-300 hover:scale-110 hover:text-primary"
                 title={link.label}
               >
                 {link.icon}
@@ -180,52 +179,52 @@ const ProfilePage = () => {
           <hr />
           <div className="mt-4 grid grid-cols-1 gap-6 text-base text-muted-foreground">
             {mySkills.map((skill, index) => (
-              <div key={index} className="border-primary pl-4 space-y-3">
+              <div key={index} className="space-y-3 border-primary pl-4">
                 <div className="flex flex-col gap-2">
                   <div className="flex">
-                    <span className="font-semibold text-primary min-w-[150px]">
+                    <span className="min-w-[150px] font-semibold text-primary">
                       Automation
                     </span>
                     <span className="ml-2">: {skill.automation}</span>
                   </div>
                   <div className="flex">
-                    <span className="font-semibold text-primary min-w-[150px]">
+                    <span className="min-w-[150px] font-semibold text-primary">
                       Language
                     </span>
                     <span className="ml-2">: {skill.lang}</span>
                   </div>
                   <div className="flex">
-                    <span className="font-semibold text-primary min-w-[150px]">
+                    <span className="min-w-[150px] font-semibold text-primary">
                       Framework
                     </span>
                     <span className="ml-2">: {skill.framework}</span>
                   </div>
                   <div className="flex">
-                    <span className="font-semibold text-primary min-w-[150px]">
+                    <span className="min-w-[150px] font-semibold text-primary">
                       API Testing
                     </span>
                     <span className="ml-2">: {skill.API}</span>
                   </div>
                   <div className="flex">
-                    <span className="font-semibold text-primary min-w-[150px]">
+                    <span className="min-w-[150px] font-semibold text-primary">
                       Database Testing
                     </span>
                     <span className="ml-2">: {skill.Database}</span>
                   </div>
                   <div className="flex">
-                    <span className="font-semibold text-primary min-w-[150px]">
+                    <span className="min-w-[150px] font-semibold text-primary">
                       CI/CD Pipelines
                     </span>
                     <span className="ml-2">: {skill.CI_CD}</span>
                   </div>
                   <div className="flex">
-                    <span className="font-semibold text-primary min-w-[150px]">
+                    <span className="min-w-[150px] font-semibold text-primary">
                       Test Management
                     </span>
                     <span className="ml-2">: {skill.test_Management}</span>
                   </div>
                   <div className="flex">
-                    <span className="font-semibold text-primary min-w-[150px]">
+                    <span className="min-w-[150px] font-semibold text-primary">
                       Dev Skills
                     </span>
                     <span className="ml-2">: {skill.devSkills}</span>
@@ -244,16 +243,16 @@ const ProfilePage = () => {
             {myExp.map((job, index) => (
               <li key={index} className="border-l-4 border-primary pl-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-semibold ">
+                  <h3 className="font-semibold">
                     {job.role} - {job.company}
                   </h3>
-                  <p className="text-sm text-muted-foreground flex items-center gap-2">
+                  <p className="flex items-center gap-2 text-sm text-muted-foreground">
                     <CalendarDays size={16} />
                     {job.duration}
                   </p>
                 </div>
 
-                <p className="text-sm text-muted-foreground mt-1 sm:max-w-sm md:min-w-[600px]">
+                <p className="mt-1 text-sm text-muted-foreground sm:max-w-sm md:min-w-[600px]">
                   {job.project}
                 </p>
               </li>
@@ -276,22 +275,22 @@ const ProfilePage = () => {
 
         {/* My Github Section */}
         <div className="mt-10">
-          <h2 className="text-2xl font-semibold flex items-center gap-2">
-            <Github className="text-primary" /> My GitHub Projects
+          <h2 className="flex items-center gap-2 text-2xl font-semibold">
+            <Code className="text-primary" /> My GitHub Projects
           </h2>
           <hr />
           <div className="mt-6 grid gap-6 sm:grid-cols-2">
             {myGithub.map((repo, index) => (
               <Card
                 key={index}
-                className="hover:shadow-lg transition-shadow duration-300 border-primary border-l-4"
+                className="border-l-4 border-primary transition-shadow duration-300 hover:shadow-lg"
               >
-                <CardContent className="p-5 flex flex-col h-full">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Github className="text-primary" size={20} />
-                    <h3 className="font-bold text-lg">{repo.name}</h3>
+                <CardContent className="flex h-full flex-col p-5">
+                  <div className="mb-2 flex items-center gap-2">
+                    <Code className="text-primary" size={20} />
+                    <h3 className="text-lg font-bold">{repo.name}</h3>
                   </div>
-                  <p className="text-sm text-muted-foreground flex-1">
+                  <p className="flex-1 text-sm text-muted-foreground">
                     {repo.description}
                   </p>
                   <div className="mt-4 flex gap-2">
@@ -303,9 +302,9 @@ const ProfilePage = () => {
                     >
                       <Button
                         variant="outline"
-                        className="w-full flex items-center gap-2"
+                        className="flex w-full items-center gap-2"
                       >
-                        <Github size={16} />
+                        <Code size={16} />
                         View on GitHub
                       </Button>
                     </Link>
@@ -317,7 +316,7 @@ const ProfilePage = () => {
                     >
                       <Button
                         variant="secondary"
-                        className="w-full flex items-center gap-2"
+                        className="flex w-full items-center gap-2"
                       >
                         <Globe size={16} />
                         Live Project
@@ -334,7 +333,7 @@ const ProfilePage = () => {
         <div className="mt-6">
           <h2 className="text-2xl font-semibold">Education</h2>
           <hr />
-          <p className="text-sm text-muted-foreground mt-2">
+          <p className="mt-2 text-sm text-muted-foreground">
             Bachelor of Engineering from Gov. College of Engineering & Research,
             Awsari Pune | 2017
           </p>

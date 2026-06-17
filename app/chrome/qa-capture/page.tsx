@@ -169,8 +169,8 @@ export default function QACapturePage() {
                 <div className="mt-6 rounded-[22px] border border-primary/20 bg-primary/10 px-5 py-4">
                   <p className="text-sm leading-7 text-muted-foreground">
                     Everything stays{" "}
-                    <span className="font-semibold text-foreground">local</span>,
-                    remains{" "}
+                    <span className="font-semibold text-foreground">local</span>
+                    , remains{" "}
                     <span className="font-semibold text-foreground">
                       free to use
                     </span>

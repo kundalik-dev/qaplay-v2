@@ -13,12 +13,36 @@ export interface ContactTopic {
 }
 
 export const contactTopics: ContactTopic[] = [
-  { value: "Bug Report", label: "Bug Report — something is broken", emoji: "🐛" },
-  { value: "Feature Request", label: "Feature Request — suggest an idea", emoji: "💡" },
-  { value: "Collaboration", label: "Collaboration — work together", emoji: "🤝" },
-  { value: "Automation Help", label: "Automation Help — testing question", emoji: "🤖" },
-  { value: "Feedback", label: "Give Feedback — share your thoughts", emoji: "💬" },
-  { value: "General Enquiry", label: "General Enquiry — anything else", emoji: "📩" },
+  {
+    value: "Bug Report",
+    label: "Bug Report — something is broken",
+    emoji: "🐛",
+  },
+  {
+    value: "Feature Request",
+    label: "Feature Request — suggest an idea",
+    emoji: "💡",
+  },
+  {
+    value: "Collaboration",
+    label: "Collaboration — work together",
+    emoji: "🤝",
+  },
+  {
+    value: "Automation Help",
+    label: "Automation Help — testing question",
+    emoji: "🤖",
+  },
+  {
+    value: "Feedback",
+    label: "Give Feedback — share your thoughts",
+    emoji: "💬",
+  },
+  {
+    value: "General Enquiry",
+    label: "General Enquiry — anything else",
+    emoji: "📩",
+  },
 ];
 
 // ── Sidebar: quick-reach channels ────────────────────────────────────────────

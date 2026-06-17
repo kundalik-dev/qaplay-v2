@@ -72,7 +72,9 @@ export function ContactForm() {
     } catch (err) {
       setStatus("error");
       setErrorMsg(
-        err instanceof Error ? err.message : "Failed to send. Please try again.",
+        err instanceof Error
+          ? err.message
+          : "Failed to send. Please try again.",
       );
     }
   }
@@ -87,7 +89,10 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <ContactSuccess email={submittedEmail} onReset={() => setStatus("idle")} />
+      <ContactSuccess
+        email={submittedEmail}
+        onReset={() => setStatus("idle")}
+      />
     );
   }
 
@@ -196,10 +201,7 @@ export function ContactForm() {
             </span>
           </div>
           <div className={styles.inputWrapper}>
-            <MessageSquare
-              className={styles.textareaIcon}
-              aria-hidden="true"
-            />
+            <MessageSquare className={styles.textareaIcon} aria-hidden="true" />
             <Textarea
               id="contact-message"
               name="message"
