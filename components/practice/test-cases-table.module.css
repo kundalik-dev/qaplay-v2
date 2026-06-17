@@ -1,0 +1,401 @@
+.root {
+  display: grid;
+  gap: 16px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.searchShell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  max-width: 370px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.96);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.searchShell:focus-within {
+  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 8%, transparent);
+}
+
+.searchIcon {
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+}
+
+.searchInput {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.92rem;
+}
+
+.filterRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.filterBtn:hover {
+  background: color-mix(in srgb, var(--primary) 5%, white);
+}
+
+.filterBtnActive {
+  background: color-mix(in srgb, var(--primary) 10%, white);
+  border-color: color-mix(in srgb, var(--primary) 25%, transparent);
+  color: var(--primary);
+}
+
+.tableWrap {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: var(--card);
+}
+
+.tableScroller {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.thead {
+  background: color-mix(in srgb, var(--primary) 5%, white);
+  border-bottom: 1px solid var(--border);
+}
+
+.table th {
+  padding: 18px 16px;
+  color: var(--primary);
+  text-align: left;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.expandHeadCell {
+  width: 44px;
+  padding-left: 16px !important;
+  padding-right: 0 !important;
+}
+
+.thInner {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.thInner:hover {
+  color: var(--foreground);
+}
+
+.sortIcon {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  opacity: 0.45;
+  transition: opacity 0.2s;
+}
+
+.thInner:hover .sortIcon,
+.thSorted .sortIcon {
+  opacity: 1;
+}
+
+.sortUp,
+.sortDown {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+}
+
+.sortUp {
+  border-bottom: 5px solid currentColor;
+}
+
+.sortDown {
+  border-top: 5px solid currentColor;
+}
+
+.sortActive {
+  color: var(--foreground);
+}
+
+.tbodyRow {
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.tbodyRow:hover {
+  background: color-mix(in srgb, var(--primary) 3%, white);
+}
+
+.tbodyRowExpanded {
+  background: color-mix(in srgb, var(--primary) 4%, white);
+}
+
+.table td {
+  padding: 16px;
+  color: var(--foreground);
+  vertical-align: middle;
+}
+
+.expandCell {
+  width: 44px;
+  padding-right: 0 !important;
+  color: var(--muted-foreground);
+}
+
+.expandIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+
+.tbodyRow:hover .expandIcon {
+  color: var(--primary);
+}
+
+.expandIconOpen {
+  color: var(--primary);
+  transform: rotate(180deg);
+}
+
+.idCell {
+  color: var(--muted-foreground) !important;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.scenarioCell {
+  min-width: 340px;
+}
+
+.cellMeta {
+  display: flex;
+  align-items: center;
+}
+
+.cellTitle {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.cellSub {
+  color: var(--muted-foreground);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.mutedCell {
+  color: var(--muted-foreground) !important;
+  font-size: 0.95rem;
+}
+
+.diff {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.diffDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+}
+
+.detailsRow td {
+  padding: 0;
+}
+
+.detailsWrap {
+  padding: 0 18px 18px 18px;
+  background: color-mix(in srgb, var(--background) 62%, white);
+}
+
+.detailsCard {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.detailsText {
+  margin: 0 0 14px;
+  color: var(--muted-foreground);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.steps {
+  display: grid;
+  gap: 10px;
+}
+
+.step {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+}
+
+.stepNum {
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--muted-foreground);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.stepBody {
+  color: var(--foreground);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.stepBody code {
+  padding: 0.1rem 0.35rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 16%, transparent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--primary) 7%, white);
+  color: var(--primary);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.83em;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.statusCompleted {
+  background: color-mix(in srgb, var(--success) 16%, white);
+  color: color-mix(in srgb, var(--success) 80%, black);
+}
+
+.statusProgress {
+  background: color-mix(in srgb, var(--warning) 18%, white);
+  color: color-mix(in srgb, var(--warning) 80%, black);
+}
+
+.statusLocked {
+  background: color-mix(in srgb, var(--secondary) 16%, white);
+  color: color-mix(in srgb, var(--secondary) 84%, black);
+}
+
+.tableFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 16px 18px;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--background) 85%, white);
+}
+
+.tableInfo {
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pageBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--muted-foreground);
+  font-size: 0.83rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--primary) 6%, white);
+}
+
+.pageBtnCurrent {
+  background: color-mix(in srgb, var(--primary) 10%, white);
+  border-color: color-mix(in srgb, var(--primary) 20%, transparent);
+  color: var(--primary);
+}
+
+.pageBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .table th,
+  .table td {
+    padding: 12px 14px;
+  }
+}

@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Button Automation Practice — QA Playground</title>
+  <style>
+    /* ── Reset & Tokens ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f8fa;
+      --surface: #ffffff;
+      --border: #e4e7ec;
+      --border-light: #f0f2f5;
+      --text-primary: #0f1117;
+      --text-secondary: #6b7280;
+      --text-muted: #9ca3af;
+      --accent: #1a3c5e;
+      --accent-light: #e8f0f8;
+      --green: #16a34a;
+      --green-bg: #f0fdf4;
+      --green-border: #bbf7d0;
+      --red: #dc2626;
+      --red-bg: #fef2f2;
+      --red-border: #fecaca;
+      --yellow: #ca8a04;
+      --yellow-bg: #fefce8;
+      --yellow-border: #fde68a;
+      --blue: #2563eb;
+      --blue-bg: #eff6ff;
+      --blue-border: #bfdbfe;
+      --purple: #7c3aed;
+      --purple-bg: #f5f3ff;
+      --purple-border: #ddd6fe;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow-md: 0 4px 12px rgba(0,0,0,.08);
+      --mono: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+      --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --nav-h: 60px;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── Nav ── */
+    nav {
+      height: var(--nav-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      gap: 32px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .nav-logo-icon { font-size: 22px; }
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      flex: 1;
+    }
+    .nav-link {
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: background .15s, color .15s;
+    }
+    .nav-link:hover { background: var(--bg); color: var(--text-primary); }
+    .nav-link.active { background: var(--accent-light); color: var(--accent); }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .btn-ghost {
+      padding: 7px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-ghost:hover { background: var(--bg); }
+    .btn-primary {
+      padding: 7px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+
+    /* ── Page Layout ── */
+    .page-wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 28px 60px;
+    }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 18px 0 14px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      background: none;
+    }
+    .breadcrumb a { color: var(--text-muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--text-primary); }
+    .breadcrumb .sep { color: var(--border); }
+    .breadcrumb .current { color: var(--text-secondary); font-weight: 500; }
+
+    /* ── Page Header ── */
+    .page-header {
+      padding-bottom: 20px;
+      margin-bottom: 0;
+    }
+    .header-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 10px;
+    }
+    .header-left { flex: 1; }
+    .page-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+    .page-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.6;
+    }
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 600;
+      border: 1px solid transparent;
+    }
+    .badge-beginner { background: var(--green-bg); color: var(--green); border-color: var(--green-border); }
+    .badge-time { background: var(--bg); color: var(--text-secondary); border-color: var(--border); }
+    .badge-scenarios { background: var(--blue-bg); color: var(--blue); border-color: var(--blue-border); }
+    .badge-tests { background: var(--purple-bg); color: var(--purple); border-color: var(--purple-border); }
+    .header-actions { display: flex; gap: 8px; align-items: center; }
+    .btn-sm {
+      padding: 7px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-sm:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Main Content Grid ── */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 24px;
+      padding-top: 24px;
+    }
+
+    /* ── Tab Bar ── */
+    .tab-bar {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border: none;
+      background: transparent;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color .15s, border-color .15s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--text-primary); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+    .tab-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 5px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--bg);
+      color: var(--text-muted);
+    }
+    .tab-btn.active .tab-count { background: var(--accent-light); color: var(--accent); }
+
+    /* ── Tab Panels ── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── PRACTICE TAB ── */
+    .scenarios-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .scenario-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .scenario-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: box-shadow .15s, border-color .15s;
+    }
+    .scenario-card:hover { box-shadow: var(--shadow-sm); border-color: #d1d5db; }
+
+    .scenario-card-header {
+      display: flex;
+      align-items: center;
+      padding: 14px 16px;
+      gap: 12px;
+    }
+    .scenario-id {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      color: var(--text-muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 2px 7px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      font-family: var(--mono);
+    }
+    .scenario-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      flex: 1;
+    }
+    .scenario-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: .05em;
+    }
+    .scenario-badge.disabled { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow-border); }
+
+    .scenario-card-body {
+      display: block;
+      padding: 0 16px 16px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .scenario-interactive {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 0 0;
+    }
+    .scenario-interactive .hint-btn {
+      margin-top: 0;
+      flex-shrink: 0;
+    }
+    .practice-btn {
+      padding: 8px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all .15s;
+      white-space: nowrap;
+    }
+    .pbtn-primary { background: var(--accent); color: #fff; }
+    .pbtn-primary:hover { opacity: .88; }
+    .pbtn-outline { background: transparent; color: var(--text-primary); border: 1.5px solid var(--border); }
+    .pbtn-outline:hover { border-color: var(--accent); color: var(--accent); }
+    .pbtn-secondary { background: var(--bg); color: var(--text-primary); border: 1.5px solid var(--border); }
+    .pbtn-secondary:hover { background: var(--border); }
+    .pbtn-custom { padding: 8px 18px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; border: 1.5px solid transparent; }
+    .pbtn-green { background: #dcfce7; color: #15803d; border-color: #bbf7d0; }
+    .pbtn-teal { background: #ccfbf1; color: #0f766e; border-color: #99f6e4; }
+    .pbtn-indigo { background: #e0e7ff; color: #3730a3; border-color: #c7d2fe; }
+    .pbtn-dark { background: #1f2937; color: #fff; }
+    .pbtn-disabled { background: #fef2f2; color: #f87171; border: 1.5px solid #fecaca; cursor: not-allowed; opacity: .7; }
+    .pbtn-blue { background: #eff6ff; color: #1d4ed8; border: 1.5px solid #bfdbfe; }
+    .pbtn-violet { background: #f5f3ff; color: #6d28d9; border: 1.5px solid #ddd6fe; }
+    .pbtn-rose { background: #fff1f2; color: #be123c; border: 1.5px solid #fecdd3; }
+
+    .scenario-result {
+      flex: 1;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      padding: 6px 10px;
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+    }
+    .scenario-result.has-result { color: var(--green); background: var(--green-bg); border-color: var(--green-border); }
+
+    .hint-btn {
+      margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .hint-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    .hint-btn.open { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+    .scenario-hint {
+      display: none;
+      margin-top: 8px;
+      padding: 10px 12px;
+      background: var(--accent-light);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      color: #1e4a7a;
+      align-items: flex-start;
+      gap: 7px;
+    }
+    .scenario-hint.visible { display: flex; margin-top: 10px; }
+    .scenario-hint code {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      background: rgba(26,60,94,.08);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    /* ── TEST CASES TAB ── */
+    .testcase-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .filter-group {
+      display: flex;
+      gap: 4px;
+    }
+    .filter-btn {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .filter-spacer { flex: 1; }
+    .testcase-count-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .testcase-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .testcase-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .testcase-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+    }
+    .testcase-id {
+      font-size: 10px;
+      font-weight: 700;
+      font-family: var(--mono);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 2px 7px;
+      border-radius: 4px;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .testcase-main { flex: 1; }
+    .testcase-scenario { font-size: 13.5px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+    .testcase-expected { font-size: 12px; color: var(--text-secondary); }
+    .testcase-badges { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .tc-badge {
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+    }
+    .tc-positive { background: var(--green-bg); color: var(--green); border-color: var(--green-border); }
+    .tc-negative { background: var(--red-bg); color: var(--red); border-color: var(--red-border); }
+    .tc-edge { background: var(--yellow-bg); color: var(--yellow); border-color: var(--yellow-border); }
+    .tc-high { background: var(--red-bg); color: var(--red); border-color: var(--red-border); }
+    .tc-medium { background: var(--yellow-bg); color: var(--yellow); border-color: var(--yellow-border); }
+    .tc-low { background: var(--bg); color: var(--text-muted); border-color: var(--border); }
+
+    .testcase-card-body {
+      display: none;
+      padding: 0 16px 14px;
+    }
+    .testcase-card.expanded .testcase-card-body { display: block; }
+    .testcase-steps-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      padding-top: 4px;
+    }
+    .testcase-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .testcase-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .testcase-step code {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      background: var(--bg);
+      padding: 1px 5px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      color: var(--accent);
+    }
+    .testcase-desc {
+      margin-bottom: 10px;
+      padding: 8px 10px;
+      background: var(--blue-bg);
+      border: 1px solid var(--blue-border);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      color: #1e40af;
+    }
+
+    /* ── LEARN TAB ── */
+    .learn-layout {
+      display: block;
+    }
+    .learn-toc {
+      position: sticky;
+      top: calc(var(--nav-h) + 16px);
+      height: fit-content;
+    }
+    .toc-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .toc-item {
+      display: block;
+      padding: 5px 10px;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      margin-bottom: 2px;
+      transition: background .12s, color .12s;
+      border-left: 2px solid transparent;
+    }
+    .toc-item:hover { background: var(--bg); color: var(--text-primary); }
+    .toc-item.active { color: var(--accent); background: var(--accent-light); border-left-color: var(--accent); font-weight: 600; }
+    .toc-divider { height: 1px; background: var(--border); margin: 8px 0; }
+
+    .learn-content { display: flex; flex-direction: column; gap: 20px; }
+
+    .doc-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .doc-section-header {
+      padding: 18px 20px 16px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .doc-section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .doc-section-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .doc-section-body { padding: 20px; }
+
+    /* Code block tabs */
+    .code-tabs { display: flex; gap: 4px; margin-bottom: 0; }
+    .code-tab-btn {
+      padding: 5px 12px;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      background: var(--bg);
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .code-tab-btn.active { background: var(--surface); color: var(--text-primary); border-color: var(--border); }
+    .code-block-wrapper {
+      border: 1px solid var(--border);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) var(--radius-sm);
+      overflow: hidden;
+    }
+    .code-block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      background: #1a1f2e;
+    }
+    .code-lang { font-size: 11px; color: #64748b; font-family: var(--mono); }
+    .copy-btn {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid #334155;
+      background: transparent;
+      color: #64748b;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .copy-btn:hover { background: #334155; color: #e2e8f0; }
+    pre {
+      padding: 16px;
+      background: #1a1f2e;
+      overflow-x: auto;
+      margin: 0;
+    }
+    code.hljs, pre code {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+    .kw { color: #c792ea; }
+    .fn { color: #82aaff; }
+    .str { color: #c3e88d; }
+    .cmt { color: #546e7a; font-style: italic; }
+    .cls { color: #ffcb6b; }
+    .num { color: #f78c6c; }
+
+    .code-tab-panel { display: none; }
+    .code-tab-panel.active { display: block; }
+
+    /* Method table */
+    .method-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+    .method-table th {
+      text-align: left;
+      padding: 9px 12px;
+      background: var(--bg);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .method-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border-light);
+      vertical-align: top;
+    }
+    .method-table tr:last-child td { border-bottom: none; }
+    .method-table tr:hover td { background: var(--bg); }
+    .method-table code {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .fw-pill {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      border: 1px solid transparent;
+    }
+    .fw-selenium { background: #fef9c3; color: #854d0e; border-color: #fde68a; }
+    .fw-playwright { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+    .fw-cypress { background: #fce7f3; color: #9d174d; border-color: #fbcfe8; }
+
+    /* FAQ */
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+    .faq-question {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--surface);
+      transition: background .12s;
+    }
+    .faq-question:hover { background: var(--bg); }
+    .faq-icon { flex-shrink: 0; color: var(--text-muted); font-size: 16px; transition: transform .2s; }
+    .faq-item.open .faq-icon { transform: rotate(180deg); }
+    .faq-answer {
+      display: none;
+      padding: 0 16px 14px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-answer code {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      background: var(--bg);
+      padding: 1px 5px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      color: var(--accent);
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar { display: flex; flex-direction: column; gap: 16px; }
+
+    .rail-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .rail-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .rail-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .rail-card-body { padding: 14px 16px; }
+
+    /* Framework toggle */
+    .framework-tabs {
+      display: flex;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .fw-tab-btn {
+      flex: 1;
+      padding: 7px 0;
+      font-size: 11.5px;
+      font-weight: 600;
+      text-align: center;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all .15s;
+      border-right: 1px solid var(--border);
+    }
+    .fw-tab-btn:last-child { border-right: none; }
+    .fw-tab-btn.active { background: var(--accent); color: #fff; }
+
+    .fw-tab-panel { display: none; }
+    .fw-tab-panel.active { display: block; }
+
+    .fw-label {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .method-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .method-list li {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+    }
+    .method-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .method-dot.d0 { background: #a855f7; }
+    .method-dot.d1 { background: #3b82f6; }
+    .method-dot.d2 { background: #f97316; }
+    .method-dot.d3 { background: #22c55e; }
+    .method-dot.d4 { background: #64748b; }
+    .method-list code {
+      font-family: var(--mono);
+      font-size: 11.5px;
+    }
+
+    .video-placeholder {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 10px 12px;
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      border: 1px dashed var(--border);
+    }
+
+    .up-next-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .up-next-card:hover { border-color: var(--accent); box-shadow: var(--shadow-sm); }
+    .up-next-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .up-next-info { flex: 1; }
+    .up-next-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); margin-bottom: 2px; }
+    .up-next-title { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+    .up-next-desc { font-size: 11.5px; color: var(--text-muted); }
+    .up-next-arrow { color: var(--text-muted); font-size: 16px; }
+
+    /* Progress tracker */
+    .progress-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+    }
+    .progress-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .progress-title { font-size: 12.5px; font-weight: 700; color: var(--text-primary); }
+    .progress-count { font-size: 12px; color: var(--text-muted); }
+    .progress-bar-bg {
+      height: 6px;
+      background: var(--bg);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--green);
+      border-radius: 10px;
+      width: 0%;
+      transition: width .4s ease;
+    }
+    .progress-items { display: flex; flex-direction: column; gap: 5px; }
+    .progress-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .progress-check {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+    }
+    .progress-check.done { background: var(--green); border-color: var(--green); color: white; }
+
+    /* ── Utility ── */
+    .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-icon">🧪</span>
+    QA Playground
+  </a>
+  <div class="nav-links">
+    <a href="#" class="nav-link active">Practice</a>
+    <a href="#" class="nav-link">Demo Apps</a>
+    <a href="#" class="nav-link">AI Interview</a>
+    <a href="#" class="nav-link">Features</a>
+    <a href="#" class="nav-link">Jobs</a>
+    <a href="#" class="nav-link">Blogs</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn-ghost">Log in / Sign up</button>
+    <button class="btn-primary">Start Practicing →</button>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+
+  <!-- ── Breadcrumb ── -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="#">Home</a>
+    <span class="sep">›</span>
+    <a href="#">Practice</a>
+    <span class="sep">›</span>
+    <span class="current">Buttons</span>
+  </nav>
+
+  <!-- ── Page Header ── -->
+  <div class="page-header">
+    <div class="header-top">
+      <div class="header-left">
+        <h1 class="page-title">Button Automation Practice</h1>
+        <p class="page-desc">
+          Master button interactions in Selenium, Playwright &amp; Cypress — single click, double-click,
+          right-click, disabled state, click-and-hold, coordinates, and computed styles.
+        </p>
+        <div class="header-badges">
+          <span class="badge badge-beginner">🌱 Beginner</span>
+          <span class="badge badge-time">⏱ 10 min</span>
+          <span class="badge badge-scenarios">⚡ 8 scenarios</span>
+          <span class="badge badge-tests">🧪 15 test cases</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Content Grid ── -->
+  <div class="content-grid">
+
+    <!-- ── Main Column ── -->
+    <main>
+
+      <!-- Tab Bar -->
+      <div class="tab-bar" role="tablist">
+        <button class="tab-btn active" role="tab" aria-selected="true" onclick="switchTab('practice', this)">
+          🎮 Practice <span class="tab-count">8</span>
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('testcases', this)">
+          🧪 Test Cases <span class="tab-count">15</span>
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('learn', this)">
+          📖 Learn
+        </button>
+      </div>
+
+      <!-- ══════════════ PRACTICE TAB ══════════════ -->
+      <div id="tab-practice" class="tab-panel active">
+        <p class="scenarios-label">Interactive Scenarios</p>
+        <div class="scenario-list" data-testid="scenarios-list">
+
+          <!-- S01 -->
+          <div class="scenario-card" data-testid="scenario-card-navigate-home">
+            <div class="scenario-card-header">
+              <span class="scenario-id">S01</span>
+              <span class="scenario-title">Navigate to Home Page</span>
+            </div>
+            <div class="scenario-card-body">
+              <div class="scenario-interactive">
+                <button class="practice-btn pbtn-primary" id="navigateHomeBtn" data-testid="btn-navigate-home"
+                  onclick="setPracticeResult('result-s01', 'Navigated to Home Page ✓', this)">
+                  Go To Home
+                </button>
+                <span class="scenario-result" id="result-s01" data-testid="result-s01">No navigation yet</span>
+                <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hint</button>
+              </div>
+              <div class="scenario-hint">Target: <code>[data-testid="btn-navigate-home"]</code> → assert result contains <code>Home</code></div>
+            </div>
+          </div>
+
+          <!-- S02 -->
+          <div class="scenario-card" data-testid="scenario-card-get-coordinates">
+            <div class="scenario-card-header">
+              <span class="scenario-id">S02</span>
+              <span class="scenario-title">Get Button X &amp; Y Coordinates</span>
+            </div>
+            <div class="scenario-card-body">
+              <div class="scenario-interactive">
+                <button class="practice-btn pbtn-custom pbtn-teal" id="coordinatesBtn" data-testid="btn-get-coordinates"
+                  onclick="getCoords(this, 'result-s02')">
+                  Find Location
+                </button>
+                <span class="scenario-result" id="result-s02" data-testid="result-s02">Coordinates: —</span>
+                <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hint</button>
+              </div>
+              <div class="scenario-hint">Use <code>getBoundingClientRect()</code> or <code>getLocation()</code> to read X/Y position</div>
+            </div>
+          </div>
+
+          <!-- S03 -->
+          <div class="scenario-card" data-testid="scenario-card-get-color">
+            <div class="scenario-card-header">
+              <span class="scenario-id">S03</span>
+              <span class="scenario-title">Get Button Color</span>
+            </div>
+            <div class="scenario-card-body">
+              <div class="scenario-interactive">
+                <button class="practice-btn pbtn-custom pbtn-violet" id="colorBtn" data-testid="btn-get-color"
+                  onclick="getColor(this, 'result-s03')">
+                  Find my color?
+                </button>
+                <span class="scenario-result" id="result-s03" data-testid="result-s03">Color: —</span>
+                <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hint</button>
+              </div>
+              <div class="scenario-hint">Use <code>getCssValue("background-color")</code> or <code>evaluate(() =&gt; getComputedStyle(el).backgroundColor)</code></div>
+            </div>
+          </div>
+
+          <!-- S04 -->
+          <div class="scenario-card" data-testid="scenario-card-get-size">
+            <div class="scenario-card-header">
+              <span class="scenario-id">S04</span>
+              <span class="scenario-title">Get Button Height &amp; Width</span>
+            </div>
+            <div class="scenario-card-body">
+              <div class="scenario-interactive">
+                <button class="practice-btn pbtn-dark" id="sizeBtn" data-testid="btn-get-size"
+                  onclick="getSize(this, 'result-s04')">
+                  Do you know my size?
+                </button>
+                <span class="scenario-result" id="result-s04" data-testid="result-s04">Size: —</span>
+                <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hint</button>
+              </div>
+              <div class="scenario-hint">Use <code>getSize()</code> in Selenium or <code>boundingBox()</code> in Playwright</div>
+            </div>
+          </div>
+
+          <!-- S05 -->
+          <div class="scenario-card" data-testid="scenario-card-disabled">
+            <div class="scenario-card-header">
+              <span class="scenario-id">S05</span>
+              <span class="scenario-title">Disabled Button</span>
+              <span class="scenario-badge disabled">DISABLED</span>
+            </div>
+            <div class="scenario-card-body">
+              <div class="scenario-interactive">
+                <button class="practice-btn pbtn-disabled" id="disabledBtn" data-testid="btn-disabled" disabled>
+                  Disabled
+                </button>
+                <span class="scenario-result" id="result-s05" data-testid="result-s05">Button is disabled — no action fires</span>
+                <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hint</button>
+              </div>
+              <div class="scenario-hint">Assert <code>isEnabled() === false</code> or <code>toBeDisabled()</code> — never try to click</div>
+            </div>
+          </div>
+
+          <!-- S06 -->
+          <div class="scenario-card" data-testid="scenario-card-click-hold">
+            <div class="scenario-card-header">
+              <span class="scenario-id">S06</span>
+              <span class="scenario-title">Click and Hold for 1.5 sec</span>
+            </div>
+            <div class="scenario-card-body">
+              <div class="scenario-interactive">
+                <button class="practice-btn pbtn-custom pbtn-blue" id="clickHoldBtn" data-testid="btn-click-hold"
+                  onpointerdown="startHold('result-s06', this)"
+                  onpointerup="endHold('result-s06', this)"
+                  onpointerleave="endHold('result-s06', this)">
+                  Click and Hold!
+                </button>
+                <span class="scenario-result" id="result-s06" data-testid="result-s06">Not held yet</span>
+                <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hint</button>
+              </div>
+              <div class="scenario-hint">Use <code>mouse.down()</code> + wait 1500ms + <code>mouse.up()</code> — early release counts as a fail</div>
+            </div>
+          </div>
+
+          <!-- S07 -->
+          <div class="scenario-card" data-testid="scenario-card-double-click">
+            <div class="scenario-card-header">
+              <span class="scenario-id">S07</span>
+              <span class="scenario-title">Double Click Button</span>
+            </div>
+            <div class="scenario-card-body">
+              <div class="scenario-interactive">
+                <button class="practice-btn pbtn-outline" id="doubleClickBtn" data-testid="btn-double-click"
+                  ondblclick="setPracticeResult('result-s07', 'Double clicked!', this)">
+                  Double Click Me
+                </button>
+                <span class="scenario-result" id="result-s07" data-testid="result-s07">Not double-clicked yet</span>
+                <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hint</button>
+              </div>
+              <div class="scenario-hint">Single click won't trigger this — use <code>dblclick()</code> or <code>Actions.doubleClick(el)</code></div>
+            </div>
+          </div>
+
+          <!-- S08 -->
+          <div class="scenario-card" data-testid="scenario-card-right-click">
+            <div class="scenario-card-header">
+              <span class="scenario-id">S08</span>
+              <span class="scenario-title">Right Click Button</span>
+            </div>
+            <div class="scenario-card-body">
+              <div class="scenario-interactive">
+                <button class="practice-btn pbtn-custom pbtn-rose" id="rightClickBtn" data-testid="btn-right-click"
+                  oncontextmenu="rightClick(event, 'result-s08', this)">
+                  Right Click Me
+                </button>
+                <span class="scenario-result" id="result-s08" data-testid="result-s08">No action performed yet</span>
+                <button class="hint-btn" onclick="toggleHint(this)">💡 Show Hint</button>
+              </div>
+              <div class="scenario-hint">Use <code>contextClick()</code> in Selenium or <code>click({ button: 'right' })</code> in Playwright</div>
+            </div>
+          </div>
+
+        </div><!-- /scenario-list -->
+      </div><!-- /tab-practice -->
+
+      <!-- ══════════════ TEST CASES TAB ══════════════ -->
+      <div id="tab-testcases" class="tab-panel">
+
+        <div class="testcase-toolbar">
+          <div class="filter-group" id="tcFilters">
+            <button class="filter-btn active" onclick="filterTestCases('all', this)">All <span style="opacity:.6">15</span></button>
+            <button class="filter-btn" onclick="filterTestCases('positive', this)">✅ Positive</button>
+            <button class="filter-btn" onclick="filterTestCases('negative', this)">❌ Negative</button>
+            <button class="filter-btn" onclick="filterTestCases('edge', this)">⚠️ Edge</button>
+          </div>
+          <div class="filter-spacer"></div>
+          <span class="testcase-count-label" id="tcCountLabel">Showing 15 test cases</span>
+        </div>
+
+        <div class="testcase-list" id="testcaseList">
+          <!-- Generated by JS -->
+        </div>
+      </div><!-- /tab-testcases -->
+
+      <!-- ══════════════ LEARN TAB ══════════════ -->
+      <div id="tab-learn" class="tab-panel">
+        <div class="learn-layout">
+          <div class="learn-content">
+
+            <!-- Overview -->
+            <div class="doc-section" id="learn-overview">
+              <div class="doc-section-header">
+                <div class="doc-section-title">Overview</div>
+                <p class="doc-section-desc">
+                  Buttons are the most fundamental interactive element you'll automate. This page covers 6 core
+                  interaction types — from simple single clicks to advanced hold actions — across Playwright,
+                  Selenium, and Cypress.
+                </p>
+              </div>
+            </div>
+
+            <!-- 1 · Single Click -->
+            <div class="doc-section" id="learn-single">
+              <div class="doc-section-header">
+                <div class="doc-section-title">1 · Single Click</div>
+                <p class="doc-section-desc">The most common automation action. All three frameworks click and auto-wait for the element to be actionable.</p>
+              </div>
+              <div class="doc-section-body">
+                <div class="code-tabs" data-group="single">
+                  <button class="code-tab-btn active" onclick="switchCodeTab('single', 'pw', this)">Playwright</button>
+                  <button class="code-tab-btn" onclick="switchCodeTab('single', 'sel', this)">Selenium</button>
+                  <button class="code-tab-btn" onclick="switchCodeTab('single', 'cy', this)">Cypress</button>
+                </div>
+                <div class="code-block-wrapper">
+                  <div class="code-block-header">
+                    <span class="code-lang" id="single-lang">TypeScript</span>
+                    <button class="copy-btn" onclick="copyCode('single-code')">Copy</button>
+                  </div>
+                  <pre><code id="single-code"><span class="cmt">// Playwright — auto-waits for actionability</span>
+<span class="kw">await</span> page.<span class="fn">locator</span>(<span class="str">'#clickBtn'</span>).<span class="fn">click</span>();
+<span class="kw">await</span> <span class="fn">expect</span>(
+  page.<span class="fn">locator</span>(<span class="str">'#clickResult'</span>)
+).<span class="fn">toBeVisible</span>();</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2 · Double Click -->
+            <div class="doc-section" id="learn-double">
+              <div class="doc-section-header">
+                <div class="doc-section-title">2 · Double Click</div>
+                <p class="doc-section-desc">A single click won't trigger double-click events. Use the dedicated API in each framework.</p>
+              </div>
+              <div class="doc-section-body">
+                <div class="code-tabs" data-group="double">
+                  <button class="code-tab-btn active" onclick="switchCodeTab('double', 'pw', this)">Playwright</button>
+                  <button class="code-tab-btn" onclick="switchCodeTab('double', 'sel', this)">Selenium</button>
+                  <button class="code-tab-btn" onclick="switchCodeTab('double', 'cy', this)">Cypress</button>
+                </div>
+                <div class="code-block-wrapper">
+                  <div class="code-block-header">
+                    <span class="code-lang" id="double-lang">TypeScript</span>
+                    <button class="copy-btn" onclick="copyCode('double-code')">Copy</button>
+                  </div>
+                  <pre><code id="double-code"><span class="cmt">// Playwright</span>
+<span class="kw">await</span> page.<span class="fn">locator</span>(<span class="str">'#doubleClickBtn'</span>).<span class="fn">dblclick</span>();
+<span class="kw">await</span> <span class="fn">expect</span>(
+  page.<span class="fn">locator</span>(<span class="str">'#doubleClickResult'</span>)
+).<span class="fn">toHaveText</span>(<span class="str">'Double clicked!'</span>);</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3 · Right Click -->
+            <div class="doc-section" id="learn-right">
+              <div class="doc-section-header">
+                <div class="doc-section-title">3 · Right Click</div>
+                <p class="doc-section-desc">Triggers context menus. Selenium uses Actions API; Playwright and Cypress have first-class support.</p>
+              </div>
+              <div class="doc-section-body">
+                <div class="code-tabs" data-group="right">
+                  <button class="code-tab-btn active" onclick="switchCodeTab('right', 'pw', this)">Playwright</button>
+                  <button class="code-tab-btn" onclick="switchCodeTab('right', 'sel', this)">Selenium</button>
+                  <button class="code-tab-btn" onclick="switchCodeTab('right', 'cy', this)">Cypress</button>
+                </div>
+                <div class="code-block-wrapper">
+                  <div class="code-block-header">
+                    <span class="code-lang" id="right-lang">TypeScript</span>
+                    <button class="copy-btn" onclick="copyCode('right-code')">Copy</button>
+                  </div>
+                  <pre><code id="right-code"><span class="cmt">// Playwright</span>
+<span class="kw">await</span> page.<span class="fn">locator</span>(<span class="str">'#rightClickBtn'</span>)
+  .<span class="fn">click</span>({ button: <span class="str">'right'</span> });
+<span class="kw">await</span> <span class="fn">expect</span>(
+  page.<span class="fn">locator</span>(<span class="str">'#contextMenu'</span>)
+).<span class="fn">toBeVisible</span>();</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4 · Disabled State -->
+            <div class="doc-section" id="learn-disabled">
+              <div class="doc-section-header">
+                <div class="doc-section-title">4 · Disabled State</div>
+                <p class="doc-section-desc">Assert the button is disabled before trying to interact. In Playwright, clicking a disabled button times out after the actionability check.</p>
+              </div>
+              <div class="doc-section-body">
+                <div class="code-tabs" data-group="disabled">
+                  <button class="code-tab-btn active" onclick="switchCodeTab('disabled', 'pw', this)">Playwright</button>
+                  <button class="code-tab-btn" onclick="switchCodeTab('disabled', 'sel', this)">Selenium</button>
+                  <button class="code-tab-btn" onclick="switchCodeTab('disabled', 'cy', this)">Cypress</button>
+                </div>
+                <div class="code-block-wrapper">
+                  <div class="code-block-header">
+                    <span class="code-lang" id="disabled-lang">TypeScript</span>
+                    <button class="copy-btn" onclick="copyCode('disabled-code')">Copy</button>
+                  </div>
+                  <pre><code id="disabled-code"><span class="cmt">// Playwright — assert disabled, don't click</span>
+<span class="kw">await</span> <span class="fn">expect</span>(
+  page.<span class="fn">locator</span>(<span class="str">'#disabledBtn'</span>)
+).<span class="fn">toBeDisabled</span>();</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5 · Text Change -->
+            <div class="doc-section" id="learn-text">
+              <div class="doc-section-header">
+                <div class="doc-section-title">5 · Text Change</div>
+                <p class="doc-section-desc">Verifying that a button's label or an associated element's text changes after a click.</p>
+              </div>
+              <div class="doc-section-body">
+                <div class="code-tabs" data-group="text">
+                  <button class="code-tab-btn active" onclick="switchCodeTab('text', 'pw', this)">Playwright</button>
+                  <button class="code-tab-btn" onclick="switchCodeTab('text', 'sel', this)">Selenium</button>
+                  <button class="code-tab-btn" onclick="switchCodeTab('text', 'cy', this)">Cypress</button>
+                </div>
+                <div class="code-block-wrapper">
+                  <div class="code-block-header">
+                    <span class="code-lang" id="text-lang">TypeScript</span>
+                    <button class="copy-btn" onclick="copyCode('text-code')">Copy</button>
+                  </div>
+                  <pre><code id="text-code"><span class="cmt">// Playwright — capture before, compare after</span>
+<span class="kw">const</span> btn = page.<span class="fn">locator</span>(<span class="str">'#toggleBtn'</span>);
+<span class="kw">const</span> before = <span class="kw">await</span> btn.<span class="fn">textContent</span>();
+<span class="kw">await</span> btn.<span class="fn">click</span>();
+<span class="fn">expect</span>(<span class="kw">await</span> btn.<span class="fn">textContent</span>()).<span class="fn">not</span>.<span class="fn">toBe</span>(before);</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6 · Keyboard Enter -->
+            <div class="doc-section" id="learn-keyboard">
+              <div class="doc-section-header">
+                <div class="doc-section-title">6 · Keyboard Enter</div>
+                <p class="doc-section-desc">Keyboard activation is required for accessible automation. A focused button responds to Enter and Space the same as a click.</p>
+              </div>
+              <div class="doc-section-body">
+                <div class="code-tabs" data-group="keyboard">
+                  <button class="code-tab-btn active" onclick="switchCodeTab('keyboard', 'pw', this)">Playwright</button>
+                  <button class="code-tab-btn" onclick="switchCodeTab('keyboard', 'sel', this)">Selenium</button>
+                  <button class="code-tab-btn" onclick="switchCodeTab('keyboard', 'cy', this)">Cypress</button>
+                </div>
+                <div class="code-block-wrapper">
+                  <div class="code-block-header">
+                    <span class="code-lang" id="keyboard-lang">TypeScript</span>
+                    <button class="copy-btn" onclick="copyCode('keyboard-code')">Copy</button>
+                  </div>
+                  <pre><code id="keyboard-code"><span class="cmt">// Playwright</span>
+<span class="kw">await</span> page.<span class="fn">locator</span>(<span class="str">'#submitBtn'</span>).<span class="fn">press</span>(<span class="str">'Enter'</span>);</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- Method Summary -->
+            <div class="doc-section" id="learn-methods">
+              <div class="doc-section-header">
+                <div class="doc-section-title">Method Summary</div>
+                <p class="doc-section-desc">Quick reference across all three frameworks.</p>
+              </div>
+              <div class="doc-section-body" style="padding: 0;">
+                <table class="method-table">
+                  <thead>
+                    <tr>
+                      <th>Action</th>
+                      <th><span class="fw-pill fw-selenium">Selenium</span></th>
+                      <th><span class="fw-pill fw-playwright">Playwright JS</span></th>
+                      <th><span class="fw-pill fw-playwright">Playwright PY</span></th>
+                      <th><span class="fw-pill fw-cypress">Cypress</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Single click</td><td><code>element.click()</code></td><td><code>locator.click()</code></td><td><code>locator.click()</code></td><td><code>.click()</code></td></tr>
+                    <tr><td>Double click</td><td><code>actions.doubleClick(el)</code></td><td><code>locator.dblclick()</code></td><td><code>locator.dblclick()</code></td><td><code>.dblclick()</code></td></tr>
+                    <tr><td>Right click</td><td><code>actions.contextClick(el)</code></td><td><code>click({ button: 'right' })</code></td><td><code>click(button='right')</code></td><td><code>.rightclick()</code></td></tr>
+                    <tr><td>Is disabled</td><td><code>!el.isEnabled()</code></td><td><code>toBeDisabled()</code></td><td><code>to_be_disabled()</code></td><td><code>should('be.disabled')</code></td></tr>
+                    <tr><td>Get text</td><td><code>el.getText()</code></td><td><code>textContent()</code></td><td><code>text_content()</code></td><td><code>.invoke('text')</code></td></tr>
+                    <tr><td>Press Enter</td><td><code>sendKeys(Keys.ENTER)</code></td><td><code>press('Enter')</code></td><td><code>press('Enter')</code></td><td><code>.type('{enter}')</code></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="doc-section" id="learn-faq">
+              <div class="doc-section-header">
+                <div class="doc-section-title">FAQ</div>
+              </div>
+              <div class="doc-section-body" style="padding: 16px;">
+                <div class="faq-item">
+                  <div class="faq-question" onclick="toggleFaq(this)">
+                    How do I click a button using Selenium WebDriver?
+                    <span class="faq-icon">⌄</span>
+                  </div>
+                  <div class="faq-answer">
+                    Locate the element with a stable selector and call <code>click()</code> — e.g. <code>driver.findElement(By.cssSelector("[data-testid='btn-navigate-home']")).click();</code>. Prefer <code>data-testid</code> or <code>id</code> over brittle XPath. Selenium scrolls the element into view automatically before clicking.
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <div class="faq-question" onclick="toggleFaq(this)">
+                    How do I perform a double-click in Selenium WebDriver?
+                    <span class="faq-icon">⌄</span>
+                  </div>
+                  <div class="faq-answer">
+                    A plain <code>click()</code> cannot express a double click — use the Actions API: <code>new Actions(driver).doubleClick(element).perform();</code>. In Playwright use <code>locator.dblclick()</code> and in Cypress <code>cy.get(sel).dblclick()</code>.
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <div class="faq-question" onclick="toggleFaq(this)">
+                    How do I right-click a button to trigger a context menu?
+                    <span class="faq-icon">⌄</span>
+                  </div>
+                  <div class="faq-answer">
+                    Use <code>new Actions(driver).contextClick(element).perform();</code>. Playwright: <code>locator.click({ button: 'right' })</code>; Cypress: <code>cy.get(sel).rightclick()</code>. If the app renders a custom menu, assert it becomes visible afterwards.
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <div class="faq-question" onclick="toggleFaq(this)">
+                    How do I check if a button is disabled before clicking it?
+                    <span class="faq-icon">⌄</span>
+                  </div>
+                  <div class="faq-answer">
+                    Assert the state instead of clicking. Selenium: <code>element.isEnabled()</code> returns <code>false</code> for disabled buttons. Playwright: <code>await expect(locator).toBeDisabled()</code>. Clicking a disabled button in Playwright throws after the actionability timeout.
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <div class="faq-question" onclick="toggleFaq(this)">
+                    How do I wait for a button to become clickable?
+                    <span class="faq-icon">⌄</span>
+                  </div>
+                  <div class="faq-answer">
+                    Playwright auto-waits for actionability (visible, enabled, stable) on every action — no explicit wait needed. Selenium needs: <code>new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(locator));</code>.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /learn-content -->
+
+        </div>
+      </div><!-- /tab-learn -->
+
+    </main>
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+
+      <!-- Progress -->
+      <div class="progress-section" id="progressSection">
+        <div class="progress-header">
+          <span class="progress-title">Your Progress</span>
+          <span class="progress-count" id="progressCount">0 / 8</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+        <div class="progress-items" id="progressItems">
+          <div class="progress-item" data-pid="s01"><span class="progress-check" id="pc-s01"></span> Navigate to Home Page</div>
+          <div class="progress-item" data-pid="s02"><span class="progress-check" id="pc-s02"></span> Get Coordinates</div>
+          <div class="progress-item" data-pid="s03"><span class="progress-check" id="pc-s03"></span> Get Button Color</div>
+          <div class="progress-item" data-pid="s04"><span class="progress-check" id="pc-s04"></span> Get Height &amp; Width</div>
+          <div class="progress-item" data-pid="s05"><span class="progress-check" id="pc-s05"></span> Disabled Button</div>
+          <div class="progress-item" data-pid="s06"><span class="progress-check" id="pc-s06"></span> Click and Hold</div>
+          <div class="progress-item" data-pid="s07"><span class="progress-check" id="pc-s07"></span> Double Click</div>
+          <div class="progress-item" data-pid="s08"><span class="progress-check" id="pc-s08"></span> Right Click</div>
+        </div>
+      </div>
+
+      <!-- What You'll Learn -->
+      <div class="rail-card">
+        <div class="rail-card-header">
+          <span class="rail-card-title">What You'll Learn</span>
+          <span>🎓</span>
+        </div>
+        <div class="rail-card-body">
+          <div class="framework-tabs">
+            <button class="fw-tab-btn active" onclick="switchFwTab('selenium', this)">Selenium<br><small style="font-weight:400;font-size:10px">Java</small></button>
+            <button class="fw-tab-btn" onclick="switchFwTab('playwright', this)">Playwright<br><small style="font-weight:400;font-size:10px">JS / PY</small></button>
+            <button class="fw-tab-btn" onclick="switchFwTab('cypress', this)">Cypress<br><small style="font-weight:400;font-size:10px">JS</small></button>
+          </div>
+
+          <div id="fw-selenium" class="fw-tab-panel active">
+            <div class="fw-label">Selenium (Java)</div>
+            <ul class="method-list">
+              <li><span class="method-dot d0"></span><code>click()</code></li>
+              <li><span class="method-dot d1"></span><code>doubleClick()</code></li>
+              <li><span class="method-dot d2"></span><code>contextClick()</code></li>
+              <li><span class="method-dot d3"></span><code>isEnabled()</code></li>
+              <li><span class="method-dot d4"></span><code>getLocation()</code></li>
+            </ul>
+          </div>
+          <div id="fw-playwright" class="fw-tab-panel">
+            <div class="fw-label">Playwright JS / PY</div>
+            <ul class="method-list">
+              <li><span class="method-dot d0"></span><code>click()</code></li>
+              <li><span class="method-dot d1"></span><code>dblclick()</code></li>
+              <li><span class="method-dot d2"></span><code>click({ button: 'right' })</code></li>
+              <li><span class="method-dot d3"></span><code>toBeDisabled()</code></li>
+              <li><span class="method-dot d4"></span><code>boundingBox()</code></li>
+            </ul>
+          </div>
+          <div id="fw-cypress" class="fw-tab-panel">
+            <div class="fw-label">Cypress JS</div>
+            <ul class="method-list">
+              <li><span class="method-dot d0"></span><code>.click()</code></li>
+              <li><span class="method-dot d1"></span><code>.dblclick()</code></li>
+              <li><span class="method-dot d2"></span><code>.rightclick()</code></li>
+              <li><span class="method-dot d3"></span><code>should('be.disabled')</code></li>
+              <li><span class="method-dot d4"></span><code>.invoke('text')</code></li>
+            </ul>
+          </div>
+
+          <div class="video-placeholder">
+            🎬 Tutorial video coming soon
+          </div>
+        </div>
+      </div>
+
+      <!-- Up Next -->
+      <div>
+        <div class="fw-label" style="margin-bottom:8px;">UP NEXT</div>
+        <a href="#" class="up-next-card" data-testid="up-next-forms">
+          <div class="up-next-icon">📋</div>
+          <div class="up-next-info">
+            <div class="up-next-label">Next Topic</div>
+            <div class="up-next-title">Forms</div>
+            <div class="up-next-desc">Fill and submit forms with validation</div>
+          </div>
+          <span class="up-next-arrow">›</span>
+        </a>
+      </div>
+
+    </aside>
+
+  </div><!-- /content-grid -->
+</div><!-- /page-wrapper -->
+
+<script>
+  /* ── Tab switching ── */
+  function switchTab(tabId, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+    document.getElementById('tab-' + tabId).classList.add('active');
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected','true');
+  }
+
+  /* ── Hint toggle ── */
+  function toggleHint(btn) {
+    // hint panel is the next sibling of the .scenario-interactive wrapper
+    const interactiveRow = btn.parentElement;
+    const hint = interactiveRow.nextElementSibling;
+    const isOpen = hint.classList.toggle('visible');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? '💡 Hide Hint' : '💡 Show Hint';
+  }
+
+  /* ── Practice interactions ── */
+  const completedScenarios = new Set();
+
+  function markDone(id) {
+    if (completedScenarios.has(id)) return;
+    completedScenarios.add(id);
+    const check = document.getElementById('pc-' + id);
+    if (check) { check.classList.add('done'); check.textContent = '✓'; }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const total = 8;
+    const done = completedScenarios.size;
+    document.getElementById('progressCount').textContent = done + ' / ' + total;
+    document.getElementById('progressBarFill').style.width = (done / total * 100) + '%';
+  }
+
+  function setResultEl(id, text) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = text;
+    el.classList.add('has-result');
+  }
+
+  function setPracticeResult(resultId, text, btn) {
+    setResultEl(resultId, text);
+    markDone(resultId.replace('result-', ''));
+  }
+
+  function getCoords(btn, resultId) {
+    const r = btn.getBoundingClientRect();
+    setResultEl(resultId, 'X: ' + Math.round(r.x) + 'px, Y: ' + Math.round(r.y) + 'px');
+    markDone(resultId.replace('result-', ''));
+  }
+
+  function getColor(btn, resultId) {
+    const bg = getComputedStyle(btn).backgroundColor;
+    setResultEl(resultId, 'Background: ' + bg);
+    markDone(resultId.replace('result-', ''));
+  }
+
+  function getSize(btn, resultId) {
+    setResultEl(resultId, 'W: ' + btn.offsetWidth + 'px, H: ' + btn.offsetHeight + 'px');
+    markDone(resultId.replace('result-', ''));
+  }
+
+  let holdTimer = null, heldLongEnough = false;
+  function startHold(resultId, btn) {
+    heldLongEnough = false;
+    setResultEl(resultId, 'Holding… keep pressing');
+    document.getElementById(resultId).classList.remove('has-result');
+    holdTimer = setTimeout(() => {
+      heldLongEnough = true;
+      setResultEl(resultId, 'Held for 1.5s ✓');
+      markDone(resultId.replace('result-', ''));
+    }, 1500);
+  }
+  function endHold(resultId, btn) {
+    if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
+    if (!heldLongEnough) {
+      const el = document.getElementById(resultId);
+      el.textContent = 'Released too early — hold for 1.5s';
+      el.classList.remove('has-result');
+    }
+  }
+  function rightClick(e, resultId, btn) {
+    e.preventDefault();
+    setResultEl(resultId, 'Context menu triggered! ✓');
+    markDone(resultId.replace('result-', ''));
+  }
+
+  /* ── Code tab switching ── */
+  const codeData = {
+    single: {
+      pw: { lang: 'TypeScript', code: `<span class="cmt">// Playwright — auto-waits for actionability</span>\n<span class="kw">await</span> page.<span class="fn">locator</span>(<span class="str">'#clickBtn'</span>).<span class="fn">click</span>();\n<span class="kw">await</span> <span class="fn">expect</span>(\n  page.<span class="fn">locator</span>(<span class="str">'#clickResult'</span>)\n).<span class="fn">toBeVisible</span>();` },
+      sel: { lang: 'Java', code: `<span class="cmt">// Selenium WebDriver (Java)</span>\ndriver.<span class="fn">findElement</span>(<span class="cls">By</span>.<span class="fn">id</span>(<span class="str">"clickBtn"</span>)).<span class="fn">click</span>();\n<span class="fn">assertTrue</span>(driver.<span class="fn">findElement</span>(\n  <span class="cls">By</span>.<span class="fn">id</span>(<span class="str">"clickResult"</span>)).<span class="fn">isDisplayed</span>());` },
+      cy: { lang: 'JavaScript', code: `<span class="cmt">// Cypress</span>\ncy.<span class="fn">get</span>(<span class="str">'#clickBtn'</span>).<span class="fn">click</span>();\ncy.<span class="fn">get</span>(<span class="str">'#clickResult'</span>).<span class="fn">should</span>(<span class="str">'be.visible'</span>);` },
+    },
+    double: {
+      pw: { lang: 'TypeScript', code: `<span class="cmt">// Playwright</span>\n<span class="kw">await</span> page.<span class="fn">locator</span>(<span class="str">'#doubleClickBtn'</span>).<span class="fn">dblclick</span>();\n<span class="kw">await</span> <span class="fn">expect</span>(\n  page.<span class="fn">locator</span>(<span class="str">'#doubleClickResult'</span>)\n).<span class="fn">toHaveText</span>(<span class="str">'Double clicked!'</span>);` },
+      sel: { lang: 'Java', code: `<span class="cmt">// Selenium WebDriver (Java)</span>\n<span class="cls">WebElement</span> btn = driver.<span class="fn">findElement</span>(\n  <span class="cls">By</span>.<span class="fn">id</span>(<span class="str">"doubleClickBtn"</span>));\n<span class="kw">new</span> <span class="cls">Actions</span>(driver).<span class="fn">doubleClick</span>(btn).<span class="fn">perform</span>();\n<span class="fn">assertEquals</span>(<span class="str">"Double clicked!"</span>,\n  driver.<span class="fn">findElement</span>(\n    <span class="cls">By</span>.<span class="fn">id</span>(<span class="str">"doubleClickResult"</span>)).<span class="fn">getText</span>());` },
+      cy: { lang: 'JavaScript', code: `<span class="cmt">// Cypress</span>\ncy.<span class="fn">get</span>(<span class="str">'#doubleClickBtn'</span>).<span class="fn">dblclick</span>();\ncy.<span class="fn">get</span>(<span class="str">'#doubleClickResult'</span>)\n  .<span class="fn">should</span>(<span class="str">'have.text'</span>, <span class="str">'Double clicked!'</span>);` },
+    },
+    right: {
+      pw: { lang: 'TypeScript', code: `<span class="cmt">// Playwright</span>\n<span class="kw">await</span> page.<span class="fn">locator</span>(<span class="str">'#rightClickBtn'</span>)\n  .<span class="fn">click</span>({ button: <span class="str">'right'</span> });\n<span class="kw">await</span> <span class="fn">expect</span>(\n  page.<span class="fn">locator</span>(<span class="str">'#contextMenu'</span>)\n).<span class="fn">toBeVisible</span>();` },
+      sel: { lang: 'Java', code: `<span class="cmt">// Selenium WebDriver (Java)</span>\n<span class="cls">WebElement</span> btn = driver.<span class="fn">findElement</span>(\n  <span class="cls">By</span>.<span class="fn">id</span>(<span class="str">"rightClickBtn"</span>));\n<span class="kw">new</span> <span class="cls">Actions</span>(driver).<span class="fn">contextClick</span>(btn).<span class="fn">perform</span>();\n<span class="fn">assertTrue</span>(driver.<span class="fn">findElement</span>(\n  <span class="cls">By</span>.<span class="fn">id</span>(<span class="str">"contextMenu"</span>)).<span class="fn">isDisplayed</span>());` },
+      cy: { lang: 'JavaScript', code: `<span class="cmt">// Cypress</span>\ncy.<span class="fn">get</span>(<span class="str">'#rightClickBtn'</span>).<span class="fn">rightclick</span>();\ncy.<span class="fn">get</span>(<span class="str">'#contextMenu'</span>).<span class="fn">should</span>(<span class="str">'be.visible'</span>);` },
+    },
+    disabled: {
+      pw: { lang: 'TypeScript', code: `<span class="cmt">// Playwright — assert disabled, don't click</span>\n<span class="kw">await</span> <span class="fn">expect</span>(\n  page.<span class="fn">locator</span>(<span class="str">'#disabledBtn'</span>)\n).<span class="fn">toBeDisabled</span>();` },
+      sel: { lang: 'Java', code: `<span class="cmt">// Selenium WebDriver (Java)</span>\n<span class="cls">WebElement</span> btn = driver.<span class="fn">findElement</span>(\n  <span class="cls">By</span>.<span class="fn">id</span>(<span class="str">"disabledBtn"</span>));\n<span class="fn">assertFalse</span>(btn.<span class="fn">isEnabled</span>());\n<span class="fn">assertNotNull</span>(btn.<span class="fn">getAttribute</span>(<span class="str">"disabled"</span>));` },
+      cy: { lang: 'JavaScript', code: `<span class="cmt">// Cypress</span>\ncy.<span class="fn">get</span>(<span class="str">'#disabledBtn'</span>).<span class="fn">should</span>(<span class="str">'be.disabled'</span>);` },
+    },
+    text: {
+      pw: { lang: 'TypeScript', code: `<span class="cmt">// Playwright — capture before, compare after</span>\n<span class="kw">const</span> btn = page.<span class="fn">locator</span>(<span class="str">'#toggleBtn'</span>);\n<span class="kw">const</span> before = <span class="kw">await</span> btn.<span class="fn">textContent</span>();\n<span class="kw">await</span> btn.<span class="fn">click</span>();\n<span class="fn">expect</span>(<span class="kw">await</span> btn.<span class="fn">textContent</span>()).<span class="fn">not</span>.<span class="fn">toBe</span>(before);` },
+      sel: { lang: 'Java', code: `<span class="cmt">// Selenium WebDriver (Java)</span>\n<span class="cls">WebElement</span> btn = driver.<span class="fn">findElement</span>(\n  <span class="cls">By</span>.<span class="fn">id</span>(<span class="str">"toggleBtn"</span>));\n<span class="cls">String</span> before = btn.<span class="fn">getText</span>();\nbtn.<span class="fn">click</span>();\n<span class="fn">assertNotEquals</span>(before, btn.<span class="fn">getText</span>());` },
+      cy: { lang: 'JavaScript', code: `<span class="cmt">// Cypress</span>\ncy.<span class="fn">get</span>(<span class="str">'#toggleBtn'</span>).<span class="fn">then</span>(($b) => {\n  <span class="kw">const</span> before = $b.<span class="fn">text</span>();\n  cy.<span class="fn">wrap</span>($b).<span class="fn">click</span>()\n    .<span class="fn">should</span>(($el) => {\n      <span class="fn">expect</span>($el.<span class="fn">text</span>()).<span class="fn">not</span>.<span class="fn">to</span>.<span class="fn">eq</span>(before);\n    });\n});` },
+    },
+    keyboard: {
+      pw: { lang: 'TypeScript', code: `<span class="cmt">// Playwright — keyboard press</span>\n<span class="kw">await</span> page.<span class="fn">locator</span>(<span class="str">'#submitBtn'</span>).<span class="fn">press</span>(<span class="str">'Enter'</span>);` },
+      sel: { lang: 'Java', code: `<span class="cmt">// Selenium WebDriver (Java)</span>\ndriver.<span class="fn">findElement</span>(<span class="cls">By</span>.<span class="fn">id</span>(<span class="str">"submitBtn"</span>))\n  .<span class="fn">sendKeys</span>(<span class="cls">Keys</span>.ENTER);` },
+      cy: { lang: 'JavaScript', code: `<span class="cmt">// Cypress</span>\ncy.<span class="fn">get</span>(<span class="str">'#submitBtn'</span>).<span class="fn">type</span>(<span class="str">'{enter}'</span>);` },
+    },
+  };
+
+  function switchCodeTab(group, fw, btn) {
+    const data = codeData[group][fw];
+    document.getElementById(group + '-code').innerHTML = data.code;
+    document.getElementById(group + '-lang').textContent = data.lang;
+    btn.parentElement.querySelectorAll('.code-tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function copyCode(id) {
+    const el = document.getElementById(id);
+    const text = el.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = el.closest('.code-block-wrapper').querySelector('.copy-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 1800);
+    });
+  }
+
+  /* ── FAQ ── */
+  function toggleFaq(el) {
+    el.parentElement.classList.toggle('open');
+  }
+
+  /* ── Framework rail tabs ── */
+  function switchFwTab(fw, btn) {
+    document.querySelectorAll('.fw-tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.fw-tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('fw-' + fw).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  /* ── Test Cases ── */
+  const testCases = [
+    { id:'BTN_001', scenario:'Button is clickable and triggers its action', expected:'Result text updates after a single click', type:'positive', priority:'high',
+      steps:['Navigate to <code>/practice/buttons</code>','Locate the button <code>[data-testid="btn-navigate-home"]</code>','Call <code>click()</code> on the element','Assert the result <code>[data-testid="result-s01"]</code> contains <code>Home</code>'] },
+    { id:'BTN_002', scenario:'Button displays the correct label text', expected:'Visible label matches the expected string exactly', type:'positive', priority:'medium',
+      steps:['Locate the button <code>[data-testid="btn-navigate-home"]</code>','Read its text via <code>textContent()</code> / <code>getText()</code>','Assert the trimmed text equals <code>Go To Home</code>'] },
+    { id:'BTN_003', scenario:'Single click triggers the correct action', expected:'Only the targeted result changes; others stay unchanged', type:'positive', priority:'high',
+      steps:['Click <code>[data-testid="btn-get-coordinates"]</code>','Assert <code>[data-testid="result-s02"]</code> shows X/Y values','Assert unrelated results were not modified'] },
+    { id:'BTN_004', scenario:'Double-click button triggers a double-click action', expected:'Result reads "Double clicked!" after a dblclick', type:'positive', priority:'high', note:'A single click must NOT satisfy this case — only a true double click.',
+      steps:['Locate <code>[data-testid="btn-double-click"]</code>','Perform <code>dblclick()</code> (Selenium: <code>Actions.doubleClick()</code>)','Assert <code>[data-testid="result-s07"]</code> reads <code>Double clicked!</code>'] },
+    { id:'BTN_005', scenario:'Right-click button opens the context action', expected:'Result confirms the context menu was triggered', type:'positive', priority:'medium',
+      steps:['Locate <code>[data-testid="btn-right-click"]</code>','Perform <code>click({ button: \'right\' })</code> / <code>contextClick()</code>','Assert <code>[data-testid="result-s08"]</code> confirms the context action'] },
+    { id:'BTN_006', scenario:'Disabled button cannot be clicked', expected:'Button is disabled and no action fires', type:'negative', priority:'high', note:'Playwright throws after the actionability timeout, so assert state instead.',
+      steps:['Locate <code>[data-testid="btn-disabled"]</code>','Assert <code>isEnabled()</code> is false / <code>toBeDisabled()</code> passes','Confirm the result area stays at its initial text'] },
+    { id:'BTN_007', scenario:'Enabled button reports an enabled state', expected:'Enabled buttons return isEnabled() === true', type:'positive', priority:'medium',
+      steps:['Locate <code>[data-testid="btn-navigate-home"]</code>','Assert <code>isEnabled()</code> returns true','Assert the <code>disabled</code> attribute is absent'] },
+    { id:'BTN_008', scenario:'Button stays usable across viewport sizes', expected:'Button remains visible and clickable on mobile and desktop widths', type:'edge', priority:'medium',
+      steps:['Set viewport to 375×667 (mobile)','Assert the button is visible and clickable','Set viewport to 1440×900 (desktop) and re-assert'] },
+    { id:'BTN_009', scenario:'Button is operable via keyboard', expected:'Focusing and pressing Enter/Space triggers the action', type:'positive', priority:'high', note:'Keyboard activation is required for accessible, automatable buttons.',
+      steps:['Focus the button with Tab or <code>focus()</code>','Press <code>Enter</code> (Playwright: <code>press(\'Enter\')</code>)','Assert the same action fires as a mouse click'] },
+    { id:'BTN_010', scenario:'Button is exposed to screen readers', expected:'Element has role=button and an accessible name', type:'positive', priority:'medium',
+      steps:['Inspect the element\'s accessibility tree','Assert role resolves to <code>button</code>','Assert the accessible name is non-empty'] },
+    { id:'BTN_011', scenario:'Hover state is visually distinct', expected:'Background/style changes on hover', type:'edge', priority:'low',
+      steps:['Hover the button via <code>hover()</code>','Read <code>background-color</code> before and after hover','Assert the computed style changed'] },
+    { id:'BTN_012', scenario:'Result state resets after a page refresh', expected:'Reloading restores each result to its initial text', type:'edge', priority:'low', note:'Client-only result state should not persist across reloads.',
+      steps:['Click a button and confirm its result changed','Reload the page','Assert the result returns to its initial value'] },
+    { id:'BTN_013', scenario:'Click-and-hold completes after 1.5 seconds', expected:'Holding for 1.5s reports success; early release does not', type:'edge', priority:'medium',
+      steps:['Press and hold <code>[data-testid="btn-click-hold"]</code> (<code>mouse.down()</code>)','Wait 1500ms, then release (<code>mouse.up()</code>)','Assert <code>[data-testid="result-s06"]</code> confirms a completed hold'] },
+    { id:'BTN_014', scenario:'Button does not overlap adjacent elements', expected:'Bounding boxes of neighbouring controls do not intersect', type:'edge', priority:'low',
+      steps:['Read the button\'s <code>boundingBox()</code>','Read the neighbouring element\'s bounding box','Assert the two rectangles do not overlap'] },
+    { id:'BTN_015', scenario:'Page loads without console errors', expected:'No uncaught errors are logged during load', type:'positive', priority:'high',
+      steps:['Attach a listener to the browser <code>console</code> / <code>pageerror</code> events','Navigate to <code>/practice/buttons</code>','Assert no <code>error</code>-level messages were captured'] },
+  ];
+
+  let currentFilter = 'all';
+
+  function renderTestCases(filter) {
+    const list = document.getElementById('testcaseList');
+    const filtered = filter === 'all' ? testCases : testCases.filter(tc => tc.type === filter);
+    document.getElementById('tcCountLabel').textContent = 'Showing ' + filtered.length + ' test case' + (filtered.length !== 1 ? 's' : '');
+    list.innerHTML = filtered.map((tc, i) => `
+      <div class="testcase-card" data-type="${tc.type}" data-priority="${tc.priority}">
+        <div class="testcase-card-header" onclick="this.parentElement.classList.toggle('expanded')">
+          <span class="testcase-id">${tc.id}</span>
+          <div class="testcase-main">
+            <div class="testcase-scenario">${tc.scenario}</div>
+            <div class="testcase-expected">Expected: ${tc.expected}</div>
+          </div>
+          <div class="testcase-badges">
+            <span class="tc-badge tc-${tc.type}">${tc.type.charAt(0).toUpperCase()+tc.type.slice(1)}</span>
+            <span class="tc-badge tc-${tc.priority}">${tc.priority.charAt(0).toUpperCase()+tc.priority.slice(1)}</span>
+          </div>
+        </div>
+        <div class="testcase-card-body">
+          ${tc.note ? `<div class="testcase-desc">ℹ️ ${tc.note}</div>` : ''}
+          <div class="testcase-steps-label">Steps</div>
+          <div class="testcase-steps">
+            ${tc.steps.map((s, idx) => `<div class="testcase-step"><span class="step-num">${idx+1}</span><span>${s}</span></div>`).join('')}
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function filterTestCases(filter, btn) {
+    currentFilter = filter;
+    document.querySelectorAll('#tcFilters .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTestCases(filter);
+  }
+
+  renderTestCases('all');
+</script>
+</body>
+</html>

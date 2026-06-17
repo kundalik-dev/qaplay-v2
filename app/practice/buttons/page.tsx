@@ -1,6 +1,6 @@
 import { JsonLd } from "@/components/seo";
 import { PracticePage } from "@/components/practice";
-import { buttonsData } from "@/data/practice-data/buttons";
+import { buttonsData, buttonsMeta } from "@/data/practice-data/buttons";
 import { buttonsPageMetadata } from "@/data/meta-data/practice/buttons-page-meta-data";
 import {
   buttonsPageBreadcrumbJsonLd,
@@ -8,6 +8,7 @@ import {
   buttonsPageWebPageJsonLd,
 } from "@/data/meta-data/practice/buttons-structured-jsonld-data";
 import { ButtonScenarios } from "./_components/button-scenarios";
+import { ButtonsOverviewRail } from "./_components/buttons-overview-rail";
 import { ButtonsLearn } from "./_components/buttons-learn";
 
 export const metadata = buttonsPageMetadata;
@@ -31,6 +32,7 @@ export default function ButtonsPage() {
         {...buttonsData}
         scenarioContent={<ButtonScenarios />}
         learnContent={<ButtonsLearn />}
+        practiceRailContent={<ButtonsOverviewRail upNext={buttonsMeta.upNext} />}
       />
     </>
   );

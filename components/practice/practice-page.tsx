@@ -22,6 +22,8 @@ interface PracticePageProps extends ElementPageData {
    * placeholder is shown. Each element page builds its own DocSection tree.
    */
   learnContent?: React.ReactNode;
+  /** Optional custom right rail for the Practice tab. */
+  practiceRailContent?: React.ReactNode;
 }
 
 /**
@@ -45,6 +47,7 @@ export function PracticePage({
   tocItems,
   scenarioContent,
   learnContent,
+  practiceRailContent,
 }: PracticePageProps) {
   return (
     <div
@@ -82,12 +85,14 @@ export function PracticePage({
               </section>
 
               {/* Right: Block 8 — sticky code panel */}
-              <CodePanel
-                totalScenarios={meta.scenarioCount}
-                snippets={codeSnippets}
-                keyMethods={keyMethods}
-                upNext={meta.upNext}
-              />
+              {practiceRailContent ?? (
+                <CodePanel
+                  totalScenarios={meta.scenarioCount}
+                  snippets={codeSnippets}
+                  keyMethods={keyMethods}
+                  upNext={meta.upNext}
+                />
+              )}
             </div>
           </div>
         }
