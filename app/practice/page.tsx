@@ -11,10 +11,14 @@ export const metadata = practicePageMetadata;
 
 export default function PracticePage() {
   return (
-    <section data-testid="practice-page" data-section="practice">
-      <JsonLd data={practicePageWebPageJsonLd} />
-      <JsonLd data={practicePageBreadcrumbJsonLd} />
-      <PracticeGrid cards={practiceCards} />
-    </section>
+    <div className="pt-24 pb-16 md:pt-28">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section data-testid="practice-page" data-section="practice">
+          <JsonLd data={practicePageWebPageJsonLd} />
+          <JsonLd data={practicePageBreadcrumbJsonLd} />
+          <PracticeGrid cards={practiceCards} />
+        </section>
+      </div>
+    </div>
   );
 }

@@ -1,15 +1,21 @@
 import React from "react";
 
+/**
+ * Shared layout for all /practice routes.
+ *
+ * NOTE: The inner max-width wrapper was intentionally removed here.
+ * - /practice (the grid page) adds its own max-width via the PracticeGrid component.
+ * - /practice/[element] pages need full-bleed sections and manage their own widths
+ *   through PracticeShell (max-w-[1200px]) and full-width headers/panels.
+ */
 const PracticeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       data-testid="practice-layout"
       data-section="practice"
-      className="min-h-screen w-full pt-24 pb-16 md:pt-28"
+      className="min-h-screen w-full"
     >
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        {children}
-      </div>
+      {children}
     </div>
   );
 };

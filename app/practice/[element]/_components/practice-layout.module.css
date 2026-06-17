@@ -1,0 +1,93 @@
+/* ── Practice tab two-column grid ───────────────────────────────────────────
+   Controls the scenario-cards column + sticky code panel layout.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.practiceLayout {
+  /* Height references for sticky offset calculations.
+     --panel-top = nav + tabs only (header scrolls away). */
+  --nav-h:     60px;
+  --tabs-h:    48px;
+  --panel-top: calc(var(--nav-h) + var(--tabs-h));
+
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  min-height: calc(100vh - var(--panel-top));
+  max-width: 1200px;
+  margin: 0 auto;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+
+.scenariosCol {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-right: 1px solid var(--border);
+  min-width: 0;
+}
+
+.colHeading {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  opacity: 0.6;
+  margin-bottom: 4px;
+}
+
+/* ── Learn tab grid ──────────────────────────────────────────────────────── */
+
+.learnLayout {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+
+/* ── Test Cases tab wrapper ──────────────────────────────────────────────── */
+
+.testCasesLayout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* ── Background for the content area below tabs ──────────────────────────── */
+
+.contentBg {
+  background:
+    radial-gradient(ellipse 80% 40% at 50% 0%, color-mix(in srgb, var(--primary) 4%, transparent), transparent),
+    var(--background);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .practiceLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .learnLayout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .learnLayout {
+    padding: 24px 16px 48px;
+  }
+
+  .scenariosCol {
+    padding: 16px;
+  }
+
+  .testCasesLayout {
+    padding: 16px;
+  }
+}

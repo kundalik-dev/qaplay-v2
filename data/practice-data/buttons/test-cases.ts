@@ -1,0 +1,197 @@
+import type { TestCase } from "@/data/practice-data/types";
+
+/**
+ * Documented QA test cases for the Buttons practice page.
+ * Rendered in the "Test Cases" tab. Steps may contain inline <code> markup.
+ */
+export const buttonsTestCases: TestCase[] = [
+  {
+    id: "BTN_001",
+    scenario: "Button is clickable and triggers its action",
+    expected: "Result text updates after a single click",
+    type: "positive",
+    priority: "high",
+    description:
+      "Verify a primary button responds to a single click and updates the associated result area.",
+    steps: [
+      "Navigate to <code>/practice/buttons</code>",
+      "Locate the button <code>[data-testid='btn-navigate-home']</code>",
+      "Call <code>click()</code> on the element",
+      "Assert the result <code>[data-testid='result-s01']</code> contains <code>Home</code>",
+    ],
+  },
+  {
+    id: "BTN_002",
+    scenario: "Button displays the correct label text",
+    expected: "Visible label matches the expected string exactly",
+    type: "positive",
+    priority: "medium",
+    description: "Verify the rendered button label matches the design copy.",
+    steps: [
+      "Locate the button <code>[data-testid='btn-navigate-home']</code>",
+      "Read its text via <code>textContent()</code> / <code>getText()</code>",
+      "Assert the trimmed text equals <code>Go To Home</code>",
+    ],
+  },
+  {
+    id: "BTN_003",
+    scenario: "Single click triggers the correct action",
+    expected: "Only the targeted result changes; others stay unchanged",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Click <code>[data-testid='btn-get-coordinates']</code>",
+      "Assert <code>[data-testid='result-s02']</code> shows X/Y values",
+      "Assert unrelated results were not modified",
+    ],
+  },
+  {
+    id: "BTN_004",
+    scenario: "Double-click button triggers a double-click action",
+    expected: "Result reads \"Double clicked!\" after a dblclick",
+    type: "positive",
+    priority: "high",
+    description: "A single click must NOT satisfy this case — only a true double click.",
+    steps: [
+      "Locate <code>[data-testid='btn-double-click']</code>",
+      "Perform <code>dblclick()</code> (Selenium: <code>Actions.doubleClick()</code>)",
+      "Assert <code>[data-testid='result-s07']</code> reads <code>Double clicked!</code>",
+    ],
+  },
+  {
+    id: "BTN_005",
+    scenario: "Right-click button opens the context action",
+    expected: "Result confirms the context menu was triggered",
+    type: "positive",
+    priority: "medium",
+    steps: [
+      "Locate <code>[data-testid='btn-right-click']</code>",
+      "Perform <code>click({ button: 'right' })</code> / <code>contextClick()</code>",
+      "Assert <code>[data-testid='result-s08']</code> confirms the context action",
+    ],
+  },
+  {
+    id: "BTN_006",
+    scenario: "Disabled button cannot be clicked",
+    expected: "Button is disabled and no action fires",
+    type: "negative",
+    priority: "high",
+    description:
+      "Clicking a disabled button must be a no-op. Playwright throws after the actionability timeout, so assert state instead.",
+    steps: [
+      "Locate <code>[data-testid='btn-disabled']</code>",
+      "Assert <code>isEnabled()</code> is false / <code>toBeDisabled()</code> passes",
+      "Confirm the result area stays at its initial text",
+    ],
+  },
+  {
+    id: "BTN_007",
+    scenario: "Enabled button reports an enabled state",
+    expected: "Enabled buttons return isEnabled() === true",
+    type: "positive",
+    priority: "medium",
+    steps: [
+      "Locate <code>[data-testid='btn-navigate-home']</code>",
+      "Assert <code>isEnabled()</code> returns true",
+      "Assert the <code>disabled</code> attribute is absent",
+    ],
+  },
+  {
+    id: "BTN_008",
+    scenario: "Button stays usable across viewport sizes",
+    expected: "Button remains visible and clickable on mobile and desktop widths",
+    type: "edge",
+    priority: "medium",
+    steps: [
+      "Set viewport to 375×667 (mobile)",
+      "Assert the button is visible and clickable",
+      "Set viewport to 1440×900 (desktop) and re-assert",
+    ],
+  },
+  {
+    id: "BTN_009",
+    scenario: "Button is operable via keyboard",
+    expected: "Focusing and pressing Enter/Space triggers the action",
+    type: "positive",
+    priority: "high",
+    description: "Keyboard activation is required for accessible, automatable buttons.",
+    steps: [
+      "Focus the button with Tab or <code>focus()</code>",
+      "Press <code>Enter</code> (Playwright: <code>press('Enter')</code>)",
+      "Assert the same action fires as a mouse click",
+    ],
+  },
+  {
+    id: "BTN_010",
+    scenario: "Button is exposed to screen readers",
+    expected: "Element has role=button and an accessible name",
+    type: "positive",
+    priority: "medium",
+    steps: [
+      "Inspect the element's accessibility tree",
+      "Assert role resolves to <code>button</code>",
+      "Assert the accessible name is non-empty",
+    ],
+  },
+  {
+    id: "BTN_011",
+    scenario: "Hover state is visually distinct",
+    expected: "Background/style changes on hover",
+    type: "edge",
+    priority: "low",
+    steps: [
+      "Hover the button via <code>hover()</code>",
+      "Read <code>background-color</code> before and after hover",
+      "Assert the computed style changed",
+    ],
+  },
+  {
+    id: "BTN_012",
+    scenario: "Result state resets after a page refresh",
+    expected: "Reloading restores each result to its initial text",
+    type: "edge",
+    priority: "low",
+    description: "Client-only result state should not persist across reloads.",
+    steps: [
+      "Click a button and confirm its result changed",
+      "Reload the page",
+      "Assert the result returns to its initial value",
+    ],
+  },
+  {
+    id: "BTN_013",
+    scenario: "Click-and-hold completes after 1.5 seconds",
+    expected: "Holding for 1.5s reports success; early release does not",
+    type: "edge",
+    priority: "medium",
+    steps: [
+      "Press and hold <code>[data-testid='btn-click-hold']</code> (<code>mouse.down()</code>)",
+      "Wait 1500ms, then release (<code>mouse.up()</code>)",
+      "Assert <code>[data-testid='result-s06']</code> confirms a completed hold",
+    ],
+  },
+  {
+    id: "BTN_014",
+    scenario: "Button does not overlap adjacent elements",
+    expected: "Bounding boxes of neighbouring controls do not intersect",
+    type: "edge",
+    priority: "low",
+    steps: [
+      "Read the button's <code>boundingBox()</code>",
+      "Read the neighbouring element's bounding box",
+      "Assert the two rectangles do not overlap",
+    ],
+  },
+  {
+    id: "BTN_015",
+    scenario: "Page loads without console errors",
+    expected: "No uncaught errors are logged during load",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Attach a listener to the browser <code>console</code> / <code>pageerror</code> events",
+      "Navigate to <code>/practice/buttons</code>",
+      "Assert no <code>error</code>-level messages were captured",
+    ],
+  },
+];
