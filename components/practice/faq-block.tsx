@@ -26,16 +26,39 @@ export function FaqBlock({ items }: FaqBlockProps) {
         return (
           <div
             key={i}
-            className="border border-border rounded-[10px] overflow-hidden"
+            className="overflow-hidden rounded-[10px] border border-border"
             data-testid={item.testId ?? `faq-${i + 1}`}
           >
             <button
+              type="button"
               onClick={() => toggle(i)}
-              className="w-full flex items-start justify-between gap-3 px-4 py-[14px] text-left bg-card hover:bg-muted/40 transition-colors"
+              className="flex w-full items-start justify-between gap-3 bg-card px-4 py-[14px] text-left transition-colors hover:bg-muted/40"
               aria-expanded={isOpen}
             >
-              <span className="text-[13.5px] font-semibold text-foreground">{item.question}</span>
+              <span className="text-[13.5px] font-semibold text-foreground">
+                {item.question}
+              </span>
               <span
                 className={cn(
-                  "flex-shrink-0 text-muted-foreground text-[16px] transition-transform mt-[1px]",
-                  isOpen ? "rotate-18
+                  "mt-[1px] flex-shrink-0 text-[16px] text-muted-foreground transition-transform duration-200",
+                  isOpen ? "rotate-90" : ""
+                )}
+              >
+                {">"}
+              </span>
+            </button>
+
+            {isOpen && (
+              <div className="border-t border-border/50 bg-card px-4 pb-4 pt-3">
+                <p
+                  className="text-[13px] leading-[1.65] text-muted-foreground"
+                  dangerouslySetInnerHTML={{ __html: item.answer }}
+                />
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}

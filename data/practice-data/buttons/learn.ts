@@ -1,79 +1,154 @@
-import type { MethodRow, FaqItem, TocItem, LearnCodeSnippet } from "@/data/practice-data/types";
+import type {
+  FaqItem,
+  LearnCodeSnippet,
+  MethodRow,
+  TocItem,
+} from "@/data/practice-data/types";
 
-// ── TOC items ────────────────────────────────────────────────────────────────
 export const buttonsTocItems: TocItem[] = [
-  { id: "learn-overview",  label: "Overview" },
-  { id: "learn-single",   label: "1 · Single Click" },
-  { id: "learn-double",   label: "2 · Double Click" },
-  { id: "learn-right",    label: "3 · Right Click" },
+  { id: "learn-overview", label: "Overview" },
+  { id: "learn-single", label: "1 · Single Click" },
+  { id: "learn-double", label: "2 · Double Click" },
+  { id: "learn-right", label: "3 · Right Click" },
   { id: "learn-disabled", label: "4 · Disabled State" },
-  { id: "learn-text",     label: "5 · Text Change" },
+  { id: "learn-text", label: "5 · Text Change" },
   { id: "learn-keyboard", label: "6 · Keyboard Enter" },
-  { id: "learn-methods",  label: "Method Summary", dividerBefore: true },
-  { id: "learn-faq",      label: "FAQ" },
+  { id: "learn-methods", label: "Method Summary", dividerBefore: true },
+  { id: "learn-faq", label: "FAQ" },
 ];
 
-// ── Learn doc sections description texts ─────────────────────────────────────
 export const buttonsLearnDesc: Record<string, string> = {
   overview:
-    "Buttons are the most fundamental interactive element you'll automate. This page covers 6 core interaction types — from simple single clicks to advanced hold actions — across Playwright, Selenium, and Cypress.",
+    "Buttons are one of the most important UI targets in automation. This page walks through the core actions you will use across Playwright, Selenium, and Cypress.",
   single:
-    "The most common automation action. All three frameworks click and auto-wait for the element to be actionable.",
+    "Single click is the baseline interaction. Use it to trigger navigation, updates, and normal action buttons.",
   double:
-    "A single click won't trigger double-click events. Use the dedicated API in each framework.",
+    "Double click requires its own framework-specific command. A normal click will not trigger a double-click event.",
   right:
-    "Triggers context menus. Selenium uses Actions API; Playwright and Cypress have first-class support.",
+    "Right click is useful for context-menu style flows. Framework support differs slightly, but all three can handle it.",
   disabled:
-    "Assert the button is disabled before trying to interact. In Playwright, clicking a disabled button times out after the actionability check.",
+    "For disabled controls, assert state instead of forcing interaction. This is more stable and more realistic.",
   text:
-    "Verifying that a button's label or an associated element's text changes after a click.",
+    "Text-change validation is a good way to assert that a button action actually caused a visible UI update.",
   keyboard:
-    "Keyboard activation is required for accessible automation. A focused button responds to Enter and Space the same as a click.",
+    "Keyboard support matters for accessibility and test realism. A focused button should respond to Enter consistently.",
 };
 
-// ── Code snippets per learn section ──────────────────────────────────────────
 export const buttonsLearnCode: Record<string, LearnCodeSnippet> = {
   single: {
-    pw:  { lang: "TypeScript", code: `// Playwright — auto-waits for actionability\nawait page.locator('#clickBtn').click();\nawait expect(\n  page.locator('#clickResult')\n).toBeVisible();` },
-    sel: { lang: "Java",       code: `// Selenium WebDriver (Java)\ndriver.findElement(By.id("clickBtn")).click();\nassertTrue(driver.findElement(\n  By.id("clickResult")).isDisplayed());` },
-    cy:  { lang: "JavaScript", code: `// Cypress\ncy.get('#clickBtn').click();\ncy.get('#clickResult').should('be.visible');` },
+    pw: {
+      lang: "TypeScript",
+      code: `// Playwright
+await page.locator('#clickBtn').click();
+await expect(page.locator('#clickResult')).toBeVisible();`,
+    },
+    sel: {
+      lang: "Java",
+      code: `// Selenium WebDriver
+driver.findElement(By.id("clickBtn")).click();
+assertTrue(driver.findElement(By.id("clickResult")).isDisplayed());`,
+    },
+    cy: {
+      lang: "JavaScript",
+      code: `// Cypress
+cy.get('#clickBtn').click();
+cy.get('#clickResult').should('be.visible');`,
+    },
   },
   double: {
-    pw:  { lang: "TypeScript", code: `// Playwright\nawait page.locator('#doubleClickBtn').dblclick();\nawait expect(\n  page.locator('#doubleClickResult')\n).toHaveText('Double clicked!');` },
-    sel: { lang: "Java",       code: `// Selenium WebDriver (Java)\nWebElement btn = driver.findElement(\n  By.id("doubleClickBtn"));\nnew Actions(driver).doubleClick(btn).perform();\nassertEquals("Double clicked!",\n  driver.findElement(\n    By.id("doubleClickResult")).getText());` },
-    cy:  { lang: "JavaScript", code: `// Cypress\ncy.get('#doubleClickBtn').dblclick();\ncy.get('#doubleClickResult')\n  .should('have.text', 'Double clicked!');` },
+    pw: {
+      lang: "TypeScript",
+      code: `// Playwright
+await page.locator('#doubleClickBtn').dblclick();`,
+    },
+    sel: {
+      lang: "Java",
+      code: `// Selenium WebDriver
+new Actions(driver).doubleClick(
+  driver.findElement(By.id("doubleClickBtn"))
+).perform();`,
+    },
+    cy: {
+      lang: "JavaScript",
+      code: `// Cypress
+cy.get('#doubleClickBtn').dblclick();`,
+    },
   },
   right: {
-    pw:  { lang: "TypeScript", code: `// Playwright\nawait page.locator('#rightClickBtn')\n  .click({ button: 'right' });\nawait expect(\n  page.locator('#contextMenu')\n).toBeVisible();` },
-    sel: { lang: "Java",       code: `// Selenium WebDriver (Java)\nWebElement btn = driver.findElement(\n  By.id("rightClickBtn"));\nnew Actions(driver).contextClick(btn).perform();\nassertTrue(driver.findElement(\n  By.id("contextMenu")).isDisplayed());` },
-    cy:  { lang: "JavaScript", code: `// Cypress\ncy.get('#rightClickBtn').rightclick();\ncy.get('#contextMenu').should('be.visible');` },
+    pw: {
+      lang: "TypeScript",
+      code: `// Playwright
+await page.locator('#rightClickBtn').click({ button: 'right' });`,
+    },
+    sel: {
+      lang: "Java",
+      code: `// Selenium WebDriver
+new Actions(driver).contextClick(
+  driver.findElement(By.id("rightClickBtn"))
+).perform();`,
+    },
+    cy: {
+      lang: "JavaScript",
+      code: `// Cypress
+cy.get('#rightClickBtn').rightclick();`,
+    },
   },
   disabled: {
-    pw:  { lang: "TypeScript", code: `// Playwright — assert disabled, don't click\nawait expect(\n  page.locator('#disabledBtn')\n).toBeDisabled();` },
-    sel: { lang: "Java",       code: `// Selenium WebDriver (Java)\nWebElement btn = driver.findElement(\n  By.id("disabledBtn"));\nassertFalse(btn.isEnabled());\nassertNotNull(btn.getAttribute("disabled"));` },
-    cy:  { lang: "JavaScript", code: `// Cypress\ncy.get('#disabledBtn').should('be.disabled');` },
+    pw: {
+      lang: "TypeScript",
+      code: `// Playwright
+await expect(page.locator('#disabledBtn')).toBeDisabled();`,
+    },
+    sel: {
+      lang: "Java",
+      code: `// Selenium WebDriver
+assertFalse(driver.findElement(By.id("disabledBtn")).isEnabled());`,
+    },
+    cy: {
+      lang: "JavaScript",
+      code: `// Cypress
+cy.get('#disabledBtn').should('be.disabled');`,
+    },
   },
   text: {
-    pw:  { lang: "TypeScript", code: `// Playwright — capture before, compare after\nconst btn = page.locator('#toggleBtn');\nconst before = await btn.textContent();\nawait btn.click();\nexpect(await btn.textContent()).not.toBe(before);` },
-    sel: { lang: "Java",       code: `// Selenium WebDriver (Java)\nWebElement btn = driver.findElement(\n  By.id("toggleBtn"));\nString before = btn.getText();\nbtn.click();\nassertNotEquals(before, btn.getText());` },
-    cy:  { lang: "JavaScript", code: `// Cypress\ncy.get('#toggleBtn').then(($b) => {\n  const before = $b.text();\n  cy.wrap($b).click()\n    .should(($el) => {\n      expect($el.text()).not.to.eq(before);\n    });\n});` },
+    pw: {
+      lang: "TypeScript",
+      code: `// Playwright
+const before = await page.locator('#toggleBtn').textContent();
+await page.locator('#toggleBtn').click();`,
+    },
+    sel: {
+      lang: "Java",
+      code: `// Selenium WebDriver
+String before = driver.findElement(By.id("toggleBtn")).getText();`,
+    },
+    cy: {
+      lang: "JavaScript",
+      code: `// Cypress
+cy.get('#toggleBtn').invoke('text').then((before) => {
+  cy.get('#toggleBtn').click();
+});`,
+    },
   },
   keyboard: {
-    pw:  { lang: "TypeScript", code: `// Playwright\nawait page.locator('#submitBtn').press('Enter');` },
-    sel: { lang: "Java",       code: `// Selenium WebDriver (Java)\ndriver.findElement(By.id("submitBtn"))\n  .sendKeys(Keys.ENTER);` },
-    cy:  { lang: "JavaScript", code: `// Cypress\ncy.get('#submitBtn').type('{enter}');` },
+    pw: {
+      lang: "TypeScript",
+      code: `// Playwright
+await page.locator('#submitBtn').press('Enter');`,
+    },
+    sel: {
+      lang: "Java",
+      code: `// Selenium WebDriver
+driver.findElement(By.id("submitBtn")).sendKeys(Keys.ENTER);`,
+    },
+    cy: {
+      lang: "JavaScript",
+      code: `// Cypress
+cy.get('#submitBtn').type('{enter}');`,
+    },
   },
 };
 
-// Alias keys for component use (pw/sel/cy → playwright/selenium/cypress)
-export type LearnFwKey = "pw" | "sel" | "cy";
-export const learnFwLabels: Record<LearnFwKey, string> = {
-  pw:  "Playwright",
-  sel: "Selenium",
-  cy:  "Cypress",
-};
-
-// ── Method summary table ──────────────────────────────────────────────────────
 export const buttonsMethodRows: MethodRow[] = [
   {
     action: "Single click",
@@ -93,4 +168,42 @@ export const buttonsMethodRows: MethodRow[] = [
     action: "Right click",
     selenium: "actions.contextClick(el)",
     playwrightJs: "click({ button: 'right' })",
-    playwrightPy: "click(button='righ
+    playwrightPy: "click(button='right')",
+    cypress: ".rightclick()",
+  },
+  {
+    action: "Disabled assert",
+    selenium: "!element.isEnabled()",
+    playwrightJs: "expect(locator).toBeDisabled()",
+    playwrightPy: "expect(locator).to_be_disabled()",
+    cypress: ".should('be.disabled')",
+  },
+  {
+    action: "Keyboard Enter",
+    selenium: "sendKeys(Keys.ENTER)",
+    playwrightJs: "locator.press('Enter')",
+    playwrightPy: "locator.press('Enter')",
+    cypress: ".type('{enter}')",
+  },
+];
+
+export const buttonsFaq: FaqItem[] = [
+  {
+    question: "Why is disabled-state checking better than clicking?",
+    answer:
+      "Because disabled buttons should not fire actions. Stable tests assert the disabled state directly instead of trying to force interaction.",
+    testId: "faq-1",
+  },
+  {
+    question: "When should I use double click in automation?",
+    answer:
+      "Use it only when the UI explicitly listens for a double-click event. Otherwise a normal click is simpler and more reliable.",
+    testId: "faq-2",
+  },
+  {
+    question: "How do I validate a right-click flow?",
+    answer:
+      "Trigger the context-click action and assert the resulting message, menu, or UI state change rather than relying on browser-native visuals.",
+    testId: "faq-3",
+  },
+];

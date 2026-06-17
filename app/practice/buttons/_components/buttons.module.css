@@ -18,10 +18,12 @@
 /* Primary — uses project primary */
 .btnPrimary {
   background: var(--primary);
-  color: #fff;
+  color: var(--primary-foreground);
   border: none;
 }
-.btnPrimary:hover { opacity: 0.88; }
+.btnPrimary:hover {
+  filter: brightness(0.96);
+}
 
 /* Outline */
 .btnOutline {

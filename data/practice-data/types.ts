@@ -63,9 +63,9 @@ export interface TestCase {
 
 // ─── Learn tab ───────────────────────────────────────────────────────────────
 export interface LearnCodeSnippet {
-  playwright: { lang: string; code: string };
-  selenium: { lang: string; code: string };
-  cypress: { lang: string; code: string };
+  pw: { lang: string; code: string };
+  sel: { lang: string; code: string };
+  cy: { lang: string; code: string };
 }
 
 export interface MethodRow {

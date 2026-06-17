@@ -30,45 +30,64 @@ export function MainTabs({
   const [active, setActive] = useState<TabId>("practice");
 
   const tabs: TabDef[] = [
-    { id: "practice",  emoji: "🎮", label: "Practice",   count: scenarioCount },
-    { id: "testcases", emoji: "🧪", label: "Test Cases", count: testCaseCount },
-    { id: "learn",     emoji: "📖", label: "Learn" },
+    { id: "practice",  label: "Practice",   emoji: "🎮", count: scenarioCount },
+    { id: "testcases", label: "Test Cases", emoji: "🧪", count: testCaseCount },
+    { id: "learn",     label: "Learn",      emoji: "📖" },
   ];
 
   return (
     <div>
-      {/* Tab bar */}
       <div
-        className="sticky top-[var(--nav-offset,60px)] z-20 bg-background/90 backdrop-blur-sm border-b border-border"
+        className="sticky top-[var(--nav-offset,60px)] z-20 border-b border-border bg-background/90 backdrop-blur-sm"
         role="tablist"
         aria-label="Practice page tabs"
       >
-        <div className="w-full max-w-[1280px] mx-auto px-7 flex items-center gap-0.5">
+        <div className="mx-auto flex w-full max-w-[1280px] items-center gap-0.5 px-7">
           {tabs.map((tab) => {
             const isActive = active === tab.id;
             return (
               <button
                 key={tab.id}
+                type="button"
                 role="tab"
                 aria-selected={isActive}
                 data-testid={`tab-${tab.id}`}
                 data-tab={tab.id}
                 onClick={() => setActive(tab.id)}
                 className={cn(
-                  "flex items-center gap-[6px] px-4 py-[10px] text-[13.5px] font-medium",
-                  "border-b-2 -mb-px transition-colors whitespace-nowrap outline-none",
+                  "flex items-center gap-[6px] whitespace-nowrap -mb-px border-b-2",
+                  "px-4 py-[10px] text-[13.5px] font-medium outline-none transition-colors",
                   "focus-visible:ring-2 focus-visible:ring-primary/30",
                   isActive
-                    ? "border-primary text-primary font-semibold"
-                    : "border-transparent text-muted-foreground hover:text-foreground"
+                    ? "border-primary font-semibold text-primary"
+                    : "border-transparent text-muted-foreground hover:text-foreground",
                 )}
               >
                 <span>{tab.emoji}</span>
-                {tab.label}
-                {tab.count !== undefined && (
+                <span>{tab.label}</span>
+                {tab.count !== undefined ? (
                   <span
                     className={cn(
-                      "inline-flex items-center justify-center min-w-[20px] h-5 px-[5px]",
-                      "rounded-[10px] text-[11px] font-bold font-[family-name:var(--font-ibm-plex-mono)]",
+                      "inline-flex h-5 min-w-[20px] items-center justify-center",
+                      "rounded-full px-[5px] text-[11px] font-bold",
+                      "font-[family-name:var(--font-ibm-plex-mono)]",
                       isActive
-                        ? "bg-[col
+                        ? "bg-primary/10 text-primary"
+                        : "bg-muted text-muted-foreground",
+                    )}
+                  >
+                    {tab.count}
+                  </span>
+                ) : null}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div hidden={active !== "practice"}>{practiceContent}</div>
+      <div hidden={active !== "testcases"}>{testCasesContent}</div>
+      <div hidden={active !== "learn"}>{learnContent}</div>
+    </div>
+  );
+}

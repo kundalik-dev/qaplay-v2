@@ -1,6 +1,6 @@
 import type { PracticePageMeta } from "@/data/practice-data/types";
 
-interface UpNextCardProps extends PracticePageMeta["upNext"] {}
+type UpNextCardProps = PracticePageMeta["upNext"];
 
 export function UpNextCard({ icon, title, description, href }: UpNextCardProps) {
   return (

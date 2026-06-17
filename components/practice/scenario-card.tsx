@@ -15,7 +15,7 @@ interface ScenarioCardProps {
   testId: string;
   resultId: string;
   initialResult: string;
-  hint: string;         // HTML-safe string, may contain <code> tags
+  hint: string;
   badge?: string;
   onComplete?: () => void;
   children: (ctx: ScenarioCtx) => React.ReactNode;
@@ -51,67 +51,72 @@ export function ScenarioCard({
     }
   }
 
-  const ctx: ScenarioCtx = { setResult, complete, isCompleted: hasResult };
-
   return (
     <div
-      className="bg-card border border-border rounded-[10px] overflow-hidden transition-shadow hover:shadow-sm hover:border-border/80"
+      className="overflow-hidden rounded-[10px] border border-border bg-card transition-shadow hover:border-border/80 hover:shadow-sm"
       data-testid={testId}
       data-section={`scenario-${id.toLowerCase()}`}
     >
-      {/* Card header */}
       <div className="flex items-center gap-3 px-4 py-[14px]">
-        <span className="font-[family-name:var(--font-ibm-plex-mono)] text-[10px] font-bold tracking-[0.05em] text-muted-foreground bg-muted border border-border px-[7px] py-[2px] rounded-[4px] flex-shrink-0">
+        <span className="flex-shrink-0 rounded-[4px] border border-border bg-muted px-[7px] py-[2px] font-[family-name:var(--font-ibm-plex-mono)] text-[10px] font-bold tracking-[0.05em] text-muted-foreground">
           {id}
         </span>
-        <span className="text-[14px] font-semibold text-foreground flex-1">
+
+        <span className="flex-1 text-[14px] font-semibold text-foreground">
           {title}
         </span>
-        {badge && (
-          <span className="text-[10px] font-bold tracking-[0.05em] px-2 py-[2px] rounded-[4px] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] text-[var(--warning)] border border-[color-mix(in_srgb,var(--warning)_30%,transparent)]">
+
+        {badge ? (
+          <span className="rounded-[4px] border border-[color-mix(in_srgb,var(--warning)_30%,transparent)] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] px-2 py-[2px] text-[10px] font-bold tracking-[0.05em] text-[var(--warning)]">
             {badge}
           </span>
-        )}
+        ) : null}
       </div>
 
-      {/* Card body */}
-      <div className="px-4 pb-4 border-t border-border/50">
-        {/* Interactive row */}
+      <div className="border-t border-border/50 px-4 pb-4">
         <div className="flex items-center gap-2.5 pt-[14px]">
-          {children(ctx)}
+          {children({ setResult, complete, isCompleted: hasResult })}
 
-          {/* Result span */}
           <span
             id={resultId}
             data-testid={resultId}
             className={cn(
-              "flex-1 text-[12.5px] font-[family-name:var(--font-ibm-plex-mono)] px-2.5 py-1.5",
-              "bg-muted border border-border/50 rounded-[6px] min-h-8 flex items-center",
-              "transition-colors",
+              "flex min-h-8 flex-1 items-center rounded-[6px] border px-2.5 py-1.5 font-[family-name:var(--font-ibm-plex-mono)] text-[12.5px] transition-colors",
               hasResult
-                ? "text-[var(--success)] bg-[color-mix(in_srgb,var(--success)_8%,transparent)] border-[color-mix(in_srgb,var(--success)_25%,transparent)]"
-                : "text-muted-foreground"
+                ? "border-[color-mix(in_srgb,var(--success)_25%,transparent)] bg-[color-mix(in_srgb,var(--success)_8%,transparent)] text-[var(--success)]"
+                : "border-border/50 bg-muted text-muted-foreground",
             )}
           >
             {result}
           </span>
 
-          {/* Hint toggle */}
           <button
-            onClick={() => setHintOpen((o) => !o)}
+            type="button"
+            onClick={() => setHintOpen((open) => !open)}
             className={cn(
-              "flex-shrink-0 inline-flex items-center gap-[5px] px-3 py-[5px]",
-              "rounded-[20px] text-[12px] font-semibold border transition-all",
+              "inline-flex flex-shrink-0 items-center gap-[5px] rounded-[20px] border px-3 py-[5px] text-[12px] font-semibold transition-all",
               hintOpen
-                ? "border-primary/40 text-primary bg-[color-mix(in_srgb,var(--primary)_10%,transparent)]"
-                : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-[color-mix(in_srgb,var(--primary)_8%,transparent)]"
+                ? "border-primary/40 bg-primary/10 text-primary"
+                : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:bg-primary/5 hover:text-primary",
             )}
           >
             💡 {hintOpen ? "Hide Hint" : "Show Hint"}
           </button>
         </div>
 
-        {/* Hint panel */}
-        {hintOpen && (
+        {hintOpen ? (
           <div
-  
+            className="mt-2.5 flex items-start gap-[7px] rounded-[6px] bg-primary/10 px-3 py-2.5 text-[12px] text-primary"
+            data-testid={`${testId}-hint`}
+          >
+            <span aria-hidden="true">💡</span>
+            <span
+              className="leading-[1.5]"
+              dangerouslySetInnerHTML={{ __html: hint }}
+            />
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
