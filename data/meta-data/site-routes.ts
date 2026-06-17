@@ -47,4 +47,10 @@ export const siteRoutes: SiteRoute[] = [
     priority: 0.5,
     lastModified: "2026-06-17",
   },
+  {
+    path: "/privacy-policy",
+    changeFrequency: "yearly",
+    priority: 0.3,
+    lastModified: "2026-06-06",
+  },
 ];
