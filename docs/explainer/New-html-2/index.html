@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Button Automation Practice | QA Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     TOP NAV
+══════════════════════════════════════════ -->
+<nav class="top-nav">
+  <div class="page-wrap">
+    <span class="nav-logo">QA <span>Play</span>ground</span>
+    <span class="nav-sep">/</span>
+    <span class="nav-context">Practice → Buttons</span>
+    <div class="nav-spacer"></div>
+    <button class="theme-toggle" id="theme-toggle">
+      <span class="t-icon">🌙</span>
+      <span class="t-label">Dark</span>
+    </button>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE HEADER  (breadcrumb · title · pills)
+══════════════════════════════════════════ -->
+<header class="page-header">
+  <div class="page-wrap">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="#">Home</a>
+      <span class="sep">›</span>
+      <a href="#">Practice</a>
+      <span class="sep">›</span>
+      <span>How To Handle Button Clicks In Selenium And Playwright</span>
+    </nav>
+
+    <h1 class="page-title">Button Automation Practice</h1>
+    <p class="page-desc">Master button interactions in Selenium &amp; Playwright — click, double-click, right-click, disabled state, click-and-hold, and browser navigation.</p>
+
+    <div class="pill-row">
+      <span class="pill pill-level">🌱 Beginner</span>
+      <span class="pill pill-time">⏱ 10 min</span>
+      <span class="pill pill-count">⚡ 8 scenarios</span>
+    </div>
+  </div>
+</header>
+
+
+<!-- ══════════════════════════════════════════
+     MAIN TABS
+══════════════════════════════════════════ -->
+<div class="main-tabs" role="tablist">
+  <div class="page-wrap">
+    <button class="main-tab active" data-tab="tab-practice" role="tab">
+      🎮 Practice
+      <span class="tab-badge">8</span>
+    </button>
+    <button class="main-tab" data-tab="tab-testcases" role="tab">
+      🧪 Test Cases
+      <span class="tab-badge">13</span>
+    </button>
+    <button class="main-tab" data-tab="tab-learn" role="tab">
+      📖 Learn
+    </button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     TAB 1 — PRACTICE
+══════════════════════════════════════════ -->
+<div id="tab-practice" class="tab-view active" role="tabpanel">
+  <div class="practice-layout">
+
+    <!-- ── Left: Scenario cards ── -->
+    <section class="scenarios-col">
+      <div class="col-heading">Interactive Scenarios</div>
+
+      <!-- S01 -->
+      <div class="scenario-card" data-testid="scenario-navigate-home">
+        <div class="sc-head">
+          <div class="sc-label">
+            <span class="sc-num">S01</span>
+            <span class="sc-title">Navigate to Home Page</span>
+          </div>
+          <div class="sc-actions"><button class="bm-btn" title="Bookmark">🔖</button></div>
+        </div>
+        <div class="sc-body">
+          <button class="pb pb-red" id="btn-home" data-testid="btn-go-home">Go To Home</button>
+          <span class="sc-result" id="res-home">Waiting for click…</span>
+        </div>
+      </div>
+
+      <!-- S02 -->
+      <div class="scenario-card" data-testid="scenario-coordinates">
+        <div class="sc-head">
+          <div class="sc-label">
+            <span class="sc-num">S02</span>
+            <span class="sc-title">Get Button X &amp; Y Coordinates</span>
+          </div>
+          <div class="sc-actions"><button class="bm-btn">🔖</button></div>
+        </div>
+        <div class="sc-body">
+          <button class="pb pb-cyan" id="btn-location" data-testid="btn-find-location">Find Location</button>
+          <span class="sc-result" id="res-location">Waiting for click…</span>
+        </div>
+      </div>
+
+      <!-- S03 -->
+      <div class="scenario-card" data-testid="scenario-color">
+        <div class="sc-head">
+          <div class="sc-label">
+            <span class="sc-num">S03</span>
+            <span class="sc-title">Get Button Color</span>
+          </div>
+          <div class="sc-actions"><button class="bm-btn">🔖</button></div>
+        </div>
+        <div class="sc-body">
+          <button class="pb pb-sky" id="btn-color" data-testid="btn-find-color">Find my color?</button>
+          <span class="sc-result" id="res-color">Waiting for click…</span>
+        </div>
+      </div>
+
+      <!-- S04 -->
+      <div class="scenario-card" data-testid="scenario-size">
+        <div class="sc-head">
+          <div class="sc-label">
+            <span class="sc-num">S04</span>
+            <span class="sc-title">Get Button Height &amp; Width</span>
+          </div>
+          <div class="sc-actions"><button class="bm-btn">🔖</button></div>
+        </div>
+        <div class="sc-body">
+          <button class="pb pb-dark" id="btn-size" data-testid="btn-find-size">Do you know my size?</button>
+          <span class="sc-result" id="res-size">Waiting for click…</span>
+        </div>
+      </div>
+
+      <!-- S05 -->
+      <div class="scenario-card" data-testid="scenario-disabled">
+        <div class="sc-head">
+          <div class="sc-label">
+            <span class="sc-num">S05</span>
+            <span class="sc-title">Disabled Button</span>
+          </div>
+          <span class="tag-disabled-pill">DISABLED</span>
+        </div>
+        <div class="sc-body">
+          <button class="pb pb-disabled" disabled data-testid="btn-disabled">Disabled</button>
+          <span class="sc-result" style="color:var(--text-dim)">Cannot be clicked — assert with isEnabled()</span>
+        </div>
+      </div>
+
+      <!-- S06 -->
+      <div class="scenario-card" data-testid="scenario-hold">
+        <div class="sc-head">
+          <div class="sc-label">
+            <span class="sc-num">S06</span>
+            <span class="sc-title">Click and Hold for 1.5 sec</span>
+          </div>
+          <div class="sc-actions"><button class="bm-btn">🔖</button></div>
+        </div>
+        <div class="sc-body">
+          <button class="pb pb-purple" id="btn-hold" data-testid="btn-click-hold">Click and Hold!</button>
+          <span class="sc-result" id="res-hold">Press &amp; hold the button…</span>
+        </div>
+      </div>
+
+      <!-- S07 -->
+      <div class="scenario-card" data-testid="scenario-dblclick">
+        <div class="sc-head">
+          <div class="sc-label">
+            <span class="sc-num">S07</span>
+            <span class="sc-title">Double Click Button</span>
+          </div>
+          <div class="sc-actions"><button class="bm-btn">🔖</button></div>
+        </div>
+        <div class="sc-body">
+          <button class="pb pb-red" id="btn-dbl" data-testid="btn-double-click">Double Click Me</button>
+          <span class="sc-result" id="res-dbl">Double-click the button…</span>
+        </div>
+      </div>
+
+    </section><!-- /scenarios-col -->
+
+
+    <!-- ── Right: Sticky code panel ── -->
+    <aside class="code-panel">
+
+      <!-- Progress -->
+      <div class="progress-widget">
+        <div class="prog-top"><span>Scenarios done</span><strong>3 / 8</strong></div>
+        <div class="prog-track"><div class="prog-fill" style="width:37.5%"></div></div>
+      </div>
+
+      <!-- Framework switcher -->
+      <div class="fw-switcher">
+        <button class="fw-btn active" data-fw="fw-pw">PW JS</button>
+        <button class="fw-btn" data-fw="fw-sel">Selenium</button>
+        <button class="fw-btn" data-fw="fw-cy">Cypress</button>
+      </div>
+
+      <!-- Playwright -->
+      <div id="fw-pw" class="fw-panel active">
+        <div class="code-block">
+          <div class="code-hdr">
+            <span class="code-lang">Playwright · JS</span>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <pre class="code-body"><span class="cm">// Single click</span>
+<span class="kw">await</span> page.<span class="fn">getByTestId</span>(<span class="str">'btn-go-home'</span>).<span class="fn">click</span>();
+
+<span class="cm">// Double click</span>
+<span class="kw">await</span> page.<span class="fn">getByTestId</span>(<span class="str">'btn-double-click'</span>).<span class="fn">dblclick</span>();
+
+<span class="cm">// Assert disabled</span>
+<span class="kw">await</span> <span class="fn">expect</span>(
+  page.<span class="fn">getByTestId</span>(<span class="str">'btn-disabled'</span>)
+).<span class="fn">toBeDisabled</span>();
+
+<span class="cm">// Click and hold 1.5 s</span>
+<span class="kw">const</span> btn = page.<span class="fn">getByTestId</span>(<span class="str">'btn-click-hold'</span>);
+<span class="kw">await</span> btn.<span class="fn">hover</span>();
+<span class="kw">await</span> page.mouse.<span class="fn">down</span>();
+<span class="kw">await</span> page.<span class="fn">waitForTimeout</span>(<span class="nm">1500</span>);
+<span class="kw">await</span> page.mouse.<span class="fn">up</span>();</pre>
+        </div>
+      </div>
+
+      <!-- Selenium -->
+      <div id="fw-sel" class="fw-panel">
+        <div class="code-block">
+          <div class="code-hdr">
+            <span class="code-lang">Selenium · Java</span>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <pre class="code-body"><span class="cm">// Single click</span>
+WebElement btn = driver.<span class="fn">findElement</span>(
+  By.<span class="fn">cssSelector</span>(<span class="str">"[data-testid='btn-go-home']"</span>));
+btn.<span class="fn">click</span>();
+
+<span class="cm">// Double click</span>
+<span class="kw">new</span> <span class="fn">Actions</span>(driver)
+  .<span class="fn">doubleClick</span>(btn).<span class="fn">perform</span>();
+
+<span class="cm">// Assert disabled</span>
+<span class="fn">assertFalse</span>(btn.<span class="fn">isEnabled</span>());
+
+<span class="cm">// Click and hold</span>
+<span class="kw">new</span> <span class="fn">Actions</span>(driver)
+  .<span class="fn">clickAndHold</span>(btn)
+  .<span class="fn">pause</span>(Duration.<span class="fn">ofMillis</span>(<span class="nm">1500</span>))
+  .<span class="fn">release</span>().<span class="fn">perform</span>();</pre>
+        </div>
+      </div>
+
+      <!-- Cypress -->
+      <div id="fw-cy" class="fw-panel">
+        <div class="code-block">
+          <div class="code-hdr">
+            <span class="code-lang">Cypress</span>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <pre class="code-body"><span class="cm">// Single click</span>
+cy.<span class="fn">get</span>(<span class="str">"[data-testid='btn-go-home']"</span>)
+  .<span class="fn">click</span>();
+
+<span class="cm">// Double click</span>
+cy.<span class="fn">get</span>(<span class="str">"[data-testid='btn-double-click']"</span>)
+  .<span class="fn">dblclick</span>();
+
+<span class="cm">// Right click</span>
+cy.<span class="fn">get</span>(<span class="str">"[data-testid='btn-right']"</span>)
+  .<span class="fn">rightclick</span>();
+
+<span class="cm">// Assert disabled</span>
+cy.<span class="fn">get</span>(<span class="str">"[data-testid='btn-disabled']"</span>)
+  .<span class="fn">should</span>(<span class="str">'be.disabled'</span>);
+
+<span class="cm">// Click and hold</span>
+cy.<span class="fn">get</span>(<span class="str">"[data-testid='btn-click-hold']"</span>)
+  .<span class="fn">trigger</span>(<span class="str">'mousedown'</span>)
+  .<span class="fn">wait</span>(<span class="nm">1500</span>)
+  .<span class="fn">trigger</span>(<span class="str">'mouseup'</span>);</pre>
+        </div>
+      </div>
+
+      <!-- Key methods -->
+      <div class="panel-section-label">Key Methods</div>
+      <div class="method-row"><span class="dot dot-g"></span>click() / locator.click()</div>
+      <div class="method-row"><span class="dot dot-b"></span>dblclick() / doubleClick()</div>
+      <div class="method-row"><span class="dot dot-o"></span>contextClick() / rightclick()</div>
+      <div class="method-row"><span class="dot dot-y"></span>isEnabled() / toBeDisabled()</div>
+      <div class="method-row"><span class="dot dot-p"></span>getLocation() / boundingBox()</div>
+
+      <!-- Up Next -->
+      <div class="up-next" style="margin-top:16px">
+        <div class="up-next-inner">
+          <span class="un-icon">📋</span>
+          <div class="un-text">
+            <div class="un-name">Forms</div>
+            <div class="un-desc">Fill and submit forms with validation</div>
+          </div>
+          <span class="un-arrow">›</span>
+        </div>
+      </div>
+
+    </aside><!-- /code-panel -->
+  </div><!-- /practice-layout -->
+</div><!-- /tab-practice -->
+
+
+<!-- ══════════════════════════════════════════
+     TAB 2 — TEST CASES
+══════════════════════════════════════════ -->
+<div id="tab-testcases" class="tab-view" role="tabpanel">
+  <div class="test-cases-layout">
+
+    <table class="tc-table" data-testid="test-cases-table">
+      <thead>
+        <tr>
+          <th style="width:40px"></th>
+          <th>Test ID</th>
+          <th>Scenario</th>
+          <th>Expected Result</th>
+          <th>Type</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- TC 01 -->
+        <tr data-testid="tc-row-001">
+          <td><button class="expand-btn" data-row="001">▸</button></td>
+          <td class="tc-id">BTN_001</td>
+          <td class="tc-scenario">Click button triggers action</td>
+          <td>Result area updates with success text</td>
+          <td><span class="tag tag-positive">positive</span></td>
+          <td><span class="tag tag-high">high</span></td>
+        </tr>
+        <tr id="steps-001" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-desc">Verify that clicking a button triggers the expected result update.</div>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Navigate to <code>/practice/buttons</code></span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Locate button with <code>data-testid="btn-go-home"</code></span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Call <code>element.click()</code> or <code>locator.click()</code></span></div>
+              <div class="step-item"><span class="step-num">4</span><span class="step-text">Assert result text contains "Navigated"</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 02 -->
+        <tr data-testid="tc-row-002">
+          <td><button class="expand-btn" data-row="002">▸</button></td>
+          <td class="tc-id">BTN_002</td>
+          <td class="tc-scenario">Disabled button cannot be clicked</td>
+          <td>Button has disabled attribute; no action fires</td>
+          <td><span class="tag tag-negative">negative</span></td>
+          <td><span class="tag tag-high">high</span></td>
+        </tr>
+        <tr id="steps-002" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-desc">Verify disabled button state and ensure it cannot be interacted with.</div>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Locate button with <code>data-testid="btn-disabled"</code></span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Assert <code>!isEnabled()</code> returns true (Selenium)</span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Assert <code>toBeDisabled()</code> passes (Playwright)</span></div>
+              <div class="step-item"><span class="step-num">4</span><span class="step-text">Attempt click — assert no state change occurs</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 03 -->
+        <tr data-testid="tc-row-003">
+          <td><button class="expand-btn" data-row="003">▸</button></td>
+          <td class="tc-id">BTN_003</td>
+          <td class="tc-scenario">Double-click fires dblclick event</td>
+          <td>Result text confirms double-click detected</td>
+          <td><span class="tag tag-positive">positive</span></td>
+          <td><span class="tag tag-medium">medium</span></td>
+        </tr>
+        <tr id="steps-003" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-desc">Verify that a double-click fires the dblclick DOM event distinct from two single clicks.</div>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Locate button with <code>data-testid="btn-double-click"</code></span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Call <code>actions.doubleClick(el).perform()</code> or <code>locator.dblclick()</code></span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Assert result area contains "Double-click fired"</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 04 -->
+        <tr data-testid="tc-row-004">
+          <td><button class="expand-btn" data-row="004">▸</button></td>
+          <td class="tc-id">BTN_004</td>
+          <td class="tc-scenario">Click-and-hold registers after 1.5 s</td>
+          <td>Result confirms hold after 1500 ms</td>
+          <td><span class="tag tag-edge">edge</span></td>
+          <td><span class="tag tag-medium">medium</span></td>
+        </tr>
+        <tr id="steps-004" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-desc">Verify that holding the mouse button down for 1.5 s triggers the hold action.</div>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Locate button with <code>data-testid="btn-click-hold"</code></span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Press and hold mouse button for 1500 ms</span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Release mouse</span></div>
+              <div class="step-item"><span class="step-num">4</span><span class="step-text">Assert result area confirms hold</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 05 -->
+        <tr data-testid="tc-row-005">
+          <td><button class="expand-btn" data-row="005">▸</button></td>
+          <td class="tc-id">BTN_005</td>
+          <td class="tc-scenario">Button is focusable via Tab key</td>
+          <td>Tab key moves focus to button; Enter triggers click</td>
+          <td><span class="tag tag-positive">positive</span></td>
+          <td><span class="tag tag-low">low</span></td>
+        </tr>
+        <tr id="steps-005" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-desc">Verify keyboard accessibility — Tab to focus, Enter to activate.</div>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Press Tab until button receives focus</span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Assert button has visible focus ring</span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Press Enter — assert same result as click()</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 06 -->
+        <tr data-testid="tc-row-006">
+          <td><button class="expand-btn" data-row="006">▸</button></td>
+          <td class="tc-id">BTN_006</td>
+          <td class="tc-scenario">Button label text is correct</td>
+          <td>getText() returns expected label string</td>
+          <td><span class="tag tag-positive">positive</span></td>
+          <td><span class="tag tag-low">low</span></td>
+        </tr>
+        <tr id="steps-006" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Locate each button by <code>data-testid</code></span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Call <code>getText()</code> or <code>textContent()</code></span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Assert text matches design spec</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 07 -->
+        <tr data-testid="tc-row-007">
+          <td><button class="expand-btn" data-row="007">▸</button></td>
+          <td class="tc-id">BTN_007</td>
+          <td class="tc-scenario">Button color matches expected value</td>
+          <td>getCssValue("background-color") returns correct hex</td>
+          <td><span class="tag tag-positive">positive</span></td>
+          <td><span class="tag tag-low">low</span></td>
+        </tr>
+        <tr id="steps-007" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Click <code>data-testid="btn-find-color"</code></span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Call <code>getCssValue("background-color")</code></span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Assert value equals expected color</span></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TC 08 -->
+        <tr data-testid="tc-row-008">
+          <td><button class="expand-btn" data-row="008">▸</button></td>
+          <td class="tc-id">BTN_008</td>
+          <td class="tc-scenario">Button dimensions match expected size</td>
+          <td>getSize() returns H: 38 W: 168</td>
+          <td><span class="tag tag-positive">positive</span></td>
+          <td><span class="tag tag-low">low</span></td>
+        </tr>
+        <tr id="steps-008" class="steps-row">
+          <td class="steps-cell" colspan="6">
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><span class="step-text">Locate <code>data-testid="btn-find-size"</code></span></div>
+              <div class="step-item"><span class="step-num">2</span><span class="step-text">Call <code>getSize()</code> or <code>boundingBox()</code></span></div>
+              <div class="step-item"><span class="step-num">3</span><span class="step-text">Assert width and height values match spec</span></div>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div><!-- /tab-testcases -->
+
+
+<!-- ══════════════════════════════════════════
+     TAB 3 — LEARN  (doc + right-side TOC)
+══════════════════════════════════════════ -->
+<div id="tab-learn" class="tab-view" role="tabpanel">
+  <div class="learn-layout">
+
+    <!-- ── Main doc content ── -->
+    <main class="learn-main">
+
+      <!-- Overview -->
+      <div class="doc-section" id="learn-overview">
+        <h2 class="doc-h2"><span class="sec-num">→</span>Overview</h2>
+        <p class="doc-p">Buttons are the most commonly interacted element in web automation. Engineers must handle four core interactions: <strong>single click</strong>, <strong>double click</strong>, <strong>right click</strong>, and asserting <strong>disabled state</strong>.</p>
+        <p class="doc-p">Selenium uses the <code>Actions</code> class for advanced mouse interactions. Playwright has all click options built into <code>locator.click()</code>. Cypress has dedicated methods for each click type.</p>
+      </div>
+
+      <!-- 1. Single Click -->
+      <div class="doc-section" id="learn-single">
+        <h2 class="doc-h2"><span class="sec-num">1</span>Single Click</h2>
+        <p class="doc-p">The most fundamental button action. Fires <code>mousedown</code>, <code>mouseup</code>, and <code>click</code> events in sequence. All three frameworks map directly to the same underlying browser event.</p>
+
+        <div class="inline-panel">
+          <div class="panel-titlebar">
+            <div class="panel-dots"><span class="dot-red"></span><span class="dot-yel"></span><span class="dot-grn"></span></div>
+            <span class="panel-label">Try it — Single Click</span>
+            <span class="panel-tag">S01 · S02 · S03 · S04</span>
+          </div>
+          <div class="panel-body">
+            <div class="panel-col-left">
+              <div class="zone-label">Element</div>
+              <div class="el-zone">
+                <button class="pb pb-red" id="lc-btn-single" data-testid="lc-btn-single">Click Me!</button>
+                <button class="pb pb-cyan">Find Location</button>
+                <button class="pb pb-sky">Find my color?</button>
+              </div>
+              <div class="out-hint">Click any button above</div>
+            </div>
+            <div class="panel-col-right">
+              <div class="zone-label">Output</div>
+              <div class="out-zone">
+                <div class="out-zone-bar" id="lc-bar-single">WAITING</div>
+                <div class="out-zone-body">
+                  <div class="out-line"><span class="out-arrow">›</span><span class="out-idle" id="lc-res-single">No action yet…</span></div>
+                </div>
+              </div>
+              <div class="inline-code">
+                <div class="inline-code-bar">
+                  <span class="inline-code-lang">All frameworks</span>
+                  <button class="inline-copy copy-btn">Copy</button>
+                </div>
+                <pre><span class="cm">// Playwright JS</span>
+<span class="kw">await</span> locator.<span class="fn">click</span>();
+<span class="cm">// Selenium Java</span>
+element.<span class="fn">click</span>();
+<span class="cm">// Cypress</span>
+cy.<span class="fn">get</span>(sel).<span class="fn">click</span>();</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Double Click -->
+      <div class="doc-section" id="learn-dbl">
+        <h2 class="doc-h2"><span class="sec-num">2</span>Double Click</h2>
+        <p class="doc-p">A double-click fires a <code>dblclick</code> DOM event. It is distinct from two rapid single clicks — the browser coalesces them into a single <code>dblclick</code> event. Selenium requires the <code>Actions</code> class; Playwright exposes <code>locator.dblclick()</code> directly.</p>
+
+        <div class="inline-panel">
+          <div class="panel-titlebar">
+            <div class="panel-dots"><span class="dot-red"></span><span class="dot-yel"></span><span class="dot-grn"></span></div>
+            <span class="panel-label">Try it — Double Click</span>
+            <span class="panel-tag">S07</span>
+          </div>
+          <div class="panel-body">
+            <div class="panel-col-left">
+              <div class="zone-label">Element</div>
+              <div class="el-zone">
+                <button class="pb pb-purple" id="lc-btn-dbl" data-testid="lc-btn-dbl">Double Click Me</button>
+              </div>
+              <div class="out-hint">Double-click the button above</div>
+            </div>
+            <div class="panel-col-right">
+              <div class="zone-label">Output</div>
+              <div class="out-zone">
+                <div class="out-zone-bar">WAITING</div>
+                <div class="out-zone-body">
+                  <div class="out-line"><span class="out-arrow">›</span><span class="out-idle" id="lc-res-dbl">No action yet…</span></div>
+                </div>
+              </div>
+              <div class="inline-code">
+                <div class="inline-code-bar">
+                  <span class="inline-code-lang">All frameworks</span>
+                  <button class="inline-copy copy-btn">Copy</button>
+                </div>
+                <pre><span class="cm">// Playwright JS</span>
+<span class="kw">await</span> locator.<span class="fn">dblclick</span>();
+<span class="cm">// Selenium Java</span>
+<span class="kw">new</span> <span class="fn">Actions</span>(driver)
+  .<span class="fn">doubleClick</span>(el).<span class="fn">perform</span>();
+<span class="cm">// Cypress</span>
+cy.<span class="fn">get</span>(sel).<span class="fn">dblclick</span>();</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Right Click -->
+      <div class="doc-section" id="learn-right">
+        <h2 class="doc-h2"><span class="sec-num">3</span>Right Click</h2>
+        <p class="doc-p">A right-click fires a <code>contextmenu</code> event. Browsers usually show a native context menu; automation intercepts the event before that happens. Playwright uses <code>{ button: 'right' }</code>; Selenium uses <code>contextClick()</code>; Cypress has <code>rightclick()</code>.</p>
+
+        <div class="inline-panel">
+          <div class="panel-titlebar">
+            <div class="panel-dots"><span class="dot-red"></span><span class="dot-yel"></span><span class="dot-grn"></span></div>
+            <span class="panel-label">Try it — Right Click</span>
+            <span class="panel-tag">contextmenu event</span>
+          </div>
+          <div class="panel-body">
+            <div class="panel-col-left">
+              <div class="zone-label">Element</div>
+              <div class="el-zone">
+                <button class="pb pb-sky" id="lc-btn-right" data-testid="lc-btn-right" oncontextmenu="return false">Right Click Me</button>
+              </div>
+              <div class="out-hint">Right-click the button above</div>
+            </div>
+            <div class="panel-col-right">
+              <div class="zone-label">Output</div>
+              <div class="out-zone">
+                <div class="out-zone-bar">WAITING</div>
+                <div class="out-zone-body">
+                  <div class="out-line"><span class="out-arrow">›</span><span class="out-idle" id="lc-res-right">No action yet…</span></div>
+                </div>
+              </div>
+              <div class="inline-code">
+                <div class="inline-code-bar">
+                  <span class="inline-code-lang">All frameworks</span>
+                  <button class="inline-copy copy-btn">Copy</button>
+                </div>
+                <pre><span class="cm">// Playwright JS</span>
+<span class="kw">await</span> locator.<span class="fn">click</span>({ button: <span class="str">'right'</span> });
+<span class="cm">// Selenium Java</span>
+<span class="kw">new</span> <span class="fn">Actions</span>(driver)
+  .<span class="fn">contextClick</span>(el).<span class="fn">perform</span>();
+<span class="cm">// Cypress</span>
+cy.<span class="fn">get</span>(sel).<span class="fn">rightclick</span>();</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Disabled State -->
+      <div class="doc-section" id="learn-disabled">
+        <h2 class="doc-h2"><span class="sec-num">4</span>Disabled State</h2>
+        <p class="doc-p">A disabled button has the HTML <code>disabled</code> attribute. The automation goal is to <strong>assert this state</strong> — not to click it. Playwright will timeout if you attempt to click a disabled element because it fails actionability checks.</p>
+
+        <div class="inline-panel">
+          <div class="panel-titlebar">
+            <div class="panel-dots"><span class="dot-red"></span><span class="dot-yel"></span><span class="dot-grn"></span></div>
+            <span class="panel-label">Disabled Button — Assert the state, don't click</span>
+            <span class="tag-disabled-pill">DISABLED</span>
+          </div>
+          <div class="panel-body">
+            <div class="panel-col-left">
+              <div class="zone-label">Element</div>
+              <div class="el-zone">
+                <button class="pb pb-disabled" disabled data-testid="lc-btn-disabled">Disabled</button>
+              </div>
+              <div class="out-hint" style="color:var(--danger)">Cannot be clicked — that's the point</div>
+            </div>
+            <div class="panel-col-right">
+              <div class="zone-label">Assertion Code</div>
+              <div class="inline-code">
+                <div class="inline-code-bar">
+                  <span class="inline-code-lang">All frameworks</span>
+                  <button class="inline-copy copy-btn">Copy</button>
+                </div>
+                <pre><span class="cm">// Playwright JS</span>
+<span class="kw">await</span> <span class="fn">expect</span>(locator)
+  .<span class="fn">toBeDisabled</span>();
+
+<span class="cm">// Selenium Java</span>
+<span class="fn">assertFalse</span>(el.<span class="fn">isEnabled</span>());
+
+<span class="cm">// Cypress</span>
+cy.<span class="fn">get</span>(sel)
+  .<span class="fn">should</span>(<span class="str">'be.disabled'</span>);</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Click and Hold -->
+      <div class="doc-section" id="learn-hold">
+        <h2 class="doc-h2"><span class="sec-num">5</span>Click and Hold</h2>
+        <p class="doc-p">Some UI patterns require holding a mouse button for a duration before releasing — sliders, drag handles, long-press menus. Selenium uses <code>clickAndHold()</code> with <code>pause()</code>. Playwright uses <code>mouse.down()</code> with <code>waitForTimeout()</code>.</p>
+
+        <div class="inline-panel">
+          <div class="panel-titlebar">
+            <div class="panel-dots"><span class="dot-red"></span><span class="dot-yel"></span><span class="dot-grn"></span></div>
+            <span class="panel-label">Try it — Click and Hold (1.5 s)</span>
+            <span class="panel-tag">S06</span>
+          </div>
+          <div class="panel-body">
+            <div class="panel-col-left">
+              <div class="zone-label">Element</div>
+              <div class="el-zone">
+                <button class="pb pb-purple" id="lc-btn-hold" data-testid="lc-btn-hold">Click and Hold!</button>
+              </div>
+              <div class="out-hint">Press and hold for 1.5 seconds</div>
+            </div>
+            <div class="panel-col-right">
+              <div class="zone-label">Output</div>
+              <div class="out-zone">
+                <div class="out-zone-bar">WAITING</div>
+                <div class="out-zone-body">
+                  <div class="out-line"><span class="out-arrow">›</span><span class="out-idle" id="lc-res-hold">No action yet…</span></div>
+                </div>
+              </div>
+              <div class="inline-code">
+                <div class="inline-code-bar">
+                  <span class="inline-code-lang">PW · Selenium</span>
+                  <button class="inline-copy copy-btn">Copy</button>
+                </div>
+                <pre><span class="cm">// Playwright JS</span>
+<span class="kw">await</span> page.mouse.<span class="fn">down</span>();
+<span class="kw">await</span> page.<span class="fn">waitForTimeout</span>(<span class="nm">1500</span>);
+<span class="kw">await</span> page.mouse.<span class="fn">up</span>();
+<span class="cm">// Selenium Java</span>
+<span class="kw">new</span> <span class="fn">Actions</span>(driver)
+  .<span class="fn">clickAndHold</span>(el)
+  .<span class="fn">pause</span>(Duration.<span class="fn">ofMillis</span>(<span class="nm">1500</span>))
+  .<span class="fn">release</span>().<span class="fn">perform</span>();</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Method Summary -->
+      <div class="doc-section" id="learn-methods">
+        <h2 class="doc-h2"><span class="sec-num">6</span>Key Methods Summary</h2>
+        <table class="method-table">
+          <thead>
+            <tr>
+              <th>Action</th>
+              <th>Selenium (Java)</th>
+              <th>Playwright (JS)</th>
+              <th>Playwright (Python)</th>
+              <th>Cypress</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Single click</td>
+              <td><code>element.click()</code></td>
+              <td><code>locator.click()</code></td>
+              <td><code>locator.click()</code></td>
+              <td><code>.click()</code></td>
+            </tr>
+            <tr>
+              <td>Double click</td>
+              <td><code>actions.doubleClick(el)</code></td>
+              <td><code>locator.dblclick()</code></td>
+              <td><code>locator.dblclick()</code></td>
+              <td><code>.dblclick()</code></td>
+            </tr>
+            <tr>
+              <td>Right click</td>
+              <td><code>actions.contextClick(el)</code></td>
+              <td><code>locator.click({button:'right'})</code></td>
+              <td><code>locator.click(button='right')</code></td>
+              <td><code>.rightclick()</code></td>
+            </tr>
+            <tr>
+              <td>Is disabled</td>
+              <td><code>!isEnabled()</code></td>
+              <td><code>toBeDisabled()</code></td>
+              <td><code>to_be_disabled()</code></td>
+              <td><code>should('be.disabled')</code></td>
+            </tr>
+            <tr>
+              <td>Get text</td>
+              <td><code>getText()</code></td>
+              <td><code>textContent()</code></td>
+              <td><code>text_content()</code></td>
+              <td><code>.invoke('text')</code></td>
+            </tr>
+            <tr>
+              <td>Get size</td>
+              <td><code>getSize()</code></td>
+              <td><code>boundingBox()</code></td>
+              <td><code>bounding_box()</code></td>
+              <td><code>.invoke('width')</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 7. FAQ -->
+      <div class="doc-section" id="learn-faq">
+        <h2 class="doc-h2"><span class="sec-num">7</span>FAQ</h2>
+
+        <div class="faq-item" data-testid="faq-1">
+          <div class="faq-trigger">
+            Why does Playwright timeout when clicking a disabled button?
+            <span class="faq-chevron">⌄</span>
+          </div>
+          <div class="faq-body">
+            Playwright performs actionability checks before clicking — it waits for the element to be visible, stable, enabled, and in the viewport. A disabled button fails the "enabled" check and the call times out after the configured timeout. Use <code>toBeDisabled()</code> to assert the state instead.
+          </div>
+        </div>
+
+        <div class="faq-item" data-testid="faq-2">
+          <div class="faq-trigger">
+            What's the difference between click() and dblclick()?
+            <span class="faq-chevron">⌄</span>
+          </div>
+          <div class="faq-body">
+            <code>click()</code> fires <code>mousedown</code> → <code>mouseup</code> → <code>click</code> events. <code>dblclick()</code> fires two rapid click cycles followed by a <code>dblclick</code> event. The browser treats them as distinct — a double-click does <em>not</em> fire two independent click events at the application level.
+          </div>
+        </div>
+
+        <div class="faq-item" data-testid="faq-3">
+          <div class="faq-trigger">
+            What is the most stable selector strategy for buttons?
+            <span class="faq-chevron">⌄</span>
+          </div>
+          <div class="faq-body">
+            Prefer <code>data-testid</code> attributes — they are stable, independent of styling, and survive refactoring. QA Playground adds <code>data-testid</code> to every practice element. In Playwright use <code>page.getByTestId('btn-id')</code>. In Selenium use <code>By.cssSelector("[data-testid='btn-id']")</code>.
+          </div>
+        </div>
+
+        <div class="faq-item" data-testid="faq-4">
+          <div class="faq-trigger">
+            How do I perform click-and-hold in Selenium Java?
+            <span class="faq-chevron">⌄</span>
+          </div>
+          <div class="faq-body">
+            Use the Actions chain: <code>new Actions(driver).clickAndHold(element).pause(Duration.ofMillis(1500)).release().perform()</code>. Always call <code>perform()</code> at the end — the chain builds the action but does not execute until then.
+          </div>
+        </div>
+
+        <div class="faq-item" data-testid="faq-5">
+          <div class="faq-trigger">
+            Does Cypress support right-click natively?
+            <span class="faq-chevron">⌄</span>
+          </div>
+          <div class="faq-body">
+            Yes, since Cypress 6.1. Use <code>cy.get(selector).rightclick()</code>. This fires the <code>contextmenu</code> event on the element. Note that the native browser context menu will not appear — Cypress suppresses it. Your app's custom context menu handler will still run.
+          </div>
+        </div>
+
+      </div>
+    </main><!-- /learn-main -->
+
+
+    <!-- ── Right: TOC ── -->
+    <nav class="learn-toc" aria-label="Table of contents">
+      <div class="toc-label">On This Page</div>
+      <a class="toc-link active" href="#learn-overview">Overview</a>
+      <a class="toc-link" href="#learn-single">1 · Single Click</a>
+      <a class="toc-link" href="#learn-dbl">2 · Double Click</a>
+      <a class="toc-link" href="#learn-right">3 · Right Click</a>
+      <a class="toc-link" href="#learn-disabled">4 · Disabled State</a>
+      <a class="toc-link" href="#learn-hold">5 · Click and Hold</a>
+      <div class="toc-divider"></div>
+      <a class="toc-link" href="#learn-methods">Method Summary</a>
+      <a class="toc-link" href="#learn-faq">FAQ</a>
+    </nav>
+
+  </div><!-- /learn-layout -->
+</div><!-- /tab-learn -->
+
+
+<script src="app.js"></script>
+</body>
+</html>

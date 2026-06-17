@@ -1,0 +1,91 @@
+.button {
+  position: fixed;
+  right: clamp(16px, 3vw, 28px);
+  bottom: clamp(16px, 3vw, 28px);
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border));
+  border-radius: 999px;
+  color: var(--primary-foreground);
+  background:
+    radial-gradient(
+      circle at top,
+      color-mix(in srgb, var(--secondary) 20%, transparent),
+      transparent 62%
+    ),
+    linear-gradient(
+      135deg,
+      var(--primary),
+      color-mix(in srgb, var(--primary) 68%, var(--secondary))
+    );
+  box-shadow:
+    0 20px 42px color-mix(in srgb, var(--primary) 22%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(calc(var(--home-card-blur) + 2px));
+  -webkit-backdrop-filter: blur(calc(var(--home-card-blur) + 2px));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(18px) scale(0.92);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    filter 180ms ease,
+    visibility 180ms ease;
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.button:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    0 24px 48px color-mix(in srgb, var(--primary) 28%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  filter: brightness(1.05);
+}
+
+.button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--primary) 32%, white);
+  outline-offset: 4px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 640px) {
+  .button {
+    width: 48px;
+    height: 48px;
+    right: 14px;
+    bottom: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: opacity 120ms ease, visibility 120ms ease;
+    transform: none;
+  }
+
+  .visible,
+  .button:hover,
+  .button:active {
+    transform: none;
+  }
+}

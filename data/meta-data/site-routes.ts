@@ -24,6 +24,24 @@ export const siteRoutes: SiteRoute[] = [
     lastModified: "2026-06-16",
   },
   {
+    path: "/demo",
+    changeFrequency: "weekly",
+    priority: 0.8,
+    lastModified: "2026-06-17",
+  },
+  {
+    path: "/demo/bank",
+    changeFrequency: "monthly",
+    priority: 0.7,
+    lastModified: "2026-06-17",
+  },
+  {
+    path: "/demo/shopping",
+    changeFrequency: "monthly",
+    priority: 0.7,
+    lastModified: "2026-06-17",
+  },
+  {
     path: "/chrome",
     changeFrequency: "weekly",
     priority: 0.8,
@@ -45,6 +63,18 @@ export const siteRoutes: SiteRoute[] = [
     path: "/about-us",
     changeFrequency: "yearly",
     priority: 0.5,
+    lastModified: "2026-06-17",
+  },
+  {
+    path: "/about-me",
+    changeFrequency: "yearly",
+    priority: 0.5,
+    lastModified: "2026-06-17",
+  },
+  {
+    path: "/contact-us",
+    changeFrequency: "yearly",
+    priority: 0.4,
     lastModified: "2026-06-17",
   },
   {

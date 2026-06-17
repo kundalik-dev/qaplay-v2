@@ -16,6 +16,7 @@ import {
   ReviewSection,
   RoadmapSection,
 } from "@/components/home";
+import { ScrollToTopButton } from "@/components/scroll-to-top";
 import { TrustSection } from "@/components/home/trust-section";
 import { JsonLd } from "@/components/seo";
 
@@ -38,6 +39,7 @@ export default function Home() {
       <ReviewSection />
       <CtaSection />
       <FaqSection />
+      <ScrollToTopButton />
     </>
   );
 }
