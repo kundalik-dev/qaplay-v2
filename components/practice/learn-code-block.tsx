@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import type { LearnCodeSnippet } from "@/data/practice-data/types";
+import type { HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
 import styles from "./code-block.module.css";
 
 type FwKey = "pw" | "sel" | "cy";
@@ -14,7 +14,7 @@ const FW_LABELS: Record<FwKey, string> = {
 };
 
 interface LearnCodeBlockProps {
-  snippets: LearnCodeSnippet;
+  snippets: HighlightedLearnCodeSnippet;
 }
 
 export function LearnCodeBlock({ snippets }: LearnCodeBlockProps) {
@@ -24,6 +24,7 @@ export function LearnCodeBlock({ snippets }: LearnCodeBlockProps) {
   const current = snippets[active];
 
   function handleCopy() {
+    // Copy the original plain-text code, not the HTML
     navigator.clipboard.writeText(current.code).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1600);
@@ -52,7 +53,7 @@ export function LearnCodeBlock({ snippets }: LearnCodeBlockProps) {
 
       {/* Code block */}
       <div className="practice-code-shell overflow-hidden rounded-[0_6px_6px_6px] border">
-        {/* Code header bar */}
+        {/* Header bar */}
         <div className="practice-code-header flex items-center justify-between px-[14px] py-2">
           <span className="practice-code-label font-[family-name:var(--font-ibm-plex-mono)] text-[11px] font-semibold">
             {current.lang}
@@ -65,18 +66,17 @@ export function LearnCodeBlock({ snippets }: LearnCodeBlockProps) {
           </button>
         </div>
 
-        {/* Code content */}
-        <pre
+        {/* Shiki-highlighted code — the transformer already stripped the
+            inline background so bg-[#1a1f2e] from the outer shell applies. */}
+        <div
           className={cn(
-            "m-0 overflow-x-auto bg-[#1a1f2e] px-4 py-4",
+            "overflow-x-auto bg-[#1a1f2e]",
+            "[&_pre]:m-0 [&_pre]:bg-transparent [&_pre]:px-4 [&_pre]:py-4",
+            "[&_code]:font-[family-name:var(--font-ibm-plex-mono)] [&_code]:text-[12.5px] [&_code]:leading-[1.7]",
             styles.codeBody,
           )}
-        >
-          <code
-            className="font-[family-name:var(--font-ibm-plex-mono)] text-[12.5px] leading-[1.7] text-[#e2e8f0]"
-            dangerouslySetInnerHTML={{ __html: current.code }}
-          />
-        </pre>
+          dangerouslySetInnerHTML={{ __html: current.html }}
+        />
       </div>
     </div>
   );

@@ -53,7 +53,7 @@ export function ScenarioCard({
 
   return (
     <div
-      className="overflow-hidden rounded-[10px] border border-border bg-card transition-shadow hover:border-border/80 hover:shadow-sm"
+      className="rounded-[10px] border border-border bg-card transition-shadow hover:border-border/80 hover:shadow-sm"
       data-testid={testId}
       data-section={`scenario-${id.toLowerCase()}`}
     >

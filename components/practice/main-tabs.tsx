@@ -86,7 +86,7 @@ export function MainTabs({
   return (
     <div>
       <div
-        className="sticky top-[var(--nav-offset,60px)] z-20 overflow-x-auto border-b border-border bg-background/90 backdrop-blur-sm"
+        className="sticky top-[var(--nav-offset,60px)] z-20 overflow-x-auto overflow-y-hidden border-b border-border bg-background/90 backdrop-blur-sm"
         role="tablist"
         aria-label="Practice page tabs"
       >
@@ -156,6 +156,7 @@ export function MainTabs({
         aria-labelledby="practice-tab-practice"
         hidden={active !== "practice"}
         tabIndex={0}
+        className="outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-primary/25"
       >
         {practiceContent}
       </div>
@@ -165,6 +166,7 @@ export function MainTabs({
         aria-labelledby="practice-tab-testcases"
         hidden={active !== "testcases"}
         tabIndex={0}
+        className="outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-primary/25"
       >
         {testCasesContent}
       </div>
@@ -174,6 +176,7 @@ export function MainTabs({
         aria-labelledby="practice-tab-learn"
         hidden={active !== "learn"}
         tabIndex={0}
+        className="outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-primary/25"
       >
         {learnContent}
       </div>

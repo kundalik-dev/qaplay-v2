@@ -12,8 +12,19 @@ import {
   buttonsFaq,
   buttonsTocItems,
 } from "@/data/practice-data/buttons/learn";
+import { highlightLearnSnippet } from "@/lib/highlight";
 
-export function LearnTab() {
+export async function LearnTab() {
+  // Pre-highlight all code blocks in parallel on the server
+  const [single, double, right, disabled, text, keyboard] = await Promise.all([
+    highlightLearnSnippet(buttonsLearnCode.single),
+    highlightLearnSnippet(buttonsLearnCode.double),
+    highlightLearnSnippet(buttonsLearnCode.right),
+    highlightLearnSnippet(buttonsLearnCode.disabled),
+    highlightLearnSnippet(buttonsLearnCode.text),
+    highlightLearnSnippet(buttonsLearnCode.keyboard),
+  ]);
+
   return (
     <div className="mx-auto w-full max-w-[1280px] px-4 py-6 pb-16 sm:px-7 sm:py-8">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_200px] lg:gap-12">
@@ -32,7 +43,7 @@ export function LearnTab() {
             heading="1 · Single Click"
             desc={buttonsLearnDesc.single}
           >
-            <LearnCodeBlock snippets={buttonsLearnCode.single} />
+            <LearnCodeBlock snippets={single} />
           </DocSection>
 
           {/* 2 · Double Click */}
@@ -41,7 +52,7 @@ export function LearnTab() {
             heading="2 · Double Click"
             desc={buttonsLearnDesc.double}
           >
-            <LearnCodeBlock snippets={buttonsLearnCode.double} />
+            <LearnCodeBlock snippets={double} />
           </DocSection>
 
           {/* 3 · Right Click */}
@@ -50,7 +61,7 @@ export function LearnTab() {
             heading="3 · Right Click"
             desc={buttonsLearnDesc.right}
           >
-            <LearnCodeBlock snippets={buttonsLearnCode.right} />
+            <LearnCodeBlock snippets={right} />
           </DocSection>
 
           {/* 4 · Disabled State */}
@@ -59,7 +70,7 @@ export function LearnTab() {
             heading="4 · Disabled State"
             desc={buttonsLearnDesc.disabled}
           >
-            <LearnCodeBlock snippets={buttonsLearnCode.disabled} />
+            <LearnCodeBlock snippets={disabled} />
           </DocSection>
 
           {/* 5 · Text Change */}
@@ -68,7 +79,7 @@ export function LearnTab() {
             heading="5 · Text Change"
             desc={buttonsLearnDesc.text}
           >
-            <LearnCodeBlock snippets={buttonsLearnCode.text} />
+            <LearnCodeBlock snippets={text} />
           </DocSection>
 
           {/* 6 · Keyboard Enter */}
@@ -77,7 +88,7 @@ export function LearnTab() {
             heading="6 · Keyboard Enter"
             desc={buttonsLearnDesc.keyboard}
           >
-            <LearnCodeBlock snippets={buttonsLearnCode.keyboard} />
+            <LearnCodeBlock snippets={keyboard} />
           </DocSection>
 
           {/* Method Summary */}

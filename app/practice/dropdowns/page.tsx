@@ -1,0 +1,25 @@
+import type { Metadata } from "next";
+import { dropdownsMeta } from "@/data/practice-data/dropdowns/meta";
+import { dropdownsTestCases } from "@/data/practice-data/dropdowns/test-cases";
+import { PracticePage } from "./_components/practice-page";
+
+export const metadata: Metadata = {
+  title: "How to Handle Dropdowns in Selenium and Playwright | QA Playground",
+  description: dropdownsMeta.description,
+  openGraph: {
+    title: "How to Handle Dropdowns in Selenium and Playwright | QA Playground",
+    description: dropdownsMeta.description,
+    url: "https://qaplayground.dev/practice/dropdowns",
+    siteName: "QA Playground",
+    type: "article",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "How to Handle Dropdowns in Selenium and Playwright | QA Playground",
+    description: dropdownsMeta.description,
+  },
+};
+
+export default function DropdownsPage() {
+  return <PracticePage meta={dropdownsMeta} testCases={dropdownsTestCases} />;
+}
