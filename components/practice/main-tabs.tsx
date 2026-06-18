@@ -1,6 +1,9 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { BookOpenText, Gamepad2, ListChecks } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 type TabId = "practice" | "testcases" | "learn";
@@ -8,6 +11,7 @@ type TabId = "practice" | "testcases" | "learn";
 interface TabDef {
   id: TabId;
   label: string;
+  Icon: LucideIcon;
   count?: number;
 }
 
@@ -34,9 +38,19 @@ export function MainTabs({
   });
 
   const tabs: TabDef[] = [
-    { id: "practice", label: "Practice", count: scenarioCount },
-    { id: "testcases", label: "Test Cases", count: testCaseCount },
-    { id: "learn", label: "Learn" },
+    {
+      id: "practice",
+      label: "Practice",
+      Icon: Gamepad2,
+      count: scenarioCount,
+    },
+    {
+      id: "testcases",
+      label: "Test Cases",
+      Icon: ListChecks,
+      count: testCaseCount,
+    },
+    { id: "learn", label: "Learn", Icon: BookOpenText },
   ];
 
   function focusTab(tabId: TabId) {
@@ -81,6 +95,7 @@ export function MainTabs({
             const isActive = active === tab.id;
             const tabId = `practice-tab-${tab.id}`;
             const panelId = `practice-panel-${tab.id}`;
+            const Icon = tab.Icon;
 
             return (
               <button
@@ -107,6 +122,13 @@ export function MainTabs({
                     : "border-transparent text-muted-foreground hover:text-foreground",
                 )}
               >
+                <Icon
+                  aria-hidden="true"
+                  className={cn(
+                    "h-[15px] w-[15px] flex-shrink-0 stroke-[2.35]",
+                    isActive ? "text-primary" : "text-muted-foreground",
+                  )}
+                />
                 <span>{tab.label}</span>
                 {tab.count !== undefined ? (
                   <span

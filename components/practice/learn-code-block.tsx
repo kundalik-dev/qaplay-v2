@@ -41,8 +41,8 @@ export function LearnCodeBlock({ snippets }: LearnCodeBlockProps) {
             className={cn(
               "rounded-t-[6px] border border-b-0 px-3 py-[5px] text-[12px] font-semibold transition-all",
               active === fw
-                ? "border-border bg-card text-foreground"
-                : "border-transparent bg-muted text-muted-foreground",
+                ? "practice-learn-tab-active"
+                : "practice-learn-tab",
             )}
           >
             {FW_LABELS[fw]}
@@ -51,15 +51,15 @@ export function LearnCodeBlock({ snippets }: LearnCodeBlockProps) {
       </div>
 
       {/* Code block */}
-      <div className="overflow-hidden rounded-[0_6px_6px_6px] border border-border">
+      <div className="practice-code-shell overflow-hidden rounded-[0_6px_6px_6px] border">
         {/* Code header bar */}
-        <div className="flex items-center justify-between bg-[#1a1f2e] px-[14px] py-2">
-          <span className="font-[family-name:var(--font-ibm-plex-mono)] text-[11px] text-[#64748b]">
+        <div className="practice-code-header flex items-center justify-between px-[14px] py-2">
+          <span className="practice-code-label font-[family-name:var(--font-ibm-plex-mono)] text-[11px] font-semibold">
             {current.lang}
           </span>
           <button
             onClick={handleCopy}
-            className="rounded-[4px] border border-[#334155] bg-transparent px-2 py-[3px] text-[11px] text-[#64748b] transition-all hover:bg-[#334155] hover:text-[#e2e8f0]"
+            className="practice-copy-button rounded-[4px] border px-2 py-[3px] text-[11px] font-semibold transition-all"
           >
             {copied ? "Copied!" : "Copy"}
           </button>
