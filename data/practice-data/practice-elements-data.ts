@@ -176,7 +176,7 @@ export const practiceCards: PracticeCard[] = [
   },
   {
     href: "/bank",
-    iconSrc: "/mainicons/mario.svg",
+    iconSrc: "/mainicons/bank-v2.svg",
     iconAlt: "Bank Demo App icon",
     title: "Bank App",
     description:
