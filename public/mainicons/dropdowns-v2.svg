@@ -1,44 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Define styles for cartoon outlines -->
   <style>
-    .outline { stroke: #313d40; stroke-width: 16px; stroke-linecap: round; stroke-linejoin: round; }
-    .thin-outline { stroke: #313d40; stroke-width: 8px; stroke-linecap: round; stroke-linejoin: round; }
-    .divider { stroke: #313d40; stroke-width: 8px; stroke-linecap: round; }
+    .outline-bg { stroke: #313d40; stroke-width: 112px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .fill-blue { stroke: #53a3ec; stroke-width: 80px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .fill-pink { stroke: #eda1ab; stroke-width: 80px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .sparkle { fill: #fcf5af; stroke: #313d40; stroke-width: 8px; stroke-linejoin: round; }
   </style>
 
-  <!-- Expanded dropdown menu list box (background/below) -->
-  <rect x="60" y="190" width="392" height="240" rx="24" fill="#ffffff" class="outline"/>
+  <!-- Background sparkles -->
+  <path d="M 70 90 L 85 75 M 85 90 L 70 75 M 77 65 V 100 M 57 82 H 97" stroke="#81d9e7" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 430 420 L 445 405 M 445 420 L 430 405 M 437 395 V 430 M 417 412 H 457" stroke="#fcf5af" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 440 90 L 450 78 M 450 90 L 440 78 M 445 70 V 98 M 432 84 H 458" stroke="#eda1ab" stroke-width="6" stroke-linecap="round"/>
 
-  <!-- List options content -->
-  <!-- Option 1 -->
-  <rect x="76" y="206" width="360" height="60" rx="12" fill="#f6f8fa"/>
-  <rect x="100" y="224" width="160" height="24" rx="12" fill="#d1d5da"/>
+  <!-- BOTTOM CHEVRON (Pink) -->
+  <g>
+    <!-- Outline -->
+    <path d="M 110 280 L 256 390 L 402 280" class="outline-bg"/>
+    <!-- Pink Fill -->
+    <path d="M 110 280 L 256 390 L 402 280" class="fill-pink"/>
+    <!-- Cute face for bottom chevron -->
+    <circle cx="220" cy="320" r="10" fill="#313d40"/>
+    <circle cx="292" cy="320" r="10" fill="#313d40"/>
+    <ellipse cx="198" cy="330" rx="12" ry="8" fill="#ff8e9e" opacity="0.9"/>
+    <ellipse cx="314" cy="330" rx="12" ry="8" fill="#ff8e9e" opacity="0.9"/>
+    <path d="M 246 340 Q 256 352 266 340" stroke="#313d40" stroke-width="6" stroke-linecap="round" fill="none"/>
+  </g>
 
-  <!-- Option 2 (Selected with Blue Fill) -->
-  <rect x="76" y="280" width="360" height="60" rx="12" fill="#53a3ec" stroke="#313d40" stroke-width="8" stroke-linejoin="round"/>
-  <rect x="100" y="298" width="160" height="24" rx="12" fill="#ffffff"/>
-  <!-- Cute Face on the Selected Option -->
-  <circle cx="320" cy="306" r="6" fill="#313d40"/>
-  <circle cx="344" cy="306" r="6" fill="#313d40"/>
-  <ellipse cx="308" cy="312" rx="6" ry="4" fill="#ff8e9e"/>
-  <ellipse cx="356" cy="312" rx="6" ry="4" fill="#ff8e9e"/>
-  <path d="M 327 313 Q 332 318 337 313" stroke="#313d40" stroke-width="4" stroke-linecap="round" fill="none"/>
-
-  <!-- Option 3 -->
-  <rect x="76" y="354" width="360" height="60" rx="12" fill="#f6f8fa"/>
-  <rect x="100" y="372" width="160" height="24" rx="12" fill="#d1d5da"/>
-
-  <!-- Main dropdown selector header (foreground/top) -->
-  <rect x="60" y="80" width="392" height="90" rx="24" fill="#fcf5af" class="outline"/>
-  <!-- Text capsule inside selector header -->
-  <rect x="95" y="110" width="200" height="30" rx="15" fill="#fbf1cf" class="thin-outline"/>
-  <!-- Dropdown Chevron Arrow -->
-  <path d="M 380 118 L 400 138 L 420 118" stroke="#313d40" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-
-  <!-- Sparkles -->
-  <!-- Yellow Star Top Right -->
-  <path d="M 440 60 L 450 45 M 450 60 L 440 45 M 445 35 V 70 M 425 52 H 465" stroke="#fcf5af" stroke-width="6" stroke-linecap="round"/>
-  <!-- Pink Star Bottom Left -->
-  <path d="M 50 430 L 60 415 M 60 430 L 50 415 M 55 405 V 440 M 35 422 H 75" stroke="#eda1ab" stroke-width="6" stroke-linecap="round"/>
-  <!-- Cyan Star Top Left -->
-  <path d="M 80 50 L 90 40 M 90 50 L 80 40 M 85 32 V 58 M 70 45 H 100" stroke="#81d9e7" stroke-width="6" stroke-linecap="round"/>
+  <!-- TOP CHEVRON (Blue) -->
+  <g>
+    <!-- Outline -->
+    <path d="M 110 140 L 256 250 L 402 140" class="outline-bg"/>
+    <!-- Blue Fill -->
+    <path d="M 110 140 L 256 250 L 402 140" class="fill-blue"/>
+    <!-- Cute face for top chevron -->
+    <circle cx="220" cy="180" r="10" fill="#313d40"/>
+    <circle cx="292" cy="180" r="10" fill="#313d40"/>
+    <ellipse cx="198" cy="190" rx="12" ry="8" fill="#ff8e9e" opacity="0.9"/>
+    <ellipse cx="314" cy="190" rx="12" ry="8" fill="#ff8e9e" opacity="0.9"/>
+    <path d="M 246 200 Q 256 212 266 200" stroke="#313d40" stroke-width="6" stroke-linecap="round" fill="none"/>
+  </g>
 </svg>

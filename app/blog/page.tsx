@@ -42,7 +42,7 @@ export default function BlogIndexPage() {
         <div className={styles.empty} data-testid="blog-empty-state">
           <p className={styles.emptyTitle}>No posts yet</p>
           <p className={styles.emptyBody}>
-            Add a Markdown file to <code>docs/blog</code> to publish your first
+            Add a Markdown file to <code>blogs/</code> to publish your first
             post.
           </p>
         </div>

@@ -11,7 +11,7 @@ import { getAllPosts } from "@/lib/blog/posts";
  * URLs are built against the canonical origin (`basicDetails.websiteURL`) so
  * they stay consistent with the site's `metadataBase` and canonical tags.
  * To add a static page to the sitemap, edit `site-routes.ts` — not this file.
- * Blog posts are picked up automatically from `docs/blog/*.md`.
+ * Blog posts are picked up automatically from `blogs/*.md`.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const origin = basicDetails.websiteURL.replace(/\/$/, "");

@@ -8,7 +8,7 @@ import type { BlogFrontmatter, BlogPost, BlogPostSummary } from "./types";
 /**
  * Filesystem-backed blog source.
  *
- * Posts live as Markdown files in `docs/blog/*.md`. Reading happens at build
+ * Posts live as Markdown files in `blogs/*.md`. Reading happens at build
  * time (server-only), so these helpers use synchronous `fs` calls — they are
  * safe to call from Server Components, `generateStaticParams`, `sitemap.ts`,
  * and `generateMetadata`.
@@ -19,8 +19,8 @@ import type { BlogFrontmatter, BlogPost, BlogPostSummary } from "./types";
  *   - `draft: true` posts are hidden in production builds but visible in dev.
  */
 
-/** Absolute path to the Markdown post directory. */
-const POSTS_DIR = join(process.cwd(), "docs", "blog");
+/** Absolute path to the Markdown post directory (root-level `blogs/`). */
+const POSTS_DIR = join(process.cwd(), "blogs");
 
 const WORDS_PER_MINUTE = 200;
 

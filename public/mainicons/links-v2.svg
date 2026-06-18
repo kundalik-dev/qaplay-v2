@@ -1,56 +1,51 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <defs>
-    <!-- A single link loop: a capsule with a hole in the middle -->
-    <path id="link-loop" d="M 50 0 H 170 A 50 50 0 0 1 220 50 A 50 50 0 0 1 170 100 H 50 A 50 50 0 0 1 0 50 A 50 50 0 0 1 50 0 Z
-                             M 68 32 H 152 A 18 18 0 0 1 170 50 A 18 18 0 0 1 152 68 H 68 A 18 18 0 0 1 50 50 A 18 18 0 0 1 68 32 Z"
-          fill-rule="evenodd"/>
-  </defs>
-
+  <!-- Define styles for cartoon outlines -->
   <style>
-    .outline { stroke: #313d40; stroke-width: 16px; stroke-linecap: round; stroke-linejoin: round; }
-    .thin-outline { stroke: #313d40; stroke-width: 8px; stroke-linecap: round; stroke-linejoin: round; }
+    .outline-bg { stroke: #313d40; stroke-width: 112px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .fill-blue { stroke: #53a3ec; stroke-width: 80px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .fill-pink { stroke: #eda1ab; stroke-width: 80px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .sparkle { fill: #fcf5af; stroke: #313d40; stroke-width: 8px; stroke-linejoin: round; }
   </style>
 
-  <!-- Scaled Group around Center (256, 256) -->
-  <g transform="translate(256, 256) scale(1.45) translate(-256, -256)">
-    <!-- Background sparkles at corners -->
-    <path d="M 80 80 L 95 65 M 95 80 L 80 65 M 87 55 V 90 M 67 72 H 107" stroke="#81d9e7" stroke-width="6" stroke-linecap="round"/>
-    <path d="M 420 420 L 435 405 M 435 420 L 420 405 M 427 395 V 430 M 407 412 H 447" stroke="#fcf5af" stroke-width="6" stroke-linecap="round"/>
+  <!-- Background sparkles -->
+  <path d="M 70 90 L 85 75 M 85 90 L 70 75 M 77 65 V 100 M 57 82 H 97" stroke="#81d9e7" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 430 420 L 445 405 M 445 420 L 430 405 M 437 395 V 430 M 417 412 H 457" stroke="#fcf5af" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 440 90 L 450 78 M 450 90 L 440 78 M 445 70 V 98 M 432 84 H 458" stroke="#81d9e7" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 80 420 L 95 408 M 95 420 L 80 408 M 87 400 V 428 M 72 414 H 98" stroke="#fcf5af" stroke-width="6" stroke-linecap="round"/>
 
-    <!-- Draw Link A (Blue, bottom-left) -->
-    <g transform="translate(210, 302) rotate(-45)">
-      <use href="#link-loop" fill="#53a3ec" stroke="#313d40" stroke-width="16" stroke-linejoin="round"/>
-      <!-- Cute Face on Link A -->
-      <circle cx="60" cy="42" r="8" fill="#313d40"/>
-      <circle cx="85" cy="42" r="8" fill="#313d40"/>
-      <ellipse cx="50" cy="50" rx="8" ry="5" fill="#ff8e9e"/>
-      <ellipse cx="95" cy="50" rx="8" ry="5" fill="#ff8e9e"/>
-      <path d="M 68 52 Q 72.5 57 77 52" stroke="#313d40" stroke-width="4" stroke-linecap="round" fill="none"/>
-    </g>
+  <!-- Center Connection Bar -->
+  <g>
+    <!-- Outline -->
+    <line x1="190" y1="256" x2="322" y2="256" stroke="#313d40" stroke-width="80" stroke-linecap="round"/>
+    <!-- Yellow Fill -->
+    <line x1="190" y1="256" x2="322" y2="256" stroke="#fcf5af" stroke-width="48" stroke-linecap="round"/>
+  </g>
 
-    <!-- Draw Link B (Pink, top-right) -->
-    <g transform="translate(302, 210) rotate(45)">
-      <use href="#link-loop" fill="#eda1ab" stroke="#313d40" stroke-width="16" stroke-linejoin="round"/>
-      <!-- Cute Face on Link B -->
-      <circle cx="135" cy="42" r="8" fill="#313d40"/>
-      <circle cx="160" cy="42" r="8" fill="#313d40"/>
-      <ellipse cx="125" cy="50" rx="8" ry="5" fill="#ff8e9e"/>
-      <ellipse cx="170" cy="50" rx="8" ry="5" fill="#ff8e9e"/>
-      <path d="M 143 52 Q 147.5 57 152 52" stroke="#313d40" stroke-width="4" stroke-linecap="round" fill="none"/>
-    </g>
+  <!-- LEFT HOOK (Blue) -->
+  <g>
+    <!-- Outline -->
+    <path d="M 220 362 H 180 A 106 106 0 0 1 180 150 H 220" class="outline-bg"/>
+    <!-- Blue Fill -->
+    <path d="M 220 362 H 180 A 106 106 0 0 1 180 150 H 220" class="fill-blue"/>
+    <!-- Face -->
+    <circle cx="95" cy="248" r="8" fill="#313d40"/>
+    <circle cx="125" cy="248" r="8" fill="#313d40"/>
+    <ellipse cx="80" cy="254" rx="8" ry="5" fill="#ff8e9e" opacity="0.9"/>
+    <ellipse cx="140" cy="254" rx="8" ry="5" fill="#ff8e9e" opacity="0.9"/>
+    <path d="M 105 258 Q 110 264 115 258" stroke="#313d40" stroke-width="5" stroke-linecap="round" fill="none"/>
+  </g>
 
-    <!-- Redraw overlapping segment of Link A (Blue) to create the "threaded" loop effect -->
-    <g transform="translate(210, 302) rotate(-45)">
-      <!-- Black border/outline -->
-      <path d="M 90 16 H 160" stroke="#313d40" stroke-width="48" stroke-linecap="round"/>
-      <!-- Blue fill -->
-      <path d="M 90 16 H 160" stroke="#53a3ec" stroke-width="32" stroke-linecap="round"/>
-    </g>
-
-    <!-- Central sparkles around connection -->
-    <path d="M 230 210 L 220 195" stroke="#fcf5af" stroke-width="8" stroke-linecap="round"/>
-    <path d="M 282 302 L 292 317" stroke="#fcf5af" stroke-width="8" stroke-linecap="round"/>
-    <path d="M 210 282 L 195 292" stroke="#fcf5af" stroke-width="8" stroke-linecap="round"/>
-    <path d="M 302 230 L 317 220" stroke="#fcf5af" stroke-width="8" stroke-linecap="round"/>
+  <!-- RIGHT HOOK (Pink) -->
+  <g>
+    <!-- Outline -->
+    <path d="M 292 150 H 332 A 106 106 0 0 1 332 362 H 292" class="outline-bg"/>
+    <!-- Pink Fill -->
+    <path d="M 292 150 H 332 A 106 106 0 0 1 332 362 H 292" class="fill-pink"/>
+    <!-- Face -->
+    <circle cx="387" cy="248" r="8" fill="#313d40"/>
+    <circle cx="417" cy="248" r="8" fill="#313d40"/>
+    <ellipse cx="372" cy="254" rx="8" ry="5" fill="#ff8e9e" opacity="0.9"/>
+    <ellipse cx="432" cy="254" rx="8" ry="5" fill="#ff8e9e" opacity="0.9"/>
+    <path d="M 397 258 Q 402 264 407 258" stroke="#313d40" stroke-width="5" stroke-linecap="round" fill="none"/>
   </g>
 </svg>

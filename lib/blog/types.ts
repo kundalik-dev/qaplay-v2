@@ -1,12 +1,12 @@
 /**
  * Blog framework types.
  *
- * Blog posts are authored as Markdown files in `docs/blog/*.md`. The YAML
+ * Blog posts are authored as Markdown files in `blogs/*.md`. The YAML
  * frontmatter at the top of each file maps to `BlogFrontmatter`, which drives
  * both the page `Metadata` and the Article JSON-LD structured data.
  */
 
-/** Frontmatter authored at the top of each `docs/blog/*.md` post. */
+/** Frontmatter authored at the top of each `blogs/*.md` post. */
 export type BlogFrontmatter = {
   /** Post title — used for the H1, page title, and Article headline. */
   title: string;

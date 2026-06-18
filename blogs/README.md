@@ -1,13 +1,13 @@
 # Blog authoring guide
 
-Blog posts are plain Markdown files in this folder (`docs/blog/`). Drop a new
-`.md` file here and it is automatically published at `/blog/<filename>` — no
-code changes required.
+Blog posts are plain Markdown files in this folder (`blogs/`), at the project
+root. Drop a new `.md` file here and it is automatically published at
+`/blog/<filename>` — no code changes required.
 
 ## How it works
 
 ```
-docs/blog/my-post.md            →  /blog/my-post
+blogs/my-post.md            →  /blog/my-post
 ```
 
 - The **filename** (without `.md`) becomes the URL slug.
