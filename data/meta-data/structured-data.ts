@@ -1,5 +1,6 @@
 import type {
   ArticleStructuredDataInput,
+  BlogPostingStructuredDataInput,
   BreadcrumbItemStructuredDataInput,
   FaqStructuredDataItemInput,
   OpenGraphImage,
@@ -97,6 +98,50 @@ export function createArticleJsonLd(input: ArticleStructuredDataInput) {
       url: basicDetails.author.url,
     },
     publisher: createPublisherOrganization(),
+  } as const;
+}
+
+/**
+ * Build schema.org/BlogPosting JSON-LD for a blog article. Like
+ * `createArticleJsonLd` but with a per-post author and `keywords`, suited to
+ * Markdown posts whose author/tags vary per file.
+ */
+export function createBlogPostingJsonLd(input: BlogPostingStructuredDataInput) {
+  const {
+    headline,
+    description = basicDetails.websiteDescription,
+    path,
+    image = basicDetails.defaultOgImage.url,
+    datePublished,
+    dateModified = datePublished,
+    authorName = basicDetails.author.name,
+    keywords,
+  } = input;
+
+  const url = toCanonicalUrl(path);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline,
+    description,
+    image: toImageObject(image),
+    datePublished,
+    dateModified,
+    inLanguage: basicDetails.locale.replace("_", "-"),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
+    url,
+    author: {
+      "@type": "Person",
+      name: authorName,
+    },
+    publisher: createPublisherOrganization(),
+    ...(keywords && keywords.length > 0
+      ? { keywords: keywords.join(", ") }
+      : {}),
   } as const;
 }
 
