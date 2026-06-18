@@ -420,7 +420,8 @@ html.theme-transition-active::view-transition-new(root) {
     background: color-mix(in srgb, var(--card) 92%, white);
     border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
     border-radius: 10px;
-    box-shadow: 0 14px 34px color-mix(in srgb, var(--foreground) 6%, transparent);
+    box-shadow: 0 14px 34px
+      color-mix(in srgb, var(--foreground) 6%, transparent);
   }
 
   .dark .practice-side-card {
@@ -430,7 +431,8 @@ html.theme-transition-active::view-transition-new(root) {
   }
 
   .practice-side-card-header {
-    border-bottom: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--foreground) 10%, transparent);
   }
 
   .practice-side-title {

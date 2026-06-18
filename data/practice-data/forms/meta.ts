@@ -7,7 +7,7 @@ export const formsMeta: PracticePageMeta = {
     "Practice end-to-end form automation — filling inputs, selecting dropdowns, toggling checkboxes, triggering validation errors, and asserting success states.",
   level: "Intermediate",
   durationMin: 20,
-  scenarioCount: 8,
+  scenarioCount: 5,
   testCaseCount: 15,
   breadcrumb: [
     { label: "Home", href: "/" },

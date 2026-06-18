@@ -1,6 +1,9 @@
 import { createHighlighter, type BundledLanguage } from "shiki";
 
-import type { LearnCodeSnippet, HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
+import type {
+  LearnCodeSnippet,
+  HighlightedLearnCodeSnippet,
+} from "@/data/practice-data/types";
 
 // ── Language mapping from display label → Shiki bundle key ───────────────────
 const LANG_MAP: Record<string, BundledLanguage> = {

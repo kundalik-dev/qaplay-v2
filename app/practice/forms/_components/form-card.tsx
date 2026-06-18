@@ -22,15 +22,18 @@ const levelClass: Record<FormLevel, string> = {
   Challenge: styles.levelChallenge,
 };
 
-export function FormCard({ id, title, level, hint, testId, children }: FormCardProps) {
+export function FormCard({
+  id,
+  title,
+  level,
+  hint,
+  testId,
+  children,
+}: FormCardProps) {
   const [hintOpen, setHintOpen] = useState(false);
 
   return (
-    <div
-      className={styles.formCard}
-      data-testid={testId}
-      data-form-id={id}
-    >
+    <div className={styles.formCard} data-testid={testId} data-form-id={id}>
       {/* Header */}
       <div className={styles.formCardHeader}>
         <span className={styles.formCardId}>{id}</span>
@@ -47,10 +50,7 @@ export function FormCard({ id, title, level, hint, testId, children }: FormCardP
       <div className={styles.formCardHintRow}>
         <button
           type="button"
-          className={cn(
-            styles.hintBtn,
-            hintOpen ? styles.hintBtnOpen : "",
-          )}
+          className={cn(styles.hintBtn, hintOpen ? styles.hintBtnOpen : "")}
           onClick={() => setHintOpen((o) => !o)}
         >
           💡 {hintOpen ? "Hide Hint" : "Show Hint"}

@@ -10,7 +10,7 @@ export const dropdownsTestCases: TestCase[] = [
     steps: [
       "Navigate to <code>/practice/dropdowns</code>",
       'Locate <code>[data-testid="fruit-select"]</code> or <code>#fruitSelect</code>',
-      'Select the option with label <code>Apple</code>',
+      "Select the option with label <code>Apple</code>",
       'Assert <code>[data-testid="result-s01"]</code> contains <code>Apple</code>',
     ],
   },
@@ -21,7 +21,7 @@ export const dropdownsTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Locate <code>#fruitSelect</code>',
+      "Locate <code>#fruitSelect</code>",
       "Assert the current value equals an empty string",
       "Assert the visible selected option is <code>Select Fruit</code>",
     ],
@@ -34,7 +34,7 @@ export const dropdownsTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Locate <code>[data-testid="country-select"]</code>',
-      'Select by value <code>india</code>',
+      "Select by value <code>india</code>",
       "Assert the selected option text is <code>India</code>",
     ],
   },
@@ -45,7 +45,7 @@ export const dropdownsTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Locate <code>#countrySelect option</code>',
+      "Locate <code>#countrySelect option</code>",
       "Read all option elements",
       "Assert the count equals <code>5</code>",
     ],
@@ -69,7 +69,7 @@ export const dropdownsTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Locate <code>#languageSelect option</code>',
+      "Locate <code>#languageSelect option</code>",
       "Read text content for each option",
       "Assert the list includes <code>Python</code>, <code>Java</code>, <code>JavaScript</code>, and <code>TypeScript</code>",
     ],

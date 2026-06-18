@@ -17,9 +17,9 @@
   border-top-color: var(--border);
 
   /* Lifted for contrast on dark #1e2433 bg — all ≥ 4.5:1 */
-  --footer-body: #97a3b8;  /* 6.1:1 */
+  --footer-body: #97a3b8; /* 6.1:1 */
   --footer-muted: #8d99ae; /* 5.4:1 */
-  --footer-meta: #7e8ea0;  /* 4.6:1 */
+  --footer-meta: #7e8ea0; /* 4.6:1 */
 }
 
 .inner {

@@ -57,9 +57,19 @@ const priorityOptions = [
 const cityOptions = [
   { id: "city-pune", value: "pune", label: "Pune", region: "MH" },
   { id: "city-mumbai", value: "mumbai", label: "Mumbai", region: "MH" },
-  { id: "city-bengaluru", value: "bengaluru", label: "Bengaluru", region: "KA" },
+  {
+    id: "city-bengaluru",
+    value: "bengaluru",
+    label: "Bengaluru",
+    region: "KA",
+  },
   { id: "city-delhi", value: "delhi", label: "Delhi", region: "DL" },
-  { id: "city-hyderabad", value: "hyderabad", label: "Hyderabad", region: "TS" },
+  {
+    id: "city-hyderabad",
+    value: "hyderabad",
+    label: "Hyderabad",
+    region: "TS",
+  },
 ];
 
 function optionLabel(
@@ -146,7 +156,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                       }}
                     >
                       {fruits.map((item) => (
-                        <option key={item.value || "placeholder"} value={item.value}>
+                        <option
+                          key={item.value || "placeholder"}
+                          value={item.value}
+                        >
                           {item.label}
                         </option>
                       ))}
@@ -183,7 +196,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     }}
                   >
                     {countries.map((item) => (
-                      <option key={item.value || "placeholder"} value={item.value}>
+                      <option
+                        key={item.value || "placeholder"}
+                        value={item.value}
+                      >
                         {item.label}
                       </option>
                     ))}
@@ -199,7 +215,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
               {({ setResult }) => (
                 <>
                   <div className={styles.fieldStack}>
-                    <label className={styles.fieldLabel} htmlFor="languageSelect">
+                    <label
+                      className={styles.fieldLabel}
+                      htmlFor="languageSelect"
+                    >
                       Select Language
                     </label>
                     <select
@@ -408,16 +427,22 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                                 setSelectedCity(city.value);
                                 setCityQuery(city.label);
                                 setCityOpen(false);
-                                setResult(`City selected: ${city.label} (${city.id})`);
+                                setResult(
+                                  `City selected: ${city.label} (${city.id})`,
+                                );
                               }}
                             >
                               <span>{city.label}</span>
-                              <span className={styles.optionCode}>{city.region}</span>
+                              <span className={styles.optionCode}>
+                                {city.region}
+                              </span>
                             </button>
                           </li>
                         ))
                       ) : (
-                        <li className={styles.emptyState}>No city matches found</li>
+                        <li className={styles.emptyState}>
+                          No city matches found
+                        </li>
                       )}
                     </ul>
                   ) : null}
@@ -427,7 +452,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
           </div>
         </section>
 
-        <aside className={styles.practiceSidebar} data-testid="practice-sidebar">
+        <aside
+          className={styles.practiceSidebar}
+          data-testid="practice-sidebar"
+        >
           <ProgressWidget items={progressItems} />
           <FrameworkMethodsPanel methods={frameworkMethods} />
           <UpNextCard {...upNext} />

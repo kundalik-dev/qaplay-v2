@@ -15,7 +15,7 @@ export function MethodSummaryTable({ rows }: MethodSummaryTableProps) {
 
   return (
     <div className="max-w-full overflow-x-auto rounded-[10px] border border-border">
-      <table className="min-w-[760px] w-full border-collapse text-[12.5px]">
+      <table className="w-full min-w-[760px] border-collapse text-[12.5px]">
         <thead>
           <tr>
             {headers.map((header) => (

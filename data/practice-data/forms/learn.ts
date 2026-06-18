@@ -4,7 +4,6 @@ import type {
   MethodRow,
   TocItem,
 } from "@/data/practice-data/types";
-
 export const formsTocItems: TocItem[] = [
   { id: "learn-overview", label: "Overview" },
   { id: "learn-fill-text", label: "1 · Fill Text Inputs" },
@@ -18,14 +17,14 @@ export const formsTocItems: TocItem[] = [
   { id: "learn-methods", label: "Method Summary", dividerBefore: true },
   { id: "learn-faq", label: "FAQ" },
 ];
-
 export const formsLearnDesc: Record<string, string> = {
   overview:
     "Forms combine every element type — text inputs, dropdowns, radio buttons, checkboxes, and passwords. Automating them well means filling all field types correctly, triggering and asserting validation error messages, submitting and verifying the success state, and resetting the form.",
   fillText:
     "Text inputs are the baseline. Use fill() in Playwright (replaces the full value) or sendKeys() in Selenium (appends). Target fields by their id or data-testid.",
   dob: "Date inputs accept ISO strings (YYYY-MM-DD). Always use fill() or sendKeys() directly with the formatted string — avoid clicking calendar pickers where possible.",
-  radio: "Radio buttons belong to a named group. Check the specific option by its id or data-testid, then assert it is checked. Assert siblings are unchecked to confirm exclusive selection.",
+  radio:
+    "Radio buttons belong to a named group. Check the specific option by its id or data-testid, then assert it is checked. Assert siblings are unchecked to confirm exclusive selection.",
   country:
     "The country field uses a native HTML <select>. Use selectOption() in Playwright or Select.selectByVisibleText() in Selenium. The data-testid on the select element makes it easy to target.",
   checkboxes:
@@ -37,7 +36,6 @@ export const formsLearnDesc: Record<string, string> = {
   errors:
     "Validation errors appear under each field after a failed submit. They carry predictable ids and data-testids so you can assert text content and visibility.",
 };
-
 export const formsLearnCode: Record<string, LearnCodeSnippet> = {
   fillText: {
     pw: {
@@ -195,18 +193,15 @@ cy.get('[data-testid="submit-form-btn"]').click();`,
       lang: "TypeScript",
       code: `// Playwright — assert validation errors
 await page.getByTestId("submit-form-btn").click();
-
 await expect(page.getByTestId("error-first-name")).toBeVisible();
 await expect(page.getByTestId("error-email")).toHaveText("Email is required.");
 await expect(page.getByTestId("error-gender")).toBeVisible();
-
 // password mismatch
 await page.fill("#password", "secret123");
 await page.fill("#confirmPassword", "wrong456");
 await page.getByTestId("submit-form-btn").click();
 await expect(page.getByTestId("error-confirm-password"))
   .toHaveText("Passwords do not match.");
-
 // success state
 await page.getByTestId("submit-form-btn").click();
 await expect(page.getByTestId("form-success-msg")).toBeVisible();
@@ -216,12 +211,10 @@ await expect(page.getByTestId("submitted-name")).toContainText("John");`,
       lang: "Java",
       code: `// Selenium WebDriver — assert validation errors
 driver.findElement(By.id("submitFormBtn")).click();
-
 assertTrue(driver.findElement(By.id("firstNameError")).isDisplayed());
 assertEquals("Email is required.",
   driver.findElement(By.id("emailError")).getText());
 assertTrue(driver.findElement(By.id("genderError")).isDisplayed());
-
 // password mismatch
 driver.findElement(By.id("password")).sendKeys("secret123");
 driver.findElement(By.id("confirmPassword")).sendKeys("wrong456");
@@ -236,7 +229,6 @@ cy.get('[data-testid="submit-form-btn"]').click();
 cy.get('[data-testid="error-first-name"]').should('be.visible');
 cy.get('[data-testid="error-email"]').should('have.text', 'Email is required.');
 cy.get('[data-testid="error-gender"]').should('be.visible');
-
 // password mismatch
 cy.get('#password').type('secret123');
 cy.get('#confirmPassword').type('wrong456');
@@ -246,14 +238,13 @@ cy.get('[data-testid="error-confirm-password"]')
     },
   },
 };
-
 export const formsMethodRows: MethodRow[] = [
   {
     action: "Fill text input",
-    selenium: "sendKeys(\"text\")",
-    playwrightJs: "fill(\"text\")",
-    playwrightPy: "fill(\"text\")",
-    cypress: ".type(\"text\")",
+    selenium: 'sendKeys("text")',
+    playwrightJs: 'fill("text")',
+    playwrightPy: 'fill("text")',
+    cypress: '.type("text")',
   },
   {
     action: "Select dropdown",
@@ -298,7 +289,6 @@ export const formsMethodRows: MethodRow[] = [
     cypress: "should('be.visible')",
   },
 ];
-
 export const formsFaq: FaqItem[] = [
   {
     question: "How do I fill and submit a form with Selenium WebDriver?",

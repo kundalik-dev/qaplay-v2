@@ -20,9 +20,7 @@ export function ProgressWidget({ items }: ProgressWidgetProps) {
   return (
     <div className="practice-side-card p-4" data-testid="progress-widget">
       <div className="mb-2.5 flex items-center justify-between">
-        <span className="practice-side-title text-[12.5px]">
-          Your Progress
-        </span>
+        <span className="practice-side-title text-[12.5px]">Your Progress</span>
         <span className="practice-side-kicker font-[family-name:var(--font-ibm-plex-mono)] text-[12px]">
           {done} / {total}
         </span>

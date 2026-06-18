@@ -3,7 +3,8 @@ import type { TestCase } from "@/data/practice-data/types";
 export const formsTestCases: TestCase[] = [
   {
     id: "FRM_001",
-    scenario: "Fill all required fields with valid data and submit successfully",
+    scenario:
+      "Fill all required fields with valid data and submit successfully",
     expected: "Success message appears showing the submitted first name",
     type: "positive",
     priority: "high",
@@ -85,7 +86,8 @@ export const formsTestCases: TestCase[] = [
   {
     id: "FRM_006",
     scenario: "Mismatched passwords show confirm password error",
-    expected: "Error message saying passwords do not match appears under confirm password",
+    expected:
+      "Error message saying passwords do not match appears under confirm password",
     type: "negative",
     priority: "high",
     steps: [
@@ -111,7 +113,8 @@ export const formsTestCases: TestCase[] = [
   {
     id: "FRM_008",
     scenario: "Success message displays the submitted first name",
-    expected: "The submitted-name element contains the first name that was entered",
+    expected:
+      "The submitted-name element contains the first name that was entered",
     type: "positive",
     priority: "high",
     steps: [
@@ -137,7 +140,8 @@ export const formsTestCases: TestCase[] = [
   {
     id: "FRM_010",
     scenario: "Gender radio button selection",
-    expected: "Only the selected radio reflects a checked state; others are unchecked",
+    expected:
+      "Only the selected radio reflects a checked state; others are unchecked",
     type: "positive",
     priority: "medium",
     steps: [
@@ -161,7 +165,8 @@ export const formsTestCases: TestCase[] = [
   {
     id: "FRM_012",
     scenario: "Multiple interest checkboxes can be selected independently",
-    expected: "Each selected checkbox is independently checked and others are unaffected",
+    expected:
+      "Each selected checkbox is independently checked and others are unaffected",
     type: "positive",
     priority: "medium",
     steps: [
@@ -174,7 +179,8 @@ export const formsTestCases: TestCase[] = [
   {
     id: "FRM_013",
     scenario: "Form fields retain values after a validation failure",
-    expected: "Filled fields keep their values when submit fails due to another field being invalid",
+    expected:
+      "Filled fields keep their values when submit fails due to another field being invalid",
     type: "edge",
     priority: "medium",
     steps: [
@@ -188,7 +194,8 @@ export const formsTestCases: TestCase[] = [
   {
     id: "FRM_014",
     scenario: "Fill Again button returns to empty form from success state",
-    expected: "Clicking Fill Again hides the success message and shows a fresh empty form",
+    expected:
+      "Clicking Fill Again hides the success message and shows a fresh empty form",
     type: "positive",
     priority: "medium",
     steps: [
@@ -202,7 +209,8 @@ export const formsTestCases: TestCase[] = [
   {
     id: "FRM_015",
     scenario: "Form page loads without JavaScript errors",
-    expected: "No console errors on page load; all form fields are present and interactive",
+    expected:
+      "No console errors on page load; all form fields are present and interactive",
     type: "positive",
     priority: "low",
     steps: [

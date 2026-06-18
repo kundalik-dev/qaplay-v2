@@ -90,7 +90,7 @@ export function MainTabs({
         role="tablist"
         aria-label="Practice page tabs"
       >
-        <div className="mx-auto flex w-max min-w-full max-w-[1280px] items-center gap-0.5 px-4 sm:px-7">
+        <div className="mx-auto flex w-max max-w-[1280px] min-w-full items-center gap-0.5 px-4 sm:px-7">
           {tabs.map((tab, index) => {
             const isActive = active === tab.id;
             const tabId = `practice-tab-${tab.id}`;
@@ -156,7 +156,7 @@ export function MainTabs({
         aria-labelledby="practice-tab-practice"
         hidden={active !== "practice"}
         tabIndex={0}
-        className="outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-primary/25"
+        className="outline-none focus-visible:ring-1 focus-visible:ring-primary/25 focus-visible:ring-inset"
       >
         {practiceContent}
       </div>
@@ -166,7 +166,7 @@ export function MainTabs({
         aria-labelledby="practice-tab-testcases"
         hidden={active !== "testcases"}
         tabIndex={0}
-        className="outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-primary/25"
+        className="outline-none focus-visible:ring-1 focus-visible:ring-primary/25 focus-visible:ring-inset"
       >
         {testCasesContent}
       </div>
@@ -176,7 +176,7 @@ export function MainTabs({
         aria-labelledby="practice-tab-learn"
         hidden={active !== "learn"}
         tabIndex={0}
-        className="outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-primary/25"
+        className="outline-none focus-visible:ring-1 focus-visible:ring-primary/25 focus-visible:ring-inset"
       >
         {learnContent}
       </div>
