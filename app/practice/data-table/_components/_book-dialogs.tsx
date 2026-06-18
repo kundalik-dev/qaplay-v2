@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { genres, type BookRow } from "@/data/practice-data/data-table/scenarios";
+import {
+  genres,
+  type BookRow,
+} from "@/data/practice-data/data-table/scenarios";
 import styles from "./data-table.module.css";
 
 // ── Edit dialog ───────────────────────────────────────────────────────────────
@@ -37,17 +40,24 @@ export function EditDialog({ book, onSave, onClose }: EditDialogProps) {
       aria-labelledby="edit-dialog-title"
       data-testid="edit-book-dialog"
       className={styles.dialogBackdrop}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
     >
       <div className={styles.dialogBox} data-book-id={book.id}>
-        <h2 id="edit-dialog-title" className={styles.dialogTitle}>Edit Book</h2>
+        <h2 id="edit-dialog-title" className={styles.dialogTitle}>
+          Edit Book
+        </h2>
         <p className={styles.dialogSubtitle}>
-          Editing: <strong data-testid="edit-dialog-book-name">{book.bookName}</strong>
+          Editing:{" "}
+          <strong data-testid="edit-dialog-book-name">{book.bookName}</strong>
         </p>
 
         <div className={styles.dialogFields}>
           {/* Beginner: label + testid */}
-          <label htmlFor="edit-book-name" className={styles.fieldLabel}>Book Name</label>
+          <label htmlFor="edit-book-name" className={styles.fieldLabel}>
+            Book Name
+          </label>
           <input
             id="edit-book-name"
             name="bookName"
@@ -59,7 +69,9 @@ export function EditDialog({ book, onSave, onClose }: EditDialogProps) {
           />
 
           {/* Beginner: label + testid */}
-          <label htmlFor="edit-book-author" className={styles.fieldLabel}>Author</label>
+          <label htmlFor="edit-book-author" className={styles.fieldLabel}>
+            Author
+          </label>
           <input
             id="edit-book-author"
             name="bookAuthor"
@@ -83,7 +95,9 @@ export function EditDialog({ book, onSave, onClose }: EditDialogProps) {
           </div>
 
           {/* Medium: native select + label */}
-          <label htmlFor="edit-book-genre" className={styles.fieldLabel}>Genre</label>
+          <label htmlFor="edit-book-genre" className={styles.fieldLabel}>
+            Genre
+          </label>
           <select
             id="edit-book-genre"
             name="bookGenre"
@@ -92,13 +106,19 @@ export function EditDialog({ book, onSave, onClose }: EditDialogProps) {
             data-testid="edit-select-genre"
             className={styles.fieldInput}
           >
-            {genres.filter((g) => g !== "All").map((g) => (
-              <option key={g} value={g}>{g}</option>
-            ))}
+            {genres
+              .filter((g) => g !== "All")
+              .map((g) => (
+                <option key={g} value={g}>
+                  {g}
+                </option>
+              ))}
           </select>
 
           {/* Published date */}
-          <label htmlFor="edit-book-published" className={styles.fieldLabel}>Published</label>
+          <label htmlFor="edit-book-published" className={styles.fieldLabel}>
+            Published
+          </label>
           <input
             id="edit-book-published"
             name="bookPublished"
@@ -112,7 +132,12 @@ export function EditDialog({ book, onSave, onClose }: EditDialogProps) {
         </div>
 
         <div className={styles.dialogActions}>
-          <button type="button" data-testid="edit-dialog-cancel" onClick={onClose} className={styles.btnOutline}>
+          <button
+            type="button"
+            data-testid="edit-dialog-cancel"
+            onClick={onClose}
+            className={styles.btnOutline}
+          >
             Cancel
           </button>
           {/* Challenge: aria-label only — no data-testid on save */}
@@ -161,7 +186,9 @@ export function AddDialog({ nextSrNo, onSave, onClose }: AddDialogProps) {
       srNo: nextSrNo,
       bookName: bookName.trim(),
       bookAuthor: bookAuthor.trim(),
-      bookIsbn: bookIsbn.trim() ? "ISBN-" + bookIsbn.trim().replace(/^ISBN-/i, "") : "ISBN-N/A",
+      bookIsbn: bookIsbn.trim()
+        ? "ISBN-" + bookIsbn.trim().replace(/^ISBN-/i, "")
+        : "ISBN-N/A",
       bookGenre,
       bookPublished: bookPublished.trim() || "N/A",
     });
@@ -174,15 +201,24 @@ export function AddDialog({ nextSrNo, onSave, onClose }: AddDialogProps) {
       aria-labelledby="add-dialog-title"
       data-testid="add-book-dialog"
       className={styles.dialogBackdrop}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
     >
       <div className={styles.dialogBox}>
-        <h2 id="add-dialog-title" className={styles.dialogTitle}>Add New Book</h2>
-        <p className={styles.dialogSubtitle}>Entry will be saved and persist across page reloads.</p>
+        <h2 id="add-dialog-title" className={styles.dialogTitle}>
+          Add New Book
+        </h2>
+        <p className={styles.dialogSubtitle}>
+          Entry will be saved and persist across page reloads.
+        </p>
 
         <div className={styles.dialogFields}>
           <label htmlFor="add-book-name" className={styles.fieldLabel}>
-            Book Name <span aria-hidden="true" className={styles.fieldRequired}>*</span>
+            Book Name{" "}
+            <span aria-hidden="true" className={styles.fieldRequired}>
+              *
+            </span>
           </label>
           <input
             id="add-book-name"
@@ -190,16 +226,29 @@ export function AddDialog({ nextSrNo, onSave, onClose }: AddDialogProps) {
             type="text"
             placeholder="Enter book title"
             value={bookName}
-            onChange={(e) => { setBookName(e.target.value); setNameError(false); }}
+            onChange={(e) => {
+              setBookName(e.target.value);
+              setNameError(false);
+            }}
             data-testid="add-input-book-name"
             aria-required="true"
             aria-invalid={nameError}
-            className={styles.fieldInput + (nameError ? " " + styles.fieldInputError : "")}
+            className={
+              styles.fieldInput +
+              (nameError ? " " + styles.fieldInputError : "")
+            }
           />
-          {nameError && <span className={styles.fieldError} data-testid="add-name-error">Book name is required</span>}
+          {nameError && (
+            <span className={styles.fieldError} data-testid="add-name-error">
+              Book name is required
+            </span>
+          )}
 
           <label htmlFor="add-book-author" className={styles.fieldLabel}>
-            Author <span aria-hidden="true" className={styles.fieldRequired}>*</span>
+            Author{" "}
+            <span aria-hidden="true" className={styles.fieldRequired}>
+              *
+            </span>
           </label>
           <input
             id="add-book-author"
@@ -207,15 +256,27 @@ export function AddDialog({ nextSrNo, onSave, onClose }: AddDialogProps) {
             type="text"
             placeholder="Author name"
             value={bookAuthor}
-            onChange={(e) => { setBookAuthor(e.target.value); setAuthorError(false); }}
+            onChange={(e) => {
+              setBookAuthor(e.target.value);
+              setAuthorError(false);
+            }}
             data-testid="add-input-book-author"
             aria-required="true"
             aria-invalid={authorError}
-            className={styles.fieldInput + (authorError ? " " + styles.fieldInputError : "")}
+            className={
+              styles.fieldInput +
+              (authorError ? " " + styles.fieldInputError : "")
+            }
           />
-          {authorError && <span className={styles.fieldError} data-testid="add-author-error">Author is required</span>}
+          {authorError && (
+            <span className={styles.fieldError} data-testid="add-author-error">
+              Author is required
+            </span>
+          )}
 
-          <label htmlFor="add-book-genre" className={styles.fieldLabel}>Genre</label>
+          <label htmlFor="add-book-genre" className={styles.fieldLabel}>
+            Genre
+          </label>
           <select
             id="add-book-genre"
             name="bookGenre"
@@ -224,9 +285,13 @@ export function AddDialog({ nextSrNo, onSave, onClose }: AddDialogProps) {
             data-testid="add-select-genre"
             className={styles.fieldInput}
           >
-            {genres.filter((g) => g !== "All").map((g) => (
-              <option key={g} value={g}>{g}</option>
-            ))}
+            {genres
+              .filter((g) => g !== "All")
+              .map((g) => (
+                <option key={g} value={g}>
+                  {g}
+                </option>
+              ))}
           </select>
 
           <div className={styles.fieldRow}>
@@ -241,7 +306,9 @@ export function AddDialog({ nextSrNo, onSave, onClose }: AddDialogProps) {
             />
           </div>
 
-          <label htmlFor="add-book-published" className={styles.fieldLabel}>Published</label>
+          <label htmlFor="add-book-published" className={styles.fieldLabel}>
+            Published
+          </label>
           <input
             id="add-book-published"
             name="bookPublished"
@@ -255,7 +322,12 @@ export function AddDialog({ nextSrNo, onSave, onClose }: AddDialogProps) {
         </div>
 
         <div className={styles.dialogActions}>
-          <button type="button" data-testid="add-dialog-cancel" onClick={onClose} className={styles.btnOutline}>
+          <button
+            type="button"
+            data-testid="add-dialog-cancel"
+            onClick={onClose}
+            className={styles.btnOutline}
+          >
             Cancel
           </button>
           <button
@@ -289,16 +361,25 @@ export function DeleteDialog({ book, onConfirm, onClose }: DeleteDialogProps) {
       aria-labelledby="delete-dialog-title"
       data-testid="delete-book-dialog"
       className={styles.dialogBackdrop}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
     >
       <div className={styles.dialogBox} data-book-id={book.id}>
-        <h2 id="delete-dialog-title" className={styles.dialogTitle}>Delete Book</h2>
+        <h2 id="delete-dialog-title" className={styles.dialogTitle}>
+          Delete Book
+        </h2>
         <p className={styles.dialogBody}>
           <span data-testid="delete-dialog-book-name">{book.bookName}</span>{" "}
           will be permanently removed.
         </p>
         <div className={styles.dialogActions}>
-          <button type="button" data-testid="delete-dialog-cancel" onClick={onClose} className={styles.btnOutline}>
+          <button
+            type="button"
+            data-testid="delete-dialog-cancel"
+            onClick={onClose}
+            className={styles.btnOutline}
+          >
             Cancel
           </button>
           <button

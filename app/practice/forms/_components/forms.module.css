@@ -134,7 +134,9 @@
 }
 
 @media (max-width: 560px) {
-  .formGrid2 { grid-template-columns: 1fr; }
+  .formGrid2 {
+    grid-template-columns: 1fr;
+  }
 }
 
 .fieldRow {
@@ -269,7 +271,9 @@
   gap: 10px 20px;
 }
 
-.termsLabel { font-size: 13px; }
+.termsLabel {
+  font-size: 13px;
+}
 
 /* ── Error message ────────────────────────────────────────────────────────── */
 
@@ -311,7 +315,9 @@
   transition: filter 0.15s;
 }
 
-.submitBtn:hover { filter: brightness(0.93); }
+.submitBtn:hover {
+  filter: brightness(0.93);
+}
 
 .resetBtn {
   padding: 8px 20px;
@@ -324,10 +330,15 @@
   background: transparent;
   color: var(--foreground);
   border: 1.5px solid var(--border);
-  transition: border-color 0.15s, color 0.15s;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
 }
 
-.resetBtn:hover { border-color: var(--primary); color: var(--primary); }
+.resetBtn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
 
 /* ── Inline feedback banners ──────────────────────────────────────────────── */
 
@@ -404,4 +415,6 @@
   transition: filter 0.15s;
 }
 
-.fillAgainBtn:hover { filter: brightness(0.93); }
+.fillAgainBtn:hover {
+  filter: brightness(0.93);
+}

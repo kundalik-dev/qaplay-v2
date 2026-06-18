@@ -19,7 +19,11 @@ function loadFromStorage(): BookRow[] {
     const raw = localStorage.getItem(LS_KEY);
     if (!raw) return bookRows;
     const parsed: BookRow[] = JSON.parse(raw);
-    if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0].id === "string") {
+    if (
+      Array.isArray(parsed) &&
+      parsed.length > 0 &&
+      typeof parsed[0].id === "string"
+    ) {
       return parsed;
     }
   } catch {
@@ -40,7 +44,10 @@ function saveToStorage(rows: BookRow[]) {
 
 type SortKey = keyof Omit<BookRow, "id">;
 type SortDir = "asc" | "desc" | null;
-interface SortState { key: SortKey | null; dir: SortDir; }
+interface SortState {
+  key: SortKey | null;
+  dir: SortDir;
+}
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
@@ -94,7 +101,11 @@ export function BookDataTable() {
   }, []);
 
   const resetToDefaults = useCallback(() => {
-    try { localStorage.removeItem(LS_KEY); } catch { /* ignore */ }
+    try {
+      localStorage.removeItem(LS_KEY);
+    } catch {
+      /* ignore */
+    }
     setRows(bookRows);
     setSearchTerm("");
     setGenreFilter("All");
@@ -116,7 +127,8 @@ export function BookDataTable() {
 
   const filteredRows = useMemo(() => {
     let result = rows;
-    if (genreFilter !== "All") result = result.filter((r) => r.bookGenre === genreFilter);
+    if (genreFilter !== "All")
+      result = result.filter((r) => r.bookGenre === genreFilter);
     if (searchTerm.trim()) {
       const q = searchTerm.toLowerCase();
       result = result.filter(
@@ -124,14 +136,16 @@ export function BookDataTable() {
           r.bookName.toLowerCase().includes(q) ||
           r.bookAuthor.toLowerCase().includes(q) ||
           r.bookGenre.toLowerCase().includes(q) ||
-          r.bookIsbn.toLowerCase().includes(q)
+          r.bookIsbn.toLowerCase().includes(q),
       );
     }
     if (sort.key && sort.dir) {
       const sk = sort.key;
       const sd = sort.dir;
       result = [...result].sort((a, b) => {
-        const cmp = String(a[sk]).localeCompare(String(b[sk]), undefined, { numeric: true });
+        const cmp = String(a[sk]).localeCompare(String(b[sk]), undefined, {
+          numeric: true,
+        });
         return sd === "asc" ? cmp : -cmp;
       });
     }
@@ -139,18 +153,26 @@ export function BookDataTable() {
   }, [rows, searchTerm, genreFilter, sort]);
 
   // Reset to page 1 whenever the filtered set changes
-  useEffect(() => { setCurrentPage(1); }, [searchTerm, genreFilter, sort]);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, genreFilter, sort]);
 
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / PAGE_SIZE));
   const safeCurrentPage = Math.min(currentPage, totalPages);
-  const pagedRows = filteredRows.slice((safeCurrentPage - 1) * PAGE_SIZE, safeCurrentPage * PAGE_SIZE);
+  const pagedRows = filteredRows.slice(
+    (safeCurrentPage - 1) * PAGE_SIZE,
+    safeCurrentPage * PAGE_SIZE,
+  );
 
   // Show Reset only after hydration and when rows have been deleted
   const showReset = hydrated && rows.length < bookRows.length;
 
   // ── Sortable column definitions ───────────────────────────────────────────
 
-  const sortableCols: Array<{ header: (typeof tableColumnHeaders)[number]; key: SortKey }> = [
+  const sortableCols: Array<{
+    header: (typeof tableColumnHeaders)[number];
+    key: SortKey;
+  }> = [
     { header: tableColumnHeaders[1], key: "bookName" },
     { header: tableColumnHeaders[2], key: "bookGenre" },
     { header: tableColumnHeaders[3], key: "bookAuthor" },
@@ -159,18 +181,32 @@ export function BookDataTable() {
   ];
 
   function sortIcon(key: SortKey) {
-    if (sort.key !== key) return <span aria-hidden="true" className={styles.sortNeutral}>{"⇅"}</span>;
-    return <span aria-hidden="true" className={styles.sortActive}>{sort.dir === "asc" ? "↑" : "↓"}</span>;
+    if (sort.key !== key)
+      return (
+        <span aria-hidden="true" className={styles.sortNeutral}>
+          {"⇅"}
+        </span>
+      );
+    return (
+      <span aria-hidden="true" className={styles.sortActive}>
+        {sort.dir === "asc" ? "↑" : "↓"}
+      </span>
+    );
   }
 
   // ── Render ────────────────────────────────────────────────────────────────
 
   return (
-    <div className={styles.tableWrapper} data-testid="data-table-wrapper" data-section="data-table">
-
+    <div
+      className={styles.tableWrapper}
+      data-testid="data-table-wrapper"
+      data-section="data-table"
+    >
       {/* Controls */}
       <div className={styles.tableControls} data-testid="table-controls">
-        <label htmlFor="table-search-input" className="sr-only">Search books</label>
+        <label htmlFor="table-search-input" className="sr-only">
+          Search books
+        </label>
         <input
           id="table-search-input"
           type="search"
@@ -182,7 +218,9 @@ export function BookDataTable() {
           className={styles.searchInput}
         />
 
-        <label htmlFor="genre-filter-select" className="sr-only">Filter by genre</label>
+        <label htmlFor="genre-filter-select" className="sr-only">
+          Filter by genre
+        </label>
         <select
           id="genre-filter-select"
           value={genreFilter}
@@ -192,7 +230,9 @@ export function BookDataTable() {
           className={styles.filterSelect}
         >
           {genres.map((g) => (
-            <option key={g} value={g}>{g === "All" ? "All Genres" : g}</option>
+            <option key={g} value={g}>
+              {g === "All" ? "All Genres" : g}
+            </option>
           ))}
         </select>
 
@@ -230,7 +270,12 @@ export function BookDataTable() {
         >
           <thead data-testid="table-head">
             <tr>
-              <th scope="col" data-testid={tableColumnHeaders[0].testId} data-col={tableColumnHeaders[0].dataCol} className={styles.th}>
+              <th
+                scope="col"
+                data-testid={tableColumnHeaders[0].testId}
+                data-col={tableColumnHeaders[0].dataCol}
+                className={styles.th}
+              >
                 {tableColumnHeaders[0].label}
               </th>
 
@@ -241,18 +286,37 @@ export function BookDataTable() {
                   data-testid={header.testId}
                   data-col={header.dataCol}
                   data-sort={key}
-                  aria-sort={sort.key === key ? (sort.dir === "asc" ? "ascending" : "descending") : "none"}
+                  aria-sort={
+                    sort.key === key
+                      ? sort.dir === "asc"
+                        ? "ascending"
+                        : "descending"
+                      : "none"
+                  }
                   className={styles.th + " " + styles.thSortable}
                   onClick={() => handleSort(key)}
-                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleSort(key); } }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      handleSort(key);
+                    }
+                  }}
                   tabIndex={0}
                   role="columnheader"
                 >
-                  <span className={styles.thContent}>{header.label}{sortIcon(key)}</span>
+                  <span className={styles.thContent}>
+                    {header.label}
+                    {sortIcon(key)}
+                  </span>
                 </th>
               ))}
 
-              <th scope="col" data-testid={tableColumnHeaders[6].testId} data-col={tableColumnHeaders[6].dataCol} className={styles.th}>
+              <th
+                scope="col"
+                data-testid={tableColumnHeaders[6].testId}
+                data-col={tableColumnHeaders[6].dataCol}
+                className={styles.th}
+              >
                 {tableColumnHeaders[6].label}
               </th>
             </tr>
@@ -261,35 +325,87 @@ export function BookDataTable() {
           <tbody data-testid="table-body">
             {filteredRows.length === 0 ? (
               <tr data-testid="empty-table-row">
-                <td colSpan={7} className={styles.emptyCell} id="emptyTableMsg" data-testid="empty-table-msg">
+                <td
+                  colSpan={7}
+                  className={styles.emptyCell}
+                  id="emptyTableMsg"
+                  data-testid="empty-table-msg"
+                >
                   No books match your search
                 </td>
               </tr>
             ) : (
               pagedRows.map((book) => {
                 const slug = book.bookGenre.toLowerCase().replace(/ /g, "-");
-                const badgeClass = styles.genreBadge + " " + (styles["genre-" + slug] ?? "");
+                const badgeClass =
+                  styles.genreBadge + " " + (styles["genre-" + slug] ?? "");
                 return (
-                  <tr key={book.id} data-testid="book-row" data-book-id={book.id} data-genre={slug} className={styles.tr}>
-                    <td data-col="sr-no" data-testid="cell-sr-no" className={styles.td}>{book.srNo}</td>
+                  <tr
+                    key={book.id}
+                    data-testid="book-row"
+                    data-book-id={book.id}
+                    data-genre={slug}
+                    className={styles.tr}
+                  >
+                    <td
+                      data-col="sr-no"
+                      data-testid="cell-sr-no"
+                      className={styles.td}
+                    >
+                      {book.srNo}
+                    </td>
                     {/* Book Name — medium: filter by text */}
-                    <td data-col="book-name" className={styles.td}>{book.bookName}</td>
+                    <td data-col="book-name" className={styles.td}>
+                      {book.bookName}
+                    </td>
                     {/* Genre — medium: data-genre-value attribute */}
-                    <td data-col="book-genre" data-genre-value={book.bookGenre} className={styles.td}>
-                      <span className={badgeClass} data-testid="genre-badge">{book.bookGenre}</span>
+                    <td
+                      data-col="book-genre"
+                      data-genre-value={book.bookGenre}
+                      className={styles.td}
+                    >
+                      <span className={badgeClass} data-testid="genre-badge">
+                        {book.bookGenre}
+                      </span>
                     </td>
                     {/* Author — hard: no data-testid, locate by text/sibling */}
-                    <td data-col="book-author" className={styles.td}>{book.bookAuthor}</td>
+                    <td data-col="book-author" className={styles.td}>
+                      {book.bookAuthor}
+                    </td>
                     {/* ISBN — hard: locate by data-col attribute */}
-                    <td data-col="book-isbn" className={styles.td + " " + styles.isbnCell}>{book.bookIsbn}</td>
+                    <td
+                      data-col="book-isbn"
+                      className={styles.td + " " + styles.isbnCell}
+                    >
+                      {book.bookIsbn}
+                    </td>
                     {/* Published — hard: locate by data-col */}
-                    <td data-col="book-published" className={styles.td}>{book.bookPublished}</td>
+                    <td data-col="book-published" className={styles.td}>
+                      {book.bookPublished}
+                    </td>
                     {/* Actions — Edit has testid; Delete has only aria-label (challenge) */}
-                    <td data-col="actions" data-testid="cell-actions" className={styles.td + " " + styles.actionsCell}>
-                      <button type="button" data-testid="btn-edit-book" aria-label={"Edit " + book.bookName} data-book-id={book.id} onClick={() => setEditBook(book)} className={styles.btnEdit}>
+                    <td
+                      data-col="actions"
+                      data-testid="cell-actions"
+                      className={styles.td + " " + styles.actionsCell}
+                    >
+                      <button
+                        type="button"
+                        data-testid="btn-edit-book"
+                        aria-label={"Edit " + book.bookName}
+                        data-book-id={book.id}
+                        onClick={() => setEditBook(book)}
+                        className={styles.btnEdit}
+                      >
                         Edit
                       </button>
-                      <button type="button" aria-label={"Delete " + book.bookName} data-book-id={book.id} onClick={() => setDeleteBook(book)} className={styles.btnDelete}>
+                      <button
+                        type="button"
+                        aria-label={"Delete " + book.bookName}
+                        data-book-id={book.id}
+                        onClick={() => setDeleteBook(book)}
+                        className={styles.btnDelete}
+                      >
                         Delete
                       </button>
                     </td>
@@ -303,7 +419,11 @@ export function BookDataTable() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className={styles.pagination} data-testid="pagination" aria-label="Table pagination">
+        <div
+          className={styles.pagination}
+          data-testid="pagination"
+          aria-label="Table pagination"
+        >
           <button
             type="button"
             className={styles.pgBtn}
@@ -319,7 +439,10 @@ export function BookDataTable() {
             <button
               key={page}
               type="button"
-              className={styles.pgBtn + (page === safeCurrentPage ? " " + styles.pgBtnActive : "")}
+              className={
+                styles.pgBtn +
+                (page === safeCurrentPage ? " " + styles.pgBtnActive : "")
+              }
               data-testid={"pagination-page-" + page}
               aria-label={"Page " + page}
               aria-current={page === safeCurrentPage ? "page" : undefined}
@@ -340,9 +463,14 @@ export function BookDataTable() {
             ›
           </button>
 
-          <span className={styles.pgRowCount} data-testid="row-count" aria-live="polite">
+          <span
+            className={styles.pgRowCount}
+            data-testid="row-count"
+            aria-live="polite"
+          >
             {filteredRows.length} {filteredRows.length === 1 ? "book" : "books"}
-            {totalPages > 1 && " — page " + safeCurrentPage + " of " + totalPages}
+            {totalPages > 1 &&
+              " — page " + safeCurrentPage + " of " + totalPages}
           </span>
         </div>
       )}
@@ -350,7 +478,11 @@ export function BookDataTable() {
       {/* Row count when no pagination */}
       {totalPages <= 1 && (
         <div className={styles.pagination}>
-          <span className={styles.pgRowCount} data-testid="row-count" aria-live="polite">
+          <span
+            className={styles.pgRowCount}
+            data-testid="row-count"
+            aria-live="polite"
+          >
             {filteredRows.length} {filteredRows.length === 1 ? "book" : "books"}
           </span>
         </div>
@@ -371,23 +503,45 @@ export function BookDataTable() {
 
         {showHints && (
           <ul className={styles.hintList} data-testid="hint-list">
-            <li><code>#dataTable</code> — stable id for all frameworks</li>
-            <li><code>[data-testid="book-row"][data-book-id="book-004"]</code> — row by id</li>
-            <li><code>td[data-col="book-isbn"]</code> — column cells by attribute</li>
-            <li><code>Delete</code> buttons have <strong>no data-testid</strong> — use <code>aria-label</code> or XPath</li>
+            <li>
+              <code>#dataTable</code> — stable id for all frameworks
+            </li>
+            <li>
+              <code>[data-testid="book-row"][data-book-id="book-004"]</code> —
+              row by id
+            </li>
+            <li>
+              <code>td[data-col="book-isbn"]</code> — column cells by attribute
+            </li>
+            <li>
+              <code>Delete</code> buttons have <strong>no data-testid</strong> —
+              use <code>aria-label</code> or XPath
+            </li>
           </ul>
         )}
       </div>
 
       {/* Dialogs */}
       {addOpen && (
-        <AddDialog nextSrNo={rows.length + 1} onSave={addRow} onClose={() => setAddOpen(false)} />
+        <AddDialog
+          nextSrNo={rows.length + 1}
+          onSave={addRow}
+          onClose={() => setAddOpen(false)}
+        />
       )}
       {editBook && (
-        <EditDialog book={editBook} onSave={updateRow} onClose={() => setEditBook(null)} />
+        <EditDialog
+          book={editBook}
+          onSave={updateRow}
+          onClose={() => setEditBook(null)}
+        />
       )}
       {deleteBook && (
-        <DeleteDialog book={deleteBook} onConfirm={() => deleteRow(deleteBook.id)} onClose={() => setDeleteBook(null)} />
+        <DeleteDialog
+          book={deleteBook}
+          onConfirm={() => deleteRow(deleteBook.id)}
+          onClose={() => setDeleteBook(null)}
+        />
       )}
     </div>
   );

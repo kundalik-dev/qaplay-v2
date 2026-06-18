@@ -244,7 +244,11 @@ export const tableColumnHeaders = [
   { label: "Book Genre", testId: "col-book-genre", dataCol: "book-genre" },
   { label: "Book Author", testId: "col-book-author", dataCol: "book-author" },
   { label: "Book ISBN", testId: "col-book-isbn", dataCol: "book-isbn" },
-  { label: "Book Published", testId: "col-book-published", dataCol: "book-published" },
+  {
+    label: "Book Published",
+    testId: "col-book-published",
+    dataCol: "book-published",
+  },
   { label: "Actions", testId: "col-actions", dataCol: "actions" },
 ];
 

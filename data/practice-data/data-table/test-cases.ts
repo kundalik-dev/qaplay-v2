@@ -10,20 +10,22 @@ export const dataTableTestCases: TestCase[] = [
     priority: "high",
     steps: [
       "Navigate to <code>/practice/data-table</code>",
-      "Locate all <code>th</code> elements inside <code>[data-testid=\"data-table\"] thead</code>",
+      'Locate all <code>th</code> elements inside <code>[data-testid="data-table"] thead</code>',
       "Read each header text via <code>allTextContents()</code> / <code>getText()</code>",
       "Assert the array contains all 7 expected header labels",
     ],
   },
   {
     id: "DT_002",
-    scenario: "Table displays exactly 5 rows on page 1 (25 total across 5 pages)",
-    expected: "Row count on page 1 equals 5; row-count indicator shows '25 books — page 1 of 5'",
+    scenario:
+      "Table displays exactly 5 rows on page 1 (25 total across 5 pages)",
+    expected:
+      "Row count on page 1 equals 5; row-count indicator shows '25 books — page 1 of 5'",
     type: "positive",
     priority: "high",
     steps: [
       "Navigate to <code>/practice/data-table</code>",
-      "Wait for <code>[data-testid=\"data-table\"] tbody tr</code> to be visible",
+      'Wait for <code>[data-testid="data-table"] tbody tr</code> to be visible',
       "Count <code>tbody tr</code> rows inside <code>#dataTable</code>",
       "Assert <code>count()</code> equals 5",
       "Assert <code>[data-testid='row-count']</code> text contains <code>25 books</code>",
@@ -43,7 +45,8 @@ export const dataTableTestCases: TestCase[] = [
   },
   {
     id: "DT_004",
-    scenario: "Find the row for author 'George Orwell' and click its Edit button",
+    scenario:
+      "Find the row for author 'George Orwell' and click its Edit button",
     expected:
       "The Edit button in the George Orwell row is clicked successfully",
     type: "positive",
@@ -89,7 +92,7 @@ export const dataTableTestCases: TestCase[] = [
       "Locate <code>[data-testid='table-search']</code>",
       "Type <code>Clean Code</code> into the search input",
       "Assert row count drops to 1",
-      'Assert the visible row contains text <code>Clean Code</code>',
+      "Assert the visible row contains text <code>Clean Code</code>",
     ],
   },
   {
@@ -100,14 +103,15 @@ export const dataTableTestCases: TestCase[] = [
     priority: "medium",
     steps: [
       "Locate <code>[data-testid='genre-filter']</code>",
-      'Select <code>Technology</code> from the dropdown',
+      "Select <code>Technology</code> from the dropdown",
       "Assert all visible rows contain <code>Technology</code> in the genre cell",
       "Assert rows from other genres are not present",
     ],
   },
   {
     id: "DT_009",
-    scenario: "Delete button for a row has no data-testid — located via aria-label",
+    scenario:
+      "Delete button for a row has no data-testid — located via aria-label",
     expected: "Delete button is found and accessible via aria-label or XPath",
     type: "positive",
     priority: "medium",
@@ -133,8 +137,10 @@ export const dataTableTestCases: TestCase[] = [
   },
   {
     id: "DT_011",
-    scenario: "Clearing the search input restores all rows and resets pagination",
-    expected: "After clearing search, page 1 shows 5 rows and pagination shows 5 pages",
+    scenario:
+      "Clearing the search input restores all rows and resets pagination",
+    expected:
+      "After clearing search, page 1 shows 5 rows and pagination shows 5 pages",
     type: "edge",
     priority: "medium",
     steps: [
@@ -159,7 +165,8 @@ export const dataTableTestCases: TestCase[] = [
   {
     id: "DT_013",
     scenario: "Clicking page 2 loads the next set of rows",
-    expected: "Page 2 shows rows 6-10 and the active page button is highlighted",
+    expected:
+      "Page 2 shows rows 6-10 and the active page button is highlighted",
     type: "positive",
     priority: "high",
     steps: [
@@ -198,8 +205,10 @@ export const dataTableTestCases: TestCase[] = [
   },
   {
     id: "DT_016",
-    scenario: "Clicking a sortable column header sorts rows ascending then descending",
-    expected: "First click sorts A to Z, second click sorts Z to A, third click resets sort",
+    scenario:
+      "Clicking a sortable column header sorts rows ascending then descending",
+    expected:
+      "First click sorts A to Z, second click sorts Z to A, third click resets sort",
     type: "positive",
     priority: "high",
     steps: [
@@ -225,7 +234,8 @@ export const dataTableTestCases: TestCase[] = [
   },
   {
     id: "DT_018",
-    scenario: "Add new book via the Add Book dialog and verify it appears in the table",
+    scenario:
+      "Add new book via the Add Book dialog and verify it appears in the table",
     expected: "New book row appears on the last page and persists after reload",
     type: "positive",
     priority: "high",
@@ -242,8 +252,10 @@ export const dataTableTestCases: TestCase[] = [
   },
   {
     id: "DT_019",
-    scenario: "Add Book dialog shows validation errors when required fields are empty",
-    expected: "Submitting with empty Name or Author shows inline error messages",
+    scenario:
+      "Add Book dialog shows validation errors when required fields are empty",
+    expected:
+      "Submitting with empty Name or Author shows inline error messages",
     type: "negative",
     priority: "medium",
     steps: [
@@ -258,7 +270,8 @@ export const dataTableTestCases: TestCase[] = [
   {
     id: "DT_020",
     scenario: "Edit a book and verify the updated values are saved",
-    expected: "Edited fields reflect new values in the table row and persist after reload",
+    expected:
+      "Edited fields reflect new values in the table row and persist after reload",
     type: "positive",
     priority: "high",
     steps: [

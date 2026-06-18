@@ -27,7 +27,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
         </section>
 
         {/* ── Right: sticky sidebar ─────────────────────────────────────── */}
-        <aside className={styles.practiceSidebar} data-testid="practice-sidebar">
+        <aside
+          className={styles.practiceSidebar}
+          data-testid="practice-sidebar"
+        >
           <FrameworkMethodsPanel methods={frameworkMethods} />
           <UpNextCard {...upNext} />
         </aside>

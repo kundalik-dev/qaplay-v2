@@ -314,7 +314,9 @@
   border: 1.5px solid #bfdbfe;
   background: #eff6ff;
   color: #1d4ed8;
-  transition: background 0.12s, border-color 0.12s;
+  transition:
+    background 0.12s,
+    border-color 0.12s;
 }
 .btnEdit:hover {
   background: #dbeafe;
@@ -342,7 +344,9 @@
   border: 1.5px solid #fca5a5;
   background: #fee2e2;
   color: #991b1b;
-  transition: background 0.12s, border-color 0.12s;
+  transition:
+    background 0.12s,
+    border-color 0.12s;
 }
 .btnDelete:hover {
   background: #fecaca;
@@ -385,7 +389,9 @@
   border: 1.5px solid #fde68a;
   background: #fefce8;
   color: #78350f;
-  transition: background 0.12s, border-color 0.12s;
+  transition:
+    background 0.12s,
+    border-color 0.12s;
   margin-bottom: 0;
 }
 .hintToggleBtn:hover {
@@ -460,7 +466,10 @@
   background: transparent;
   color: var(--foreground);
   cursor: pointer;
-  transition: background 0.12s, border-color 0.12s, color 0.12s;
+  transition:
+    background 0.12s,
+    border-color 0.12s,
+    color 0.12s;
 }
 .pgBtn:hover:not(:disabled) {
   background: var(--muted);
