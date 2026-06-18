@@ -15,8 +15,8 @@ import {
 
 export function LearnTab() {
   return (
-    <div className="mx-auto w-full max-w-[1280px] px-7 py-8 pb-16">
-      <div className="grid gap-12" style={{ gridTemplateColumns: "1fr 200px" }}>
+    <div className="mx-auto w-full max-w-[1280px] px-4 py-6 pb-16 sm:px-7 sm:py-8">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_200px] lg:gap-12">
         {/* ── Main doc content ─────────────────────────────────────────── */}
         <main aria-label="Learn content" className="flex flex-col gap-5">
           {/* Overview */}

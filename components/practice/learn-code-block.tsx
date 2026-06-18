@@ -33,13 +33,13 @@ export function LearnCodeBlock({ snippets }: LearnCodeBlockProps) {
   return (
     <div>
       {/* Framework tabs */}
-      <div className="mb-0 flex gap-1">
+      <div className="mb-0 flex max-w-full gap-1 overflow-x-auto">
         {(Object.keys(FW_LABELS) as FwKey[]).map((fw) => (
           <button
             key={fw}
             onClick={() => setActive(fw)}
             className={cn(
-              "rounded-t-[6px] border border-b-0 px-3 py-[5px] text-[12px] font-semibold transition-all",
+              "flex-shrink-0 rounded-t-[6px] border border-b-0 px-3 py-[5px] text-[12px] font-semibold transition-all",
               active === fw
                 ? "practice-learn-tab-active"
                 : "practice-learn-tab",

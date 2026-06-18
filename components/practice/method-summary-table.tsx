@@ -14,8 +14,8 @@ export function MethodSummaryTable({ rows }: MethodSummaryTableProps) {
   ] as const;
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse text-[12.5px]">
+    <div className="max-w-full overflow-x-auto rounded-[10px] border border-border">
+      <table className="min-w-[760px] w-full border-collapse text-[12.5px]">
         <thead>
           <tr>
             {headers.map((header) => (
@@ -43,9 +43,9 @@ export function MethodSummaryTable({ rows }: MethodSummaryTableProps) {
                 row.playwrightJs,
                 row.playwrightPy,
                 row.cypress,
-              ].map((cell) => (
+              ].map((cell, colIndex) => (
                 <td
-                  key={`${row.action}-${cell}`}
+                  key={`${row.action}-${colIndex}`}
                   className="border-b border-border/50 px-3 py-[9px]"
                 >
                   <code className="font-[family-name:var(--font-ibm-plex-mono)] text-[11.5px] text-primary">

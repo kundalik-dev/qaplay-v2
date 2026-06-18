@@ -80,10 +80,7 @@ export function PageHeader({
         </nav>
 
         <div className="pb-5">
-          <h1
-            className="mb-2 font-[family-name:var(--font-space-grotesk)] leading-[1.25] font-extrabold tracking-[-0.5px] text-foreground"
-            style={{ fontSize: "28px" }}
-          >
+          <h1 className="mb-2 font-[family-name:var(--font-space-grotesk)] text-[24px] leading-[1.25] font-extrabold tracking-[-0.5px] text-foreground sm:text-[28px]">
             {title}
           </h1>
           <p className="mb-[14px] max-w-[600px] text-[14px] leading-[1.6] text-muted-foreground">

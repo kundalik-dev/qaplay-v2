@@ -40,7 +40,7 @@ export function LearnToc({ items }: LearnTocProps) {
   return (
     <nav
       aria-label="Table of contents"
-      className="sticky top-[160px] flex flex-col"
+      className="order-first flex flex-col lg:sticky lg:top-[160px] lg:order-none"
     >
       <span className="mb-2 font-[family-name:var(--font-ibm-plex-mono)] text-[10.5px] font-bold tracking-[0.07em] text-muted-foreground uppercase">
         On This Page

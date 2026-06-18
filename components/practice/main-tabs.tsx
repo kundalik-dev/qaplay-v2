@@ -86,11 +86,11 @@ export function MainTabs({
   return (
     <div>
       <div
-        className="sticky top-[var(--nav-offset,60px)] z-20 border-b border-border bg-background/90 backdrop-blur-sm"
+        className="sticky top-[var(--nav-offset,60px)] z-20 overflow-x-auto border-b border-border bg-background/90 backdrop-blur-sm"
         role="tablist"
         aria-label="Practice page tabs"
       >
-        <div className="mx-auto flex w-full max-w-[1280px] items-center gap-0.5 px-7">
+        <div className="mx-auto flex w-max min-w-full max-w-[1280px] items-center gap-0.5 px-4 sm:px-7">
           {tabs.map((tab, index) => {
             const isActive = active === tab.id;
             const tabId = `practice-tab-${tab.id}`;
@@ -115,7 +115,7 @@ export function MainTabs({
                 onKeyDown={(event) => handleTabKeyDown(event, index)}
                 className={cn(
                   "-mb-px flex items-center gap-[6px] border-b-2 whitespace-nowrap",
-                  "px-4 py-[10px] text-[13.5px] font-medium transition-colors outline-none",
+                  "px-3 py-[10px] text-[13px] font-medium transition-colors outline-none sm:px-4 sm:text-[13.5px]",
                   "focus-visible:ring-2 focus-visible:ring-primary/30",
                   isActive
                     ? "border-primary font-semibold text-primary"

@@ -41,7 +41,7 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
 
   return (
     <div
-      className="mx-auto w-full max-w-[1280px] px-7"
+      className="mx-auto w-full max-w-[1280px] px-4 sm:px-7"
       data-testid="practice-tab"
       data-section="practice"
     >
