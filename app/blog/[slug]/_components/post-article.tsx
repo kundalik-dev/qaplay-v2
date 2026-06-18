@@ -83,7 +83,8 @@ export function PostArticle({
         {previousPost && <PostNavBanner post={previousPost} />}
       </article>
 
-      {hasToc && <PostToc items={toc} />}
+      {/* TOC hidden for now */}
+      {/* {hasToc && <PostToc items={toc} />} */}
     </div>
   );
 }
