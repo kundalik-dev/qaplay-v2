@@ -83,8 +83,12 @@
   --chart-5: #8fa5b5;
   --brand-tertiary: #d9652f;
   --success: #27c93f;
+  --success-readable: #137333;
   --warning: #ffbd2e;
+  --warning-readable: #8a5a00;
   --info: #44d9e8;
+  --info-readable: #0b7285;
+  --destructive-readable: #c2410c;
   --radius: 0.625rem;
   --grid-line: rgba(31, 95, 107, 0.04);
   --hero-glow-1: rgba(20, 184, 166, 0.08);
@@ -177,8 +181,12 @@
   --chart-5: #4a5266;
   --brand-tertiary: #ff6b35;
   --success: #27c93f;
+  --success-readable: #27c93f;
   --warning: #ffbd2e;
+  --warning-readable: #ffbd2e;
   --info: #44d9e8;
+  --info-readable: #44d9e8;
+  --destructive-readable: #ff5f56;
   --grid-line: rgba(0, 255, 170, 0.03);
   --hero-glow-1: rgba(0, 255, 170, 0.08);
   --hero-glow-2: rgba(123, 97, 255, 0.05);
@@ -408,6 +416,142 @@ html.theme-transition-active::view-transition-new(root) {
 }
 
 @layer components {
+  .practice-side-card {
+    background: color-mix(in srgb, var(--card) 92%, white);
+    border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
+    border-radius: 10px;
+    box-shadow: 0 14px 34px color-mix(in srgb, var(--foreground) 6%, transparent);
+  }
+
+  .dark .practice-side-card {
+    background: color-mix(in srgb, var(--card) 94%, black);
+    border-color: color-mix(in srgb, var(--foreground) 12%, transparent);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+  }
+
+  .practice-side-card-header {
+    border-bottom: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  }
+
+  .practice-side-title {
+    color: var(--foreground);
+    font-weight: 800;
+  }
+
+  .practice-side-kicker {
+    color: color-mix(in srgb, var(--primary) 72%, var(--foreground));
+    font-weight: 800;
+  }
+
+  .dark .practice-side-kicker {
+    color: color-mix(in srgb, var(--primary) 78%, white);
+  }
+
+  .practice-side-muted {
+    color: color-mix(in srgb, var(--muted-foreground) 74%, var(--foreground));
+  }
+
+  .dark .practice-side-muted {
+    color: color-mix(in srgb, var(--muted-foreground) 74%, white);
+  }
+
+  .practice-progress-track {
+    background: color-mix(in srgb, var(--foreground) 8%, transparent);
+  }
+
+  .practice-progress-fill {
+    background: linear-gradient(
+      90deg,
+      var(--success-readable),
+      color-mix(in srgb, var(--success-readable) 70%, var(--info-readable))
+    );
+  }
+
+  .practice-progress-check {
+    background: var(--success-readable);
+    border-color: var(--success-readable);
+    color: var(--primary-foreground);
+  }
+
+  .practice-progress-empty {
+    background: color-mix(in srgb, var(--card) 85%, white);
+    border-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+    color: transparent;
+  }
+
+  .dark .practice-progress-empty {
+    background: color-mix(in srgb, var(--card) 82%, black);
+    border-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+  }
+
+  .practice-framework-tab {
+    color: color-mix(in srgb, var(--muted-foreground) 72%, var(--foreground));
+  }
+
+  .practice-framework-tab:hover {
+    color: var(--foreground);
+    background: color-mix(in srgb, var(--primary) 6%, transparent);
+  }
+
+  .practice-framework-tab-active {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  .practice-side-notice {
+    color: color-mix(in srgb, var(--primary) 72%, var(--foreground));
+    background: color-mix(in srgb, var(--primary) 8%, var(--card));
+    border-color: color-mix(in srgb, var(--primary) 28%, transparent);
+  }
+
+  .dark .practice-side-notice {
+    color: color-mix(in srgb, var(--primary) 78%, white);
+    background: color-mix(in srgb, var(--primary) 10%, var(--card));
+    border-color: color-mix(in srgb, var(--primary) 34%, transparent);
+  }
+
+  .practice-learn-tab {
+    color: color-mix(in srgb, var(--muted-foreground) 70%, var(--foreground));
+    background: color-mix(in srgb, var(--muted) 72%, transparent);
+    border-color: color-mix(in srgb, var(--foreground) 10%, transparent);
+  }
+
+  .practice-learn-tab:hover {
+    color: var(--foreground);
+    background: color-mix(in srgb, var(--primary) 6%, var(--card));
+  }
+
+  .practice-learn-tab-active {
+    color: var(--primary-foreground);
+    background: var(--primary);
+    border-color: var(--primary);
+  }
+
+  .practice-code-shell {
+    border-color: color-mix(in srgb, var(--foreground) 14%, transparent);
+  }
+
+  .practice-code-header {
+    background: #111827;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.1);
+  }
+
+  .practice-code-label {
+    color: #cbd5e1;
+  }
+
+  .practice-copy-button {
+    color: #dbeafe;
+    background: rgba(59, 130, 246, 0.12);
+    border-color: rgba(147, 197, 253, 0.32);
+  }
+
+  .practice-copy-button:hover {
+    color: #ffffff;
+    background: rgba(59, 130, 246, 0.28);
+    border-color: rgba(191, 219, 254, 0.52);
+  }
+
   .capture-shell {
     width: min(100%, 1280px);
     margin-inline: auto;

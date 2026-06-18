@@ -33,7 +33,7 @@ export function FrameworkMethodsPanel({ methods }: FrameworkMethodsPanelProps) {
       {/* Panel header */}
       <div className="flex items-center justify-between border-b border-border/50 px-4 py-[14px]">
         <span className="text-[13px] font-bold text-foreground">
-          What You'll Learn
+          What You&apos;ll Learn
         </span>
         <span>🎓</span>
       </div>

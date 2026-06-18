@@ -15,6 +15,22 @@
   line-height: 1;
 }
 
+.practiceLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 24px;
+  padding-block: 24px 64px;
+}
+
+.practiceSidebar {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  gap: 16px;
+}
+
 /* Primary — uses project primary */
 .btnPrimary {
   background: var(--primary);
@@ -68,11 +84,11 @@
 
 /* Disabled (red-tinted) */
 .btnDisabled {
-  background: #fef2f2;
-  color: #f87171;
-  border: 1.5px solid #fecaca;
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1.5px solid #fca5a5;
   cursor: not-allowed;
-  opacity: 0.7;
+  opacity: 1;
 }
 
 /* Blue */
@@ -93,4 +109,14 @@
 }
 .btnRose:hover {
   background: #ffe4e6;
+}
+
+@media (max-width: 1024px) {
+  .practiceLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .practiceSidebar {
+    position: static;
+  }
 }

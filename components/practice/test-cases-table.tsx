@@ -10,16 +10,16 @@ import type {
 
 const TYPE_STYLES: Record<TestCaseType, string> = {
   positive:
-    "bg-[color-mix(in_srgb,var(--success)_10%,transparent)] text-[var(--success)] border-[color-mix(in_srgb,var(--success)_30%,transparent)]",
+    "bg-[color-mix(in_srgb,var(--success)_10%,transparent)] text-[var(--success-readable)] border-[color-mix(in_srgb,var(--success)_30%,transparent)]",
   negative:
-    "bg-[color-mix(in_srgb,var(--destructive)_10%,transparent)] text-[var(--destructive)] border-[color-mix(in_srgb,var(--destructive)_30%,transparent)]",
-  edge: "bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] text-[var(--warning)] border-[color-mix(in_srgb,var(--warning)_30%,transparent)]",
+    "bg-[color-mix(in_srgb,var(--destructive)_10%,transparent)] text-[var(--destructive-readable)] border-[color-mix(in_srgb,var(--destructive)_30%,transparent)]",
+  edge: "bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] text-[var(--warning-readable)] border-[color-mix(in_srgb,var(--warning)_30%,transparent)]",
 };
 
 const PRIORITY_STYLES: Record<TestCasePriority, string> = {
-  high: "bg-[color-mix(in_srgb,var(--destructive)_10%,transparent)] text-[var(--destructive)] border-[color-mix(in_srgb,var(--destructive)_30%,transparent)]",
+  high: "bg-[color-mix(in_srgb,var(--destructive)_10%,transparent)] text-[var(--destructive-readable)] border-[color-mix(in_srgb,var(--destructive)_30%,transparent)]",
   medium:
-    "bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] text-[var(--warning)] border-[color-mix(in_srgb,var(--warning)_30%,transparent)]",
+    "bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] text-[var(--warning-readable)] border-[color-mix(in_srgb,var(--warning)_30%,transparent)]",
   low: "bg-muted text-muted-foreground border-border",
 };
 
@@ -39,7 +39,11 @@ export function TestCasesTable({ testCases }: TestCasesTableProps) {
   function toggleExpand(id: string) {
     setExpanded((prev) => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
       return next;
     });
   }

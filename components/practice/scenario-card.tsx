@@ -67,7 +67,7 @@ export function ScenarioCard({
         </span>
 
         {badge ? (
-          <span className="rounded-[4px] border border-[color-mix(in_srgb,var(--warning)_30%,transparent)] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] px-2 py-[2px] text-[10px] font-bold tracking-[0.05em] text-[var(--warning)]">
+          <span className="rounded-[4px] border border-[color-mix(in_srgb,var(--warning)_30%,transparent)] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] px-2 py-[2px] text-[10px] font-bold tracking-[0.05em] text-[var(--warning-readable)]">
             {badge}
           </span>
         ) : null}
@@ -83,7 +83,7 @@ export function ScenarioCard({
             className={cn(
               "flex min-h-8 flex-1 items-center rounded-[6px] border px-2.5 py-1.5 font-[family-name:var(--font-ibm-plex-mono)] text-[12.5px] transition-colors",
               hasResult
-                ? "border-[color-mix(in_srgb,var(--success)_25%,transparent)] bg-[color-mix(in_srgb,var(--success)_8%,transparent)] text-[var(--success)]"
+                ? "border-[color-mix(in_srgb,var(--success)_25%,transparent)] bg-[color-mix(in_srgb,var(--success)_8%,transparent)] text-[var(--success-readable)]"
                 : "border-border/50 bg-muted text-muted-foreground",
             )}
           >

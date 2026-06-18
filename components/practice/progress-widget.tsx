@@ -36,6 +36,8 @@ export function ProgressWidget({ items }: ProgressWidgetProps) {
           className="h-full rounded-full transition-all duration-500"
           style={{ width: `${pct}%`, background: "var(--success)" }}
           role="progressbar"
+          aria-label="Practice progress"
+          aria-valuemin={0}
           aria-valuenow={done}
           aria-valuemax={total}
         />
