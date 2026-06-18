@@ -68,6 +68,13 @@ export interface LearnCodeSnippet {
   cy: { lang: string; code: string };
 }
 
+/** Server-side pre-highlighted version passed to LearnCodeBlock */
+export interface HighlightedLearnCodeSnippet {
+  pw: { lang: string; code: string; html: string };
+  sel: { lang: string; code: string; html: string };
+  cy: { lang: string; code: string; html: string };
+}
+
 export interface MethodRow {
   action: string;
   selenium: string;

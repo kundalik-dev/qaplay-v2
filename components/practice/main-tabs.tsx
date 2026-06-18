@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { BookOpenText, Gamepad2, ListChecks } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 type TabId = "practice" | "testcases" | "learn";
@@ -8,7 +11,7 @@ type TabId = "practice" | "testcases" | "learn";
 interface TabDef {
   id: TabId;
   label: string;
-  emoji: string;
+  Icon: LucideIcon;
   count?: number;
 }
 
@@ -28,42 +31,104 @@ export function MainTabs({
   learnContent,
 }: MainTabsProps) {
   const [active, setActive] = useState<TabId>("practice");
+  const tabRefs = useRef<Record<TabId, HTMLButtonElement | null>>({
+    practice: null,
+    testcases: null,
+    learn: null,
+  });
 
   const tabs: TabDef[] = [
-    { id: "practice", label: "Practice", emoji: "🎮", count: scenarioCount },
-    { id: "testcases", label: "Test Cases", emoji: "🧪", count: testCaseCount },
-    { id: "learn", label: "Learn", emoji: "📖" },
+    {
+      id: "practice",
+      label: "Practice",
+      Icon: Gamepad2,
+      count: scenarioCount,
+    },
+    {
+      id: "testcases",
+      label: "Test Cases",
+      Icon: ListChecks,
+      count: testCaseCount,
+    },
+    { id: "learn", label: "Learn", Icon: BookOpenText },
   ];
+
+  function focusTab(tabId: TabId) {
+    setActive(tabId);
+    tabRefs.current[tabId]?.focus();
+  }
+
+  function handleTabKeyDown(
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    index: number,
+  ) {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (event.key === "Home") {
+      focusTab(tabs[0].id);
+      return;
+    }
+
+    if (event.key === "End") {
+      focusTab(tabs[tabs.length - 1].id);
+      return;
+    }
+
+    const offset = event.key === "ArrowRight" ? 1 : -1;
+    const nextIndex = (index + offset + tabs.length) % tabs.length;
+    focusTab(tabs[nextIndex].id);
+  }
 
   return (
     <div>
       <div
-        className="sticky top-[var(--nav-offset,60px)] z-20 border-b border-border bg-background/90 backdrop-blur-sm"
+        className="sticky top-[var(--nav-offset,60px)] z-20 overflow-x-auto overflow-y-hidden border-b border-border bg-background/90 backdrop-blur-sm"
         role="tablist"
         aria-label="Practice page tabs"
       >
-        <div className="mx-auto flex w-full max-w-[1280px] items-center gap-0.5 px-7">
-          {tabs.map((tab) => {
+        <div className="mx-auto flex w-max max-w-[1280px] min-w-full items-center gap-0.5 px-4 sm:px-7">
+          {tabs.map((tab, index) => {
             const isActive = active === tab.id;
+            const tabId = `practice-tab-${tab.id}`;
+            const panelId = `practice-panel-${tab.id}`;
+            const Icon = tab.Icon;
+
             return (
               <button
                 key={tab.id}
+                ref={(node) => {
+                  tabRefs.current[tab.id] = node;
+                }}
                 type="button"
                 role="tab"
+                id={tabId}
                 aria-selected={isActive}
+                aria-controls={panelId}
+                tabIndex={isActive ? 0 : -1}
                 data-testid={`tab-${tab.id}`}
                 data-tab={tab.id}
                 onClick={() => setActive(tab.id)}
+                onKeyDown={(event) => handleTabKeyDown(event, index)}
                 className={cn(
                   "-mb-px flex items-center gap-[6px] border-b-2 whitespace-nowrap",
-                  "px-4 py-[10px] text-[13.5px] font-medium transition-colors outline-none",
+                  "px-3 py-[10px] text-[13px] font-medium transition-colors outline-none sm:px-4 sm:text-[13.5px]",
                   "focus-visible:ring-2 focus-visible:ring-primary/30",
                   isActive
                     ? "border-primary font-semibold text-primary"
                     : "border-transparent text-muted-foreground hover:text-foreground",
                 )}
               >
-                <span>{tab.emoji}</span>
+                <Icon
+                  aria-hidden="true"
+                  className={cn(
+                    "h-[15px] w-[15px] flex-shrink-0 stroke-[2.35]",
+                    isActive ? "text-primary" : "text-muted-foreground",
+                  )}
+                />
                 <span>{tab.label}</span>
                 {tab.count !== undefined ? (
                   <span
@@ -85,9 +150,36 @@ export function MainTabs({
         </div>
       </div>
 
-      <div hidden={active !== "practice"}>{practiceContent}</div>
-      <div hidden={active !== "testcases"}>{testCasesContent}</div>
-      <div hidden={active !== "learn"}>{learnContent}</div>
+      <div
+        id="practice-panel-practice"
+        role="tabpanel"
+        aria-labelledby="practice-tab-practice"
+        hidden={active !== "practice"}
+        tabIndex={0}
+        className="outline-none focus-visible:ring-1 focus-visible:ring-primary/25 focus-visible:ring-inset"
+      >
+        {practiceContent}
+      </div>
+      <div
+        id="practice-panel-testcases"
+        role="tabpanel"
+        aria-labelledby="practice-tab-testcases"
+        hidden={active !== "testcases"}
+        tabIndex={0}
+        className="outline-none focus-visible:ring-1 focus-visible:ring-primary/25 focus-visible:ring-inset"
+      >
+        {testCasesContent}
+      </div>
+      <div
+        id="practice-panel-learn"
+        role="tabpanel"
+        aria-labelledby="practice-tab-learn"
+        hidden={active !== "learn"}
+        tabIndex={0}
+        className="outline-none focus-visible:ring-1 focus-visible:ring-primary/25 focus-visible:ring-inset"
+      >
+        {learnContent}
+      </div>
     </div>
   );
 }

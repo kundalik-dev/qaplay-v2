@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Define styles for cartoon outlines -->
+  <style>
+    .outline-bg { stroke: #313d40; stroke-width: 112px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .fill-blue { stroke: #53a3ec; stroke-width: 80px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .fill-pink { stroke: #eda1ab; stroke-width: 80px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .sparkle { fill: #fcf5af; stroke: #313d40; stroke-width: 8px; stroke-linejoin: round; }
+  </style>
+
+  <!-- Background sparkles -->
+  <path d="M 70 90 L 85 75 M 85 90 L 70 75 M 77 65 V 100 M 57 82 H 97" stroke="#81d9e7" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 430 420 L 445 405 M 445 420 L 430 405 M 437 395 V 430 M 417 412 H 457" stroke="#fcf5af" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 440 90 L 450 78 M 450 90 L 440 78 M 445 70 V 98 M 432 84 H 458" stroke="#eda1ab" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- BOTTOM CHEVRON (Pink) -->
+  <g>
+    <!-- Outline -->
+    <path d="M 110 280 L 256 390 L 402 280" class="outline-bg"/>
+    <!-- Pink Fill -->
+    <path d="M 110 280 L 256 390 L 402 280" class="fill-pink"/>
+    <!-- Cute face for bottom chevron -->
+    <circle cx="220" cy="320" r="10" fill="#313d40"/>
+    <circle cx="292" cy="320" r="10" fill="#313d40"/>
+    <ellipse cx="198" cy="330" rx="12" ry="8" fill="#ff8e9e" opacity="0.9"/>
+    <ellipse cx="314" cy="330" rx="12" ry="8" fill="#ff8e9e" opacity="0.9"/>
+    <path d="M 246 340 Q 256 352 266 340" stroke="#313d40" stroke-width="6" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- TOP CHEVRON (Blue) -->
+  <g>
+    <!-- Outline -->
+    <path d="M 110 140 L 256 250 L 402 140" class="outline-bg"/>
+    <!-- Blue Fill -->
+    <path d="M 110 140 L 256 250 L 402 140" class="fill-blue"/>
+    <!-- Cute face for top chevron -->
+    <circle cx="220" cy="180" r="10" fill="#313d40"/>
+    <circle cx="292" cy="180" r="10" fill="#313d40"/>
+    <ellipse cx="198" cy="190" rx="12" ry="8" fill="#ff8e9e" opacity="0.9"/>
+    <ellipse cx="314" cy="190" rx="12" ry="8" fill="#ff8e9e" opacity="0.9"/>
+    <path d="M 246 200 Q 256 212 266 200" stroke="#313d40" stroke-width="6" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

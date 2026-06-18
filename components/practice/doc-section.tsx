@@ -23,7 +23,7 @@ export function DocSection({
         className,
       )}
     >
-      <div className="border-b border-border/50 px-5 pt-[18px] pb-4">
+      <div className="border-b border-border/50 px-4 pt-[16px] pb-4 sm:px-5 sm:pt-[18px]">
         <div className="mb-1 font-[family-name:var(--font-space-grotesk)] text-[16px] font-bold text-foreground">
           {heading}
         </div>
@@ -33,7 +33,7 @@ export function DocSection({
           </p>
         )}
       </div>
-      {children && <div className="p-5">{children}</div>}
+      {children && <div className="p-4 sm:p-5">{children}</div>}
     </div>
   );
 }

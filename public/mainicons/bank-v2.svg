@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <style>
+    .outline { stroke: #313d40; stroke-width: 16px; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+
+  <!-- Background sparkles -->
+  <path d="M 70 90 L 85 75 M 85 90 L 70 75 M 77 65 V 100 M 57 82 H 97" stroke="#81d9e7" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 430 420 L 445 405 M 445 420 L 430 405 M 437 395 V 430 M 417 412 H 457" stroke="#fcf5af" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 440 90 L 450 78 M 450 90 L 440 78 M 445 70 V 98 M 432 84 H 458" stroke="#eda1ab" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Bank Base -->
+  <rect x="60" y="380" width="392" height="60" rx="16" fill="#fcf5af" class="outline" />
+
+  <!-- Bank Pillars -->
+  <rect x="80" y="220" width="40" height="160" rx="12" fill="#53a3ec" class="outline" />
+  <rect x="184" y="220" width="40" height="160" rx="12" fill="#53a3ec" class="outline" />
+  <rect x="288" y="220" width="40" height="160" rx="12" fill="#53a3ec" class="outline" />
+  <rect x="392" y="220" width="40" height="160" rx="12" fill="#53a3ec" class="outline" />
+
+  <!-- Roof Base -->
+  <rect x="60" y="160" width="392" height="60" rx="16" fill="#fcf5af" class="outline" />
+
+  <!-- Roof Top (Triangle) -->
+  <path d="M 256 60 L 60 160 H 452 Z" fill="#eda1ab" class="outline" />
+
+  <!-- Cute Face on the Roof Top -->
+  <circle cx="236" cy="120" r="8" fill="#313d40"/>
+  <circle cx="276" cy="120" r="8" fill="#313d40"/>
+  <ellipse cx="216" cy="125" rx="8" ry="6" fill="#ff8e9e"/>
+  <ellipse cx="296" cy="125" rx="8" ry="6" fill="#ff8e9e"/>
+  <path d="M 248 128 Q 256 136 264 128" stroke="#313d40" stroke-width="5" stroke-linecap="round" fill="none"/>
+</svg>

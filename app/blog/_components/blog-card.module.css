@@ -1,0 +1,256 @@
+/* ── Blog Card ──────────────────────────────────────────────────────── */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border-color: color-mix(in srgb, var(--primary) 25%, var(--border));
+}
+
+:global(.dark) .card {
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}
+
+:global(.dark) .card:hover {
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Card link (full clickable area) ───────────────────────────────── */
+
+.cardLink {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ── Cover image ────────────────────────────────────────────────────── */
+
+.imageWrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--muted);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.03);
+}
+
+/* ── Placeholder when no cover image ───────────────────────────────── */
+
+.imagePlaceholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--muted) 60%, var(--background));
+  flex-shrink: 0;
+}
+
+.placeholderIcon {
+  width: 32px;
+  height: 32px;
+  color: var(--muted-foreground);
+  opacity: 0.4;
+}
+
+/* ── Card body ──────────────────────────────────────────────────────── */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 16px 18px 18px;
+}
+
+/* ── Category pills ─────────────────────────────────────────────────── */
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--pill-border, var(--border));
+  background: var(--pill-bg, transparent);
+  color: var(--pill-text, var(--muted-foreground));
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* Per-category pill colors via data attributes */
+.pill[data-cat="ai"] {
+  --pill-bg: rgba(59, 130, 246, 0.08);
+  --pill-text: #2563eb;
+  --pill-border: rgba(59, 130, 246, 0.25);
+}
+.pill[data-cat="automation"] {
+  --pill-bg: rgba(100, 116, 139, 0.08);
+  --pill-text: #475569;
+  --pill-border: rgba(100, 116, 139, 0.25);
+}
+.pill[data-cat="general"] {
+  --pill-bg: rgba(107, 114, 128, 0.06);
+  --pill-text: #4b5563;
+  --pill-border: rgba(107, 114, 128, 0.22);
+}
+.pill[data-cat="nextjs"] {
+  --pill-bg: rgba(14, 165, 233, 0.08);
+  --pill-text: #0369a1;
+  --pill-border: rgba(14, 165, 233, 0.22);
+}
+.pill[data-cat="playwright"] {
+  --pill-bg: rgba(139, 92, 246, 0.08);
+  --pill-text: #7c3aed;
+  --pill-border: rgba(139, 92, 246, 0.22);
+}
+.pill[data-cat="security"] {
+  --pill-bg: rgba(59, 130, 246, 0.06);
+  --pill-text: #1d4ed8;
+  --pill-border: rgba(59, 130, 246, 0.2);
+}
+.pill[data-cat="selenium"] {
+  --pill-bg: rgba(234, 179, 8, 0.1);
+  --pill-text: #a16207;
+  --pill-border: rgba(234, 179, 8, 0.28);
+}
+.pill[data-cat="testing"] {
+  --pill-bg: rgba(99, 102, 241, 0.08);
+  --pill-text: #4338ca;
+  --pill-border: rgba(99, 102, 241, 0.22);
+}
+.pill[data-cat="tools"] {
+  --pill-bg: rgba(16, 185, 129, 0.08);
+  --pill-text: #059669;
+  --pill-border: rgba(16, 185, 129, 0.22);
+}
+
+/* Dark mode pill text adjustments */
+:global(.dark) .pill[data-cat="automation"] {
+  --pill-text: #94a3b8;
+}
+:global(.dark) .pill[data-cat="general"] {
+  --pill-text: #9ca3af;
+}
+:global(.dark) .pill[data-cat="ai"] {
+  --pill-text: #93c5fd;
+}
+:global(.dark) .pill[data-cat="nextjs"] {
+  --pill-text: #7dd3fc;
+}
+:global(.dark) .pill[data-cat="playwright"] {
+  --pill-text: #c4b5fd;
+}
+:global(.dark) .pill[data-cat="security"] {
+  --pill-text: #93c5fd;
+}
+:global(.dark) .pill[data-cat="selenium"] {
+  --pill-text: #fde047;
+}
+:global(.dark) .pill[data-cat="testing"] {
+  --pill-text: #a5b4fc;
+}
+:global(.dark) .pill[data-cat="tools"] {
+  --pill-text: #6ee7b7;
+}
+
+/* ── Title ──────────────────────────────────────────────────────────── */
+
+.title {
+  margin: 0 0 8px;
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Description ────────────────────────────────────────────────────── */
+
+.description {
+  margin: 0 0 14px;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* ── Meta row ───────────────────────────────────────────────────────── */
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+}
+
+.metaIcon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  opacity: 0.75;
+}
+
+/* ── Read more ──────────────────────────────────────────────────────── */
+
+.readMore {
+  display: inline-block;
+  color: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: gap 0.15s ease;
+}
+
+.card:hover .readMore {
+  color: color-mix(in srgb, var(--primary) 80%, var(--foreground));
+}

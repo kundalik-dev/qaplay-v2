@@ -1,0 +1,301 @@
+import type { TestCase } from "@/data/practice-data/types";
+
+export const dataTableTestCases: TestCase[] = [
+  {
+    id: "DT_001",
+    scenario: "All 7 column headers are present and correctly labelled",
+    expected:
+      "Headers read: Sr No., Book Name, Book Genre, Book Author, Book ISBN, Book Published, Actions",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Navigate to <code>/practice/data-table</code>",
+      'Locate all <code>th</code> elements inside <code>[data-testid="data-table"] thead</code>',
+      "Read each header text via <code>allTextContents()</code> / <code>getText()</code>",
+      "Assert the array contains all 7 expected header labels",
+    ],
+  },
+  {
+    id: "DT_002",
+    scenario:
+      "Table displays exactly 5 rows on page 1 (25 total across 5 pages)",
+    expected:
+      "Row count on page 1 equals 5; row-count indicator shows '25 books — page 1 of 5'",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Navigate to <code>/practice/data-table</code>",
+      'Wait for <code>[data-testid="data-table"] tbody tr</code> to be visible',
+      "Count <code>tbody tr</code> rows inside <code>#dataTable</code>",
+      "Assert <code>count()</code> equals 5",
+      "Assert <code>[data-testid='row-count']</code> text contains <code>25 books</code>",
+    ],
+  },
+  {
+    id: "DT_003",
+    scenario: "Row 2, Column 2 contains the book name 'Clean Code'",
+    expected: "Cell text at row 2, column 2 equals 'Clean Code'",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Locate <code>#dataTable tbody tr:nth-child(2) td:nth-child(2)</code>",
+      "Read cell text via <code>textContent()</code> / <code>getText()</code>",
+      "Assert the trimmed text equals <code>Clean Code</code>",
+    ],
+  },
+  {
+    id: "DT_004",
+    scenario:
+      "Find the row for author 'George Orwell' and click its Edit button",
+    expected:
+      "The Edit button in the George Orwell row is clicked successfully",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Use Playwright: <code>page.locator(\"[data-testid='book-row']\").filter({ hasText: 'George Orwell' })</code>",
+      "Scope to that row and click <code>[data-testid='btn-edit-book']</code>",
+      "Assert the edit dialog or result panel appears",
+    ],
+    note: "XPath: //tr[td[normalize-space()='George Orwell']]//button[@data-testid='btn-edit-book']",
+  },
+  {
+    id: "DT_005",
+    scenario: "Table is not empty after initial page load",
+    expected: "tbody contains at least one visible row",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Navigate to <code>/practice/data-table</code>",
+      "Assert <code>tbody tr</code> count is greater than 0",
+      "Assert the first row is visible",
+    ],
+  },
+  {
+    id: "DT_006",
+    scenario: "All values in the Book ISBN column start with 'ISBN-'",
+    expected: "Every ISBN cell begins with the prefix 'ISBN-'",
+    type: "positive",
+    priority: "medium",
+    steps: [
+      "Locate all <code>td[data-col='book-isbn']</code> cells",
+      "Read all texts via <code>allTextContents()</code>",
+      "Assert each value starts with <code>ISBN-</code>",
+    ],
+  },
+  {
+    id: "DT_007",
+    scenario: "Searching by a book name filters the visible rows",
+    expected: "Only rows matching the search term remain visible",
+    type: "positive",
+    priority: "medium",
+    steps: [
+      "Locate <code>[data-testid='table-search']</code>",
+      "Type <code>Clean Code</code> into the search input",
+      "Assert row count drops to 1",
+      "Assert the visible row contains text <code>Clean Code</code>",
+    ],
+  },
+  {
+    id: "DT_008",
+    scenario: "Genre filter reduces visible rows to the selected genre only",
+    expected: "Only books in the chosen genre are shown after filtering",
+    type: "positive",
+    priority: "medium",
+    steps: [
+      "Locate <code>[data-testid='genre-filter']</code>",
+      "Select <code>Technology</code> from the dropdown",
+      "Assert all visible rows contain <code>Technology</code> in the genre cell",
+      "Assert rows from other genres are not present",
+    ],
+  },
+  {
+    id: "DT_009",
+    scenario:
+      "Delete button for a row has no data-testid — located via aria-label",
+    expected: "Delete button is found and accessible via aria-label or XPath",
+    type: "positive",
+    priority: "medium",
+    note: "Intentionally missing data-testid — practice XPath/aria-label locators.",
+    steps: [
+      "Locate the row for book 'Dune' using <code>filter({ hasText: 'Dune' })</code>",
+      'Find Delete button via <code>getByRole("button", { name: /Delete Dune/ })</code>',
+      "Assert the button is visible",
+      "XPath: <code>//tr[.//td[normalize-space()='Dune']]//button[contains(@aria-label,'Delete')]</code>",
+    ],
+  },
+  {
+    id: "DT_010",
+    scenario: "Row can be located by its data-book-id attribute",
+    expected: "Row with data-book-id='book-004' contains 'The Hobbit'",
+    type: "positive",
+    priority: "medium",
+    steps: [
+      "Locate <code>[data-testid='book-row'][data-book-id='book-004']</code>",
+      "Assert the row contains text <code>The Hobbit</code>",
+      "XPath: <code>//tr[@data-book-id='book-004']</code>",
+    ],
+  },
+  {
+    id: "DT_011",
+    scenario:
+      "Clearing the search input restores all rows and resets pagination",
+    expected:
+      "After clearing search, page 1 shows 5 rows and pagination shows 5 pages",
+    type: "edge",
+    priority: "medium",
+    steps: [
+      "Type a search term to filter rows down to fewer than 5",
+      "Clear the search input via <code>clear()</code> or <code>triple_click + type('')</code>",
+      "Assert <code>tbody tr</code> count returns to 5 (page 1)",
+      "Assert <code>[data-testid='pagination']</code> shows 5 page buttons",
+    ],
+  },
+  {
+    id: "DT_012",
+    scenario: "Row-count display updates after filtering",
+    expected: "The row-count indicator reflects the filtered count",
+    type: "edge",
+    priority: "low",
+    steps: [
+      "Note initial <code>[data-testid='row-count']</code> text (should include '25 books')",
+      "Apply a genre filter",
+      "Assert <code>[data-testid='row-count']</code> reflects the new filtered count",
+    ],
+  },
+  {
+    id: "DT_013",
+    scenario: "Clicking page 2 loads the next set of rows",
+    expected:
+      "Page 2 shows rows 6-10 and the active page button is highlighted",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Locate <code>[data-testid='pagination']</code>",
+      "Click <code>[data-testid='pagination-page-2']</code>",
+      "Assert <code>tbody tr</code> count equals 5",
+      "Assert first visible row Sr No. value is 6",
+      "Assert <code>[data-testid='pagination-page-2']</code> has <code>aria-current='page'</code>",
+    ],
+  },
+  {
+    id: "DT_014",
+    scenario: "Clicking Next navigates to the following page",
+    expected: "Next button advances pagination by one page",
+    type: "positive",
+    priority: "medium",
+    steps: [
+      "Assert current page is 1 (page-1 button has <code>aria-current='page'</code>)",
+      "Click <code>[data-testid='pagination-next']</code>",
+      "Assert <code>[data-testid='pagination-page-2']</code> now has <code>aria-current='page'</code>",
+      "Assert Previous button is now enabled",
+    ],
+  },
+  {
+    id: "DT_015",
+    scenario: "Previous button is disabled on page 1 and enabled on page 2+",
+    expected: "Prev is disabled on first page, enabled on all others",
+    type: "edge",
+    priority: "medium",
+    steps: [
+      "On page 1, assert <code>[data-testid='pagination-prev']</code> has <code>disabled</code> attribute",
+      "Click page 2 button",
+      "Assert Prev button is no longer disabled",
+      "Assert Next button is still enabled (not on last page)",
+    ],
+  },
+  {
+    id: "DT_016",
+    scenario:
+      "Clicking a sortable column header sorts rows ascending then descending",
+    expected:
+      "First click sorts A to Z, second click sorts Z to A, third click resets sort",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Click <code>[data-testid='col-book-name']</code> column header",
+      "Assert <code>aria-sort='ascending'</code> is set on that header",
+      "Assert first visible book name is alphabetically first",
+      "Click the same header again",
+      "Assert <code>aria-sort='descending'</code> is set",
+      "Click a third time and assert <code>aria-sort='none'</code> and original order returns",
+    ],
+  },
+  {
+    id: "DT_017",
+    scenario: "Sorting resets to page 1 when a different page is active",
+    expected: "Changing sort while on page 3 jumps back to page 1",
+    type: "edge",
+    priority: "medium",
+    steps: [
+      "Navigate to page 3 via <code>[data-testid='pagination-page-3']</code>",
+      "Click a column header to sort",
+      "Assert <code>[data-testid='pagination-page-1']</code> has <code>aria-current='page'</code>",
+    ],
+  },
+  {
+    id: "DT_018",
+    scenario:
+      "Add new book via the Add Book dialog and verify it appears in the table",
+    expected: "New book row appears on the last page and persists after reload",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Click <code>[data-testid='btn-add-book']</code>",
+      "Assert <code>[data-testid='add-book-dialog']</code> is visible",
+      "Fill <code>[data-testid='add-input-book-name']</code> with a unique book title",
+      "Fill <code>[data-testid='add-input-book-author']</code> with an author name",
+      "Select a genre from <code>[data-testid='add-select-genre']</code>",
+      "Click <code>[data-testid='add-dialog-save']</code>",
+      "Navigate to the last page and assert the new row is visible",
+      "Reload the page and confirm the new book persists (localStorage)",
+    ],
+  },
+  {
+    id: "DT_019",
+    scenario:
+      "Add Book dialog shows validation errors when required fields are empty",
+    expected:
+      "Submitting with empty Name or Author shows inline error messages",
+    type: "negative",
+    priority: "medium",
+    steps: [
+      "Click <code>[data-testid='btn-add-book']</code>",
+      "Leave Book Name and Author blank",
+      "Click <code>[data-testid='add-dialog-save']</code>",
+      "Assert <code>[data-testid='add-name-error']</code> is visible",
+      "Assert <code>[data-testid='add-author-error']</code> is visible",
+      "Assert dialog is still open (no premature close)",
+    ],
+  },
+  {
+    id: "DT_020",
+    scenario: "Edit a book and verify the updated values are saved",
+    expected:
+      "Edited fields reflect new values in the table row and persist after reload",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Click <code>[data-testid='btn-edit-book']</code> in the row for 'Clean Code'",
+      "Assert <code>[data-testid='edit-book-dialog']</code> is visible",
+      "Clear and type a new value in <code>[data-testid='edit-input-book-name']</code>",
+      "Click <code>[data-testid='edit-dialog-save']</code>",
+      "Assert the row now shows the new book name",
+      "Reload and confirm the edit persists",
+    ],
+  },
+  {
+    id: "DT_021",
+    scenario: "Delete a book and verify the row is removed from all pages",
+    expected: "Deleted book no longer appears and row count decreases by 1",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Locate the row for 'Dune' using <code>filter({ hasText: 'Dune' })</code>",
+      "Click its Delete button via <code>getByRole('button', { name: /Delete Dune/ })</code>",
+      "Assert <code>[data-testid='delete-book-dialog']</code> is visible",
+      "Click the Confirm button via <code>aria-label='Confirm delete Dune'</code>",
+      "Assert no row with text 'Dune' exists across any page",
+      "Assert <code>[data-testid='row-count']</code> decreased by 1",
+    ],
+  },
+];

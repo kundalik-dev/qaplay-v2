@@ -4,29 +4,29 @@ import type { PracticePageMeta } from "@/data/practice-data/types";
 
 const levelConfig: Record<
   string,
-  { emoji: string; bg: string; text: string; border: string }
+  { marker: string; bg: string; text: string; border: string }
 > = {
   Beginner: {
-    emoji: "🌱",
+    marker: "01",
     bg: "var(--success)",
-    text: "var(--success)",
+    text: "var(--success-readable)",
     border: "var(--success)",
   },
   Intermediate: {
-    emoji: "⚡",
+    marker: "02",
     bg: "var(--warning)",
-    text: "var(--warning)",
+    text: "var(--warning-readable)",
     border: "var(--warning)",
   },
   Advanced: {
-    emoji: "🔥",
+    marker: "03",
     bg: "var(--destructive)",
-    text: "var(--destructive)",
+    text: "var(--destructive-readable)",
     border: "var(--destructive)",
   },
 };
 
-interface PageHeaderProps extends Pick<
+type PageHeaderProps = Pick<
   PracticePageMeta,
   | "title"
   | "description"
@@ -35,7 +35,7 @@ interface PageHeaderProps extends Pick<
   | "scenarioCount"
   | "testCaseCount"
   | "breadcrumb"
-> {}
+>;
 
 export function PageHeader({
   title,
@@ -73,17 +73,14 @@ export function PageHeader({
                 </span>
               )}
               {i < breadcrumb.length - 1 && (
-                <span className="text-[12.5px] text-border">›</span>
+                <span className="text-[12.5px] text-border">/</span>
               )}
             </span>
           ))}
         </nav>
 
         <div className="pb-5">
-          <h1
-            className="mb-2 font-[family-name:var(--font-space-grotesk)] leading-[1.25] font-extrabold tracking-[-0.5px] text-foreground"
-            style={{ fontSize: "28px" }}
-          >
+          <h1 className="mb-2 font-[family-name:var(--font-space-grotesk)] text-[24px] leading-[1.25] font-extrabold tracking-[-0.5px] text-foreground sm:text-[28px]">
             {title}
           </h1>
           <p className="mb-[14px] max-w-[600px] text-[14px] leading-[1.6] text-muted-foreground">
@@ -99,7 +96,8 @@ export function PageHeader({
                 borderColor: `color-mix(in srgb, ${lv.border} 30%, transparent)`,
               }}
             >
-              {lv.emoji} {level}
+              <span aria-hidden="true">{lv.marker}</span>
+              {level}
             </span>
 
             <span
@@ -108,17 +106,17 @@ export function PageHeader({
                 "border-border bg-muted text-muted-foreground",
               )}
             >
-              ⏱ {durationMin} min
+              {durationMin} min
             </span>
 
             <span
-              className={cn(pillBase, "text-[var(--info)]")}
+              className={cn(pillBase, "text-[var(--info-readable)]")}
               style={{
                 background: "color-mix(in srgb, var(--info) 10%, transparent)",
                 borderColor: "color-mix(in srgb, var(--info) 30%, transparent)",
               }}
             >
-              🎮 {scenarioCount} scenarios
+              {scenarioCount} scenarios
             </span>
 
             <span
@@ -130,7 +128,7 @@ export function PageHeader({
                   "color-mix(in srgb, var(--secondary) 30%, transparent)",
               }}
             >
-              🧪 {testCaseCount} test cases
+              {testCaseCount} test cases
             </span>
           </div>
         </div>

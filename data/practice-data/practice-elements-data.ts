@@ -44,7 +44,7 @@ export const practiceCards: PracticeCard[] = [
   },
   {
     href: "/practice/buttons",
-    iconSrc: "/mainicons/buttons.svg",
+    iconSrc: "/mainicons/buttons-v2.svg",
     iconAlt: "Buttons icon",
     title: "Buttons",
     description:
@@ -66,7 +66,7 @@ export const practiceCards: PracticeCard[] = [
   },
   {
     href: "/practice/dropdowns",
-    iconSrc: "/mainicons/select.svg",
+    iconSrc: "/mainicons/dropdowns-v2.svg",
     iconAlt: "Dropdowns icon",
     title: "Dropdowns",
     description:
@@ -77,7 +77,7 @@ export const practiceCards: PracticeCard[] = [
   },
   {
     href: "/practice/data-table",
-    iconSrc: "/mainicons/advtable.svg",
+    iconSrc: "/mainicons/datatables-v2.svg",
     iconAlt: "Data Table icon",
     title: "Data Table",
     description:
@@ -121,7 +121,7 @@ export const practiceCards: PracticeCard[] = [
   },
   {
     href: "/practice/links",
-    iconSrc: "/mainicons/frame.svg",
+    iconSrc: "/mainicons/links-v2.svg",
     iconAlt: "Links icon",
     title: "Links",
     description:
@@ -132,7 +132,7 @@ export const practiceCards: PracticeCard[] = [
   },
   {
     href: "/practice/tabs-windows",
-    iconSrc: "/mainicons/window.svg",
+    iconSrc: "/mainicons/tabs-v2.svg",
     iconAlt: "Tabs & Windows icon",
     title: "Tabs & Windows",
     description:
@@ -176,7 +176,7 @@ export const practiceCards: PracticeCard[] = [
   },
   {
     href: "/bank",
-    iconSrc: "/mainicons/mario.svg",
+    iconSrc: "/mainicons/bank-v2.svg",
     iconAlt: "Bank Demo App icon",
     title: "Bank App",
     description:

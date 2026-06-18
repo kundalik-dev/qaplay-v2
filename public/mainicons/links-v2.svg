@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Define styles for cartoon outlines -->
+  <style>
+    .outline-bg { stroke: #313d40; stroke-width: 112px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .fill-blue { stroke: #53a3ec; stroke-width: 80px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .fill-pink { stroke: #eda1ab; stroke-width: 80px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .sparkle { fill: #fcf5af; stroke: #313d40; stroke-width: 8px; stroke-linejoin: round; }
+  </style>
+
+  <!-- Background sparkles -->
+  <path d="M 70 90 L 85 75 M 85 90 L 70 75 M 77 65 V 100 M 57 82 H 97" stroke="#81d9e7" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 430 420 L 445 405 M 445 420 L 430 405 M 437 395 V 430 M 417 412 H 457" stroke="#fcf5af" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 440 90 L 450 78 M 450 90 L 440 78 M 445 70 V 98 M 432 84 H 458" stroke="#81d9e7" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 80 420 L 95 408 M 95 420 L 80 408 M 87 400 V 428 M 72 414 H 98" stroke="#fcf5af" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Center Connection Bar -->
+  <g>
+    <!-- Outline -->
+    <line x1="190" y1="256" x2="322" y2="256" stroke="#313d40" stroke-width="80" stroke-linecap="round"/>
+    <!-- Yellow Fill -->
+    <line x1="190" y1="256" x2="322" y2="256" stroke="#fcf5af" stroke-width="48" stroke-linecap="round"/>
+  </g>
+
+  <!-- LEFT HOOK (Blue) -->
+  <g>
+    <!-- Outline -->
+    <path d="M 220 362 H 180 A 106 106 0 0 1 180 150 H 220" class="outline-bg"/>
+    <!-- Blue Fill -->
+    <path d="M 220 362 H 180 A 106 106 0 0 1 180 150 H 220" class="fill-blue"/>
+    <!-- Face -->
+    <circle cx="95" cy="248" r="8" fill="#313d40"/>
+    <circle cx="125" cy="248" r="8" fill="#313d40"/>
+    <ellipse cx="80" cy="254" rx="8" ry="5" fill="#ff8e9e" opacity="0.9"/>
+    <ellipse cx="140" cy="254" rx="8" ry="5" fill="#ff8e9e" opacity="0.9"/>
+    <path d="M 105 258 Q 110 264 115 258" stroke="#313d40" stroke-width="5" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- RIGHT HOOK (Pink) -->
+  <g>
+    <!-- Outline -->
+    <path d="M 292 150 H 332 A 106 106 0 0 1 332 362 H 292" class="outline-bg"/>
+    <!-- Pink Fill -->
+    <path d="M 292 150 H 332 A 106 106 0 0 1 332 362 H 292" class="fill-pink"/>
+    <!-- Face -->
+    <circle cx="387" cy="248" r="8" fill="#313d40"/>
+    <circle cx="417" cy="248" r="8" fill="#313d40"/>
+    <ellipse cx="372" cy="254" rx="8" ry="5" fill="#ff8e9e" opacity="0.9"/>
+    <ellipse cx="432" cy="254" rx="8" ry="5" fill="#ff8e9e" opacity="0.9"/>
+    <path d="M 397 258 Q 402 264 407 258" stroke="#313d40" stroke-width="5" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

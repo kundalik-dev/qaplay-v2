@@ -126,6 +126,65 @@ When creating or updating homepage sections:
 - Do not hardcode content in many places when it can live once in the `data` folder.
 - Do not add unstable or hard-to-target markup that weakens test automation use cases.
 
+### Server / Client Component Boundary — Do Not Import async Server Components into Client Components
+
+**Do not import an `async` Server Component directly inside a `'use client'` component.** Next.js will treat the imported module as a Client Component, and async Client Components are not supported — this causes the runtime errors:
+
+- `<X> is an async Client Component. Only Server Components can be async`
+- `A component was suspended by an uncached promise`
+
+**Root cause:** When a `'use client'` file statically imports any module, that module is bundled for the client. If the imported component is `async`, it breaks at runtime.
+
+**Additional limitation — do not pass async Server Components as JSX props either:**
+Even with the composition pattern (passing `<LearnTab />` as a `ReactNode` prop from a Server Component), async Server Components can still fail at runtime in Next.js 16 / React 19 because the RSC runtime may serialize the component reference rather than pre-rendering it, causing the same error on the client.
+
+**Correct pattern — move async work to `page.tsx`, keep child components sync:**
+Do all `await` work in the page (a Server Component). Pass the pre-computed serializable data as props to child components, which remain synchronous.
+
+```tsx
+// ✅ page.tsx (async Server Component) — does all the async work
+import { LearnTab } from "./_components/learn-tab"; // sync Server Component
+import { PracticePage } from "./_components/practice-page"; // 'use client'
+import { highlightLearnSnippet } from "@/lib/highlight";
+import { myLearnCode } from "@/data/practice-data/my-route/learn";
+
+export default async function MyPage() {
+  const [snippet1, snippet2] = await Promise.all([
+    highlightLearnSnippet(myLearnCode.snippet1),
+    highlightLearnSnippet(myLearnCode.snippet2),
+  ]);
+
+  return (
+    <PracticePage
+      learnContent={<LearnTab snippets={{ snippet1, snippet2 }} />}
+    />
+  );
+}
+
+// ✅ learn-tab.tsx (sync Server Component) — receives pre-computed data, no async
+import type { HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
+interface LearnTabProps {
+  snippets: {
+    snippet1: HighlightedLearnCodeSnippet;
+    snippet2: HighlightedLearnCodeSnippet;
+  };
+}
+export function LearnTab({ snippets }: LearnTabProps) {
+  return <div>...</div>;
+}
+
+// ✅ practice-page.tsx ('use client') — accepts ReactNode, never imports LearnTab
+import type { ReactNode } from "react";
+interface Props {
+  learnContent: ReactNode;
+}
+export function PracticePage({ learnContent }: Props) {
+  return <div>{learnContent}</div>;
+}
+```
+
+Applied to all practice routes: `buttons`, `forms`, `input-fields`, `data-table`, `dropdowns`.
+
 ## Decision Priority
 
 When multiple approaches are possible, prefer the option that best satisfies this order:

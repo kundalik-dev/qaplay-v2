@@ -29,25 +29,23 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
     done: completedIds.has(s.id.toLowerCase()),
   }));
 
-  // Click-and-hold state for S06
   const holdTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const heldEnoughRef = useRef(false);
-  const [holdResult, setHoldResult] = useState<{
-    id: string;
-    text: string;
-  } | null>(null);
+
+  function clearHoldTimer() {
+    if (holdTimerRef.current) {
+      clearTimeout(holdTimerRef.current);
+      holdTimerRef.current = null;
+    }
+  }
 
   return (
     <div
-      className="mx-auto w-full max-w-[1280px] px-7"
+      className="mx-auto w-full max-w-[1280px] px-4 sm:px-7"
       data-testid="practice-tab"
       data-section="practice"
     >
-      <div
-        className="grid gap-6 pt-6 pb-16"
-        style={{ gridTemplateColumns: "1fr 280px" }}
-      >
-        {/* ── Left: scenarios ─────────────────────────────────────────── */}
+      <div className={styles.practiceLayout}>
         <section aria-label="Interactive Scenarios">
           <p className="mb-3 text-[10.5px] font-bold tracking-[0.08em] text-muted-foreground uppercase">
             Interactive Scenarios
@@ -57,7 +55,6 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             className="flex flex-col gap-[10px]"
             data-testid="scenarios-list"
           >
-            {/* S01 — Navigate to Home Page */}
             <ScenarioCard
               {...buttonScenarios[0]}
               onComplete={() => markDone("s01")}
@@ -67,14 +64,13 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                   id="navigateHomeBtn"
                   data-testid="btn-navigate-home"
                   className={styles.practiceBtn + " " + styles.btnPrimary}
-                  onClick={() => setResult("Navigated to Home Page ✓")}
+                  onClick={() => setResult("Navigated to Home Page")}
                 >
                   Go To Home
                 </button>
               )}
             </ScenarioCard>
 
-            {/* S02 — Get Coordinates */}
             <ScenarioCard
               {...buttonScenarios[1]}
               onComplete={() => markDone("s02")}
@@ -98,7 +94,6 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
               )}
             </ScenarioCard>
 
-            {/* S03 — Get Color */}
             <ScenarioCard
               {...buttonScenarios[2]}
               onComplete={() => markDone("s03")}
@@ -120,7 +115,6 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
               )}
             </ScenarioCard>
 
-            {/* S04 — Get Size */}
             <ScenarioCard
               {...buttonScenarios[3]}
               onComplete={() => markDone("s04")}
@@ -142,7 +136,6 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
               )}
             </ScenarioCard>
 
-            {/* S05 — Disabled */}
             <ScenarioCard {...buttonScenarios[4]}>
               {() => (
                 <button
@@ -156,53 +149,65 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
               )}
             </ScenarioCard>
 
-            {/* S06 — Click and Hold */}
             <ScenarioCard
               {...buttonScenarios[5]}
               onComplete={() => markDone("s06")}
             >
-              {({ setResult, complete }) => (
-                <button
-                  id="clickHoldBtn"
-                  data-testid="btn-click-hold"
-                  className={styles.practiceBtn + " " + styles.btnBlue}
-                  onPointerDown={(e) => {
-                    (e.currentTarget as HTMLElement).setPointerCapture(
-                      e.pointerId,
-                    );
-                    heldEnoughRef.current = false;
-                    setResult("Holding… keep pressing");
-                    holdTimerRef.current = setTimeout(() => {
-                      heldEnoughRef.current = true;
-                      setResult("Held for 1.5s ✓");
-                      complete();
-                    }, 1500);
-                  }}
-                  onPointerUp={() => {
-                    if (holdTimerRef.current) {
-                      clearTimeout(holdTimerRef.current);
-                      holdTimerRef.current = null;
-                    }
-                    if (!heldEnoughRef.current) {
-                      setResult("Released too early — hold for 1.5s");
-                    }
-                  }}
-                  onPointerLeave={() => {
-                    if (holdTimerRef.current) {
-                      clearTimeout(holdTimerRef.current);
-                      holdTimerRef.current = null;
-                    }
-                    if (!heldEnoughRef.current) {
-                      setResult("Released too early — hold for 1.5s");
-                    }
-                  }}
-                >
-                  Click and Hold!
-                </button>
-              )}
+              {({ setResult, complete }) => {
+                function startHold() {
+                  clearHoldTimer();
+                  heldEnoughRef.current = false;
+                  setResult("Holding... keep pressing");
+                  holdTimerRef.current = setTimeout(() => {
+                    heldEnoughRef.current = true;
+                    setResult("Held for 1.5s");
+                    complete();
+                  }, 1500);
+                }
+
+                function endHold() {
+                  clearHoldTimer();
+                  if (!heldEnoughRef.current) {
+                    setResult("Released too early - hold for 1.5s");
+                  }
+                }
+
+                return (
+                  <button
+                    id="clickHoldBtn"
+                    data-testid="btn-click-hold"
+                    className={styles.practiceBtn + " " + styles.btnBlue}
+                    onPointerDown={(e) => {
+                      (e.currentTarget as HTMLElement).setPointerCapture(
+                        e.pointerId,
+                      );
+                      startHold();
+                    }}
+                    onPointerUp={endHold}
+                    onPointerLeave={endHold}
+                    onKeyDown={(e) => {
+                      if (e.repeat || (e.key !== " " && e.key !== "Enter")) {
+                        return;
+                      }
+
+                      e.preventDefault();
+                      startHold();
+                    }}
+                    onKeyUp={(e) => {
+                      if (e.key !== " " && e.key !== "Enter") {
+                        return;
+                      }
+
+                      e.preventDefault();
+                      endHold();
+                    }}
+                  >
+                    Click and Hold!
+                  </button>
+                );
+              }}
             </ScenarioCard>
 
-            {/* S07 — Double Click */}
             <ScenarioCard
               {...buttonScenarios[6]}
               onComplete={() => markDone("s07")}
@@ -213,13 +218,18 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                   data-testid="btn-double-click"
                   className={styles.practiceBtn + " " + styles.btnOutline}
                   onDoubleClick={() => setResult("Double clicked!")}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setResult("Keyboard activated double click!");
+                    }
+                  }}
                 >
                   Double Click Me
                 </button>
               )}
             </ScenarioCard>
 
-            {/* S08 — Right Click */}
             <ScenarioCard
               {...buttonScenarios[7]}
               onComplete={() => markDone("s08")}
@@ -231,7 +241,18 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                   className={styles.practiceBtn + " " + styles.btnRose}
                   onContextMenu={(e) => {
                     e.preventDefault();
-                    setResult("Context menu triggered! ✓");
+                    setResult("Context menu triggered!");
+                  }}
+                  onKeyDown={(e) => {
+                    if (
+                      e.key === "ContextMenu" ||
+                      (e.shiftKey && e.key === "F10") ||
+                      e.key === "Enter" ||
+                      e.key === " "
+                    ) {
+                      e.preventDefault();
+                      setResult("Context menu triggered!");
+                    }
                   }}
                 >
                   Right Click Me
@@ -241,9 +262,8 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
           </div>
         </section>
 
-        {/* ── Right: sticky sidebar ────────────────────────────────────── */}
         <aside
-          className="sticky top-[120px] flex flex-col gap-4 self-start"
+          className={styles.practiceSidebar}
           data-testid="practice-sidebar"
         >
           <ProgressWidget items={progressItems} />

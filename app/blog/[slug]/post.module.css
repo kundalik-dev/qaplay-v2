@@ -1,0 +1,22 @@
+/* ── Blog Post Reading Column ──────────────────────────────────────────── */
+
+.wrapper {
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .wrapper {
+    padding: 0 1.5rem;
+  }
+}
+
+/* Widen the shell on large screens to make room for the TOC sidebar.
+   The reading column itself stays capped at 48rem inside the layout grid. */
+@media (min-width: 1180px) {
+  .wrapper {
+    max-width: 70rem;
+  }
+}

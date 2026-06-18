@@ -3,15 +3,20 @@
 import { PageHeader, MainTabs } from "@/components/practice";
 import { PracticeTab } from "./practice-tab";
 import { TestCasesTab } from "./test-cases-tab";
-import { LearnTab } from "./learn-tab";
 import type { PracticePageMeta, TestCase } from "@/data/practice-data/types";
+import type { ReactNode } from "react";
 
 interface PracticePageProps {
   meta: PracticePageMeta;
   testCases: TestCase[];
+  learnContent: ReactNode;
 }
 
-export function PracticePage({ meta, testCases }: PracticePageProps) {
+export function PracticePage({
+  meta,
+  testCases,
+  learnContent,
+}: PracticePageProps) {
   return (
     <div
       data-testid={`${meta.element}-page`}
@@ -35,7 +40,7 @@ export function PracticePage({ meta, testCases }: PracticePageProps) {
         testCaseCount={meta.testCaseCount}
         practiceContent={<PracticeTab upNext={meta.upNext} />}
         testCasesContent={<TestCasesTab testCases={testCases} />}
-        learnContent={<LearnTab />}
+        learnContent={learnContent}
       />
     </div>
   );

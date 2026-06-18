@@ -7,16 +7,29 @@ import {
 } from "@/components/practice";
 import {
   inputFieldsLearnDesc,
-  inputFieldsLearnCode,
   inputFieldsMethodRows,
   inputFieldsFaq,
   inputFieldsTocItems,
 } from "@/data/practice-data/input-fields/learn";
+import type { HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
 
-export function LearnTab() {
+interface LearnTabProps {
+  snippets: {
+    type: HighlightedLearnCodeSnippet;
+    append: HighlightedLearnCodeSnippet;
+    read: HighlightedLearnCodeSnippet;
+    clear: HighlightedLearnCodeSnippet;
+    disabled: HighlightedLearnCodeSnippet;
+    readonly: HighlightedLearnCodeSnippet;
+  };
+}
+
+export function LearnTab({ snippets }: LearnTabProps) {
+  const { type, append, read, clear, disabled, readonly } = snippets;
+
   return (
-    <div className="mx-auto w-full max-w-[1280px] px-7 py-8 pb-16">
-      <div className="grid gap-12" style={{ gridTemplateColumns: "1fr 200px" }}>
+    <div className="mx-auto w-full max-w-[1280px] px-4 py-6 pb-16 sm:px-7 sm:py-8">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_200px] lg:gap-12">
         {/* ── Main doc content ─────────────────────────────────────────── */}
         <main aria-label="Learn content" className="flex flex-col gap-5">
           {/* Overview */}
@@ -32,7 +45,7 @@ export function LearnTab() {
             heading="1 · Typing Text"
             desc={inputFieldsLearnDesc.type}
           >
-            <LearnCodeBlock snippets={inputFieldsLearnCode.type} />
+            <LearnCodeBlock snippets={type} />
           </DocSection>
 
           {/* 2 · Append & Tab */}
@@ -41,7 +54,7 @@ export function LearnTab() {
             heading="2 · Append & Tab"
             desc={inputFieldsLearnDesc.append}
           >
-            <LearnCodeBlock snippets={inputFieldsLearnCode.append} />
+            <LearnCodeBlock snippets={append} />
           </DocSection>
 
           {/* 3 · Read Value */}
@@ -50,7 +63,7 @@ export function LearnTab() {
             heading="3 · Read Value"
             desc={inputFieldsLearnDesc.read}
           >
-            <LearnCodeBlock snippets={inputFieldsLearnCode.read} />
+            <LearnCodeBlock snippets={read} />
           </DocSection>
 
           {/* 4 · Clear Field */}
@@ -59,7 +72,7 @@ export function LearnTab() {
             heading="4 · Clear Field"
             desc={inputFieldsLearnDesc.clear}
           >
-            <LearnCodeBlock snippets={inputFieldsLearnCode.clear} />
+            <LearnCodeBlock snippets={clear} />
           </DocSection>
 
           {/* 5 · Disabled State */}
@@ -68,7 +81,7 @@ export function LearnTab() {
             heading="5 · Disabled State"
             desc={inputFieldsLearnDesc.disabled}
           >
-            <LearnCodeBlock snippets={inputFieldsLearnCode.disabled} />
+            <LearnCodeBlock snippets={disabled} />
           </DocSection>
 
           {/* 6 · Readonly State */}
@@ -77,7 +90,7 @@ export function LearnTab() {
             heading="6 · Readonly State"
             desc={inputFieldsLearnDesc.readonly}
           >
-            <LearnCodeBlock snippets={inputFieldsLearnCode.readonly} />
+            <LearnCodeBlock snippets={readonly} />
           </DocSection>
 
           {/* Method Summary */}

@@ -41,14 +41,11 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
 
   return (
     <div
-      className="mx-auto w-full max-w-[1280px] px-7"
+      className="mx-auto w-full max-w-[1280px] px-4 sm:px-7"
       data-testid="practice-tab"
       data-section="practice"
     >
-      <div
-        className="grid gap-6 pt-6 pb-16"
-        style={{ gridTemplateColumns: "1fr 280px" }}
-      >
+      <div className="grid grid-cols-1 gap-6 pt-6 pb-16 lg:grid-cols-[minmax(0,1fr)_280px]">
         {/* ── Left: scenarios ─────────────────────────────────────────── */}
         <section aria-label="Interactive Scenarios">
           <p className="mb-3 text-[10.5px] font-bold tracking-[0.08em] text-muted-foreground uppercase">
@@ -209,7 +206,7 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
 
         {/* ── Right: sticky sidebar ────────────────────────────────────── */}
         <aside
-          className="sticky top-[120px] flex flex-col gap-4 self-start"
+          className="flex flex-col gap-4 self-start lg:sticky lg:top-[120px]"
           data-testid="practice-sidebar"
         >
           <ProgressWidget items={progressItems} />

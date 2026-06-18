@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <style>
+    .outline { stroke: #313d40; stroke-width: 16px; stroke-linecap: round; stroke-linejoin: round; }
+    .thin-outline { stroke: #313d40; stroke-width: 8px; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+
+  <!-- Browser Window Body (White content area) -->
+  <rect x="60" y="150" width="392" height="280" rx="24" fill="#ffffff" class="outline"/>
+
+  <!-- Tab Bar Background (Grey tab bar) -->
+  <path d="M 60 150 V 110 A 24 24 0 0 1 84 86 H 428 A 24 24 0 0 1 452 110 V 150 Z" fill="#e1e4e8" stroke="#313d40" stroke-width="16" stroke-linejoin="round"/>
+
+  <!-- Inactive Tab Left -->
+  <rect x="80" y="100" width="90" height="50" rx="10" fill="#d1d5da" stroke="#313d40" stroke-width="12" stroke-linejoin="round"/>
+
+  <!-- Inactive Tab Right -->
+  <rect x="300" y="100" width="90" height="50" rx="10" fill="#d1d5da" stroke="#313d40" stroke-width="12" stroke-linejoin="round"/>
+
+  <!-- Active Tab Center (Blue, highlighted) -->
+  <path d="M 162 150 L 177 102 A 12 12 0 0 1 189 90 H 275 A 12 12 0 0 1 287 102 L 302 150 Z" fill="#53a3ec" stroke="#313d40" stroke-width="16" stroke-linejoin="round"/>
+  <!-- Little face on the active tab -->
+  <circle cx="218" cy="122" r="4" fill="#313d40"/>
+  <circle cx="246" cy="122" r="4" fill="#313d40"/>
+  <path d="M 228 128 Q 232 132 236 128" stroke="#313d40" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+  <!-- Address Bar inside window content area -->
+  <rect x="80" y="180" width="352" height="40" rx="20" fill="#f6f8fa" stroke="#313d40" stroke-width="8" stroke-linejoin="round"/>
+  <!-- Lock secure icon -->
+  <circle cx="105" cy="200" r="8" fill="#b3e59f" stroke="#313d40" stroke-width="4"/>
+  <!-- Address line placeholder -->
+  <rect x="130" y="194" width="180" height="12" rx="6" fill="#d1d5da"/>
+
+  <!-- Web Page content (cute card with face) -->
+  <rect x="110" y="240" width="292" height="150" rx="16" fill="#fbf1cf" stroke="#313d40" stroke-width="8" stroke-linejoin="round"/>
+  <!-- Cute face details -->
+  <circle cx="230" cy="300" r="10" fill="#313d40"/>
+  <circle cx="282" cy="300" r="10" fill="#313d40"/>
+  <ellipse cx="206" cy="315" rx="12" ry="8" fill="#ff8e9e"/>
+  <ellipse cx="306" cy="315" rx="12" ry="8" fill="#ff8e9e"/>
+  <path d="M 246 320 Q 256 332 266 320" stroke="#313d40" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+  <!-- Mouse Cursor hovering/clicking on tab bar -->
+  <g transform="translate(340, 115) scale(0.65)">
+    <path d="M 0 0 L 80 80 L 45 90 L 95 180 L 55 200 L 5 110 L -40 130 Z" fill="#fcf5af" stroke="#313d40" stroke-width="16" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Sparkles -->
+  <path d="M 430 60 L 440 48 M 440 60 L 430 48 M 435 40 V 68 M 422 54 H 448" stroke="#fcf5af" stroke-width="6" stroke-linecap="round"/>
+</svg>

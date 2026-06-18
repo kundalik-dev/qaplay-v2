@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <style>
+    .outline-bg { stroke: #313d40; stroke-width: 112px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .fill-blue { stroke: #53a3ec; stroke-width: 80px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .fill-pink { stroke: #eda1ab; stroke-width: 80px; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+  </style>
+
+  <!-- Background sparkles -->
+  <path d="M 80 80 L 95 65 M 95 80 L 80 65 M 87 55 V 90 M 67 72 H 107" stroke="#fcf5af" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 420 420 L 435 405 M 435 420 L 420 405 M 427 395 V 430 M 407 412 H 447" stroke="#81d9e7" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 440 90 L 450 78 M 450 90 L 440 78 M 445 70 V 98 M 432 84 H 458" stroke="#eda1ab" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 80 420 L 95 408 M 95 420 L 80 408 M 87 400 V 428 M 72 414 H 98" stroke="#fcf5af" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Combined Outline Layer (Bottom) -->
+  <g class="outline-bg">
+    <!-- Arc -->
+    <path d="M 136 136 A 170 170 0 1 0 376 136" />
+    <!-- Vertical Line -->
+    <path d="M 256 60 L 256 200" />
+  </g>
+
+  <!-- Fill Layer (Top) -->
+  <!-- Arc (Blue) -->
+  <path d="M 136 136 A 170 170 0 1 0 376 136" class="fill-blue" />
+  
+  <!-- Vertical Line (Pink) -->
+  <path d="M 256 60 L 256 200" class="fill-pink" />
+
+  <!-- Cute Face on the bottom of the arc -->
+  <circle cx="228" cy="426" r="10" fill="#313d40"/>
+  <circle cx="284" cy="426" r="10" fill="#313d40"/>
+  <ellipse cx="204" cy="434" rx="12" ry="8" fill="#ff8e9e" opacity="0.9"/>
+  <ellipse cx="308" cy="434" rx="12" ry="8" fill="#ff8e9e" opacity="0.9"/>
+  <path d="M 248 438 Q 256 446 264 438" stroke="#313d40" stroke-width="6" stroke-linecap="round" fill="none"/>
+</svg>

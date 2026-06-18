@@ -186,7 +186,7 @@
 }
 
 .levelBeginner {
-  color: var(--success);
+  color: var(--success-readable);
 }
 
 .levelBeginner .levelDot {
@@ -194,7 +194,7 @@
 }
 
 .levelIntermediate {
-  color: var(--warning);
+  color: var(--warning-readable);
 }
 
 .levelIntermediate .levelDot {
@@ -202,7 +202,7 @@
 }
 
 .levelAdvanced {
-  color: var(--brand-tertiary);
+  color: var(--destructive-readable);
 }
 
 .levelAdvanced .levelDot {

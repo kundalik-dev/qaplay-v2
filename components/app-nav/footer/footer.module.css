@@ -1,15 +1,25 @@
 .shell {
   width: 100%;
   margin-top: auto;
-  background: #eaf0f5;
-  border-top: 1px solid rgba(20, 42, 62, 0.08);
+  background: linear-gradient(180deg, #e4edf4 0%, #dce7ef 100%);
+  border-top: 1px solid rgba(20, 42, 62, 0.1);
   position: relative;
   z-index: 1;
+
+  /* Footer-specific contrast tokens — calibrated for the light bg */
+  --footer-body: #354f62;
+  --footer-muted: #46627a;
+  --footer-meta: #4a6278;
 }
 
 :global(.dark) .shell {
   background: var(--popover);
   border-top-color: var(--border);
+
+  /* Lifted for contrast on dark #1e2433 bg — all ≥ 4.5:1 */
+  --footer-body: #97a3b8; /* 6.1:1 */
+  --footer-muted: #8d99ae; /* 5.4:1 */
+  --footer-meta: #7e8ea0; /* 4.6:1 */
 }
 
 .inner {
@@ -65,7 +75,7 @@
   font-family: var(--font-inter), sans-serif;
   font-size: 14px;
   line-height: 1.75;
-  color: var(--muted-foreground);
+  color: var(--footer-body);
 }
 
 .socialRow {
@@ -73,6 +83,13 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.socialRow li {
+  display: contents;
 }
 
 .socialBtn {
@@ -82,9 +99,9 @@
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(20, 42, 62, 0.1);
-  color: var(--muted-foreground);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(20, 42, 62, 0.12);
+  color: var(--footer-body);
   text-decoration: none;
   transition:
     color 0.15s ease,
@@ -117,7 +134,7 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--foreground);
+  color: var(--primary);
 }
 
 .linkList {
@@ -133,7 +150,7 @@
   font-family: var(--font-inter), sans-serif;
   font-size: 14px;
   line-height: 1.5;
-  color: var(--muted-foreground);
+  color: var(--footer-muted);
   text-decoration: none;
   transition: color 0.15s ease;
 }
@@ -152,7 +169,7 @@
   font-family: var(--font-ibm-plex-mono), monospace;
   font-size: 12px;
   line-height: 1.7;
-  color: color-mix(in srgb, var(--muted-foreground) 80%, transparent);
+  color: var(--footer-meta);
 }
 
 .bottom a {

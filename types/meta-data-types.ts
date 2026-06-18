@@ -107,6 +107,33 @@ export type ArticleStructuredDataInput = {
   dateModified?: string;
 };
 
+/**
+ * Input for building schema.org/BlogPosting JSON-LD for a blog article.
+ * Extends the Article shape with per-post author, tags/keywords, and the
+ * canonical blog path. Everything optional falls back to `SiteBasicDetails`.
+ */
+export type BlogPostingStructuredDataInput = {
+  /** Headline shown in rich search results. */
+  headline: string;
+  /** Short summary. Falls back to the site description when omitted. */
+  description?: string;
+  /** Route path used to build the canonical post URL, e.g. "/blog/my-post". */
+  path: string;
+  /**
+   * Representative image URL (relative or absolute) or a full image object.
+   * Falls back to the default OG image when omitted.
+   */
+  image?: string | OpenGraphImage;
+  /** ISO 8601 date the post was first published, e.g. "2026-06-18". */
+  datePublished: string;
+  /** ISO 8601 date the post was last updated. Defaults to `datePublished`. */
+  dateModified?: string;
+  /** Author display name. Falls back to the site author. */
+  authorName?: string;
+  /** Topic keywords/tags surfaced as `keywords` in the structured data. */
+  keywords?: string[];
+};
+
 /** A single breadcrumb item used by `BreadcrumbList` JSON-LD. */
 export type BreadcrumbItemStructuredDataInput = {
   /** Human-readable breadcrumb label, e.g. "Practice". */

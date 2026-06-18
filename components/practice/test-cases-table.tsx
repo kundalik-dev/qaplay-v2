@@ -10,16 +10,16 @@ import type {
 
 const TYPE_STYLES: Record<TestCaseType, string> = {
   positive:
-    "bg-[color-mix(in_srgb,var(--success)_10%,transparent)] text-[var(--success)] border-[color-mix(in_srgb,var(--success)_30%,transparent)]",
+    "bg-[color-mix(in_srgb,var(--success)_10%,transparent)] text-[var(--success-readable)] border-[color-mix(in_srgb,var(--success)_30%,transparent)]",
   negative:
-    "bg-[color-mix(in_srgb,var(--destructive)_10%,transparent)] text-[var(--destructive)] border-[color-mix(in_srgb,var(--destructive)_30%,transparent)]",
-  edge: "bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] text-[var(--warning)] border-[color-mix(in_srgb,var(--warning)_30%,transparent)]",
+    "bg-[color-mix(in_srgb,var(--destructive)_10%,transparent)] text-[var(--destructive-readable)] border-[color-mix(in_srgb,var(--destructive)_30%,transparent)]",
+  edge: "bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] text-[var(--warning-readable)] border-[color-mix(in_srgb,var(--warning)_30%,transparent)]",
 };
 
 const PRIORITY_STYLES: Record<TestCasePriority, string> = {
-  high: "bg-[color-mix(in_srgb,var(--destructive)_10%,transparent)] text-[var(--destructive)] border-[color-mix(in_srgb,var(--destructive)_30%,transparent)]",
+  high: "bg-[color-mix(in_srgb,var(--destructive)_10%,transparent)] text-[var(--destructive-readable)] border-[color-mix(in_srgb,var(--destructive)_30%,transparent)]",
   medium:
-    "bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] text-[var(--warning)] border-[color-mix(in_srgb,var(--warning)_30%,transparent)]",
+    "bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] text-[var(--warning-readable)] border-[color-mix(in_srgb,var(--warning)_30%,transparent)]",
   low: "bg-muted text-muted-foreground border-border",
 };
 
@@ -39,7 +39,11 @@ export function TestCasesTable({ testCases }: TestCasesTableProps) {
   function toggleExpand(id: string) {
     setExpanded((prev) => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
       return next;
     });
   }
@@ -59,14 +63,14 @@ export function TestCasesTable({ testCases }: TestCasesTableProps) {
   return (
     <div data-testid="test-cases-table">
       {/* Toolbar */}
-      <div className="mb-4 flex items-center gap-2.5">
-        <div className="flex gap-1">
+      <div className="mb-4 flex flex-col gap-2.5 sm:flex-row sm:items-center">
+        <div className="flex max-w-full gap-1 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
           {filters.map((f) => (
             <button
               key={f.id}
               onClick={() => setFilterActive(f.id)}
               className={cn(
-                "rounded-[20px] border px-3 py-[5px] text-[12px] font-medium transition-all",
+                "flex-shrink-0 rounded-[20px] border px-3 py-[5px] text-[12px] font-medium transition-all",
                 filter === f.id
                   ? "border-primary bg-primary text-primary-foreground"
                   : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary",
@@ -76,8 +80,8 @@ export function TestCasesTable({ testCases }: TestCasesTableProps) {
             </button>
           ))}
         </div>
-        <div className="flex-1" />
-        <span className="text-[12px] text-muted-foreground">
+        <div className="hidden flex-1 sm:block" />
+        <span className="text-[12px] text-muted-foreground sm:text-right">
           Showing {filtered.length} test case{filtered.length !== 1 ? "s" : ""}
         </span>
       </div>
@@ -96,7 +100,7 @@ export function TestCasesTable({ testCases }: TestCasesTableProps) {
             >
               {/* Header (clickable) */}
               <button
-                className="flex w-full items-start gap-3 px-4 py-[14px] text-left transition-colors hover:bg-muted/40"
+                className="flex w-full flex-col gap-3 px-4 py-[14px] text-left transition-colors hover:bg-muted/40 sm:flex-row sm:items-start"
                 onClick={() => toggleExpand(tc.id)}
                 data-testid={`expand-${tc.id.toLowerCase()}`}
                 aria-expanded={isOpen}
@@ -112,7 +116,7 @@ export function TestCasesTable({ testCases }: TestCasesTableProps) {
                     Expected: {tc.expected}
                   </div>
                 </div>
-                <div className="flex flex-shrink-0 items-center gap-[6px]">
+                <div className="flex flex-shrink-0 flex-wrap items-center gap-[6px]">
                   <span
                     className={cn(
                       "rounded-[4px] border px-2 py-[2px] text-[10.5px] font-semibold capitalize",
