@@ -40,7 +40,14 @@ export default async function DataTablePage() {
       testCases={dataTableTestCases}
       learnContent={
         <LearnTab
-          snippets={{ countRows, readCell, readHeaders, findRow, allRows, verifyEmpty }}
+          snippets={{
+            countRows,
+            readCell,
+            readHeaders,
+            findRow,
+            allRows,
+            verifyEmpty,
+          }}
         />
       }
     />

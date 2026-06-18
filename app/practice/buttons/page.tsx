@@ -38,7 +38,9 @@ export default async function ButtonsPage() {
       meta={buttonsMeta}
       testCases={buttonsTestCases}
       learnContent={
-        <LearnTab snippets={{ single, double, right, disabled, text, keyboard }} />
+        <LearnTab
+          snippets={{ single, double, right, disabled, text, keyboard }}
+        />
       }
     />
   );

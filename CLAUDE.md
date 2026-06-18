@@ -129,6 +129,7 @@ When creating or updating homepage sections:
 ### Server / Client Component Boundary — Do Not Import async Server Components into Client Components
 
 **Do not import an `async` Server Component directly inside a `'use client'` component.** Next.js will treat the imported module as a Client Component, and async Client Components are not supported — this causes the runtime errors:
+
 - `<X> is an async Client Component. Only Server Components can be async`
 - `A component was suspended by an uncached promise`
 
@@ -142,7 +143,7 @@ Do all `await` work in the page (a Server Component). Pass the pre-computed seri
 
 ```tsx
 // ✅ page.tsx (async Server Component) — does all the async work
-import { LearnTab } from "./_components/learn-tab";   // sync Server Component
+import { LearnTab } from "./_components/learn-tab"; // sync Server Component
 import { PracticePage } from "./_components/practice-page"; // 'use client'
 import { highlightLearnSnippet } from "@/lib/highlight";
 import { myLearnCode } from "@/data/practice-data/my-route/learn";
@@ -163,7 +164,10 @@ export default async function MyPage() {
 // ✅ learn-tab.tsx (sync Server Component) — receives pre-computed data, no async
 import type { HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
 interface LearnTabProps {
-  snippets: { snippet1: HighlightedLearnCodeSnippet; snippet2: HighlightedLearnCodeSnippet; };
+  snippets: {
+    snippet1: HighlightedLearnCodeSnippet;
+    snippet2: HighlightedLearnCodeSnippet;
+  };
 }
 export function LearnTab({ snippets }: LearnTabProps) {
   return <div>...</div>;
@@ -171,7 +175,9 @@ export function LearnTab({ snippets }: LearnTabProps) {
 
 // ✅ practice-page.tsx ('use client') — accepts ReactNode, never imports LearnTab
 import type { ReactNode } from "react";
-interface Props { learnContent: ReactNode; }
+interface Props {
+  learnContent: ReactNode;
+}
 export function PracticePage({ learnContent }: Props) {
   return <div>{learnContent}</div>;
 }

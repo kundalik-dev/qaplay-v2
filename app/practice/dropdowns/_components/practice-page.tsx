@@ -10,7 +10,11 @@ interface PracticePageProps {
   learnContent: ReactNode;
 }
 
-export function PracticePage({ meta, testCases, learnContent }: PracticePageProps) {
+export function PracticePage({
+  meta,
+  testCases,
+  learnContent,
+}: PracticePageProps) {
   return (
     <div
       data-testid={`${meta.element}-page`}

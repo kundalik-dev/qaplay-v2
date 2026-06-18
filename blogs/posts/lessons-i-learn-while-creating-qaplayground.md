@@ -62,6 +62,8 @@ Two separate cases of the same underlying issue:
 
 2. **Tab panels (SyllabusManagerView)** — the Study Tracker renders all tab views in the DOM simultaneously, not lazily. `SyllabusManagerView` contains a `<Link href="/qa-tools/json-to-file">`. Even when the user is on a different tab (e.g. Resources), that Link is present in the DOM and Next.js prefetches it.
 
+![Testing](https://ik.imagekit.io/randomcoder/QAPlayground/id-02-people-in-meeting-with-laptop.webp?updatedAt=1759727596773)
+
 #### Fix
 
 Added `prefetch={false}` to the offending links:

@@ -55,7 +55,7 @@ The recorder gives you the skeleton. AI gives it structure.
 npx playwright test --ui
 ```
 
-The Playwright UI Mode gives you a timeline, a DOM snapshot at each step, and the ability to re-run individual tests from any point. It is the fastest way to understand *why* a test failed.
+The Playwright UI Mode gives you a timeline, a DOM snapshot at each step, and the ability to re-run individual tests from any point. It is the fastest way to understand _why_ a test failed.
 
 **Where AI comes in:** When a test fails, copy the error message and the relevant test code into your AI assistant. A prompt like:
 
@@ -182,14 +182,14 @@ Push your tests. Share the HTML report link with the team.
 
 Here are prompts that consistently produce useful output:
 
-| Situation | Prompt |
-|-----------|--------|
-| Converting a recorded script | "Refactor this Playwright codegen output into a Page Object Model" |
-| Writing assertions | "Add meaningful expect() assertions to this Playwright test" |
-| Fixing a timeout | "This Playwright test times out on this locator. Suggest alternatives" |
-| Data-driven tests | "Rewrite this test to run with multiple input datasets using test.each" |
-| CI failures | "These tests pass locally but fail in CI. What are common causes in Playwright?" |
-| Locator strategy | "Which locator is most resilient for this HTML element: [paste HTML]" |
+| Situation                    | Prompt                                                                           |
+| ---------------------------- | -------------------------------------------------------------------------------- |
+| Converting a recorded script | "Refactor this Playwright codegen output into a Page Object Model"               |
+| Writing assertions           | "Add meaningful expect() assertions to this Playwright test"                     |
+| Fixing a timeout             | "This Playwright test times out on this locator. Suggest alternatives"           |
+| Data-driven tests            | "Rewrite this test to run with multiple input datasets using test.each"          |
+| CI failures                  | "These tests pass locally but fail in CI. What are common causes in Playwright?" |
+| Locator strategy             | "Which locator is most resilient for this HTML element: [paste HTML]"            |
 
 ---
 

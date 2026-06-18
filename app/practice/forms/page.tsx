@@ -42,7 +42,16 @@ export default async function FormsPage() {
       testCases={formsTestCases}
       learnContent={
         <LearnTab
-          snippets={{ fillText, dob, radio, country, checkboxes, password, terms, errors }}
+          snippets={{
+            fillText,
+            dob,
+            radio,
+            country,
+            checkboxes,
+            password,
+            terms,
+            errors,
+          }}
         />
       }
     />

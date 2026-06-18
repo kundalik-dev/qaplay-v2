@@ -50,12 +50,12 @@ See `_template.md` in this folder for a ready-to-copy starting point.
 
 ## Where the code lives
 
-| Concern                | File                                            |
-| ---------------------- | ----------------------------------------------- |
-| Reading/parsing posts  | `lib/blog/posts.ts`                             |
-| Markdown → HTML (Shiki) | `lib/blog/markdown.ts`                         |
-| Types                  | `lib/blog/types.ts`                             |
-| Per-post metadata/JSON-LD | `data/meta-data/blog/blog-post-meta.ts`      |
-| Index metadata/JSON-LD | `data/meta-data/blog/*`                         |
-| Index page             | `app/blog/page.tsx`                             |
-| Post page              | `app/blog/[slug]/page.tsx`                       |
+| Concern                   | File                                    |
+| ------------------------- | --------------------------------------- |
+| Reading/parsing posts     | `lib/blog/posts.ts`                     |
+| Markdown → HTML (Shiki)   | `lib/blog/markdown.ts`                  |
+| Types                     | `lib/blog/types.ts`                     |
+| Per-post metadata/JSON-LD | `data/meta-data/blog/blog-post-meta.ts` |
+| Index metadata/JSON-LD    | `data/meta-data/blog/*`                 |
+| Index page                | `app/blog/page.tsx`                     |
+| Post page                 | `app/blog/[slug]/page.tsx`              |

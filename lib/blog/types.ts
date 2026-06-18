@@ -20,6 +20,8 @@ export type BlogFrontmatter = {
   author?: string;
   /** Topic tags shown as pills and used as extra SEO keywords. */
   tags?: string[];
+  /** Category labels used for filtering on the blog index (e.g. ["playwright", "automation"]). */
+  category?: string[];
   /** Extra SEO keywords merged with the site defaults. */
   keywords?: string[];
   /** Cover/OG image path (relative to the site origin), e.g. "/blog/x.png". */

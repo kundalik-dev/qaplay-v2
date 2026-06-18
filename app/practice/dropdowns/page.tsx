@@ -39,7 +39,9 @@ export default async function DropdownsPage() {
       meta={dropdownsMeta}
       testCases={dropdownsTestCases}
       learnContent={
-        <LearnTab snippets={{ visibleText, value, options, multi, custom, searchable }} />
+        <LearnTab
+          snippets={{ visibleText, value, options, multi, custom, searchable }}
+        />
       }
     />
   );

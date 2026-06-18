@@ -20,73 +20,33 @@
 }
 
 .header {
-  padding: 40px 0 32px;
+  padding: 28px 0 20px;
   max-width: 640px;
 }
 
 .eyebrow {
   display: inline-block;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   color: var(--primary);
   font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .title {
-  margin: 0 0 12px;
+  margin: 0 0 6px;
   color: var(--foreground);
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.04em;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 }
 
 .subtitle {
   margin: 0;
   color: var(--muted-foreground);
-  font-size: 1.05rem;
-  line-height: 1.6;
-  text-wrap: pretty;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
-  padding-bottom: 64px;
-}
-
-@media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 640px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ── Empty state ───────────────────────────────────────────────────────── */
-
-.empty {
-  padding: 64px 24px;
-  text-align: center;
-  color: var(--muted-foreground);
-}
-
-.emptyTitle {
-  margin: 0 0 8px;
-  color: var(--foreground);
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-.emptyBody {
-  margin: 0;
   font-size: 0.9rem;
+  line-height: 1.5;
 }

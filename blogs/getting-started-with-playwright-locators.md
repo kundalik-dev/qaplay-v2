@@ -46,12 +46,12 @@ test("submits the contact form", async ({ page }) => {
 
 ### Picking the right one
 
-| Locator         | Use it when                                            |
-| --------------- | ------------------------------------------------------ |
-| `getByRole`     | The element has a clear role + accessible name         |
-| `getByLabel`    | Targeting form fields tied to a `<label>`              |
-| `getByTestId`   | There's no good accessible handle, but a stable id     |
-| `getByText`     | Matching visible copy (use sparingly — copy changes)   |
+| Locator       | Use it when                                          |
+| ------------- | ---------------------------------------------------- |
+| `getByRole`   | The element has a clear role + accessible name       |
+| `getByLabel`  | Targeting form fields tied to a `<label>`            |
+| `getByTestId` | There's no good accessible handle, but a stable id   |
+| `getByText`   | Matching visible copy (use sparingly — copy changes) |
 
 > Tip: add stable `data-testid` attributes to important controls so
 > `getByTestId` always has something dependable to target. Every practice

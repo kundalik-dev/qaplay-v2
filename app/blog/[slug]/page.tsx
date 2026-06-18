@@ -7,7 +7,11 @@ import {
   buildBlogPostMetadata,
 } from "@/data/meta-data/blog/blog-post-meta";
 import { renderMarkdown } from "@/lib/blog/markdown";
-import { getAllPostSlugs, getPostBySlug } from "@/lib/blog/posts";
+import {
+  getAllPostSlugs,
+  getPostBySlug,
+  getPreviousPost,
+} from "@/lib/blog/posts";
 
 import { PostArticle } from "./_components/post-article";
 import styles from "./post.module.css";
@@ -32,12 +36,17 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
   if (!post) notFound();
 
   const contentHtml = await renderMarkdown(post.content);
+  const previousPost = getPreviousPost(slug);
 
   return (
     <section className={styles.wrapper}>
       <JsonLd data={buildBlogPostJsonLd(post)} />
       <JsonLd data={buildBlogPostBreadcrumbJsonLd(post)} />
-      <PostArticle post={post} contentHtml={contentHtml} />
+      <PostArticle
+        post={post}
+        contentHtml={contentHtml}
+        previousPost={previousPost}
+      />
     </section>
   );
 }

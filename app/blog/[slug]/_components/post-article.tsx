@@ -1,19 +1,26 @@
 import Link from "next/link";
 
 import { formatPostDate } from "@/lib/blog/format";
-import type { BlogPost } from "@/lib/blog/types";
+import type { BlogPost, BlogPostSummary } from "@/lib/blog/types";
 import { basicDetails } from "@/data/meta-data/basic-details-data";
 
+import { PostNavBanner } from "./post-nav-banner";
 import styles from "./post-article.module.css";
 
 type PostArticleProps = {
   post: BlogPost;
   /** Pre-rendered, syntax-highlighted HTML for the Markdown body. */
   contentHtml: string;
+  /** The post published before this one (older), for the nav banner. */
+  previousPost: BlogPostSummary | null;
 };
 
 /** Full rendered blog post: header, meta, and the Markdown body. */
-export function PostArticle({ post, contentHtml }: PostArticleProps) {
+export function PostArticle({
+  post,
+  contentHtml,
+  previousPost,
+}: PostArticleProps) {
   const { frontmatter, readingTimeMinutes, slug } = post;
   const author = frontmatter.author ?? basicDetails.author.name;
 
@@ -59,12 +66,13 @@ export function PostArticle({ post, contentHtml }: PostArticleProps) {
         </div>
       </header>
 
-      {/* Markdown is rendered to HTML on the server (see lib/blog/markdown.ts). */}
       <div
         className={styles.content}
         data-testid="blog-post-content"
         dangerouslySetInnerHTML={{ __html: contentHtml }}
       />
+
+      {previousPost && <PostNavBanner post={previousPost} />}
     </article>
   );
 }

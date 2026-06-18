@@ -38,7 +38,9 @@ export default async function InputFieldsPage() {
       meta={inputFieldsMeta}
       testCases={inputFieldsTestCases}
       learnContent={
-        <LearnTab snippets={{ type, append, read, clear, disabled, readonly }} />
+        <LearnTab
+          snippets={{ type, append, read, clear, disabled, readonly }}
+        />
       }
     />
   );
