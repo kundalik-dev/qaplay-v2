@@ -1,0 +1,157 @@
+import type { TestCase } from "@/data/practice-data/types";
+
+export const dataTableTestCases: TestCase[] = [
+  {
+    id: "DT_001",
+    scenario: "All 7 column headers are present and correctly labelled",
+    expected:
+      "Headers read: Sr No., Book Name, Book Genre, Book Author, Book ISBN, Book Published, Actions",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Navigate to <code>/practice/data-table</code>",
+      "Locate all <code>th</code> elements inside <code>[data-testid=\"data-table\"] thead</code>",
+      "Read each header text via <code>allTextContents()</code> / <code>getText()</code>",
+      "Assert the array contains all 7 expected header labels",
+    ],
+  },
+  {
+    id: "DT_002",
+    scenario: "Table displays exactly 10 rows of book data on initial load",
+    expected: "Row count equals 10 after the table finishes loading",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Navigate to <code>/practice/data-table</code>",
+      "Wait for <code>[data-testid=\"data-table\"] tbody tr</code> to be visible",
+      "Count all <code>tbody tr</code> rows inside <code>#dataTable</code>",
+      "Assert <code>count()</code> / <code>size()</code> equals 10",
+    ],
+  },
+  {
+    id: "DT_003",
+    scenario: "Row 2, Column 2 contains the book name 'Clean Code'",
+    expected: "Cell text at row 2, column 2 equals 'Clean Code'",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Locate <code>#dataTable tbody tr:nth-child(2) td:nth-child(2)</code>",
+      "Read cell text via <code>textContent()</code> / <code>getText()</code>",
+      "Assert the trimmed text equals <code>Clean Code</code>",
+    ],
+  },
+  {
+    id: "DT_004",
+    scenario: "Find the row for author 'George Orwell' and click its Edit button",
+    expected:
+      "The Edit button in the George Orwell row is clicked successfully",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Use Playwright: <code>page.locator(\"[data-testid='book-row']\").filter({ hasText: 'George Orwell' })</code>",
+      "Scope to that row and click <code>[data-testid='btn-edit-book']</code>",
+      "Assert the edit dialog or result panel appears",
+    ],
+    note: "XPath: //tr[td[normalize-space()='George Orwell']]//button[@data-testid='btn-edit-book']",
+  },
+  {
+    id: "DT_005",
+    scenario: "Table is not empty after initial page load",
+    expected: "tbody contains at least one visible row",
+    type: "positive",
+    priority: "high",
+    steps: [
+      "Navigate to <code>/practice/data-table</code>",
+      "Assert <code>tbody tr</code> count is greater than 0",
+      "Assert the first row is visible",
+    ],
+  },
+  {
+    id: "DT_006",
+    scenario: "All values in the Book ISBN column start with 'ISBN-'",
+    expected: "Every ISBN cell begins with the prefix 'ISBN-'",
+    type: "positive",
+    priority: "medium",
+    steps: [
+      "Locate all <code>td[data-col='book-isbn']</code> cells",
+      "Read all texts via <code>allTextContents()</code>",
+      "Assert each value starts with <code>ISBN-</code>",
+    ],
+  },
+  {
+    id: "DT_007",
+    scenario: "Searching by a book name filters the visible rows",
+    expected: "Only rows matching the search term remain visible",
+    type: "positive",
+    priority: "medium",
+    steps: [
+      "Locate <code>[data-testid='table-search']</code>",
+      "Type <code>Clean Code</code> into the search input",
+      "Assert row count drops to 1",
+      'Assert the visible row contains text <code>Clean Code</code>',
+    ],
+  },
+  {
+    id: "DT_008",
+    scenario: "Genre filter reduces visible rows to the selected genre only",
+    expected: "Only books in the chosen genre are shown after filtering",
+    type: "positive",
+    priority: "medium",
+    steps: [
+      "Locate <code>[data-testid='genre-filter']</code>",
+      'Select <code>Technology</code> from the dropdown',
+      "Assert all visible rows contain <code>Technology</code> in the genre cell",
+      "Assert rows from other genres are not present",
+    ],
+  },
+  {
+    id: "DT_009",
+    scenario: "Delete button for a row has no data-testid — located via aria-label",
+    expected: "Delete button is found and accessible via aria-label or XPath",
+    type: "positive",
+    priority: "medium",
+    note: "Intentionally missing data-testid — practice XPath/aria-label locators.",
+    steps: [
+      "Locate the row for book 'Dune' using <code>filter({ hasText: 'Dune' })</code>",
+      'Find Delete button via <code>getByRole("button", { name: /Delete Dune/ })</code>',
+      "Assert the button is visible",
+      "XPath: <code>//tr[.//td[normalize-space()='Dune']]//button[contains(@aria-label,'Delete')]</code>",
+    ],
+  },
+  {
+    id: "DT_010",
+    scenario: "Row can be located by its data-book-id attribute",
+    expected: "Row with data-book-id='book-004' contains 'The Hobbit'",
+    type: "positive",
+    priority: "medium",
+    steps: [
+      "Locate <code>[data-testid='book-row'][data-book-id='book-004']</code>",
+      "Assert the row contains text <code>The Hobbit</code>",
+      "XPath: <code>//tr[@data-book-id='book-004']</code>",
+    ],
+  },
+  {
+    id: "DT_011",
+    scenario: "Clearing the search input restores all 10 rows",
+    expected: "Row count returns to 10 after clearing search",
+    type: "edge",
+    priority: "medium",
+    steps: [
+      "Type a search term to filter rows",
+      "Clear the search input via <code>clear()</code> or <code>triple_click + type('')</code>",
+      "Assert row count returns to 10",
+    ],
+  },
+  {
+    id: "DT_012",
+    scenario: "Row-count display updates after filtering",
+    expected: "The row-count indicator reflects the filtered count",
+    type: "edge",
+    priority: "low",
+    steps: [
+      "Note initial <code>[data-testid='row-count']</code> text (should be 10)",
+      "Apply a genre filter",
+      "Assert <code>[data-testid='row-count']</code> reflects the new filtered count",
+    ],
+  },
+];
