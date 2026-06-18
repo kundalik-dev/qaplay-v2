@@ -134,19 +134,42 @@ When creating or updating homepage sections:
 
 **Root cause:** When a `'use client'` file statically imports any module, that module is bundled for the client. If the imported component is `async`, it breaks at runtime.
 
-**Correct pattern — composition via props:**
-Pass the Server Component's JSX as a `ReactNode` prop from a parent Server Component down into the Client Component. The Client Component never imports the Server Component directly.
+**Additional limitation — do not pass async Server Components as JSX props either:**
+Even with the composition pattern (passing `<LearnTab />` as a `ReactNode` prop from a Server Component), async Server Components can still fail at runtime in Next.js 16 / React 19 because the RSC runtime may serialize the component reference rather than pre-rendering it, causing the same error on the client.
+
+**Correct pattern — move async work to `page.tsx`, keep child components sync:**
+Do all `await` work in the page (a Server Component). Pass the pre-computed serializable data as props to child components, which remain synchronous.
 
 ```tsx
-// ✅ page.tsx (Server Component) — renders the async SC and passes it as a prop
-import { LearnTab } from "./_components/learn-tab";   // async Server Component
+// ✅ page.tsx (async Server Component) — does all the async work
+import { LearnTab } from "./_components/learn-tab";   // sync Server Component
 import { PracticePage } from "./_components/practice-page"; // 'use client'
+import { highlightLearnSnippet } from "@/lib/highlight";
+import { myLearnCode } from "@/data/practice-data/my-route/learn";
 
-export default function Page() {
-  return <PracticePage learnContent={<LearnTab />} />;
+export default async function MyPage() {
+  const [snippet1, snippet2] = await Promise.all([
+    highlightLearnSnippet(myLearnCode.snippet1),
+    highlightLearnSnippet(myLearnCode.snippet2),
+  ]);
+
+  return (
+    <PracticePage
+      learnContent={<LearnTab snippets={{ snippet1, snippet2 }} />}
+    />
+  );
 }
 
-// ✅ practice-page.tsx ('use client') — accepts it as ReactNode, never imports it
+// ✅ learn-tab.tsx (sync Server Component) — receives pre-computed data, no async
+import type { HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
+interface LearnTabProps {
+  snippets: { snippet1: HighlightedLearnCodeSnippet; snippet2: HighlightedLearnCodeSnippet; };
+}
+export function LearnTab({ snippets }: LearnTabProps) {
+  return <div>...</div>;
+}
+
+// ✅ practice-page.tsx ('use client') — accepts ReactNode, never imports LearnTab
 import type { ReactNode } from "react";
 interface Props { learnContent: ReactNode; }
 export function PracticePage({ learnContent }: Props) {

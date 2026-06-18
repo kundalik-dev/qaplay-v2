@@ -7,23 +7,25 @@ import {
 } from "@/components/practice";
 import {
   buttonsLearnDesc,
-  buttonsLearnCode,
   buttonsMethodRows,
   buttonsFaq,
   buttonsTocItems,
 } from "@/data/practice-data/buttons/learn";
-import { highlightLearnSnippet } from "@/lib/highlight";
+import type { HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
 
-export async function LearnTab() {
-  // Pre-highlight all code blocks in parallel on the server
-  const [single, double, right, disabled, text, keyboard] = await Promise.all([
-    highlightLearnSnippet(buttonsLearnCode.single),
-    highlightLearnSnippet(buttonsLearnCode.double),
-    highlightLearnSnippet(buttonsLearnCode.right),
-    highlightLearnSnippet(buttonsLearnCode.disabled),
-    highlightLearnSnippet(buttonsLearnCode.text),
-    highlightLearnSnippet(buttonsLearnCode.keyboard),
-  ]);
+interface LearnTabProps {
+  snippets: {
+    single: HighlightedLearnCodeSnippet;
+    double: HighlightedLearnCodeSnippet;
+    right: HighlightedLearnCodeSnippet;
+    disabled: HighlightedLearnCodeSnippet;
+    text: HighlightedLearnCodeSnippet;
+    keyboard: HighlightedLearnCodeSnippet;
+  };
+}
+
+export function LearnTab({ snippets }: LearnTabProps) {
+  const { single, double, right, disabled, text, keyboard } = snippets;
 
   return (
     <div className="mx-auto w-full max-w-[1280px] px-4 py-6 pb-16 sm:px-7 sm:py-8">

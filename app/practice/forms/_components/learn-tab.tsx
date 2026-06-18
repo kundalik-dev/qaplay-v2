@@ -7,25 +7,28 @@ import {
 } from "@/components/practice";
 import {
   formsLearnDesc,
-  formsLearnCode,
   formsMethodRows,
   formsFaq,
   formsTocItems,
 } from "@/data/practice-data/forms/learn";
-import { highlightLearnSnippet } from "@/lib/highlight";
+import type { HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
 
-export async function LearnTab() {
-  const [fillText, dob, radio, country, checkboxes, password, terms, errors] =
-    await Promise.all([
-      highlightLearnSnippet(formsLearnCode.fillText),
-      highlightLearnSnippet(formsLearnCode.dob),
-      highlightLearnSnippet(formsLearnCode.radio),
-      highlightLearnSnippet(formsLearnCode.country),
-      highlightLearnSnippet(formsLearnCode.checkboxes),
-      highlightLearnSnippet(formsLearnCode.password),
-      highlightLearnSnippet(formsLearnCode.terms),
-      highlightLearnSnippet(formsLearnCode.errors),
-    ]);
+interface LearnTabProps {
+  snippets: {
+    fillText: HighlightedLearnCodeSnippet;
+    dob: HighlightedLearnCodeSnippet;
+    radio: HighlightedLearnCodeSnippet;
+    country: HighlightedLearnCodeSnippet;
+    checkboxes: HighlightedLearnCodeSnippet;
+    password: HighlightedLearnCodeSnippet;
+    terms: HighlightedLearnCodeSnippet;
+    errors: HighlightedLearnCodeSnippet;
+  };
+}
+
+export function LearnTab({ snippets }: LearnTabProps) {
+  const { fillText, dob, radio, country, checkboxes, password, terms, errors } =
+    snippets;
 
   return (
     <div className="mx-auto w-full max-w-[1280px] px-4 py-6 pb-16 sm:px-7 sm:py-8">

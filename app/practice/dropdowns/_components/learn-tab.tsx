@@ -7,23 +7,25 @@ import {
 } from "@/components/practice";
 import {
   dropdownsFaq,
-  dropdownsLearnCode,
   dropdownsLearnDesc,
   dropdownsMethodRows,
   dropdownsTocItems,
 } from "@/data/practice-data/dropdowns/learn";
-import { highlightLearnSnippet } from "@/lib/highlight";
+import type { HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
 
-export async function LearnTab() {
-  const [visibleText, value, options, multi, custom, searchable] =
-    await Promise.all([
-      highlightLearnSnippet(dropdownsLearnCode.visibleText),
-      highlightLearnSnippet(dropdownsLearnCode.value),
-      highlightLearnSnippet(dropdownsLearnCode.options),
-      highlightLearnSnippet(dropdownsLearnCode.multi),
-      highlightLearnSnippet(dropdownsLearnCode.custom),
-      highlightLearnSnippet(dropdownsLearnCode.searchable),
-    ]);
+interface LearnTabProps {
+  snippets: {
+    visibleText: HighlightedLearnCodeSnippet;
+    value: HighlightedLearnCodeSnippet;
+    options: HighlightedLearnCodeSnippet;
+    multi: HighlightedLearnCodeSnippet;
+    custom: HighlightedLearnCodeSnippet;
+    searchable: HighlightedLearnCodeSnippet;
+  };
+}
+
+export function LearnTab({ snippets }: LearnTabProps) {
+  const { visibleText, value, options, multi, custom, searchable } = snippets;
 
   return (
     <div className="mx-auto w-full max-w-[1280px] px-4 py-6 pb-16 sm:px-7 sm:py-8">

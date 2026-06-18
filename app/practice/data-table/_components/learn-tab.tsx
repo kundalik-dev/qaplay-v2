@@ -7,23 +7,26 @@ import {
 } from "@/components/practice";
 import {
   dataTableLearnDesc,
-  dataTableLearnCode,
   dataTableMethodRows,
   dataTableFaq,
   dataTableTocItems,
 } from "@/data/practice-data/data-table/learn";
-import { highlightLearnSnippet } from "@/lib/highlight";
+import type { HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
 
-export async function LearnTab() {
-  const [countRows, readCell, readHeaders, findRow, allRows, verifyEmpty] =
-    await Promise.all([
-      highlightLearnSnippet(dataTableLearnCode.countRows),
-      highlightLearnSnippet(dataTableLearnCode.readCell),
-      highlightLearnSnippet(dataTableLearnCode.readHeaders),
-      highlightLearnSnippet(dataTableLearnCode.findRow),
-      highlightLearnSnippet(dataTableLearnCode.allRows),
-      highlightLearnSnippet(dataTableLearnCode.verifyEmpty),
-    ]);
+interface LearnTabProps {
+  snippets: {
+    countRows: HighlightedLearnCodeSnippet;
+    readCell: HighlightedLearnCodeSnippet;
+    readHeaders: HighlightedLearnCodeSnippet;
+    findRow: HighlightedLearnCodeSnippet;
+    allRows: HighlightedLearnCodeSnippet;
+    verifyEmpty: HighlightedLearnCodeSnippet;
+  };
+}
+
+export function LearnTab({ snippets }: LearnTabProps) {
+  const { countRows, readCell, readHeaders, findRow, allRows, verifyEmpty } =
+    snippets;
 
   return (
     <div className="mx-auto w-full max-w-[1280px] px-4 py-6 pb-16 sm:px-7 sm:py-8">

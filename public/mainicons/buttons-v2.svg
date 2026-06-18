@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Define styles for cartoon outlines -->
+  <style>
+    .outline { stroke: #313d40; stroke-width: 16px; stroke-linecap: round; stroke-linejoin: round; }
+    .thin-outline { stroke: #313d40; stroke-width: 8px; stroke-linecap: round; stroke-linejoin: round; }
+    .sparkle { fill: #fcf5af; stroke: #313d40; stroke-width: 8px; stroke-linejoin: round; }
+  </style>
+
+  <!-- Background/Shadow Base -->
+  <rect x="60" y="120" width="392" height="272" rx="50" fill="#3085d1" class="outline"/>
+  
+  <!-- Main Button Body (raised) -->
+  <rect x="60" y="90" width="392" height="272" rx="50" fill="#53a3ec" class="outline"/>
+  
+  <!-- Highlight shine on the button -->
+  <path d="M 110 125 H 402" stroke="#ffffff" stroke-width="12" stroke-linecap="round" opacity="0.4"/>
+  
+  <!-- Cute Face -->
+  <!-- Eyes -->
+  <circle cx="190" cy="210" r="14" fill="#313d40"/>
+  <circle cx="322" cy="210" r="14" fill="#313d40"/>
+  
+  <!-- Cheeks -->
+  <ellipse cx="145" cy="240" rx="22" ry="14" fill="#ff8e9e" opacity="0.9"/>
+  <ellipse cx="367" cy="240" rx="22" ry="14" fill="#ff8e9e" opacity="0.9"/>
+  
+  <!-- Mouth (Happy Smile) -->
+  <path d="M 236 235 Q 256 265 276 235" stroke="#313d40" stroke-width="12" stroke-linecap="round" fill="none"/>
+  
+  <!-- Sparkles/Action Lines -->
+  <!-- Top Right Sparkle -->
+  <path d="M 430 70 L 450 50 M 450 70 L 430 50 M 440 40 V 80 M 410 60 H 470" stroke="#fcf5af" stroke-width="8" stroke-linecap="round"/>
+  <!-- Top Left Sparkle -->
+  <path d="M 80 50 L 95 35 M 95 50 L 80 35 M 87 25 V 60 M 67 42 H 107" stroke="#81d9e7" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Click wave effect -->
+  <path d="M 340 310 A 50 50 0 0 1 420 390" fill="none" stroke="#313d40" stroke-width="12" stroke-linecap="round"/>
+  <path d="M 320 290 A 80 80 0 0 1 440 410" fill="none" stroke="#313d40" stroke-width="8" stroke-linecap="round" stroke-dasharray="12 12"/>
+
+  <!-- Cute Cursor clicking the button -->
+  <g transform="translate(350, 330)">
+    <!-- Shadow of cursor -->
+    <path d="M 0 0 L 80 80 L 45 90 L 95 180 L 55 200 L 5 110 L -40 130 Z" fill="#313d40" opacity="0.2"/>
+    <!-- Cursor Body -->
+    <path d="M 0 0 L 80 80 L 45 90 L 95 180 L 55 200 L 5 110 L -40 130 Z" fill="#fcf5af" class="outline"/>
+    <!-- Cursor inner detail -->
+    <path d="M -15 35 L 25 75 L 10 80 L 45 150" fill="none" class="thin-outline"/>
+  </g>
+</svg>

@@ -7,23 +7,25 @@ import {
 } from "@/components/practice";
 import {
   inputFieldsLearnDesc,
-  inputFieldsLearnCode,
   inputFieldsMethodRows,
   inputFieldsFaq,
   inputFieldsTocItems,
 } from "@/data/practice-data/input-fields/learn";
-import { highlightLearnSnippet } from "@/lib/highlight";
+import type { HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
 
-export async function LearnTab() {
-  // Pre-highlight all code blocks in parallel on the server
-  const [type, append, read, clear, disabled, readonly] = await Promise.all([
-    highlightLearnSnippet(inputFieldsLearnCode.type),
-    highlightLearnSnippet(inputFieldsLearnCode.append),
-    highlightLearnSnippet(inputFieldsLearnCode.read),
-    highlightLearnSnippet(inputFieldsLearnCode.clear),
-    highlightLearnSnippet(inputFieldsLearnCode.disabled),
-    highlightLearnSnippet(inputFieldsLearnCode.readonly),
-  ]);
+interface LearnTabProps {
+  snippets: {
+    type: HighlightedLearnCodeSnippet;
+    append: HighlightedLearnCodeSnippet;
+    read: HighlightedLearnCodeSnippet;
+    clear: HighlightedLearnCodeSnippet;
+    disabled: HighlightedLearnCodeSnippet;
+    readonly: HighlightedLearnCodeSnippet;
+  };
+}
+
+export function LearnTab({ snippets }: LearnTabProps) {
+  const { type, append, read, clear, disabled, readonly } = snippets;
 
   return (
     <div className="mx-auto w-full max-w-[1280px] px-4 py-6 pb-16 sm:px-7 sm:py-8">
