@@ -45,10 +45,7 @@ export function PostToc({ items }: PostTocProps) {
     return () => observer.disconnect();
   }, [items]);
 
-  function handleClick(
-    event: React.MouseEvent<HTMLAnchorElement>,
-    id: string,
-  ) {
+  function handleClick(event: React.MouseEvent<HTMLAnchorElement>, id: string) {
     event.preventDefault();
     const target = document.getElementById(id);
     if (!target) return;
