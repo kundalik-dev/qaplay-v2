@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Inter, Space_Grotesk } from "next/font/google";
+import {
+  IBM_Plex_Mono,
+  Inter,
+  JetBrains_Mono,
+  Space_Grotesk,
+} from "next/font/google";
 
 import { AppFooter, AppNavbar } from "@/components/app-nav";
 import { JsonLd } from "@/components/seo";
@@ -26,6 +31,12 @@ const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
   variable: "--font-ibm-plex-mono",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-jetbrains-mono",
 });
 
 // Site-wide defaults. The title template applies to child pages that supply a
@@ -61,7 +72,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable} dark`}
+      className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable} ${jetbrainsMono.variable} dark`}
       suppressHydrationWarning
     >
       <head>

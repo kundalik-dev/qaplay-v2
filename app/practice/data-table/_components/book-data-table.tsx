@@ -1,196 +1,108 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import {
   bookRows,
   tableColumnHeaders,
   genres,
   type BookRow,
 } from "@/data/practice-data/data-table/scenarios";
+import { EditDialog, DeleteDialog, AddDialog } from "./_book-dialogs";
 import styles from "./data-table.module.css";
+
+// ── localStorage helpers ──────────────────────────────────────────────────────
+
+const LS_KEY = "qaplayground-data-table-books";
+
+function loadFromStorage(): BookRow[] {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return bookRows;
+    const parsed: BookRow[] = JSON.parse(raw);
+    if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0].id === "string") {
+      return parsed;
+    }
+  } catch {
+    // corrupt — fall through
+  }
+  return bookRows;
+}
+
+function saveToStorage(rows: BookRow[]) {
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify(rows));
+  } catch {
+    // storage unavailable — ignore
+  }
+}
+
+// ── Types ─────────────────────────────────────────────────────────────────────
 
 type SortKey = keyof Omit<BookRow, "id">;
 type SortDir = "asc" | "desc" | null;
+interface SortState { key: SortKey | null; dir: SortDir; }
 
-interface SortState {
-  key: SortKey | null;
-  dir: SortDir;
-}
-
-// ── Edit dialog ───────────────────────────────────────────────────────────────
-
-interface EditDialogProps {
-  book: BookRow;
-  onClose: () => void;
-}
-
-function EditDialog({ book, onClose }: EditDialogProps) {
-  return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="edit-dialog-title"
-      data-testid="edit-book-dialog"
-      className={styles.dialogBackdrop}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      <div className={styles.dialogBox} data-book-id={book.id}>
-        <h2 id="edit-dialog-title" className={styles.dialogTitle}>
-          Edit Book
-        </h2>
-        <p className={styles.dialogSubtitle}>
-          Editing:{" "}
-          <strong data-testid="edit-dialog-book-name">{book.bookName}</strong>
-        </p>
-
-        <div className={styles.dialogFields}>
-          {/* Beginner: label + testid */}
-          <label htmlFor="edit-book-name" className={styles.fieldLabel}>
-            Book Name
-          </label>
-          <input
-            id="edit-book-name"
-            name="bookName"
-            type="text"
-            defaultValue={book.bookName}
-            data-testid="edit-input-book-name"
-            className={styles.fieldInput}
-          />
-
-          {/* Beginner: label + testid */}
-          <label htmlFor="edit-book-author" className={styles.fieldLabel}>
-            Author
-          </label>
-          <input
-            id="edit-book-author"
-            name="bookAuthor"
-            type="text"
-            defaultValue={book.bookAuthor}
-            data-testid="edit-input-book-author"
-            className={styles.fieldInput}
-          />
-
-          {/* Hard: nearby span instead of label, dynamic name attr */}
-          <div className={styles.fieldRow}>
-            <span className={styles.fieldSpanLabel}>ISBN</span>
-            <div>
-              <input
-                name={`isbn_field_${book.id}`}
-                type="text"
-                defaultValue={book.bookIsbn}
-                className={styles.fieldInput}
-              />
-            </div>
-          </div>
-
-          {/* Medium: native select with label */}
-          <label htmlFor="edit-book-genre" className={styles.fieldLabel}>
-            Genre
-          </label>
-          <select
-            id="edit-book-genre"
-            name="bookGenre"
-            defaultValue={book.bookGenre}
-            data-testid="edit-select-genre"
-            className={styles.fieldInput}
-          >
-            {genres
-              .filter((g) => g !== "All")
-              .map((g) => (
-                <option key={g} value={g}>
-                  {g}
-                </option>
-              ))}
-          </select>
-        </div>
-
-        <div className={styles.dialogActions}>
-          <button
-            type="button"
-            data-testid="edit-dialog-cancel"
-            onClick={onClose}
-            className={styles.btnOutline}
-          >
-            Cancel
-          </button>
-          {/* Challenge: confirm button uses aria-label with book name */}
-          <button
-            type="button"
-            aria-label={`Save changes for ${book.bookName}`}
-            data-testid="edit-dialog-save"
-            onClick={onClose}
-            className={styles.btnPrimary}
-          >
-            Save Changes
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── Delete confirm dialog ─────────────────────────────────────────────────────
-
-interface DeleteDialogProps {
-  book: BookRow;
-  onClose: () => void;
-}
-
-function DeleteDialog({ book, onClose }: DeleteDialogProps) {
-  return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="delete-dialog-title"
-      data-testid="delete-book-dialog"
-      className={styles.dialogBackdrop}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      <div className={styles.dialogBox} data-book-id={book.id}>
-        <h2 id="delete-dialog-title" className={styles.dialogTitle}>
-          Delete Book
-        </h2>
-        <p className={styles.dialogBody}>
-          <span data-testid="delete-dialog-book-name">{book.bookName}</span>{" "}
-          will be permanently removed.
-        </p>
-        <div className={styles.dialogActions}>
-          {/* Beginner: testid on cancel */}
-          <button
-            type="button"
-            data-testid="delete-dialog-cancel"
-            onClick={onClose}
-            className={styles.btnOutline}
-          >
-            Cancel
-          </button>
-          {/* Challenge: confirm uses aria-label — no testid */}
-          <button
-            type="button"
-            aria-label={`Confirm delete ${book.bookName}`}
-            onClick={onClose}
-            className={styles.btnDanger}
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── Main table ────────────────────────────────────────────────────────────────
+// ── Component ─────────────────────────────────────────────────────────────────
 
 export function BookDataTable() {
+  const [rows, setRows] = useState<BookRow[]>(bookRows);
+  const [hydrated, setHydrated] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [genreFilter, setGenreFilter] = useState("All");
   const [sort, setSort] = useState<SortState>({ key: null, dir: null });
   const [editBook, setEditBook] = useState<BookRow | null>(null);
   const [deleteBook, setDeleteBook] = useState<BookRow | null>(null);
+  const [showHints, setShowHints] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [addOpen, setAddOpen] = useState(false);
+
+  const PAGE_SIZE = 5;
+
+  // Hydrate from localStorage once on mount (avoids SSR mismatch)
+  useEffect(() => {
+    setRows(loadFromStorage());
+    setHydrated(true);
+  }, []);
+
+  // ── Mutations ────────────────────────────────────────────────────────────
+
+  const updateRow = useCallback((updated: BookRow) => {
+    setRows((prev) => {
+      const next = prev.map((r) => (r.id === updated.id ? updated : r));
+      saveToStorage(next);
+      return next;
+    });
+    setEditBook(null);
+  }, []);
+
+  const deleteRow = useCallback((id: string) => {
+    setRows((prev) => {
+      const next = prev.filter((r) => r.id !== id);
+      saveToStorage(next);
+      return next;
+    });
+    setDeleteBook(null);
+  }, []);
+
+  const addRow = useCallback((book: BookRow) => {
+    setRows((prev) => {
+      const next = [...prev, book];
+      saveToStorage(next);
+      return next;
+    });
+    setAddOpen(false);
+  }, []);
+
+  const resetToDefaults = useCallback(() => {
+    try { localStorage.removeItem(LS_KEY); } catch { /* ignore */ }
+    setRows(bookRows);
+    setSearchTerm("");
+    setGenreFilter("All");
+    setSort({ key: null, dir: null });
+    setCurrentPage(1);
+  }, []);
+
+  // ── Sort ─────────────────────────────────────────────────────────────────
 
   const handleSort = useCallback((key: SortKey) => {
     setSort((prev) => {
@@ -200,16 +112,14 @@ export function BookDataTable() {
     });
   }, []);
 
+  // ── Filtered + sorted rows ────────────────────────────────────────────────
+
   const filteredRows = useMemo(() => {
-    let rows = bookRows;
-
-    if (genreFilter !== "All") {
-      rows = rows.filter((r) => r.bookGenre === genreFilter);
-    }
-
+    let result = rows;
+    if (genreFilter !== "All") result = result.filter((r) => r.bookGenre === genreFilter);
     if (searchTerm.trim()) {
       const q = searchTerm.toLowerCase();
-      rows = rows.filter(
+      result = result.filter(
         (r) =>
           r.bookName.toLowerCase().includes(q) ||
           r.bookAuthor.toLowerCase().includes(q) ||
@@ -217,40 +127,50 @@ export function BookDataTable() {
           r.bookIsbn.toLowerCase().includes(q)
       );
     }
-
     if (sort.key && sort.dir) {
-      rows = [...rows].sort((a, b) => {
-        const av = String(a[sort.key!]);
-        const bv = String(b[sort.key!]);
-        const cmp = av.localeCompare(bv, undefined, { numeric: true });
-        return sort.dir === "asc" ? cmp : -cmp;
+      const sk = sort.key;
+      const sd = sort.dir;
+      result = [...result].sort((a, b) => {
+        const cmp = String(a[sk]).localeCompare(String(b[sk]), undefined, { numeric: true });
+        return sd === "asc" ? cmp : -cmp;
       });
     }
+    return result;
+  }, [rows, searchTerm, genreFilter, sort]);
 
-    return rows;
-  }, [searchTerm, genreFilter, sort]);
+  // Reset to page 1 whenever the filtered set changes
+  useEffect(() => { setCurrentPage(1); }, [searchTerm, genreFilter, sort]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredRows.length / PAGE_SIZE));
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+  const pagedRows = filteredRows.slice((safeCurrentPage - 1) * PAGE_SIZE, safeCurrentPage * PAGE_SIZE);
+
+  // Show Reset only after hydration and when rows have been deleted
+  const showReset = hydrated && rows.length < bookRows.length;
+
+  // ── Sortable column definitions ───────────────────────────────────────────
+
+  const sortableCols: Array<{ header: (typeof tableColumnHeaders)[number]; key: SortKey }> = [
+    { header: tableColumnHeaders[1], key: "bookName" },
+    { header: tableColumnHeaders[2], key: "bookGenre" },
+    { header: tableColumnHeaders[3], key: "bookAuthor" },
+    { header: tableColumnHeaders[4], key: "bookIsbn" },
+    { header: tableColumnHeaders[5], key: "bookPublished" },
+  ];
 
   function sortIcon(key: SortKey) {
-    if (sort.key !== key) return <span aria-hidden="true" className={styles.sortNeutral}>⇅</span>;
-    return (
-      <span aria-hidden="true" className={styles.sortActive}>
-        {sort.dir === "asc" ? "↑" : "↓"}
-      </span>
-    );
+    if (sort.key !== key) return <span aria-hidden="true" className={styles.sortNeutral}>{"⇅"}</span>;
+    return <span aria-hidden="true" className={styles.sortActive}>{sort.dir === "asc" ? "↑" : "↓"}</span>;
   }
 
+  // ── Render ────────────────────────────────────────────────────────────────
+
   return (
-    <div
-      className={styles.tableWrapper}
-      data-testid="data-table-wrapper"
-      data-section="data-table"
-    >
-      {/* ── Controls ─────────────────────────────────────────────────────── */}
+    <div className={styles.tableWrapper} data-testid="data-table-wrapper" data-section="data-table">
+
+      {/* Controls */}
       <div className={styles.tableControls} data-testid="table-controls">
-        {/* Beginner: clear label + testid on search */}
-        <label htmlFor="table-search-input" className="sr-only">
-          Search books
-        </label>
+        <label htmlFor="table-search-input" className="sr-only">Search books</label>
         <input
           id="table-search-input"
           type="search"
@@ -262,10 +182,7 @@ export function BookDataTable() {
           className={styles.searchInput}
         />
 
-        {/* Medium: native select with label + testid */}
-        <label htmlFor="genre-filter-select" className="sr-only">
-          Filter by genre
-        </label>
+        <label htmlFor="genre-filter-select" className="sr-only">Filter by genre</label>
         <select
           id="genre-filter-select"
           value={genreFilter}
@@ -275,19 +192,34 @@ export function BookDataTable() {
           className={styles.filterSelect}
         >
           {genres.map((g) => (
-            <option key={g} value={g}>
-              {g === "All" ? "All Genres" : g}
-            </option>
+            <option key={g} value={g}>{g === "All" ? "All Genres" : g}</option>
           ))}
         </select>
 
-        {/* Hard: no testid on row count span — locate via text or parent */}
-        <span className={styles.rowCount} data-testid="row-count" aria-live="polite">
-          {filteredRows.length} {filteredRows.length === 1 ? "book" : "books"}
-        </span>
+        <button
+          type="button"
+          data-testid="btn-add-book"
+          aria-label="Add new book"
+          onClick={() => setAddOpen(true)}
+          className={styles.btnAdd}
+        >
+          + Add Book
+        </button>
+
+        {showReset && (
+          <button
+            type="button"
+            data-testid="btn-reset-table"
+            onClick={resetToDefaults}
+            className={styles.btnReset}
+            title="Restore original 25 books"
+          >
+            Reset
+          </button>
+        )}
       </div>
 
-      {/* ── Table ────────────────────────────────────────────────────────── */}
+      {/* Table */}
       <div className={styles.tableScroll}>
         <table
           id="dataTable"
@@ -298,64 +230,29 @@ export function BookDataTable() {
         >
           <thead data-testid="table-head">
             <tr>
-              {/* Sr No — no sort */}
-              <th
-                scope="col"
-                data-testid={tableColumnHeaders[0].testId}
-                data-col={tableColumnHeaders[0].dataCol}
-                className={styles.th}
-              >
+              <th scope="col" data-testid={tableColumnHeaders[0].testId} data-col={tableColumnHeaders[0].dataCol} className={styles.th}>
                 {tableColumnHeaders[0].label}
               </th>
 
-              {/* Sortable columns: Book Name, Genre, Author, ISBN, Published */}
-              {(
-                [
-                  { header: tableColumnHeaders[1], key: "bookName" as SortKey },
-                  { header: tableColumnHeaders[2], key: "bookGenre" as SortKey },
-                  { header: tableColumnHeaders[3], key: "bookAuthor" as SortKey },
-                  { header: tableColumnHeaders[4], key: "bookIsbn" as SortKey },
-                  { header: tableColumnHeaders[5], key: "bookPublished" as SortKey },
-                ]
-              ).map(({ header, key }) => (
+              {sortableCols.map(({ header, key }) => (
                 <th
                   key={key}
                   scope="col"
                   data-testid={header.testId}
                   data-col={header.dataCol}
                   data-sort={key}
-                  aria-sort={
-                    sort.key === key
-                      ? sort.dir === "asc"
-                        ? "ascending"
-                        : "descending"
-                      : "none"
-                  }
-                  className={`${styles.th} ${styles.thSortable}`}
+                  aria-sort={sort.key === key ? (sort.dir === "asc" ? "ascending" : "descending") : "none"}
+                  className={styles.th + " " + styles.thSortable}
                   onClick={() => handleSort(key)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      handleSort(key);
-                    }
-                  }}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleSort(key); } }}
                   tabIndex={0}
                   role="columnheader"
                 >
-                  <span className={styles.thContent}>
-                    {header.label}
-                    {sortIcon(key)}
-                  </span>
+                  <span className={styles.thContent}>{header.label}{sortIcon(key)}</span>
                 </th>
               ))}
 
-              {/* Actions — no sort */}
-              <th
-                scope="col"
-                data-testid={tableColumnHeaders[6].testId}
-                data-col={tableColumnHeaders[6].dataCol}
-                className={styles.th}
-              >
+              <th scope="col" data-testid={tableColumnHeaders[6].testId} data-col={tableColumnHeaders[6].dataCol} className={styles.th}>
                 {tableColumnHeaders[6].label}
               </th>
             </tr>
@@ -364,143 +261,133 @@ export function BookDataTable() {
           <tbody data-testid="table-body">
             {filteredRows.length === 0 ? (
               <tr data-testid="empty-table-row">
-                <td
-                  colSpan={7}
-                  className={styles.emptyCell}
-                  id="emptyTableMsg"
-                  data-testid="empty-table-msg"
-                >
+                <td colSpan={7} className={styles.emptyCell} id="emptyTableMsg" data-testid="empty-table-msg">
                   No books match your search
                 </td>
               </tr>
             ) : (
-              filteredRows.map((book) => (
-                <tr
-                  key={book.id}
-                  data-testid="book-row"
-                  data-book-id={book.id}
-                  data-genre={book.bookGenre.toLowerCase().replace(/ /g, "-")}
-                  className={styles.tr}
-                >
-                  {/* Sr No */}
-                  <td
-                    data-col="sr-no"
-                    data-testid="cell-sr-no"
-                    className={styles.td}
-                  >
-                    {book.srNo}
-                  </td>
-
-                  {/* Book Name — medium: find by partial text */}
-                  <td
-                    data-col="book-name"
-                    className={styles.td}
-                  >
-                    {book.bookName}
-                  </td>
-
-                  {/* Genre — medium: filter by value */}
-                  <td
-                    data-col="book-genre"
-                    data-genre-value={book.bookGenre}
-                    className={styles.td}
-                  >
-                    <span
-                      className={`${styles.genreBadge} ${styles[`genre-${book.bookGenre.toLowerCase().replace(/ /g, "-")}`] ?? ""}`}
-                      data-testid="genre-badge"
-                    >
-                      {book.bookGenre}
-                    </span>
-                  </td>
-
-                  {/* Author — hard: no testid, locate via text relationship */}
-                  <td
-                    data-col="book-author"
-                    className={styles.td}
-                  >
-                    {book.bookAuthor}
-                  </td>
-
-                  {/* ISBN — hard: no testid, locate by data-col attribute */}
-                  <td
-                    data-col="book-isbn"
-                    className={`${styles.td} ${styles.isbnCell}`}
-                  >
-                    {book.bookIsbn}
-                  </td>
-
-                  {/* Published — hard: no testid, parse or locate by col */}
-                  <td
-                    data-col="book-published"
-                    className={styles.td}
-                  >
-                    {book.bookPublished}
-                  </td>
-
-                  {/* Actions */}
-                  <td
-                    data-col="actions"
-                    data-testid="cell-actions"
-                    className={`${styles.td} ${styles.actionsCell}`}
-                  >
-                    {/*
-                     * Beginner: Edit has data-testid + aria-label
-                     * Challenge: Delete has ONLY aria-label — no data-testid
-                     *   → forces XPath / getByRole({ name: /Delete .../ }) practice
-                     */}
-                    <button
-                      type="button"
-                      data-testid="btn-edit-book"
-                      aria-label={`Edit ${book.bookName}`}
-                      data-book-id={book.id}
-                      onClick={() => setEditBook(book)}
-                      className={styles.btnEdit}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      type="button"
-                      aria-label={`Delete ${book.bookName}`}
-                      data-book-id={book.id}
-                      onClick={() => setDeleteBook(book)}
-                      className={styles.btnDelete}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
+              pagedRows.map((book) => {
+                const slug = book.bookGenre.toLowerCase().replace(/ /g, "-");
+                const badgeClass = styles.genreBadge + " " + (styles["genre-" + slug] ?? "");
+                return (
+                  <tr key={book.id} data-testid="book-row" data-book-id={book.id} data-genre={slug} className={styles.tr}>
+                    <td data-col="sr-no" data-testid="cell-sr-no" className={styles.td}>{book.srNo}</td>
+                    {/* Book Name — medium: filter by text */}
+                    <td data-col="book-name" className={styles.td}>{book.bookName}</td>
+                    {/* Genre — medium: data-genre-value attribute */}
+                    <td data-col="book-genre" data-genre-value={book.bookGenre} className={styles.td}>
+                      <span className={badgeClass} data-testid="genre-badge">{book.bookGenre}</span>
+                    </td>
+                    {/* Author — hard: no data-testid, locate by text/sibling */}
+                    <td data-col="book-author" className={styles.td}>{book.bookAuthor}</td>
+                    {/* ISBN — hard: locate by data-col attribute */}
+                    <td data-col="book-isbn" className={styles.td + " " + styles.isbnCell}>{book.bookIsbn}</td>
+                    {/* Published — hard: locate by data-col */}
+                    <td data-col="book-published" className={styles.td}>{book.bookPublished}</td>
+                    {/* Actions — Edit has testid; Delete has only aria-label (challenge) */}
+                    <td data-col="actions" data-testid="cell-actions" className={styles.td + " " + styles.actionsCell}>
+                      <button type="button" data-testid="btn-edit-book" aria-label={"Edit " + book.bookName} data-book-id={book.id} onClick={() => setEditBook(book)} className={styles.btnEdit}>
+                        Edit
+                      </button>
+                      <button type="button" aria-label={"Delete " + book.bookName} data-book-id={book.id} onClick={() => setDeleteBook(book)} className={styles.btnDelete}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
             )}
           </tbody>
         </table>
       </div>
 
-      {/* ── Locator hint footer ───────────────────────────────────────────── */}
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className={styles.pagination} data-testid="pagination" aria-label="Table pagination">
+          <button
+            type="button"
+            className={styles.pgBtn}
+            data-testid="pagination-prev"
+            aria-label="Previous page"
+            disabled={safeCurrentPage === 1}
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+          >
+            ‹
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              type="button"
+              className={styles.pgBtn + (page === safeCurrentPage ? " " + styles.pgBtnActive : "")}
+              data-testid={"pagination-page-" + page}
+              aria-label={"Page " + page}
+              aria-current={page === safeCurrentPage ? "page" : undefined}
+              onClick={() => setCurrentPage(page)}
+            >
+              {page}
+            </button>
+          ))}
+
+          <button
+            type="button"
+            className={styles.pgBtn}
+            data-testid="pagination-next"
+            aria-label="Next page"
+            disabled={safeCurrentPage === totalPages}
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+          >
+            ›
+          </button>
+
+          <span className={styles.pgRowCount} data-testid="row-count" aria-live="polite">
+            {filteredRows.length} {filteredRows.length === 1 ? "book" : "books"}
+            {totalPages > 1 && " — page " + safeCurrentPage + " of " + totalPages}
+          </span>
+        </div>
+      )}
+
+      {/* Row count when no pagination */}
+      {totalPages <= 1 && (
+        <div className={styles.pagination}>
+          <span className={styles.pgRowCount} data-testid="row-count" aria-live="polite">
+            {filteredRows.length} {filteredRows.length === 1 ? "book" : "books"}
+          </span>
+        </div>
+      )}
+
+      {/* Locator hint footer */}
       <div className={styles.locatorHints} data-testid="locator-hints">
-        <p className={styles.hintLabel}>Locator Practice Notes</p>
-        <ul className={styles.hintList}>
-          <li>
-            <code>#dataTable</code> — stable id for all frameworks
-          </li>
-          <li>
-            <code>[data-testid=&quot;book-row&quot;][data-book-id=&quot;book-004&quot;]</code> — row by id
-          </li>
-          <li>
-            <code>td[data-col=&quot;book-isbn&quot;]</code> — column cells by attribute
-          </li>
-          <li>
-            <code>Delete</code> buttons have <strong>no data-testid</strong> — use{" "}
-            <code>aria-label</code> or XPath
-          </li>
-        </ul>
+        <button
+          type="button"
+          className={styles.hintToggleBtn}
+          data-testid="show-hint-btn"
+          aria-expanded={showHints}
+          onClick={() => setShowHints((v) => !v)}
+        >
+          <span className={styles.hintBulb}>💡</span>
+          {showHints ? "Hide Hint" : "Show Hint"}
+        </button>
+
+        {showHints && (
+          <ul className={styles.hintList} data-testid="hint-list">
+            <li><code>#dataTable</code> — stable id for all frameworks</li>
+            <li><code>[data-testid="book-row"][data-book-id="book-004"]</code> — row by id</li>
+            <li><code>td[data-col="book-isbn"]</code> — column cells by attribute</li>
+            <li><code>Delete</code> buttons have <strong>no data-testid</strong> — use <code>aria-label</code> or XPath</li>
+          </ul>
+        )}
       </div>
 
-      {/* ── Dialogs ───────────────────────────────────────────────────────── */}
+      {/* Dialogs */}
+      {addOpen && (
+        <AddDialog nextSrNo={rows.length + 1} onSave={addRow} onClose={() => setAddOpen(false)} />
+      )}
       {editBook && (
-        <EditDialog book={editBook} onClose={() => setEditBook(null)} />
+        <EditDialog book={editBook} onSave={updateRow} onClose={() => setEditBook(null)} />
       )}
       {deleteBook && (
-        <DeleteDialog book={deleteBook} onClose={() => setDeleteBook(null)} />
+        <DeleteDialog book={deleteBook} onConfirm={() => deleteRow(deleteBook.id)} onClose={() => setDeleteBook(null)} />
       )}
     </div>
   );

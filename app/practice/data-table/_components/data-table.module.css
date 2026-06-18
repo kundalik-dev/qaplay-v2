@@ -71,11 +71,7 @@
 }
 
 .rowCount {
-  margin-left: auto;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted-foreground);
-  white-space: nowrap;
+  display: none; /* moved to pagination bar */
 }
 
 /* ── Table scroll container ──────────────────────────────────────────────── */
@@ -172,7 +168,7 @@
   border: 1px solid var(--border);
 }
 
-/* Genre-specific tints */
+/* Genre-specific tints — light mode */
 .genre-technology {
   background: #eff6ff;
   color: #1d4ed8;
@@ -204,6 +200,38 @@
   border-color: #bbf7d0;
 }
 
+/* Genre-specific tints — dark mode */
+:global(.dark) .genre-technology {
+  background: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+:global(.dark) .genre-fantasy {
+  background: rgba(139, 92, 246, 0.15);
+  color: #c4b5fd;
+  border-color: rgba(139, 92, 246, 0.3);
+}
+:global(.dark) .genre-science-fiction {
+  background: rgba(16, 185, 129, 0.12);
+  color: #6ee7b7;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+:global(.dark) .genre-dystopian {
+  background: rgba(249, 115, 22, 0.12);
+  color: #fdba74;
+  border-color: rgba(249, 115, 22, 0.3);
+}
+:global(.dark) .genre-fiction {
+  background: rgba(168, 85, 247, 0.12);
+  color: #d8b4fe;
+  border-color: rgba(168, 85, 247, 0.3);
+}
+:global(.dark) .genre-non-fiction {
+  background: rgba(34, 197, 94, 0.12);
+  color: #86efac;
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
 /* Actions cell */
 .actionsCell {
   white-space: nowrap;
@@ -215,6 +243,62 @@
   text-align: center;
   color: var(--muted-foreground);
   font-size: 13px;
+}
+
+/* ── Add Book button ─────────────────────────────────────────────────────── */
+
+.btnAdd {
+  height: 34px;
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  border: none;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  transition: filter 0.12s;
+}
+.btnAdd:hover {
+  filter: brightness(0.92);
+}
+.btnAdd:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ── Reset button ────────────────────────────────────────────────────────── */
+
+.btnReset {
+  height: 34px;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  border: 1.5px solid #fde68a;
+  background: #fefce8;
+  color: #92400e;
+  transition: background 0.12s;
+  white-space: nowrap;
+}
+.btnReset:hover {
+  background: #fef9c3;
+}
+.btnReset:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+:global(.dark) .btnReset {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.35);
+  color: #fcd34d;
+}
+:global(.dark) .btnReset:hover {
+  background: rgba(245, 158, 11, 0.22);
 }
 
 /* ── Action buttons ──────────────────────────────────────────────────────── */
@@ -230,7 +314,7 @@
   border: 1.5px solid #bfdbfe;
   background: #eff6ff;
   color: #1d4ed8;
-  transition: background 0.12s;
+  transition: background 0.12s, border-color 0.12s;
 }
 .btnEdit:hover {
   background: #dbeafe;
@@ -238,6 +322,14 @@
 .btnEdit:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+}
+:global(.dark) .btnEdit {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.35);
+  color: #93c5fd;
+}
+:global(.dark) .btnEdit:hover {
+  background: rgba(59, 130, 246, 0.22);
 }
 
 .btnDelete {
@@ -250,7 +342,7 @@
   border: 1.5px solid #fca5a5;
   background: #fee2e2;
   color: #991b1b;
-  transition: background 0.12s;
+  transition: background 0.12s, border-color 0.12s;
 }
 .btnDelete:hover {
   background: #fecaca;
@@ -259,22 +351,63 @@
   outline: 2px solid #ef4444;
   outline-offset: 2px;
 }
+:global(.dark) .btnDelete {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+}
+:global(.dark) .btnDelete:hover {
+  background: rgba(239, 68, 68, 0.22);
+}
 
 /* ── Locator hints ───────────────────────────────────────────────────────── */
 
 .locatorHints {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
   padding: 12px 16px;
   border-top: 1px solid var(--border);
   background: color-mix(in srgb, var(--primary) 4%, var(--background));
 }
 
-.hintLabel {
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
-  margin-bottom: 6px;
+.hintToggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  border: 1.5px solid #fde68a;
+  background: #fefce8;
+  color: #78350f;
+  transition: background 0.12s, border-color 0.12s;
+  margin-bottom: 0;
+}
+.hintToggleBtn:hover {
+  background: #fef9c3;
+  border-color: #fcd34d;
+}
+.hintToggleBtn:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+:global(.dark) .hintToggleBtn {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #fcd34d;
+}
+:global(.dark) .hintToggleBtn:hover {
+  background: rgba(245, 158, 11, 0.18);
+}
+
+.hintBulb {
+  font-size: 13px;
+  line-height: 1;
 }
 
 .hintList {
@@ -299,6 +432,67 @@
   border-radius: 3px;
   padding: 1px 4px;
   color: var(--foreground);
+}
+
+/* ── Pagination ──────────────────────────────────────────────────────────── */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+}
+
+.pgBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+.pgBtn:hover:not(:disabled) {
+  background: var(--muted);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.pgBtn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.pgBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.pgBtnActive {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 700;
+}
+.pgBtnActive:hover:not(:disabled) {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.pgRowCount {
+  margin-left: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  white-space: nowrap;
 }
 
 /* ── Dialogs ─────────────────────────────────────────────────────────────── */
@@ -385,6 +579,20 @@
 }
 .fieldInput:focus {
   border-color: var(--primary);
+}
+
+.fieldInputError {
+  border-color: #ef4444 !important;
+}
+
+.fieldRequired {
+  color: #ef4444;
+}
+
+.fieldError {
+  font-size: 11px;
+  color: #ef4444;
+  margin-top: -4px;
 }
 
 .dialogActions {

@@ -48,7 +48,7 @@ export function MethodSummaryTable({ rows }: MethodSummaryTableProps) {
                   key={`${row.action}-${colIndex}`}
                   className="border-b border-border/50 px-3 py-[9px]"
                 >
-                  <code className="font-[family-name:var(--font-ibm-plex-mono)] text-[11.5px] text-primary">
+                  <code className="font-[family-name:var(--font-jetbrains-mono)] text-[12px] tracking-[-0.01em] text-foreground">
                     {cell}
                   </code>
                 </td>
