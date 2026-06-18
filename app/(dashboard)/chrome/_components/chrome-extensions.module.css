@@ -7,41 +7,66 @@
   min-height: 100vh;
 }
 
-/* ── Hero / Header ─────────────────────────────────────────────────────── */
+/* ── Hero section wrapper ──────────────────────────────────────────────── */
 
-.hero {
-  padding: 8px 0 18px;
+.heroSection {
+  margin-bottom: 32px;
+  padding: 36px 32px 28px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 60%, transparent);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   text-align: center;
 }
 
+/* ── Hero / Header ─────────────────────────────────────────────────────── */
+
+.hero {
+  margin-bottom: 24px;
+}
+
 .eyebrow {
-  display: inline-block;
-  margin-bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  border: 1px solid color-mix(in srgb, var(--primary) 25%, var(--border));
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
   color: var(--primary);
   font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: var(--home-type-label-size);
-  letter-spacing: var(--home-type-label-spacing);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  font-weight: 600;
 }
 
 .title {
-  margin: 0 auto 8px;
-  max-width: 30ch;
-  color: var(--foreground);
+  margin: 0 auto 12px;
+  max-width: 28ch;
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
   font-weight: 700;
-  line-height: 1.12;
-  letter-spacing: -0.04em;
+  line-height: 1.1;
+  letter-spacing: -0.045em;
   text-wrap: balance;
+  background: linear-gradient(
+    135deg,
+    var(--foreground) 0%,
+    color-mix(in srgb, var(--foreground) 72%, var(--primary)) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {
   margin: 0 auto;
-  max-width: 600px;
+  max-width: 520px;
   color: var(--muted-foreground);
-  font-size: 0.95rem;
-  line-height: 1.55;
+  font-size: 0.925rem;
+  line-height: 1.6;
   text-wrap: pretty;
 }
 
@@ -50,9 +75,9 @@
 .toolbar {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin: 0 auto 24px;
-  max-width: 720px;
+  gap: 16px;
+  margin: 0 auto;
+  max-width: 680px;
 }
 
 .searchBox {
@@ -71,26 +96,29 @@
 
 .searchInput {
   width: 100%;
-  height: 48px;
-  padding: 0 16px 0 46px;
-  border: 1px solid var(--input);
-  border-radius: var(--radius-xl);
-  background: var(--card);
+  height: 50px;
+  padding: 0 18px 0 48px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--background);
   color: var(--foreground);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   outline: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06), inset 0 1px 2px rgba(0, 0, 0, 0.04);
   transition:
     border-color 0.18s ease,
     box-shadow 0.18s ease;
 }
 
 .searchInput::placeholder {
-  color: var(--muted-foreground);
+  color: color-mix(in srgb, var(--muted-foreground) 70%, transparent);
 }
 
 .searchInput:focus {
-  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
+  border-color: color-mix(in srgb, var(--primary) 50%, var(--border));
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent),
+    0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* ── Filter pills ──────────────────────────────────────────────────────── */
@@ -99,48 +127,51 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .filterPill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
+  gap: 5px;
+  padding: 5px 13px;
   border: 1px solid var(--border);
   border-radius: 99px;
-  background: color-mix(in srgb, var(--card) 70%, transparent);
+  background: var(--background);
   color: var(--muted-foreground);
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 500;
   cursor: pointer;
   transition:
-    color 0.16s ease,
-    border-color 0.16s ease,
-    background-color 0.16s ease,
-    transform 0.16s ease;
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .filterPill:hover {
   color: var(--foreground);
-  border-color: color-mix(in srgb, var(--primary) 32%, var(--border));
-  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+  background: color-mix(in srgb, var(--primary) 6%, var(--background));
 }
 
 .filterPillActive {
   color: var(--primary-foreground);
   background: var(--primary);
   border-color: var(--primary);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 35%, transparent);
+  font-weight: 600;
 }
 
 .filterPillActive:hover {
   color: var(--primary-foreground);
+  background: var(--primary);
 }
 
 .filterCount {
   font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 0.72rem;
-  opacity: 0.7;
+  font-size: 0.7rem;
+  opacity: 0.75;
 }
 
 /* ── Grid ──────────────────────────────────────────────────────────────── */

@@ -6,7 +6,10 @@ import {
   Space_Grotesk,
 } from "next/font/google";
 
-import { AppFooter, AppNavbar } from "@/components/app-nav";
+import {
+  ConditionalSiteChrome,
+  ConditionalSiteFooter,
+} from "@/components/app-nav/conditional-site-chrome";
 import { JsonLd } from "@/components/seo";
 import { basicDetails } from "@/data/meta-data/basic-details-data";
 import {
@@ -91,14 +94,14 @@ export default function RootLayout({
           Skip to content
         </a>
 
-        {/* Fixed navbar sits above all page content. */}
-        <AppNavbar />
+        {/* Navbar — hidden on dashboard routes. */}
+        <ConditionalSiteChrome />
 
         {/* Page content; top spacing is handled in global styles. */}
         <main id="main-content">{children}</main>
 
-        {/* Footer stays at the bottom of every page. */}
-        <AppFooter />
+        {/* Footer — hidden on dashboard routes. */}
+        <ConditionalSiteFooter />
       </body>
     </html>
   );
