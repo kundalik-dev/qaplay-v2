@@ -35,7 +35,7 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
   const post = getPostBySlug(slug);
   if (!post) notFound();
 
-  const contentHtml = await renderMarkdown(post.content);
+  const { html, toc } = await renderMarkdown(post.content);
   const previousPost = getPreviousPost(slug);
 
   return (
@@ -44,7 +44,8 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
       <JsonLd data={buildBlogPostBreadcrumbJsonLd(post)} />
       <PostArticle
         post={post}
-        contentHtml={contentHtml}
+        contentHtml={html}
+        toc={toc}
         previousPost={previousPost}
       />
     </section>

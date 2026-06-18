@@ -49,3 +49,21 @@ export type BlogPost = BlogPostSummary & {
   /** Raw Markdown content (without frontmatter). */
   content: string;
 };
+
+/** A single table-of-contents entry, derived from an `h2`/`h3` in the body. */
+export type TocHeading = {
+  /** Slugified anchor id, matching the `id` on the rendered heading. */
+  id: string;
+  /** Plain-text heading label (Markdown/HTML stripped). */
+  text: string;
+  /** Heading depth — 2 (section) or 3 (sub-section). */
+  level: 2 | 3;
+};
+
+/** Rendered post body plus its extracted table of contents. */
+export type RenderedPost = {
+  /** Syntax-highlighted HTML for the Markdown body. */
+  html: string;
+  /** Ordered table-of-contents headings (`h2`/`h3`). */
+  toc: TocHeading[];
+};

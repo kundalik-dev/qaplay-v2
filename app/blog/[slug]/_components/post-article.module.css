@@ -1,6 +1,36 @@
+/* ── Blog Post Layout (article + TOC sidebar) ──────────────────────────── */
+
+.layout {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile: the TOC card sits above the article. */
+.layout aside {
+  order: -1;
+}
+
+@media (min-width: 1180px) {
+  /* Desktop: two columns — reading column + sticky TOC rail. */
+  .layout[data-has-toc="true"] {
+    display: grid;
+    grid-template-columns: minmax(0, 48rem) 15rem;
+    gap: 3rem;
+    align-items: start;
+    justify-content: center;
+  }
+
+  .layout[data-has-toc="true"] aside {
+    order: 0;
+  }
+}
+
 /* ── Blog Post Article ─────────────────────────────────────────────────── */
 
 .article {
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 auto;
   padding: 24px 0 64px;
 }
 

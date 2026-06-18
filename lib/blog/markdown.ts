@@ -1,8 +1,10 @@
-import { Marked } from "marked";
+import { Marked, type Tokens } from "marked";
 import markedShiki from "marked-shiki";
 import { createHighlighter, type HighlighterGeneric } from "shiki";
 
 import type { BundledLanguage, BundledTheme } from "shiki";
+
+import type { RenderedPost, TocHeading } from "./types";
 
 /**
  * Markdown → HTML renderer for blog posts.
@@ -50,46 +52,94 @@ function getHighlighter() {
   return highlighterPromise;
 }
 
-// Singleton `marked` instance wired up with the Shiki extension.
-let markedPromise: Promise<Marked> | null = null;
-
-function getMarked() {
-  if (!markedPromise) {
-    markedPromise = (async () => {
-      const highlighter = await getHighlighter();
-      const loaded = new Set(highlighter.getLoadedLanguages());
-
-      return new Marked({ gfm: true }).use(
-        markedShiki({
-          highlight(code, lang) {
-            const language = loaded.has(lang) ? lang : "text";
-            return highlighter.codeToHtml(code, {
-              lang: language,
-              theme: THEME,
-              transformers: [
-                {
-                  // Strip Shiki's inline background so our own shell styles it.
-                  pre(node) {
-                    const style = node.properties?.style;
-                    if (typeof style === "string") {
-                      node.properties.style = style
-                        .replace(/background-color:[^;]+;?\s*/g, "")
-                        .trim();
-                    }
-                  },
-                },
-              ],
-            });
-          },
-        }),
-      );
-    })();
-  }
-  return markedPromise;
+/** Turn heading text into a URL-safe anchor slug. */
+function slugify(text: string): string {
+  return (
+    text
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "") // drop punctuation/symbols
+      .replace(/\s+/g, "-") // spaces → hyphens
+      .replace(/-+/g, "-") // collapse repeats
+      .replace(/^-|-$/g, "") || "section"
+  );
 }
 
-/** Render a raw Markdown string to sanitized-by-construction HTML. */
-export async function renderMarkdown(markdown: string): Promise<string> {
-  const marked = await getMarked();
-  return marked.parse(markdown, { async: true });
+/**
+ * Build a fresh `marked` instance for a single render. Each call gets its own
+ * `toc` accumulator and slug counter so heading ids stay unique and free of
+ * cross-render state (renders may run concurrently during a build).
+ *
+ * The Shiki highlighter itself stays a singleton (see `getHighlighter`), so
+ * creating the lightweight `Marked` wrapper per render is cheap.
+ */
+function createMarked(
+  highlighter: HighlighterGeneric<BundledLanguage, BundledTheme>,
+  loaded: Set<string>,
+  toc: TocHeading[],
+): Marked {
+  // Track how many times each base slug has been used, to de-duplicate.
+  const slugCounts = new Map<string, number>();
+
+  return new Marked({ gfm: true })
+    .use(
+      markedShiki({
+        highlight(code, lang) {
+          const language = loaded.has(lang) ? lang : "text";
+          return highlighter.codeToHtml(code, {
+            lang: language,
+            theme: THEME,
+            transformers: [
+              {
+                // Strip Shiki's inline background so our own shell styles it.
+                pre(node) {
+                  const style = node.properties?.style;
+                  if (typeof style === "string") {
+                    node.properties.style = style
+                      .replace(/background-color:[^;]+;?\s*/g, "")
+                      .trim();
+                  }
+                },
+              },
+            ],
+          });
+        },
+      }),
+    )
+    .use({
+      renderer: {
+        // Add a stable `id` to every heading and collect h2/h3 for the TOC.
+        heading(token: Tokens.Heading): string {
+          const inner = this.parser.parseInline(token.tokens);
+          const level = token.depth;
+          const plain = inner.replace(/<[^>]+>/g, "").trim();
+
+          const base = slugify(plain);
+          const used = slugCounts.get(base) ?? 0;
+          slugCounts.set(base, used + 1);
+          const id = used === 0 ? base : `${base}-${used}`;
+
+          if (level === 2 || level === 3) {
+            toc.push({ id, text: plain, level });
+          }
+
+          return `<h${level} id="${id}">${inner}</h${level}>\n`;
+        },
+      },
+    });
+}
+
+/**
+ * Render a raw Markdown string to sanitized-by-construction HTML, returning
+ * both the body HTML and the extracted table of contents (h2/h3 headings).
+ */
+export async function renderMarkdown(markdown: string): Promise<RenderedPost> {
+  const highlighter = await getHighlighter();
+  const loaded = new Set(highlighter.getLoadedLanguages());
+
+  const toc: TocHeading[] = [];
+  const marked = createMarked(highlighter, loaded, toc);
+  const html = await marked.parse(markdown, { async: true });
+
+  return { html, toc };
 }

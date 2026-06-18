@@ -1,5 +1,7 @@
 import type React from "react";
 
+import { ScrollToTopButton } from "@/components/scroll-to-top";
+
 /**
  * Shared shell for the blog index and individual posts. Adds the top spacing
  * for the fixed nav; each page controls its own content max-width.
@@ -16,6 +18,7 @@ export default function BlogLayout({
       className="min-h-screen w-full pt-24 pb-16 md:pt-28"
     >
       {children}
+      <ScrollToTopButton />
     </div>
   );
 }
