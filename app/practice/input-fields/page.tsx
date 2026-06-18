@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PracticePage } from "./_components/practice-page";
+import { LearnTab } from "./_components/learn-tab";
 import { inputFieldsMeta } from "@/data/practice-data/input-fields/meta";
 import { inputFieldsTestCases } from "@/data/practice-data/input-fields/test-cases";
 
@@ -22,6 +23,6 @@ export const metadata: Metadata = {
 
 export default function InputFieldsPage() {
   return (
-    <PracticePage meta={inputFieldsMeta} testCases={inputFieldsTestCases} />
+    <PracticePage meta={inputFieldsMeta} testCases={inputFieldsTestCases} learnContent={<LearnTab />} />
   );
 }

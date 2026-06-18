@@ -60,6 +60,12 @@ export const siteRoutes: SiteRoute[] = [
     lastModified: "2026-06-17",
   },
   {
+    path: "/blog",
+    changeFrequency: "weekly",
+    priority: 0.7,
+    lastModified: "2026-06-18",
+  },
+  {
     path: "/about-us",
     changeFrequency: "yearly",
     priority: 0.5,

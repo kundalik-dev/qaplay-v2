@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PracticePage } from "./_components/practice-page";
+import { LearnTab } from "./_components/learn-tab";
 import { dataTableMeta } from "@/data/practice-data/data-table/meta";
 import { dataTableTestCases } from "@/data/practice-data/data-table/test-cases";
 
@@ -21,5 +22,5 @@ export const metadata: Metadata = {
 };
 
 export default function DataTablePage() {
-  return <PracticePage meta={dataTableMeta} testCases={dataTableTestCases} />;
+  return <PracticePage meta={dataTableMeta} testCases={dataTableTestCases} learnContent={<LearnTab />} />;
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PracticePage } from "./_components/practice-page";
+import { LearnTab } from "./_components/learn-tab";
 import { formsMeta } from "@/data/practice-data/forms/meta";
 import { formsTestCases } from "@/data/practice-data/forms/test-cases";
 
@@ -21,5 +22,5 @@ export const metadata: Metadata = {
 };
 
 export default function FormsPage() {
-  return <PracticePage meta={formsMeta} testCases={formsTestCases} />;
+  return <PracticePage meta={formsMeta} testCases={formsTestCases} learnContent={<LearnTab />} />;
 }

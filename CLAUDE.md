@@ -126,6 +126,36 @@ When creating or updating homepage sections:
 - Do not hardcode content in many places when it can live once in the `data` folder.
 - Do not add unstable or hard-to-target markup that weakens test automation use cases.
 
+### Server / Client Component Boundary — Do Not Import async Server Components into Client Components
+
+**Do not import an `async` Server Component directly inside a `'use client'` component.** Next.js will treat the imported module as a Client Component, and async Client Components are not supported — this causes the runtime errors:
+- `<X> is an async Client Component. Only Server Components can be async`
+- `A component was suspended by an uncached promise`
+
+**Root cause:** When a `'use client'` file statically imports any module, that module is bundled for the client. If the imported component is `async`, it breaks at runtime.
+
+**Correct pattern — composition via props:**
+Pass the Server Component's JSX as a `ReactNode` prop from a parent Server Component down into the Client Component. The Client Component never imports the Server Component directly.
+
+```tsx
+// ✅ page.tsx (Server Component) — renders the async SC and passes it as a prop
+import { LearnTab } from "./_components/learn-tab";   // async Server Component
+import { PracticePage } from "./_components/practice-page"; // 'use client'
+
+export default function Page() {
+  return <PracticePage learnContent={<LearnTab />} />;
+}
+
+// ✅ practice-page.tsx ('use client') — accepts it as ReactNode, never imports it
+import type { ReactNode } from "react";
+interface Props { learnContent: ReactNode; }
+export function PracticePage({ learnContent }: Props) {
+  return <div>{learnContent}</div>;
+}
+```
+
+Applied to all practice routes: `buttons`, `forms`, `input-fields`, `data-table`, `dropdowns`.
+
 ## Decision Priority
 
 When multiple approaches are possible, prefer the option that best satisfies this order:

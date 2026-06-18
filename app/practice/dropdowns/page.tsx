@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { dropdownsMeta } from "@/data/practice-data/dropdowns/meta";
 import { dropdownsTestCases } from "@/data/practice-data/dropdowns/test-cases";
 import { PracticePage } from "./_components/practice-page";
+import { LearnTab } from "./_components/learn-tab";
 
 export const metadata: Metadata = {
   title: "How to Handle Dropdowns in Selenium and Playwright | QA Playground",
@@ -21,5 +22,5 @@ export const metadata: Metadata = {
 };
 
 export default function DropdownsPage() {
-  return <PracticePage meta={dropdownsMeta} testCases={dropdownsTestCases} />;
+  return <PracticePage meta={dropdownsMeta} testCases={dropdownsTestCases} learnContent={<LearnTab />} />;
 }
