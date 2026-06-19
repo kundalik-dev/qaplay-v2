@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Wrench } from "lucide-react";
 
-import styles from "../_components/dashboard.module.css";
+import { filterTools, qaTools } from "@/data/qa-tools/tools-data";
+
+import { ToolsWall } from "./_components/tools-wall";
 
 export const metadata: Metadata = {
   title: "QA Tools | QA Playground",
@@ -20,22 +21,27 @@ export const metadata: Metadata = {
     title: "Free QA Tools | QA Playground",
     description:
       "Free online QA tools — UUID generator, JSON formatter, regex tester, base64 encoder and more. Built for testers and developers.",
-    url: "https://qaplayground.com/qa-tools",
+    url: "https://qaplayground.dev/qa-tools",
     siteName: "QA Playground",
     type: "website",
   },
 };
 
-export default function QaToolsPage() {
-  return (
-    <div className={styles.placeholderPage} data-testid="page-qa-tools">
-      <Wrench className={styles.placeholderIcon} aria-hidden="true" />
-      <h1 className={styles.placeholderTitle}>QA Tools</h1>
-      <p className={styles.placeholderDesc}>
-        A growing suite of free online tools built for QA engineers and
-        developers — UUID generators, JSON formatters, regex testers, and more.
-      </p>
-      <span className={styles.comingSoonBadge}>Coming soon</span>
-    </div>
-  );
+interface QaToolsPageProps {
+  searchParams: Promise<{ q?: string; category?: string }>;
+}
+
+/**
+ * /qa-tools — SSR tool index.
+ *
+ * Search and category filtering are done server-side by reading searchParams.
+ * The filter bar (client component) updates the URL which triggers a server
+ * re-render with the new params.
+ */
+export default async function QaToolsPage({ searchParams }: QaToolsPageProps) {
+  const { q = "", category = "" } = await searchParams;
+
+  const filteredTools = filterTools(qaTools, q, category);
+
+  return <ToolsWall allTools={qaTools} filteredTools={filteredTools} />;
 }
