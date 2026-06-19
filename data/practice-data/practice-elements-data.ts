@@ -175,6 +175,61 @@ export const practiceCards: PracticeCard[] = [
     testId: "file-upload",
   },
   {
+    href: "/practice/drag-drop",
+    iconSrc: "/mainicons/drag.svg",
+    iconAlt: "Drag & Drop icon",
+    title: "Drag & Drop",
+    description:
+      "Practice drag-and-drop interactions, sortable lists, and reordering elements.",
+    level: "Advanced",
+    tag: "MOUSE",
+    testId: "drag-drop",
+  },
+  {
+    href: "/practice/iframes",
+    iconSrc: "/mainicons/frame.svg",
+    iconAlt: "iFrames icon",
+    title: "iFrames",
+    description:
+      "Switch into nested iframes and interact with embedded content reliably.",
+    level: "Intermediate",
+    tag: "FRAME",
+    testId: "iframes",
+  },
+  {
+    href: "/practice/shadow-dom",
+    iconSrc: "/mainicons/elements.svg",
+    iconAlt: "Shadow DOM icon",
+    title: "Shadow DOM",
+    description:
+      "Pierce shadow roots and locate elements inside web components.",
+    level: "Advanced",
+    tag: "DOM",
+    testId: "shadow-dom",
+  },
+  {
+    href: "/practice/modals",
+    iconSrc: "/mainicons/window.svg",
+    iconAlt: "Modal Windows icon",
+    title: "Modal Windows",
+    description:
+      "Open, close, and assert modal dialogs and overlay window behavior.",
+    level: "Beginner",
+    tag: "MODAL",
+    testId: "modals",
+  },
+  {
+    href: "/practice/infinite-scroll",
+    iconSrc: "/mainicons/falling.svg",
+    iconAlt: "Infinite Scroll icon",
+    title: "Infinite Scroll",
+    description:
+      "Handle lazy-loaded lists and scroll-triggered content loading patterns.",
+    level: "Advanced",
+    tag: "SCROLL",
+    testId: "infinite-scroll",
+  },
+  {
     href: "/bank",
     iconSrc: "/mainicons/bank-v2.svg",
     iconAlt: "Bank Demo App icon",

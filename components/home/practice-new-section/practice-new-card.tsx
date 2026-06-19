@@ -1,5 +1,5 @@
+import Image from "next/image";
 import Link from "next/link";
-import type { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -7,7 +7,8 @@ import styles from "./practice-new-section.module.css";
 
 type PracticeNewCardProps = {
   href: string;
-  icon: LucideIcon;
+  iconSrc: string;
+  iconAlt: string;
   level: "Beginner" | "Intermediate" | "Advanced";
   title: string;
 };
@@ -21,7 +22,8 @@ function toTestIdValue(value: string) {
 
 export function PracticeNewCard({
   href,
-  icon: Icon,
+  iconSrc,
+  iconAlt,
   level,
   title,
 }: PracticeNewCardProps) {
@@ -38,7 +40,13 @@ export function PracticeNewCard({
     >
       <span className={styles.iconWrap} aria-hidden="true">
         <span className={styles.icon}>
-          <Icon strokeWidth={2} />
+          <Image
+            src={iconSrc}
+            alt={iconAlt}
+            width={18}
+            height={18}
+            className="object-contain"
+          />
         </span>
       </span>
 
