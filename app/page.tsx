@@ -33,7 +33,7 @@ export default function Home() {
       {/* <PracticeSection /> */}
       <PracticeNewSection />
       <HomeFeaturePreview />
-      <JobHuntSection />
+      {/* <JobHuntSection /> */}
       <InterviewSection />
       <RoadmapSection />
       <ReviewSection />

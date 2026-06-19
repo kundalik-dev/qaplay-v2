@@ -41,10 +41,6 @@
   text-wrap: balance;
 }
 
-.titleAccent {
-  color: var(--primary);
-}
-
 .titleNowrap {
   white-space: nowrap;
   color: var(--muted-foreground);
@@ -101,19 +97,145 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
+@media (min-width: 769px) {
+  .title {
+    letter-spacing: -0.02em;
+  }
+}
 
-@media (max-width: 900px) {
+/* Wide + short viewport: laptops with ~700–820px tall viewports (e.g. 1366×768) */
+@media (min-width: 901px) and (max-height: 820px) {
   .section {
-    padding-top: 124px;
+    padding: 104px 0 36px;
+  }
+
+  .title {
+    font-size: clamp(2.4rem, 4.5vw, 3.75rem);
+  }
+
+  .description {
+    margin-top: 14px;
+  }
+
+  .actions {
+    margin-top: 18px;
+  }
+
+  .stats {
+    margin-top: 22px;
+    gap: 12px 16px;
+  }
+
+  .statValue {
+    font-size: clamp(1.25rem, 1.8vw, 1.6rem);
+  }
+}
+
+/* Very short viewport: under 700px tall */
+@media (min-width: 901px) and (max-height: 700px) {
+  .section {
+    padding: 92px 0 24px;
+  }
+
+  .title {
+    font-size: clamp(2rem, 4vw, 3.25rem);
+  }
+
+  .description {
+    font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+    margin-top: 10px;
+  }
+
+  .actions {
+    margin-top: 14px;
+  }
+
+  .stats {
+    margin-top: 16px;
+    gap: 10px 16px;
+  }
+
+  .statValue {
+    font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  }
+
+  .statLabel {
+    font-size: 9px;
+    margin-top: 4px;
+  }
+}
+
+/* Tablet: 769px – 900px */
+@media (min-width: 769px) and (max-width: 900px) {
+  .section {
+    padding-top: 110px;
     min-height: 100svh;
+  }
+
+  .title {
+    font-size: clamp(2rem, 4.5vw, 2.8rem);
+  }
+
+  .description {
+    margin-top: 14px;
+    font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  }
+
+  .actions {
+    margin-top: 20px;
   }
 
   .stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 24px;
+    gap: 14px 16px;
+  }
+
+  .statValue {
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  }
+}
+
+/* Small tablet: 641px – 768px */
+@media (min-width: 641px) and (max-width: 768px) {
+  .section {
+    padding: 96px 0 28px;
+  }
+
+  .title {
+    font-size: clamp(1.75rem, 5vw, 2.2rem);
+  }
+
+  .description {
+    margin-top: 10px;
+    font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+  }
+
+  .actions {
+    margin-top: 16px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 18px;
+    gap: 10px 12px;
+  }
+
+  .statValue {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  }
+
+  .statLabel {
+    font-size: 9px;
+    margin-top: 4px;
   }
 }
 
 @media (max-width: 640px) {
+  .section {
+    padding-top: 108px;
+  }
+
   .description {
     font-size: 1rem;
   }

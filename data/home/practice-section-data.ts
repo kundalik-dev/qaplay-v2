@@ -23,13 +23,13 @@ export interface PracticeElement {
 
 export const practiceElements: PracticeElement[] = [
   {
-    href: "/practice/input",
+    href: "/practice/input-fields",
     icon: FileText,
     title: "Forms & Inputs",
     level: "Beginner",
   },
   {
-    href: "/practice/alert",
+    href: "/practice/alerts-dialogs",
     icon: BellRing,
     title: "Alerts & Dialogs",
     level: "Intermediate",
@@ -53,31 +53,31 @@ export const practiceElements: PracticeElement[] = [
     level: "Advanced",
   },
   {
-    href: "/practice",
+    href: "/practice/dynamic-waits",
     icon: AlarmClock,
     title: "Dynamic Waits",
     level: "Advanced",
   },
   {
-    href: "/practice/simple-table",
+    href: "/practice/data-table",
     icon: ChartNoAxesCombined,
     title: "Data Tables",
     level: "Intermediate",
   },
   {
-    href: "/practice",
+    href: "/practice/dropdowns",
     icon: ChevronDown,
     title: "Dropdowns",
     level: "Beginner",
   },
   {
-    href: "/practice",
+    href: "/practice/date-picker",
     icon: CalendarDays,
     title: "Date Pickers",
     level: "Intermediate",
   },
   {
-    href: "/practice",
+    href: "/practice/",
     icon: MonitorCog,
     title: "Modal Windows",
     level: "Beginner",
@@ -89,7 +89,7 @@ export const practiceElements: PracticeElement[] = [
     level: "Advanced",
   },
   {
-    href: "/practice",
+    href: "/practice/tabs-windows",
     icon: GalleryHorizontalEnd,
     title: "Multi-Tab Windows",
     level: "Intermediate",
