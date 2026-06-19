@@ -25,7 +25,6 @@ interface ChromeExtensionsWallProps {
 export function ChromeExtensionsWall({
   extensions,
   title,
-  description: _description,
 }: ChromeExtensionsWallProps) {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>(ALL_FILTER);
@@ -115,7 +114,9 @@ export function ChromeExtensionsWall({
           id="chrome-category-filter"
           data-testid="chrome-category-filter"
         >
-          <option value={ALL_FILTER}>All Categories ({extensions.length})</option>
+          <option value={ALL_FILTER}>
+            All Categories ({extensions.length})
+          </option>
           {categories.map(({ label, cat, count }) => (
             <option key={cat} value={cat}>
               {label} ({count})

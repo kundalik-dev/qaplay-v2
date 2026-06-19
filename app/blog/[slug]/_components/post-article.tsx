@@ -5,7 +5,6 @@ import type { BlogPost, BlogPostSummary, TocHeading } from "@/lib/blog/types";
 import { basicDetails } from "@/data/meta-data/basic-details-data";
 
 import { PostNavBanner } from "./post-nav-banner";
-import { PostToc } from "./post-toc";
 import styles from "./post-article.module.css";
 
 type PostArticleProps = {

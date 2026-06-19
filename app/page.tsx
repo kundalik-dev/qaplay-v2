@@ -11,7 +11,6 @@ import {
   HomeFeaturePreview,
   HomeHero,
   InterviewSection,
-  JobHuntSection,
   PracticeNewSection,
   ReviewSection,
   RoadmapSection,

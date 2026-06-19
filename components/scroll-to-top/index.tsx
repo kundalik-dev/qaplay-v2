@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUp } from "lucide-react";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 
 import { cn } from "@/lib/utils";
@@ -19,11 +19,12 @@ export function ScrollToTopButton({
   label = "Scroll to top",
   visibilityOffset = 360,
 }: ScrollToTopButtonProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  // Render nothing until mounted on the client (portal needs document.body).
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   const isVisible = useSyncExternalStore(
     (onStoreChange) => {

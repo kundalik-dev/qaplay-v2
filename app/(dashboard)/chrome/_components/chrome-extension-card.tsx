@@ -22,7 +22,19 @@ interface ChromeExtensionCardProps {
 }
 
 export function ChromeExtensionCard({ extension }: ChromeExtensionCardProps) {
-  const { id, name, description, category, tags, icon, tone, storeUrl, internal, featured, downloads } = extension;
+  const {
+    id,
+    name,
+    description,
+    category,
+    tags,
+    icon,
+    tone,
+    storeUrl,
+    internal,
+    featured,
+    downloads,
+  } = extension;
 
   const Icon = chromeIconMap[icon];
   const visibleTags = tags.slice(0, 3);
@@ -49,7 +61,14 @@ export function ChromeExtensionCard({ extension }: ChromeExtensionCardProps) {
           </span>
           {featured && (
             <span className={styles.featuredFlag} data-testid="chrome-featured">
-              <svg viewBox="0 0 16 16" fill="currentColor" stroke="none" aria-hidden="true" width={9} height={9}>
+              <svg
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                stroke="none"
+                aria-hidden="true"
+                width={9}
+                height={9}
+              >
                 <path d="M8 1.5l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.3 4.2 13.3l.7-4.3-3.1-3 4.3-.6z" />
               </svg>
               Featured
@@ -61,7 +80,10 @@ export function ChromeExtensionCard({ extension }: ChromeExtensionCardProps) {
       {/* Card body */}
       <div className={styles.cardBody}>
         <div className={styles.cardMeta}>
-          <span className={styles.categoryBadge} data-testid="chrome-category-tag">
+          <span
+            className={styles.categoryBadge}
+            data-testid="chrome-category-tag"
+          >
             {category}
           </span>
         </div>
@@ -73,7 +95,9 @@ export function ChromeExtensionCard({ extension }: ChromeExtensionCardProps) {
         {visibleTags.length > 0 && (
           <div className={styles.cardTags} aria-label="Tags">
             {visibleTags.map((tag) => (
-              <span key={tag} className={styles.tag}>{tag}</span>
+              <span key={tag} className={styles.tag}>
+                {tag}
+              </span>
             ))}
             {hiddenCount > 0 && (
               <span className={styles.tagMore}>+{hiddenCount}</span>
@@ -84,8 +108,22 @@ export function ChromeExtensionCard({ extension }: ChromeExtensionCardProps) {
         {/* Footer: downloads + view link */}
         <div className={styles.cardFooter}>
           {downloads ? (
-            <span className={styles.downloads} data-testid={`chrome-downloads-${id}`}>
-              <svg xmlns="http://www.w3.org/2000/svg" width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <span
+              className={styles.downloads}
+              data-testid={`chrome-downloads-${id}`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={12}
+                height={12}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
@@ -97,7 +135,17 @@ export function ChromeExtensionCard({ extension }: ChromeExtensionCardProps) {
           )}
           <span className={styles.viewLink} aria-hidden="true">
             {internal ? "View details" : "View extension"}
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" width={13} height={13}>
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              width={13}
+              height={13}
+            >
               {internal ? (
                 <path d="M3 8h10M9 4l4 4-4 4" />
               ) : (
@@ -112,14 +160,24 @@ export function ChromeExtensionCard({ extension }: ChromeExtensionCardProps) {
 
   if (internal) {
     return (
-      <Link href={storeUrl} aria-label={`${name} — view details`} {...sharedProps}>
+      <Link
+        href={storeUrl}
+        aria-label={`${name} — view details`}
+        {...sharedProps}
+      >
         {inner}
       </Link>
     );
   }
 
   return (
-    <a href={storeUrl} target="_blank" rel="noopener noreferrer" aria-label={`${name} — open on the Chrome Web Store`} {...sharedProps}>
+    <a
+      href={storeUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${name} — open on the Chrome Web Store`}
+      {...sharedProps}
+    >
       {inner}
     </a>
   );

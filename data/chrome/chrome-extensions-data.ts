@@ -144,7 +144,7 @@ export const chromeExtensions: ChromeExtension[] = [
     tone: "orange",
     storeUrl:
       "https://chromewebstore.google.com/detail/check-my-links/ojkcdipcgfaekbeaelaapakgnjflfglf",
-      developer: "Paul Livesey",
+    developer: "Paul Livesey",
     downloads: "100K+",
   },
 ];

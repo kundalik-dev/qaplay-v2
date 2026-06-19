@@ -15,7 +15,6 @@ import {
   Trophy,
   Wrench,
   Globe,
-  Home,
 } from "lucide-react";
 
 export interface DashboardNavItem {
