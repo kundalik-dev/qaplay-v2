@@ -44,12 +44,24 @@ export const auth = betterAuth({
     enabled: true,
     requireEmailVerification: true,
     // Wire up your email provider (Resend, Nodemailer, etc.) here:
-    sendVerificationEmail: async ({ user, url }) => {
+    sendVerificationEmail: async ({
+      user,
+      url,
+    }: {
+      user: { email: string };
+      url: string;
+    }) => {
       console.log(`[auth] Verification email → ${user.email}: ${url}`);
       // TODO: replace with real email send, e.g.:
       // await resend.emails.send({ from: "...", to: user.email, subject: "Verify", html: `<a href="${url}">Verify</a>` })
     },
-    sendResetPassword: async ({ user, url }) => {
+    sendResetPassword: async ({
+      user,
+      url,
+    }: {
+      user: { email: string };
+      url: string;
+    }) => {
       console.log(`[auth] Reset password email → ${user.email}: ${url}`);
       // TODO: replace with real email send
     },
