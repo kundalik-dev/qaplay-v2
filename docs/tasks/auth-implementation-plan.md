@@ -9,21 +9,21 @@
 | Item | Status |
 |------|--------|
 | `better-auth` installed | ✅ |
-| `lib/auth.ts` scaffold | ✅ (stubs only) |
+| `lib/auth.ts` scaffold | ✅ |
 | `lib/auth-client.ts` | ✅ |
 | `app/api/auth/[...all]/route.ts` | ✅ |
 | Prisma schema (user/session/account/verification) | ✅ |
-| Resend email sending | ❌ |
-| Google OAuth wired | ❌ (env vars only) |
-| Auth UI pages | ❌ |
-| Middleware (route protection) | ❌ |
-| Security hardening | ❌ |
+| Resend email sending | ✅ |
+| Google OAuth wired | ✅ |
+| Auth UI pages | ✅ |
+| Middleware (route protection) | ✅ |
+| Security hardening | ✅ |
 
 ---
 
-## Task Breakdown
+## Task Breakdown — All Complete ✅
 
-### Task 1 — Resend Email Integration
+### Task 1 — Resend Email Integration ✅
 - Install `resend` package
 - Create `lib/email/` module:
   - `resend-client.ts` — singleton Resend instance
@@ -32,7 +32,7 @@
   - `sender.ts` — `sendVerificationEmail`, `sendResetPasswordEmail` helpers
 - Replace `console.log` stubs in `lib/auth.ts` with real Resend calls
 
-### Task 2 — Auth Config Hardening
+### Task 2 — Auth Config Hardening ✅
 - Enable `haveIBeenPwned` password plugin
 - Set minimum password length (8+), max (128)
 - Configure trusted origins (no open redirect)
@@ -42,7 +42,7 @@
 - Set `session.cookieCache` for performance
 - Add `emailVerification.autoSignInAfterVerification: true`
 
-### Task 3 — Auth UI Pages
+### Task 3 — Auth UI Pages ✅
 Route group: `app/(auth)/`
 
 | Route | Purpose |
@@ -61,7 +61,7 @@ Route group: `app/(auth)/`
 - Redirect to `/dashboard` on successful sign-in
 - Show toast via `sonner` for errors
 
-### Task 4 — Middleware
+### Task 4 — Middleware ✅
 - `middleware.ts` at project root
 - Protected prefixes: `/dashboard`, `/job-crm`, `/challenges`, `/interview-practice`
 - Public routes: `/`, `/auth/*`, `/api/auth/*`, `/blog/*`, `/practice/*`
@@ -69,7 +69,7 @@ Route group: `app/(auth)/`
 - Redirect to `/auth/sign-in?redirect=<path>` on unauthorized
 - Redirect `/auth/*` to `/dashboard` if already signed in
 
-### Task 5 — Environment Variables
+### Task 5 — Environment Variables ✅
 Required in `.env.local`:
 
 ```env
@@ -97,17 +97,17 @@ RESEND_FROM_EMAIL=noreply@yourdomain.com
 
 ## Security Checklist
 
-- [ ] **CSRF** — better-auth uses double-submit cookie pattern; no additional work needed for API routes
-- [ ] **SQL Injection** — Prisma parameterised queries; no raw SQL
-- [ ] **Open Redirect** — validate `redirect` param against trusted origins before redirecting
-- [ ] **Session Fixation** — better-auth regenerates session token on sign-in
-- [ ] **Password Storage** — better-auth uses bcrypt (12 rounds default)
-- [ ] **Token Leakage** — verification/reset tokens are single-use and expire
-- [ ] **Rate Limiting** — better-auth `rateLimit` on auth endpoints
-- [ ] **Secure Cookies** — `httpOnly: true`, `sameSite: lax`, `secure: true` in production
-- [ ] **Email Enumeration** — better-auth returns generic messages for unknown emails (verify)
-- [ ] **Input Validation** — zod schemas on all form actions
-- [ ] **Env var secrets** — never exposed to client; `RESEND_API_KEY` server-only
+- [x] **CSRF** — better-auth uses double-submit cookie pattern; no additional work needed for API routes
+- [x] **SQL Injection** — Prisma parameterised queries; no raw SQL
+- [x] **Open Redirect** — validate `redirect` param against trusted origins before redirecting
+- [x] **Session Fixation** — better-auth regenerates session token on sign-in
+- [x] **Password Storage** — better-auth uses bcrypt (12 rounds default)
+- [x] **Token Leakage** — verification/reset tokens are single-use and expire
+- [x] **Rate Limiting** — better-auth `rateLimit` on auth endpoints
+- [x] **Secure Cookies** — `httpOnly: true`, `sameSite: lax`, `secure: true` in production
+- [x] **Email Enumeration** — better-auth returns generic messages for unknown emails (verify)
+- [x] **Input Validation** — zod schemas on all form actions
+- [x] **Env var secrets** — never exposed to client; `RESEND_API_KEY` server-only
 
 ---
 

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import styles from "../../auth.module.css";
+import styles from "../../../auth.module.css";
 
 // ── Google icon ──────────────────────────────────────────────────────────────
 function GoogleIcon() {
@@ -126,12 +126,6 @@ export function SignInForm() {
 
   return (
     <div className={styles["auth-card"]} data-testid="sign-in-card">
-      {/* Brand */}
-      <Link href="/" className={styles["auth-brand"]}>
-        <span className={styles["auth-brand__dot"]} />
-        QA Playground
-      </Link>
-
       <h1 className={styles["auth-heading"]}>Welcome back</h1>
       <p className={styles["auth-subheading"]}>
         Sign in to your account to continue.

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
-import styles from "../../auth.module.css";
+import styles from "../../../auth.module.css";
 
 function Spinner() {
   return (

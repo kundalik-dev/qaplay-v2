@@ -1,5 +1,6 @@
 /**
- * Next.js edge middleware — route protection & auth redirect.
+ * Next.js proxy — route protection & auth redirect.
+ * (Renamed from middleware.ts → proxy.ts as required by Next.js 16)
  *
  * Strategy:
  *  - Protected routes → redirect to /auth/sign-in if no valid session
@@ -56,16 +57,16 @@ function signInUrl(request: NextRequest): URL {
   return url;
 }
 
-// ── Middleware ────────────────────────────────────────────────────────────────
+// ── Proxy ─────────────────────────────────────────────────────────────────────
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Skip static files and Next.js internals
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api/auth") || // better-auth handles its own routes
-    pathname.includes(".")              // static assets (favicon, images, etc.)
+    pathname.includes(".") // static assets (favicon, images, etc.)
   ) {
     return NextResponse.next();
   }
@@ -78,8 +79,8 @@ export async function middleware(request: NextRequest) {
       headers: request.headers,
     });
   } catch (err) {
-    // Never crash the middleware — log and continue as unauthenticated
-    console.error("[middleware] getSession error:", err);
+    // Never crash the proxy — log and continue as unauthenticated
+    console.error("[proxy] getSession error:", err);
   }
 
   const isAuthenticated = !!session?.user;
@@ -107,7 +108,6 @@ export async function middleware(request: NextRequest) {
 }
 
 // ── Matcher ───────────────────────────────────────────────────────────────────
-// Apply middleware to all routes except static files and API internals.
 export const config = {
   matcher: [
     /*

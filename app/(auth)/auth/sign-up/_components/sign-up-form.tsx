@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import styles from "../../auth.module.css";
+import styles from "../../../auth.module.css";
 
 // ── Google icon ──────────────────────────────────────────────────────────────
 function GoogleIcon() {
@@ -122,10 +122,6 @@ export function SignUpForm() {
   if (success) {
     return (
       <div className={styles["auth-card"]} data-testid="sign-up-success">
-        <Link href="/" className={styles["auth-brand"]}>
-          <span className={styles["auth-brand__dot"]} />
-          QA Playground
-        </Link>
         <div className={styles["auth-info-box"]}>
           <div className={styles["auth-info-icon"]}>📬</div>
           <h1 className={styles["auth-info-title"]}>Check your email</h1>
@@ -143,12 +139,6 @@ export function SignUpForm() {
 
   return (
     <div className={styles["auth-card"]} data-testid="sign-up-card">
-      {/* Brand */}
-      <Link href="/" className={styles["auth-brand"]}>
-        <span className={styles["auth-brand__dot"]} />
-        QA Playground
-      </Link>
-
       <h1 className={styles["auth-heading"]}>Create your account</h1>
       <p className={styles["auth-subheading"]}>
         Start practising automation on real UI elements.
