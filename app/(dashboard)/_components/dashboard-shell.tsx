@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 
 import { DashboardSidebar } from "./dashboard-sidebar";
 import styles from "./dashboard.module.css";
+import { cn } from "@/lib/utils";
 
 interface DashboardShellProps {
   topNav: ReactNode;
@@ -21,7 +22,7 @@ export function DashboardShell({ topNav, children }: DashboardShellProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
-    <div className={styles.shell} data-testid="dashboard-shell">
+    <div className={cn(styles.shell, " ")} data-testid="dashboard-shell">
       <DashboardSidebar
         isCollapsed={isCollapsed}
         onToggle={() => setIsCollapsed((prev) => !prev)}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 
 import styles from "./dashboard.module.css";
+import { cn } from "@/lib/utils";
 
 interface Crumb {
   label: string;
@@ -16,9 +17,12 @@ interface DashboardTopNavProps {
   actions?: React.ReactNode;
 }
 
-export function DashboardTopNav({ breadcrumbs = [], actions }: DashboardTopNavProps) {
+export function DashboardTopNav({
+  breadcrumbs = [],
+  actions,
+}: DashboardTopNavProps) {
   return (
-    <header className={styles.topNav} data-testid="dashboard-topnav">
+    <header className={cn(styles.topNav)} data-testid="dashboard-topnav">
       <div className={styles.topNavLeft}>
         {breadcrumbs.length > 0 && (
           <nav aria-label="Breadcrumb" className={styles.breadcrumb}>
@@ -27,7 +31,11 @@ export function DashboardTopNav({ breadcrumbs = [], actions }: DashboardTopNavPr
               const Icon = crumb.icon;
 
               return (
-                <span key={crumb.label} className={styles.breadcrumb} style={{ display: "contents" }}>
+                <span
+                  key={crumb.label}
+                  className={styles.breadcrumb}
+                  style={{ display: "contents" }}
+                >
                   {i > 0 && (
                     <span className={styles.breadcrumbSep} aria-hidden="true">
                       /
@@ -38,12 +46,24 @@ export function DashboardTopNav({ breadcrumbs = [], actions }: DashboardTopNavPr
                       className={styles.breadcrumbCurrent}
                       aria-current={isLast ? "page" : undefined}
                     >
-                      {Icon && <Icon size={14} aria-hidden="true" style={{ marginRight: 4, verticalAlign: "middle" }} />}
+                      {Icon && (
+                        <Icon
+                          size={14}
+                          aria-hidden="true"
+                          style={{ marginRight: 4, verticalAlign: "middle" }}
+                        />
+                      )}
                       {crumb.label}
                     </span>
                   ) : (
                     <Link href={crumb.href} className={styles.breadcrumb}>
-                      {Icon && <Icon size={14} aria-hidden="true" style={{ marginRight: 4, verticalAlign: "middle" }} />}
+                      {Icon && (
+                        <Icon
+                          size={14}
+                          aria-hidden="true"
+                          style={{ marginRight: 4, verticalAlign: "middle" }}
+                        />
+                      )}
                       {crumb.label}
                     </Link>
                   )}
