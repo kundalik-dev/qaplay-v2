@@ -18,8 +18,8 @@ export default function VerifyEmailPage() {
         <div className={styles["auth-info-icon"]}>✉️</div>
         <h1 className={styles["auth-info-title"]}>Verify your email</h1>
         <p className={styles["auth-info-body"]}>
-          A verification link has been sent to your email address.
-          Click it to activate your account. The link expires in{" "}
+          A verification link has been sent to your email address. Click it to
+          activate your account. The link expires in{" "}
           <strong>24&nbsp;hours</strong>.
         </p>
         <p

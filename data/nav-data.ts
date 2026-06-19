@@ -30,7 +30,6 @@ export const navLinks: NavLink[] = [
   { label: "Demo Apps", href: "/demo" },
   { label: "Dashboard", href: "/dashboard" },
   { label: "AI Interview", href: "/interview-practice" },
-  // { label: "Jobs", href: "/#jobs" },
   { label: "Blogs", href: "/blog" },
 ];
 
@@ -41,5 +40,5 @@ export const navCta: NavCta = {
 
 export const navAuth: NavCta = {
   label: "Log in / Sign up",
-  href: "/auth",
+  href: "/auth/sign-in",
 };

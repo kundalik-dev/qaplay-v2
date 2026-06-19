@@ -7,11 +7,29 @@ import styles from "../../../auth.module.css";
 
 function Spinner() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"
-      style={{ animation: "spin 0.7s linear infinite" }}>
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden="true"
+      style={{ animation: "spin 0.7s linear infinite" }}
+    >
       <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
-      <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="2" strokeOpacity="0.25" />
-      <path d="M14 8a6 6 0 0 0-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <circle
+        cx="8"
+        cy="8"
+        r="6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeOpacity="0.25"
+      />
+      <path
+        d="M14 8a6 6 0 0 0-6-6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -53,7 +71,10 @@ export function ForgotPasswordForm() {
 
   if (submitted) {
     return (
-      <div className={styles["auth-card"]} data-testid="forgot-password-success">
+      <div
+        className={styles["auth-card"]}
+        data-testid="forgot-password-success"
+      >
         <Link href="/" className={styles["auth-brand"]}>
           <span className={styles["auth-brand__dot"]} />
           QA Playground
@@ -62,8 +83,8 @@ export function ForgotPasswordForm() {
           <div className={styles["auth-info-icon"]}>📨</div>
           <h1 className={styles["auth-info-title"]}>Check your inbox</h1>
           <p className={styles["auth-info-body"]}>
-            If <strong>{email}</strong> is associated with an account, you&apos;ll
-            receive a password reset link shortly. It expires in{" "}
+            If <strong>{email}</strong> is associated with an account,
+            you&apos;ll receive a password reset link shortly. It expires in{" "}
             <strong>1&nbsp;hour</strong>.
           </p>
           <Link href="/auth/sign-in" className={styles["auth-link"]}>
@@ -93,7 +114,9 @@ export function ForgotPasswordForm() {
         data-testid="forgot-password-form"
       >
         <div className={styles["auth-field"]}>
-          <label htmlFor="email" className={styles["auth-label"]}>Email</label>
+          <label htmlFor="email" className={styles["auth-label"]}>
+            Email
+          </label>
           <input
             id="email"
             type="email"
@@ -110,7 +133,11 @@ export function ForgotPasswordForm() {
             data-testid="email-input"
           />
           {emailError && (
-            <span id="email-error" className={styles["auth-field-error"]} role="alert">
+            <span
+              id="email-error"
+              className={styles["auth-field-error"]}
+              role="alert"
+            >
               {emailError}
             </span>
           )}

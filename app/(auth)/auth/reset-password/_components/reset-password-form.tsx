@@ -8,11 +8,29 @@ import styles from "../../../auth.module.css";
 
 function Spinner() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"
-      style={{ animation: "spin 0.7s linear infinite" }}>
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden="true"
+      style={{ animation: "spin 0.7s linear infinite" }}
+    >
       <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
-      <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="2" strokeOpacity="0.25" />
-      <path d="M14 8a6 6 0 0 0-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <circle
+        cx="8"
+        cy="8"
+        r="6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeOpacity="0.25"
+      />
+      <path
+        d="M14 8a6 6 0 0 0-6-6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -20,7 +38,8 @@ function Spinner() {
 function validate(password: string, confirm: string) {
   const errors: { password?: string; confirm?: string } = {};
   if (!password) errors.password = "Password is required.";
-  else if (password.length < 8) errors.password = "Password must be at least 8 characters.";
+  else if (password.length < 8)
+    errors.password = "Password must be at least 8 characters.";
   else if (password.length > 128) errors.password = "Password is too long.";
   if (!confirm) errors.confirm = "Please confirm your password.";
   else if (password !== confirm) errors.confirm = "Passwords don't match.";
@@ -56,8 +75,8 @@ export function ResetPasswordForm() {
           <div className={styles["auth-info-icon"]}>⚠️</div>
           <h1 className={styles["auth-info-title"]}>Invalid reset link</h1>
           <p className={styles["auth-info-body"]}>
-            This password reset link is invalid or has expired.
-            Please request a new one.
+            This password reset link is invalid or has expired. Please request a
+            new one.
           </p>
           <Link href="/auth/forgot-password" className={styles["auth-link"]}>
             Request new link
@@ -105,8 +124,10 @@ export function ResetPasswordForm() {
       });
 
       if (error) {
-        if (error.message?.toLowerCase().includes("expired") ||
-            error.message?.toLowerCase().includes("invalid")) {
+        if (
+          error.message?.toLowerCase().includes("expired") ||
+          error.message?.toLowerCase().includes("invalid")
+        ) {
           setServerError(
             "This reset link has expired or is invalid. Please request a new one.",
           );
@@ -180,7 +201,11 @@ export function ResetPasswordForm() {
             data-testid="password-input"
           />
           {fieldErrors.password ? (
-            <span id="password-error" className={styles["auth-field-error"]} role="alert">
+            <span
+              id="password-error"
+              className={styles["auth-field-error"]}
+              role="alert"
+            >
               {fieldErrors.password}
             </span>
           ) : (
@@ -210,7 +235,11 @@ export function ResetPasswordForm() {
             data-testid="confirm-password-input"
           />
           {fieldErrors.confirm && (
-            <span id="confirm-error" className={styles["auth-field-error"]} role="alert">
+            <span
+              id="confirm-error"
+              className={styles["auth-field-error"]}
+              role="alert"
+            >
               {fieldErrors.confirm}
             </span>
           )}

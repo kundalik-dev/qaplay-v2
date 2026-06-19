@@ -143,8 +143,8 @@ export const auth = betterAuth({
   // set REDIS_URL — see https://www.better-auth.com/docs/concepts/rate-limit
   rateLimit: {
     enabled: true,
-    window: 60,   // 60-second rolling window
-    max: 10,      // max 10 auth requests per window per IP
+    window: 60, // 60-second rolling window
+    max: 10, // max 10 auth requests per window per IP
     storage: "memory",
   },
 
