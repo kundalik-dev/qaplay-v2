@@ -18,6 +18,7 @@ const DASHBOARD_PREFIXES = [
   "/interview-questions",
   "/resources",
   "/chrome",
+  "/auth",
 ];
 
 function isDashboardRoute(pathname: string): boolean {
