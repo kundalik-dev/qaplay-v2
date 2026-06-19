@@ -3,7 +3,7 @@ import { chromePageDescription } from "@/data/chrome/chrome-extensions-data";
 import { createPageMetadata } from "../create-page-metadata";
 
 export const chromePageMetadata = createPageMetadata({
-  title: "Chrome Extensions for QA Engineers",
+  title: "Chrome Extensions | QA Playground",
   description: chromePageDescription,
   path: "/chrome",
   keywords: [

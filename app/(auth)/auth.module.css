@@ -1,0 +1,268 @@
+/* ══════════════════════════════════════════════════════════════
+   Auth layout — sits below the fixed site navbar (~64 px tall).
+   Centers the card in the remaining viewport height.
+   ══════════════════════════════════════════════════════════════ */
+
+.auth-layout {
+  /* push content below the fixed navbar */
+  padding-top: 64px;
+  min-height: 100dvh;
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-layout__main {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  /* vertical breathing room so the card doesn't touch nav or viewport edge */
+  padding: 1.5rem 1rem;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Auth card
+   Compact by default so the full form fits without scrolling
+   on a typical laptop (768 px+ viewport height).
+   ══════════════════════════════════════════════════════════════ */
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem 1.875rem 2rem;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 8px 28px rgba(0, 0, 0, 0.08);
+}
+
+/* ── Headings ─────────────────────────────────────────────────── */
+.auth-heading {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--foreground);
+  letter-spacing: -0.025em;
+  margin: 0 0 0.3rem;
+  line-height: 1.2;
+}
+
+.auth-subheading {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+}
+
+/* ── Form ─────────────────────────────────────────────────────── */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.auth-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.auth-input {
+  width: 100%;
+  padding: 0.5625rem 0.75rem;
+  font-size: 0.9rem;
+  color: var(--foreground);
+  background: var(--popover);
+  border: 1.5px solid var(--input);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition:
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.auth-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.auth-input[aria-invalid="true"] {
+  border-color: var(--destructive);
+  box-shadow: 0 0 0 3px rgba(255, 95, 86, 0.15);
+}
+
+.auth-input::placeholder {
+  color: var(--muted-foreground);
+  opacity: 0.7;
+}
+
+/* ── Field error ─────────────────────────────────────────────── */
+.auth-field-error {
+  font-size: 0.78125rem;
+  color: var(--destructive);
+}
+
+/* ── Alert banner ────────────────────────────────────────────── */
+.auth-alert {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  margin-bottom: 0.125rem;
+}
+
+.auth-alert--error {
+  background: rgba(255, 95, 86, 0.08);
+  color: var(--destructive);
+  border: 1px solid rgba(255, 95, 86, 0.2);
+}
+
+.auth-alert--success {
+  background: rgba(31, 95, 107, 0.08);
+  color: var(--primary);
+  border: 1px solid rgba(31, 95, 107, 0.2);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.auth-btn {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition:
+    opacity 150ms,
+    transform 100ms,
+    box-shadow 150ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.auth-btn:active {
+  transform: scale(0.98);
+}
+
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.auth-btn--primary {
+  background: var(--foreground);
+  color: var(--background);
+  margin-top: 0.125rem;
+}
+
+.auth-btn--primary:hover:not(:disabled) {
+  opacity: 0.88;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.auth-btn--google {
+  background: var(--popover);
+  color: var(--foreground);
+  border: 1.5px solid var(--border);
+}
+
+.auth-btn--google:hover:not(:disabled) {
+  background: var(--muted);
+  border-color: var(--primary);
+}
+
+/* ── Divider ─────────────────────────────────────────────────── */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin: 0.5rem 0;
+  color: var(--muted-foreground);
+  font-size: 0.78125rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Footer link ─────────────────────────────────────────────── */
+.auth-footer {
+  margin-top: 1.25rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+}
+
+.auth-link {
+  color: var(--foreground);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.auth-link:hover {
+  color: var(--primary);
+}
+
+/* ── Forgot password link ────────────────────────────────────── */
+.auth-forgot {
+  text-align: right;
+  font-size: 0.8125rem;
+}
+
+/* ── Branding inside card ─────────────────────────────────────── */
+.auth-brand {
+  display: none; /* brand is in the navbar — hide inside card */
+}
+
+.auth-brand__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+/* ── Info box (verify-email / success states) ────────────────── */
+.auth-info-box {
+  text-align: center;
+  padding: 0.75rem 0;
+}
+
+.auth-info-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.auth-info-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0 0 0.4rem;
+}
+
+.auth-info-body {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+  margin: 0 0 1.25rem;
+}
+
+/* ── Password-strength hint ──────────────────────────────────── */
+.auth-hint {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}

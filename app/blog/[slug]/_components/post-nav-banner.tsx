@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import type { BlogPostSummary } from "@/lib/blog/types";
@@ -51,14 +52,12 @@ export function PostNavBanner({ post }: PostNavBannerProps) {
         {/* Thumbnail */}
         <div className={styles.thumb} aria-hidden="true">
           {frontmatter.coverImage ? (
-            <img
+            <Image
               src={frontmatter.coverImage}
               alt={frontmatter.coverImageAlt ?? frontmatter.title}
               className={styles.thumbImg}
               width={96}
               height={64}
-              loading="lazy"
-              decoding="async"
             />
           ) : (
             <div className={styles.thumbPlaceholder}>

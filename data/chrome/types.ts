@@ -151,4 +151,6 @@ export interface ChromeExtension {
   developer: string;
   /** Highlighted as recommended when true. */
   featured?: boolean;
+  /** Chrome Web Store download / user count (display string, e.g. "500K+"). */
+  downloads?: string;
 }

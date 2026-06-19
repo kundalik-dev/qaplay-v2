@@ -3,7 +3,6 @@
    ───────────────────────────────────────────────────────────── */
 
 .page {
-  padding: 10px 28px 24px;
   min-height: 100%;
 }
 
@@ -245,6 +244,7 @@
 }
 
 .cardImage {
+  position: relative;
   height: 120px;
   flex-shrink: 0;
   overflow: hidden;

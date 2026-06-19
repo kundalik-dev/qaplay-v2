@@ -1,44 +1,54 @@
+/**
+ * /qa-tools/uuid-generator
+ *
+ * Static route for the UUID Generator tool. Next.js gives priority to named
+ * routes over dynamic [slug] segments, so this file must exist and render the
+ * tool directly — not redirect to itself.
+ *
+ * All shared rendering logic lives in the [slug] route's _components folder.
+ */
+
 import type { Metadata } from "next";
-import { Wrench } from "lucide-react";
 
-import styles from "../../_components/dashboard.module.css";
+import { findTool } from "@/data/qa-tools/tools-data";
 
-export const metadata: Metadata = {
-  title: "UUID Generator | QA Playground",
-  description:
-    "Free online UUID v4 generator. Generate single or bulk UUIDs instantly — perfect for test data, database IDs, and API testing.",
-  keywords: [
-    "uuid generator",
-    "uuid v4 generator",
-    "online uuid",
-    "free uuid generator",
-    "generate uuid",
-    "bulk uuid",
-    "test data generator",
-  ],
-  openGraph: {
-    title: "Free UUID Generator | QA Playground",
-    description:
-      "Generate single or bulk UUID v4 values instantly. Free online tool for testers and developers.",
-    url: "https://qaplayground.com/qa-tools/uuid-generator",
-    siteName: "QA Playground",
-    type: "website",
-  },
-  alternates: {
-    canonical: "https://qaplayground.com/qa-tools/uuid-generator",
-  },
-};
+// Shared shell and renderer from the dynamic route
+import { ToolShell } from "../[slug]/_components/tool-shell";
+import { ToolRenderer } from "../[slug]/_components/tool-renderer";
+
+const SLUG = "uuid-generator";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const tool = findTool(SLUG)!;
+  const title = `${tool.name} | QA Playground`;
+  const url = `https://qaplayground.dev/qa-tools/${SLUG}`;
+
+  return {
+    title,
+    description: tool.description,
+    keywords: [
+      tool.name.toLowerCase(),
+      ...tool.tags,
+      "qa tools",
+      "free online tool",
+    ],
+    openGraph: {
+      title,
+      description: tool.description,
+      url,
+      siteName: "QA Playground",
+      type: "website",
+    },
+    alternates: { canonical: url },
+  };
+}
 
 export default function UuidGeneratorPage() {
+  const tool = findTool(SLUG)!;
+
   return (
-    <div className={styles.placeholderPage} data-testid="page-uuid-generator">
-      <Wrench className={styles.placeholderIcon} aria-hidden="true" />
-      <h1 className={styles.placeholderTitle}>UUID Generator</h1>
-      <p className={styles.placeholderDesc}>
-        Generate UUID v4 values for test data, database seeds, and API payloads.
-        Single or bulk — copy with one click.
-      </p>
-      <span className={styles.comingSoonBadge}>Coming soon</span>
-    </div>
+    <ToolShell tool={tool}>
+      <ToolRenderer slug={SLUG} />
+    </ToolShell>
   );
 }

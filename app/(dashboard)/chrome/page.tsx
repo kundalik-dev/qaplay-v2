@@ -1,7 +1,6 @@
 import { JsonLd } from "@/components/seo";
 import {
   chromeExtensions,
-  chromePageEyebrow,
   chromePageSubtitle,
   chromePageTitle,
 } from "@/data/chrome/chrome-extensions-data";
@@ -17,20 +16,15 @@ export const metadata = chromePageMetadata;
 
 export default function ChromeExtensionsPage() {
   return (
-    <section
-      data-testid="chrome-page"
-      data-section="chrome"
-      className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
-    >
+    <>
       <JsonLd data={chromeWebPageJsonLd} />
       <JsonLd data={chromeBreadcrumbJsonLd} />
 
       <ChromeExtensionsWall
         extensions={chromeExtensions}
-        eyebrow={chromePageEyebrow}
         title={chromePageTitle}
         description={chromePageSubtitle}
       />
-    </section>
+    </>
   );
 }

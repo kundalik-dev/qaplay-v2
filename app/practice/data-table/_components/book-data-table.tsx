@@ -65,11 +65,15 @@ export function BookDataTable() {
 
   const PAGE_SIZE = 5;
 
-  // Hydrate from localStorage once on mount (avoids SSR mismatch)
+  // Hydrate from localStorage once on mount (avoids SSR mismatch). Initialising
+  // client-only persisted state is a legitimate one-time effect, so the
+  // synchronous setState is intentional here.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     setRows(loadFromStorage());
     setHydrated(true);
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   // ── Mutations ────────────────────────────────────────────────────────────
 
@@ -152,10 +156,15 @@ export function BookDataTable() {
     return result;
   }, [rows, searchTerm, genreFilter, sort]);
 
-  // Reset to page 1 whenever the filtered set changes
-  useEffect(() => {
+  // Reset to page 1 whenever the filtered set changes. Adjusting state during
+  // render (instead of in an effect) avoids the extra cascading render.
+  const filterSignature = `${searchTerm}|${genreFilter}|${sort.key}|${sort.dir}`;
+  const [lastFilterSignature, setLastFilterSignature] =
+    useState(filterSignature);
+  if (filterSignature !== lastFilterSignature) {
+    setLastFilterSignature(filterSignature);
     setCurrentPage(1);
-  }, [searchTerm, genreFilter, sort]);
+  }
 
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / PAGE_SIZE));
   const safeCurrentPage = Math.min(currentPage, totalPages);
@@ -507,11 +516,12 @@ export function BookDataTable() {
               <code>#dataTable</code> — stable id for all frameworks
             </li>
             <li>
-              <code>[data-testid="book-row"][data-book-id="book-004"]</code> —
-              row by id
+              <code>{'[data-testid="book-row"][data-book-id="book-004"]'}</code>{" "}
+              — row by id
             </li>
             <li>
-              <code>td[data-col="book-isbn"]</code> — column cells by attribute
+              <code>{'td[data-col="book-isbn"]'}</code> — column cells by
+              attribute
             </li>
             <li>
               <code>Delete</code> buttons have <strong>no data-testid</strong> —

@@ -1,17 +1,12 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronUp, LogOut, User } from "lucide-react";
 
+import { authClient } from "@/lib/auth-client";
 import styles from "./dashboard.module.css";
-
-interface UserInfo {
-  name: string;
-  email: string;
-  /** Two-letter initials derived from name, or falls back to first char of email */
-  initials: string;
-}
 
 interface UserProfileCardProps {
   isCollapsed: boolean;
@@ -38,24 +33,40 @@ function getInitials(name: string, email: string): string {
 export function UserProfileCard({ isCollapsed }: UserProfileCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   // ── Auth state ─────────────────────────────────────────────────────────
-  // Replace this block with your real session hook once better-auth is wired:
-  //
-  //   import { authClient } from "@/lib/auth-client"
-  //   const { data: session, isPending } = authClient.useSession()
-  //   const user = session?.user
-  //   const isSignedIn = !!user
-  //
-  // For now we use a placeholder so the UI works before auth is configured.
-  const isSignedIn = false; // TODO: wire authClient.useSession()
-  const user: UserInfo | null = isSignedIn
-    ? {
-        name: "Kundalik J.",
-        email: "kundalikjadhav5545@gmail.com",
-        initials: "KJ",
-      }
-    : null;
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user ?? null;
+  const isSignedIn = !!user;
+
+  // ── Loading state ──────────────────────────────────────────────────────
+  if (isPending) {
+    return (
+      <div
+        className={styles.profileCard}
+        style={{ cursor: "default", opacity: 0.5 }}
+        data-testid="sidebar-user-loading"
+        aria-busy="true"
+      >
+        <span
+          className={styles.profileAvatar}
+          aria-hidden="true"
+          style={{ background: "var(--muted)" }}
+        />
+        {!isCollapsed && (
+          <span className={styles.profileInfo}>
+            <span
+              className={styles.profileName}
+              style={{ background: "var(--muted)", borderRadius: 4 }}
+            >
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+          </span>
+        )}
+      </div>
+    );
+  }
 
   // ── Signed-out state ───────────────────────────────────────────────────
   if (!isSignedIn || !user) {
@@ -91,14 +102,12 @@ export function UserProfileCard({ isCollapsed }: UserProfileCardProps) {
   }
 
   // ── Signed-in state ────────────────────────────────────────────────────
-  const initials = getInitials(user.name, user.email);
+  const initials = getInitials(user.name ?? "", user.email);
 
   async function handleSignOut() {
     setIsOpen(false);
-    // TODO: wire real sign-out:
-    // await authClient.signOut()
-    // router.push("/")
-    console.log("Sign out triggered — wire authClient.signOut() here");
+    await authClient.signOut();
+    router.push("/");
   }
 
   return (
@@ -144,7 +153,7 @@ export function UserProfileCard({ isCollapsed }: UserProfileCardProps) {
         {!isCollapsed && (
           <>
             <span className={styles.profileInfo}>
-              <span className={styles.profileName}>{user.name}</span>
+              <span className={styles.profileName}>{user.name ?? user.email}</span>
               <span className={styles.profileEmail}>{user.email}</span>
             </span>
             <ChevronUp

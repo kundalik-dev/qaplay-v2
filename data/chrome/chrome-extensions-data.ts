@@ -10,11 +10,10 @@ import type { ChromeExtension } from "./types";
 
 export const chromePageEyebrow = "QA Toolbox";
 
-export const chromePageTitle =
-  "Chrome Extensions Every QA Engineer Should Have";
+export const chromePageTitle = "Chrome Extensions";
 
 export const chromePageDescription =
-  "A curated wall of the most useful Chrome extensions for QA engineers — accessibility checkers, automation recorders, API inspectors, and more. Search, filter by category, and install any of them in one click from the Chrome Web Store.";
+  "A curated store of the most useful Chrome extensions for QA testers — handpicked tools that help with accessibility checks, automation recording, API inspection, session management, and more. Everything you need to supercharge your daily QA workflow, all in one place.";
 
 /** Short, single-line subtitle shown under the page H1 (the long version above
  *  stays the SEO/meta description). */
@@ -31,7 +30,7 @@ export const chromeExtensions: ChromeExtension[] = [
     name: "QA Capture",
     tagline: "Screenshot every test step, export in one click",
     description:
-      "Our own extension. Capture screenshots continuously during testing, name each step, and export the whole session as PDF, Markdown, or HTML — perfect for bug reports and test evidence.",
+      "Capture screenshots continuously during testing, name each step, and export the whole session as PDF, Markdown, or HTML — perfect for bug reports and test evidence.",
     category: "Documentation",
     tags: ["screenshots", "documentation", "bug reports", "evidence"],
     icon: "camera",
@@ -46,7 +45,7 @@ export const chromeExtensions: ChromeExtension[] = [
     name: "QA Clipper",
     tagline: "Clip articles & courses into your Study Tracker",
     description:
-      "Our own extension. Save articles, videos, courses, and docs straight into your QA Playground Study Tracker with one click, so your learning resources stay organized in one place.",
+      "Save articles, videos, courses, and docs straight into your QA Playground Study Tracker with one click, keeping all your learning resources organized in one place.",
     category: "Productivity",
     tags: ["study tracker", "bookmarks", "learning", "productivity"],
     icon: "bookmark",
@@ -61,7 +60,7 @@ export const chromeExtensions: ChromeExtension[] = [
     name: "axe DevTools",
     tagline: "Catch accessibility issues before users do",
     description:
-      "Deque's industry-standard accessibility testing engine. Run an automated WCAG audit on any page in seconds, get zero-false-positive issue lists, and see exactly which element and rule failed.",
+      "Industry-standard accessibility testing engine. Run an automated WCAG audit on any page in seconds and get zero-false-positive issue lists with exact element details.",
     category: "Accessibility",
     tags: ["accessibility", "a11y", "wcag", "audit"],
     icon: "shield-check",
@@ -70,13 +69,14 @@ export const chromeExtensions: ChromeExtension[] = [
       "https://chromewebstore.google.com/detail/axe-devtools-web-accessib/lhdoppojpmngadmnindnejefpokejbdd",
     developer: "Deque Systems",
     featured: true,
+    downloads: "300K+",
   },
   {
     id: "selenium-ide",
     name: "Selenium IDE",
     tagline: "Record and replay browser test flows",
     description:
-      "Record your interactions into a reusable test, replay them across runs, and export the script to WebDriver code. A fast way to prototype automation and reproduce bugs step by step.",
+      "Record your interactions into a reusable test, replay them across runs, and export the script to WebDriver code. Great for prototyping automation and reproducing bugs.",
     category: "Automation",
     tags: ["automation", "selenium", "record", "playback"],
     icon: "zap",
@@ -85,6 +85,7 @@ export const chromeExtensions: ChromeExtension[] = [
       "https://chromewebstore.google.com/detail/selenium-ide/mooikfkahbdckldjjndioackbalphokd",
     developer: "Selenium",
     featured: true,
+    downloads: "900K+",
   },
   {
     id: "json-viewer-pro",
@@ -99,13 +100,14 @@ export const chromeExtensions: ChromeExtension[] = [
     storeUrl:
       "https://chromewebstore.google.com/detail/json-viewer-pro/eifflpmocdbdmepbjaopkkhbfmdgijcc",
     developer: "tulios",
+    downloads: "200K+",
   },
   {
     id: "cookie-editor",
     name: "Cookie-Editor",
     tagline: "Edit cookies to test sessions & auth",
     description:
-      "Create, edit, delete, import, and export cookies from a clean popup. Perfect for testing authenticated states, session expiry, and feature flags without leaving the page under test.",
+      "Create, edit, delete, import, and export cookies from a clean popup. Perfect for testing authenticated states, session expiry, and feature flags without leaving the page.",
     category: "Sessions & Cookies",
     tags: ["cookies", "session", "auth", "storage"],
     icon: "key",
@@ -113,6 +115,7 @@ export const chromeExtensions: ChromeExtension[] = [
     storeUrl:
       "https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm",
     developer: "Moustachauve",
+    downloads: "800K+",
   },
   {
     id: "wappalyzer",
@@ -127,6 +130,7 @@ export const chromeExtensions: ChromeExtension[] = [
     storeUrl:
       "https://chromewebstore.google.com/detail/wappalyzer-technology-pro/gppongmhjkpfnbhagpmjfkannfbllamg",
     developer: "Wappalyzer",
+    downloads: "2M+",
   },
   {
     id: "check-my-links",
@@ -141,5 +145,6 @@ export const chromeExtensions: ChromeExtension[] = [
     storeUrl:
       "https://chromewebstore.google.com/detail/check-my-links/ojkcdipcgfaekbeaelaapakgnjflfglf",
     developer: "Paul Livesey",
+    downloads: "100K+",
   },
 ];
