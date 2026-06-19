@@ -19,7 +19,7 @@ keywords: ["keyword one", "keyword two"]
 coverImage: "/blog/post-cover.png"
 # Optional — alt text for the cover image (falls back to the title).
 coverImageAlt: "Describe the cover image"
-# Optional — when true, the post is hidden in production builds but visible in dev.
+# Optional — when true, the post is hidden in production builds but visible in dev..
 draft: true
 ---
 
