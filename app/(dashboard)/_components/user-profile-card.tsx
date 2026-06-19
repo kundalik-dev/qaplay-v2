@@ -28,7 +28,9 @@ function getInitials(name: string, email: string): string {
   }
   const parts = trimmed.split(/\s+/);
   if (parts.length >= 2) {
-    return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+    return (
+      parts[0].charAt(0) + parts[parts.length - 1].charAt(0)
+    ).toUpperCase();
   }
   return parts[0].charAt(0).toUpperCase();
 }
@@ -77,7 +79,11 @@ export function UserProfileCard({ isCollapsed }: UserProfileCardProps) {
         <p className={styles.loginBannerText}>
           Sign in to track your progress and save your work.
         </p>
-        <Link href="/login" className={styles.loginBtn} data-testid="sidebar-login-btn">
+        <Link
+          href="/login"
+          className={styles.loginBtn}
+          data-testid="sidebar-login-btn"
+        >
           Log in / Sign up
         </Link>
       </div>
@@ -96,10 +102,18 @@ export function UserProfileCard({ isCollapsed }: UserProfileCardProps) {
   }
 
   return (
-    <div ref={containerRef} style={{ position: "relative" }} data-testid="sidebar-user-card">
+    <div
+      ref={containerRef}
+      style={{ position: "relative" }}
+      data-testid="sidebar-user-card"
+    >
       {/* Dropdown popover — rendered above the trigger */}
       {isOpen && (
-        <div className={styles.profileDropdown} role="menu" data-testid="sidebar-user-dropdown">
+        <div
+          className={styles.profileDropdown}
+          role="menu"
+          data-testid="sidebar-user-dropdown"
+        >
           <button
             className={`${styles.dropdownItem} ${styles.dropdownItemDestructive}`}
             onClick={handleSignOut}

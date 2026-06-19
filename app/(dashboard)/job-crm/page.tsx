@@ -20,7 +20,10 @@ export const metadata: Metadata = {
 export default function JobCrmPage() {
   return (
     <div className={styles.placeholderPage} data-testid="page-job-crm">
-      <BriefcaseBusiness className={styles.placeholderIcon} aria-hidden="true" />
+      <BriefcaseBusiness
+        className={styles.placeholderIcon}
+        aria-hidden="true"
+      />
       <h1 className={styles.placeholderTitle}>Job CRM</h1>
       <p className={styles.placeholderDesc}>
         Your personal job search tracker. Log applications, set follow-up

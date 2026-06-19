@@ -23,8 +23,8 @@ export default function DashboardPage() {
       <LayoutDashboard className={styles.placeholderIcon} aria-hidden="true" />
       <h1 className={styles.placeholderTitle}>Dashboard</h1>
       <p className={styles.placeholderDesc}>
-        Your command center — activity feed, practice stats, and quick access
-        to all features will live here.
+        Your command center — activity feed, practice stats, and quick access to
+        all features will live here.
       </p>
       <span className={styles.comingSoonBadge}>Coming soon</span>
     </div>

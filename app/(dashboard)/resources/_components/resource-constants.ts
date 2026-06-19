@@ -68,7 +68,8 @@ export const DUMMY_RESOURCES: Resource[] = [
     resourceType: "TOOL",
     title: "- YouTube",
     url: "https://youtube.com",
-    description: "Enjoy the videos and music you love, upload original content, and share it all with friends,…",
+    description:
+      "Enjoy the videos and music you love, upload original content, and share it all with friends,…",
     tags: [],
     image: undefined,
     createdAt: "2026-04-27",
@@ -78,7 +79,8 @@ export const DUMMY_RESOURCES: Resource[] = [
     resourceType: "TOOL",
     title: "iDocs — MarkItDown",
     url: "https://idocs.example.com",
-    description: "idocs using markitdown to convert any document into markdown. It support PDF, excel…",
+    description:
+      "idocs using markitdown to convert any document into markdown. It support PDF, excel…",
     tags: ["idocs", "md-convertor", "tool"],
     image: undefined,
     createdAt: "2026-04-24",
@@ -88,9 +90,11 @@ export const DUMMY_RESOURCES: Resource[] = [
     resourceType: "TOOL",
     title: "Deploy LobeHub with database on Vercel · LobeHub Docs · LobeHub",
     url: "https://lobehub.com/docs",
-    description: "Learn how to deploy LobeHub with database on Vercel with ease, including: database,…",
+    description:
+      "Learn how to deploy LobeHub with database on Vercel with ease, including: database,…",
     tags: [],
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=200&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=200&fit=crop",
     createdAt: "2026-04-20",
   },
   {
@@ -98,7 +102,8 @@ export const DUMMY_RESOURCES: Resource[] = [
     resourceType: "TOOL",
     title: "Markdown to HTML Converter Online Free | QA Tools",
     url: "https://qatools.example.com/md-html",
-    description: "Convert Markdown to beautifully styling HTML instantly. Preview live and download the final…",
+    description:
+      "Convert Markdown to beautifully styling HTML instantly. Preview live and download the final…",
     tags: [],
     image: undefined,
     createdAt: "2026-04-17",
@@ -110,7 +115,8 @@ export const DUMMY_RESOURCES: Resource[] = [
     url: "https://lmstudio.ai/careers",
     description: "Open roles at LM Studio.",
     tags: ["job", "ai", "ml"],
-    image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&h=200&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&h=200&fit=crop",
     createdAt: "2026-04-16",
   },
   {
@@ -118,9 +124,11 @@ export const DUMMY_RESOURCES: Resource[] = [
     resourceType: "TOOL",
     title: "All Features: AI Avatar & Voice Interview Platform",
     url: "https://jobmojito.com",
-    description: "Explore the complete feature set for our AI interview platform, including real-time feedbac…",
+    description:
+      "Explore the complete feature set for our AI interview platform, including real-time feedbac…",
     tags: ["saas", "iprep", "idea"],
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=200&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=200&fit=crop",
     createdAt: "2026-04-12",
   },
   {
@@ -128,9 +136,11 @@ export const DUMMY_RESOURCES: Resource[] = [
     resourceType: "TOOL",
     title: "LockedIn AI - AI Interview Assistant & Meeting Copilot",
     url: "https://lockedinai.com",
-    description: "LockedIn AI is the #1 real-time AI interview assistant for job seekers. Get live interview…",
+    description:
+      "LockedIn AI is the #1 real-time AI interview assistant for job seekers. Get live interview…",
     tags: ["saas", "iprep", "idea"],
-    image: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=400&h=200&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=400&h=200&fit=crop",
     createdAt: "2026-04-12",
   },
   {
@@ -138,9 +148,11 @@ export const DUMMY_RESOURCES: Resource[] = [
     resourceType: "TOOL",
     title: "Yoodli | AI Roleplays",
     url: "https://yoodli.ai",
-    description: "Enterprise AI roleplay platform for sales enablement, partner training, and L&D. Practic…",
+    description:
+      "Enterprise AI roleplay platform for sales enablement, partner training, and L&D. Practic…",
     tags: ["saas", "iprep", "idea"],
-    image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=200&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=200&fit=crop",
     createdAt: "2026-04-12",
   },
   {
@@ -148,7 +160,8 @@ export const DUMMY_RESOURCES: Resource[] = [
     resourceType: "TOOL",
     title: "Elevate your interviews with AI",
     url: "https://interviewai.com",
-    description: "Transform interviews with InterviewAI. Practice smarter, hire faster, and streamline your proces…",
+    description:
+      "Transform interviews with InterviewAI. Practice smarter, hire faster, and streamline your proces…",
     tags: ["saas", "idea", "iprep"],
     image: undefined,
     createdAt: "2026-04-12",
@@ -158,9 +171,11 @@ export const DUMMY_RESOURCES: Resource[] = [
     resourceType: "DOCUMENTATION",
     title: "Process Adapter - Paperclip",
     url: "https://paperclip.dev",
-    description: "Run local CLI agents like Claude Code and Codex as child processes",
+    description:
+      "Run local CLI agents like Claude Code and Codex as child processes",
     tags: ["iprep", "idea"],
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=200&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=200&fit=crop",
     createdAt: "2026-04-11",
   },
   {
@@ -168,9 +183,11 @@ export const DUMMY_RESOURCES: Resource[] = [
     resourceType: "ARTICLE",
     title: "TypeScript Deep Dive",
     url: "https://basarat.gitbook.io/typescript/",
-    description: "The definitive guide to TypeScript — covers types, generics, decorators and more.",
+    description:
+      "The definitive guide to TypeScript — covers types, generics, decorators and more.",
     tags: ["typescript", "programming"],
-    image: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=400&h=200&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=400&h=200&fit=crop",
     createdAt: "2026-04-08",
   },
   {
@@ -178,7 +195,8 @@ export const DUMMY_RESOURCES: Resource[] = [
     resourceType: "COURSE",
     title: "Playwright: From Zero to Hero",
     url: "https://udemy.com/playwright",
-    description: "Master Playwright end-to-end testing with real projects and CI/CD integration.",
+    description:
+      "Master Playwright end-to-end testing with real projects and CI/CD integration.",
     tags: ["playwright", "testing", "automation"],
     image: undefined,
     createdAt: "2026-04-05",
@@ -188,9 +206,11 @@ export const DUMMY_RESOURCES: Resource[] = [
     resourceType: "VIDEO",
     title: "Cypress vs Playwright in 2026",
     url: "https://youtube.com/watch?v=abc123",
-    description: "A comprehensive comparison of the two leading E2E testing frameworks, covering speed, DX, and ecosystem.",
+    description:
+      "A comprehensive comparison of the two leading E2E testing frameworks, covering speed, DX, and ecosystem.",
     tags: ["cypress", "playwright", "testing"],
-    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&h=200&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&h=200&fit=crop",
     createdAt: "2026-04-01",
   },
 ];

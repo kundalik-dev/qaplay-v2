@@ -104,7 +104,8 @@ function ResourceDialog({
   const suggestions = allTags
     .filter(
       (t) =>
-        !form.tags.includes(t) && (!tagInput || t.includes(tagInput.toLowerCase())),
+        !form.tags.includes(t) &&
+        (!tagInput || t.includes(tagInput.toLowerCase())),
     )
     .slice(0, 6);
 
@@ -161,7 +162,9 @@ function ResourceDialog({
               className={styles.input}
               placeholder="Resource title"
               value={form.title}
-              onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, title: e.target.value }))
+              }
               data-testid="res-title-input"
             />
           </div>
@@ -251,7 +254,9 @@ function ResourceDialog({
             </div>
             {suggestions.length > 0 && (
               <div className={styles.cardTags} style={{ marginTop: 4 }}>
-                <span style={{ fontSize: 11, color: "var(--muted-foreground)" }}>
+                <span
+                  style={{ fontSize: 11, color: "var(--muted-foreground)" }}
+                >
                   Suggestions:
                 </span>
                 {suggestions.map((t) => (
@@ -280,7 +285,9 @@ function ResourceDialog({
               type="url"
               placeholder="https://…"
               value={form.image}
-              onChange={(e) => setForm((f) => ({ ...f, image: e.target.value }))}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, image: e.target.value }))
+              }
               data-testid="res-image-input"
             />
           </div>
@@ -368,10 +375,7 @@ export function ResourcesView() {
     setDeleteTarget(null);
   };
 
-  const handleSave = (
-    data: typeof EMPTY_FORM,
-    editingId: string | null,
-  ) => {
+  const handleSave = (data: typeof EMPTY_FORM, editingId: string | null) => {
     if (!data.resourceType || !data.title || !data.url) return;
 
     const now = new Date().toISOString().split("T")[0];
@@ -410,7 +414,11 @@ export function ResourcesView() {
   };
 
   return (
-    <div className={styles.page} data-testid="resources-page" data-section="resources">
+    <div
+      className={styles.page}
+      data-testid="resources-page"
+      data-section="resources"
+    >
       {/* ── Top bar ── */}
       <div className={styles.topBar}>
         <div className={styles.titleGroup}>
@@ -505,11 +513,7 @@ export function ResourcesView() {
         </select>
 
         {/* View toggle */}
-        <div
-          className={styles.viewToggle}
-          role="group"
-          aria-label="View mode"
-        >
+        <div className={styles.viewToggle} role="group" aria-label="View mode">
           <button
             className={`${styles.viewBtn} ${viewMode === "table" ? styles.viewBtnActive : ""}`}
             onClick={() => setViewMode("table")}

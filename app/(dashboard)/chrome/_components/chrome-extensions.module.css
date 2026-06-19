@@ -131,7 +131,11 @@
 }
 
 .pill:hover {
-  border-color: color-mix(in srgb, var(--pill-text, var(--primary)) 40%, var(--border));
+  border-color: color-mix(
+    in srgb,
+    var(--pill-text, var(--primary)) 40%,
+    var(--border)
+  );
   color: var(--pill-text, var(--foreground));
 }
 
@@ -235,14 +239,30 @@
 
 /* ── Dark mode ──────────────────────────────────────────────────────────── */
 
-:global(.dark) .pill[data-cat="documentation"] { --pill-text: #7dd3fc; }
-:global(.dark) .pill[data-cat="productivity"] { --pill-text: #6ee7b7; }
-:global(.dark) .pill[data-cat="accessibility"] { --pill-text: #c4b5fd; }
-:global(.dark) .pill[data-cat="automation"] { --pill-text: #fde047; }
-:global(.dark) .pill[data-cat="api-network"] { --pill-text: #a5b4fc; }
-:global(.dark) .pill[data-cat="sessions-cookies"] { --pill-text: #fca5a5; }
-:global(.dark) .pill[data-cat="tech-stack"] { --pill-text: #94a3b8; }
-:global(.dark) .pill[data-cat="links-seo"] { --pill-text: #fdba74; }
+:global(.dark) .pill[data-cat="documentation"] {
+  --pill-text: #7dd3fc;
+}
+:global(.dark) .pill[data-cat="productivity"] {
+  --pill-text: #6ee7b7;
+}
+:global(.dark) .pill[data-cat="accessibility"] {
+  --pill-text: #c4b5fd;
+}
+:global(.dark) .pill[data-cat="automation"] {
+  --pill-text: #fde047;
+}
+:global(.dark) .pill[data-cat="api-network"] {
+  --pill-text: #a5b4fc;
+}
+:global(.dark) .pill[data-cat="sessions-cookies"] {
+  --pill-text: #fca5a5;
+}
+:global(.dark) .pill[data-cat="tech-stack"] {
+  --pill-text: #94a3b8;
+}
+:global(.dark) .pill[data-cat="links-seo"] {
+  --pill-text: #fdba74;
+}
 
 /* ── Pill count badge ───────────────────────────────────────────────────── */
 

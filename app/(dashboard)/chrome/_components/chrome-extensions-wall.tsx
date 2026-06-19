@@ -10,7 +10,10 @@ import styles from "./chrome-extensions.module.css";
 const ALL_FILTER = "all";
 
 function toCat(label: string): string {
-  return label.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return label
+    .toLowerCase()
+    .replaceAll(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 interface ChromeExtensionsWallProps {
@@ -35,7 +38,11 @@ export function ChromeExtensionsWall({
     for (const ext of extensions) {
       seen.set(ext.category, (seen.get(ext.category) ?? 0) + 1);
     }
-    return Array.from(seen, ([label, count]) => ({ label, cat: toCat(label), count }));
+    return Array.from(seen, ([label, count]) => ({
+      label,
+      cat: toCat(label),
+      count,
+    }));
   }, [extensions]);
 
   const filtered = useMemo(() => {
@@ -94,7 +101,12 @@ export function ChromeExtensionsWall({
         </div>
 
         <div className={styles.filterRow}>
-          <div className={styles.pills} role="group" aria-label="Filter by category" data-testid="chrome-filters">
+          <div
+            className={styles.pills}
+            role="group"
+            aria-label="Filter by category"
+            data-testid="chrome-filters"
+          >
             <button
               type="button"
               className={styles.pill}
@@ -155,7 +167,9 @@ export function ChromeExtensionsWall({
           ) : (
             <div className={styles.emptyState} data-testid="chrome-no-results">
               <p className={styles.emptyTitle}>No extensions found</p>
-              <p className={styles.emptyBody}>Try a different keyword or category.</p>
+              <p className={styles.emptyBody}>
+                Try a different keyword or category.
+              </p>
             </div>
           )}
         </div>

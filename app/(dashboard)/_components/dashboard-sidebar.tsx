@@ -14,7 +14,10 @@ interface DashboardSidebarProps {
   onToggle: () => void;
 }
 
-export function DashboardSidebar({ isCollapsed, onToggle }: DashboardSidebarProps) {
+export function DashboardSidebar({
+  isCollapsed,
+  onToggle,
+}: DashboardSidebarProps) {
   const pathname = usePathname();
 
   function isActive(href: string) {
@@ -31,7 +34,11 @@ export function DashboardSidebar({ isCollapsed, onToggle }: DashboardSidebarProp
       {/* ── Header ─────────────────────────────────────────────── */}
       <div className={styles.sidebarHeader} data-testid="sidebar-header">
         {!isCollapsed && (
-          <Link href="/" className={styles.sidebarBrand} data-testid="sidebar-brand">
+          <Link
+            href="/"
+            className={styles.sidebarBrand}
+            data-testid="sidebar-brand"
+          >
             <Image
               src="/logo/logo.svg"
               alt="QA Playground"
@@ -56,9 +63,17 @@ export function DashboardSidebar({ isCollapsed, onToggle }: DashboardSidebarProp
       </div>
 
       {/* ── Navigation ─────────────────────────────────────────── */}
-      <nav className={styles.sidebarNav} data-testid="sidebar-nav" aria-label="Main navigation">
+      <nav
+        className={styles.sidebarNav}
+        data-testid="sidebar-nav"
+        aria-label="Main navigation"
+      >
         {dashboardNavGroups.map((group) => (
-          <div key={group.label} className={styles.navGroup} data-testid={`nav-group-${group.label.toLowerCase().replace(/\s+/g, "-")}`}>
+          <div
+            key={group.label}
+            className={styles.navGroup}
+            data-testid={`nav-group-${group.label.toLowerCase().replace(/\s+/g, "-")}`}
+          >
             {!isCollapsed && (
               <span className={styles.navGroupLabel}>{group.label}</span>
             )}

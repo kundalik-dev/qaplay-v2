@@ -19,12 +19,15 @@ export const metadata: Metadata = {
 
 export default function InterviewPracticePage() {
   return (
-    <div className={styles.placeholderPage} data-testid="page-interview-practice">
+    <div
+      className={styles.placeholderPage}
+      data-testid="page-interview-practice"
+    >
       <BrainCircuit className={styles.placeholderIcon} aria-hidden="true" />
       <h1 className={styles.placeholderTitle}>Interview Practice</h1>
       <p className={styles.placeholderDesc}>
-        AI-powered mock interviews for QA roles. Practice common questions,
-        get real-time feedback, and build confidence before your next interview.
+        AI-powered mock interviews for QA roles. Practice common questions, get
+        real-time feedback, and build confidence before your next interview.
       </p>
       <span className={styles.comingSoonBadge}>Coming soon</span>
     </div>

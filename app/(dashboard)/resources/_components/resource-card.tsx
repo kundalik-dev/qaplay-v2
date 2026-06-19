@@ -101,9 +101,7 @@ export function ResourceCard({
         </a>
 
         {/* Description */}
-        {r.description && (
-          <p className={styles.cardDesc}>{r.description}</p>
-        )}
+        {r.description && <p className={styles.cardDesc}>{r.description}</p>}
 
         {/* Tags */}
         {r.tags.length > 0 && (
