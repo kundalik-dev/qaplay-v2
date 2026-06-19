@@ -7,140 +7,303 @@
   min-height: 100vh;
 }
 
-/* ── Hero / Header ─────────────────────────────────────────────────────── */
+/* ── Header ────────────────────────────────────────────────────────────── */
 
-.hero {
-  padding: 8px 0 18px;
-  text-align: center;
+.header {
+  padding: 24px 0 16px;
+  max-width: 640px;
 }
 
 .eyebrow {
   display: inline-block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: var(--primary);
   font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: var(--home-type-label-size);
-  letter-spacing: var(--home-type-label-spacing);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .title {
-  margin: 0 auto 8px;
-  max-width: 30ch;
+  margin: 0 0 6px;
   color: var(--foreground);
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
-  line-height: 1.12;
-  letter-spacing: -0.04em;
-  text-wrap: balance;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 }
 
 .subtitle {
-  margin: 0 auto;
-  max-width: 600px;
+  margin: 0;
   color: var(--muted-foreground);
-  font-size: 0.95rem;
-  line-height: 1.55;
-  text-wrap: pretty;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
-/* ── Toolbar: search + filters ─────────────────────────────────────────── */
+/* ── Controls ───────────────────────────────────────────────────────────── */
 
-.toolbar {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin: 0 auto 24px;
-  max-width: 720px;
+.controls {
+  margin-bottom: 24px;
 }
 
-.searchBox {
+/* ── Search ─────────────────────────────────────────────────────────────── */
+
+.searchWrap {
   position: relative;
-  display: flex;
-  align-items: center;
+  margin-bottom: 14px;
 }
 
 .searchIcon {
   position: absolute;
-  left: 16px;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
   color: var(--muted-foreground);
   pointer-events: none;
   flex-shrink: 0;
 }
 
-.searchInput {
+.search {
   width: 100%;
-  height: 48px;
-  padding: 0 16px 0 46px;
-  border: 1px solid var(--input);
-  border-radius: var(--radius-xl);
-  background: var(--card);
+  padding: 10px 14px 10px 38px;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  background: var(--background);
   color: var(--foreground);
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   outline: none;
   transition:
-    border-color 0.18s ease,
-    box-shadow 0.18s ease;
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  appearance: none;
 }
 
-.searchInput::placeholder {
+.search::placeholder {
   color: var(--muted-foreground);
 }
 
-.searchInput:focus {
-  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+.search:focus {
+  border-color: color-mix(in srgb, var(--primary) 50%, var(--border));
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
 }
 
-/* ── Filter pills ──────────────────────────────────────────────────────── */
+/* ── Filter row (pills + sort) ──────────────────────────────────────────── */
 
-.filters {
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ── Pills ──────────────────────────────────────────────────────────────── */
+
+.pills {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
+  gap: 6px;
+  flex: 1;
 }
 
-.filterPill {
+/* ── Individual pill ────────────────────────────────────────────────────── */
+
+.pill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
-  border: 1px solid var(--border);
+  gap: 5px;
+  padding: 4px 13px;
   border-radius: 99px;
-  background: color-mix(in srgb, var(--card) 70%, transparent);
-  color: var(--muted-foreground);
-  font-size: 0.82rem;
-  font-weight: 600;
+  border: 1px solid var(--pill-border, var(--border));
+  background: var(--pill-bg, transparent);
+  color: var(--pill-text, var(--muted-foreground));
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.5;
   cursor: pointer;
+  white-space: nowrap;
   transition:
-    color 0.16s ease,
-    border-color 0.16s ease,
-    background-color 0.16s ease,
-    transform 0.16s ease;
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
 }
 
-.filterPill:hover {
-  color: var(--foreground);
-  border-color: color-mix(in srgb, var(--primary) 32%, var(--border));
-  transform: translateY(-1px);
+.pill:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--pill-text, var(--primary)) 40%,
+    var(--border)
+  );
+  color: var(--pill-text, var(--foreground));
 }
 
-.filterPillActive {
-  color: var(--primary-foreground);
+/* All pill — active */
+.pill[data-active="true"][data-cat="all"] {
   background: var(--primary);
   border-color: var(--primary);
-}
-
-.filterPillActive:hover {
   color: var(--primary-foreground);
+  font-weight: 600;
 }
 
-.filterCount {
+/* ── Per-category pill colors ───────────────────────────────────────────── */
+
+.pill[data-cat="documentation"] {
+  --pill-bg: rgba(14, 165, 233, 0.1);
+  --pill-text: #0369a1;
+  --pill-border: rgba(14, 165, 233, 0.22);
+}
+.pill[data-cat="documentation"][data-active="true"] {
+  --pill-bg: rgba(14, 165, 233, 0.22);
+  --pill-border: rgba(14, 165, 233, 0.5);
+  font-weight: 600;
+}
+
+.pill[data-cat="productivity"] {
+  --pill-bg: rgba(16, 185, 129, 0.1);
+  --pill-text: #059669;
+  --pill-border: rgba(16, 185, 129, 0.22);
+}
+.pill[data-cat="productivity"][data-active="true"] {
+  --pill-bg: rgba(16, 185, 129, 0.22);
+  --pill-border: rgba(16, 185, 129, 0.5);
+  font-weight: 600;
+}
+
+.pill[data-cat="accessibility"] {
+  --pill-bg: rgba(139, 92, 246, 0.1);
+  --pill-text: #7c3aed;
+  --pill-border: rgba(139, 92, 246, 0.22);
+}
+.pill[data-cat="accessibility"][data-active="true"] {
+  --pill-bg: rgba(139, 92, 246, 0.22);
+  --pill-border: rgba(139, 92, 246, 0.5);
+  font-weight: 600;
+}
+
+.pill[data-cat="automation"] {
+  --pill-bg: rgba(234, 179, 8, 0.1);
+  --pill-text: #a16207;
+  --pill-border: rgba(234, 179, 8, 0.25);
+}
+.pill[data-cat="automation"][data-active="true"] {
+  --pill-bg: rgba(234, 179, 8, 0.22);
+  --pill-border: rgba(234, 179, 8, 0.5);
+  font-weight: 600;
+}
+
+.pill[data-cat="api-network"] {
+  --pill-bg: rgba(99, 102, 241, 0.1);
+  --pill-text: #4338ca;
+  --pill-border: rgba(99, 102, 241, 0.22);
+}
+.pill[data-cat="api-network"][data-active="true"] {
+  --pill-bg: rgba(99, 102, 241, 0.22);
+  --pill-border: rgba(99, 102, 241, 0.5);
+  font-weight: 600;
+}
+
+.pill[data-cat="sessions-cookies"] {
+  --pill-bg: rgba(239, 68, 68, 0.1);
+  --pill-text: #dc2626;
+  --pill-border: rgba(239, 68, 68, 0.22);
+}
+.pill[data-cat="sessions-cookies"][data-active="true"] {
+  --pill-bg: rgba(239, 68, 68, 0.22);
+  --pill-border: rgba(239, 68, 68, 0.5);
+  font-weight: 600;
+}
+
+.pill[data-cat="tech-stack"] {
+  --pill-bg: rgba(100, 116, 139, 0.1);
+  --pill-text: #475569;
+  --pill-border: rgba(100, 116, 139, 0.22);
+}
+.pill[data-cat="tech-stack"][data-active="true"] {
+  --pill-bg: rgba(100, 116, 139, 0.22);
+  --pill-border: rgba(100, 116, 139, 0.5);
+  font-weight: 600;
+}
+
+.pill[data-cat="links-seo"] {
+  --pill-bg: rgba(251, 146, 60, 0.1);
+  --pill-text: #c2410c;
+  --pill-border: rgba(251, 146, 60, 0.25);
+}
+.pill[data-cat="links-seo"][data-active="true"] {
+  --pill-bg: rgba(251, 146, 60, 0.22);
+  --pill-border: rgba(251, 146, 60, 0.5);
+  font-weight: 600;
+}
+
+/* ── Dark mode ──────────────────────────────────────────────────────────── */
+
+:global(.dark) .pill[data-cat="documentation"] {
+  --pill-text: #7dd3fc;
+}
+:global(.dark) .pill[data-cat="productivity"] {
+  --pill-text: #6ee7b7;
+}
+:global(.dark) .pill[data-cat="accessibility"] {
+  --pill-text: #c4b5fd;
+}
+:global(.dark) .pill[data-cat="automation"] {
+  --pill-text: #fde047;
+}
+:global(.dark) .pill[data-cat="api-network"] {
+  --pill-text: #a5b4fc;
+}
+:global(.dark) .pill[data-cat="sessions-cookies"] {
+  --pill-text: #fca5a5;
+}
+:global(.dark) .pill[data-cat="tech-stack"] {
+  --pill-text: #94a3b8;
+}
+:global(.dark) .pill[data-cat="links-seo"] {
+  --pill-text: #fdba74;
+}
+
+/* ── Pill count badge ───────────────────────────────────────────────────── */
+
+.pillCount {
   font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   opacity: 0.7;
+}
+
+/* ── Sort dropdown ──────────────────────────────────────────────────────── */
+
+.sort {
+  padding: 6px 32px 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: border-color 0.15s ease;
+}
+
+.sort:focus {
+  border-color: color-mix(in srgb, var(--primary) 50%, var(--border));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+/* ── Result count ───────────────────────────────────────────────────────── */
+
+.count {
+  margin: 12px 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
 }
 
 /* ── Grid ──────────────────────────────────────────────────────────────── */

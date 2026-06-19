@@ -20,7 +20,7 @@ export default function ChromeExtensionsPage() {
     <section
       data-testid="chrome-page"
       data-section="chrome"
-      className="mx-auto w-full max-w-7xl px-4 pt-14 sm:px-6 lg:px-8 lg:pt-16"
+      className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
     >
       <JsonLd data={chromeWebPageJsonLd} />
       <JsonLd data={chromeBreadcrumbJsonLd} />

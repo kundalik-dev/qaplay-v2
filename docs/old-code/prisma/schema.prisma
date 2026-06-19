@@ -1,0 +1,419 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ResourceType {
+  ARTICLE
+  VIDEO
+  COURSE
+  BOOK
+  TOOL
+  DOCUMENTATION
+  OTHER
+}
+
+enum InterviewPlan {
+  FREE
+  PAID
+}
+
+enum InterviewKeySource {
+  PLATFORM
+  USER_LOCAL
+}
+
+enum InterviewStatus {
+  CREATED
+  ACTIVE
+  SUMMARIZING
+  COMPLETED
+  ENDED_BY_USER
+  FAILED
+}
+
+enum InterviewMessageRole {
+  SYSTEM
+  INTERVIEWER
+  USER
+}
+
+// Better-Auth required models
+
+model User {
+  id                String                     @id @default(cuid())
+  name              String
+  email             String                     @unique
+  emailVerified     Boolean                    @default(false)
+  image             String?
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @updatedAt
+  role              Role                       @default(USER)
+  sessions          Session[]
+  accounts          Account[]
+  resources         Resource[]
+  apiKeys           ApiKey[]
+  syllabi           UserSyllabus[]
+  topicProgress     TopicProgress[]
+  subtopicProgress  SubtopicProgress[]
+  dailyTasks        DailyTask[]
+  habits            Habit[]
+  habitLogs         HabitLog[]
+  activityLogs      ActivityLog[]
+  telegramUser      TelegramUser?
+  notes             Note[]
+  interviewProfile  UserInterviewProfile?
+  interviewSessions InterviewPracticeSession[]
+}
+
+model Resource {
+  id           String       @id @default(cuid())
+  userId       String
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resourceType ResourceType
+  title        String
+  url          String
+  description  String?
+  tags         String[]
+  image        String?
+  source       String       @default("web")
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model ApiKey {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  key       String    @unique
+  expiresAt DateTime?
+  createdAt DateTime  @default(now())
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
+model Verification {
+  id         String    @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+}
+
+// ─── Study Tracker Feature ────────────────────────────────────────────────────
+
+// Stores each user's custom syllabus overrides (or the default if unchanged).
+// syllabusId matches the client-side key e.g. "manual", "automation", "playwright".
+model UserSyllabus {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  syllabusId String
+  data       Json
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userId, syllabusId])
+}
+
+// Per-topic completion state. topicId matches client strings e.g. "m-t1".
+model TopicProgress {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topicId   String
+  done      Boolean   @default(false)
+  notes     String?
+  doneAt    DateTime?
+  updatedAt DateTime  @updatedAt
+
+  @@unique([userId, topicId])
+}
+
+// Per-subtopic checked state. One row per (user, topic, subtopicTitle) triple.
+model SubtopicProgress {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topicId       String
+  subtopicTitle String
+  checked       Boolean  @default(false)
+  updatedAt     DateTime @updatedAt
+
+  @@unique([userId, topicId, subtopicTitle])
+}
+
+// Daily task list entries. taskId is the client-generated uuid.
+model DailyTask {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      String
+  taskId    String
+  title     String
+  done      Boolean  @default(false)
+  timeMin   Int      @default(0)
+  reason    String?
+  source    String   @default("web")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, taskId])
+  @@index([userId, date])
+}
+
+// Habit definitions. habitId is the client-generated uuid.
+model Habit {
+  id         String     @id @default(cuid())
+  userId     String
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  habitId    String
+  title      String
+  timeMin    Int        @default(0)
+  recurrence String
+  customDays Int[]
+  startDate  String
+  endDate    String?
+  timeSlot   String?
+  active     Boolean    @default(true)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  logs       HabitLog[]
+
+  @@unique([userId, habitId])
+}
+
+// Habit completion log — one row per (user, habit, date).
+model HabitLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  habitId   String
+  habit     Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  date      String
+  done      Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, habitId, date])
+  @@index([userId, date])
+}
+
+// Append-only activity log. Tracks topic completions, notes, etc.
+model ActivityLog {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date       String
+  topicId    String?
+  syllabusId String?
+  action     String
+  createdAt  DateTime @default(now())
+
+  @@index([userId, date])
+}
+
+// Interview Practice Feature
+
+// Per-user interview entitlement state. User-owned Deepgram keys are not stored in DB.
+model UserInterviewProfile {
+  id                         String        @id @default(cuid())
+  userId                     String        @unique
+  user                       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan                       InterviewPlan @default(FREE)
+  platformFreeInterviewsUsed Int           @default(0)
+  createdAt                  DateTime      @default(now())
+  updatedAt                  DateTime      @updatedAt
+}
+
+// One row per interview attempt/session.
+model InterviewPracticeSession {
+  id                String                     @id @default(cuid())
+  userId            String
+  user              User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  publicId          String                     @unique @default(cuid())
+  status            InterviewStatus            @default(CREATED)
+  keySource         InterviewKeySource
+  role              String
+  companyStyle      String
+  focus             String
+  durationMinutes   Int
+  questionLimit     Int
+  questionCount     Int                        @default(0)
+  deepgramRequestId String?
+  startedAt         DateTime?
+  endedAt           DateTime?
+  endReason         String?
+  summary           String?
+  feedback          Json?
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @updatedAt
+  messages          InterviewPracticeMessage[]
+  tokens            InterviewSessionToken[]
+
+  @@index([userId, createdAt])
+  @@index([userId, status])
+}
+
+// Normalized transcript and agent/system events for each interview.
+model InterviewPracticeMessage {
+  id         String                   @id @default(cuid())
+  sessionId  String
+  session    InterviewPracticeSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role       InterviewMessageRole
+  content    String
+  source     String                   @default("deepgram")
+  eventType  String?
+  sequence   Int
+  occurredAt DateTime                 @default(now())
+  rawEvent   Json?
+
+  @@unique([sessionId, sequence])
+  @@index([sessionId, occurredAt])
+}
+
+// Short-lived websocket tokens. Stores token hash only, never Deepgram keys.
+model InterviewSessionToken {
+  id        String                   @id @default(cuid())
+  sessionId String
+  session   InterviewPracticeSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  tokenHash String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime                 @default(now())
+
+  @@index([sessionId])
+}
+
+// ─── Contact Form Submissions ─────────────────────────────────────────────────
+
+enum ContactStatus {
+  UNREAD
+  READ
+  REPLIED
+}
+
+// One row per contact form submission from the /contact-us page.
+model ContactMessage {
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  topic     String
+  message   String
+  status    ContactStatus @default(UNREAD)
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime      @default(now())
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+// ─── Site Alert Feature ───────────────────────────────────────────────────────
+
+enum SiteAlertQuestionType {
+  YESNO
+  THUMBS
+}
+
+// Singleton — only ever one row. Controls global on/off + frequency.
+model SiteAlertConfig {
+  id           String   @id @default(cuid())
+  enabled      Boolean  @default(true)
+  durationDays Int      @default(7)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// One row per question the admin creates.
+model SiteAlertQuestion {
+  id        String                @id @default(cuid())
+  text      String
+  type      SiteAlertQuestionType @default(YESNO)
+  order     Int                   @default(0)
+  isActive  Boolean               @default(true)
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
+  responses SiteAlertResponse[]
+}
+
+// One row per answer a visitor submits.
+model SiteAlertResponse {
+  id         String            @id @default(cuid())
+  questionId String
+  question   SiteAlertQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  answer     String
+  visitorId  String
+  userAgent  String?
+  createdAt  DateTime          @default(now())
+}
+
+// ─── Telegram Bot Feature ─────────────────────────────────────────────────────
+
+// Links a platform User to a Telegram chatId.
+// tokenHash stores SHA-256 of pending connect token; cleared after successful connection.
+model TelegramUser {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chatId      String?   @unique
+  username    String?
+  tokenHash   String? // SHA-256 hash — used by webhook for verification 
+  tokenExpiry DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// Notes saved by the user — from Telegram bot or web interface.
+model Note {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  trigger   String
+  title     String
+  content   String
+  source    String   @default("web")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}

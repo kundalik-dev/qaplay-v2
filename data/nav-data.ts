@@ -25,11 +25,12 @@ export const navBrand: NavBrand = {
 };
 
 export const navLinks: NavLink[] = [
+  { label: "Home", href: "/" },
   { label: "Practice", href: "/practice" },
   { label: "Demo Apps", href: "/demo" },
-  { label: "AI Interview", href: "/#interview" },
-  { label: "Features", href: "/#features" },
-  { label: "Jobs", href: "/#jobs" },
+  { label: "Dashboard", href: "/dashboard" },
+  { label: "AI Interview", href: "/interview-practice" },
+  // { label: "Jobs", href: "/#jobs" },
   { label: "Blogs", href: "/blog" },
 ];
 

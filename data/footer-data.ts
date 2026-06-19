@@ -78,7 +78,7 @@ export const footerNavColumns: FooterNavColumn[] = [
       { label: "Practice Elements", href: "/practice" },
       { label: "AI Mock Interviews", href: "/interview" },
       { label: "Job Hub & CRM", href: "/jobs" },
-      { label: "Bank Demo", href: "/bank" },
+      { label: "Bank Demo", href: "/demo/bank" },
       { label: "Study Tracker", href: "/study-tracker/dashboard" },
       { label: "QA Tools", href: "/qa-tools" },
     ],
