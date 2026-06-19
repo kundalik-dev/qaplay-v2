@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { formatPostDate } from "@/lib/blog/format";
@@ -45,14 +46,12 @@ export function BlogCard({ post }: { post: BlogPostSummary }) {
       >
         {frontmatter.coverImage ? (
           <div className={styles.imageWrap} data-testid={`blog-image-${slug}`}>
-            <img
+            <Image
               src={frontmatter.coverImage}
               alt={frontmatter.coverImageAlt ?? frontmatter.title}
               className={styles.image}
-              loading="lazy"
-              width={1200}
-              height={630}
-              decoding="async"
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           </div>
         ) : (

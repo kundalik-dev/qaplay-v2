@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import styles from "../auth.module.css";
+import styles from "../../auth.module.css";
 
 export const metadata: Metadata = {
   title: "Verify your email — QA Playground",

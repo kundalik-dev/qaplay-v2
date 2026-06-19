@@ -370,6 +370,8 @@
   overflow: hidden;
   opacity: 1;
   transition: opacity 0.12s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebarCollapsed .profileInfo {

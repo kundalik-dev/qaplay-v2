@@ -57,7 +57,7 @@ export function ForgotPasswordForm() {
     try {
       // better-auth always returns success to prevent email enumeration —
       // we never know whether the email exists. Always show the same message.
-      await authClient.forgetPassword({
+      await authClient.requestPasswordReset({
         email: email.trim().toLowerCase(),
         redirectTo: "/auth/reset-password",
       });

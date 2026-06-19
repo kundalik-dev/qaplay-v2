@@ -1,6 +1,7 @@
 "use client";
 
 import { ExternalLink, Pencil, Trash2 } from "lucide-react";
+import Image from "next/image";
 
 import type { Resource } from "./resource-constants";
 import { TYPE_COLORS, TYPE_LABELS } from "./resource-constants";
@@ -35,11 +36,13 @@ export function ResourceCard({
         style={!r.image ? { background: typeColor.background } : undefined}
       >
         {r.image ? (
-          <img
+          <Image
             src={r.image}
             alt={r.title}
             className={styles.cardImageImg}
-            loading="lazy"
+            fill
+            sizes="(max-width: 600px) 100vw, 220px"
+            unoptimized
           />
         ) : (
           <div className={styles.cardImagePlaceholder}>

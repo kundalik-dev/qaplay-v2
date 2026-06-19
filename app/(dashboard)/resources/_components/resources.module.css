@@ -244,6 +244,7 @@
 }
 
 .cardImage {
+  position: relative;
   height: 120px;
   flex-shrink: 0;
   overflow: hidden;
