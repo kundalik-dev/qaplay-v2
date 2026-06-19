@@ -169,8 +169,6 @@ export function SignUpForm() {
 
   return (
     <div className={styles["auth-card"]} data-testid="sign-up-card">
-      {/* Brand — visible on mobile where the left panel is hidden */}
-
       <h1 className={styles["auth-heading"]}>Create your account</h1>
       <p className={styles["auth-subheading"]}>
         Start practising automation on real UI elements.
@@ -303,7 +301,7 @@ export function SignUpForm() {
             </span>
           ) : (
             <span id="password-hint" className={styles["auth-hint"]}>
-              Must be 8–128 characters.
+              Must be more than 8 characters.
             </span>
           )}
         </div>
