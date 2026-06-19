@@ -18,16 +18,14 @@ function toCat(label: string): string {
 
 interface ChromeExtensionsWallProps {
   extensions: ChromeExtension[];
-  eyebrow: string;
   title: string;
   description: string;
 }
 
 export function ChromeExtensionsWall({
   extensions,
-  eyebrow,
   title,
-  description,
+  description: _description,
 }: ChromeExtensionsWallProps) {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>(ALL_FILTER);
@@ -67,14 +65,23 @@ export function ChromeExtensionsWall({
   }, [extensions, query, activeCategory, sort]);
 
   return (
-    <>
-      <header className={styles.header} data-testid="chrome-hero">
-        <span className={styles.eyebrow}>{eyebrow}</span>
-        <h1 className={styles.title}>{title}</h1>
-        <p className={styles.subtitle}>{description}</p>
-      </header>
+    <div
+      className={styles.page}
+      data-testid="chrome-page"
+      data-section="chrome-extensions"
+    >
+      {/* Top bar */}
+      <div className={styles.topBar} data-testid="chrome-hero">
+        <div className={styles.titleGroup}>
+          <h1 className={styles.title}>{title}</h1>
+          <span className={styles.countBadge} data-testid="chrome-count">
+            {extensions.length} extensions
+          </span>
+        </div>
+      </div>
 
-      <div className={styles.controls} data-testid="chrome-toolbar">
+      {/* Filters bar */}
+      <div className={styles.filtersBar} data-testid="chrome-toolbar">
         <div className={styles.searchWrap}>
           <svg
             className={styles.searchIcon}
@@ -91,7 +98,7 @@ export function ChromeExtensionsWall({
           </svg>
           <input
             type="search"
-            className={styles.search}
+            className={styles.searchInput}
             placeholder="Search extensions by name, tag, or use case..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -100,61 +107,38 @@ export function ChromeExtensionsWall({
           />
         </div>
 
-        <div className={styles.filterRow}>
-          <div
-            className={styles.pills}
-            role="group"
-            aria-label="Filter by category"
-            data-testid="chrome-filters"
-          >
-            <button
-              type="button"
-              className={styles.pill}
-              data-active={activeCategory === ALL_FILTER}
-              data-cat="all"
-              onClick={() => setActiveCategory(ALL_FILTER)}
-              data-testid="chrome-filter-all"
-            >
-              All
-              <span className={styles.pillCount}>{extensions.length}</span>
-            </button>
-            {categories.map(({ label, cat, count }) => (
-              <button
-                key={cat}
-                type="button"
-                className={styles.pill}
-                data-active={activeCategory === cat}
-                data-cat={cat}
-                onClick={() => setActiveCategory(cat)}
-                data-testid={`chrome-filter-${cat}`}
-              >
-                {label}
-                <span className={styles.pillCount}>{count}</span>
-              </button>
-            ))}
-          </div>
+        <select
+          className={styles.filterSelect}
+          value={activeCategory}
+          onChange={(e) => setActiveCategory(e.target.value)}
+          aria-label="Filter by category"
+          id="chrome-category-filter"
+          data-testid="chrome-category-filter"
+        >
+          <option value={ALL_FILTER}>All Categories ({extensions.length})</option>
+          {categories.map(({ label, cat, count }) => (
+            <option key={cat} value={cat}>
+              {label} ({count})
+            </option>
+          ))}
+        </select>
 
-          <select
-            className={styles.sort}
-            value={sort}
-            onChange={(e) => setSort(e.target.value as "featured" | "az")}
-            aria-label="Sort extensions"
-            data-testid="chrome-sort"
-          >
-            <option value="featured">Featured first</option>
-            <option value="az">A to Z</option>
-          </select>
-        </div>
-
-        <p className={styles.count} data-testid="chrome-count">
-          Showing {filtered.length} of {extensions.length} extensions
-        </p>
+        <select
+          className={styles.filterSelect}
+          value={sort}
+          onChange={(e) => setSort(e.target.value as "featured" | "az")}
+          aria-label="Sort extensions"
+          data-testid="chrome-sort"
+        >
+          <option value="featured">Featured first</option>
+          <option value="az">A to Z</option>
+        </select>
       </div>
 
+      {/* Grid */}
       <section
         className={styles.gridSection}
         data-testid="chrome-grid"
-        data-section="chrome-extensions"
         aria-label="Chrome extensions for QA"
       >
         <div className={styles.grid} role="list">
@@ -174,6 +158,6 @@ export function ChromeExtensionsWall({
           )}
         </div>
       </section>
-    </>
+    </div>
   );
 }
