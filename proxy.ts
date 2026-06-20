@@ -18,11 +18,10 @@ import { auth } from "@/lib/auth";
 /** Prefixes that require an active session. */
 const PROTECTED_PREFIXES = [
   "/dashboard",
-  "/job-crm",
-  "/challenges",
   "/interview-practice",
-  "/interview-questions",
-  "/qa-tools",
+  "/challenges",
+  "/resources",
+  "/job-crm",
 ];
 
 /** Prefixes that should redirect to dashboard when already signed in. */

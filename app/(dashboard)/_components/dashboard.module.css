@@ -194,6 +194,20 @@
   flex: 1;
 }
 
+.navLockIcon {
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+  opacity: 0.5;
+}
+
+.navItemLocked {
+  opacity: 0.65;
+}
+
+.navItemLocked:hover {
+  opacity: 1;
+}
+
 .sidebarCollapsed .navLabel {
   opacity: 0;
   width: 0;
@@ -498,6 +512,27 @@
 
 .loginBtn:hover {
   opacity: 0.88;
+}
+
+.loginBtnSecondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--sidebar-foreground);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+  font-family: var(--font-space-grotesk), sans-serif;
+  border: 1px solid var(--sidebar-border);
+}
+
+.loginBtnSecondary:hover {
+  background: var(--sidebar-accent);
 }
 
 .loginBtnIcon {

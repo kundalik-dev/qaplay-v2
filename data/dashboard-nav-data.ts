@@ -23,6 +23,8 @@ export interface DashboardNavItem {
   icon: LucideIcon;
   /** data-testid applied to the nav link */
   testId: string;
+  /** If true, middleware will redirect unauthenticated users to sign-in */
+  requiresAuth?: boolean;
 }
 
 export interface DashboardNavGroup {
@@ -46,6 +48,7 @@ export const dashboardNavGroups: DashboardNavGroup[] = [
         href: "/dashboard",
         icon: LayoutDashboard,
         testId: "nav-dashboard",
+        requiresAuth: true,
       },
     ],
   },
@@ -57,12 +60,14 @@ export const dashboardNavGroups: DashboardNavGroup[] = [
         href: "/interview-practice",
         icon: BrainCircuit,
         testId: "nav-interview-practice",
+        requiresAuth: true,
       },
       {
         label: "Challenges",
         href: "/challenges",
         icon: Trophy,
         testId: "nav-challenges",
+        requiresAuth: true,
       },
       {
         label: "Interview Questions",
@@ -86,12 +91,14 @@ export const dashboardNavGroups: DashboardNavGroup[] = [
         href: "/job-crm",
         icon: BriefcaseBusiness,
         testId: "nav-job-crm",
+        requiresAuth: true,
       },
       {
         label: "Resources",
         href: "/resources",
         icon: LibraryBig,
         testId: "nav-resources",
+        requiresAuth: true,
       },
       {
         label: "Chrome Extensions",

@@ -3,7 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PanelLeft } from "lucide-react";
+import { Lock, PanelLeft } from "lucide-react";
+
+import { authClient } from "@/lib/auth-client";
 
 import { dashboardNavGroups } from "@/data/dashboard-nav-data";
 import { UserProfileCard } from "./user-profile-card";
@@ -19,6 +21,8 @@ export function DashboardSidebar({
   onToggle,
 }: DashboardSidebarProps) {
   const pathname = usePathname();
+  const { data: session } = authClient.useSession();
+  const isSignedIn = !!session?.user;
 
   function isActive(href: string) {
     return pathname === href || pathname.startsWith(href + "/");
@@ -82,18 +86,27 @@ export function DashboardSidebar({
               {group.items.map((item) => {
                 const Icon = item.icon;
                 const active = isActive(item.href);
+                const locked = item.requiresAuth && !isSignedIn;
 
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`${styles.navItem} ${active ? styles.navItemActive : ""}`}
+                    className={`${styles.navItem} ${active ? styles.navItemActive : ""} ${locked ? styles.navItemLocked : ""}`}
                     data-testid={item.testId}
-                    title={isCollapsed ? item.label : undefined}
+                    data-requires-auth={item.requiresAuth ? "true" : undefined}
+                    title={isCollapsed ? item.label : locked ? `${item.label} — sign in required` : undefined}
                     aria-current={active ? "page" : undefined}
                   >
                     <Icon className={styles.navIcon} aria-hidden="true" />
                     <span className={styles.navLabel}>{item.label}</span>
+                    {locked && !isCollapsed && (
+                      <Lock
+                        size={11}
+                        className={styles.navLockIcon}
+                        aria-label="Sign in required"
+                      />
+                    )}
                   </Link>
                 );
               })}

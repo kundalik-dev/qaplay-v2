@@ -74,7 +74,7 @@ export function UserProfileCard({ isCollapsed }: UserProfileCardProps) {
       return (
         <div data-testid="sidebar-user-guest-collapsed">
           <Link
-            href="/login"
+            href="/auth/sign-in"
             className={styles.loginBtnIcon}
             title="Sign in"
             aria-label="Sign in"
@@ -91,11 +91,18 @@ export function UserProfileCard({ isCollapsed }: UserProfileCardProps) {
           Sign in to track your progress and save your work.
         </p>
         <Link
-          href="/login"
+          href="/auth/sign-up"
           className={styles.loginBtn}
+          data-testid="sidebar-signup-btn"
+        >
+          Sign up for free
+        </Link>
+        <Link
+          href="/auth/sign-in"
+          className={styles.loginBtnSecondary}
           data-testid="sidebar-login-btn"
         >
-          Log in / Sign up
+          Log in
         </Link>
       </div>
     );
