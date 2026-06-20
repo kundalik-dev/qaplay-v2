@@ -11,19 +11,73 @@ datasource db {
   provider = "postgresql"
 }
 
+// ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ResourceType {
+  ARTICLE
+  VIDEO
+  COURSE
+  BOOK
+  TOOL
+  DOCUMENTATION
+  OTHER
+}
+
+enum InterviewPlan {
+  FREE
+  PAID
+}
+
+enum InterviewKeySource {
+  PLATFORM
+  USER_LOCAL
+}
+
+enum InterviewStatus {
+  CREATED
+  ACTIVE
+  SUMMARIZING
+  COMPLETED
+  ENDED_BY_USER
+  FAILED
+}
+
+enum InterviewMessageRole {
+  SYSTEM
+  INTERVIEWER
+  USER
+}
+
+enum ContactStatus {
+  UNREAD
+  READ
+  REPLIED
+}
+
 // ─── better-auth required tables ────────────────────────────────────────────
 
 model User {
-  id            String    @id
+  id            String   @id
   name          String
-  email         String    @unique
+  email         String   @unique
   emailVerified Boolean
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
+  role          Role     @default(USER)
 
-  sessions Session[]
-  accounts Account[]
+  sessions          Session[]
+  accounts          Account[]
+  resources         Resource[]
+  apiKeys           ApiKey[]
+  telegramUser      TelegramUser?
+  interviewProfile  UserInterviewProfile?
+  interviewSessions InterviewPracticeSession[]
 
   @@map("user")
 }
@@ -71,4 +125,155 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+// ─── Resources ───────────────────────────────────────────────────────────────
+
+// User-saved resources. source tracks where it was created: "web" | "extension" | "telegram"
+model Resource {
+  id           String       @id @default(cuid())
+  userId       String
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resourceType ResourceType
+  title        String
+  url          String
+  description  String?
+  tags         String[]
+  image        String?
+  source       String       @default("web")
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([userId, resourceType])
+}
+
+// ─── API Keys ─────────────────────────────────────────────────────────────────
+
+// Platform API keys issued to users for the Chrome extension.
+// Raw key is shown once at creation; only the SHA-256 hash is stored.
+// prefix stores the first 8 visible chars (e.g. "qap_a1b2") for display.
+model ApiKey {
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  keyHash    String    @unique
+  prefix     String
+  expiresAt  DateTime?
+  lastUsedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+// ─── Telegram Bot ────────────────────────────────────────────────────────────
+
+// Links a platform User to a Telegram account.
+// tokenHash / tokenExpiry are used during the connection handshake only;
+// cleared after the user successfully connects their Telegram.
+model TelegramUser {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chatId      String?   @unique
+  username    String?
+  tokenHash   String?
+  tokenExpiry DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// ─── Interview Practice ──────────────────────────────────────────────────────
+
+// Per-user interview quota and plan state.
+// totalInterviewsAllowed defaults to 2 (free tier).
+// Admin overwrites this field when upgrading a user to a paid plan.
+// remaining = totalInterviewsAllowed - interviewsUsed
+model UserInterviewProfile {
+  id                     String        @id @default(cuid())
+  userId                 String        @unique
+  user                   User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan                   InterviewPlan @default(FREE)
+  totalInterviewsAllowed Int           @default(2)
+  interviewsUsed         Int           @default(0)
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+}
+
+// One row per interview attempt.
+model InterviewPracticeSession {
+  id                String                     @id @default(cuid())
+  userId            String
+  user              User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  publicId          String                     @unique @default(cuid())
+  status            InterviewStatus            @default(CREATED)
+  keySource         InterviewKeySource
+  role              String
+  companyStyle      String
+  focus             String
+  durationMinutes   Int
+  questionLimit     Int
+  questionCount     Int                        @default(0)
+  deepgramRequestId String?
+  startedAt         DateTime?
+  endedAt           DateTime?
+  endReason         String?
+  summary           String?
+  feedback          Json?
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @updatedAt
+  messages          InterviewPracticeMessage[]
+  tokens            InterviewSessionToken[]
+
+  @@index([userId, createdAt])
+  @@index([userId, status])
+}
+
+// Normalized transcript and agent/system events per interview session.
+model InterviewPracticeMessage {
+  id         String                   @id @default(cuid())
+  sessionId  String
+  session    InterviewPracticeSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role       InterviewMessageRole
+  content    String
+  source     String                   @default("deepgram")
+  eventType  String?
+  sequence   Int
+  occurredAt DateTime                 @default(now())
+  rawEvent   Json?
+
+  @@unique([sessionId, sequence])
+  @@index([sessionId, occurredAt])
+}
+
+// Short-lived websocket auth tokens. Only the hash is stored — never raw keys.
+model InterviewSessionToken {
+  id        String                   @id @default(cuid())
+  sessionId String
+  session   InterviewPracticeSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  tokenHash String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime                 @default(now())
+
+  @@index([sessionId])
+}
+
+// ─── Contact Form ────────────────────────────────────────────────────────────
+
+model ContactMessage {
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  topic     String
+  message   String
+  status    ContactStatus @default(UNREAD)
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime      @default(now())
+
+  @@index([status])
+  @@index([createdAt])
 }
