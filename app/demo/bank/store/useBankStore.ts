@@ -52,7 +52,7 @@ export const useBankStore = create<BankState>()(
       logout: () => set({ isLoggedIn: false, user: null }),
 
       setVersionAndData: (version, balance, transactions) => set((state) => {
-        const defaultAccounts = state.accounts && state.accounts.length > 0 ? state.accounts : [{
+        const defaultAccounts: BankAccount[] = state.accounts && state.accounts.length > 0 ? state.accounts : [{
           id: 'acc-1',
           name: 'Primary Checking',
           type: 'Checking',
