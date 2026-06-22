@@ -13,6 +13,8 @@
 import { createHash } from "crypto";
 import { NextResponse } from "next/server";
 
+import { Prisma } from "@prisma/client";
+
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
@@ -71,7 +73,7 @@ export async function GET(request: Request) {
   const type   = searchParams.get("type")?.trim() ?? "";
   const tag    = searchParams.get("tag")?.trim() ?? "";
 
-  const where: Parameters<typeof prisma.resource.findMany>[0]["where"] = { userId };
+  const where: Prisma.ResourceWhereInput = { userId };
 
   if (type && type !== "ALL") {
     // Validate against known enum values to prevent injection

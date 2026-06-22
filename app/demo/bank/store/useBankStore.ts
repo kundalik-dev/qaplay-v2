@@ -14,10 +14,10 @@ interface BankState {
   transactions: Transaction[];
   version: string | null;
   isLoggedIn: boolean;
-  user: { name: string; username: string } | null;
-  
+  user: { name: string; username: string; role: string } | null;
+
   // Actions
-  login: (username: string) => void;
+  login: (username: string, role: string) => void;
   logout: () => void;
   setVersionAndData: (version: string, balance: number, transactions: Transaction[]) => void;
   deleteTransaction: (id: string) => void; // P1 intentional bug will be inside the component calling this, or here. Let's put it in the component to easily see it.
@@ -33,9 +33,9 @@ export const useBankStore = create<BankState>()(
       isLoggedIn: false,
       user: null,
 
-      login: (username) => set({ 
-        isLoggedIn: true, 
-        user: { name: 'Practice User', username } 
+      login: (username, role) => set({
+        isLoggedIn: true,
+        user: { name: username === 'admin' ? 'Admin User' : 'Viewer', username, role },
       }),
 
       logout: () => set({ isLoggedIn: false, user: null }),
