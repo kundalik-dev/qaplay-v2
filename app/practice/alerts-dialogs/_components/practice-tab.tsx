@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ScenarioCard } from "@/components/practice";
 import { ProgressWidget, type ProgressItem } from "@/components/practice";
 import { FrameworkMethodsPanel } from "@/components/practice";
@@ -29,9 +29,6 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
   const [completedIds, setCompletedIds] = useState<Set<string>>(new Set());
   const [activeDialog, setActiveDialog] = useState<ActiveDialog | null>(null);
 
-  const activeDialogRef = useRef<ActiveDialog | null>(null);
-  activeDialogRef.current = activeDialog;
-
   function markDone(id: string) {
     setCompletedIds((prev) => new Set([...prev, id]));
   }
@@ -50,16 +47,15 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
     if (activeDialog?.scenarioId !== "S06") return;
 
     function onKeyDown(e: KeyboardEvent) {
-      const current = activeDialogRef.current;
-      if (e.key === "Escape" && current?.scenarioId === "S06") {
-        current.setResult("Dialog closed via Escape key");
+      if (e.key === "Escape") {
+        activeDialog?.setResult("Dialog closed via Escape key");
         setActiveDialog(null);
       }
     }
 
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, [activeDialog?.scenarioId]);
+  }, [activeDialog]);
 
   return (
     <div

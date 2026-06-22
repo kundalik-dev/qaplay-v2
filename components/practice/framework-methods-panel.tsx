@@ -14,6 +14,8 @@ const DOT_COLORS: Record<string, string> = {
   orange: "bg-[#f97316]",
   green: "bg-[#22c55e]",
   yellow: "bg-[#eab308]",
+  emerald: "bg-[#10b981]",
+  slate: "bg-[#64748b]",
 };
 
 const FW_TABS: Array<{ id: FwKey; short: string }> = [

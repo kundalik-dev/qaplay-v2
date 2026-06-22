@@ -3,7 +3,14 @@ export type PracticeLevel = "Beginner" | "Intermediate" | "Advanced";
 export type TestCaseType = "positive" | "negative" | "edge";
 export type TestCasePriority = "high" | "medium" | "low";
 export type Framework = "playwright" | "selenium" | "cypress";
-export type DotColor = "green" | "blue" | "orange" | "yellow" | "purple";
+export type DotColor =
+  | "green"
+  | "blue"
+  | "orange"
+  | "yellow"
+  | "purple"
+  | "emerald"
+  | "slate";
 
 // ─── Page header / meta ─────────────────────────────────────────────────────
 export interface PracticePageMeta {

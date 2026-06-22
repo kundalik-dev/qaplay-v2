@@ -6,6 +6,22 @@ const nextConfig: NextConfig = {
   // Prisma 7 + Next.js 16 Turbopack: prevent bundling of Prisma client and pg driver.
   // Without this, Turbopack loses the .prisma/client/default module reference during SSR.
   serverExternalPackages: ["@prisma/client", "pg"],
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "randomuser.me",
+      },
+      {
+        protocol: "https",
+        hostname: "ik.imagekit.io",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
