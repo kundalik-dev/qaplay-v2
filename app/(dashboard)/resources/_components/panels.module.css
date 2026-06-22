@@ -1,0 +1,400 @@
+/* ── Shared panel styles (ApiKeysDialog + TelegramBotPanel) ──────────────── */
+
+/* Slightly wider dialog for panels that need more room */
+.wideDialog {
+  max-width: 520px;
+}
+
+/* Description text at top of panel */
+.panelDesc {
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+/* ── Spinner ─────────────────────────────────────────────────────────────── */
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+/* ── Centered loading state ──────────────────────────────────────────────── */
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 0;
+  color: var(--muted-foreground);
+}
+
+/* ── Empty message ───────────────────────────────────────────────────────── */
+
+.emptyMsg {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  padding: 20px 0;
+  margin: 0;
+}
+
+/* ── Generate form row ───────────────────────────────────────────────────── */
+
+.generateRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.generateInput {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── New key callout ─────────────────────────────────────────────────────── */
+
+.newKeyCallout {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+}
+
+.newKeyHeading {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #166534;
+  margin: 0 0 8px;
+}
+
+/* ── Key row (code + copy button) ────────────────────────────────────────── */
+
+.keyRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--muted, #f3f4f6);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+.keyCode {
+  flex: 1;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.78rem;
+  color: var(--foreground);
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Icon buttons ────────────────────────────────────────────────────────── */
+
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  color: var(--muted-foreground);
+  transition: background 0.15s, color 0.15s;
+}
+
+.iconBtn:hover {
+  background: var(--muted, #f3f4f6);
+  color: var(--foreground);
+}
+
+.iconGreen {
+  color: #16a34a;
+}
+
+.iconDanger {
+  color: var(--destructive, #ef4444);
+}
+
+/* ── Keys list ───────────────────────────────────────────────────────────── */
+
+.keysList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.keyItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 8px;
+  background: var(--background, #fff);
+}
+
+.keyMeta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.keyName {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.keyPrefix {
+  font-size: 0.75rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: var(--muted-foreground);
+}
+
+.keyDates {
+  font-size: 0.72rem;
+  color: var(--muted-foreground);
+}
+
+.keyActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* ── Telegram: linked state ──────────────────────────────────────────────── */
+
+.linkedState {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.linkedBadge {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+}
+
+.linkedIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #dcfce7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #16a34a;
+  flex-shrink: 0;
+}
+
+.linkedTitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #166534;
+  margin: 0 0 2px;
+}
+
+.linkedSub {
+  font-size: 0.75rem;
+  color: #16a34a;
+  margin: 0;
+}
+
+/* ── Quick reference box ─────────────────────────────────────────────────── */
+
+.quickRef {
+  background: var(--muted, #f3f4f6);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.quickRefHeading {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted-foreground);
+  margin: 0 0 4px;
+}
+
+.quickRefCode {
+  font-size: 0.76rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: var(--foreground);
+  background: var(--background, #fff);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 4px;
+  padding: 3px 6px;
+}
+
+/* ── Linked action buttons ───────────────────────────────────────────────── */
+
+.linkedActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.btnTelegram {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #3b82f6;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btnTelegram:hover {
+  background: #2563eb;
+}
+
+.btnDisconnect {
+  gap: 5px;
+  color: var(--destructive, #ef4444) !important;
+  border-color: color-mix(in srgb, var(--destructive, #ef4444) 30%, transparent) !important;
+}
+
+/* ── Step list ───────────────────────────────────────────────────────────── */
+
+.stepList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stepItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.stepNum {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.stepText {
+  font-size: 0.84rem;
+  color: var(--muted-foreground);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inlineCode {
+  font-size: 0.76rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  background: var(--muted, #f3f4f6);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 4px;
+  padding: 3px 7px;
+  width: fit-content;
+}
+
+/* ── Token section ───────────────────────────────────────────────────────── */
+
+.tokenSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tokenMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tokenLabel {
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+}
+
+.tokenExpiry {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #f97316;
+}
+
+/* ── Full width button helper ────────────────────────────────────────────── */
+
+.fullWidth {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ── Help link ───────────────────────────────────────────────────────────── */
+
+.helpLink {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.helpAnchor {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #16a34a;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.helpAnchor:hover {
+  color: #15803d;
+}
