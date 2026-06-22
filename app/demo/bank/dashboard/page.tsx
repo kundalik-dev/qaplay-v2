@@ -5,7 +5,7 @@ import { useBankStore, Transaction } from '../store/useBankStore';
 import '../styles/bank.css';
 
 export default function DashboardPage() {
-  const { balance, transactions, deleteTransaction, user } = useBankStore();
+  const { balance, transactions, deleteTransaction, user, accounts } = useBankStore();
   const [sortField, setSortField]       = useState<'date' | 'amount' | null>(null);
   const [sortOrder, setSortOrder]       = useState<'asc' | 'desc'>('desc');
   const [categoryFilter, setCategoryFilter] = useState<string>('All');
@@ -97,7 +97,13 @@ export default function DashboardPage() {
           <div className="bank-balance-amount" data-testid="account-balance">
             ${balance.toFixed(2)}
           </div>
-          <p className="bank-balance-account">Primary Checking · **** 4821</p>
+          <div style={{ marginTop: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+            {(accounts || []).map(acc => (
+              <p key={acc.id} className="bank-balance-account" style={{ marginTop: 0 }}>
+                {acc.name} · {acc.accountNumber} <span style={{ opacity: 0.7 }}>(${acc.balance.toFixed(2)})</span>
+              </p>
+            ))}
+          </div>
         </div>
         <div className="bank-export-group">
           {/* P3 Bug: Typo in aria-label */}

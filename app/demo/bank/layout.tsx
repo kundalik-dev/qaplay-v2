@@ -95,7 +95,7 @@ function IconBank() {
 /* ── Nav items config ───────────────────────────────────────────── */
 const NAV_ITEMS = [
   { label: 'Dashboard',    href: '/demo/bank/dashboard', icon: <IconDashboard />,    testid: 'sidebar-link-dashboard' },
-  { label: 'Accounts',     href: '/demo/bank/dashboard', icon: <IconAccounts />,     testid: 'sidebar-link-accounts' },
+  { label: 'Accounts',     href: '/demo/bank/accounts',  icon: <IconAccounts />,     testid: 'sidebar-link-accounts' },
   { label: 'Transfer',     href: '/demo/bank/dashboard', icon: <IconTransfer />,     testid: 'sidebar-link-transfer' },
   { label: 'Transactions', href: '/demo/bank/dashboard', icon: <IconTransactions />, testid: 'sidebar-link-transactions' },
   { label: 'Cards',        href: '/demo/bank/dashboard', icon: <IconCards />,        testid: 'sidebar-link-cards' },

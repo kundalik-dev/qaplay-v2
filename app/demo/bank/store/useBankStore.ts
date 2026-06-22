@@ -1,6 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+export type BankAccount = {
+  id: string;
+  name: string;
+  type: 'Checking' | 'Savings' | 'Credit';
+  balance: number;
+  accountNumber: string;
+};
+
 export type Transaction = {
   id: string; // e.g. "trx-1001"
   date: string;
@@ -12,6 +20,7 @@ export type Transaction = {
 interface BankState {
   balance: number;
   transactions: Transaction[];
+  accounts: BankAccount[];
   version: string | null;
   isLoggedIn: boolean;
   user: { name: string; username: string; role: string } | null;
@@ -22,6 +31,7 @@ interface BankState {
   setVersionAndData: (version: string, balance: number, transactions: Transaction[]) => void;
   deleteTransaction: (id: string) => void; // P1 intentional bug will be inside the component calling this, or here. Let's put it in the component to easily see it.
   addTransaction: (trx: Transaction) => void;
+  addAccount: (account: BankAccount) => void;
 }
 
 export const useBankStore = create<BankState>()(
@@ -29,6 +39,7 @@ export const useBankStore = create<BankState>()(
     (set, get) => ({
       balance: 0,
       transactions: [],
+      accounts: [],
       version: null,
       isLoggedIn: false,
       user: null,
@@ -40,10 +51,20 @@ export const useBankStore = create<BankState>()(
 
       logout: () => set({ isLoggedIn: false, user: null }),
 
-      setVersionAndData: (version, balance, transactions) => set({
-        version,
-        balance,
-        transactions
+      setVersionAndData: (version, balance, transactions) => set((state) => {
+        const defaultAccounts = state.accounts && state.accounts.length > 0 ? state.accounts : [{
+          id: 'acc-1',
+          name: 'Primary Checking',
+          type: 'Checking',
+          balance: balance,
+          accountNumber: '**** 4821'
+        }];
+        return {
+          version,
+          balance,
+          transactions,
+          accounts: defaultAccounts
+        };
       }),
 
       // Bug P1 logic: The component will pass the wrong ID to this function. 
@@ -58,6 +79,11 @@ export const useBankStore = create<BankState>()(
       addTransaction: (trx) => set((state) => ({
         transactions: [trx, ...state.transactions],
         balance: state.balance + trx.amount
+      })),
+
+      addAccount: (account) => set((state) => ({
+        accounts: [...state.accounts, account],
+        balance: state.balance + account.balance
       }))
     }),
     {
