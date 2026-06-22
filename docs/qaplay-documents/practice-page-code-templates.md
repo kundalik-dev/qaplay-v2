@@ -4,7 +4,7 @@
 > practice page blocks. Reference: [`practice-page-blocks.md`](./practice-page-blocks.md)
 >
 > **These are starting templates.** When implementing a real block, ask to generate the full production
-> version — these shells show the contract, structure, and styling approach.
+> version — these shells show the contract, structure, and styling approach..
 
 ---
 
