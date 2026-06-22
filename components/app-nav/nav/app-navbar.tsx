@@ -10,9 +10,11 @@ import { buttonVariants } from "@/components/ui/button";
 import { NavBrand } from "./nav-brand";
 import { NavLinks } from "./nav-links";
 import { NavThemeToggle } from "./nav-theme-toggle";
+import { authClient } from "@/lib/auth-client";
 import styles from "./nav.module.css";
 
 export function AppNavbar() {
+  const { data: session } = authClient.useSession();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -55,15 +57,17 @@ export function AppNavbar() {
           <div className={styles.actions}>
             <NavThemeToggle />
 
-            <Link
-              href={navAuth.href}
-              className={cn(
-                buttonVariants({ variant: "homeSecondary", size: "home-sm" }),
-                styles.cta,
-              )}
-            >
-              {navAuth.label}
-            </Link>
+            {!session && (
+              <Link
+                href={navAuth.href}
+                className={cn(
+                  buttonVariants({ variant: "homeSecondary", size: "home-sm" }),
+                  styles.cta,
+                )}
+              >
+                {navAuth.label}
+              </Link>
+            )}
 
             <Link
               href={navCta.href}
@@ -104,16 +108,18 @@ export function AppNavbar() {
         <NavLinks links={navLinks} mobile onLinkClick={closeMobile} />
 
         <div className={styles.mobileActions}>
-          <Link
-            href={navAuth.href}
-            className={cn(
-              buttonVariants({ variant: "homeSecondary", size: "home" }),
-              styles.mobileCta,
-            )}
-            onClick={closeMobile}
-          >
-            {navAuth.label}
-          </Link>
+          {!session && (
+            <Link
+              href={navAuth.href}
+              className={cn(
+                buttonVariants({ variant: "homeSecondary", size: "home" }),
+                styles.mobileCta,
+              )}
+              onClick={closeMobile}
+            >
+              {navAuth.label}
+            </Link>
+          )}
 
           <Link
             href={navCta.href}
