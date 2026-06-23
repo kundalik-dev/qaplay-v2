@@ -315,6 +315,71 @@
   margin: 0;
 }
 
+/* ── AI Prompt Preview (admin/dev tool) ─────────────────── */
+
+.promptPreviewSection {
+  margin-top: var(--_sp5);
+  border: 1px solid var(--_border);
+  border-radius: var(--_r-md);
+  overflow: hidden;
+}
+
+.promptToggleBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--_sp2);
+  padding: 10px 14px;
+  background: var(--_bg2);
+  border: none;
+  cursor: pointer;
+  font-family: var(--_font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--_text-muted);
+  text-align: left;
+  transition: background var(--_fast), color var(--_fast);
+}
+
+.promptToggleBtn:hover {
+  background: color-mix(in srgb, var(--_accent) 6%, var(--_bg2));
+  color: var(--_text);
+}
+
+.promptToggleIcon {
+  flex-shrink: 0;
+  font-size: 10px;
+  color: var(--_accent);
+}
+
+.promptToggleMeta {
+  margin-left: auto;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--_accent);
+  background: color-mix(in srgb, var(--_accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--_accent) 20%, transparent);
+  padding: 2px 8px;
+  border-radius: var(--_r-full);
+  white-space: nowrap;
+}
+
+.promptPreview {
+  margin: 0;
+  padding: 16px;
+  background: var(--_bg);
+  border-top: 1px solid var(--_border);
+  font-family: var(--_font-mono);
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--_text-muted);
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
 /* Right Panel */
 .panelHeader {
   background: var(--_bg2);

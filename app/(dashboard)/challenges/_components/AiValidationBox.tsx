@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import styles from "../challenges.module.css";
 import type { ChallengeMeta } from "@/data/challenges-registry";
+import { buildValidationSystemPrompt } from "@/data/challenges-registry";
 
 export default function AiValidationBox({ challenge }: { challenge: ChallengeMeta }) {
   const [code, setCode] = useState(challenge.boilerplate);
@@ -12,6 +13,7 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
     feedback: "",
   });
   const [hasKey, setHasKey] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
 
   useEffect(() => {
     Promise.resolve().then(() => {
@@ -33,6 +35,9 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
     setLoading(true);
     setResult({ status: null, feedback: "" });
 
+    // Build the system prompt from the structured validationConfig
+    const systemPrompt = buildValidationSystemPrompt(challenge);
+
     try {
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
@@ -45,19 +50,7 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
         body: JSON.stringify({
           model,
           messages: [
-            {
-              role: "system",
-              content: `You are an expert Senior QA Engineer evaluating automated test scripts.
-Your job is to validate the user's code against the following requirement:
-"${challenge.validationPrompt}"
-
-Respond ONLY in valid JSON format with exactly two keys:
-{
-  "pass": boolean,
-  "feedback": string
-}
-Do not wrap the JSON in markdown blocks.`,
-            },
+            { role: "system", content: systemPrompt },
             { role: "user", content: code },
           ],
         }),
@@ -95,6 +88,8 @@ Do not wrap the JSON in markdown blocks.`,
     }
   };
 
+  const systemPromptPreview = buildValidationSystemPrompt(challenge);
+
   return (
     <div className={styles.panelSection} data-testid="ai-validation-box">
       <h2 className={`${styles.headingSm} ${styles.aiBoxTitle}`}>
@@ -108,9 +103,7 @@ Do not wrap the JSON in markdown blocks.`,
       {!hasKey && (
         <div className={styles.noKeyWarning} data-testid="no-key-warning" role="alert">
           ⚠️ <strong>No API Key found.</strong> Go to the{" "}
-          <a href="/settings" className={styles.warningLink}>
-            Settings page
-          </a>{" "}
+          <a href="/settings" className={styles.warningLink}>Settings page</a>{" "}
           to configure your OpenRouter API key before submitting.
         </div>
       )}
@@ -140,6 +133,34 @@ Do not wrap the JSON in markdown blocks.`,
         {loading ? "Validating…" : "Validate with AI"}
       </button>
 
+      {/* ── AI Prompt Preview (dev/admin tool) ── */}
+      <div className={styles.promptPreviewSection} data-testid="prompt-preview-section">
+        <button
+          className={styles.promptToggleBtn}
+          onClick={() => setShowPrompt((v) => !v)}
+          data-testid="prompt-toggle-btn"
+          aria-expanded={showPrompt}
+        >
+          <span className={styles.promptToggleIcon} aria-hidden="true">
+            {showPrompt ? "▾" : "▸"}
+          </span>
+          <span>AI Validation Prompt</span>
+          <span className={styles.promptToggleMeta}>
+            {challenge.validationConfig.strictness} · {challenge.validationConfig.requiredPatterns.length} rules
+          </span>
+        </button>
+        {showPrompt && (
+          <pre
+            className={styles.promptPreview}
+            data-testid="prompt-preview"
+            aria-label="AI system prompt that will be sent on submission"
+          >
+            {systemPromptPreview}
+          </pre>
+        )}
+      </div>
+
+      {/* ── Result ── */}
       {result.status && (
         <div
           className={`${styles.aiFeedbackResult} ${result.status === "fail" ? styles.failState : ""}`}
