@@ -47,7 +47,7 @@ export const demoAppCards: DemoAppCard[] = [
     description:
       "Test cart flows, product exploration, and checkout-style interactions in a compact retail demo built for QA practice.",
     href: "/demo/shopping",
-    imageSrc: "/icons/homePage.png",
+    imageSrc: "/images/sauce-demo-app.png",
     imageAlt: "Shopping demo app preview",
     filters: ["all", "ui", "e2e"],
     badge: "Popular",
@@ -56,6 +56,22 @@ export const demoAppCards: DemoAppCard[] = [
       "Product browse and cart coverage",
       "Checkout interaction practice",
       "Good fit for regression scenarios",
+    ],
+  },
+  {
+    title: "Sauce Demo",
+    description:
+      "The go-to QA practice site by Sauce Labs — explore login flows, product listing, cart, and checkout on a real-world e-commerce UI built for automation.",
+    href: "https://www.saucedemo.com/",
+    imageSrc: "/images/sauce-demo-app.png",
+    imageAlt: "Sauce Demo website preview",
+    filters: ["all", "ui", "e2e"],
+    badge: "Classic",
+    eyebrow: "External Site",
+    highlights: [
+      "Login with multiple test user roles",
+      "Product sort, filter, and cart flows",
+      "Full checkout journey practice",
     ],
   },
 ];
