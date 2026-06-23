@@ -15,16 +15,23 @@ import { highlightLearnSnippet } from "@/lib/highlight";
 export const metadata = alertsDialogsPageMetadata;
 
 export default async function AlertsDialogsPage() {
-  const [openVerify, closeButton, confirm, ariaLabel, backdrop, escape, scoped] =
-    await Promise.all([
-      highlightLearnSnippet(alertsDialogsLearnCode.openVerify),
-      highlightLearnSnippet(alertsDialogsLearnCode.closeButton),
-      highlightLearnSnippet(alertsDialogsLearnCode.confirm),
-      highlightLearnSnippet(alertsDialogsLearnCode.ariaLabel),
-      highlightLearnSnippet(alertsDialogsLearnCode.backdrop),
-      highlightLearnSnippet(alertsDialogsLearnCode.escape),
-      highlightLearnSnippet(alertsDialogsLearnCode.scoped),
-    ]);
+  const [
+    openVerify,
+    closeButton,
+    confirm,
+    ariaLabel,
+    backdrop,
+    escape,
+    scoped,
+  ] = await Promise.all([
+    highlightLearnSnippet(alertsDialogsLearnCode.openVerify),
+    highlightLearnSnippet(alertsDialogsLearnCode.closeButton),
+    highlightLearnSnippet(alertsDialogsLearnCode.confirm),
+    highlightLearnSnippet(alertsDialogsLearnCode.ariaLabel),
+    highlightLearnSnippet(alertsDialogsLearnCode.backdrop),
+    highlightLearnSnippet(alertsDialogsLearnCode.escape),
+    highlightLearnSnippet(alertsDialogsLearnCode.scoped),
+  ]);
 
   return (
     <>

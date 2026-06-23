@@ -55,7 +55,10 @@ const URL_RE = /https?:\/\/[^\s"'<>]+/i;
 // ── sanitizeText ──────────────────────────────────────────────────────────────
 
 /** Clamp to maxLength and strip control characters except newlines/tabs. */
-export function sanitizeText(text: string, maxLength = P.maxTextLength): string {
+export function sanitizeText(
+  text: string,
+  maxLength = P.maxTextLength,
+): string {
   return text
     .slice(0, maxLength)
     .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "");
@@ -94,7 +97,9 @@ export function parseTodo(text: string): ParsedTodo | null {
   if (timeMatch) {
     const val = parseFloat(timeMatch[1]);
     timeMin =
-      timeMatch[2].toLowerCase() === "h" ? Math.round(val * 60) : Math.round(val);
+      timeMatch[2].toLowerCase() === "h"
+        ? Math.round(val * 60)
+        : Math.round(val);
   }
 
   const title = body
@@ -123,7 +128,9 @@ export function parseResource(text: string): ParsedResource | null {
 
   // Extract quoted description
   const descMatch = text.match(/"([^"]{1,500})"/);
-  const description = descMatch ? descMatch[1].trim().slice(0, P.maxDescLength) : null;
+  const description = descMatch
+    ? descMatch[1].trim().slice(0, P.maxDescLength)
+    : null;
 
   // Extract #tags (after URL, ignore the URL itself)
   const withoutUrl = text.replace(urlMatch[0], "").replace(/"[^"]*"/, "");
@@ -212,19 +219,35 @@ export async function fetchUrlMetadata(url: string): Promise<UrlMetadata> {
     };
 
     const title =
-      get(/<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']{1,300})["']/i) ??
-      get(/<meta[^>]+content=["']([^"']{1,300})["'][^>]+property=["']og:title["']/i) ??
+      get(
+        /<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']{1,300})["']/i,
+      ) ??
+      get(
+        /<meta[^>]+content=["']([^"']{1,300})["'][^>]+property=["']og:title["']/i,
+      ) ??
       get(/<title[^>]*>([^<]{1,300})<\/title>/i);
 
     const description =
-      get(/<meta[^>]+property=["']og:description["'][^>]+content=["']([^"']{1,500})["']/i) ??
-      get(/<meta[^>]+content=["']([^"']{1,500})["'][^>]+property=["']og:description["']/i) ??
-      get(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']{1,500})["']/i) ??
-      get(/<meta[^>]+content=["']([^"']{1,500})["'][^>]+name=["']description["']/i);
+      get(
+        /<meta[^>]+property=["']og:description["'][^>]+content=["']([^"']{1,500})["']/i,
+      ) ??
+      get(
+        /<meta[^>]+content=["']([^"']{1,500})["'][^>]+property=["']og:description["']/i,
+      ) ??
+      get(
+        /<meta[^>]+name=["']description["'][^>]+content=["']([^"']{1,500})["']/i,
+      ) ??
+      get(
+        /<meta[^>]+content=["']([^"']{1,500})["'][^>]+name=["']description["']/i,
+      );
 
     const image =
-      get(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']{1,1000})["']/i) ??
-      get(/<meta[^>]+content=["']([^"']{1,1000})["'][^>]+property=["']og:image["']/i);
+      get(
+        /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']{1,1000})["']/i,
+      ) ??
+      get(
+        /<meta[^>]+content=["']([^"']{1,1000})["'][^>]+property=["']og:image["']/i,
+      );
 
     return {
       title: title?.slice(0, P.maxTitleLength) ?? null,

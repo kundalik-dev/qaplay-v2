@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QA Playground — Challenges Dashboard</title>
+    <meta name="description" content="Master automation testing with daily challenges." />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="./style.css" />
+
+    <!-- Inline theme init -->
+    <script>
+      (function () {
+        const saved = localStorage.getItem("qap-theme");
+        const preferred = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", saved || preferred);
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="page-wrap">
+      <!-- NAV -->
+      <nav class="nav" role="navigation">
+        <div class="nav-inner">
+          <a href="/" class="nav-brand">
+            <div class="nav-badge" aria-hidden="true">⚡</div>
+            <span class="nav-name">QA Playground</span>
+          </a>
+          <ul class="nav-links">
+            <li><a href="#" class="nav-link">Dashboard</a></li>
+            <li><a href="#" class="nav-link" style="color: var(--accent);">Challenges</a></li>
+            <li><a href="#" class="nav-link">Jobs</a></li>
+          </ul>
+          <div class="nav-actions">
+            <div class="user-stats">
+              <span class="stat-pill"><span class="icon">🔥</span> Streak: 4</span>
+              <span class="stat-pill"><span class="icon">⭐</span> 2,450 XP</span>
+            </div>
+            <button class="theme-toggle" aria-label="Switch theme">🌙</button>
+          </div>
+        </div>
+      </nav>
+
+      <main class="page-body dash-page" id="main-content">
+        
+        <!-- Welcome Widget / Top Bar -->
+        <header class="dash-header section-inner">
+          <div class="dash-welcome">
+            <h1 class="heading-lg">Welcome back, Tester!</h1>
+            <p class="body-lg">You are on a 4-day streak. Complete a challenge today to keep it alive!</p>
+          </div>
+          <div class="dash-stats-grid">
+            <div class="dash-stat-card">
+              <div class="stat-value">Level 5</div>
+              <div class="stat-label">Automation Novice</div>
+              <div class="stat-progress">
+                <div class="stat-progress-bar" style="width: 60%;"></div>
+              </div>
+            </div>
+            <div class="dash-stat-card">
+              <div class="stat-value">12 / 45</div>
+              <div class="stat-label">Challenges Completed</div>
+            </div>
+            <div class="dash-stat-card">
+              <div class="stat-value">Top 15%</div>
+              <div class="stat-label">Global Rank</div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Next Challenge / Daily Challenge Hero -->
+        <section class="section-inner" style="padding-top: var(--sp-6); padding-bottom: var(--sp-8);">
+          <div class="daily-hero-card">
+            <div class="daily-hero-content">
+              <div class="eyebrow" style="margin-bottom: var(--sp-4);">
+                <span class="eyebrow-dot" aria-hidden="true"></span>
+                Daily Recommended Challenge
+              </div>
+              <h2 class="heading-lg" style="margin-bottom: var(--sp-3);">The Ghost Element</h2>
+              <p class="body-base" style="margin-bottom: var(--sp-6); max-width: 500px;">
+                Dive into Web Components. Traverse the shadow DOM to find and interact with an encapsulated button. A must-know skill for modern web automation.
+              </p>
+              <div class="ch-badges" style="margin-bottom: var(--sp-8);">
+                <span class="chip-advanced">Advanced</span>
+                <span class="badge" style="--c: var(--accent2);">+100 XP</span>
+                <span class="badge" style="--c: var(--info);">Shadow DOM</span>
+              </div>
+              <!-- Link to the detail page we built -->
+              <a href="challenges.html" class="btn btn-primary btn-lg">Start Challenge ⚡</a>
+            </div>
+            <div class="daily-hero-graphics">
+              <!-- Decorative graphic -->
+              <div class="mock-browser-window">
+                <div class="mock-browser-header"><span></span><span></span><span></span></div>
+                <div class="mock-browser-body">
+                  <div class="mock-node">&lt;my-component&gt;</div>
+                  <div class="mock-node indent">#shadow-root (open)</div>
+                  <div class="mock-node indent-2 highlight">&lt;button&gt;Reveal&lt;/button&gt;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Filters & Search -->
+        <section class="section-inner" style="padding-top: 0;">
+          <div class="dash-filters-bar">
+            <div class="filter-group">
+              <button class="filter-pill active">All</button>
+              <button class="filter-pill">Incomplete</button>
+              <button class="filter-pill">Completed</button>
+            </div>
+            <div class="filter-divider"></div>
+            <div class="filter-group">
+              <button class="filter-pill" style="--c: var(--success);">🟢 Easy</button>
+              <button class="filter-pill" style="--c: var(--warning);">🟡 Medium</button>
+              <button class="filter-pill" style="--c: var(--accent3);">🔴 Hard</button>
+            </div>
+            <div class="filter-search" style="margin-left: auto;">
+              <input type="text" placeholder="Search challenges..." class="input-field" style="width: 250px; border-radius: var(--radius-full); padding: 8px 16px;" />
+            </div>
+          </div>
+
+          <!-- Challenge Grid -->
+          <div class="ch-grid">
+            
+            <!-- Card 1: Completed -->
+            <div class="ch-card completed">
+              <div class="ch-card-status">
+                <span class="status-icon" title="Completed">✅</span>
+              </div>
+              <div class="ch-card-body">
+                <div class="ch-card-tags">
+                  <span class="chip-beginner">Easy</span>
+                  <span class="pill-muted" style="font-size: 9px; padding: 2px 6px;">Forms</span>
+                </div>
+                <h3 class="ch-card-title">The First Login</h3>
+                <p class="ch-card-desc">Type username, password, and click submit. Simple.</p>
+                <div class="ch-card-footer">
+                  <span class="ch-xp text-muted">+10 XP</span>
+                  <a href="#" class="btn btn-secondary btn-sm">Review Code</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: Medium (Incomplete) -->
+            <div class="ch-card">
+              <div class="ch-card-status">
+                <span class="status-icon pending" title="Incomplete">⭕</span>
+              </div>
+              <div class="ch-card-body">
+                <div class="ch-card-tags">
+                  <span class="chip-intermediate">Medium</span>
+                  <span class="pill-muted" style="font-size: 9px; padding: 2px 6px;">Dynamic Waits</span>
+                </div>
+                <h3 class="ch-card-title">The Impatient User</h3>
+                <p class="ch-card-desc">Wait for a random delay before a success toast disappears.</p>
+                <div class="ch-card-footer">
+                  <span class="ch-xp" style="color: var(--accent2);">+50 XP</span>
+                  <a href="#" class="btn btn-primary btn-sm">Start</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Hard (Incomplete) -->
+            <div class="ch-card">
+              <div class="ch-card-status">
+                <span class="status-icon pending" title="Incomplete">⭕</span>
+              </div>
+              <div class="ch-card-body">
+                <div class="ch-card-tags">
+                  <span class="chip-advanced">Hard</span>
+                  <span class="pill-muted" style="font-size: 9px; padding: 2px 6px;">Network</span>
+                </div>
+                <h3 class="ch-card-title">The Stubborn API</h3>
+                <p class="ch-card-desc">Intercept a broken API request and mock a 200 OK response.</p>
+                <div class="ch-card-footer">
+                  <span class="ch-xp" style="color: var(--accent2);">+100 XP</span>
+                  <a href="#" class="btn btn-primary btn-sm">Start</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4: Medium (Incomplete) -->
+            <div class="ch-card">
+              <div class="ch-card-status">
+                <span class="status-icon pending" title="Incomplete">⭕</span>
+              </div>
+              <div class="ch-card-body">
+                <div class="ch-card-tags">
+                  <span class="chip-intermediate">Medium</span>
+                  <span class="pill-muted" style="font-size: 9px; padding: 2px 6px;">Interactions</span>
+                </div>
+                <h3 class="ch-card-title">Drag & Drop Puzzle</h3>
+                <p class="ch-card-desc">Simulate mouse pointer events to drag a ticket to 'Done'.</p>
+                <div class="ch-card-footer">
+                  <span class="ch-xp" style="color: var(--accent2);">+50 XP</span>
+                  <a href="#" class="btn btn-primary btn-sm">Start</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,10 +1,10 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export type BankAccount = {
   id: string;
   name: string;
-  type: 'Checking' | 'Savings' | 'Credit';
+  type: "Checking" | "Savings" | "Credit";
   balance: number;
   accountNumber: string;
 };
@@ -28,7 +28,11 @@ interface BankState {
   // Actions
   login: (username: string, role: string) => void;
   logout: () => void;
-  setVersionAndData: (version: string, balance: number, transactions: Transaction[]) => void;
+  setVersionAndData: (
+    version: string,
+    balance: number,
+    transactions: Transaction[],
+  ) => void;
   deleteTransaction: (id: string) => void; // P1 intentional bug will be inside the component calling this, or here. Let's put it in the component to easily see it.
   addTransaction: (trx: Transaction) => void;
   addAccount: (account: BankAccount) => void;
@@ -36,7 +40,7 @@ interface BankState {
 
 export const useBankStore = create<BankState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       balance: 0,
       transactions: [],
       accounts: [],
@@ -44,50 +48,67 @@ export const useBankStore = create<BankState>()(
       isLoggedIn: false,
       user: null,
 
-      login: (username, role) => set({
-        isLoggedIn: true,
-        user: { name: username === 'admin' ? 'Admin User' : 'Viewer', username, role },
-      }),
+      login: (username, role) =>
+        set({
+          isLoggedIn: true,
+          user: {
+            name: username === "admin" ? "Admin User" : "Viewer",
+            username,
+            role,
+          },
+        }),
 
       logout: () => set({ isLoggedIn: false, user: null }),
 
-      setVersionAndData: (version, balance, transactions) => set((state) => {
-        const defaultAccounts: BankAccount[] = state.accounts && state.accounts.length > 0 ? state.accounts : [{
-          id: 'acc-1',
-          name: 'Primary Checking',
-          type: 'Checking',
-          balance: balance,
-          accountNumber: '**** 4821'
-        }];
-        return {
-          version,
-          balance,
-          transactions,
-          accounts: defaultAccounts
-        };
-      }),
+      setVersionAndData: (version, balance, transactions) =>
+        set((state) => {
+          const defaultAccounts: BankAccount[] =
+            state.accounts && state.accounts.length > 0
+              ? state.accounts
+              : [
+                  {
+                    id: "acc-1",
+                    name: "Primary Checking",
+                    type: "Checking",
+                    balance: balance,
+                    accountNumber: "**** 4821",
+                  },
+                ];
+          return {
+            version,
+            balance,
+            transactions,
+            accounts: defaultAccounts,
+          };
+        }),
 
-      // Bug P1 logic: The component will pass the wrong ID to this function. 
+      // Bug P1 logic: The component will pass the wrong ID to this function.
       // But we just need a standard delete here.
-      deleteTransaction: (id) => set((state) => {
-        const newTransactions = state.transactions.filter(t => t.id !== id);
-        // Recalculate balance for realism
-        const newBalance = newTransactions.reduce((acc, t) => acc + t.amount, 0);
-        return { transactions: newTransactions, balance: newBalance };
-      }),
+      deleteTransaction: (id) =>
+        set((state) => {
+          const newTransactions = state.transactions.filter((t) => t.id !== id);
+          // Recalculate balance for realism
+          const newBalance = newTransactions.reduce(
+            (acc, t) => acc + t.amount,
+            0,
+          );
+          return { transactions: newTransactions, balance: newBalance };
+        }),
 
-      addTransaction: (trx) => set((state) => ({
-        transactions: [trx, ...state.transactions],
-        balance: state.balance + trx.amount
-      })),
+      addTransaction: (trx) =>
+        set((state) => ({
+          transactions: [trx, ...state.transactions],
+          balance: state.balance + trx.amount,
+        })),
 
-      addAccount: (account) => set((state) => ({
-        accounts: [...state.accounts, account],
-        balance: state.balance + account.balance
-      }))
+      addAccount: (account) =>
+        set((state) => ({
+          accounts: [...state.accounts, account],
+          balance: state.balance + account.balance,
+        })),
     }),
     {
-      name: 'qaplay-bank-storage', // unique name for localStorage key
-    }
-  )
+      name: "qaplay-bank-storage", // unique name for localStorage key
+    },
+  ),
 );

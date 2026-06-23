@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
-import { PracticePage }  from "./_components/practice-page";
-import { LearnTab }       from "./_components/learn-tab";
-import { radioCheckboxMeta, radioCheckboxTestCases, radioCheckboxLearnCode } from "@/data/practice-data/radio-checkbox";
+import { PracticePage } from "./_components/practice-page";
+import { LearnTab } from "./_components/learn-tab";
+import {
+  radioCheckboxMeta,
+  radioCheckboxTestCases,
+  radioCheckboxLearnCode,
+} from "@/data/practice-data/radio-checkbox";
 import { radioCheckboxPageMetadata } from "@/data/meta-data/practice/radio-checkbox-page-meta-data";
 import {
   radioCheckboxPageWebPageJsonLd,
@@ -24,20 +28,28 @@ export default async function RadioCheckboxPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(radioCheckboxPageWebPageJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(radioCheckboxPageWebPageJsonLd),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(radioCheckboxPageBreadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(radioCheckboxPageBreadcrumbJsonLd),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(radioCheckboxPageFaqJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(radioCheckboxPageFaqJsonLd),
+        }}
       />
       <PracticePage
         meta={radioCheckboxMeta}
         testCases={radioCheckboxTestCases}
-        learnContent={<LearnTab snippets={{ checkbox, radio, assert, disabled }} />}
+        learnContent={
+          <LearnTab snippets={{ checkbox, radio, assert, disabled }} />
+        }
       />
     </>
   );

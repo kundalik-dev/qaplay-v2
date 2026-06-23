@@ -95,7 +95,13 @@ export function DashboardSidebar({
                     className={`${styles.navItem} ${active ? styles.navItemActive : ""} ${locked ? styles.navItemLocked : ""}`}
                     data-testid={item.testId}
                     data-requires-auth={item.requiresAuth ? "true" : undefined}
-                    title={isCollapsed ? item.label : locked ? `${item.label} — sign in required` : undefined}
+                    title={
+                      isCollapsed
+                        ? item.label
+                        : locked
+                          ? `${item.label} — sign in required`
+                          : undefined
+                    }
                     aria-current={active ? "page" : undefined}
                   >
                     <Icon className={styles.navIcon} aria-hidden="true" />

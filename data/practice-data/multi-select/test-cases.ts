@@ -4,44 +4,48 @@ export const multiSelectTestCases: TestCase[] = [
   {
     id: "MS_001",
     scenario: "Select a single option from a native multi-select",
-    expected: "Only the selected option is highlighted; selectedOptions.length === 1.",
+    expected:
+      "Only the selected option is highlighted; selectedOptions.length === 1.",
     type: "positive",
     priority: "high",
     steps: [
-      'Navigate to <code>/practice/multi-select</code>.',
+      "Navigate to <code>/practice/multi-select</code>.",
       'Locate <code>[data-testid="ms-native-select"]</code>.',
-      'Call <code>selectOption(\'playwright\')</code>.',
+      "Call <code>selectOption('playwright')</code>.",
       'Assert <code>selectedOptions</code> contains only "Playwright".',
     ],
   },
   {
     id: "MS_002",
     scenario: "Select multiple options simultaneously from native multi-select",
-    expected: "Both selected options are highlighted; selectedOptions.length === 2.",
+    expected:
+      "Both selected options are highlighted; selectedOptions.length === 2.",
     type: "positive",
     priority: "high",
     steps: [
       'Locate <code>[data-testid="ms-native-select"]</code>.',
-      'Call <code>selectOption([\'playwright\', \'cypress\'])</code>.',
+      "Call <code>selectOption(['playwright', 'cypress'])</code>.",
       'Assert <code>selectedOptions</code> contains "Playwright" and "Cypress".',
     ],
   },
   {
     id: "MS_003",
     scenario: "Select all available options in native multi-select",
-    expected: "All options are selected; selectedOptions.length equals total option count.",
+    expected:
+      "All options are selected; selectedOptions.length equals total option count.",
     type: "positive",
     priority: "medium",
     steps: [
       'Locate <code>[data-testid="ms-native-select"]</code>.',
-      'Call <code>selectOption([\'playwright\', \'cypress\', \'selenium\', \'webdriverio\'])</code>.',
-      'Assert all four options are selected.',
+      "Call <code>selectOption(['playwright', 'cypress', 'selenium', 'webdriverio'])</code>.",
+      "Assert all four options are selected.",
     ],
   },
   {
     id: "MS_004",
     scenario: "Deselect a specific option while keeping others selected",
-    expected: "Deselected option is no longer highlighted; others remain selected.",
+    expected:
+      "Deselected option is no longer highlighted; others remain selected.",
     type: "positive",
     priority: "high",
     steps: [
@@ -52,14 +56,15 @@ export const multiSelectTestCases: TestCase[] = [
   },
   {
     id: "MS_005",
-    scenario: "Native multi-select ignores deselection when no option is pre-selected",
+    scenario:
+      "Native multi-select ignores deselection when no option is pre-selected",
     expected: "No change in state; no error thrown.",
     type: "edge",
     priority: "low",
     steps: [
-      'Ensure no options are selected initially.',
-      'Attempt to call <code>selectOption([])</code>.',
-      'Assert <code>selectedOptions.length === 0</code>.',
+      "Ensure no options are selected initially.",
+      "Attempt to call <code>selectOption([])</code>.",
+      "Assert <code>selectedOptions.length === 0</code>.",
     ],
   },
   {
@@ -82,19 +87,20 @@ export const multiSelectTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Open the custom dropdown via the trigger.',
-      'Click outside the panel (e.g., the page heading).',
+      "Open the custom dropdown via the trigger.",
+      "Click outside the panel (e.g., the page heading).",
       'Assert <code>[data-testid="ms-custom-panel"]</code> is not visible.',
     ],
   },
   {
     id: "MS_008",
     scenario: "Use Select All button to check all custom options",
-    expected: "All options gain aria-selected=true; count label shows full count.",
+    expected:
+      "All options gain aria-selected=true; count label shows full count.",
     type: "positive",
     priority: "high",
     steps: [
-      'Open the custom multi-select panel.',
+      "Open the custom multi-select panel.",
       'Click <code>[data-testid="ms-select-all-btn"]</code>.',
       'Assert all <code>[data-testid="ms-custom-option"]</code> elements have <code>aria-selected="true"</code>.',
     ],
@@ -106,22 +112,23 @@ export const multiSelectTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Select all options via Select All button.',
+      "Select all options via Select All button.",
       'Click <code>[data-testid="ms-clear-all-btn"]</code>.',
       'Assert no option has <code>aria-selected="true"</code>.',
     ],
   },
   {
     id: "MS_010",
-    scenario: "Remove a tag by clicking its close button (no data-testid on button)",
+    scenario:
+      "Remove a tag by clicking its close button (no data-testid on button)",
     expected: "The removed tag no longer appears in the tag list.",
     type: "positive",
     priority: "high",
     steps: [
-      'Pre-select tags using the tag scenario controls.',
+      "Pre-select tags using the tag scenario controls.",
       'Locate <code>[data-tag-value="javascript"]</code> inside <code>[data-testid="ms-tag-list"]</code>.',
-      'Click its child button using <code>getByRole(\'button\')</code> or XPath <code>//li[@data-tag-value="javascript"]//button</code>.',
-      'Assert the tag is no longer in the DOM.',
+      "Click its child button using <code>getByRole('button')</code> or XPath <code>//li[@data-tag-value=\"javascript\"]//button</code>.",
+      "Assert the tag is no longer in the DOM.",
     ],
   },
   {
@@ -151,11 +158,12 @@ export const multiSelectTestCases: TestCase[] = [
   {
     id: "MS_013",
     scenario: "Empty search returns all options in searchable multi-select",
-    expected: "All options appear in the results listbox when search is cleared.",
+    expected:
+      "All options appear in the results listbox when search is cleared.",
     type: "edge",
     priority: "medium",
     steps: [
-      'Type a query, then clear the search input.',
+      "Type a query, then clear the search input.",
       'Assert all options are visible in <code>[data-testid="ms-search-results"]</code>.',
     ],
   },

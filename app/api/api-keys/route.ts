@@ -56,7 +56,9 @@ export async function POST(request: Request) {
   const count = await prisma.apiKey.count({ where: { userId } });
   if (count >= MAX_KEYS_PER_USER) {
     return NextResponse.json(
-      { error: `Maximum of ${MAX_KEYS_PER_USER} API keys allowed. Delete one first.` },
+      {
+        error: `Maximum of ${MAX_KEYS_PER_USER} API keys allowed. Delete one first.`,
+      },
       { status: 422 },
     );
   }

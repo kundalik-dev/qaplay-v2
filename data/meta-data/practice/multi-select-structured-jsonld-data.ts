@@ -1,4 +1,8 @@
-import { createBreadcrumbJsonLd, createFaqPageJsonLd, createWebPageJsonLd } from "../structured-data";
+import {
+  createBreadcrumbJsonLd,
+  createFaqPageJsonLd,
+  createWebPageJsonLd,
+} from "../structured-data";
 import { multiSelectFaq } from "@/data/practice-data/multi-select";
 
 const name = "How to Handle Multi-Select in Selenium and Playwright";
@@ -25,11 +29,14 @@ export const multiSelectPageWebPageJsonLd = createWebPageJsonLd({
 });
 
 export const multiSelectPageBreadcrumbJsonLd = createBreadcrumbJsonLd([
-  { name: "Home",         path: "/" },
-  { name: "Practice",     path: "/practice" },
+  { name: "Home", path: "/" },
+  { name: "Practice", path: "/practice" },
   { name: "Multi-Select", path: "/practice/multi-select" },
 ]);
 
 export const multiSelectPageFaqJsonLd = createFaqPageJsonLd(
-  multiSelectFaq.map((item) => ({ question: item.question, answer: item.answer })),
+  multiSelectFaq.map((item) => ({
+    question: item.question,
+    answer: item.answer,
+  })),
 );

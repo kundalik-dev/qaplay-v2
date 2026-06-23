@@ -1,13 +1,18 @@
-import type { FaqItem, LearnCodeSnippet, MethodRow, TocItem } from "@/data/practice-data/types";
+import type {
+  FaqItem,
+  LearnCodeSnippet,
+  MethodRow,
+  TocItem,
+} from "@/data/practice-data/types";
 
 export const tabsWindowsTocItems: TocItem[] = [
   { id: "learn-overview", label: "Overview" },
-  { id: "learn-new-tab",  label: "1 · Open & Capture New Tab" },
-  { id: "learn-switch",   label: "2 · Switch & Return" },
-  { id: "learn-popup",    label: "3 · Popups (window.open)" },
-  { id: "learn-close",    label: "4 · Close a Tab" },
-  { id: "learn-methods",  label: "Method Summary", dividerBefore: true },
-  { id: "learn-faq",      label: "FAQ" },
+  { id: "learn-new-tab", label: "1 · Open & Capture New Tab" },
+  { id: "learn-switch", label: "2 · Switch & Return" },
+  { id: "learn-popup", label: "3 · Popups (window.open)" },
+  { id: "learn-close", label: "4 · Close a Tab" },
+  { id: "learn-methods", label: "Method Summary", dividerBefore: true },
+  { id: "learn-faq", label: "FAQ" },
 ];
 
 export const tabsWindowsLearnDesc: Record<string, string> = {
@@ -210,45 +215,46 @@ cy.url().should('include', 'tabs-windows');`,
 
 export const tabsWindowsMethodRows: MethodRow[] = [
   {
-    action:       "Capture new tab",
-    selenium:     "getWindowHandles() diff",
+    action: "Capture new tab",
+    selenium: "getWindowHandles() diff",
     playwrightJs: "context.waitForEvent('page')",
     playwrightPy: "context.wait_for_event('page')",
-    cypress:      "invoke('removeAttr','target')",
+    cypress: "invoke('removeAttr','target')",
   },
   {
-    action:       "Capture popup",
-    selenium:     "getWindowHandles() diff",
+    action: "Capture popup",
+    selenium: "getWindowHandles() diff",
     playwrightJs: "page.waitForEvent('popup')",
     playwrightPy: "page.wait_for_event('popup')",
-    cypress:      "cy.stub(win, 'open')",
+    cypress: "cy.stub(win, 'open')",
   },
   {
-    action:       "Switch to tab",
-    selenium:     "switchTo().window(handle)",
+    action: "Switch to tab",
+    selenium: "switchTo().window(handle)",
     playwrightJs: "page.bringToFront()",
     playwrightPy: "page.bring_to_front()",
-    cypress:      "N/A (single tab)",
+    cypress: "N/A (single tab)",
   },
   {
-    action:       "List all pages",
-    selenium:     "getWindowHandles()",
+    action: "List all pages",
+    selenium: "getWindowHandles()",
     playwrightJs: "context.pages()",
     playwrightPy: "context.pages",
-    cypress:      "N/A",
+    cypress: "N/A",
   },
   {
-    action:       "Close tab",
-    selenium:     "close()",
+    action: "Close tab",
+    selenium: "close()",
     playwrightJs: "page.close()",
     playwrightPy: "page.close()",
-    cypress:      "N/A",
+    cypress: "N/A",
   },
 ];
 
 export const tabsWindowsFaq: FaqItem[] = [
   {
-    question: "Why must I set up the event listener before clicking in Playwright?",
+    question:
+      "Why must I set up the event listener before clicking in Playwright?",
     answer:
       "The new page event fires immediately when the tab opens. If you click first and then call waitForEvent, the event may have already fired and your await will hang forever. Always set up the listener — via Promise.all — before the triggering action.",
     testId: "faq-1",

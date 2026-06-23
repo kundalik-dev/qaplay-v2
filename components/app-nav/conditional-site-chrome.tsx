@@ -11,6 +11,7 @@ import { AppNavbar } from "./nav";
  */
 const DASHBOARD_PREFIXES = [
   "/dashboard",
+  "/settings",
   "/interview-practice",
   "/qa-tools",
   "/challenges",

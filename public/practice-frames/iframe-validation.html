@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Validation Frame</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 14px; font-family: system-ui, sans-serif; font-size: 12px; background: #fff; color: #111; }
+    form { display: flex; flex-direction: column; gap: 10px; max-width: 300px; }
+    .field { display: flex; flex-direction: column; gap: 3px; }
+    label { font-size: 12px; font-weight: 600; color: #374151; }
+    input[type="text"], input[type="email"] {
+      height: 32px; padding: 0 9px; border: 1px solid #d1d5db; border-radius: 5px;
+      font-size: 12px; width: 100%;
+    }
+    input:focus { border-color: #6366f1; outline: none; }
+    input.invalid { border-color: #dc2626; }
+    /* Error messages: NO data-testid — locate by role="alert" or by following-sibling XPath */
+    .field-error {
+      font-size: 11px; color: #dc2626; font-weight: 500; min-height: 14px;
+    }
+    button { height: 32px; padding: 0 14px; background: #6366f1; color: #fff; border: none; border-radius: 5px; font-size: 12px; font-weight: 500; cursor: pointer; align-self: flex-start; }
+    button:hover { background: #4f46e5; }
+    #form-success { font-size: 12px; color: #059669; font-weight: 600; margin-top: 4px; display: none; }
+    #form-success.visible { display: block; }
+  </style>
+</head>
+<body>
+  <!--
+    Challenge frame: error messages have NO data-testid.
+    Locate via:
+    - role="alert" (Playwright): frame.getByRole('alert').filter({ hasText: 'required' })
+    - XPath following-sibling: //label[normalize-space()="Full name"]/following-sibling::span[@class="field-error"]
+    - Or: //input[@id="val-name"]/following-sibling::span
+  -->
+  <form id="val-form" data-testid="iframe-val-form" onsubmit="return false;">
+    <div class="field">
+      <label for="val-name">Full name</label>
+      <input
+        type="text"
+        id="val-name"
+        data-testid="iframe-val-name"
+        name="fullName"
+        placeholder="Jane Smith"
+        autocomplete="off"
+      />
+      <!-- No data-testid on error spans — intentional -->
+      <span class="field-error" id="err-name" role="alert" aria-live="polite"></span>
+    </div>
+
+    <div class="field">
+      <label for="val-email">Email address</label>
+      <input
+        type="email"
+        id="val-email"
+        data-testid="iframe-val-email"
+        name="email"
+        placeholder="jane@example.com"
+        autocomplete="off"
+      />
+      <span class="field-error" id="err-email" role="alert" aria-live="polite"></span>
+    </div>
+
+    <div class="field">
+      <!-- No data-testid on this label or field — Hard locator -->
+      <label for="val-company">Company <span style="font-weight:400;color:#9ca3af">(optional)</span></label>
+      <input
+        type="text"
+        id="val-company"
+        name="company"
+        placeholder="Acme Corp"
+        autocomplete="off"
+      />
+    </div>
+
+    <button id="iframe-val-submit" data-testid="iframe-val-submit" type="button" onclick="validate()">
+      Register
+    </button>
+    <p id="form-success">Registered successfully ✓</p>
+  </form>
+
+  <script>
+    function validate() {
+      var name  = document.getElementById('val-name').value.trim();
+      var email = document.getElementById('val-email').value.trim();
+      var errName  = document.getElementById('err-name');
+      var errEmail = document.getElementById('err-email');
+      var nameEl   = document.getElementById('val-name');
+      var emailEl  = document.getElementById('val-email');
+      var ok = true;
+
+      errName.textContent  = '';
+      errEmail.textContent = '';
+      nameEl.classList.remove('invalid');
+      emailEl.classList.remove('invalid');
+
+      if (!name) {
+        errName.textContent = 'Full name is required';
+        nameEl.classList.add('invalid');
+        ok = false;
+      }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errEmail.textContent = email ? 'Enter a valid email address' : 'Email is required';
+        emailEl.classList.add('invalid');
+        ok = false;
+      }
+
+      if (ok) {
+        document.getElementById('form-success').classList.add('visible');
+        window.top.postMessage({ type: 'iframe-s06', value: 'Registered: ' + name + ' / ' + email + ' ✓' }, '*');
+      } else {
+        window.top.postMessage({ type: 'iframe-s06', value: 'Validation errors shown — no testid on errors' }, '*');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,4 +1,7 @@
-import type { ScenarioMeta, FrameworkMethods } from "@/data/practice-data/types";
+import type {
+  ScenarioMeta,
+  FrameworkMethods,
+} from "@/data/practice-data/types";
 
 export const tabsWindowsScenarios: ScenarioMeta[] = [
   {
@@ -68,35 +71,38 @@ export const tabsWindowsScenarios: ScenarioMeta[] = [
   },
 ];
 
-export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", FrameworkMethods> = {
+export const frameworkMethods: Record<
+  "selenium" | "playwright" | "cypress",
+  FrameworkMethods
+> = {
   selenium: {
     label: "Selenium (Java)",
     methods: [
       { color: "purple", label: "getWindowHandles()" },
-      { color: "blue",   label: "switchTo().window()" },
+      { color: "blue", label: "switchTo().window()" },
       { color: "orange", label: "getTitle()" },
-      { color: "emerald",label: "getCurrentUrl()" },
-      { color: "slate",  label: "close()" },
+      { color: "emerald", label: "getCurrentUrl()" },
+      { color: "slate", label: "close()" },
     ],
   },
   playwright: {
     label: "Playwright JS / PY",
     methods: [
       { color: "purple", label: "context.waitForEvent('page')" },
-      { color: "blue",   label: "page.waitForEvent('popup')" },
+      { color: "blue", label: "page.waitForEvent('popup')" },
       { color: "orange", label: "context.pages()" },
-      { color: "emerald",label: "page.bringToFront()" },
-      { color: "slate",  label: "page.close()" },
+      { color: "emerald", label: "page.bringToFront()" },
+      { color: "slate", label: "page.close()" },
     ],
   },
   cypress: {
     label: "Cypress JS",
     methods: [
       { color: "purple", label: "cy.origin()" },
-      { color: "blue",   label: "invoke('removeAttr', 'target')" },
+      { color: "blue", label: "invoke('removeAttr', 'target')" },
       { color: "orange", label: "cy.window()" },
-      { color: "emerald",label: "cy.title()" },
-      { color: "slate",  label: "cy.url()" },
+      { color: "emerald", label: "cy.title()" },
+      { color: "slate", label: "cy.url()" },
     ],
   },
 };

@@ -1,4 +1,7 @@
-import type { ScenarioMeta, FrameworkMethods } from "@/data/practice-data/types";
+import type {
+  ScenarioMeta,
+  FrameworkMethods,
+} from "@/data/practice-data/types";
 
 export const radioCheckboxScenarios: ScenarioMeta[] = [
   {
@@ -69,35 +72,38 @@ export const radioCheckboxScenarios: ScenarioMeta[] = [
   },
 ];
 
-export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", FrameworkMethods> = {
+export const frameworkMethods: Record<
+  "selenium" | "playwright" | "cypress",
+  FrameworkMethods
+> = {
   selenium: {
     label: "Selenium (Java)",
     methods: [
       { color: "purple", label: "click()" },
-      { color: "blue",   label: "isSelected()" },
+      { color: "blue", label: "isSelected()" },
       { color: "orange", label: "isEnabled()" },
-      { color: "emerald",label: "getAttribute(\"value\")" },
-      { color: "slate",  label: "findElements(By.name())" },
+      { color: "emerald", label: 'getAttribute("value")' },
+      { color: "slate", label: "findElements(By.name())" },
     ],
   },
   playwright: {
     label: "Playwright JS / PY",
     methods: [
       { color: "purple", label: "check()" },
-      { color: "blue",   label: "isChecked()" },
+      { color: "blue", label: "isChecked()" },
       { color: "orange", label: "isDisabled()" },
-      { color: "emerald",label: "toBeChecked()" },
-      { color: "slate",  label: "locator.all()" },
+      { color: "emerald", label: "toBeChecked()" },
+      { color: "slate", label: "locator.all()" },
     ],
   },
   cypress: {
     label: "Cypress JS",
     methods: [
       { color: "purple", label: ".check()" },
-      { color: "blue",   label: ".should('be.checked')" },
+      { color: "blue", label: ".should('be.checked')" },
       { color: "orange", label: ".should('be.disabled')" },
-      { color: "emerald",label: ".uncheck()" },
-      { color: "slate",  label: ".invoke('val')" },
+      { color: "emerald", label: ".uncheck()" },
+      { color: "slate", label: ".invoke('val')" },
     ],
   },
 };

@@ -1,4 +1,8 @@
-import { createBreadcrumbJsonLd, createFaqPageJsonLd, createWebPageJsonLd } from "../structured-data";
+import {
+  createBreadcrumbJsonLd,
+  createFaqPageJsonLd,
+  createWebPageJsonLd,
+} from "../structured-data";
 import { tabsWindowsFaq } from "@/data/practice-data/tabs-windows";
 
 const name = "How to Handle Tabs and Windows in Selenium and Playwright";
@@ -24,11 +28,14 @@ export const tabsWindowsPageWebPageJsonLd = createWebPageJsonLd({
 });
 
 export const tabsWindowsPageBreadcrumbJsonLd = createBreadcrumbJsonLd([
-  { name: "Home",          path: "/" },
-  { name: "Practice",      path: "/practice" },
+  { name: "Home", path: "/" },
+  { name: "Practice", path: "/practice" },
   { name: "Tabs & Windows", path: "/practice/tabs-windows" },
 ]);
 
 export const tabsWindowsPageFaqJsonLd = createFaqPageJsonLd(
-  tabsWindowsFaq.map((item) => ({ question: item.question, answer: item.answer })),
+  tabsWindowsFaq.map((item) => ({
+    question: item.question,
+    answer: item.answer,
+  })),
 );

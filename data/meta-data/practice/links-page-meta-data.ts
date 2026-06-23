@@ -2,7 +2,8 @@ import { createPageMetadata } from "../create-page-metadata";
 
 export const linksPageMetadata = createPageMetadata({
   title: "How to Handle Links in Selenium and Playwright",
-  description: "Learn how to automate link clicks, verify URLs, handle new tabs, and find links by text using Selenium WebDriver, Playwright, and Cypress.",
+  description:
+    "Learn how to automate link clicks, verify URLs, handle new tabs, and find links by text using Selenium WebDriver, Playwright, and Cypress.",
   path: "/practice/links",
   ogType: "article",
   keywords: [

@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
-import { PracticePage }  from "./_components/practice-page";
-import { LearnTab }       from "./_components/learn-tab";
-import { tabsWindowsMeta, tabsWindowsTestCases, tabsWindowsLearnCode } from "@/data/practice-data/tabs-windows";
+import { PracticePage } from "./_components/practice-page";
+import { LearnTab } from "./_components/learn-tab";
+import {
+  tabsWindowsMeta,
+  tabsWindowsTestCases,
+  tabsWindowsLearnCode,
+} from "@/data/practice-data/tabs-windows";
 import { tabsWindowsPageMetadata } from "@/data/meta-data/practice/tabs-windows-page-meta-data";
 import {
   tabsWindowsPageWebPageJsonLd,
@@ -24,20 +28,28 @@ export default async function TabsWindowsPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(tabsWindowsPageWebPageJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(tabsWindowsPageWebPageJsonLd),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(tabsWindowsPageBreadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(tabsWindowsPageBreadcrumbJsonLd),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(tabsWindowsPageFaqJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(tabsWindowsPageFaqJsonLd),
+        }}
       />
       <PracticePage
         meta={tabsWindowsMeta}
         testCases={tabsWindowsTestCases}
-        learnContent={<LearnTab snippets={{ newTab, switch: switchTab, popup, close }} />}
+        learnContent={
+          <LearnTab snippets={{ newTab, switch: switchTab, popup, close }} />
+        }
       />
     </>
   );

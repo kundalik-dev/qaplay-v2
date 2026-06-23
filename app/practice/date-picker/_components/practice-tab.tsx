@@ -1,9 +1,17 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { ScenarioCard, ProgressWidget, FrameworkMethodsPanel, UpNextCard } from "@/components/practice";
+import {
+  ScenarioCard,
+  ProgressWidget,
+  FrameworkMethodsPanel,
+  UpNextCard,
+} from "@/components/practice";
 import type { ProgressItem } from "@/components/practice";
-import { datePickerScenarios, frameworkMethods } from "@/data/practice-data/date-picker/scenarios";
+import {
+  datePickerScenarios,
+  frameworkMethods,
+} from "@/data/practice-data/date-picker/scenarios";
 import type { PracticePageMeta } from "@/data/practice-data/types";
 import styles from "./date-picker.module.css";
 
@@ -14,27 +22,47 @@ interface PracticeTabProps {
 const WEEKDAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
 const MONTH_NAMES = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 /* ── Sub-components (extracted to satisfy rules-of-hooks) ───── */
 
 function MonthNav({ onNavigate }: { onNavigate: (label: string) => void }) {
   const now = new Date();
-  const [navYear, setNavYear]   = useState(now.getFullYear());
+  const [navYear, setNavYear] = useState(now.getFullYear());
   const [navMonth, setNavMonth] = useState(now.getMonth());
 
   function goNext() {
-    let ny = navYear, nm = navMonth;
-    if (nm === 11) { nm = 0; ny++; } else nm++;
-    setNavYear(ny); setNavMonth(nm);
+    let ny = navYear,
+      nm = navMonth;
+    if (nm === 11) {
+      nm = 0;
+      ny++;
+    } else nm++;
+    setNavYear(ny);
+    setNavMonth(nm);
     onNavigate(`Navigated to: ${MONTH_NAMES[nm]} ${ny}`);
   }
   function goPrev() {
-    let ny = navYear, nm = navMonth;
-    if (nm === 0) { nm = 11; ny--; } else nm--;
-    setNavYear(ny); setNavMonth(nm);
+    let ny = navYear,
+      nm = navMonth;
+    if (nm === 0) {
+      nm = 11;
+      ny--;
+    } else nm--;
+    setNavYear(ny);
+    setNavMonth(nm);
     onNavigate(`Navigated to: ${MONTH_NAMES[nm]} ${ny}`);
   }
 
@@ -45,14 +73,14 @@ function MonthNav({ onNavigate }: { onNavigate: (label: string) => void }) {
         data-testid="dp-nav-prev-month"
         aria-label="Previous month"
         onClick={goPrev}
-        className="inline-flex items-center justify-center h-8 w-8 rounded border border-input bg-background text-sm hover:bg-accent"
+        className="inline-flex h-8 w-8 items-center justify-center rounded border border-input bg-background text-sm hover:bg-accent"
       >
         ‹
       </button>
       <span
         id="dp-nav-month-display"
         data-testid="dp-nav-month-display"
-        className="text-sm font-semibold min-w-[140px] text-center"
+        className="min-w-[140px] text-center text-sm font-semibold"
       >
         {MONTH_NAMES[navMonth]} {navYear}
       </span>
@@ -61,7 +89,7 @@ function MonthNav({ onNavigate }: { onNavigate: (label: string) => void }) {
         data-testid="dp-nav-next-month"
         aria-label="Next month"
         onClick={goNext}
-        className="inline-flex items-center justify-center h-8 w-8 rounded border border-input bg-background text-sm hover:bg-accent"
+        className="inline-flex h-8 w-8 items-center justify-center rounded border border-input bg-background text-sm hover:bg-accent"
       >
         ›
       </button>
@@ -69,9 +97,13 @@ function MonthNav({ onNavigate }: { onNavigate: (label: string) => void }) {
   );
 }
 
-function RangePicker({ onRangeChange }: { onRangeChange: (label: string) => void }) {
+function RangePicker({
+  onRangeChange,
+}: {
+  onRangeChange: (label: string) => void;
+}) {
   const [start, setStart] = useState("");
-  const [end, setEnd]     = useState("");
+  const [end, setEnd] = useState("");
 
   function update(s: string, e: string) {
     if (s && e) onRangeChange(`Range: ${s} → ${e}`);
@@ -81,27 +113,40 @@ function RangePicker({ onRangeChange }: { onRangeChange: (label: string) => void
   return (
     <div className="flex flex-wrap items-center gap-3">
       <div className="flex flex-col gap-1">
-        <label htmlFor="dp-range-start" className="text-xs text-muted-foreground">Start date</label>
+        <label
+          htmlFor="dp-range-start"
+          className="text-xs text-muted-foreground"
+        >
+          Start date
+        </label>
         <input
           type="date"
           id="dp-range-start"
           data-testid="dp-range-start"
           value={start}
-          className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
-          onChange={(e) => { setStart(e.target.value); update(e.target.value, end); }}
+          className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:ring-1 focus:ring-ring focus:outline-none"
+          onChange={(e) => {
+            setStart(e.target.value);
+            update(e.target.value, end);
+          }}
         />
       </div>
-      <span className="text-muted-foreground text-sm mt-4">→</span>
+      <span className="mt-4 text-sm text-muted-foreground">→</span>
       <div className="flex flex-col gap-1">
-        <label htmlFor="dp-range-end" className="text-xs text-muted-foreground">End date</label>
+        <label htmlFor="dp-range-end" className="text-xs text-muted-foreground">
+          End date
+        </label>
         <input
           type="date"
           id="dp-range-end"
           data-testid="dp-range-end"
           value={end}
           min={start || undefined}
-          className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
-          onChange={(e) => { setEnd(e.target.value); update(start, e.target.value); }}
+          className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:ring-1 focus:ring-ring focus:outline-none"
+          onChange={(e) => {
+            setEnd(e.target.value);
+            update(start, e.target.value);
+          }}
         />
       </div>
     </div>
@@ -109,9 +154,24 @@ function RangePicker({ onRangeChange }: { onRangeChange: (label: string) => void
 }
 
 const BOOKING_SLOTS = [
-  { slot: "morning",   label: "Morning",   date: "2025-08-12", time: "09:00 – 10:00 AM" },
-  { slot: "afternoon", label: "Afternoon", date: "2025-08-12", time: "01:00 – 02:00 PM" },
-  { slot: "evening",   label: "Evening",   date: "2025-08-12", time: "05:00 – 06:00 PM" },
+  {
+    slot: "morning",
+    label: "Morning",
+    date: "2025-08-12",
+    time: "09:00 – 10:00 AM",
+  },
+  {
+    slot: "afternoon",
+    label: "Afternoon",
+    date: "2025-08-12",
+    time: "01:00 – 02:00 PM",
+  },
+  {
+    slot: "evening",
+    label: "Evening",
+    date: "2025-08-12",
+    time: "05:00 – 06:00 PM",
+  },
 ];
 
 export function PracticeTab({ upNext }: PracticeTabProps) {
@@ -119,9 +179,9 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
 
   // Calendar state
   const today = new Date();
-  const [calOpen, setCalOpen]         = useState(false);
-  const [calYear, setCalYear]         = useState(today.getFullYear());
-  const [calMonth, setCalMonth]       = useState(today.getMonth());
+  const [calOpen, setCalOpen] = useState(false);
+  const [calYear, setCalYear] = useState(today.getFullYear());
+  const [calMonth, setCalMonth] = useState(today.getMonth());
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
   function markDone(id: string) {
@@ -144,13 +204,17 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
   }, [calYear, calMonth]);
 
   function goNextMonth() {
-    if (calMonth === 11) { setCalMonth(0); setCalYear((y) => y + 1); }
-    else setCalMonth((m) => m + 1);
+    if (calMonth === 11) {
+      setCalMonth(0);
+      setCalYear((y) => y + 1);
+    } else setCalMonth((m) => m + 1);
   }
 
   function goPrevMonth() {
-    if (calMonth === 0) { setCalMonth(11); setCalYear((y) => y - 1); }
-    else setCalMonth((m) => m - 1);
+    if (calMonth === 0) {
+      setCalMonth(11);
+      setCalYear((y) => y - 1);
+    } else setCalMonth((m) => m - 1);
   }
 
   function buildDateStr(day: number) {
@@ -170,10 +234,15 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
           <p className="mb-3 text-[10.5px] font-bold tracking-[0.08em] text-muted-foreground uppercase">
             Interactive Scenarios
           </p>
-          <div className="flex flex-col gap-[10px]" data-testid="scenarios-list">
-
+          <div
+            className="flex flex-col gap-[10px]"
+            data-testid="scenarios-list"
+          >
             {/* ── S01: Basic Date Input ──────────────────────────────────── */}
-            <ScenarioCard {...datePickerScenarios[0]} onComplete={() => markDone("s01")}>
+            <ScenarioCard
+              {...datePickerScenarios[0]}
+              onComplete={() => markDone("s01")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-col gap-2">
                   <label
@@ -186,11 +255,13 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     type="date"
                     id="dp-basic-input"
                     data-testid="dp-basic-input"
-                    className="h-9 rounded-md border border-input bg-background px-3 text-sm text-foreground shadow-sm focus:outline-none focus:ring-1 focus:ring-ring w-fit"
+                    className="h-9 w-fit rounded-md border border-input bg-background px-3 text-sm text-foreground shadow-sm focus:ring-1 focus:ring-ring focus:outline-none"
                     onChange={(e) => {
                       const val = e.target.value;
-                      if (val) { setResult(val); markDone("s01"); }
-                      else setResult("No date selected");
+                      if (val) {
+                        setResult(val);
+                        markDone("s01");
+                      } else setResult("No date selected");
                     }}
                   />
                 </div>
@@ -198,7 +269,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* ── S02: Calendar Open & Select ───────────────────────────── */}
-            <ScenarioCard {...datePickerScenarios[1]} onComplete={() => markDone("s02")}>
+            <ScenarioCard
+              {...datePickerScenarios[1]}
+              onComplete={() => markDone("s02")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-col gap-2">
                   <button
@@ -208,7 +282,7 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     aria-haspopup="dialog"
                     aria-expanded={calOpen}
                     onClick={() => setCalOpen((o) => !o)}
-                    className="inline-flex items-center gap-2 h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm hover:bg-accent transition-colors w-fit"
+                    className="inline-flex h-9 w-fit items-center gap-2 rounded-md border border-input bg-background px-3 text-sm shadow-sm transition-colors hover:bg-accent"
                   >
                     <span>📅</span>
                     <span>{selectedDate ?? "Pick a date"}</span>
@@ -252,13 +326,29 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                         </button>
                       </div>
 
-                      <div className={styles.calendarGrid} role="grid" aria-label="Calendar days">
+                      <div
+                        className={styles.calendarGrid}
+                        role="grid"
+                        aria-label="Calendar days"
+                      >
                         {WEEKDAYS.map((wd) => (
-                          <span key={wd} className={styles.calendarWeekday} role="columnheader">{wd}</span>
+                          <span
+                            key={wd}
+                            className={styles.calendarWeekday}
+                            role="columnheader"
+                          >
+                            {wd}
+                          </span>
                         ))}
                         {calDays.map((day, i) => {
                           if (day === null) {
-                            return <span key={`empty-${i}`} className={styles.calendarDayEmpty} aria-hidden="true" />;
+                            return (
+                              <span
+                                key={`empty-${i}`}
+                                className={styles.calendarDayEmpty}
+                                aria-hidden="true"
+                              />
+                            );
                           }
                           const dateStr = buildDateStr(day);
                           const isSelected = dateStr === selectedDate;
@@ -291,28 +381,46 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* ── S03: Month Navigation ─────────────────────────────────── */}
-            <ScenarioCard {...datePickerScenarios[2]} onComplete={() => markDone("s03")}>
+            <ScenarioCard
+              {...datePickerScenarios[2]}
+              onComplete={() => markDone("s03")}
+            >
               {({ setResult }) => (
                 <MonthNav
-                  onNavigate={(label) => { setResult(label); markDone("s03"); }}
+                  onNavigate={(label) => {
+                    setResult(label);
+                    markDone("s03");
+                  }}
                 />
               )}
             </ScenarioCard>
 
             {/* ── S04: Date Range Picker ────────────────────────────────── */}
-            <ScenarioCard {...datePickerScenarios[3]} onComplete={() => markDone("s04")}>
+            <ScenarioCard
+              {...datePickerScenarios[3]}
+              onComplete={() => markDone("s04")}
+            >
               {({ setResult }) => (
                 <RangePicker
-                  onRangeChange={(label) => { setResult(label); markDone("s04"); }}
+                  onRangeChange={(label) => {
+                    setResult(label);
+                    markDone("s04");
+                  }}
                 />
               )}
             </ScenarioCard>
 
             {/* ── S05: Constrained Date Input ──────────────────────────── */}
-            <ScenarioCard {...datePickerScenarios[4]} onComplete={() => markDone("s05")}>
+            <ScenarioCard
+              {...datePickerScenarios[4]}
+              onComplete={() => markDone("s05")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="dp-constrained-input" className="text-xs font-medium text-foreground">
+                  <label
+                    htmlFor="dp-constrained-input"
+                    className="text-xs font-medium text-foreground"
+                  >
                     Book appointment (Jun – Dec 2025 only)
                   </label>
                   <input
@@ -323,7 +431,7 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     max="2025-12-31"
                     data-min="2025-06-01"
                     data-max="2025-12-31"
-                    className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring w-fit"
+                    className="h-9 w-fit rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:ring-1 focus:ring-ring focus:outline-none"
                     onChange={(e) => {
                       const el = e.target as HTMLInputElement;
                       if (el.checkValidity()) {
@@ -342,7 +450,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* ── S06: Sibling-Located Date Fields (Hard — no testid on inputs) */}
-            <ScenarioCard {...datePickerScenarios[5]} onComplete={() => markDone("s06")}>
+            <ScenarioCard
+              {...datePickerScenarios[5]}
+              onComplete={() => markDone("s06")}
+            >
               {({ setResult }) => (
                 <div
                   data-testid="dp-sibling-form"
@@ -356,7 +467,7 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                         type="date"
                         name="appointment_date_2025"
                         aria-label="Appointment date"
-                        className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                        className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:ring-1 focus:ring-ring focus:outline-none"
                         onChange={(e) => {
                           if (e.target.value) {
                             setResult(`Appointment: ${e.target.value}`);
@@ -374,7 +485,7 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                         type="date"
                         name="return_date_2025"
                         aria-label="Return date"
-                        className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                        className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:ring-1 focus:ring-ring focus:outline-none"
                         onChange={(e) => {
                           if (e.target.value) {
                             setResult(`Return: ${e.target.value}`);
@@ -390,9 +501,15 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* ── S07: Booking Cards — Scoped Locator (Medium) ─────────── */}
-            <ScenarioCard {...datePickerScenarios[6]} onComplete={() => markDone("s07")}>
+            <ScenarioCard
+              {...datePickerScenarios[6]}
+              onComplete={() => markDone("s07")}
+            >
               {({ setResult }) => (
-                <div className={styles.bookingCardsGrid} data-testid="booking-cards-list">
+                <div
+                  className={styles.bookingCardsGrid}
+                  data-testid="booking-cards-list"
+                >
                   {BOOKING_SLOTS.map(({ slot, label, date, time }) => (
                     <article
                       key={slot}
@@ -407,7 +524,7 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                       <button
                         type="button"
                         aria-label={`Book ${label} slot on ${date}`}
-                        className="mt-1 inline-flex items-center justify-center rounded-md border border-input bg-background px-3 h-8 text-xs font-medium hover:bg-accent transition-colors"
+                        className="mt-1 inline-flex h-8 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium transition-colors hover:bg-accent"
                         onClick={() => {
                           setResult(`Booked: ${label} — ${date} ${time}`);
                           markDone("s07");
@@ -422,7 +539,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* ── S08: Dynamic Date Display — Challenge (no testid) ─────── */}
-            <ScenarioCard {...datePickerScenarios[7]} onComplete={() => markDone("s08")}>
+            <ScenarioCard
+              {...datePickerScenarios[7]}
+              onComplete={() => markDone("s08")}
+            >
               {({ setResult }) => {
                 const todayStr = new Date().toLocaleDateString();
                 return (
@@ -431,10 +551,13 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     className="flex flex-col gap-2"
                   >
                     <p className="text-xs text-muted-foreground">
-                      The date below is rendered dynamically. Locate it without <code>data-testid</code>.
+                      The date below is rendered dynamically. Locate it without{" "}
+                      <code>data-testid</code>.
                     </p>
                     <div className="flex items-center gap-3 rounded-md border border-dashed border-border p-3">
-                      <span className="text-xs text-muted-foreground">Today&apos;s date:</span>
+                      <span className="text-xs text-muted-foreground">
+                        Today&apos;s date:
+                      </span>
                       {/* No data-testid intentionally — challenge element */}
                       <span
                         id="dynamic-date-display"
@@ -450,7 +573,7 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                         setResult(`Asserted: ${todayStr}`);
                         markDone("s08");
                       }}
-                      className="inline-flex items-center justify-center h-8 rounded-md border border-input bg-background px-3 text-xs font-medium hover:bg-accent transition-colors w-fit"
+                      className="inline-flex h-8 w-fit items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium transition-colors hover:bg-accent"
                     >
                       Assert today&apos;s date
                     </button>
@@ -458,11 +581,13 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                 );
               }}
             </ScenarioCard>
-
           </div>
         </section>
 
-        <aside className={styles.practiceSidebar} data-testid="practice-sidebar">
+        <aside
+          className={styles.practiceSidebar}
+          data-testid="practice-sidebar"
+        >
           <ProgressWidget items={progressItems} />
           <FrameworkMethodsPanel methods={frameworkMethods} />
           <UpNextCard {...upNext} />

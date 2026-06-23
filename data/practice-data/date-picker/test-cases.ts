@@ -9,8 +9,8 @@ export const datePickerTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Locate <code>[data-testid="dp-basic-input"]</code>.',
-      'Fill with a valid date string (e.g. <code>2025-06-15</code>).',
-      'Assert <code>inputValue()</code> equals <code>2025-06-15</code>.',
+      "Fill with a valid date string (e.g. <code>2025-06-15</code>).",
+      "Assert <code>inputValue()</code> equals <code>2025-06-15</code>.",
     ],
   },
   {
@@ -21,7 +21,7 @@ export const datePickerTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Click <code>[data-testid="dp-calendar-trigger"]</code>.',
-      'Assert the calendar panel is visible.',
+      "Assert the calendar panel is visible.",
     ],
   },
   {
@@ -33,7 +33,7 @@ export const datePickerTestCases: TestCase[] = [
     steps: [
       'Open the calendar via <code>[data-testid="dp-calendar-trigger"]</code>.',
       'Click <code>[data-testid="dp-day-btn"][data-date="2025-07-20"]</code>.',
-      'Assert the result display shows the selected date.',
+      "Assert the result display shows the selected date.",
     ],
   },
   {
@@ -43,10 +43,10 @@ export const datePickerTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Open the calendar.',
-      'Note the current month heading.',
+      "Open the calendar.",
+      "Note the current month heading.",
       'Click <code>[data-testid="dp-next-month"]</code>.',
-      'Assert the heading now shows the following month.',
+      "Assert the heading now shows the following month.",
     ],
   },
   {
@@ -56,33 +56,35 @@ export const datePickerTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Open the calendar.',
+      "Open the calendar.",
       'Click <code>[data-testid="dp-prev-month"]</code>.',
-      'Assert the heading shows the prior month.',
+      "Assert the heading shows the prior month.",
     ],
   },
   {
     id: "DP_006",
     scenario: "Verify date range start and end inputs accept valid dates",
-    expected: "Both inputs hold the correct date strings and the range summary updates.",
+    expected:
+      "Both inputs hold the correct date strings and the range summary updates.",
     type: "positive",
     priority: "high",
     steps: [
       'Fill <code>[data-testid="dp-range-start"]</code> with <code>2025-08-01</code>.',
       'Fill <code>[data-testid="dp-range-end"]</code> with <code>2025-08-15</code>.',
-      'Assert the range summary text includes both dates.',
+      "Assert the range summary text includes both dates.",
     ],
   },
   {
     id: "DP_007",
     scenario: "Verify constrained input rejects dates before min",
-    expected: "Input is invalid or shows browser validation error when value < min.",
+    expected:
+      "Input is invalid or shows browser validation error when value < min.",
     type: "negative",
     priority: "high",
     steps: [
       'Locate <code>[data-testid="dp-constrained-input"]</code>.',
-      'Fill with a date earlier than its <code>min</code> attribute.',
-      'Assert the input\'s validity state is invalid.',
+      "Fill with a date earlier than its <code>min</code> attribute.",
+      "Assert the input's validity state is invalid.",
     ],
   },
   {
@@ -93,7 +95,7 @@ export const datePickerTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Fill <code>[data-testid="dp-constrained-input"]</code> with a date later than its <code>max</code>.',
-      'Assert the input\'s validity state is invalid.',
+      "Assert the input's validity state is invalid.",
     ],
   },
   {
@@ -104,20 +106,21 @@ export const datePickerTestCases: TestCase[] = [
     priority: "medium",
     steps: [
       'Use XPath: <code>//span[normalize-space()="Appointment Date"]/following-sibling::input</code>.',
-      'Fill the input with a date.',
-      'Assert the value updates.',
+      "Fill the input with a date.",
+      "Assert the value updates.",
     ],
   },
   {
     id: "DP_010",
     scenario: "Verify scoped booking card date button click",
-    expected: "Clicking Book inside the Morning card produces the correct result text.",
+    expected:
+      "Clicking Book inside the Morning card produces the correct result text.",
     type: "positive",
     priority: "medium",
     steps: [
       'Locate: <code>[data-testid="booking-card"][data-slot="morning"]</code>.',
-      'Click the <code>Book</code> button inside that card.',
-      'Assert the result span shows the correct confirmation.',
+      "Click the <code>Book</code> button inside that card.",
+      "Assert the result span shows the correct confirmation.",
     ],
   },
   {
@@ -128,8 +131,8 @@ export const datePickerTestCases: TestCase[] = [
     priority: "medium",
     steps: [
       'Locate the element with <code>id="dynamic-date-display"</code>.',
-      'Extract its text content.',
-      'Assert it matches today\'s date in the expected locale format.',
+      "Extract its text content.",
+      "Assert it matches today's date in the expected locale format.",
     ],
   },
   {
@@ -139,9 +142,9 @@ export const datePickerTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Place focus on a preceding element.',
-      'Press <code>Tab</code> to reach the date input.',
-      'Assert the input is focused.',
+      "Place focus on a preceding element.",
+      "Press <code>Tab</code> to reach the date input.",
+      "Assert the input is focused.",
     ],
   },
   {
@@ -151,9 +154,9 @@ export const datePickerTestCases: TestCase[] = [
     type: "positive",
     priority: "low",
     steps: [
-      'Open the calendar.',
-      'Inspect a day cell\'s <code>aria-label</code>.',
-      'Assert it contains the full date string.',
+      "Open the calendar.",
+      "Inspect a day cell's <code>aria-label</code>.",
+      "Assert it contains the full date string.",
     ],
   },
   {
@@ -163,8 +166,8 @@ export const datePickerTestCases: TestCase[] = [
     type: "edge",
     priority: "low",
     steps: [
-      'Fill a date input, then clear it.',
-      'Assert the displayed result reverts to the initial placeholder text.',
+      "Fill a date input, then clear it.",
+      "Assert the displayed result reverts to the initial placeholder text.",
     ],
   },
 ];

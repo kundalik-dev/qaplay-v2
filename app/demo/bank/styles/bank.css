@@ -19,7 +19,12 @@
   inset: 0;
   overflow: hidden;
   background: #f3f0ff;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   color: #1e1b4b;
   z-index: 200;
 }
@@ -50,7 +55,7 @@
 .bank-topbar-brand-icon {
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+  background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -61,7 +66,7 @@
 .bank-topbar-brand-name {
   font-size: 1.125rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+  background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -84,7 +89,7 @@
 .bank-topbar-avatar {
   width: 34px;
   height: 34px;
-  background: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+  background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -168,11 +173,11 @@
 
 .bank-nav-item:hover {
   background: #f3f0ff;
-  color: #7C3AED;
+  color: #7c3aed;
 }
 
 .bank-nav-item.active {
-  background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%);
+  background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
   color: #ffffff;
   box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
 }
@@ -214,7 +219,7 @@
 
 /* ─── Balance card ────────────────────────────────────────────── */
 .bank-balance-card {
-  background: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+  background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
   border-radius: 16px;
   padding: 2rem 2.5rem;
   margin-bottom: 2rem;
@@ -313,12 +318,12 @@
 }
 
 .bank-combobox-trigger:hover {
-  border-color: #7C3AED;
+  border-color: #7c3aed;
 }
 
 .bank-combobox-trigger:focus {
   outline: none;
-  border-color: #7C3AED;
+  border-color: #7c3aed;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
 }
 
@@ -350,12 +355,12 @@
 
 .bank-combobox-option:hover {
   background: #f3f0ff;
-  color: #7C3AED;
+  color: #7c3aed;
 }
 
 .bank-combobox-option[aria-selected="true"] {
   background: #ede9fe;
-  color: #7C3AED;
+  color: #7c3aed;
   font-weight: 500;
 }
 
@@ -382,7 +387,7 @@
   padding: 0.875rem 1.25rem;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #7C3AED;
+  color: #7c3aed;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   border-bottom: 1px solid #e5e7eb;
@@ -492,7 +497,7 @@
   font-weight: 600;
   background: #1e1b4b;
   color: #ffffff;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   letter-spacing: 0.02em;
 }
 
@@ -505,8 +510,8 @@
   justify-content: center;
   background: #f3f0ff;
   font-size: 0.875rem;
-  color: #7C3AED;
-  font-family: 'Inter', sans-serif;
+  color: #7c3aed;
+  font-family: "Inter", sans-serif;
   z-index: 200;
 }
 
@@ -519,7 +524,12 @@
   inset: 0;
   overflow-y: auto;
   background: #f3f0ff;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   z-index: 200;
 }
 
@@ -556,7 +566,7 @@
 }
 
 .bank-login-welcome span {
-  background: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+  background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -593,7 +603,7 @@
   font-size: 1.625rem;
   font-weight: 700;
   text-align: center;
-  background: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+  background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -633,7 +643,7 @@
 }
 
 .bank-form-input:focus {
-  border-color: #7C3AED;
+  border-color: #7c3aed;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
 }
 
@@ -665,7 +675,7 @@
 }
 
 .bank-password-toggle:hover {
-  color: #7C3AED;
+  color: #7c3aed;
 }
 
 /* Remember me row */
@@ -679,7 +689,7 @@
 .bank-remember-checkbox {
   width: 16px;
   height: 16px;
-  accent-color: #7C3AED;
+  accent-color: #7c3aed;
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -706,7 +716,7 @@
 .bank-login-btn {
   width: 100%;
   padding: 0.8125rem;
-  background: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+  background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -788,7 +798,7 @@
   font-weight: 700;
   background: #1e1b4b;
   color: #ffffff;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   letter-spacing: 0.02em;
 }
 

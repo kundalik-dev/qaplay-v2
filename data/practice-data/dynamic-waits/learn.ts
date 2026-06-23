@@ -1,13 +1,18 @@
-import type { FaqItem, LearnCodeSnippet, MethodRow, TocItem } from "@/data/practice-data/types";
+import type {
+  FaqItem,
+  LearnCodeSnippet,
+  MethodRow,
+  TocItem,
+} from "@/data/practice-data/types";
 
 export const dynamicWaitsTocItems: TocItem[] = [
-  { id: "learn-overview",   label: "Overview" },
-  { id: "learn-selector",   label: "1 · waitForSelector" },
-  { id: "learn-function",   label: "2 · waitForFunction" },
-  { id: "learn-state",      label: "3 · Element State Waits" },
-  { id: "learn-selenium",   label: "4 · Selenium WebDriverWait" },
-  { id: "learn-methods",    label: "Method Summary", dividerBefore: true },
-  { id: "learn-faq",        label: "FAQ" },
+  { id: "learn-overview", label: "Overview" },
+  { id: "learn-selector", label: "1 · waitForSelector" },
+  { id: "learn-function", label: "2 · waitForFunction" },
+  { id: "learn-state", label: "3 · Element State Waits" },
+  { id: "learn-selenium", label: "4 · Selenium WebDriverWait" },
+  { id: "learn-methods", label: "Method Summary", dividerBefore: true },
+  { id: "learn-faq", label: "FAQ" },
 ];
 
 export const dynamicWaitsLearnDesc: Record<string, string> = {
@@ -206,39 +211,39 @@ cy.wait('@statusCheck').its('response.statusCode').should('eq', 200);`,
 
 export const dynamicWaitsMethodRows: MethodRow[] = [
   {
-    action:       "Wait for visible",
-    selenium:     "visibilityOfElementLocated()",
+    action: "Wait for visible",
+    selenium: "visibilityOfElementLocated()",
     playwrightJs: "waitForSelector({ state: 'visible' })",
     playwrightPy: "wait_for_selector(state='visible')",
-    cypress:      ".should('be.visible')",
+    cypress: ".should('be.visible')",
   },
   {
-    action:       "Wait for hidden",
-    selenium:     "invisibilityOf(element)",
+    action: "Wait for hidden",
+    selenium: "invisibilityOf(element)",
     playwrightJs: "waitForSelector({ state: 'hidden' })",
     playwrightPy: "wait_for_selector(state='hidden')",
-    cypress:      ".should('not.exist')",
+    cypress: ".should('not.exist')",
   },
   {
-    action:       "Wait for enabled",
-    selenium:     "elementToBeClickable()",
+    action: "Wait for enabled",
+    selenium: "elementToBeClickable()",
     playwrightJs: "waitFor({ state: 'visible' }) + toBeEnabled()",
     playwrightPy: "wait_for(state='visible') + to_be_enabled()",
-    cypress:      ".should('not.be.disabled')",
+    cypress: ".should('not.be.disabled')",
   },
   {
-    action:       "Wait for text",
-    selenium:     "textToBePresentInElement()",
+    action: "Wait for text",
+    selenium: "textToBePresentInElement()",
     playwrightJs: "waitForFunction(() => el.textContent === 'x')",
     playwrightPy: "wait_for_function('...')",
-    cypress:      ".should('have.text', 'x')",
+    cypress: ".should('have.text', 'x')",
   },
   {
-    action:       "Custom polling",
-    selenium:     "FluentWait.pollingEvery()",
+    action: "Custom polling",
+    selenium: "FluentWait.pollingEvery()",
     playwrightJs: "waitForFunction({ polling: N })",
     playwrightPy: "wait_for_function(polling=N)",
-    cypress:      "{ timeout: N } option",
+    cypress: "{ timeout: N } option",
   },
 ];
 
@@ -250,13 +255,15 @@ export const dynamicWaitsFaq: FaqItem[] = [
     testId: "faq-1",
   },
   {
-    question: "What is the difference between waitForSelector and waitForFunction?",
+    question:
+      "What is the difference between waitForSelector and waitForFunction?",
     answer:
       "waitForSelector waits for a CSS/XPath selector to match an element in a given state (visible, hidden, attached, detached). waitForFunction evaluates arbitrary JavaScript in the page and waits until it returns truthy — useful for computed values, text content equality, or conditions involving multiple elements.",
     testId: "faq-2",
   },
   {
-    question: "How does Cypress handle waiting differently from Playwright and Selenium?",
+    question:
+      "How does Cypress handle waiting differently from Playwright and Selenium?",
     answer:
       "Cypress automatically retries its assertions (should) and queries (get) for up to the configured command timeout (default 4 seconds). You do not call an explicit wait — instead you increase the timeout option on the assertion that needs more time. There is no built-in multi-tab or network-level wait equivalent to Playwright's waitForResponse.",
     testId: "faq-3",

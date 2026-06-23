@@ -29,7 +29,11 @@ interface ApiKeysDialogProps {
 
 // ── Component ────────────────────────────────────────────────────────────────
 
-export function ApiKeysDialog({ open, onClose, showToast }: ApiKeysDialogProps) {
+export function ApiKeysDialog({
+  open,
+  onClose,
+  showToast,
+}: ApiKeysDialogProps) {
   const [keys, setKeys] = useState<ApiKey[]>([]);
   const [loading, setLoading] = useState(false);
   const [newKeyName, setNewKeyName] = useState("");
@@ -54,13 +58,15 @@ export function ApiKeysDialog({ open, onClose, showToast }: ApiKeysDialogProps) 
 
   useEffect(() => {
     if (open) {
+      /* eslint-disable react-hooks/set-state-in-effect */
       setNewKey(null);
       setConfirmRevokeId(null);
       setNewKeyName("");
+      /* eslint-enable react-hooks/set-state-in-effect */
       void fetchKeys();
       setTimeout(() => inputRef.current?.focus(), 80);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const handleGenerate = async () => {
@@ -78,7 +84,10 @@ export function ApiKeysDialog({ open, onClose, showToast }: ApiKeysDialogProps) 
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({ error: "Unknown error" }));
-        showToast((err as { error?: string }).error ?? "Failed to generate key", true);
+        showToast(
+          (err as { error?: string }).error ?? "Failed to generate key",
+          true,
+        );
         return;
       }
       const created: NewKeyResult = await res.json();
@@ -125,13 +134,18 @@ export function ApiKeysDialog({ open, onClose, showToast }: ApiKeysDialogProps) 
         aria-modal="true"
         aria-label="API Keys"
         data-testid="api-keys-dialog"
-        onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) onClose();
+        }}
       >
         <div className={[styles.dialog, panelStyles.wideDialog].join(" ")}>
           {/* Header */}
           <div className={styles.dialogHeader}>
             <h2 className={styles.dialogTitle}>
-              <KeyRound size={15} style={{ verticalAlign: "middle", marginRight: 6 }} />
+              <KeyRound
+                size={15}
+                style={{ verticalAlign: "middle", marginRight: 6 }}
+              />
               API Keys
             </h2>
             <button
@@ -145,19 +159,24 @@ export function ApiKeysDialog({ open, onClose, showToast }: ApiKeysDialogProps) 
 
           <div className={styles.dialogBody}>
             <p className={panelStyles.panelDesc}>
-              Use these keys in the{" "}
-              <strong>QA Playground Clipper</strong> Chrome extension to save
-              resources directly from any webpage.
+              Use these keys in the <strong>QA Playground Clipper</strong>{" "}
+              Chrome extension to save resources directly from any webpage.
             </p>
 
             {/* New key revealed callout */}
             {newKey && (
-              <div className={panelStyles.newKeyCallout} data-testid="new-key-callout">
+              <div
+                className={panelStyles.newKeyCallout}
+                data-testid="new-key-callout"
+              >
                 <p className={panelStyles.newKeyHeading}>
                   ✅ Key generated — copy it now, it won&apos;t be shown again
                 </p>
                 <div className={panelStyles.keyRow}>
-                  <code className={panelStyles.keyCode} data-testid="new-key-value">
+                  <code
+                    className={panelStyles.keyCode}
+                    data-testid="new-key-value"
+                  >
                     {newKey.key}
                   </code>
                   <button
@@ -166,9 +185,11 @@ export function ApiKeysDialog({ open, onClose, showToast }: ApiKeysDialogProps) 
                     title="Copy key"
                     data-testid="copy-new-key-btn"
                   >
-                    {copiedId === newKey.id
-                      ? <Check size={13} className={panelStyles.iconGreen} />
-                      : <Copy size={13} />}
+                    {copiedId === newKey.id ? (
+                      <Check size={13} className={panelStyles.iconGreen} />
+                    ) : (
+                      <Copy size={13} />
+                    )}
                   </button>
                 </div>
               </div>
@@ -182,7 +203,9 @@ export function ApiKeysDialog({ open, onClose, showToast }: ApiKeysDialogProps) 
                 placeholder="Key name (e.g. My Extension)"
                 value={newKeyName}
                 onChange={(e) => setNewKeyName(e.target.value)}
-                onKeyDown={(e) => { if (e.key === "Enter") void handleGenerate(); }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") void handleGenerate();
+                }}
                 disabled={generating}
                 id="new-key-name"
                 data-testid="new-key-name-input"
@@ -194,9 +217,11 @@ export function ApiKeysDialog({ open, onClose, showToast }: ApiKeysDialogProps) 
                 id="generate-key-btn"
                 data-testid="generate-key-btn"
               >
-                {generating
-                  ? <Loader2 size={13} className={panelStyles.spin} />
-                  : "Generate"}
+                {generating ? (
+                  <Loader2 size={13} className={panelStyles.spin} />
+                ) : (
+                  "Generate"
+                )}
               </button>
             </div>
 
@@ -225,10 +250,18 @@ export function ApiKeysDialog({ open, onClose, showToast }: ApiKeysDialogProps) 
                       <span className={panelStyles.keyDates}>
                         Created {new Date(k.createdAt).toLocaleDateString()}
                         {k.lastUsedAt && (
-                          <> · Last used {new Date(k.lastUsedAt).toLocaleDateString()}</>
+                          <>
+                            {" "}
+                            · Last used{" "}
+                            {new Date(k.lastUsedAt).toLocaleDateString()}
+                          </>
                         )}
                         {k.expiresAt && (
-                          <> · Expires {new Date(k.expiresAt).toLocaleDateString()}</>
+                          <>
+                            {" "}
+                            · Expires{" "}
+                            {new Date(k.expiresAt).toLocaleDateString()}
+                          </>
                         )}
                       </span>
                     </div>

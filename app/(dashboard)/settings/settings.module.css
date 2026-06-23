@@ -1,0 +1,267 @@
+.page {
+  min-height: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.topBar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  gap: 8px;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title {
+  margin: 0;
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.description {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted-foreground);
+  line-height: 1.5;
+}
+
+.tabsBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+}
+
+.tab {
+  height: 34px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+.tabActive {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.cardHeader {
+  margin-bottom: 20px;
+}
+
+.cardTitle {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+  margin: 0 0 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cardDesc {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+.inputGroup {
+  margin-bottom: 16px;
+}
+
+.label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 6px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 96%, transparent);
+  color: var(--foreground);
+  font-size: 13px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.input:focus {
+  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 8%, transparent);
+}
+
+.input:read-only {
+  background: color-mix(in srgb, var(--background) 60%, transparent);
+  color: var(--muted-foreground);
+  cursor: not-allowed;
+  border-color: color-mix(in srgb, var(--border) 60%, transparent);
+}
+
+.select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 96%, transparent);
+  color: var(--foreground);
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.select:focus {
+  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 8%, transparent);
+}
+
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btnPrimary {
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    color-mix(in srgb, var(--primary) 80%, white)
+  );
+  color: var(--primary-foreground);
+  box-shadow: 0 8px 16px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.btnSecondary {
+  background: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.btnDanger {
+  background: color-mix(in srgb, var(--destructive) 10%, transparent);
+  color: var(--destructive);
+  border: 1px solid color-mix(in srgb, var(--destructive) 20%, transparent);
+}
+
+.btnDanger:hover {
+  background: color-mix(in srgb, var(--destructive) 16%, transparent);
+}
+
+.btnSm {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.formActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.buttonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.optionBtn {
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--muted-foreground);
+}
+
+.optionBtn:hover {
+  border-color: color-mix(in srgb, var(--primary) 40%, transparent);
+  color: var(--foreground);
+}
+
+.optionBtnActive {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 6%, transparent);
+  color: var(--foreground);
+}
+
+.optionBtnTitle {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.optionBtnDesc {
+  font-size: 12px;
+  text-align: center;
+  color: inherit;
+  opacity: 0.8;
+}

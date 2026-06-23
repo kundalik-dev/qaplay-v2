@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dynamic Frame</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 14px; font-family: system-ui, sans-serif; font-size: 12px; background: #fff; color: #111; }
+    #loading { display: flex; align-items: center; gap: 8px; color: #6b7280; font-size: 12px; }
+    .spinner { width: 14px; height: 14px; border: 2px solid #e5e7eb; border-top-color: #6366f1; border-radius: 50%; animation: spin .7s linear infinite; flex-shrink: 0; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #dynamic-content { display: none; flex-direction: column; gap: 10px; }
+    #dynamic-content.visible { display: flex; }
+    h4 { margin: 0; font-size: 13px; font-weight: 700; color: #111; }
+    p.desc { margin: 0; font-size: 11px; color: #6b7280; }
+    /* Intentionally NO data-testid on the revealed button or input */
+    .dyn-input { height: 32px; padding: 0 8px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 12px; width: 180px; }
+    .dyn-input:focus { border-color: #6366f1; outline: none; }
+    .dyn-btn { height: 32px; padding: 0 12px; background: #6366f1; color: #fff; border: none; border-radius: 5px; font-size: 12px; cursor: pointer; }
+    .dyn-btn:hover { background: #4f46e5; }
+    #dyn-result { font-size: 11px; color: #6b7280; }
+    #dyn-result.done { color: #059669; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div id="loading">
+    <div class="spinner"></div>
+    Loading content… (1.5 s)
+  </div>
+
+  <!--
+    Content revealed after delay.
+    No data-testid on any element — locate by role, label, or text.
+    Playwright: await expect(frame.getByRole('button', { name: 'Reveal Secret' })).toBeVisible({ timeout: 5000 })
+    Selenium: wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[normalize-space()='Reveal Secret']")))
+  -->
+  <div id="dynamic-content" role="region" aria-label="Dynamic content">
+    <h4>Dynamic content loaded</h4>
+    <p class="desc">This section appeared after a delay. No data-testid — use role or text.</p>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <input
+        type="text"
+        class="dyn-input"
+        id="dyn-code-input"
+        name="dynamic_code"
+        placeholder="Enter reveal code"
+        aria-label="Reveal code input"
+        autocomplete="off"
+      />
+      <button
+        type="button"
+        class="dyn-btn"
+        aria-label="Reveal Secret"
+        onclick="reveal()"
+      >
+        Reveal Secret
+      </button>
+    </div>
+    <p id="dyn-result">Awaiting input…</p>
+  </div>
+
+  <script>
+    setTimeout(function() {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('dynamic-content').classList.add('visible');
+    }, 1500);
+
+    function reveal() {
+      var val = document.getElementById('dyn-code-input').value.trim();
+      var r = document.getElementById('dyn-result');
+      r.textContent = val ? 'Secret revealed: ' + val + ' ✓' : 'Enter a code first.';
+      r.className = val ? 'done' : '';
+      if (val) {
+        window.top.postMessage({ type: 'iframe-s05', value: 'Dynamic content: revealed "' + val + '"' }, '*');
+      }
+    }
+  </script>
+</body>
+</html>

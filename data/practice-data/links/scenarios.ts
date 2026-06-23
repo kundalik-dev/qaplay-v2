@@ -1,4 +1,7 @@
-import type { ScenarioMeta, FrameworkMethods } from "@/data/practice-data/types";
+import type {
+  ScenarioMeta,
+  FrameworkMethods,
+} from "@/data/practice-data/types";
 
 export const linksScenarios: ScenarioMeta[] = [
   {
@@ -59,35 +62,38 @@ export const linksScenarios: ScenarioMeta[] = [
   },
 ];
 
-export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", FrameworkMethods> = {
-  selenium: { 
-    label: "Selenium (Java)", 
+export const frameworkMethods: Record<
+  "selenium" | "playwright" | "cypress",
+  FrameworkMethods
+> = {
+  selenium: {
+    label: "Selenium (Java)",
     methods: [
       { color: "purple", label: "click()" },
-      { color: "blue", label: "getAttribute(\"href\")" },
-      { color: "orange", label: "getAttribute(\"target\")" },
+      { color: "blue", label: 'getAttribute("href")' },
+      { color: "orange", label: 'getAttribute("target")' },
       { color: "emerald", label: "driver.navigate().back()" },
       { color: "slate", label: "driver.getWindowHandles()" },
-    ] 
+    ],
   },
-  playwright: { 
-    label: "Playwright JS / PY", 
+  playwright: {
+    label: "Playwright JS / PY",
     methods: [
       { color: "purple", label: "click()" },
-      { color: "blue", label: "getAttribute(\"href\")" },
-      { color: "orange", label: "getAttribute(\"target\")" },
+      { color: "blue", label: 'getAttribute("href")' },
+      { color: "orange", label: 'getAttribute("target")' },
       { color: "emerald", label: "page.goBack()" },
       { color: "slate", label: "context.pages()" },
-    ] 
+    ],
   },
-  cypress: { 
-    label: "Cypress JS", 
+  cypress: {
+    label: "Cypress JS",
     methods: [
       { color: "purple", label: "click()" },
       { color: "blue", label: "invoke('attr', 'href')" },
       { color: "orange", label: "invoke('attr', 'target')" },
       { color: "emerald", label: "go('back')" },
       { color: "slate", label: "window()" },
-    ] 
+    ],
   },
 };

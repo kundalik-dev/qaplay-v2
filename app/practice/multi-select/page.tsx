@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { PracticePage } from "./_components/practice-page";
-import { LearnTab }      from "./_components/learn-tab";
-import { multiSelectMeta, multiSelectTestCases, multiSelectLearnCode } from "@/data/practice-data/multi-select";
+import { LearnTab } from "./_components/learn-tab";
+import {
+  multiSelectMeta,
+  multiSelectTestCases,
+  multiSelectLearnCode,
+} from "@/data/practice-data/multi-select";
 import { multiSelectPageMetadata } from "@/data/meta-data/practice/multi-select-page-meta-data";
 import {
   multiSelectPageWebPageJsonLd,
@@ -24,20 +28,28 @@ export default async function MultiSelectPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(multiSelectPageWebPageJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(multiSelectPageWebPageJsonLd),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(multiSelectPageBreadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(multiSelectPageBreadcrumbJsonLd),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(multiSelectPageFaqJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(multiSelectPageFaqJsonLd),
+        }}
       />
       <PracticePage
         meta={multiSelectMeta}
         testCases={multiSelectTestCases}
-        learnContent={<LearnTab snippets={{ native, custom, tags, searchable }} />}
+        learnContent={
+          <LearnTab snippets={{ native, custom, tags, searchable }} />
+        }
       />
     </>
   );

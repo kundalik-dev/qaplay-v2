@@ -9,8 +9,8 @@ export const radioCheckboxTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Locate <code>[data-testid="chk-accept-terms"]</code>.',
-      'Call <code>check()</code> or <code>click()</code>.',
-      'Assert <code>isChecked()</code> is true.',
+      "Call <code>check()</code> or <code>click()</code>.",
+      "Assert <code>isChecked()</code> is true.",
     ],
   },
   {
@@ -21,21 +21,22 @@ export const radioCheckboxTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Locate <code>[data-testid="chk-accept-terms"]</code> — ensure it is checked first.',
-      'Call <code>uncheck()</code>.',
-      'Assert <code>isChecked()</code> is false.',
+      "Call <code>uncheck()</code>.",
+      "Assert <code>isChecked()</code> is false.",
     ],
   },
   {
     id: "RC_003",
     scenario: "Verify a radio button can be selected from a group",
-    expected: "The clicked radio is checked; others in the group become unchecked.",
+    expected:
+      "The clicked radio is checked; others in the group become unchecked.",
     type: "positive",
     priority: "high",
     steps: [
       'Scope to <code>[data-testid="radio-plan-group"]</code>.',
       'Locate the radio with label "Pro" and call <code>check()</code>.',
-      'Assert it is checked.',
-      'Assert other radios in the group are not checked.',
+      "Assert it is checked.",
+      "Assert other radios in the group are not checked.",
     ],
   },
   {
@@ -54,13 +55,13 @@ export const radioCheckboxTestCases: TestCase[] = [
   {
     id: "RC_005",
     scenario: "Verify all checkboxes in a group can be checked",
-    expected: "All checkboxes with data-testid=\"chk-skill\" are checked.",
+    expected: 'All checkboxes with data-testid="chk-skill" are checked.',
     type: "positive",
     priority: "medium",
     steps: [
       'Get all elements with <code>[data-testid="chk-skill"]</code>.',
-      'Loop and call <code>check()</code> on each.',
-      'Assert all return <code>isChecked() === true</code>.',
+      "Loop and call <code>check()</code> on each.",
+      "Assert all return <code>isChecked() === true</code>.",
     ],
   },
   {
@@ -70,9 +71,9 @@ export const radioCheckboxTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Navigate to the page.',
+      "Navigate to the page.",
       'Locate <code>[data-testid="chk-newsletter"]</code>.',
-      'Assert <code>isChecked()</code> is true immediately.',
+      "Assert <code>isChecked()</code> is true immediately.",
     ],
   },
   {
@@ -83,8 +84,8 @@ export const radioCheckboxTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Locate <code>[data-testid="chk-disabled"]</code>.',
-      'Assert <code>isDisabled()</code> is true.',
-      'Attempt <code>check()</code> — assert no state change.',
+      "Assert <code>isDisabled()</code> is true.",
+      "Attempt <code>check()</code> — assert no state change.",
     ],
   },
   {
@@ -95,7 +96,7 @@ export const radioCheckboxTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Locate <code>[data-testid="radio-disabled"]</code>.',
-      'Assert <code>isDisabled()</code> is true.',
+      "Assert <code>isDisabled()</code> is true.",
     ],
   },
   {
@@ -106,31 +107,34 @@ export const radioCheckboxTestCases: TestCase[] = [
     priority: "medium",
     steps: [
       'Use XPath: <code>//span[normalize-space()="Marketing emails"]/preceding-sibling::input</code>.',
-      'Call <code>check()</code>.',
-      'Assert the result updates.',
+      "Call <code>check()</code>.",
+      "Assert the result updates.",
     ],
   },
   {
     id: "RC_010",
     scenario: "Verify scoped plan card radio can be selected",
-    expected: "Radio inside the Enterprise plan card is checked after scoped selection.",
+    expected:
+      "Radio inside the Enterprise plan card is checked after scoped selection.",
     type: "positive",
     priority: "medium",
     steps: [
       'Locate <code>[data-testid="plan-card"][data-plan="enterprise"]</code>.',
-      'Find the radio input inside and call <code>check()</code>.',
-      'Assert it is checked.',
+      "Find the radio input inside and call <code>check()</code>.",
+      "Assert it is checked.",
     ],
   },
   {
     id: "RC_011",
-    scenario: "Verify dynamic checkboxes with partial name attribute can be located",
-    expected: "Checkboxes with names starting with perm_ are located via XPath starts-with.",
+    scenario:
+      "Verify dynamic checkboxes with partial name attribute can be located",
+    expected:
+      "Checkboxes with names starting with perm_ are located via XPath starts-with.",
     type: "positive",
     priority: "medium",
     steps: [
       'Use XPath: <code>//input[@type="checkbox" and starts-with(@name, "perm_")]</code>.',
-      'Assert multiple elements are found.',
+      "Assert multiple elements are found.",
     ],
   },
   {
@@ -140,9 +144,9 @@ export const radioCheckboxTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Check a checkbox.',
-      'Locate the result span by its <code>id</code>.',
-      'Assert the span text reflects the checked state.',
+      "Check a checkbox.",
+      "Locate the result span by its <code>id</code>.",
+      "Assert the span text reflects the checked state.",
     ],
   },
   {
@@ -153,19 +157,20 @@ export const radioCheckboxTestCases: TestCase[] = [
     priority: "medium",
     steps: [
       'Tab to <code>[data-testid="chk-accept-terms"]</code>.',
-      'Press <code>Space</code> to toggle.',
-      'Assert <code>isChecked()</code> is true.',
+      "Press <code>Space</code> to toggle.",
+      "Assert <code>isChecked()</code> is true.",
     ],
   },
   {
     id: "RC_014",
-    scenario: "Verify radio button group has correct name attribute for grouping",
+    scenario:
+      "Verify radio button group has correct name attribute for grouping",
     expected: "All radios in the plan group share the same name attribute.",
     type: "positive",
     priority: "low",
     steps: [
       'Locate all radios inside <code>[data-testid="radio-plan-group"]</code>.',
-      'Assert all share the same <code>name</code> attribute value.',
+      "Assert all share the same <code>name</code> attribute value.",
     ],
   },
 ];

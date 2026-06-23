@@ -1,4 +1,8 @@
-import { createBreadcrumbJsonLd, createFaqPageJsonLd, createWebPageJsonLd } from "../structured-data";
+import {
+  createBreadcrumbJsonLd,
+  createFaqPageJsonLd,
+  createWebPageJsonLd,
+} from "../structured-data";
 import { datePickerFaq } from "@/data/practice-data/date-picker";
 
 const name = "How to Handle Date Pickers in Selenium and Playwright";
@@ -24,11 +28,14 @@ export const datePickerPageWebPageJsonLd = createWebPageJsonLd({
 });
 
 export const datePickerPageBreadcrumbJsonLd = createBreadcrumbJsonLd([
-  { name: "Home",        path: "/" },
-  { name: "Practice",   path: "/practice" },
+  { name: "Home", path: "/" },
+  { name: "Practice", path: "/practice" },
   { name: "Date Picker", path: "/practice/date-picker" },
 ]);
 
 export const datePickerPageFaqJsonLd = createFaqPageJsonLd(
-  datePickerFaq.map((item) => ({ question: item.question, answer: item.answer })),
+  datePickerFaq.map((item) => ({
+    question: item.question,
+    answer: item.answer,
+  })),
 );

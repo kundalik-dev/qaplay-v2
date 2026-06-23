@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Frame Two</title>
+  <style>
+    body { margin: 0; padding: 14px; font-family: system-ui, sans-serif; font-size: 12px; background: #f0fdf4; color: #14532d; }
+    h4 { margin: 0 0 10px; font-size: 12px; font-weight: 700; color: #166534; text-transform: uppercase; letter-spacing: .05em; }
+    /* Intentionally NO data-testid on button — locate by role/text/name */
+    button { height: 30px; padding: 0 12px; background: #16a34a; color: #fff; border: none; border-radius: 5px; font-size: 12px; font-weight: 500; cursor: pointer; }
+    button:hover { background: #15803d; }
+    #f2-result { margin-top: 8px; font-size: 11px; color: #6b7280; }
+    #f2-result.done { color: #059669; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <!-- Frame Two: button has NO data-testid — locate by role or text -->
+  <h4>Frame Two</h4>
+  <button
+    id="f2-action-btn"
+    name="frame-two-action"
+    type="button"
+    aria-label="Activate Frame Two"
+    onclick="act()"
+  >
+    Activate
+  </button>
+  <p id="f2-result">Not activated</p>
+
+  <script>
+    function act() {
+      document.getElementById('f2-result').textContent = 'Frame Two activated ✓';
+      document.getElementById('f2-result').className = 'done';
+      parent.postMessage({ type: 'iframe-s03-f2', value: 'Frame Two: activated ✓' }, '*');
+    }
+  </script>
+</body>
+</html>

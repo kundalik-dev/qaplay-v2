@@ -1,4 +1,7 @@
-import type { ScenarioMeta, FrameworkMethods } from "@/data/practice-data/types";
+import type {
+  ScenarioMeta,
+  FrameworkMethods,
+} from "@/data/practice-data/types";
 
 export const multiSelectScenarios: ScenarioMeta[] = [
   {
@@ -68,35 +71,38 @@ export const multiSelectScenarios: ScenarioMeta[] = [
   },
 ];
 
-export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", FrameworkMethods> = {
+export const frameworkMethods: Record<
+  "selenium" | "playwright" | "cypress",
+  FrameworkMethods
+> = {
   selenium: {
     label: "Selenium (Java)",
     methods: [
       { color: "purple", label: "Select.selectByValue()" },
-      { color: "blue",   label: "Select.deselectByValue()" },
+      { color: "blue", label: "Select.deselectByValue()" },
       { color: "orange", label: "Select.selectByVisibleText()" },
-      { color: "emerald",label: "Actions + Keys.CONTROL" },
-      { color: "slate",  label: "Select.getOptions()" },
+      { color: "emerald", label: "Actions + Keys.CONTROL" },
+      { color: "slate", label: "Select.getOptions()" },
     ],
   },
   playwright: {
     label: "Playwright JS / PY",
     methods: [
       { color: "purple", label: "selectOption('value')" },
-      { color: "blue",   label: "selectOption(['v1','v2'])" },
+      { color: "blue", label: "selectOption(['v1','v2'])" },
       { color: "orange", label: "getByRole('option')" },
-      { color: "emerald",label: "getByRole('combobox')" },
-      { color: "slate",  label: "filter({ hasText })" },
+      { color: "emerald", label: "getByRole('combobox')" },
+      { color: "slate", label: "filter({ hasText })" },
     ],
   },
   cypress: {
     label: "Cypress JS",
     methods: [
       { color: "purple", label: ".select('value')" },
-      { color: "blue",   label: ".select(['v1','v2'])" },
+      { color: "blue", label: ".select(['v1','v2'])" },
       { color: "orange", label: ".contains('option text')" },
-      { color: "emerald",label: ".should('have.value', …)" },
-      { color: "slate",  label: "{ force: true }" },
+      { color: "emerald", label: ".should('have.value', …)" },
+      { color: "slate", label: "{ force: true }" },
     ],
   },
 };

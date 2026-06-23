@@ -15,6 +15,7 @@ import {
   Trophy,
   Wrench,
   Globe,
+  Settings,
 } from "lucide-react";
 
 export interface DashboardNavItem {
@@ -105,6 +106,17 @@ export const dashboardNavGroups: DashboardNavGroup[] = [
         href: "/chrome",
         icon: Globe,
         testId: "nav-chrome",
+      },
+    ],
+  },
+  {
+    label: "Settings",
+    items: [
+      {
+        label: "Settings",
+        href: "/settings",
+        icon: Settings,
+        testId: "nav-settings",
       },
     ],
   },

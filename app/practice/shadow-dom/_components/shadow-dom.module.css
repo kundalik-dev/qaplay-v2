@@ -1,0 +1,180 @@
+/* ── Shared layout ───────────────────────────────────────────── */
+.practiceLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 24px;
+  padding-block: 24px 64px;
+}
+
+.practiceSidebar {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .practiceLayout {
+    grid-template-columns: 1fr;
+  }
+  .practiceSidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .practiceLayout {
+    gap: 16px;
+    padding-block: 20px 48px;
+  }
+}
+
+/* ── Shadow host shell ───────────────────────────────────────── */
+.shadowHostShell {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--card);
+}
+
+.shadowHostLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--muted) 30%, var(--card));
+  flex-wrap: wrap;
+}
+
+.shadowHostContent {
+  display: block;
+  min-height: 52px;
+}
+
+.shadowHostActivated {
+  background: color-mix(in srgb, #22c55e 5%, var(--card));
+}
+
+/* ── Shadow mode badge ───────────────────────────────────────── */
+.shadowBadge {
+  display: inline-flex;
+  align-items: center;
+  height: 16px;
+  padding: 0 7px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  font-family: monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: color-mix(in srgb, #22c55e 12%, transparent);
+  color: #16a34a;
+  border: 1px solid color-mix(in srgb, #22c55e 25%, transparent);
+  flex-shrink: 0;
+}
+
+.shadowBadgeClosed {
+  background: color-mix(in srgb, #ef4444 12%, transparent);
+  color: #dc2626;
+  border-color: color-mix(in srgb, #ef4444 25%, transparent);
+}
+
+/* ── Loading / ready pills ───────────────────────────────────── */
+.shadowLoadingPill {
+  display: inline-flex;
+  align-items: center;
+  height: 16px;
+  padding: 0 7px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 600;
+  font-family: monospace;
+  background: color-mix(in srgb, #f59e0b 12%, transparent);
+  color: #d97706;
+  border: 1px solid color-mix(in srgb, #f59e0b 25%, transparent);
+}
+
+.shadowReadyPill {
+  display: inline-flex;
+  align-items: center;
+  height: 16px;
+  padding: 0 7px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 600;
+  font-family: monospace;
+  background: color-mix(in srgb, #22c55e 12%, transparent);
+  color: #16a34a;
+  border: 1px solid color-mix(in srgb, #22c55e 25%, transparent);
+}
+
+/* ── Multi-host grid ─────────────────────────────────────────── */
+.multiHostGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 700px) {
+  .multiHostGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Depth indicator (nested scenario) ──────────────────────── */
+.shadowDepthIndicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--primary) 6%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--primary) 12%, transparent);
+  font-size: 10px;
+  font-family: monospace;
+  color: var(--muted-foreground);
+  flex-wrap: wrap;
+}
+
+.depthArrow {
+  color: var(--primary);
+  font-size: 11px;
+}
+
+/* ── Result banner ───────────────────────────────────────────── */
+.shadowResultBanner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--primary) 8%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+  font-size: 11px;
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+/* ── Eval warning note ───────────────────────────────────────── */
+.shadowEvalNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, #f59e0b 8%, var(--card));
+  border: 1px solid color-mix(in srgb, #f59e0b 22%, transparent);
+  font-size: 11px;
+  color: var(--foreground);
+  line-height: 1.5;
+}
+
+.shadowEvalIcon {
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: #d97706;
+}

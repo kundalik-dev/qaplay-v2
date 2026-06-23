@@ -1,6 +1,13 @@
 "use client";
 
-import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   ExternalLink,
   KeyRound,
@@ -66,9 +73,7 @@ function ResourceTableRow({
           {r.title}
           <ExternalLink size={11} style={{ opacity: 0.5 }} />
         </a>
-        {r.description && (
-          <p className={styles.tableDesc}>{r.description}</p>
-        )}
+        {r.description && <p className={styles.tableDesc}>{r.description}</p>}
       </td>
       <td>
         <div className={styles.tableTags}>
@@ -152,7 +157,10 @@ interface ResourcesEmptyContentProps {
   hasNoneOwned: boolean;
   onAdd: () => void;
 }
-function ResourcesEmptyContent({ hasNoneOwned, onAdd }: ResourcesEmptyContentProps) {
+function ResourcesEmptyContent({
+  hasNoneOwned,
+  onAdd,
+}: ResourcesEmptyContentProps) {
   return (
     <div className={styles.emptyState} data-testid="resources-empty">
       <div className={styles.emptyEmoji}>{hasNoneOwned ? "📚" : "🔍"}</div>
@@ -244,7 +252,10 @@ function ResourcesListContent({
 
 // -- API helpers --------------------------------------------------------------
 
-async function apiFetch<T = unknown>(path: string, init?: RequestInit): Promise<T> {
+async function apiFetch<T = unknown>(
+  path: string,
+  init?: RequestInit,
+): Promise<T> {
   const res = await fetch(path, {
     headers: { "Content-Type": "application/json", ...init?.headers },
     ...init,
@@ -265,7 +276,12 @@ interface ConfirmDeleteProps {
   onCancel: () => void;
 }
 
-function ConfirmDelete({ resource, deleting, onConfirm, onCancel }: ConfirmDeleteProps) {
+function ConfirmDelete({
+  resource,
+  deleting,
+  onConfirm,
+  onCancel,
+}: ConfirmDeleteProps) {
   return (
     <div className={styles.confirmOverlay} role="dialog" aria-modal="true">
       <div className={styles.confirmDialog}>
@@ -274,10 +290,18 @@ function ConfirmDelete({ resource, deleting, onConfirm, onCancel }: ConfirmDelet
           &ldquo;{resource.title}&rdquo; will be permanently deleted.
         </p>
         <div className={styles.confirmActions}>
-          <button className={styles.btnOutline} onClick={onCancel} disabled={deleting}>
+          <button
+            className={styles.btnOutline}
+            onClick={onCancel}
+            disabled={deleting}
+          >
             Cancel
           </button>
-          <button className={styles.btnDanger} onClick={onConfirm} disabled={deleting}>
+          <button
+            className={styles.btnDanger}
+            onClick={onConfirm}
+            disabled={deleting}
+          >
             {deleting ? "Deleting…" : "Delete"}
           </button>
         </div>
@@ -356,7 +380,11 @@ function ResourceDialog({
 
         <div className={styles.dialogBody}>
           {error && (
-            <p className={styles.formError} role="alert" data-testid="form-error">
+            <p
+              className={styles.formError}
+              role="alert"
+              data-testid="form-error"
+            >
               {error}
             </p>
           )}
@@ -537,7 +565,11 @@ function ResourceDialog({
         </div>
 
         <div className={styles.dialogFooter}>
-          <button className={styles.btnOutline} onClick={onClose} disabled={saving}>
+          <button
+            className={styles.btnOutline}
+            onClick={onClose}
+            disabled={saving}
+          >
             Cancel
           </button>
           <button
@@ -562,18 +594,42 @@ function ResourceDialog({
 
 // -- Toast --------------------------------------------------------------------
 
-interface ToastItem { id: number; message: string; isError: boolean }
+interface ToastItem {
+  id: number;
+  message: string;
+  isError: boolean;
+}
 
-function ToastList({ toasts, toastCls, toastErrCls }: {
+function ToastList({
+  toasts,
+  toastCls,
+  toastErrCls,
+}: {
   toasts: ToastItem[];
   toastCls: string;
   toastErrCls: string;
 }) {
   if (toasts.length === 0) return null;
   return (
-    <div style={{ position: "fixed", bottom: 24, right: 24, zIndex: 9999, display: "flex", flexDirection: "column", gap: 8, pointerEvents: "none" }} aria-live="polite">
+    <div
+      style={{
+        position: "fixed",
+        bottom: 24,
+        right: 24,
+        zIndex: 9999,
+        display: "flex",
+        flexDirection: "column",
+        gap: 8,
+        pointerEvents: "none",
+      }}
+      aria-live="polite"
+    >
       {toasts.map((t) => (
-        <div key={t.id} className={t.isError ? toastErrCls : toastCls} role="status">
+        <div
+          key={t.id}
+          className={t.isError ? toastErrCls : toastCls}
+          role="status"
+        >
           {t.message}
         </div>
       ))}
@@ -634,9 +690,11 @@ export function ResourcesView() {
     setLoading(true);
     setFetchError(null);
     try {
-      const res = await apiFetch<{ data: Resource[]; total: number; filtered: boolean }>(
-        "/api/resources",
-      );
+      const res = await apiFetch<{
+        data: Resource[];
+        total: number;
+        filtered: boolean;
+      }>("/api/resources");
       setResources(res.data);
       // When not filtered, total === data.length (the server skips the count query).
       // Either way, this is the user's unfiltered owned count.
@@ -649,6 +707,7 @@ export function ResourcesView() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void loadResources();
   }, [loadResources]);
 
@@ -723,10 +782,13 @@ export function ResourcesView() {
       };
 
       if (editingId) {
-        const updated = await apiFetch<Resource>(`/api/resources/${editingId}`, {
-          method: "PUT",
-          body: JSON.stringify(payload),
-        });
+        const updated = await apiFetch<Resource>(
+          `/api/resources/${editingId}`,
+          {
+            method: "PUT",
+            body: JSON.stringify(payload),
+          },
+        );
         setResources((prev) =>
           prev.map((r) => (r.id === editingId ? updated : r)),
         );
@@ -778,8 +840,14 @@ export function ResourcesView() {
 
   const renderContent = (): ReactNode => {
     if (loading) return <ResourcesLoadingContent />;
-    if (fetchError) return <ResourcesErrorContent error={fetchError} onRetry={loadResources} />;
-    if (filtered.length === 0) return <ResourcesEmptyContent hasNoneOwned={hasNoneOwned} onAdd={openAdd} />;
+    if (fetchError)
+      return (
+        <ResourcesErrorContent error={fetchError} onRetry={loadResources} />
+      );
+    if (filtered.length === 0)
+      return (
+        <ResourcesEmptyContent hasNoneOwned={hasNoneOwned} onAdd={openAdd} />
+      );
     return (
       <ResourcesListContent
         resources={filtered}
@@ -957,7 +1025,11 @@ export function ResourcesView() {
       />
 
       {/* -- Toasts -- */}
-      <ToastList toasts={toasts} toastCls={styles.toast} toastErrCls={styles.toastError} />
+      <ToastList
+        toasts={toasts}
+        toastCls={styles.toast}
+        toastErrCls={styles.toastError}
+      />
     </div>
   );
 }

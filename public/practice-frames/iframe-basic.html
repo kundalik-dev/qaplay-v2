@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Iframe</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 16px; font-family: system-ui, sans-serif; font-size: 13px; background: #fff; color: #111; }
+    label { display: block; font-weight: 600; margin-bottom: 5px; color: #374151; }
+    input[type="text"] { display: block; width: 100%; max-width: 260px; height: 34px; padding: 0 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; color: #111; outline: none; }
+    input[type="text"]:focus { border-color: #6366f1; box-shadow: 0 0 0 2px rgba(99,102,241,.2); }
+    .row { display: flex; gap: 8px; margin-top: 4px; align-items: flex-end; }
+    button { height: 34px; padding: 0 14px; background: #6366f1; color: #fff; border: none; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+    button:hover { background: #4f46e5; }
+    #result { margin-top: 10px; font-size: 12px; color: #6b7280; min-height: 18px; }
+    #result.success { color: #059669; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <label for="iframe-name-input">Your name</label>
+  <div class="row">
+    <input
+      type="text"
+      id="iframe-name-input"
+      data-testid="iframe-name-input"
+      name="name"
+      placeholder="Enter your name"
+      autocomplete="off"
+    />
+    <button
+      id="iframe-submit-btn"
+      data-testid="iframe-submit-btn"
+      type="button"
+      onclick="handleSubmit()"
+    >
+      Submit
+    </button>
+  </div>
+  <p id="result">Not submitted yet</p>
+
+  <script>
+    function handleSubmit() {
+      var val = document.getElementById('iframe-name-input').value.trim();
+      var result = document.getElementById('result');
+      if (val) {
+        result.textContent = 'Hello, ' + val + '!';
+        result.className = 'success';
+        parent.postMessage({ type: 'iframe-s01', value: 'Submitted: ' + val }, '*');
+      } else {
+        result.textContent = 'Please enter a name first.';
+        result.className = '';
+        parent.postMessage({ type: 'iframe-s01', value: 'Empty — no name entered' }, '*');
+      }
+    }
+    document.getElementById('iframe-name-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') handleSubmit();
+    });
+  </script>
+</body>
+</html>

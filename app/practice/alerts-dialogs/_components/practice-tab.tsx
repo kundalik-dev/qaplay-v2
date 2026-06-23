@@ -69,8 +69,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             Interactive Scenarios
           </p>
 
-          <div className="flex flex-col gap-[10px]" data-testid="scenarios-list">
-
+          <div
+            className="flex flex-col gap-[10px]"
+            data-testid="scenarios-list"
+          >
             {/* ── S01 – Close Info Alert (Beginner) ──────────────────────── */}
             <ScenarioCard
               {...alertsDialogsScenarios[0]}
@@ -261,7 +263,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
           </div>
         </section>
 
-        <aside className={styles.practiceSidebar} data-testid="practice-sidebar">
+        <aside
+          className={styles.practiceSidebar}
+          data-testid="practice-sidebar"
+        >
           <ProgressWidget items={progressItems} />
           <FrameworkMethodsPanel methods={frameworkMethods} />
           <UpNextCard {...upNext} />
@@ -561,7 +566,9 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </div>
             <div className={styles.dialogBody}>
               {/* No data-testid on badge or paragraph — practice text assertions */}
-              <span className={`${styles.dialogBadge} ${styles.dialogBadgeScheduled}`}>
+              <span
+                className={`${styles.dialogBadge} ${styles.dialogBadgeScheduled}`}
+              >
                 Scheduled
               </span>
               <p className={styles.dialogBodyText}>

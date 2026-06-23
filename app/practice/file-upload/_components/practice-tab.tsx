@@ -1,9 +1,17 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { ScenarioCard, ProgressWidget, FrameworkMethodsPanel, UpNextCard } from "@/components/practice";
+import {
+  ScenarioCard,
+  ProgressWidget,
+  FrameworkMethodsPanel,
+  UpNextCard,
+} from "@/components/practice";
 import type { ProgressItem } from "@/components/practice";
-import { fileUploadScenarios, frameworkMethods } from "@/data/practice-data/file-upload/scenarios";
+import {
+  fileUploadScenarios,
+  frameworkMethods,
+} from "@/data/practice-data/file-upload/scenarios";
 import type { PracticePageMeta } from "@/data/practice-data/types";
 import styles from "./file-upload.module.css";
 
@@ -13,7 +21,7 @@ interface PracticeTabProps {
 
 /* ── Helpers ─────────────────────────────────────────────────── */
 function formatBytes(bytes: number): string {
-  if (bytes < 1024)       return `${bytes} B`;
+  if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
@@ -23,13 +31,20 @@ function FileIcon() {
 }
 
 /* ── S01: Single file input ──────────────────────────────────── */
-function SingleFileScenario({ onComplete }: { onComplete: (msg: string) => void }) {
+function SingleFileScenario({
+  onComplete,
+}: {
+  onComplete: (msg: string) => void;
+}) {
   const [files, setFiles] = useState<File[]>([]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const selected = e.target.files ? [...e.target.files] : [];
     setFiles(selected);
-    if (selected.length) onComplete(`"${selected[0].name}" selected (${formatBytes(selected[0].size)})`);
+    if (selected.length)
+      onComplete(
+        `"${selected[0].name}" selected (${formatBytes(selected[0].size)})`,
+      );
   }
 
   return (
@@ -45,7 +60,10 @@ function SingleFileScenario({ onComplete }: { onComplete: (msg: string) => void 
         <ul className={styles.fileList}>
           {files.map((f) => (
             <li key={f.name} className={styles.fileListItem}>
-              <FileIcon /> {f.name} <span className="ml-auto text-[11px] text-muted-foreground">{formatBytes(f.size)}</span>
+              <FileIcon /> {f.name}{" "}
+              <span className="ml-auto text-[11px] text-muted-foreground">
+                {formatBytes(f.size)}
+              </span>
             </li>
           ))}
         </ul>
@@ -55,13 +73,20 @@ function SingleFileScenario({ onComplete }: { onComplete: (msg: string) => void 
 }
 
 /* ── S02: Multiple files ─────────────────────────────────────── */
-function MultiFileScenario({ onComplete }: { onComplete: (msg: string) => void }) {
+function MultiFileScenario({
+  onComplete,
+}: {
+  onComplete: (msg: string) => void;
+}) {
   const [files, setFiles] = useState<File[]>([]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const selected = e.target.files ? [...e.target.files] : [];
     setFiles(selected);
-    if (selected.length) onComplete(`${selected.length} file(s) selected: ${selected.map((f) => f.name).join(", ")}`);
+    if (selected.length)
+      onComplete(
+        `${selected.length} file(s) selected: ${selected.map((f) => f.name).join(", ")}`,
+      );
   }
 
   return (
@@ -78,7 +103,10 @@ function MultiFileScenario({ onComplete }: { onComplete: (msg: string) => void }
         <ul className={styles.fileList}>
           {files.map((f) => (
             <li key={f.name} className={styles.fileListItem}>
-              <FileIcon /> {f.name} <span className="ml-auto text-[11px] text-muted-foreground">{formatBytes(f.size)}</span>
+              <FileIcon /> {f.name}{" "}
+              <span className="ml-auto text-[11px] text-muted-foreground">
+                {formatBytes(f.size)}
+              </span>
             </li>
           ))}
         </ul>
@@ -88,7 +116,11 @@ function MultiFileScenario({ onComplete }: { onComplete: (msg: string) => void }
 }
 
 /* ── S03: Filename display (no testid on inner span) ─────────── */
-function FilenameDisplayScenario({ onComplete }: { onComplete: (msg: string) => void }) {
+function FilenameDisplayScenario({
+  onComplete,
+}: {
+  onComplete: (msg: string) => void;
+}) {
   const [name, setName] = useState<string | null>(null);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -109,21 +141,34 @@ function FilenameDisplayScenario({ onComplete }: { onComplete: (msg: string) => 
       {/* Inner span has no data-testid — practice scoped locator */}
       <div data-testid="fu-filename-display" className={styles.filenameDisplay}>
         <span className={styles.filenameIcon}>{name ? "📄" : "🗂️"}</span>
-        {name
-          ? <span role="status">{name}</span>
-          : <span className="text-muted-foreground text-[12px]">No file chosen</span>}
+        {name ? (
+          <span role="status">{name}</span>
+        ) : (
+          <span className="text-[12px] text-muted-foreground">
+            No file chosen
+          </span>
+        )}
       </div>
       <p className="text-[11px] text-muted-foreground">
-        Inner <code>&lt;span&gt;</code> has no <code>data-testid</code>. Target via{" "}
-        <code>[data-testid=&quot;fu-filename-display&quot;] span[role=&quot;status&quot;]</code>.
+        Inner <code>&lt;span&gt;</code> has no <code>data-testid</code>. Target
+        via{" "}
+        <code>
+          [data-testid=&quot;fu-filename-display&quot;]
+          span[role=&quot;status&quot;]
+        </code>
+        .
       </p>
     </div>
   );
 }
 
 /* ── S04: Drag & drop zone ───────────────────────────────────── */
-function DragDropScenario({ onComplete }: { onComplete: (msg: string) => void }) {
-  const [dragging, setDragging]     = useState(false);
+function DragDropScenario({
+  onComplete,
+}: {
+  onComplete: (msg: string) => void;
+}) {
+  const [dragging, setDragging] = useState(false);
   const [droppedFile, setDroppedFile] = useState<string | null>(null);
 
   function handleDragOver(e: React.DragEvent) {
@@ -175,27 +220,36 @@ function DragDropScenario({ onComplete }: { onComplete: (msg: string) => void })
           {droppedFile ? droppedFile : "Drag & drop a file here"}
         </span>
         <span className={styles.dropSub}>
-          {droppedFile ? "File received" : "or click to browse · hidden input inside zone"}
+          {droppedFile
+            ? "File received"
+            : "or click to browse · hidden input inside zone"}
         </span>
       </div>
       <p className="text-[11px] text-muted-foreground">
-        Automation tip: target <code>[data-testid=&quot;fu-drop-input&quot;]</code> inside the zone
-        and use <code>setInputFiles()</code>.
+        Automation tip: target{" "}
+        <code>[data-testid=&quot;fu-drop-input&quot;]</code> inside the zone and
+        use <code>setInputFiles()</code>.
       </p>
     </div>
   );
 }
 
 /* ── S05: Type restriction ───────────────────────────────────── */
-function TypeRestrictionScenario({ onComplete }: { onComplete: (msg: string) => void }) {
-  const [error, setError]     = useState<string | null>(null);
+function TypeRestrictionScenario({
+  onComplete,
+}: {
+  onComplete: (msg: string) => void;
+}) {
+  const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
     if (!file.type.startsWith("image/")) {
-      setError(`"${file.name}" is not an image file. Only image/* is accepted.`);
+      setError(
+        `"${file.name}" is not an image file. Only image/* is accepted.`,
+      );
       setSuccess(null);
       onComplete(`Type error: "${file.name}" rejected`);
     } else {
@@ -208,7 +262,8 @@ function TypeRestrictionScenario({ onComplete }: { onComplete: (msg: string) => 
   return (
     <div className={styles.fileInputWrapper}>
       <p className="text-[11px] text-muted-foreground">
-        Input has <code>accept=&quot;image/*&quot;</code>. Upload a non-image file to trigger the error.
+        Input has <code>accept=&quot;image/*&quot;</code>. Upload a non-image
+        file to trigger the error.
       </p>
       <input
         id="fu-type-input"
@@ -219,13 +274,15 @@ function TypeRestrictionScenario({ onComplete }: { onComplete: (msg: string) => 
         onChange={handleChange}
       />
       {error && (
-        <div data-testid="fu-type-error" role="alert" className={styles.errorMsg}>
+        <div
+          data-testid="fu-type-error"
+          role="alert"
+          className={styles.errorMsg}
+        >
           ⚠ {error}
         </div>
       )}
-      {success && (
-        <div className={styles.successMsg}>{success}</div>
-      )}
+      {success && <div className={styles.successMsg}>{success}</div>}
     </div>
   );
 }
@@ -233,8 +290,12 @@ function TypeRestrictionScenario({ onComplete }: { onComplete: (msg: string) => 
 /* ── S06: Size validation (error has no testid) ──────────────── */
 const MAX_SIZE_MB = 2;
 
-function SizeValidationScenario({ onComplete }: { onComplete: (msg: string) => void }) {
-  const [error, setError]     = useState<string | null>(null);
+function SizeValidationScenario({
+  onComplete,
+}: {
+  onComplete: (msg: string) => void;
+}) {
+  const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -242,9 +303,13 @@ function SizeValidationScenario({ onComplete }: { onComplete: (msg: string) => v
     if (!file) return;
     const sizeMB = file.size / (1024 * 1024);
     if (sizeMB > MAX_SIZE_MB) {
-      setError(`File is too large (${sizeMB.toFixed(1)} MB). Maximum allowed is ${MAX_SIZE_MB} MB.`);
+      setError(
+        `File is too large (${sizeMB.toFixed(1)} MB). Maximum allowed is ${MAX_SIZE_MB} MB.`,
+      );
       setSuccess(null);
-      onComplete(`Size error: ${sizeMB.toFixed(1)} MB exceeds ${MAX_SIZE_MB} MB`);
+      onComplete(
+        `Size error: ${sizeMB.toFixed(1)} MB exceeds ${MAX_SIZE_MB} MB`,
+      );
     } else {
       setSuccess(`✅ "${file.name}" accepted (${formatBytes(file.size)})`);
       setError(null);
@@ -257,7 +322,8 @@ function SizeValidationScenario({ onComplete }: { onComplete: (msg: string) => v
     <div data-testid="fu-size-panel" className={styles.validationPanel}>
       <p className="text-[11px] text-muted-foreground">
         Max size: <strong>2 MB</strong>. Error paragraph has <strong>no</strong>{" "}
-        <code>data-testid</code> — locate via <code>.error-msg</code> class inside the panel.
+        <code>data-testid</code> — locate via <code>.error-msg</code> class
+        inside the panel.
       </p>
       <input
         id="fu-size-input"
@@ -268,17 +334,21 @@ function SizeValidationScenario({ onComplete }: { onComplete: (msg: string) => v
       />
       {error && (
         /* Intentionally no data-testid — practice scoped locator */
-        <p className={`error-msg ${styles.errorMsg}`} role="alert">⚠ {error}</p>
+        <p className={`error-msg ${styles.errorMsg}`} role="alert">
+          ⚠ {error}
+        </p>
       )}
-      {success && (
-        <p className={styles.successMsg}>{success}</p>
-      )}
+      {success && <p className={styles.successMsg}>{success}</p>}
     </div>
   );
 }
 
 /* ── S07: Hidden file input triggered by custom button ───────── */
-function HiddenInputScenario({ onComplete }: { onComplete: (msg: string) => void }) {
+function HiddenInputScenario({
+  onComplete,
+}: {
+  onComplete: (msg: string) => void;
+}) {
   const hiddenRef = useRef<HTMLInputElement>(null);
   const [selected, setSelected] = useState<string | null>(null);
 
@@ -294,9 +364,13 @@ function HiddenInputScenario({ onComplete }: { onComplete: (msg: string) => void
     /* outer zone has testid; hidden input has NO testid */
     <div data-testid="fu-hidden-zone" className={styles.hiddenZone}>
       <p className="text-[11px] text-muted-foreground">
-        The styled button triggers a visually hidden <code>input[type=&quot;file&quot;]</code>.
-        The input has <strong>no</strong> <code>data-testid</code>. Target via:{" "}
-        <code>[data-testid=&quot;fu-hidden-zone&quot;] input[type=&quot;file&quot;]</code>.
+        The styled button triggers a visually hidden{" "}
+        <code>input[type=&quot;file&quot;]</code>. The input has{" "}
+        <strong>no</strong> <code>data-testid</code>. Target via:{" "}
+        <code>
+          [data-testid=&quot;fu-hidden-zone&quot;] input[type=&quot;file&quot;]
+        </code>
+        .
       </p>
       {/* Hidden input — no data-testid intentionally */}
       <input
@@ -326,11 +400,15 @@ function HiddenInputScenario({ onComplete }: { onComplete: (msg: string) => void
 }
 
 /* ── S08: Upload progress ────────────────────────────────────── */
-function ProgressScenario({ onComplete }: { onComplete: (msg: string) => void }) {
-  const [file, setFile]           = useState<File | null>(null);
-  const [progress, setProgress]   = useState(0);
+function ProgressScenario({
+  onComplete,
+}: {
+  onComplete: (msg: string) => void;
+}) {
+  const [file, setFile] = useState<File | null>(null);
+  const [progress, setProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
-  const [done, setDone]           = useState(false);
+  const [done, setDone] = useState(false);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0] ?? null;
@@ -389,7 +467,10 @@ function ProgressScenario({ onComplete }: { onComplete: (msg: string) => void })
             aria-label="Upload progress"
             className={styles.progressTrack}
           >
-            <div className={styles.progressFill} style={{ width: `${progress}%` }} />
+            <div
+              className={styles.progressFill}
+              style={{ width: `${progress}%` }}
+            />
           </div>
           <p className={styles.progressLabel}>{progress}%</p>
         </>
@@ -437,68 +518,136 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
           <p className="mb-3 text-[10.5px] font-bold tracking-[0.08em] text-muted-foreground uppercase">
             Interactive Scenarios
           </p>
-          <div className="flex flex-col gap-[10px]" data-testid="scenarios-list">
-
+          <div
+            className="flex flex-col gap-[10px]"
+            data-testid="scenarios-list"
+          >
             {/* ── S01: Single file ─────────────────────────────── */}
-            <ScenarioCard {...fileUploadScenarios[0]} onComplete={() => markDone("s01")}>
+            <ScenarioCard
+              {...fileUploadScenarios[0]}
+              onComplete={() => markDone("s01")}
+            >
               {({ setResult }) => (
-                <SingleFileScenario onComplete={(msg) => { setResult(msg); markDone("s01"); }} />
+                <SingleFileScenario
+                  onComplete={(msg) => {
+                    setResult(msg);
+                    markDone("s01");
+                  }}
+                />
               )}
             </ScenarioCard>
 
             {/* ── S02: Multiple files ───────────────────────────── */}
-            <ScenarioCard {...fileUploadScenarios[1]} onComplete={() => markDone("s02")}>
+            <ScenarioCard
+              {...fileUploadScenarios[1]}
+              onComplete={() => markDone("s02")}
+            >
               {({ setResult }) => (
-                <MultiFileScenario onComplete={(msg) => { setResult(msg); markDone("s02"); }} />
+                <MultiFileScenario
+                  onComplete={(msg) => {
+                    setResult(msg);
+                    markDone("s02");
+                  }}
+                />
               )}
             </ScenarioCard>
 
             {/* ── S03: Filename display ─────────────────────────── */}
-            <ScenarioCard {...fileUploadScenarios[2]} onComplete={() => markDone("s03")}>
+            <ScenarioCard
+              {...fileUploadScenarios[2]}
+              onComplete={() => markDone("s03")}
+            >
               {({ setResult }) => (
-                <FilenameDisplayScenario onComplete={(msg) => { setResult(msg); markDone("s03"); }} />
+                <FilenameDisplayScenario
+                  onComplete={(msg) => {
+                    setResult(msg);
+                    markDone("s03");
+                  }}
+                />
               )}
             </ScenarioCard>
 
             {/* ── S04: Drag & drop ──────────────────────────────── */}
-            <ScenarioCard {...fileUploadScenarios[3]} onComplete={() => markDone("s04")}>
+            <ScenarioCard
+              {...fileUploadScenarios[3]}
+              onComplete={() => markDone("s04")}
+            >
               {({ setResult }) => (
-                <DragDropScenario onComplete={(msg) => { setResult(msg); markDone("s04"); }} />
+                <DragDropScenario
+                  onComplete={(msg) => {
+                    setResult(msg);
+                    markDone("s04");
+                  }}
+                />
               )}
             </ScenarioCard>
 
             {/* ── S05: Type restriction ─────────────────────────── */}
-            <ScenarioCard {...fileUploadScenarios[4]} onComplete={() => markDone("s05")}>
+            <ScenarioCard
+              {...fileUploadScenarios[4]}
+              onComplete={() => markDone("s05")}
+            >
               {({ setResult }) => (
-                <TypeRestrictionScenario onComplete={(msg) => { setResult(msg); markDone("s05"); }} />
+                <TypeRestrictionScenario
+                  onComplete={(msg) => {
+                    setResult(msg);
+                    markDone("s05");
+                  }}
+                />
               )}
             </ScenarioCard>
 
             {/* ── S06: Size validation (Hard) ───────────────────── */}
-            <ScenarioCard {...fileUploadScenarios[5]} onComplete={() => markDone("s06")}>
+            <ScenarioCard
+              {...fileUploadScenarios[5]}
+              onComplete={() => markDone("s06")}
+            >
               {({ setResult }) => (
-                <SizeValidationScenario onComplete={(msg) => { setResult(msg); markDone("s06"); }} />
+                <SizeValidationScenario
+                  onComplete={(msg) => {
+                    setResult(msg);
+                    markDone("s06");
+                  }}
+                />
               )}
             </ScenarioCard>
 
             {/* ── S07: Hidden input (Challenge) ─────────────────── */}
-            <ScenarioCard {...fileUploadScenarios[6]} onComplete={() => markDone("s07")}>
+            <ScenarioCard
+              {...fileUploadScenarios[6]}
+              onComplete={() => markDone("s07")}
+            >
               {({ setResult }) => (
-                <HiddenInputScenario onComplete={(msg) => { setResult(msg); markDone("s07"); }} />
+                <HiddenInputScenario
+                  onComplete={(msg) => {
+                    setResult(msg);
+                    markDone("s07");
+                  }}
+                />
               )}
             </ScenarioCard>
 
             {/* ── S08: Progress bar (Challenge) ─────────────────── */}
-            <ScenarioCard {...fileUploadScenarios[7]} onComplete={() => markDone("s08")}>
+            <ScenarioCard
+              {...fileUploadScenarios[7]}
+              onComplete={() => markDone("s08")}
+            >
               {({ setResult }) => (
-                <ProgressScenario onComplete={(msg) => { setResult(msg); markDone("s08"); }} />
+                <ProgressScenario
+                  onComplete={(msg) => {
+                    setResult(msg);
+                    markDone("s08");
+                  }}
+                />
               )}
             </ScenarioCard>
-
           </div>
         </section>
 
-        <aside className={styles.practiceSidebar} data-testid="practice-sidebar">
+        <aside
+          className={styles.practiceSidebar}
+          data-testid="practice-sidebar"
+        >
           <ProgressWidget items={progressItems} />
           <FrameworkMethodsPanel methods={frameworkMethods} />
           <UpNextCard {...upNext} />

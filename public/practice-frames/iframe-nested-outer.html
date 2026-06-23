@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Outer Frame</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 12px; font-family: system-ui, sans-serif; font-size: 12px; background: #f8fafc; color: #1e293b; }
+    p { margin: 0 0 8px; font-size: 11px; color: #64748b; }
+    iframe { display: block; width: 100%; border: 2px dashed #cbd5e1; border-radius: 8px; background: #fff; }
+  </style>
+</head>
+<body>
+  <p>Outer Frame — contains Inner Frame below</p>
+  <!--
+    Inner iframe: title="Inner Frame" but NO data-testid.
+    Locate from parent: page.frameLocator('[data-testid="iframe-outer"]')
+                             .frameLocator('iframe[title="Inner Frame"]')
+  -->
+  <iframe
+    src="/practice-frames/iframe-nested-inner.html"
+    title="Inner Frame"
+    name="inner-frame"
+    height="130"
+    frameborder="0"
+    scrolling="no"
+  ></iframe>
+</body>
+</html>

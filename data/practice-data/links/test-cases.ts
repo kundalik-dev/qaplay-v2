@@ -8,9 +8,9 @@ export const linksTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Locate the link element using an appropriate selector.',
-      'Click the link.',
-      'Assert that the current page URL matches the link\'s expected destination.',
+      "Locate the link element using an appropriate selector.",
+      "Click the link.",
+      "Assert that the current page URL matches the link's expected destination.",
     ],
   },
   {
@@ -20,9 +20,9 @@ export const linksTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Locate the link element.',
-      'Retrieve its visible text.',
-      'Assert the text matches the expected label.',
+      "Locate the link element.",
+      "Retrieve its visible text.",
+      "Assert the text matches the expected label.",
     ],
   },
   {
@@ -32,10 +32,10 @@ export const linksTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Locate the external link element.',
+      "Locate the external link element.",
       'Assert that it has the <code>target="_blank"</code> attribute.',
-      'Click the link and switch to the new window handle/context.',
-      'Assert the URL in the new tab.',
+      "Click the link and switch to the new window handle/context.",
+      "Assert the URL in the new tab.",
     ],
   },
   {
@@ -45,22 +45,23 @@ export const linksTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Locate an internal link element.',
+      "Locate an internal link element.",
       'Assert that it does NOT have <code>target="_blank"</code>.',
-      'Click the link.',
-      'Assert the URL changes in the current context.',
+      "Click the link.",
+      "Assert the URL changes in the current context.",
     ],
   },
   {
     id: "LNK_005",
     scenario: "Verify broken link returns HTTP error status",
-    expected: "An HTTP request to the link's href should return an error status (e.g., 404, 500).",
+    expected:
+      "An HTTP request to the link's href should return an error status (e.g., 404, 500).",
     type: "negative",
     priority: "high",
     steps: [
-      'Extract the <code>href</code> attribute from the link.',
-      'Send an HTTP GET request to the extracted URL.',
-      'Assert that the response status code is >= 400.',
+      "Extract the <code>href</code> attribute from the link.",
+      "Send an HTTP GET request to the extracted URL.",
+      "Assert that the response status code is >= 400.",
     ],
   },
   {
@@ -70,9 +71,9 @@ export const linksTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Simulate the <code>Tab</code> key to focus the link.',
-      'Simulate the <code>Enter</code> key.',
-      'Assert that the link click action is triggered.',
+      "Simulate the <code>Tab</code> key to focus the link.",
+      "Simulate the <code>Enter</code> key.",
+      "Assert that the link click action is triggered.",
     ],
   },
   {
@@ -82,9 +83,9 @@ export const linksTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Locate the link element.',
-      'Retrieve the <code>href</code> attribute.',
-      'Assert the attribute value equals the expected URL.',
+      "Locate the link element.",
+      "Retrieve the <code>href</code> attribute.",
+      "Assert the attribute value equals the expected URL.",
     ],
   },
   {
@@ -94,9 +95,9 @@ export const linksTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Locate the link element.',
-      'Check for an <code>aria-label</code> or visually hidden text if the link has no visible text (like an image link).',
-      'Assert the accessibility text is present and correct.',
+      "Locate the link element.",
+      "Check for an <code>aria-label</code> or visually hidden text if the link has no visible text (like an image link).",
+      "Assert the accessibility text is present and correct.",
     ],
   },
   {
@@ -106,45 +107,48 @@ export const linksTestCases: TestCase[] = [
     type: "positive",
     priority: "low",
     steps: [
-      'Locate the link element.',
-      'Simulate a mouse hover action.',
-      'Assert that computed styles (e.g., text-decoration or color) change.',
+      "Locate the link element.",
+      "Simulate a mouse hover action.",
+      "Assert that computed styles (e.g., text-decoration or color) change.",
     ],
   },
   {
     id: "LNK_010",
     scenario: "Verify right-click on link shows browser context menu",
-    expected: "Right-clicking should open the context menu without custom interference.",
+    expected:
+      "Right-clicking should open the context menu without custom interference.",
     type: "positive",
     priority: "low",
     steps: [
-      'Locate the link element.',
-      'Perform a context-click (right-click).',
-      'Ensure no custom overlay blocks the default browser menu.',
+      "Locate the link element.",
+      "Perform a context-click (right-click).",
+      "Ensure no custom overlay blocks the default browser menu.",
     ],
   },
   {
     id: "LNK_011",
     scenario: "Verify link with dynamic URL resolves correctly",
-    expected: "Dynamically generated links should lead to the correct specific resource.",
+    expected:
+      "Dynamically generated links should lead to the correct specific resource.",
     type: "positive",
     priority: "high",
     steps: [
-      'Identify a link whose URL is generated dynamically (e.g., contains an ID).',
-      'Extract the <code>href</code> and navigate to it.',
-      'Assert the target page loads the corresponding specific resource.',
+      "Identify a link whose URL is generated dynamically (e.g., contains an ID).",
+      "Extract the <code>href</code> and navigate to it.",
+      "Assert the target page loads the corresponding specific resource.",
     ],
   },
   {
     id: "LNK_012",
     scenario: "Verify link page loads without console errors",
-    expected: "Clicking a link and navigating should not produce JavaScript errors.",
+    expected:
+      "Clicking a link and navigating should not produce JavaScript errors.",
     type: "edge",
     priority: "medium",
     steps: [
-      'Attach a listener to the browser console.',
-      'Click the target link.',
-      'Wait for the new page to load and assert no console errors are thrown.',
+      "Attach a listener to the browser console.",
+      "Click the target link.",
+      "Wait for the new page to load and assert no console errors are thrown.",
     ],
   },
 ];

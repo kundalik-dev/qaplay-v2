@@ -298,10 +298,10 @@ export const alertsDialogsMethodRows: MethodRow[] = [
   },
   {
     action: "Scope to dialog",
-    selenium: 'findElement(By.css(\'[role="dialog"]\'))',
+    selenium: "findElement(By.css('[role=\"dialog\"]'))",
     playwrightJs: "getByRole('dialog')",
     playwrightPy: "get_by_role('dialog')",
-    cypress: 'get(\'[role="dialog"]\')',
+    cypress: "get('[role=\"dialog\"]')",
   },
   {
     action: "Escape key",
@@ -319,29 +319,30 @@ export const alertsDialogsMethodRows: MethodRow[] = [
   },
   {
     action: "Aria-label button",
-    selenium: 'findElement(By.css("[aria-label=\'...\']"))',
+    selenium: "findElement(By.css(\"[aria-label='...']\"))",
     playwrightJs: "getByRole('button', { name: '...' })",
     playwrightPy: "get_by_role('button', name='...')",
-    cypress: 'find("[aria-label=\'...\']")',
+    cypress: "find(\"[aria-label='...']\")",
   },
 ];
 
 export const alertsDialogsFaq: FaqItem[] = [
   {
-    question: "How do I wait for a dialog to appear before interacting with it?",
+    question:
+      "How do I wait for a dialog to appear before interacting with it?",
     answer:
       "Use Playwright's expect(dialog).toBeVisible(), Selenium's WebDriverWait with visibilityOf, or Cypress's should('be.visible'). Never interact with elements before asserting visibility.",
     testId: "faq-1",
   },
   {
-    question:
-      "How do I handle a dialog button that has no data-testid?",
+    question: "How do I handle a dialog button that has no data-testid?",
     answer:
       "First scope into the dialog with getByRole('dialog') or getByTestId on the dialog root. Then target the button by aria-label, role + name, or visible text. Avoid unscoped text selectors that could match buttons elsewhere on the page.",
     testId: "faq-2",
   },
   {
-    question: "What is the difference between clicking the backdrop vs the dialog box?",
+    question:
+      "What is the difference between clicking the backdrop vs the dialog box?",
     answer:
       "The backdrop is the full-screen overlay. The dialog box is the centered panel on top. Clicking the dialog box stops propagation so the backdrop close handler never fires. To click the backdrop, use a position value in the corner of the overlay element — outside the dialog box bounds.",
     testId: "faq-3",

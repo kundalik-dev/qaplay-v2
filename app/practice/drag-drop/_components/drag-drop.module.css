@@ -1,0 +1,537 @@
+/* ── Shared layout ───────────────────────────────────────────── */
+.practiceLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 24px;
+  padding-block: 24px 64px;
+}
+
+.practiceSidebar {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .practiceLayout {
+    grid-template-columns: 1fr;
+  }
+  .practiceSidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .practiceLayout {
+    gap: 16px;
+    padding-block: 20px 48px;
+  }
+}
+
+/* ── S01: Basic drop zone ────────────────────────────────────── */
+.basicArea {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.draggableItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  background: color-mix(in srgb, var(--primary) 10%, var(--card));
+  color: var(--foreground);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: grab;
+  user-select: none;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s,
+    opacity 0.15s;
+  text-align: center;
+  padding: 8px;
+}
+
+.draggableItem:active {
+  cursor: grabbing;
+}
+
+.draggableItemDragging {
+  opacity: 0.4;
+  border-color: var(--primary);
+}
+
+.dropZone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+  min-height: 80px;
+  border-radius: 10px;
+  border: 2px dashed var(--border);
+  background: var(--card);
+  color: var(--muted-foreground);
+  font-size: 12px;
+  text-align: center;
+  padding: 12px;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.dropZoneOver {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, var(--card));
+}
+
+.dropZoneFilled {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--primary) 40%, transparent);
+  background: color-mix(in srgb, var(--primary) 6%, var(--card));
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+/* ── S02: Multi-zone ─────────────────────────────────────────── */
+.multiZoneArea {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cardRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.zoneRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.zoneCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 60px;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: grab;
+  user-select: none;
+  transition:
+    opacity 0.15s,
+    border-color 0.15s;
+  text-align: center;
+  padding: 6px;
+}
+
+.zoneCard:active {
+  cursor: grabbing;
+}
+.zoneCardDragging {
+  opacity: 0.35;
+}
+
+.labelledZone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  min-height: 72px;
+  border-radius: 8px;
+  border: 2px dashed var(--border);
+  background: var(--card);
+  font-size: 11px;
+  color: var(--muted-foreground);
+  padding: 8px;
+  gap: 4px;
+  text-align: center;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.labelledZoneOver {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, var(--card));
+}
+
+.labelledZoneFilled {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--primary) 40%, transparent);
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.zoneLabel {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+  margin-bottom: 2px;
+}
+
+/* ── S03: Sortable list ───────────────────────────────────────── */
+.sortList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 320px;
+}
+
+.sortItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: grab;
+  user-select: none;
+  transition:
+    border-color 0.15s,
+    background 0.15s,
+    opacity 0.15s;
+}
+
+.sortItem:active {
+  cursor: grabbing;
+}
+
+.sortItemDragging {
+  opacity: 0.35;
+  border-color: var(--primary);
+}
+
+.sortItemOver {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 6%, var(--card));
+}
+
+.sortHandle {
+  color: var(--muted-foreground);
+  font-size: 14px;
+  cursor: grab;
+  flex-shrink: 0;
+}
+
+/* ── S04: Kanban board ────────────────────────────────────────── */
+.kanbanBoard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .kanbanBoard {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kanbanColumn {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  overflow: hidden;
+}
+
+.kanbanColumnOver {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 4%, var(--card));
+}
+
+.kanbanHeader {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kanbanCount {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  min-width: 18px;
+  padding: 0 5px;
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--foreground) 10%, transparent);
+  font-size: 10px;
+  font-weight: 700;
+  justify-content: center;
+}
+
+.kanbanBody {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 80px;
+}
+
+.kanbanTask {
+  padding: 10px 12px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: grab;
+  user-select: none;
+  transition:
+    border-color 0.15s,
+    opacity 0.15s;
+  line-height: 1.4;
+}
+
+.kanbanTask:active {
+  cursor: grabbing;
+}
+
+.kanbanTaskDragging {
+  opacity: 0.3;
+  border-color: var(--primary);
+}
+
+/* ── S05: Type-restricted zones ──────────────────────────────── */
+.typedArea {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shapeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.shapeItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  user-select: none;
+  transition: opacity 0.15s;
+  gap: 6px;
+}
+
+.shapeItem:active {
+  cursor: grabbing;
+}
+.shapeItemDragging {
+  opacity: 0.3;
+}
+
+.shapeCircle {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 3px solid #3b82f6;
+  background: color-mix(in srgb, #3b82f6 15%, var(--card));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+.shapeSquare {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  border: 3px solid #f59e0b;
+  background: color-mix(in srgb, #f59e0b 15%, var(--card));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+.shapeTriangle {
+  width: 0;
+  height: 0;
+  border-left: 27px solid transparent;
+  border-right: 27px solid transparent;
+  border-bottom: 48px solid color-mix(in srgb, #10b981 30%, var(--card));
+}
+
+.shapeLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+.typedZoneRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.typedZone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  min-height: 90px;
+  border-radius: 10px;
+  border: 2px dashed var(--border);
+  background: var(--card);
+  font-size: 11px;
+  color: var(--muted-foreground);
+  padding: 8px;
+  text-align: center;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+  gap: 4px;
+}
+
+.typedZoneOver {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, var(--card));
+}
+
+.typedZoneFilled {
+  border-style: solid;
+  border-color: #10b981;
+  background: color-mix(in srgb, #10b981 8%, var(--card));
+}
+
+.typedZoneError {
+  border-style: solid;
+  border-color: var(--destructive);
+  background: color-mix(in srgb, var(--destructive) 6%, var(--card));
+}
+
+.errorMsg {
+  font-size: 11px;
+  color: var(--destructive);
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* ── S06: Multi-column board ──────────────────────────────────── */
+.boardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 700px) {
+  .boardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.boardColumn {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  overflow: hidden;
+}
+
+.boardColumnOver {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 4%, var(--card));
+}
+
+.boardHeader {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.boardBody {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 80px;
+}
+
+.boardCard {
+  padding: 9px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  font-size: 12px;
+  cursor: grab;
+  user-select: none;
+  transition:
+    border-color 0.15s,
+    opacity 0.15s;
+  line-height: 1.35;
+}
+
+.boardCard:active {
+  cursor: grabbing;
+}
+
+.boardCardDragging {
+  opacity: 0.3;
+  border-color: var(--primary);
+}
+
+/* ── Reset button ─────────────────────────────────────────────── */
+.resetBtn {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--muted-foreground);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.1s,
+    color 0.1s;
+  margin-top: 8px;
+}
+
+.resetBtn:hover {
+  background: var(--accent);
+  color: var(--foreground);
+}

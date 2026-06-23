@@ -1,61 +1,79 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
-import { useBankStore, Transaction } from '../store/useBankStore';
-import '../styles/bank.css';
+import React, { useState, useMemo } from "react";
+import { useBankStore, Transaction } from "../store/useBankStore";
+import "../styles/bank.css";
 
 export default function DashboardPage() {
-  const { balance, transactions, deleteTransaction, user, accounts } = useBankStore();
-  const [sortField, setSortField]       = useState<'date' | 'amount' | null>(null);
-  const [sortOrder, setSortOrder]       = useState<'asc' | 'desc'>('desc');
-  const [categoryFilter, setCategoryFilter] = useState<string>('All');
-  const [isComboOpen, setIsComboOpen]   = useState(false);
+  const { balance, transactions, deleteTransaction, user, accounts } =
+    useBankStore();
+  const [sortField, setSortField] = useState<"date" | "amount" | null>(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [categoryFilter, setCategoryFilter] = useState<string>("All");
+  const [isComboOpen, setIsComboOpen] = useState(false);
 
-  const categories = ['All', 'Income', 'Groceries', 'Utilities', 'Shopping', 'Transport', 'Dining', 'Health'];
+  const categories = [
+    "All",
+    "Income",
+    "Groceries",
+    "Utilities",
+    "Shopping",
+    "Transport",
+    "Dining",
+    "Health",
+  ];
 
   /* ── Derived stats ──────────────────────────────────────────── */
-  const totalIncome  = transactions.filter((t) => t.amount > 0).reduce((s, t) => s + t.amount, 0);
-  const totalExpense = transactions.filter((t) => t.amount < 0).reduce((s, t) => s + t.amount, 0);
+  const totalIncome = transactions
+    .filter((t) => t.amount > 0)
+    .reduce((s, t) => s + t.amount, 0);
+  const totalExpense = transactions
+    .filter((t) => t.amount < 0)
+    .reduce((s, t) => s + t.amount, 0);
 
   /* ── Export helpers ─────────────────────────────────────────── */
   const handleExportExcel = () => {
     const csv =
-      'data:text/csv;charset=utf-8,' +
-      'ID,Date,Description,Amount,Category\n' +
-      transactions.map((t) => `${t.id},${t.date},${t.description},${t.amount},${t.category}`).join('\n');
-    const link = document.createElement('a');
-    link.setAttribute('href', encodeURI(csv));
-    link.setAttribute('download', 'transactions.csv');
+      "data:text/csv;charset=utf-8," +
+      "ID,Date,Description,Amount,Category\n" +
+      transactions
+        .map(
+          (t) => `${t.id},${t.date},${t.description},${t.amount},${t.category}`,
+        )
+        .join("\n");
+    const link = document.createElement("a");
+    link.setAttribute("href", encodeURI(csv));
+    link.setAttribute("download", "transactions.csv");
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   const handleExportPdf = () => {
-    alert('PDF Exported!');
+    alert("PDF Exported!");
   };
 
   /* ── Sort + filter ──────────────────────────────────────────── */
   const sortedAndFilteredTransactions = useMemo(() => {
     let result = [...transactions];
 
-    if (categoryFilter !== 'All') {
+    if (categoryFilter !== "All") {
       result = result.filter((t) => t.category === categoryFilter);
     }
 
     if (sortField) {
       result.sort((a, b) => {
-        if (sortField === 'amount') {
+        if (sortField === "amount") {
           // P2 Bug: sorting amounts as strings (alphabetically) instead of numerically
           const valA = String(a.amount);
           const valB = String(b.amount);
-          if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
-          if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
+          if (valA < valB) return sortOrder === "asc" ? -1 : 1;
+          if (valA > valB) return sortOrder === "asc" ? 1 : -1;
           return 0;
         }
         const dateA = new Date(a.date).getTime();
         const dateB = new Date(b.date).getTime();
-        return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+        return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
       });
     }
     return result;
@@ -63,31 +81,33 @@ export default function DashboardPage() {
 
   /* ── Delete (P1 bug preserved) ──────────────────────────────── */
   const handleDelete = (index: number, transaction: Transaction) => {
-    if (transaction.category === 'Utilities') {
+    if (transaction.category === "Utilities") {
       const wrongIndex = Math.max(0, index - 1);
-      const wrongTrx   = sortedAndFilteredTransactions[wrongIndex];
+      const wrongTrx = sortedAndFilteredTransactions[wrongIndex];
       deleteTransaction(wrongTrx.id);
     } else {
       deleteTransaction(transaction.id);
     }
   };
 
-  const toggleSort = (field: 'date' | 'amount') => {
+  const toggleSort = (field: "date" | "amount") => {
     if (sortField === field) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
       setSortField(field);
-      setSortOrder('desc');
+      setSortOrder("desc");
     }
   };
 
   return (
     <div data-testid="bank-dashboard">
-
       {/* Page heading */}
-      <h1 className="bank-page-title" data-testid="dashboard-title">Dashboard</h1>
+      <h1 className="bank-page-title" data-testid="dashboard-title">
+        Dashboard
+      </h1>
       <p className="bank-page-subtitle">
-        Welcome back, <strong>{user?.username ?? 'User'}</strong>. Here&apos;s your financial overview.
+        Welcome back, <strong>{user?.username ?? "User"}</strong>. Here&apos;s
+        your financial overview.
       </p>
 
       {/* Balance card */}
@@ -97,10 +117,24 @@ export default function DashboardPage() {
           <div className="bank-balance-amount" data-testid="account-balance">
             ${balance.toFixed(2)}
           </div>
-          <div style={{ marginTop: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-            {(accounts || []).map(acc => (
-              <p key={acc.id} className="bank-balance-account" style={{ marginTop: 0 }}>
-                {acc.name} · {acc.accountNumber} <span style={{ opacity: 0.7 }}>(${acc.balance.toFixed(2)})</span>
+          <div
+            style={{
+              marginTop: "0.5rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.25rem",
+            }}
+          >
+            {(accounts || []).map((acc) => (
+              <p
+                key={acc.id}
+                className="bank-balance-account"
+                style={{ marginTop: 0 }}
+              >
+                {acc.name} · {acc.accountNumber}{" "}
+                <span style={{ opacity: 0.7 }}>
+                  (${acc.balance.toFixed(2)})
+                </span>
               </p>
             ))}
           </div>
@@ -137,7 +171,10 @@ export default function DashboardPage() {
         </div>
         <div className="bank-stat-card" data-testid="stat-expenses">
           <p className="bank-stat-label">Total Expenses</p>
-          <p className="bank-stat-value expense" data-testid="stat-expense-value">
+          <p
+            className="bank-stat-value expense"
+            data-testid="stat-expense-value"
+          >
             ${totalExpense.toFixed(2)}
           </p>
         </div>
@@ -156,7 +193,10 @@ export default function DashboardPage() {
         <div className="bank-filter-group">
           <span className="bank-filter-label">Category:</span>
           {/* Challenge Locator: Custom Combobox */}
-          <div className="bank-combobox-wrapper" data-testid="category-filter-combobox">
+          <div
+            className="bank-combobox-wrapper"
+            data-testid="category-filter-combobox"
+          >
             <button
               type="button"
               className="bank-combobox-trigger"
@@ -166,17 +206,36 @@ export default function DashboardPage() {
               data-testid="combobox-trigger"
             >
               {categoryFilter}
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
             </button>
             {isComboOpen && (
-              <ul className="bank-combobox-list" role="listbox" data-testid="combobox-list">
+              <ul
+                className="bank-combobox-list"
+                role="listbox"
+                data-testid="combobox-list"
+              >
                 {categories.map((cat) => (
                   <li
                     key={cat}
                     role="option"
                     aria-selected={categoryFilter === cat}
                     className="bank-combobox-option"
-                    onClick={() => { setCategoryFilter(cat); setIsComboOpen(false); }}
+                    onClick={() => {
+                      setCategoryFilter(cat);
+                      setIsComboOpen(false);
+                    }}
                     data-category-id={`cat-${cat.toLowerCase()}`}
                     data-testid={`combobox-option-${cat.toLowerCase()}`}
                   >
@@ -190,28 +249,44 @@ export default function DashboardPage() {
       </div>
 
       {/* Transaction table */}
-      <div className="bank-table-wrapper" data-testid="transaction-table-wrapper">
+      <div
+        className="bank-table-wrapper"
+        data-testid="transaction-table-wrapper"
+      >
         <table className="bank-table" data-testid="transactions-table">
           <thead>
             <tr>
               <th>ID</th>
               <th
                 className="sortable"
-                onClick={() => toggleSort('date')}
+                onClick={() => toggleSort("date")}
                 data-testid="sort-date-header"
-                aria-sort={sortField === 'date' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'}
+                aria-sort={
+                  sortField === "date"
+                    ? sortOrder === "asc"
+                      ? "ascending"
+                      : "descending"
+                    : "none"
+                }
               >
-                Date {sortField === 'date' && (sortOrder === 'asc' ? '↑' : '↓')}
+                Date {sortField === "date" && (sortOrder === "asc" ? "↑" : "↓")}
               </th>
               <th>Description</th>
               <th>Category</th>
               <th
                 className="sortable"
-                onClick={() => toggleSort('amount')}
+                onClick={() => toggleSort("amount")}
                 data-testid="sort-amount-header"
-                aria-sort={sortField === 'amount' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'}
+                aria-sort={
+                  sortField === "amount"
+                    ? sortOrder === "asc"
+                      ? "ascending"
+                      : "descending"
+                    : "none"
+                }
               >
-                Amount {sortField === 'amount' && (sortOrder === 'asc' ? '↑' : '↓')}
+                Amount{" "}
+                {sortField === "amount" && (sortOrder === "asc" ? "↑" : "↓")}
               </th>
               <th>Actions</th>
             </tr>
@@ -228,8 +303,15 @@ export default function DashboardPage() {
                 <td>{trx.date}</td>
                 <td>{trx.description}</td>
                 <td>{trx.category}</td>
-                <td className={trx.amount > 0 ? 'bank-amount-positive' : 'bank-amount-negative'}>
-                  {trx.amount > 0 ? '+' : ''}{trx.amount.toFixed(2)}
+                <td
+                  className={
+                    trx.amount > 0
+                      ? "bank-amount-positive"
+                      : "bank-amount-negative"
+                  }
+                >
+                  {trx.amount > 0 ? "+" : ""}
+                  {trx.amount.toFixed(2)}
                 </td>
                 <td>
                   {/* Medium/Hard Locator: no data-testid — use aria-label or ancestor XPath */}
@@ -246,13 +328,14 @@ export default function DashboardPage() {
             ))}
             {sortedAndFilteredTransactions.length === 0 && (
               <tr>
-                <td colSpan={6} className="bank-table-empty">No transactions found.</td>
+                <td colSpan={6} className="bank-table-empty">
+                  No transactions found.
+                </td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-
     </div>
   );
 }

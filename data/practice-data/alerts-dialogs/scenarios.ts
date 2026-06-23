@@ -88,7 +88,7 @@ export const frameworkMethods: Record<
       { color: "purple", label: "findElement(By.css('[role=dialog]'))" },
       { color: "blue", label: "isDisplayed()" },
       { color: "orange", label: "sendKeys(Keys.ESCAPE)" },
-      { color: "green", label: "findElement(By.cssSelector(\"[aria-label]\"))" },
+      { color: "green", label: 'findElement(By.cssSelector("[aria-label]"))' },
       { color: "yellow", label: "Actions.moveToElement()" },
     ],
   },
@@ -105,7 +105,7 @@ export const frameworkMethods: Record<
   cypress: {
     label: "Cypress JS",
     methods: [
-      { color: "purple", label: 'get(\'[role="dialog"]\')'  },
+      { color: "purple", label: "get('[role=\"dialog\"]')" },
       { color: "blue", label: "should('be.visible')" },
       { color: "orange", label: "type('{esc}')" },
       { color: "green", label: ".find('button')" },

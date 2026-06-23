@@ -56,40 +56,62 @@ export async function PUT(
 ) {
   const userId = await resolveUserId(request);
   if (!userId) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401, headers: CORS });
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      { status: 401, headers: CORS },
+    );
   }
 
   const { id } = await params;
 
   const existing = await prisma.resource.findUnique({ where: { id } });
   if (!existing || existing.userId !== userId) {
-    return NextResponse.json({ error: "Not found" }, { status: 404, headers: CORS });
+    return NextResponse.json(
+      { error: "Not found" },
+      { status: 404, headers: CORS },
+    );
   }
 
   let body: unknown;
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400, headers: CORS });
+    return NextResponse.json(
+      { error: "Invalid JSON" },
+      { status: 400, headers: CORS },
+    );
   }
 
-  const { resourceType, title, url, description, tags, image } =
-    body as Record<string, unknown>;
+  const { resourceType, title, url, description, tags, image } = body as Record<
+    string,
+    unknown
+  >;
 
-  const validTypes = ["ARTICLE", "VIDEO", "COURSE", "BOOK", "TOOL", "DOCUMENTATION", "OTHER"];
+  const validTypes = [
+    "ARTICLE",
+    "VIDEO",
+    "COURSE",
+    "BOOK",
+    "TOOL",
+    "DOCUMENTATION",
+    "OTHER",
+  ];
 
   const updated = await prisma.resource.update({
     where: { id },
     data: {
-      ...(typeof resourceType === "string" && validTypes.includes(resourceType) && {
-        resourceType: resourceType as import("@prisma/client").ResourceType,
-      }),
-      ...(typeof title === "string" && title.trim() && {
-        title: title.trim().slice(0, 300),
-      }),
-      ...(typeof url === "string" && url.trim() && {
-        url: url.trim().slice(0, 2048),
-      }),
+      ...(typeof resourceType === "string" &&
+        validTypes.includes(resourceType) && {
+          resourceType: resourceType as import("@prisma/client").ResourceType,
+        }),
+      ...(typeof title === "string" &&
+        title.trim() && {
+          title: title.trim().slice(0, 300),
+        }),
+      ...(typeof url === "string" &&
+        url.trim() && {
+          url: url.trim().slice(0, 2048),
+        }),
       // Explicit null clears the field; undefined leaves it unchanged
       description:
         description === null
@@ -124,14 +146,20 @@ export async function DELETE(
 ) {
   const userId = await resolveUserId(request);
   if (!userId) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401, headers: CORS });
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      { status: 401, headers: CORS },
+    );
   }
 
   const { id } = await params;
 
   const existing = await prisma.resource.findUnique({ where: { id } });
   if (!existing || existing.userId !== userId) {
-    return NextResponse.json({ error: "Not found" }, { status: 404, headers: CORS });
+    return NextResponse.json(
+      { error: "Not found" },
+      { status: 404, headers: CORS },
+    );
   }
 
   await prisma.resource.delete({ where: { id } });

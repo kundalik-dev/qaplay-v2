@@ -1,8 +1,8 @@
 "use client";
 
 import { PageHeader, MainTabs } from "@/components/practice";
-import { PracticeTab }           from "./practice-tab";
-import { TestCasesTab }          from "./test-cases-tab";
+import { PracticeTab } from "./practice-tab";
+import { TestCasesTab } from "./test-cases-tab";
 import type { PracticePageMeta, TestCase } from "@/data/practice-data/types";
 import type { ReactNode } from "react";
 
@@ -12,7 +12,11 @@ interface PracticePageProps {
   learnContent: ReactNode;
 }
 
-export function PracticePage({ meta, testCases, learnContent }: PracticePageProps) {
+export function PracticePage({
+  meta,
+  testCases,
+  learnContent,
+}: PracticePageProps) {
   return (
     <div
       data-testid={`${meta.element}-page`}

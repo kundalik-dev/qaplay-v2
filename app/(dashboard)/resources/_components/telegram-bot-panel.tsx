@@ -32,7 +32,11 @@ const BOT_URL = "https://t.me/qaplayground_bot";
 
 // ── Component ────────────────────────────────────────────────────────────────
 
-export function TelegramBotPanel({ open, onClose, showToast }: TelegramBotPanelProps) {
+export function TelegramBotPanel({
+  open,
+  onClose,
+  showToast,
+}: TelegramBotPanelProps) {
   const [status, setStatus] = useState<TelegramStatus | null>(null);
   const [loading, setLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
@@ -54,11 +58,13 @@ export function TelegramBotPanel({ open, onClose, showToast }: TelegramBotPanelP
 
   useEffect(() => {
     if (open) {
+      /* eslint-disable react-hooks/set-state-in-effect */
       setConfirmDisconnect(false);
       setCopied(false);
+      /* eslint-enable react-hooks/set-state-in-effect */
       void fetchStatus();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const generateToken = async () => {
@@ -78,7 +84,9 @@ export function TelegramBotPanel({ open, onClose, showToast }: TelegramBotPanelP
   const disconnect = async () => {
     setDisconnecting(true);
     try {
-      const res = await fetch("/api/telegram/connect-token", { method: "DELETE" });
+      const res = await fetch("/api/telegram/connect-token", {
+        method: "DELETE",
+      });
       if (!res.ok) throw new Error();
       setStatus(null);
       setConfirmDisconnect(false);
@@ -106,13 +114,18 @@ export function TelegramBotPanel({ open, onClose, showToast }: TelegramBotPanelP
         aria-modal="true"
         aria-label="Telegram Bot"
         data-testid="telegram-bot-dialog"
-        onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) onClose();
+        }}
       >
         <div className={[styles.dialog, panelStyles.wideDialog].join(" ")}>
           {/* Header */}
           <div className={styles.dialogHeader}>
             <h2 className={styles.dialogTitle}>
-              <Send size={15} style={{ verticalAlign: "middle", marginRight: 6 }} />
+              <Send
+                size={15}
+                style={{ verticalAlign: "middle", marginRight: 6 }}
+              />
               Telegram Bot
             </h2>
             <button
@@ -131,7 +144,10 @@ export function TelegramBotPanel({ open, onClose, showToast }: TelegramBotPanelP
               </div>
             ) : status?.linked ? (
               /* ── Already linked ────────────────────────────────────── */
-              <div className={panelStyles.linkedState} data-testid="telegram-linked">
+              <div
+                className={panelStyles.linkedState}
+                data-testid="telegram-linked"
+              >
                 <div className={panelStyles.linkedBadge}>
                   <div className={panelStyles.linkedIcon}>
                     <Link2 size={14} />
@@ -139,24 +155,35 @@ export function TelegramBotPanel({ open, onClose, showToast }: TelegramBotPanelP
                   <div>
                     <p className={panelStyles.linkedTitle}>Telegram linked</p>
                     {status.username && (
-                      <p className={panelStyles.linkedSub}>@{status.username}</p>
+                      <p className={panelStyles.linkedSub}>
+                        @{status.username}
+                      </p>
                     )}
                     <p className={panelStyles.linkedSub}>
                       Connected{" "}
-                      {new Date(status.createdAt).toLocaleDateString(undefined, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
+                      {new Date(status.createdAt).toLocaleDateString(
+                        undefined,
+                        {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        },
+                      )}
                     </p>
                   </div>
                 </div>
 
                 <div className={panelStyles.quickRef}>
                   <p className={panelStyles.quickRefHeading}>Quick reference</p>
-                  <code className={panelStyles.quickRefCode}>#todo Buy groceries @30min</code>
-                  <code className={panelStyles.quickRefCode}>https://example.com #js #tutorial</code>
-                  <code className={panelStyles.quickRefCode}>#note Your note content #tag</code>
+                  <code className={panelStyles.quickRefCode}>
+                    #todo Buy groceries @30min
+                  </code>
+                  <code className={panelStyles.quickRefCode}>
+                    https://example.com #js #tutorial
+                  </code>
+                  <code className={panelStyles.quickRefCode}>
+                    #note Your note content #tag
+                  </code>
                 </div>
 
                 <div className={panelStyles.linkedActions}>
@@ -172,7 +199,10 @@ export function TelegramBotPanel({ open, onClose, showToast }: TelegramBotPanelP
                     <ExternalLink size={11} style={{ opacity: 0.7 }} />
                   </a>
                   <button
-                    className={[styles.btnOutline, panelStyles.btnDisconnect].join(" ")}
+                    className={[
+                      styles.btnOutline,
+                      panelStyles.btnDisconnect,
+                    ].join(" ")}
                     onClick={() => setConfirmDisconnect(true)}
                     disabled={disconnecting}
                     id="disconnect-telegram-btn"
@@ -194,18 +224,24 @@ export function TelegramBotPanel({ open, onClose, showToast }: TelegramBotPanelP
                 <ol className={panelStyles.stepList}>
                   <li className={panelStyles.stepItem}>
                     <span className={panelStyles.stepNum}>1</span>
-                    <span className={panelStyles.stepText}>Generate a connect token below</span>
+                    <span className={panelStyles.stepText}>
+                      Generate a connect token below
+                    </span>
                   </li>
                   <li className={panelStyles.stepItem}>
                     <span className={panelStyles.stepNum}>2</span>
                     <span className={panelStyles.stepText}>
                       Open the bot and send:
-                      <code className={panelStyles.inlineCode}>/connect &lt;your-token&gt;</code>
+                      <code className={panelStyles.inlineCode}>
+                        /connect &lt;your-token&gt;
+                      </code>
                     </span>
                   </li>
                   <li className={panelStyles.stepItem}>
                     <span className={panelStyles.stepNum}>3</span>
-                    <span className={panelStyles.stepText}>Bot confirms — you&apos;re linked!</span>
+                    <span className={panelStyles.stepText}>
+                      Bot confirms — you&apos;re linked!
+                    </span>
                   </li>
                 </ol>
 
@@ -213,14 +249,19 @@ export function TelegramBotPanel({ open, onClose, showToast }: TelegramBotPanelP
                 {status?.token ? (
                   <div className={panelStyles.tokenSection}>
                     <div className={panelStyles.tokenMeta}>
-                      <span className={panelStyles.tokenLabel}>Your connect token</span>
+                      <span className={panelStyles.tokenLabel}>
+                        Your connect token
+                      </span>
                       {status.expiresAt && (
                         <span className={panelStyles.tokenExpiry}>
                           Expires{" "}
-                          {new Date(status.expiresAt).toLocaleTimeString(undefined, {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
+                          {new Date(status.expiresAt).toLocaleTimeString(
+                            undefined,
+                            {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            },
+                          )}
                         </span>
                       )}
                     </div>
@@ -237,34 +278,45 @@ export function TelegramBotPanel({ open, onClose, showToast }: TelegramBotPanelP
                         title="Copy token"
                         data-testid="copy-telegram-token-btn"
                       >
-                        {copied
-                          ? <Check size={13} className={panelStyles.iconGreen} />
-                          : <Copy size={13} />}
+                        {copied ? (
+                          <Check size={13} className={panelStyles.iconGreen} />
+                        ) : (
+                          <Copy size={13} />
+                        )}
                       </button>
                     </div>
                     <button
-                      className={[styles.btnOutline, panelStyles.fullWidth].join(" ")}
+                      className={[
+                        styles.btnOutline,
+                        panelStyles.fullWidth,
+                      ].join(" ")}
                       onClick={() => void generateToken()}
                       disabled={generating}
                       data-testid="refresh-telegram-token-btn"
                     >
-                      {generating
-                        ? <Loader2 size={13} className={panelStyles.spin} />
-                        : <RefreshCw size={13} />}
+                      {generating ? (
+                        <Loader2 size={13} className={panelStyles.spin} />
+                      ) : (
+                        <RefreshCw size={13} />
+                      )}
                       Regenerate token
                     </button>
                   </div>
                 ) : (
                   <button
-                    className={[styles.btnPrimary, panelStyles.fullWidth].join(" ")}
+                    className={[styles.btnPrimary, panelStyles.fullWidth].join(
+                      " ",
+                    )}
                     onClick={() => void generateToken()}
                     disabled={generating}
                     id="generate-telegram-token-btn"
                     data-testid="generate-telegram-token-btn"
                   >
-                    {generating
-                      ? <Loader2 size={13} className={panelStyles.spin} />
-                      : <Send size={13} />}
+                    {generating ? (
+                      <Loader2 size={13} className={panelStyles.spin} />
+                    ) : (
+                      <Send size={13} />
+                    )}
                     Generate Connect Token
                   </button>
                 )}
@@ -273,7 +325,10 @@ export function TelegramBotPanel({ open, onClose, showToast }: TelegramBotPanelP
                   href={BOT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={[panelStyles.btnTelegram, panelStyles.fullWidth].join(" ")}
+                  className={[
+                    panelStyles.btnTelegram,
+                    panelStyles.fullWidth,
+                  ].join(" ")}
                   style={{ marginTop: 8, justifyContent: "center" }}
                   data-testid="open-telegram-bot-btn"
                 >

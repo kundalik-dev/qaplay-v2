@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QA Playground — The Ghost Element Challenge</title>
+    <meta name="description" content="Practice Shadow DOM automation." />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="./style.css" />
+
+    <!-- Inline theme init -->
+    <script>
+      (function () {
+        const saved = localStorage.getItem("qap-theme");
+        const preferred = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", saved || preferred);
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="page-wrap">
+      <!-- NAV (Simplified) -->
+      <nav class="nav" role="navigation">
+        <div class="nav-inner">
+          <a href="/" class="nav-brand">
+            <div class="nav-badge" aria-hidden="true">⚡</div>
+            <span class="nav-name">QA Playground</span>
+          </a>
+          <ul class="nav-links">
+            <li><a href="#" class="nav-link">Dashboard</a></li>
+            <li><a href="#" class="nav-link" style="color: var(--accent);">Challenges</a></li>
+            <li><a href="#" class="nav-link">Jobs</a></li>
+          </ul>
+          <div class="nav-actions">
+            <div class="user-stats">
+              <span class="stat-pill"><span class="icon">🔥</span> Streak: 4</span>
+              <span class="stat-pill"><span class="icon">⭐</span> 2,450 XP</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main class="page-body challenge-page" id="main-content">
+        <!-- Challenge Header -->
+        <header class="challenge-header section-inner">
+          <div class="ch-breadcrumbs">
+            <a href="#">Challenges</a> <span class="sep">/</span> <span class="current">Advanced DOM</span>
+          </div>
+          <div class="ch-title-row">
+            <h1 class="heading-lg">The Ghost Element</h1>
+            <div class="ch-badges">
+              <span class="chip-advanced">Advanced</span>
+              <span class="badge" style="--c: var(--accent2);">+100 XP</span>
+            </div>
+          </div>
+          <p class="body-base ch-desc">Find and click the hidden button nested inside a Shadow DOM component to reveal the secret token.</p>
+        </header>
+
+        <!-- Main Workspace Split View -->
+        <div class="challenge-workspace section-inner">
+          
+          <!-- LEFT PANEL: Instructions & Submission -->
+          <div class="ch-panel ch-left">
+            <div class="panel-section">
+              <h2 class="heading-sm">📝 Instructions</h2>
+              <ul class="ch-task-list">
+                <li><span class="tick">1</span> Open your local VS Code and start a Playwright script.</li>
+                <li><span class="tick">2</span> Navigate to this page and locate the button labelled "Reveal Secret".</li>
+                <li><span class="tick">3</span> The button is hidden inside a `#shadow-root`. Click it.</li>
+              </ul>
+              <button class="btn btn-secondary btn-sm" style="margin-top: var(--sp-4);">📋 Copy Boilerplate</button>
+            </div>
+
+            <div class="panel-section ai-validation-section">
+              <h2 class="heading-sm"><span class="icon">🤖</span> Submit Solution (AI BYOK)</h2>
+              <p class="body-sm text-muted">Paste your Playwright code below. Our AI will analyze your code for correctness and best practices.</p>
+              
+              <div class="form-group">
+                <label for="byok-key" class="label">OpenAI API Key (Stored Locally)</label>
+                <input type="password" id="byok-key" class="input-field" placeholder="sk-..." />
+              </div>
+
+              <div class="form-group">
+                <label for="code-submission" class="label">Your Automation Script</label>
+                <textarea id="code-submission" class="input-field code-editor" placeholder="import { test, expect } from '@playwright/test';&#10;&#10;test('Find the ghost element', async ({ page }) => {&#10;  // Your code here&#10;});"></textarea>
+              </div>
+
+              <button class="btn btn-primary btn-submit-solution">
+                <span class="icon">✨</span> Validate with AI
+              </button>
+            </div>
+
+            <!-- AI Feedback Result (Initially Hidden, mocked as visible for UI preview) -->
+            <div class="panel-section ai-feedback-result success-state">
+              <div class="feedback-header">
+                <div class="feedback-status">
+                  <span class="icon status-icon">✅</span> 
+                  <span class="heading-sm">Challenge Passed!</span>
+                </div>
+                <span class="xp-awarded">+100 XP</span>
+              </div>
+              <div class="feedback-body">
+                <p class="body-sm text-muted"><strong>AI Senior QA Feedback:</strong><br/>Great job piercing the shadow DOM! Your script successfully targeted the element.</p>
+                <div class="feedback-code-review">
+                  <span class="label">Code Quality Tip</span>
+                  <p class="body-sm">I noticed you used <code>page.locator('css=div > span > button')</code>. While it works, this selector is highly brittle. Try relying on ARIA roles or data-testids like <code>page.getByRole('button', { name: 'Reveal Secret' })</code> for more robust tests.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT PANEL: The Target UI (Playground) -->
+          <div class="ch-panel ch-right">
+            <div class="panel-header">
+              <div class="window-controls"><span></span><span></span><span></span></div>
+              <div class="window-title">Target UI Playground</div>
+            </div>
+            <div class="playground-area">
+              <div class="pg-instructions">
+                <p class="body-base">The target component is rendered below. Do not interact with it manually—use your script!</p>
+              </div>
+
+              <!-- Mocked Shadow DOM Component Box -->
+              <div class="target-component-box">
+                <div class="mock-shadow-root">
+                  <div class="shadow-boundary-label">#shadow-root (open)</div>
+                  <button class="btn btn-secondary target-btn" id="secret-btn">Reveal Secret</button>
+                </div>
+              </div>
+
+              <div class="pg-success-toast" style="display: none;">
+                🎉 Secret Revealed! Token: <strong>QA-SHDW-992</strong>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

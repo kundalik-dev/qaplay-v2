@@ -68,8 +68,10 @@ export const alertsDialogsTestCases: TestCase[] = [
   },
   {
     id: "ALD_006",
-    scenario: "Destructive confirm button located by aria-label (no data-testid)",
-    expected: 'Result reads "Account deleted!" after clicking the danger button',
+    scenario:
+      "Destructive confirm button located by aria-label (no data-testid)",
+    expected:
+      'Result reads "Account deleted!" after clicking the danger button',
     type: "positive",
     priority: "high",
     note: "The Delete Account button intentionally has no data-testid — use aria-label or role+name.",
@@ -97,7 +99,7 @@ export const alertsDialogsTestCases: TestCase[] = [
   {
     id: "ALD_008",
     scenario: "Escape key dismisses the dialog",
-    expected: 'Result confirms dialog closed via keyboard; dialog disappears',
+    expected: "Result confirms dialog closed via keyboard; dialog disappears",
     type: "positive",
     priority: "high",
     steps: [
@@ -131,7 +133,7 @@ export const alertsDialogsTestCases: TestCase[] = [
       'Open any dialog, e.g. <code>[data-testid="open-info-dialog"]</code>',
       'Assert <code>getAttribute("role")</code> equals <code>dialog</code>',
       'Assert <code>getAttribute("aria-modal")</code> equals <code>true</code>',
-      'Assert <code>aria-labelledby</code> points to a visible heading',
+      "Assert <code>aria-labelledby</code> points to a visible heading",
     ],
   },
   {
@@ -141,7 +143,7 @@ export const alertsDialogsTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Open the info dialog and read <code>aria-labelledby</code> attribute',
+      "Open the info dialog and read <code>aria-labelledby</code> attribute",
       "Locate element by that ID",
       "Assert the element is the visible <code>h2</code> heading",
       "Assert its text is non-empty",
@@ -150,7 +152,8 @@ export const alertsDialogsTestCases: TestCase[] = [
   {
     id: "ALD_012",
     scenario: "Correct notification targeted from repeated Dismiss buttons",
-    expected: "The 'Session Expiring Soon' notification is dismissed, not the others",
+    expected:
+      "The 'Session Expiring Soon' notification is dismissed, not the others",
     type: "positive",
     priority: "high",
     note: "All three dismiss buttons share the same data-testid — scoping to the parent is required.",
@@ -164,7 +167,8 @@ export const alertsDialogsTestCases: TestCase[] = [
   {
     id: "ALD_013",
     scenario: "Dismiss confirm dialog scoped by data-notif-id",
-    expected: "Confirm button inside scoped dialog is clicked without ambiguity",
+    expected:
+      "Confirm button inside scoped dialog is clicked without ambiguity",
     type: "positive",
     priority: "medium",
     steps: [
@@ -189,7 +193,8 @@ export const alertsDialogsTestCases: TestCase[] = [
   {
     id: "ALD_015",
     scenario: "Escape key has no effect when no dialog is open",
-    expected: "Page state remains unchanged when pressing Escape with no active dialog",
+    expected:
+      "Page state remains unchanged when pressing Escape with no active dialog",
     type: "edge",
     priority: "low",
     steps: [
