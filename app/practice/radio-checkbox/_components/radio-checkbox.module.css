@@ -1,0 +1,119 @@
+/* ── Shared layout ───────────────────────────────────────────── */
+.practiceLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 24px;
+  padding-block: 24px 64px;
+}
+
+.practiceSidebar {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .practiceLayout { grid-template-columns: 1fr; }
+  .practiceSidebar { position: static; }
+}
+
+@media (max-width: 640px) {
+  .practiceLayout { gap: 16px; padding-block: 20px 48px; }
+}
+
+/* ── Checkbox / Radio item rows ──────────────────────────────── */
+.controlRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+.controlLabel {
+  font-size: 13px;
+  color: var(--foreground);
+  cursor: pointer;
+  user-select: none;
+}
+
+.controlHint {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  margin-top: 2px;
+}
+
+/* ── Plan cards ──────────────────────────────────────────────── */
+.planCardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.planCard {
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  background: var(--card);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.planCardSelected {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 6%, var(--card));
+}
+
+.planName {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.planPrice {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+
+/* ── Dynamic permission list ─────────────────────────────────── */
+.permissionRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.permissionRow:last-child {
+  border-bottom: none;
+}
+
+.permissionName {
+  font-size: 12px;
+  color: var(--foreground);
+  flex: 1;
+}
+
+/* ── Sibling field rows ──────────────────────────────────────── */
+.fieldRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.fieldRow:last-child {
+  border-bottom: none;
+}
+
+.fieldSpan {
+  font-size: 13px;
+  color: var(--foreground);
+  flex: 1;
+}
