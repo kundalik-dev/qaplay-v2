@@ -1,0 +1,167 @@
+/* ── Shared layout ───────────────────────────────────────────── */
+.practiceLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 24px;
+  padding-block: 24px 64px;
+}
+
+.practiceSidebar {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .practiceLayout { grid-template-columns: 1fr; }
+  .practiceSidebar { position: static; }
+}
+
+@media (max-width: 640px) {
+  .practiceLayout { gap: 16px; padding-block: 20px 48px; }
+}
+
+/* ── Calendar widget ─────────────────────────────────────────── */
+.calendarPanel {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  padding: 12px;
+  width: 260px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.calendarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.calendarMonthLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.calendarNavBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.15s;
+}
+
+.calendarNavBtn:hover {
+  background: var(--accent);
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.calendarWeekday {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  text-align: center;
+  padding: 4px 0;
+}
+
+.calendarDay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  font-size: 12px;
+  border: none;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+
+.calendarDay:hover {
+  background: var(--accent);
+}
+
+.calendarDaySelected {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.calendarDayEmpty {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ── Booking cards ───────────────────────────────────────────── */
+.bookingCardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.bookingCard {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bookingSlotLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.bookingDate {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.bookingTime {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+
+/* ── Sibling field rows ──────────────────────────────────────── */
+.fieldRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.fieldLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--foreground);
+  min-width: 130px;
+}
+
+.fieldHint {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  margin-top: 2px;
+}
