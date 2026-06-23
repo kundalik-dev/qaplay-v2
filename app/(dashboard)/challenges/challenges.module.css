@@ -66,6 +66,511 @@
 
 
 /* ==========================================================
+   0. PROBLEM STATEMENT
+   ========================================================== */
+
+.psBlock {
+  margin-bottom: var(--_sp5);
+}
+
+.psBlock:last-child {
+  margin-bottom: 0;
+}
+
+.psSectionLabel {
+  font-family: var(--_font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--_accent);
+  margin: 0 0 6px;
+}
+
+.psBody {
+  font-family: var(--_font-body);
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--_text-muted);
+  margin: 0;
+}
+
+.psBody code {
+  font-family: var(--_font-mono);
+  font-size: 11.5px;
+  background: color-mix(in srgb, var(--_accent) 10%, transparent);
+  color: var(--_accent);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.psChecklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.psCheckItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--_text-muted);
+  font-family: var(--_font-body);
+  line-height: 1.5;
+}
+
+.psCheckIcon {
+  flex-shrink: 0;
+  color: var(--_accent);
+  font-weight: 700;
+  margin-top: 1px;
+  font-size: 12px;
+}
+
+/* ==========================================================
+   0b. INSTRUCTIONS ACCORDION
+   ========================================================== */
+
+.accordionBlock {
+  border-bottom: 1px solid var(--_border);
+}
+
+.accordionTrigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: var(--_sp5) var(--_sp7);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--_fast);
+}
+
+.accordionTrigger:hover {
+  background: color-mix(in srgb, var(--_accent) 4%, transparent);
+}
+
+.accordionIcon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.accordionTitle {
+  font-family: var(--_font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--_text);
+  letter-spacing: -0.01em;
+  flex: 1;
+}
+
+.accordionMeta {
+  font-family: var(--_font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--_text-muted);
+  background: var(--_surface2);
+  padding: 3px 8px;
+  border-radius: var(--_r-full);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.accordionChevron {
+  font-size: 14px;
+  color: var(--_text-muted);
+  flex-shrink: 0;
+  transition: transform var(--_base);
+  display: inline-block;
+}
+
+.accordionChevronOpen {
+  transform: rotate(180deg);
+}
+
+.instructionsList {
+  list-style: none;
+  padding: var(--_sp3) var(--_sp7) var(--_sp6);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--_sp3);
+}
+
+.instructionsItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.stepBadge {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--_accent) 12%, transparent);
+  color: var(--_accent);
+  font-family: var(--_font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.stepText {
+  font-family: var(--_font-body);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--_text-muted);
+  flex: 1;
+}
+
+.stepText code {
+  font-family: var(--_font-mono);
+  font-size: 11.5px;
+  background: color-mix(in srgb, var(--_accent) 10%, transparent);
+  color: var(--_accent);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+/* ==========================================================
+   0c. HINTS
+   ========================================================== */
+
+.hintsWrapper {
+  padding: var(--_sp4) var(--_sp7);
+  border-bottom: 1px solid var(--_border);
+}
+
+/* Pill trigger — matches ScenarioCard exactly */
+.hintTriggerBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 9999px;
+  border: 1px solid var(--_border);
+  background: var(--_surface);
+  color: var(--_text-muted);
+  font-family: var(--_font-body);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 14px;
+  cursor: pointer;
+  transition: all var(--_fast);
+}
+
+.hintTriggerBtn:hover {
+  border-color: color-mix(in srgb, var(--_accent) 40%, transparent);
+  background: color-mix(in srgb, var(--_accent) 5%, transparent);
+  color: var(--_accent);
+}
+
+.hintTriggerBtnOpen {
+  border-color: color-mix(in srgb, var(--_accent) 40%, transparent);
+  background: color-mix(in srgb, var(--_accent) 10%, transparent);
+  color: var(--_accent);
+}
+
+.hintCountBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--_accent) 18%, transparent);
+  color: var(--_accent);
+  font-family: var(--_font-mono);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.hintsBody {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hintItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: color-mix(in srgb, var(--_accent) 8%, transparent);
+  border-radius: var(--_r-sm);
+  padding: 10px 12px;
+  animation: fadeSlideInHint 0.18s ease;
+}
+
+@keyframes fadeSlideInHint {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hintNum {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--_accent) 20%, transparent);
+  color: var(--_accent);
+  font-family: var(--_font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.hintText {
+  font-family: var(--_font-body);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--_accent);
+  flex: 1;
+}
+
+.hintText code {
+  font-family: var(--_font-mono);
+  font-size: 11px;
+  background: color-mix(in srgb, var(--_accent) 15%, transparent);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.hintText strong {
+  font-weight: 700;
+}
+
+/* ==========================================================
+   0d. AI FEEDBACK RESULT CARD
+   ========================================================== */
+
+.resultCard {
+  border-radius: var(--_r-lg);
+  overflow: hidden;
+  border: 1px solid transparent;
+  margin-top: var(--_sp6);
+}
+
+.resultCardPass {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--_success) 6%, var(--_surface)),
+    var(--_surface)
+  );
+  border-color: color-mix(in srgb, var(--_success) 22%, var(--_border));
+}
+
+.resultCardFail {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--_danger) 6%, var(--_surface)),
+    var(--_surface)
+  );
+  border-color: color-mix(in srgb, var(--_danger) 22%, var(--_border));
+}
+
+.resultHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--_sp4);
+  padding: var(--_sp5) var(--_sp6);
+  border-bottom: 1px solid var(--_border);
+}
+
+.resultTitleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.resultStatusIcon {
+  font-size: 22px;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.resultTitle {
+  font-family: var(--_font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--_text);
+  margin: 0 0 2px;
+  letter-spacing: -0.01em;
+}
+
+.resultSubtitle {
+  font-family: var(--_font-body);
+  font-size: 12px;
+  color: var(--_text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* XP block (pass only) */
+.xpBlock {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: color-mix(in srgb, var(--_accent2) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--_accent2) 25%, transparent);
+  border-radius: var(--_r-full);
+  padding: 6px 12px;
+  flex-shrink: 0;
+}
+
+.xpIcon {
+  font-size: 13px;
+}
+
+.xpValue {
+  font-family: var(--_font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--_accent2);
+  letter-spacing: -0.02em;
+}
+
+.xpLabel {
+  font-family: var(--_font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--_accent2);
+  letter-spacing: 0.05em;
+}
+
+/* Feedback block */
+.resultFeedbackBlock {
+  padding: var(--_sp5) var(--_sp6);
+  border-bottom: 1px solid var(--_border);
+}
+
+.resultFeedbackLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--_font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--_text-muted);
+  margin-bottom: 8px;
+}
+
+.resultFeedbackDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--_accent);
+  flex-shrink: 0;
+}
+
+.resultFeedbackText {
+  font-family: var(--_font-body);
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--_text-muted);
+  margin: 0;
+  background: var(--_bg2);
+  padding: var(--_sp3) var(--_sp4);
+  border-radius: var(--_r-sm);
+  border-left: 3px solid var(--_warning);
+}
+
+.resultCardFail .resultFeedbackText {
+  border-left-color: var(--_danger);
+}
+
+.resultCardPass .resultFeedbackText {
+  border-left-color: var(--_success);
+}
+
+/* Action buttons */
+.resultActions {
+  display: flex;
+  gap: 8px;
+  padding: var(--_sp4) var(--_sp6);
+  flex-wrap: wrap;
+}
+
+.resultBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: var(--_r-full);
+  font-family: var(--_font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  border: none;
+  transition: transform var(--_base), box-shadow var(--_base), filter var(--_base);
+}
+
+.resultBtn:hover {
+  transform: translateY(-1px);
+}
+
+.resultBtnPrimary {
+  background: linear-gradient(
+    135deg,
+    var(--_accent),
+    color-mix(in srgb, var(--_accent) 68%, var(--_accent2))
+  );
+  color: var(--primary-foreground);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--_accent) 22%, transparent);
+}
+
+.resultBtnPrimary:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--_accent) 32%, transparent);
+}
+
+.resultBtnSecondary {
+  background: var(--_surface2);
+  color: var(--_text);
+  border: 1px solid var(--_border-strong);
+}
+
+.resultBtnSecondary:hover {
+  background: var(--_bg2);
+  border-color: var(--_border-glow);
+}
+
+/* Validate-button loading spinner */
+.validateSpinner {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border: 2px solid color-mix(in srgb, var(--primary-foreground) 30%, transparent);
+  border-top-color: var(--primary-foreground);
+  border-radius: 50%;
+  animation: validateSpin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes validateSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================
    1. WORKSPACE (CHALLENGE DETAIL PAGE)
    ========================================================== */
 

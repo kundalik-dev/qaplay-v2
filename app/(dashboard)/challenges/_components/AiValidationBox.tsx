@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import styles from "../challenges.module.css";
 import type { ChallengeMeta } from "@/data/challenges-registry";
 import { buildValidationSystemPrompt } from "@/data/challenges-registry";
+import { AiFeedbackResult } from "./ai-feedback-result";
 
 export default function AiValidationBox({ challenge }: { challenge: ChallengeMeta }) {
   const [code, setCode] = useState(challenge.boilerplate);
@@ -35,7 +36,6 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
     setLoading(true);
     setResult({ status: null, feedback: "" });
 
-    // Build the system prompt from the structured validationConfig
     const systemPrompt = buildValidationSystemPrompt(challenge);
 
     try {
@@ -92,14 +92,16 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
 
   return (
     <div className={styles.panelSection} data-testid="ai-validation-box">
+
+      {/* Header */}
       <h2 className={`${styles.headingSm} ${styles.aiBoxTitle}`}>
-        <span aria-hidden="true">🤖</span> Submit Solution (AI BYOK)
+        <span aria-hidden="true">🤖</span> Submit Solution
       </h2>
       <p className={`${styles.bodySm} ${styles.textMuted} ${styles.aiBoxIntro}`}>
-        Paste your automation script below. Our AI will analyze your code for correctness and
-        best practices.
+        Run your script locally, paste it below, and let AI validate your solution.
       </p>
 
+      {/* No-key warning */}
       {!hasKey && (
         <div className={styles.noKeyWarning} data-testid="no-key-warning" role="alert">
           ⚠️ <strong>No API Key found.</strong> Go to the{" "}
@@ -108,6 +110,7 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
         </div>
       )}
 
+      {/* Code textarea */}
       <div className={styles.formGroup}>
         <label htmlFor="code-submission" className={styles.codeLabel}>
           Your Automation Script
@@ -122,6 +125,7 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
         />
       </div>
 
+      {/* Submit button */}
       <button
         className={`${styles.btn} ${styles.btnPrimary} ${styles.btnSubmitSolution}`}
         onClick={handleValidate}
@@ -129,17 +133,27 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
         data-testid="validate-btn"
         aria-busy={loading}
       >
-        <span aria-hidden="true">✨</span>{" "}
-        {loading ? "Validating…" : "Validate with AI"}
+        {loading ? (
+          <>
+            <span className={styles.validateSpinner} aria-hidden="true" />
+            Validating…
+          </>
+        ) : (
+          <>
+            <span aria-hidden="true">✨</span>
+            Validate with AI
+          </>
+        )}
       </button>
 
-      {/* ── AI Prompt Preview (dev/admin tool) ── */}
+      {/* Prompt preview (admin/dev tool) */}
       <div className={styles.promptPreviewSection} data-testid="prompt-preview-section">
         <button
           className={styles.promptToggleBtn}
           onClick={() => setShowPrompt((v) => !v)}
           data-testid="prompt-toggle-btn"
           aria-expanded={showPrompt}
+          type="button"
         >
           <span className={styles.promptToggleIcon} aria-hidden="true">
             {showPrompt ? "▾" : "▸"}
@@ -153,42 +167,21 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
           <pre
             className={styles.promptPreview}
             data-testid="prompt-preview"
-            aria-label="AI system prompt that will be sent on submission"
+            aria-label="AI system prompt sent on submission"
           >
             {systemPromptPreview}
           </pre>
         )}
       </div>
 
-      {/* ── Result ── */}
+      {/* Result */}
       {result.status && (
-        <div
-          className={`${styles.aiFeedbackResult} ${result.status === "fail" ? styles.failState : ""}`}
-          data-testid="ai-feedback-result"
-          data-status={result.status}
-          role="status"
-          aria-live="polite"
-        >
-          <div className={styles.feedbackHeader}>
-            <div className={styles.feedbackStatus}>
-              <span aria-hidden="true">{result.status === "success" ? "✅" : "❌"}</span>
-              <span>{result.status === "success" ? "Challenge Passed!" : "Challenge Failed"}</span>
-            </div>
-            {result.status === "success" && (
-              <span className={styles.xpAwarded} data-testid="xp-awarded">
-                +{challenge.xp} XP
-              </span>
-            )}
-          </div>
-          <div>
-            <p className={`${styles.bodySm} ${styles.feedbackLabel}`}>
-              <strong>AI Feedback:</strong>
-            </p>
-            <div className={styles.feedbackCodeReview}>
-              <p className={`${styles.bodySm} ${styles.feedbackText}`}>{result.feedback}</p>
-            </div>
-          </div>
-        </div>
+        <AiFeedbackResult
+          status={result.status}
+          feedback={result.feedback}
+          xp={challenge.xp}
+          challengeId={challenge.id}
+        />
       )}
     </div>
   );

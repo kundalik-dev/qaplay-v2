@@ -5,6 +5,9 @@ import Link from "next/link";
 import styles from "../challenges.module.css";
 import type { ChallengeMeta } from "@/data/challenges-registry";
 import AiValidationBox from "./AiValidationBox";
+import { ChallengeProblemStatement } from "./challenge-problem-statement";
+import { ChallengeInstructions } from "./challenge-instructions";
+import { ChallengeHints } from "./challenge-hints";
 
 interface Props {
   challenge: ChallengeMeta;
@@ -25,7 +28,7 @@ export default function ChallengeWorkspaceLayout({ challenge, children }: Props)
   return (
     <div className={styles.challengePage} data-testid="challenge-workspace">
 
-      {/* Challenge Header */}
+      {/* ── Challenge Header ── */}
       <header className={styles.challengeHeader} data-testid="challenge-header">
         <nav className={styles.chBreadcrumbs} aria-label="Breadcrumb">
           <Link href="/challenges">Challenges</Link>
@@ -48,24 +51,26 @@ export default function ChallengeWorkspaceLayout({ challenge, children }: Props)
         </p>
       </header>
 
-      {/* Split-screen workspace */}
+      {/* ── Split-screen workspace ── */}
       <div className={styles.challengeWorkspace} data-testid="challenge-split-view">
 
-        {/* LEFT — Instructions + AI validation */}
+        {/* LEFT — Problem → Instructions → Hints → AI Validation */}
         <div className={`${styles.chPanel} ${styles.chLeft}`} data-testid="challenge-left-panel">
-          <div className={styles.panelSection} data-testid="challenge-instructions">
-            <h2 className={styles.headingSm}>📝 Instructions</h2>
-            <ol className={styles.chTaskList}>
-              {challenge.instructions.map((step, idx) => (
-                <li key={idx}>
-                  <span className={styles.tick} aria-hidden="true">{idx + 1}</span>
-                  <span>{step}</span>
-                </li>
-              ))}
-            </ol>
+
+          {/* 1. Problem statement + expected behavior */}
+          <ChallengeProblemStatement challenge={challenge} />
+
+          {/* 2. Instructions accordion */}
+          <ChallengeInstructions instructions={challenge.instructions} />
+
+          {/* 3. Hints (ScenarioCard-style pill trigger) */}
+          <div className={styles.hintsWrapper}>
+            <ChallengeHints hints={challenge.hints} challengeId={challenge.id} />
           </div>
 
+          {/* 4. AI submission + validation */}
           <AiValidationBox challenge={challenge} />
+
         </div>
 
         {/* RIGHT — Target UI playground */}

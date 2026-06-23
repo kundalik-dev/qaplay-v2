@@ -248,6 +248,19 @@ export const challenges: ChallengeMeta[] = [
     difficulty: "Hard",
     xp: 15,
     tags: ["Shadow DOM", "Web Components"],
+    problemStatement:
+      "Modern web apps increasingly use Web Components and Shadow DOM to encapsulate UI logic. This means elements are hidden inside a <code>#shadow-root</code> that standard CSS selectors and XPath can't reach — a common source of test failures on real projects. This challenge simulates that scenario: a button is rendered inside a component with an open shadow root, and your script must interact with it without resorting to fragile DOM hacks.",
+    expectedBehavior: [
+      "Navigate to the challenge page",
+      "Locate the button labelled \"Reveal Secret\" inside the simulated shadow root",
+      "Click the button using a stable, modern Playwright locator",
+      "Assert that the secret token becomes visible after the click",
+    ],
+    hints: [
+      "Playwright automatically pierces <strong>open</strong> shadow roots with its built-in locators — you don't need any special API or <code>evaluate()</code> call.",
+      "Try <code>page.locator('#secret-btn')</code> or <code>page.getByRole('button', { name: 'Reveal Secret' })</code> — both work across shadow boundaries.",
+      "After clicking, use <code>await expect(page.getByTestId('secret-token')).toBeVisible()</code> to assert the revealed token.",
+    ],
     instructions: [
       "Open your local VS Code and start a Playwright script.",
       "Navigate to this page and locate the button labelled 'Reveal Secret'.",
@@ -325,6 +338,20 @@ test('pierce the shadow DOM', async ({ page }) => {
     difficulty: "Medium",
     xp: 10,
     tags: ["Dynamic Waits", "Timing", "Flakiness"],
+    problemStatement:
+      "The #1 cause of flaky E2E tests is hardcoded sleeps like <code>page.waitForTimeout(3000)</code>. If the actual delay is longer than 3 seconds, your test fails. If it's shorter, you waste time. This challenge forces you to replace that habit with Playwright's smart waiting APIs, which poll the DOM until the element is in the expected state — no guessing, no flaking.",
+    expectedBehavior: [
+      "Click the \"Start Processing\" button to trigger the async operation",
+      "Wait dynamically for the success toast — do NOT use hardcoded sleeps",
+      "Assert the toast's exact text while it is still visible",
+      "Your script must handle any delay between 1 and 7 seconds reliably",
+    ],
+    hints: [
+      "<code>expect(locator).toBeVisible()</code> is a smart wait by default — it retries until the element appears or the timeout expires.",
+      "Pass a generous timeout to handle the full 7-second delay: <code>await expect(toast).toBeVisible({ timeout: 10_000 })</code>.",
+      "The toast disappears after 800 ms. Assert its text <em>while waiting</em> for visibility — <code>toBeVisible</code> and <code>toContainText</code> can be chained or used back-to-back before it vanishes.",
+      "Never use <code>page.waitForTimeout()</code> here. If you feel tempted to add a sleep, that's the signal to use <code>waitForSelector</code> or <code>expect(...).toBeVisible()</code> instead.",
+    ],
     instructions: [
       "Click the 'Start Processing' button in the right panel.",
       "A spinner will appear for a random 1–7 second delay.",
@@ -391,6 +418,20 @@ test('catch the fleeting success toast', async ({ page }) => {
     difficulty: "Hard",
     xp: 15,
     tags: ["Network Interception", "API Mocking"],
+    problemStatement:
+      "QA engineers frequently need to test how the UI handles edge cases that the real backend doesn't expose on demand — 500 errors, empty datasets, edge-case payloads. Playwright's <code>page.route()</code> lets you intercept any network request and return a mocked response without touching the server. This challenge puts you in that scenario: the <code>/api/user-stats</code> endpoint is hardcoded to fail, and your job is to make the UI think it succeeded.",
+    expectedBehavior: [
+      "Register a page.route() intercept for /api/user-stats BEFORE navigating",
+      "Mock the response with HTTP 200 and body <code>{ status: 'success', users: 42 }</code>",
+      "Navigate to the page — the intercept must catch the very first load request",
+      "Assert that the success widget renders the mocked data correctly",
+    ],
+    hints: [
+      "Register your <code>page.route()</code> handler <strong>before</strong> calling <code>page.goto()</code> — the API request fires on page load and will be missed if you register late.",
+      "Use <code>route.fulfill()</code> to provide a mocked response. Pass <code>status: 200</code>, <code>contentType: 'application/json'</code>, and <code>body: JSON.stringify({ status: 'success', users: 42 })</code>.",
+      "The URL glob <code>'**/api/user-stats'</code> matches the request regardless of the base domain — safe to use in any environment.",
+      "After navigation, assert the success element: <code>await expect(page.getByTestId('api-success-box')).toBeVisible()</code>.",
+    ],
     instructions: [
       "The page makes a GET request to /api/user-stats on load — it always returns 500.",
       "Set up a page.route() handler BEFORE navigating so the first load is already mocked.",
@@ -467,6 +508,20 @@ test('mock the stubborn API', async ({ page }) => {
     difficulty: "Medium",
     xp: 10,
     tags: ["Mouse Events", "Drag & Drop", "Interactions"],
+    problemStatement:
+      "Drag-and-drop is one of the trickiest interactions to automate reliably. The browser fires a chain of pointer events — <code>pointerdown</code>, <code>pointermove</code>, <code>pointerup</code> — and frameworks like React listen to all of them. A simple <code>click()</code> won't work. This challenge simulates a real kanban board where you must drag a ticket from \"To Do\" to \"Done\" using Playwright's pointer simulation APIs.",
+    expectedBehavior: [
+      "Locate the draggable ticket in the \"To Do\" column",
+      "Drag it to the \"Done\" column using Playwright's drag API or manual mouse events",
+      "Assert that the ticket appears in the Done column after the drop",
+      "Assert that a success indicator is visible confirming the drag completed",
+    ],
+    hints: [
+      "Playwright's <code>locator.dragTo(target)</code> is the simplest approach — it handles the full pointer event sequence automatically.",
+      "If <code>dragTo()</code> doesn't trigger the drop, try the manual approach: <code>await page.mouse.move()</code> + <code>mouse.down()</code> + <code>mouse.move()</code> + <code>mouse.up()</code>.",
+      "Find the ticket with <code>page.getByTestId('ticket-ticket-1042')</code> and the drop target with <code>page.getByTestId('done-column')</code>.",
+      "After the drag, assert <code>page.getByTestId('ticket-ticket-1042-done')</code> is visible to confirm the drop registered correctly.",
+    ],
     instructions: [
       "Locate the ticket in the 'To Do' column (data-testid: ticket-ticket-1042).",
       "Drag it to the 'Done' column (data-testid: done-column).",

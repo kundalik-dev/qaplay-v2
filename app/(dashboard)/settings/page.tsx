@@ -129,6 +129,7 @@ export default function SettingsPage() {
       updateSettings({ theme: newTheme });
       document.documentElement.classList.toggle("dark", newTheme === "dark");
     }
+    window.dispatchEvent(new Event("qap-theme-change"));
   };
 
   const handleFontChange = (newFont: "inter" | "space-grotesk") => {
