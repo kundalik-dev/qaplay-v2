@@ -393,74 +393,64 @@
 /* ── Stats grid — 4-card metric layout ───────────────────── */
 
 .statsGrid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-}
-
-@media (max-width: 860px) {
-  .statsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .statCard {
-  background: linear-gradient(
-    180deg,
-    var(--_surface),
-    color-mix(in srgb, var(--_surface) 88%, var(--_bg))
-  );
+  background: var(--_surface);
   border: 1px solid var(--_border);
-  border-radius: 16px;
-  padding: 14px 16px 16px;
+  border-radius: 10px;
+  padding: 8px 14px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  box-shadow: 0 4px 16px rgba(20, 42, 62, 0.05);
+  gap: 1px;
+  width: 140px;
+  flex-shrink: 0;
 }
 
 .statCardMeta {
   font-family: var(--_font-mono);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--_text-muted);
   display: block;
-  margin-bottom: 4px;
 }
 
 .statCardValue {
   display: block;
   font-family: var(--_font-display);
-  font-size: 28px;
+  font-size: 17px;
   font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1.05;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
   color: var(--_text);
+  margin-top: 2px;
 }
 
 .statCardUnit {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--_text-muted);
-  letter-spacing: -0.02em;
 }
 
 .statCardSub {
   font-family: var(--_font-body);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--_text-muted);
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 /* XP progress bar */
 .statCardBar {
-  height: 3px;
+  height: 2px;
   background: var(--_border-strong);
   border-radius: var(--_r-full);
   overflow: hidden;
-  margin: 6px 0 2px;
+  margin: 4px 0 2px;
 }
 
 .statCardBarFill {

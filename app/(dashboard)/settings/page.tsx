@@ -12,6 +12,8 @@ import {
   User,
   Mail,
   Shield,
+  FileText,
+  Upload,
 } from "lucide-react";
 import pageStyles from "./settings.module.css";
 import dashboardStyles from "../_components/dashboard.module.css";
@@ -45,6 +47,7 @@ export default function SettingsPage() {
 
   // Profile State
   const [profileSaved, setProfileSaved] = useState(false);
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
 
   useEffect(() => {
     Promise.resolve().then(() => {
@@ -96,6 +99,20 @@ export default function SettingsPage() {
 
   const handleSaveProfile = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Simulated API Call for Resume Upload
+    if (resumeFile) {
+      console.log("Simulating resume upload to API:", resumeFile.name);
+      /*
+      const formData = new FormData();
+      formData.append("resume", resumeFile);
+      fetch("/api/upload-resume", { method: "POST", body: formData })
+        .then(res => res.json())
+        .then(data => console.log("Upload success", data))
+        .catch(err => console.error("Upload failed", err));
+      */
+    }
+
     setProfileSaved(true);
     setTimeout(() => setProfileSaved(false), 3000);
   };
@@ -278,6 +295,36 @@ export default function SettingsPage() {
                     />
                   </div>
                 </div>
+                
+                <div className={pageStyles.inputGroup}>
+                  <label className={pageStyles.label}>Upload Resume</label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <label 
+                      className={cn(pageStyles.btn, pageStyles.btnSecondary)} 
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <Upload size={14} /> Choose File
+                      <input 
+                        type="file" 
+                        accept=".pdf,.doc,.docx,.md" 
+                        style={{ display: 'none' }}
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files.length > 0) {
+                            setResumeFile(e.target.files[0]);
+                          }
+                        }}
+                      />
+                    </label>
+                    {resumeFile ? (
+                      <span style={{ fontSize: '13px', color: 'var(--foreground)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <FileText size={14} className="text-primary" /> {resumeFile.name}
+                      </span>
+                    ) : (
+                      <span style={{ fontSize: '13px', color: 'var(--muted-foreground)' }}>No file chosen (PDF, DOCX, MD)</span>
+                    )}
+                  </div>
+                </div>
+
                 <div className={pageStyles.formActions}>
                   <button
                     type="submit"

@@ -67,7 +67,7 @@ export default function ChallengesDashboard() {
   const [status, setStatus] = useState<StatusFilter>("all");
   const [difficulty, setDifficulty] = useState<DifficultyFilter>("all");
   const [search, setSearch] = useState("");
-  const [view, setView] = useState<ViewMode>("table");
+  const [view, setView] = useState<ViewMode>("card");
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("qap_completed_challenges") || "[]");
