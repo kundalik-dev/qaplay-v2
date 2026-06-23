@@ -5,52 +5,92 @@ import Link from "next/link";
 import styles from "./challenges.module.css";
 import { challenges } from "@/data/challenges-registry";
 
-type StatusFilter = "All" | "Incomplete" | "Completed";
-type DifficultyFilter = "All" | "Easy" | "Medium" | "Hard";
+type StatusFilter = "all" | "incomplete" | "completed";
+type DifficultyFilter = "all" | "Easy" | "Medium" | "Hard";
+type ViewMode = "card" | "table";
 
 const XP_PER_LEVEL = 25;
 
+/* ── Icons ─────────────────────────────────────────────────── */
+function IconGrid() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+      <rect x="1" y="1" width="5.5" height="5.5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+      <rect x="8.5" y="1" width="5.5" height="5.5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+      <rect x="1" y="8.5" width="5.5" height="5.5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+      <rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+    </svg>
+  );
+}
+
+function IconList() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+      <line x1="1" y1="3.5" x2="14" y2="3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <line x1="1" y1="7.5" x2="14" y2="7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <line x1="1" y1="11.5" x2="14" y2="11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+function IconSearch() {
+  return (
+    <svg className={styles.searchIcon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clipRule="evenodd"/>
+    </svg>
+  );
+}
+
+function IconClear() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" aria-hidden="true">
+      <path d="M4 4l8 8M12 4l-8 8"/>
+    </svg>
+  );
+}
+
+/* ── Difficulty chip ────────────────────────────────────────── */
+function DiffChip({ diff }: { diff: string }) {
+  const cls =
+    diff === "Hard"
+      ? styles.chipHard
+      : diff === "Medium"
+      ? styles.chipMedium
+      : styles.chipEasy;
+  return <span className={cls}>{diff}</span>;
+}
+
+/* ── Main page ──────────────────────────────────────────────── */
 export default function ChallengesDashboard() {
   const [completedIds, setCompletedIds] = useState<string[]>([]);
   const [streak, setStreak] = useState(0);
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
-  const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("All");
+  const [status, setStatus] = useState<StatusFilter>("all");
+  const [difficulty, setDifficulty] = useState<DifficultyFilter>("all");
   const [search, setSearch] = useState("");
+  const [view, setView] = useState<ViewMode>("table");
 
   useEffect(() => {
-    const savedCompleted = JSON.parse(
-      localStorage.getItem("qap_completed_challenges") || "[]"
-    );
-    setCompletedIds(savedCompleted);
-
-    const savedStreak = parseInt(
-      localStorage.getItem("qap_user_streak") || "0",
-      10
-    );
-    if (savedStreak === 0) {
-      localStorage.setItem("qap_user_streak", "4");
-      setStreak(4);
-    } else {
-      setStreak(savedStreak);
-    }
+    const saved = JSON.parse(localStorage.getItem("qap_completed_challenges") || "[]");
+    setCompletedIds(saved);
+    const s = parseInt(localStorage.getItem("qap_user_streak") || "0", 10);
+    if (s === 0) { localStorage.setItem("qap_user_streak", "4"); setStreak(4); }
+    else setStreak(s);
   }, []);
 
   const totalXP = completedIds.reduce((acc, id) => {
-    const challenge = challenges.find((c) => c.id === id);
-    return acc + (challenge?.xp || 0);
+    return acc + (challenges.find((c) => c.id === id)?.xp ?? 0);
   }, 0);
 
   const level = Math.floor(totalXP / XP_PER_LEVEL) + 1;
   const xpIntoLevel = totalXP % XP_PER_LEVEL;
   const xpProgress = (xpIntoLevel / XP_PER_LEVEL) * 100;
 
-  const filteredChallenges = useMemo(() => {
+  const filtered = useMemo(() => {
     return challenges.filter((c) => {
-      const isCompleted = completedIds.includes(c.id);
-      if (statusFilter === "Completed" && !isCompleted) return false;
-      if (statusFilter === "Incomplete" && isCompleted) return false;
-      if (difficultyFilter !== "All" && c.difficulty !== difficultyFilter)
-        return false;
+      const done = completedIds.includes(c.id);
+      if (status === "completed" && !done) return false;
+      if (status === "incomplete" && done) return false;
+      if (difficulty !== "all" && c.difficulty !== difficulty) return false;
       if (search) {
         const q = search.toLowerCase();
         return (
@@ -61,243 +101,305 @@ export default function ChallengesDashboard() {
       }
       return true;
     });
-  }, [completedIds, statusFilter, difficultyFilter, search]);
+  }, [completedIds, status, difficulty, search]);
+
+  const isFiltering = status !== "all" || difficulty !== "all" || search !== "";
+
+  function clearFilters() {
+    setStatus("all");
+    setDifficulty("all");
+    setSearch("");
+  }
 
   const dailyChallenge = challenges[0];
-
-  function toggleDifficulty(d: DifficultyFilter) {
-    setDifficultyFilter((prev) => (prev === d ? "All" : d));
-  }
 
   return (
     <div className={styles.dashPage} data-testid="challenges-dashboard">
 
-      {/* ── Stats Header ─────────────────────────────── */}
-      <header className={styles.dashHeader} data-testid="challenges-stats-header">
-        <div className={styles.dashWelcome}>
-          <p className={styles.eyebrow} data-testid="streak-label">
-            <span className={styles.eyebrowDot} aria-hidden="true" />
-            {streak > 0 ? `🔥 ${streak}-day streak — keep it going!` : "Start your streak today"}
-          </p>
-          <h1 className={styles.dashTitle}>Challenges</h1>
-          <p className={styles.dashSubtitle}>
-            Sharpen your automation skills. Complete challenges to earn XP and level up.
-          </p>
+      {/* ── Page header ─────────────────────────────────────── */}
+      <div className={styles.pageHeader} data-testid="challenges-header">
+        <div className={styles.headerTop}>
+          <div>
+            <h1 className={styles.pageTitle}>Challenges</h1>
+            <p className={styles.pageSubtitle}>
+              Complete challenges to earn XP, level up, and sharpen your automation skills.
+            </p>
+          </div>
+
+          {/* Streak pill */}
+          {streak > 0 && (
+            <span className={styles.streakPill} data-testid="streak-pill">
+              🔥 {streak}-day streak
+            </span>
+          )}
         </div>
 
-        <div className={styles.dashStatsGrid} data-testid="challenges-stats-grid">
-          <div className={styles.dashStatCard} data-testid="stat-level">
-            <div className={styles.statIconRow}>
-              <span className={styles.statEmoji} aria-hidden="true">⚡</span>
-              <span className={styles.statBadge}>Level {level}</span>
+        {/* Inline stats strip */}
+        <div className={styles.statsStrip} data-testid="stats-strip">
+          <div className={styles.statItem} data-testid="stat-level">
+            <span className={styles.statItemIcon}>⚡</span>
+            <span className={styles.statItemValue}>Level {level}</span>
+            <span className={styles.statItemLabel}>·</span>
+            <span className={styles.statItemLabel}>{totalXP} XP</span>
+            <div className={styles.miniProgressWrap}>
+              <div className={styles.miniProgressBar} style={{ width: `${xpProgress}%` }} />
             </div>
-            <div className={styles.statValue}>{totalXP} XP</div>
-            <div className={styles.statLabel}>Total earned</div>
-            <div className={styles.statProgress} role="progressbar" aria-valuenow={xpProgress} aria-valuemin={0} aria-valuemax={100}>
-              <div className={styles.statProgressBar} style={{ width: `${xpProgress}%` }} />
-            </div>
-            <div className={styles.statProgressLabel}>
-              {xpIntoLevel} / {XP_PER_LEVEL} XP to Level {level + 1}
-            </div>
+            <span className={styles.statItemMuted}>{xpIntoLevel}/{XP_PER_LEVEL} to Lvl {level + 1}</span>
           </div>
-
-          <div className={styles.dashStatCard} data-testid="stat-completed">
-            <div className={styles.statIconRow}>
-              <span className={styles.statEmoji} aria-hidden="true">✅</span>
-            </div>
-            <div className={styles.statValue}>
-              {completedIds.length}
-              <span className={styles.statDim}> / {challenges.length}</span>
-            </div>
-            <div className={styles.statLabel}>Challenges done</div>
+          <span className={styles.statDivider} aria-hidden="true" />
+          <div className={styles.statItem} data-testid="stat-done">
+            <span className={styles.statItemIcon}>✅</span>
+            <span className={styles.statItemValue}>{completedIds.length}/{challenges.length}</span>
+            <span className={styles.statItemLabel}>done</span>
           </div>
-
-          <div className={styles.dashStatCard} data-testid="stat-rank">
-            <div className={styles.statIconRow}>
-              <span className={styles.statEmoji} aria-hidden="true">🏆</span>
-            </div>
-            <div className={styles.statValue}>Top 15%</div>
-            <div className={styles.statLabel}>Global rank</div>
+          <span className={styles.statDivider} aria-hidden="true" />
+          <div className={styles.statItem} data-testid="stat-rank">
+            <span className={styles.statItemIcon}>🏆</span>
+            <span className={styles.statItemValue}>Top 15%</span>
+            <span className={styles.statItemLabel}>global</span>
           </div>
         </div>
-      </header>
+      </div>
 
-      {/* ── Daily Hero Card ───────────────────────────── */}
+      {/* ── Daily hero card ──────────────────────────────────── */}
       <section className={styles.heroSection} data-testid="daily-challenge-hero">
         <div className={styles.dailyHeroCard}>
           <div className={styles.heroContent}>
             <p className={styles.eyebrow}>
               <span className={styles.eyebrowDot} aria-hidden="true" />
-              Daily Recommended Challenge
+              Daily Recommended
             </p>
             <h2 className={styles.heroTitle}>{dailyChallenge.title}</h2>
             <p className={styles.heroDesc}>{dailyChallenge.description}</p>
             <div className={styles.heroBadges}>
-              <span className={styles.chipAdvanced}>{dailyChallenge.difficulty}</span>
+              <DiffChip diff={dailyChallenge.difficulty} />
               <span className={styles.xpBadge}>+{dailyChallenge.xp} XP</span>
-              {dailyChallenge.tags.map((tag) => (
-                <span key={tag} className={styles.tagBadge}>{tag}</span>
+              {dailyChallenge.tags.map((t) => (
+                <span key={t} className={styles.tagPill}>{t}</span>
               ))}
             </div>
-            <Link
-              href={`/challenges/${dailyChallenge.id}`}
-              className={styles.heroCta}
-              data-testid="daily-challenge-cta"
-              data-cta="start-daily-challenge"
-            >
+            <Link href={`/challenges/${dailyChallenge.id}`} className={styles.heroCta} data-testid="daily-challenge-cta">
               Start Challenge ⚡
             </Link>
           </div>
-
           <div className={styles.heroGraphic} aria-hidden="true">
             <div className={styles.mockBrowserWindow}>
-              <div className={styles.mockBrowserHeader}>
-                <span /><span /><span />
-              </div>
+              <div className={styles.mockBrowserHeader}><span /><span /><span /></div>
               <div className={styles.mockBrowserBody}>
                 <div className={styles.mockNode}>&lt;my-component&gt;</div>
-                <div className={`${styles.mockNode} ${styles.mockIndent}`}>
-                  #shadow-root (open)
-                </div>
-                <div className={`${styles.mockNode} ${styles.mockIndent2} ${styles.mockHighlight}`}>
-                  &lt;button&gt;Reveal&lt;/button&gt;
-                </div>
+                <div className={`${styles.mockNode} ${styles.mockIndent}`}>#shadow-root (open)</div>
+                <div className={`${styles.mockNode} ${styles.mockIndent2} ${styles.mockHighlight}`}>&lt;button&gt;Reveal&lt;/button&gt;</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Filters + Grid ───────────────────────────── */}
+      {/* ── Filters + list ───────────────────────────────────── */}
       <section data-testid="challenges-list-section">
-        <div className={styles.dashFiltersBar} data-testid="challenges-filters">
-          {/* Status filters */}
-          <div className={styles.filterGroup} data-testid="status-filters">
-            {(["All", "Incomplete", "Completed"] as StatusFilter[]).map((f) => (
-              <button
-                key={f}
-                className={`${styles.filterPill} ${statusFilter === f ? styles.filterPillActive : ""}`}
-                onClick={() => setStatusFilter(f)}
-                data-testid={`filter-status-${f.toLowerCase()}`}
-              >
-                {f}
-              </button>
-            ))}
-          </div>
 
-          <div className={styles.filterDivider} aria-hidden="true" />
-
-          {/* Difficulty filters */}
-          <div className={styles.filterGroup} data-testid="difficulty-filters">
-            <button
-              className={`${styles.filterPill} ${styles.filterPillEasy} ${difficultyFilter === "Easy" ? styles.filterPillActive : ""}`}
-              onClick={() => toggleDifficulty("Easy")}
-              data-testid="filter-difficulty-easy"
-            >
-              Easy
-            </button>
-            <button
-              className={`${styles.filterPill} ${styles.filterPillMedium} ${difficultyFilter === "Medium" ? styles.filterPillActive : ""}`}
-              onClick={() => toggleDifficulty("Medium")}
-              data-testid="filter-difficulty-medium"
-            >
-              Medium
-            </button>
-            <button
-              className={`${styles.filterPill} ${styles.filterPillHard} ${difficultyFilter === "Hard" ? styles.filterPillActive : ""}`}
-              onClick={() => toggleDifficulty("Hard")}
-              data-testid="filter-difficulty-hard"
-            >
-              Hard
-            </button>
-          </div>
-
+        {/* Filter bar — QA Tools style */}
+        <div className={styles.filtersBar} data-testid="challenges-filters">
           {/* Search */}
-          <div className={styles.filterSearchWrap}>
+          <div className={styles.searchWrap}>
+            <IconSearch />
             <input
               type="search"
-              className={styles.filterSearch}
+              className={styles.searchInput}
               placeholder="Search challenges..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              data-testid="challenges-search"
               aria-label="Search challenges"
+              data-testid="challenges-search"
             />
+            {search && (
+              <button className={styles.clearBtn} onClick={() => setSearch("")} aria-label="Clear search">
+                <IconClear />
+              </button>
+            )}
+          </div>
+
+          {/* Difficulty select */}
+          <select
+            className={styles.filterSelect}
+            value={difficulty}
+            onChange={(e) => setDifficulty(e.target.value as DifficultyFilter)}
+            aria-label="Filter by difficulty"
+            data-testid="filter-difficulty"
+          >
+            <option value="all">All Difficulties</option>
+            <option value="Easy">Easy (+5 XP)</option>
+            <option value="Medium">Medium (+10 XP)</option>
+            <option value="Hard">Hard (+15 XP)</option>
+          </select>
+
+          {/* Status select */}
+          <select
+            className={styles.filterSelect}
+            value={status}
+            onChange={(e) => setStatus(e.target.value as StatusFilter)}
+            aria-label="Filter by status"
+            data-testid="filter-status"
+          >
+            <option value="all">All ({challenges.length})</option>
+            <option value="incomplete">Incomplete</option>
+            <option value="completed">Completed</option>
+          </select>
+
+          {/* Count + clear */}
+          {isFiltering && (
+            <>
+              <span className={styles.resultCount} data-testid="result-count">
+                {filtered.length} result{filtered.length !== 1 ? "s" : ""}
+              </span>
+              <button className={styles.clearFiltersBtn} onClick={clearFilters} data-testid="clear-filters">
+                Clear
+              </button>
+            </>
+          )}
+
+          {/* View toggle */}
+          <div className={styles.viewToggle} role="group" aria-label="View mode" data-testid="view-toggle">
+            <button
+              className={`${styles.viewBtn} ${view === "card" ? styles.viewBtnActive : ""}`}
+              onClick={() => setView("card")}
+              aria-label="Card view"
+              aria-pressed={view === "card"}
+              data-testid="view-card"
+            >
+              <IconGrid />
+            </button>
+            <button
+              className={`${styles.viewBtn} ${view === "table" ? styles.viewBtnActive : ""}`}
+              onClick={() => setView("table")}
+              aria-label="Table view"
+              aria-pressed={view === "table"}
+              data-testid="view-table"
+            >
+              <IconList />
+            </button>
           </div>
         </div>
 
-        {/* Challenge Grid */}
-        <div className={styles.chGrid} data-testid="challenges-grid">
-          {filteredChallenges.length === 0 && (
-            <div className={styles.emptyState} data-testid="challenges-empty">
-              <span className={styles.emptyIcon} aria-hidden="true">🔍</span>
-              <p className={styles.emptyText}>No challenges match your filters.</p>
-              <button
-                className={styles.emptyReset}
-                onClick={() => { setStatusFilter("All"); setDifficultyFilter("All"); setSearch(""); }}
-              >
-                Clear filters
-              </button>
-            </div>
-          )}
+        {/* Empty state */}
+        {filtered.length === 0 && (
+          <div className={styles.emptyState} data-testid="challenges-empty">
+            <span className={styles.emptyIcon}>🔍</span>
+            <p className={styles.emptyText}>No challenges match your filters.</p>
+            <button className={styles.emptyReset} onClick={clearFilters}>Clear filters</button>
+          </div>
+        )}
 
-          {filteredChallenges.map((challenge) => {
-            const isCompleted = completedIds.includes(challenge.id);
-            return (
-              <Link
-                href={`/challenges/${challenge.id}`}
-                key={challenge.id}
-                className={`${styles.chCard} ${isCompleted ? styles.chCardCompleted : ""}`}
-                data-testid={`challenge-card-${challenge.id}`}
-                data-difficulty={challenge.difficulty.toLowerCase()}
-                data-completed={isCompleted}
-                data-card="challenge"
-              >
-                <div className={styles.chCardStatus}>
-                  <span
-                    className={`${styles.statusIcon} ${!isCompleted ? styles.statusPending : ""}`}
-                    title={isCompleted ? "Completed" : "Incomplete"}
-                    aria-label={isCompleted ? "Completed" : "Incomplete"}
-                  >
-                    {isCompleted ? "✅" : "⭕"}
-                  </span>
-                </div>
+        {/* ── Card grid view ──────────────────────────────────── */}
+        {view === "card" && filtered.length > 0 && (
+          <div className={styles.chGrid} data-testid="challenges-grid">
+            {filtered.map((ch) => {
+              const done = completedIds.includes(ch.id);
+              return (
+                <Link
+                  href={`/challenges/${ch.id}`}
+                  key={ch.id}
+                  className={`${styles.chCard} ${done ? styles.chCardDone : ""}`}
+                  data-testid={`challenge-card-${ch.id}`}
+                  data-difficulty={ch.difficulty.toLowerCase()}
+                  data-completed={done}
+                >
+                  <div className={styles.chCardStatus}>
+                    <span className={`${styles.statusIcon} ${!done ? styles.statusPending : ""}`}>
+                      {done ? "✅" : "⭕"}
+                    </span>
+                  </div>
+                  <div className={styles.chCardBody}>
+                    <div className={styles.chCardTags}>
+                      <DiffChip diff={ch.difficulty} />
+                      {ch.tags.map((t) => (
+                        <span key={t} className={styles.tagPill}>{t}</span>
+                      ))}
+                    </div>
+                    <h3 className={styles.chCardTitle}>{ch.title}</h3>
+                    <p className={styles.chCardDesc}>{ch.summary}</p>
+                    <div className={styles.chCardFooter}>
+                      <span className={`${styles.chXp} ${done ? styles.chXpDone : ""}`}>
+                        +{ch.xp} XP
+                      </span>
+                      <span className={`${styles.cardBtn} ${done ? styles.cardBtnSecondary : styles.cardBtnPrimary}`}>
+                        {done ? "Review →" : "Start →"}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        )}
 
-                <div className={styles.chCardBody}>
-                  <div className={styles.chCardTags}>
-                    <span
-                      className={
-                        challenge.difficulty === "Hard"
-                          ? styles.chipAdvanced
-                          : challenge.difficulty === "Medium"
-                          ? styles.chipIntermediate
-                          : styles.chipBeginner
-                      }
-                      data-level={challenge.difficulty.toLowerCase()}
+        {/* ── Table view ──────────────────────────────────────── */}
+        {view === "table" && filtered.length > 0 && (
+          <div className={styles.tableWrap} data-testid="challenges-table">
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th className={styles.thStatus} scope="col">Status</th>
+                  <th className={styles.thTitle} scope="col">Challenge</th>
+                  <th className={styles.thDiff} scope="col">Difficulty</th>
+                  <th className={styles.thTags} scope="col">Tags</th>
+                  <th className={styles.thXp} scope="col">XP</th>
+                  <th className={styles.thAction} scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.map((ch) => {
+                  const done = completedIds.includes(ch.id);
+                  return (
+                    <tr
+                      key={ch.id}
+                      className={`${styles.tableRow} ${done ? styles.tableRowDone : ""}`}
+                      data-testid={`challenge-row-${ch.id}`}
+                      data-difficulty={ch.difficulty.toLowerCase()}
+                      data-completed={done}
                     >
-                      {challenge.difficulty}
-                    </span>
-                    {challenge.tags.map((tag) => (
-                      <span key={tag} className={styles.tagPill}>{tag}</span>
-                    ))}
-                  </div>
-
-                  <h3 className={styles.chCardTitle}>{challenge.title}</h3>
-                  <p className={styles.chCardDesc}>{challenge.summary}</p>
-
-                  <div className={styles.chCardFooter}>
-                    <span className={`${styles.chXp} ${isCompleted ? styles.chXpDone : ""}`}>
-                      +{challenge.xp} XP
-                    </span>
-                    <span className={`${styles.cardBtn} ${isCompleted ? styles.cardBtnSecondary : styles.cardBtnPrimary}`}>
-                      {isCompleted ? "Review →" : "Start →"}
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+                      <td className={styles.tdStatus}>
+                        <span className={`${styles.statusIcon} ${!done ? styles.statusPending : ""}`} title={done ? "Completed" : "Incomplete"}>
+                          {done ? "✅" : "⭕"}
+                        </span>
+                      </td>
+                      <td className={styles.tdTitle}>
+                        <Link href={`/challenges/${ch.id}`} className={styles.tableLink}>
+                          {ch.title}
+                        </Link>
+                        <p className={styles.tableDesc}>{ch.summary}</p>
+                      </td>
+                      <td className={styles.tdDiff}>
+                        <DiffChip diff={ch.difficulty} />
+                      </td>
+                      <td className={styles.tdTags}>
+                        <div className={styles.tableTags}>
+                          {ch.tags.map((t) => (
+                            <span key={t} className={styles.tagPill}>{t}</span>
+                          ))}
+                        </div>
+                      </td>
+                      <td className={styles.tdXp}>
+                        <span className={`${styles.chXp} ${done ? styles.chXpDone : ""}`}>
+                          +{ch.xp} XP
+                        </span>
+                      </td>
+                      <td className={styles.tdAction}>
+                        <Link
+                          href={`/challenges/${ch.id}`}
+                          className={`${styles.cardBtn} ${done ? styles.cardBtnSecondary : styles.cardBtnPrimary}`}
+                          data-testid={`challenge-action-${ch.id}`}
+                        >
+                          {done ? "Review →" : "Start →"}
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
     </div>
   );

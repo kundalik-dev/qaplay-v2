@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Save, Palette, Key, Monitor, Moon, Sun, Type } from "lucide-react";
-import styles from "../_components/dashboard.module.css";
+import { Save, Palette, Key, Monitor, Moon, Sun, Type, User, Mail, Shield } from "lucide-react";
+import pageStyles from "./settings.module.css";
+import dashboardStyles from "../_components/dashboard.module.css";
+import { cn } from "@/lib/utils";
 
 const MODELS = [
   { id: "openai/gpt-4o-mini", name: "OpenAI GPT-4o Mini (Default)" },
@@ -14,7 +16,7 @@ const MODELS = [
 ];
 
 export default function SettingsPage() {
-  const [activeTab, setActiveTab] = useState<"appearance" | "api">("appearance");
+  const [activeTab, setActiveTab] = useState<"profile" | "appearance" | "api">("profile");
   
   // API State
   const [key, setKey] = useState("");
@@ -26,6 +28,9 @@ export default function SettingsPage() {
   // Appearance State
   const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
   const [font, setFont] = useState<"inter" | "space-grotesk">("inter");
+
+  // Profile State
+  const [profileSaved, setProfileSaved] = useState(false);
 
   useEffect(() => {
     Promise.resolve().then(() => {
@@ -65,6 +70,12 @@ export default function SettingsPage() {
     setTimeout(() => setApiSaved(false), 3000);
   };
 
+  const handleSaveProfile = (e: React.FormEvent) => {
+    e.preventDefault();
+    setProfileSaved(true);
+    setTimeout(() => setProfileSaved(false), 3000);
+  };
+
   const handleThemeChange = (newTheme: "light" | "dark" | "system") => {
     setTheme(newTheme);
     if (newTheme === "system") {
@@ -84,177 +95,237 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className={styles.main} style={{ maxWidth: '800px', margin: '0 auto', width: '100%' }}>
-      <h1 className="heading-lg" style={{ marginBottom: '8px' }}>Settings</h1>
-      <p className="body-base text-muted" style={{ marginBottom: '32px' }}>
-        Manage your preferences and integrations.
-      </p>
+    <div className={cn(dashboardStyles.main, pageStyles.page)}>
+      
+      {/* Header */}
+      <div className={pageStyles.topBar}>
+        <div className={pageStyles.titleGroup}>
+          <h1 className={pageStyles.title}>Settings</h1>
+        </div>
+        <p className={pageStyles.description}>
+          Manage your account preferences, appearance, and integrations.
+        </p>
+      </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', borderBottom: '1px solid var(--border)' }}>
+      <div className={pageStyles.tabsBar}>
         <button 
-          onClick={() => setActiveTab("appearance")}
-          style={{ 
-            padding: '12px 16px', 
-            fontWeight: 600, 
-            color: activeTab === "appearance" ? 'var(--accent)' : 'var(--text-muted)',
-            borderBottom: activeTab === "appearance" ? '2px solid var(--accent)' : '2px solid transparent',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px'
-          }}
+          onClick={() => setActiveTab("profile")} 
+          className={cn(pageStyles.tab, activeTab === "profile" && pageStyles.tabActive)}
         >
-          <Palette size={18} /> Appearance
+          <User size={16} /> Profile
         </button>
         <button 
-          onClick={() => setActiveTab("api")}
-          style={{ 
-            padding: '12px 16px', 
-            fontWeight: 600, 
-            color: activeTab === "api" ? 'var(--accent)' : 'var(--text-muted)',
-            borderBottom: activeTab === "api" ? '2px solid var(--accent)' : '2px solid transparent',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px'
-          }}
+          onClick={() => setActiveTab("appearance")} 
+          className={cn(pageStyles.tab, activeTab === "appearance" && pageStyles.tabActive)}
         >
-          <Key size={18} /> API & Integrations
+          <Palette size={16} /> Appearance
+        </button>
+        <button 
+          onClick={() => setActiveTab("api")} 
+          className={cn(pageStyles.tab, activeTab === "api" && pageStyles.tabActive)}
+        >
+          <Key size={16} /> API & Integrations
         </button>
       </div>
 
-      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', padding: '24px' }}>
+      {/* Content */}
+      <div style={{ animation: 'fade-in 0.3s ease-out' }}>
         
+        {/* PROFILE TAB */}
+        {activeTab === "profile" && (
+          <div>
+            <div className={pageStyles.card}>
+              <div className={pageStyles.cardHeader}>
+                <h2 className={pageStyles.cardTitle}>Personal Information</h2>
+                <p className={pageStyles.cardDesc}>Update your name and email address.</p>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '32px' }}>
+                <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'var(--primary)', color: 'var(--primary-foreground)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 600, fontFamily: 'var(--font-space-grotesk)' }}>
+                  KJ
+                </div>
+                <div>
+                  <button className="btn btn-secondary" style={{ padding: '6px 12px', fontSize: '12px', borderRadius: '6px' }}>Upload New Photo</button>
+                  <p style={{ fontSize: '11px', color: 'var(--muted-foreground)', marginTop: '8px', margin: '4px 0 0 0' }}>At least 256x256px PNG or JPG.</p>
+                </div>
+              </div>
+
+              <form onSubmit={handleSaveProfile}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div className={pageStyles.inputGroup}>
+                    <label className={pageStyles.label}>First Name</label>
+                    <input type="text" defaultValue="Kundalik" className={pageStyles.input} />
+                  </div>
+                  <div className={pageStyles.inputGroup}>
+                    <label className={pageStyles.label}>Last Name</label>
+                    <input type="text" defaultValue="Jadhav" className={pageStyles.input} />
+                  </div>
+                </div>
+                <div className={pageStyles.inputGroup}>
+                  <label className={pageStyles.label}>Email Address</label>
+                  <div style={{ position: 'relative' }}>
+                    <Mail size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--muted-foreground)' }} />
+                    <input type="email" defaultValue="kundalik.dev@gmail.com" className={pageStyles.input} style={{ paddingLeft: '38px' }} />
+                  </div>
+                </div>
+                <div className={pageStyles.formActions}>
+                  <button type="submit" className="btn btn-primary" style={{ padding: '8px 16px', borderRadius: '6px', fontSize: '13px' }}>Save Changes</button>
+                  {profileSaved && <span style={{ color: 'var(--success)', fontSize: '12px', fontWeight: 500 }}>✓ Saved successfully</span>}
+                </div>
+              </form>
+            </div>
+
+            <div className={pageStyles.card}>
+                <div className={pageStyles.cardHeader}>
+                <h2 className={pageStyles.cardTitle}><Shield size={18} className="text-destructive" /> Danger Zone</h2>
+                <p className={pageStyles.cardDesc}>Permanently delete your account and all associated data.</p>
+              </div>
+              <button className="btn btn-secondary" style={{ color: 'var(--destructive)', borderColor: 'color-mix(in srgb, var(--destructive) 30%, transparent)' }}>Delete Account</button>
+            </div>
+          </div>
+        )}
+
         {/* APPEARANCE TAB */}
         {activeTab === "appearance" && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-            
-            {/* Theme Selection */}
-            <div>
-              <h2 className="heading-md" style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Monitor size={20} /> Theme Preference
-              </h2>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '16px' }}>
-                <button 
-                  onClick={() => handleThemeChange("system")}
-                  style={{ padding: '16px', borderRadius: '8px', border: `2px solid ${theme === 'system' ? 'var(--accent)' : 'var(--border)'}`, background: 'var(--bg2)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}
-                >
-                  <Monitor size={24} /> System
-                </button>
-                <button 
-                  onClick={() => handleThemeChange("light")}
-                  style={{ padding: '16px', borderRadius: '8px', border: `2px solid ${theme === 'light' ? 'var(--accent)' : 'var(--border)'}`, background: 'var(--bg2)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}
-                >
-                  <Sun size={24} /> Light
-                </button>
-                <button 
-                  onClick={() => handleThemeChange("dark")}
-                  style={{ padding: '16px', borderRadius: '8px', border: `2px solid ${theme === 'dark' ? 'var(--accent)' : 'var(--border)'}`, background: 'var(--bg2)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}
-                >
-                  <Moon size={24} /> Dark
-                </button>
+          <div>
+            <div className={pageStyles.card}>
+              <div className={pageStyles.cardHeader}>
+                <h2 className={pageStyles.cardTitle}>
+                  <Monitor size={18} /> Theme Preference
+                </h2>
+                <p className={pageStyles.cardDesc}>Select or customize your UI theme.</p>
+              </div>
+              <div className={pageStyles.buttonGrid}>
+                {[
+                  { id: "system", icon: Monitor, label: "System" },
+                  { id: "light", icon: Sun, label: "Light" },
+                  { id: "dark", icon: Moon, label: "Dark" },
+                ].map((t) => {
+                  const Icon = t.icon;
+                  const isActive = theme === t.id;
+                  return (
+                    <button 
+                      key={t.id}
+                      onClick={() => handleThemeChange(t.id as "light" | "dark" | "system")}
+                      className={cn(pageStyles.optionBtn, isActive && pageStyles.optionBtnActive)}
+                    >
+                      <Icon size={24} />
+                      <span className={pageStyles.optionBtnTitle}>{t.label}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
-            {/* Font Selection */}
-            <div>
-              <h2 className="heading-md" style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Type size={20} /> App Font
-              </h2>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
-                <button 
-                  onClick={() => handleFontChange("inter")}
-                  style={{ padding: '16px', borderRadius: '8px', border: `2px solid ${font === 'inter' ? 'var(--accent)' : 'var(--border)'}`, background: 'var(--bg2)', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px', fontFamily: 'var(--font-inter)' }}
-                >
-                  <span style={{ fontSize: '18px', fontWeight: 600 }}>Inter</span>
-                  <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>The quick brown fox jumps over the lazy dog.</span>
-                </button>
-                <button 
-                  onClick={() => handleFontChange("space-grotesk")}
-                  style={{ padding: '16px', borderRadius: '8px', border: `2px solid ${font === 'space-grotesk' ? 'var(--accent)' : 'var(--border)'}`, background: 'var(--bg2)', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px', fontFamily: 'var(--font-space-grotesk)' }}
-                >
-                  <span style={{ fontSize: '18px', fontWeight: 600 }}>Space Grotesk</span>
-                  <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>The quick brown fox jumps over the lazy dog.</span>
-                </button>
+            <div className={pageStyles.card}>
+              <div className={pageStyles.cardHeader}>
+                <h2 className={pageStyles.cardTitle}>
+                  <Type size={18} /> App Font
+                </h2>
+                <p className={pageStyles.cardDesc}>Choose your preferred typeface for reading and writing.</p>
+              </div>
+              <div className={pageStyles.buttonGrid} style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
+                {[
+                  { id: "inter", name: "Inter", desc: "Clean and highly readable sans-serif.", var: "var(--font-inter)" },
+                  { id: "space-grotesk", name: "Space Grotesk", desc: "Geometrical, technical, and modern.", var: "var(--font-space-grotesk)" }
+                ].map((f) => {
+                  const isActive = font === f.id;
+                  return (
+                    <button 
+                      key={f.id}
+                      onClick={() => handleFontChange(f.id as "inter" | "space-grotesk")}
+                      className={cn(pageStyles.optionBtn, isActive && pageStyles.optionBtnActive)}
+                      style={{ alignItems: 'flex-start', fontFamily: f.var, textAlign: 'left' }}
+                    >
+                      <span className={pageStyles.optionBtnTitle} style={{ fontSize: '18px' }}>{f.name}</span>
+                      <span className={pageStyles.optionBtnDesc}>{f.desc}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
-
           </div>
         )}
 
         {/* API TAB */}
         {activeTab === "api" && (
           <div>
-            <h2 className="heading-md" style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span className="icon">🔑</span> AI Validation Configuration (BYOK)
-            </h2>
-            <p className="body-sm text-muted" style={{ marginBottom: '24px' }}>
-              We use <a href="https://openrouter.ai/" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)' }}>OpenRouter</a> to process your challenge submissions. 
-              Your API key is stored locally in your browser and is never sent to our servers.
-            </p>
-
-            <form onSubmit={handleSaveApi} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              
-              {/* API Key */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <label htmlFor="openrouter-key" style={{ fontSize: '13px', fontWeight: 600 }}>OpenRouter API Key</label>
-                <input 
-                  id="openrouter-key"
-                  type="password"
-                  placeholder="sk-or-v1-..."
-                  value={key}
-                  onChange={(e) => setKey(e.target.value)}
-                  style={{
-                    background: 'var(--bg2)', border: '1px solid var(--border-strong)', borderRadius: '6px', padding: '10px 14px', fontSize: '14px', color: 'var(--text)', width: '100%', maxWidth: '400px'
-                  }}
-                />
+            <div className={pageStyles.card}>
+              <div className={pageStyles.cardHeader}>
+                <h2 className={pageStyles.cardTitle}>
+                  AI Validation Configuration
+                </h2>
+                <p className={pageStyles.cardDesc}>
+                  We use <a href="https://openrouter.ai/" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', textDecoration: 'underline', textUnderlineOffset: '2px' }}>OpenRouter</a> to process your challenge submissions. 
+                  Your API key is stored locally in your browser and is never sent to our servers.
+                </p>
               </div>
 
-              {/* Model Selection */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <label htmlFor="openrouter-model" style={{ fontSize: '13px', fontWeight: 600 }}>Preferred Model</label>
-                <select 
-                  id="openrouter-model"
-                  value={model}
-                  onChange={(e) => {
-                    setModel(e.target.value);
-                    setIsCustom(e.target.value === "custom");
-                  }}
-                  style={{
-                    background: 'var(--bg2)', border: '1px solid var(--border-strong)', borderRadius: '6px', padding: '10px 14px', fontSize: '14px', color: 'var(--text)', width: '100%', maxWidth: '400px', cursor: 'pointer'
-                  }}
-                >
-                  {MODELS.map(m => (
-                    <option key={m.id} value={m.id}>{m.name}</option>
-                  ))}
-                  <option value="custom">Custom Model...</option>
-                </select>
-              </div>
-
-              {/* Custom Model Input */}
-              {isCustom && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label htmlFor="custom-model" style={{ fontSize: '13px', fontWeight: 600 }}>Custom Model ID</label>
-                  <input 
-                    id="custom-model"
-                    type="text"
-                    placeholder="e.g. meta-llama/llama-3-8b-instruct"
-                    value={customModel}
-                    onChange={(e) => setCustomModel(e.target.value)}
-                    style={{
-                      background: 'var(--bg2)', border: '1px solid var(--border-strong)', borderRadius: '6px', padding: '10px 14px', fontSize: '14px', color: 'var(--text)', width: '100%', maxWidth: '400px'
-                    }}
-                  />
+              <form onSubmit={handleSaveApi}>
+                
+                {/* API Key */}
+                <div className={pageStyles.inputGroup}>
+                  <label htmlFor="openrouter-key" className={pageStyles.label}>OpenRouter API Key</label>
+                  <div style={{ position: 'relative', maxWidth: '480px' }}>
+                    <Key size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--muted-foreground)' }} />
+                    <input 
+                      id="openrouter-key"
+                      type="password"
+                      placeholder="sk-or-v1-..."
+                      value={key}
+                      onChange={(e) => setKey(e.target.value)}
+                      className={pageStyles.input}
+                      style={{ paddingLeft: '38px' }}
+                    />
+                  </div>
                 </div>
-              )}
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '16px' }}>
-                <button type="submit" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Save size={16} /> Save Configuration
-                </button>
-                {apiSaved && <span style={{ color: 'var(--success)', fontSize: '13px', fontWeight: 500 }}>Saved successfully!</span>}
-              </div>
+                {/* Model Selection */}
+                <div className={pageStyles.inputGroup}>
+                  <label htmlFor="openrouter-model" className={pageStyles.label}>Preferred Model</label>
+                  <select 
+                    id="openrouter-model"
+                    value={model}
+                    onChange={(e) => {
+                      setModel(e.target.value);
+                      setIsCustom(e.target.value === "custom");
+                    }}
+                    className={pageStyles.select}
+                    style={{ maxWidth: '480px', backgroundImage: `url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', backgroundSize: '10px 10px' }}
+                  >
+                    {MODELS.map(m => (
+                      <option key={m.id} value={m.id}>{m.name}</option>
+                    ))}
+                    <option value="custom">Custom Model...</option>
+                  </select>
+                </div>
 
-            </form>
+                {/* Custom Model Input */}
+                {isCustom && (
+                  <div className={pageStyles.inputGroup}>
+                    <label htmlFor="custom-model" className={pageStyles.label}>Custom Model ID</label>
+                    <input 
+                      id="custom-model"
+                      type="text"
+                      placeholder="e.g. meta-llama/llama-3-8b-instruct"
+                      value={customModel}
+                      onChange={(e) => setCustomModel(e.target.value)}
+                      className={pageStyles.input}
+                      style={{ maxWidth: '480px' }}
+                    />
+                  </div>
+                )}
+
+                <div className={pageStyles.formActions}>
+                  <button type="submit" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '6px', fontSize: '13px' }}>
+                    <Save size={14} /> Save Configuration
+                  </button>
+                  {apiSaved && <span style={{ color: 'var(--success)', fontSize: '12px', fontWeight: 500 }}>✓ Saved successfully</span>}
+                </div>
+
+              </form>
+            </div>
           </div>
         )}
 
