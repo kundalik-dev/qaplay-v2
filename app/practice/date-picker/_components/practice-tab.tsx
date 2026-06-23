@@ -18,6 +18,96 @@ const MONTH_NAMES = [
   "July", "August", "September", "October", "November", "December",
 ];
 
+/* ── Sub-components (extracted to satisfy rules-of-hooks) ───── */
+
+function MonthNav({ onNavigate }: { onNavigate: (label: string) => void }) {
+  const now = new Date();
+  const [navYear, setNavYear]   = useState(now.getFullYear());
+  const [navMonth, setNavMonth] = useState(now.getMonth());
+
+  function goNext() {
+    let ny = navYear, nm = navMonth;
+    if (nm === 11) { nm = 0; ny++; } else nm++;
+    setNavYear(ny); setNavMonth(nm);
+    onNavigate(`Navigated to: ${MONTH_NAMES[nm]} ${ny}`);
+  }
+  function goPrev() {
+    let ny = navYear, nm = navMonth;
+    if (nm === 0) { nm = 11; ny--; } else nm--;
+    setNavYear(ny); setNavMonth(nm);
+    onNavigate(`Navigated to: ${MONTH_NAMES[nm]} ${ny}`);
+  }
+
+  return (
+    <div className="flex items-center gap-3">
+      <button
+        type="button"
+        data-testid="dp-nav-prev-month"
+        aria-label="Previous month"
+        onClick={goPrev}
+        className="inline-flex items-center justify-center h-8 w-8 rounded border border-input bg-background text-sm hover:bg-accent"
+      >
+        ‹
+      </button>
+      <span
+        id="dp-nav-month-display"
+        data-testid="dp-nav-month-display"
+        className="text-sm font-semibold min-w-[140px] text-center"
+      >
+        {MONTH_NAMES[navMonth]} {navYear}
+      </span>
+      <button
+        type="button"
+        data-testid="dp-nav-next-month"
+        aria-label="Next month"
+        onClick={goNext}
+        className="inline-flex items-center justify-center h-8 w-8 rounded border border-input bg-background text-sm hover:bg-accent"
+      >
+        ›
+      </button>
+    </div>
+  );
+}
+
+function RangePicker({ onRangeChange }: { onRangeChange: (label: string) => void }) {
+  const [start, setStart] = useState("");
+  const [end, setEnd]     = useState("");
+
+  function update(s: string, e: string) {
+    if (s && e) onRangeChange(`Range: ${s} → ${e}`);
+    else if (s) onRangeChange(`Start: ${s} (end not set)`);
+  }
+
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-col gap-1">
+        <label htmlFor="dp-range-start" className="text-xs text-muted-foreground">Start date</label>
+        <input
+          type="date"
+          id="dp-range-start"
+          data-testid="dp-range-start"
+          value={start}
+          className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+          onChange={(e) => { setStart(e.target.value); update(e.target.value, end); }}
+        />
+      </div>
+      <span className="text-muted-foreground text-sm mt-4">→</span>
+      <div className="flex flex-col gap-1">
+        <label htmlFor="dp-range-end" className="text-xs text-muted-foreground">End date</label>
+        <input
+          type="date"
+          id="dp-range-end"
+          data-testid="dp-range-end"
+          value={end}
+          min={start || undefined}
+          className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+          onChange={(e) => { setEnd(e.target.value); update(start, e.target.value); }}
+        />
+      </div>
+    </div>
+  );
+}
+
 const BOOKING_SLOTS = [
   { slot: "morning",   label: "Morning",   date: "2025-08-12", time: "09:00 – 10:00 AM" },
   { slot: "afternoon", label: "Afternoon", date: "2025-08-12", time: "01:00 – 02:00 PM" },
@@ -211,50 +301,11 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
 
             {/* ── S04: Date Range Picker ────────────────────────────────── */}
             <ScenarioCard {...datePickerScenarios[3]} onComplete={() => markDone("s04")}>
-              {({ setResult }) => {
-                const [start, setStart] = useState("");
-                const [end, setEnd]     = useState("");
-
-                function updateRange(s: string, e: string) {
-                  if (s && e) {
-                    setResult(`Range: ${s} → ${e}`);
-                    markDone("s04");
-                  } else if (s) {
-                    setResult(`Start: ${s} (end not set)`);
-                  }
-                }
-
-                return (
-                  <div className="flex flex-col gap-2">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <div className="flex flex-col gap-1">
-                        <label htmlFor="dp-range-start" className="text-xs text-muted-foreground">Start date</label>
-                        <input
-                          type="date"
-                          id="dp-range-start"
-                          data-testid="dp-range-start"
-                          value={start}
-                          className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
-                          onChange={(e) => { setStart(e.target.value); updateRange(e.target.value, end); }}
-                        />
-                      </div>
-                      <span className="text-muted-foreground text-sm mt-4">→</span>
-                      <div className="flex flex-col gap-1">
-                        <label htmlFor="dp-range-end" className="text-xs text-muted-foreground">End date</label>
-                        <input
-                          type="date"
-                          id="dp-range-end"
-                          data-testid="dp-range-end"
-                          value={end}
-                          min={start || undefined}
-                          className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
-                          onChange={(e) => { setEnd(e.target.value); updateRange(start, e.target.value); }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                );
-              }}
+              {({ setResult }) => (
+                <RangePicker
+                  onRangeChange={(label) => { setResult(label); markDone("s04"); }}
+                />
+              )}
             </ScenarioCard>
 
             {/* ── S05: Constrained Date Input ──────────────────────────── */}
