@@ -1,0 +1,147 @@
+/* ── Shared layout ───────────────────────────────────────────── */
+.practiceLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 24px;
+  padding-block: 24px 64px;
+}
+
+.practiceSidebar {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .practiceLayout { grid-template-columns: 1fr; }
+  .practiceSidebar { position: static; }
+}
+
+@media (max-width: 640px) {
+  .practiceLayout { gap: 16px; padding-block: 20px 48px; }
+}
+
+/* ── Spinner / skeleton ──────────────────────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.skeletonLine {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    var(--muted) 25%,
+    color-mix(in srgb, var(--muted) 60%, var(--background)) 50%,
+    var(--muted) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Toast ───────────────────────────────────────────────────── */
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid;
+  max-width: 320px;
+  animation: slideIn 0.2s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.toastSuccess {
+  background: color-mix(in srgb, #22c55e 10%, var(--card));
+  border-color: color-mix(in srgb, #22c55e 30%, transparent);
+  color: #16a34a;
+}
+
+.toastError {
+  background: color-mix(in srgb, #ef4444 10%, var(--card));
+  border-color: color-mix(in srgb, #ef4444 30%, transparent);
+  color: #dc2626;
+}
+
+/* ── Poll counter ────────────────────────────────────────────── */
+.pollCounter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pollValue {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+  min-width: 40px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Status panel (hard — no testid on span) ─────────────────── */
+.statusPanel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--muted-foreground);
+  flex-shrink: 0;
+}
+
+.statusDotActive {
+  background: #22c55e;
+  box-shadow: 0 0 0 3px color-mix(in srgb, #22c55e 25%, transparent);
+}
+
+/* ── Race target flash ───────────────────────────────────────── */
+.raceTarget {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--primary) 12%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  animation: fadeInOut 0.3s ease;
+}
+
+@keyframes fadeInOut {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
