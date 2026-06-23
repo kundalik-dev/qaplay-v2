@@ -58,8 +58,10 @@ export function TelegramBotPanel({
 
   useEffect(() => {
     if (open) {
+      /* eslint-disable react-hooks/set-state-in-effect */
       setConfirmDisconnect(false);
       setCopied(false);
+      /* eslint-enable react-hooks/set-state-in-effect */
       void fetchStatus();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

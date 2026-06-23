@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 "use client";
 
 import { useState } from "react";
@@ -215,6 +216,7 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     }}
                   >
                     {/* Using a standard img tag because next/image requires configured domains */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="https://ashisheditz.com/wp-content/uploads/2023/10/4k-iron-man-wallpaper.jpg"
                       className="h-14 w-20 rounded object-cover shadow"

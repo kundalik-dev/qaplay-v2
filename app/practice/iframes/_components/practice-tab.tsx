@@ -123,7 +123,7 @@ function LocatorHint({ rows }: { rows: HintRow[] }) {
    messages from different iframes don't collide.
 ──────────────────────────────────────────────────────────────── */
 function useIframeMessage(type: string, onMessage: (value: string) => void) {
-  const stable = useCallback(onMessage, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const stable = useCallback((val: string) => onMessage(val), [onMessage]);
   useEffect(() => {
     function handler(e: MessageEvent) {
       if (e.data && e.data.type === type) {

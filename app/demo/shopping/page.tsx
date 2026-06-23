@@ -22,8 +22,8 @@ export default function ShoppingDemoPage() {
 
       <p className="mx-auto mb-10 max-w-2xl text-lg text-slate-600 dark:text-slate-400">
         We are crafting the ultimate Shopping Demo App for QA engineers. Soon,
-        you'll be able to practice cart flows, product exploration, and complex
-        checkout automations!
+        you&apos;ll be able to practice cart flows, product exploration, and
+        complex checkout automations!
       </p>
 
       <Link

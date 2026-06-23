@@ -10,7 +10,7 @@ interface Props {
   challengeId: string;
 }
 
-export function AiFeedbackResult({ status, feedback, xp, challengeId }: Props) {
+export function AiFeedbackResult({ status, feedback, xp }: Props) {
   const isPass = status === "success";
 
   return (

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import type { ChallengeMeta } from "@/data/challenges-registry";
 import styles from "../challenges.module.css";
 

@@ -525,7 +525,7 @@ function TypedZoneScenario({
       <p className="text-[11px] text-muted-foreground">
         Zones only accept their matching shape type. Rejection feedback has{" "}
         <strong>no</strong> <code>data-testid</code> — locate via{" "}
-        <code>role="status"</code>.
+        <code>role=&quot;status&quot;</code>.
       </p>
 
       <div className={styles.typedArea}>

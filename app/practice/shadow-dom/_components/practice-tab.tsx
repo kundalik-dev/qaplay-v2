@@ -43,7 +43,10 @@ function BasicShadowScenario({
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [count, setCount] = useState(0);
-  const onCompleteStable = useCallback(onComplete, []);
+  const onCompleteStable = useCallback(
+    (msg: string) => onComplete(msg),
+    [onComplete],
+  );
 
   useEffect(() => {
     const el = hostRef.current;
@@ -123,7 +126,10 @@ function MultiHostScenario({
     "host-3": null,
   });
   const [activated, setActivated] = useState<HostId | null>(null);
-  const onCompleteStable = useCallback(onComplete, []);
+  const onCompleteStable = useCallback(
+    (msg: string) => onComplete(msg),
+    [onComplete],
+  );
 
   useEffect(() => {
     HOST_IDS.forEach((hostId) => {
@@ -203,7 +209,10 @@ function NestedShadowScenario({
 }) {
   const outerRef = useRef<HTMLDivElement>(null);
   const [done, setDone] = useState(false);
-  const onCompleteStable = useCallback(onComplete, []);
+  const onCompleteStable = useCallback(
+    (msg: string) => onComplete(msg),
+    [onComplete],
+  );
 
   useEffect(() => {
     const outerEl = outerRef.current;
@@ -307,7 +316,10 @@ function FormShadowScenario({
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [submitted, setSubmitted] = useState<string | null>(null);
-  const onCompleteStable = useCallback(onComplete, []);
+  const onCompleteStable = useCallback(
+    (msg: string) => onComplete(msg),
+    [onComplete],
+  );
 
   useEffect(() => {
     const el = hostRef.current;
@@ -408,7 +420,10 @@ function DynamicShadowScenario({
   const hostRef = useRef<HTMLDivElement>(null);
   const [triggered, setTriggered] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const onCompleteStable = useCallback(onComplete, []);
+  const onCompleteStable = useCallback(
+    (msg: string) => onComplete(msg),
+    [onComplete],
+  );
 
   useEffect(() => {
     const el = hostRef.current;
@@ -512,7 +527,10 @@ function EvalShadowScenario({
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [executed, setExecuted] = useState(false);
-  const onCompleteStable = useCallback(onComplete, []);
+  const onCompleteStable = useCallback(
+    (msg: string) => onComplete(msg),
+    [onComplete],
+  );
 
   useEffect(() => {
     const el = hostRef.current;

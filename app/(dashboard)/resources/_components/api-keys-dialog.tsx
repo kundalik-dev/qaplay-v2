@@ -58,9 +58,11 @@ export function ApiKeysDialog({
 
   useEffect(() => {
     if (open) {
+      /* eslint-disable react-hooks/set-state-in-effect */
       setNewKey(null);
       setConfirmRevokeId(null);
       setNewKeyName("");
+      /* eslint-enable react-hooks/set-state-in-effect */
       void fetchKeys();
       setTimeout(() => inputRef.current?.focus(), 80);
     }

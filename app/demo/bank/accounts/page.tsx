@@ -81,7 +81,9 @@ export default function AccountsPage() {
               <select
                 className="bank-form-input"
                 value={type}
-                onChange={(e) => setType(e.target.value as any)}
+                onChange={(e) =>
+                  setType(e.target.value as "Checking" | "Savings" | "Credit")
+                }
                 data-testid="account-type-select"
               >
                 <option value="Checking">Checking</option>

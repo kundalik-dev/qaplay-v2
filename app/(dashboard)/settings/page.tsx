@@ -49,9 +49,9 @@ export default function SettingsPage() {
   const [profileSaved, setProfileSaved] = useState(false);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
 
-  const updateSettings = (updates: any) => {
+  const updateSettings = (updates: Record<string, unknown>) => {
     const current = JSON.parse(localStorage.getItem("qap_settings") || "{}");
-    const merged = { ...current, ...updates };
+    const merged: Record<string, unknown> = { ...current, ...updates };
     // Remove undefined keys to keep localStorage clean
     Object.keys(merged).forEach(
       (key) => merged[key] === undefined && delete merged[key],

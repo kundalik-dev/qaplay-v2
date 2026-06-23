@@ -40,7 +40,7 @@ interface BankState {
 
 export const useBankStore = create<BankState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       balance: 0,
       transactions: [],
       accounts: [],

@@ -160,6 +160,7 @@ export default function ChallengesDashboard() {
     const saved = JSON.parse(
       localStorage.getItem("qap_completed_challenges") || "[]",
     );
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCompletedIds(saved);
     const s = parseInt(localStorage.getItem("qap_user_streak") || "0", 10);
     if (s === 0) {

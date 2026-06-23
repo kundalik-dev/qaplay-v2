@@ -97,7 +97,7 @@ function DeselectScenario({
       </button>
       {armed && (
         <p className="text-[11px] text-muted-foreground">
-          Now Ctrl+click "Selenium" to deselect it, or use{" "}
+          Now Ctrl+click &quot;Selenium&quot; to deselect it, or use{" "}
           <code>selectOption</code> with remaining values.
         </p>
       )}
@@ -481,10 +481,7 @@ function GroupedSelectScenario({
       <p className="text-[11px] text-muted-foreground">
         Options are grouped with <code>&lt;optgroup&gt;</code>. No{" "}
         <code>data-testid</code> on the groups — target via XPath:{" "}
-        <code>
-          //optgroup[@label=&apos;Backend&apos;]//option[@value=&apos;node&apos;]
-        </code>
-        .
+        <code>{"//optgroup[@label='Backend']//option[@value='node']"}</code>
       </p>
       {/* No data-testid on optgroups intentionally */}
       <select

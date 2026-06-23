@@ -159,11 +159,26 @@ export default function AiValidationBox({
       </div>
 
       {/* Actions Row */}
-      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '16px', flexWrap: 'wrap' }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "8px",
+          alignItems: "center",
+          marginTop: "16px",
+          flexWrap: "wrap",
+        }}
+      >
         {/* Submit button */}
         <button
           className={`${styles.btn} ${styles.btnPrimary}`}
-          style={{ width: 'auto', padding: '8px 16px', fontSize: '13px', margin: 0, borderRadius: '9999px', height: '32px' }}
+          style={{
+            width: "auto",
+            padding: "8px 16px",
+            fontSize: "13px",
+            margin: 0,
+            borderRadius: "9999px",
+            height: "32px",
+          }}
           onClick={handleValidate}
           disabled={loading || !hasKey}
           data-testid="validate-btn"
@@ -192,15 +207,22 @@ export default function AiValidationBox({
         >
           <span aria-hidden="true">{showPrompt ? "▾" : "▸"}</span>
           AI Validation Prompt
-          <span className={styles.hintCountBadge} style={{ textTransform: 'uppercase' }}>
-            {challenge.validationConfig.strictness} · {challenge.validationConfig.requiredPatterns.length} rules
+          <span
+            className={styles.hintCountBadge}
+            style={{ textTransform: "uppercase" }}
+          >
+            {challenge.validationConfig.strictness} ·{" "}
+            {challenge.validationConfig.requiredPatterns.length} rules
           </span>
         </button>
       </div>
 
       {/* Prompt preview body */}
       {showPrompt && (
-        <div className={styles.promptPreviewSection} style={{ marginTop: '12px' }}>
+        <div
+          className={styles.promptPreviewSection}
+          style={{ marginTop: "12px" }}
+        >
           <pre
             className={styles.promptPreview}
             data-testid="prompt-preview"

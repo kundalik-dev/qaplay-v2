@@ -707,6 +707,7 @@ export function ResourcesView() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void loadResources();
   }, [loadResources]);
 

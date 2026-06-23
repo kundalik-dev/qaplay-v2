@@ -293,7 +293,9 @@ async function handleResource(
 
 async function handleTodo(
   chatId: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _userId: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _text: string,
 ): Promise<void> {
   // TODO: DailyTask model not yet in schema — coming soon
@@ -307,7 +309,9 @@ async function handleTodo(
 
 async function handleNote(
   chatId: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _userId: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _text: string,
 ): Promise<void> {
   // TODO: Note model not yet in schema — coming soon

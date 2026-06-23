@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./playground.module.css";
 
 type ApiState = "error" | "success";
@@ -20,12 +20,14 @@ export function StubbornApiPlayground() {
 
   // Expose a way for automation scripts to "inject" a mocked response
   // The script calls window.__mockApiSuccess() to trigger the success state
-  if (typeof window !== "undefined") {
-    // @ts-expect-error — intentional automation hook
-    window.__mockApiSuccess = () => setApiState("success");
-    // @ts-expect-error — intentional automation hook
-    window.__mockApiReset = () => setApiState("error");
-  }
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // @ts-expect-error — intentional automation hook
+      window.__mockApiSuccess = () => setApiState("success");
+      // @ts-expect-error — intentional automation hook
+      window.__mockApiReset = () => setApiState("error");
+    }
+  }, []);
 
   return (
     <div className={styles.playground} data-testid="stubborn-api-playground">
