@@ -63,6 +63,10 @@ const themeInitScript = `
     var s=localStorage.getItem('qap-theme');
     var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
     document.documentElement.classList.toggle('dark',d);
+    if(s==='light') document.documentElement.classList.remove('dark');
+    
+    var f=localStorage.getItem('qap-font');
+    if(f) document.documentElement.setAttribute('data-font', f);
   }catch(e){}
 })();
 `.trim();

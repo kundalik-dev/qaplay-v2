@@ -18,7 +18,7 @@ export const challenges: ChallengeMeta[] = [
     summary: "Traverse the shadow DOM to interact with an encapsulated button.",
     description: "Dive into Web Components. Traverse the shadow DOM to find and interact with an encapsulated button. A must-know skill for modern web automation.",
     difficulty: "Hard",
-    xp: 100,
+    xp: 15,
     tags: ["Shadow DOM", "Advanced"],
     instructions: [
       "Open your local VS Code and start a Playwright script.",
@@ -34,7 +34,7 @@ export const challenges: ChallengeMeta[] = [
     summary: "Wait for a random delay before a success toast disappears.",
     description: "A common flakiness cause in E2E tests is hardcoded sleeps. This challenge forces users to use smart, dynamic waits for elements that appear and disappear rapidly.",
     difficulty: "Medium",
-    xp: 50,
+    xp: 10,
     tags: ["Dynamic Waits", "Timing"],
     instructions: [
       "Click the 'Start Processing' button.",
@@ -50,7 +50,7 @@ export const challenges: ChallengeMeta[] = [
     summary: "Intercept a broken API request and mock a 200 OK response.",
     description: "The frontend works, but the API is returning 500. Use network interception to mock the response to 200 OK and fix the UI.",
     difficulty: "Hard",
-    xp: 100,
+    xp: 15,
     tags: ["Network", "Mocking"],
     instructions: [
       "The page automatically makes a GET request to /api/user-stats.",
@@ -67,7 +67,7 @@ export const challenges: ChallengeMeta[] = [
     summary: "Simulate mouse pointer events to drag a ticket to 'Done'.",
     description: "Native drag and drop can be tricky. Simulate mousedown, mousemove, and mouseup to drag the ticket from the To Do column to the Done column.",
     difficulty: "Medium",
-    xp: 50,
+    xp: 10,
     tags: ["Mouse Events", "Interactions"],
     instructions: [
       "Find the ticket element in the 'To Do' column.",

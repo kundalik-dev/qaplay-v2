@@ -87,11 +87,11 @@ Do not wrap the JSON in markdown blocks.`
             localStorage.setItem("qap_completed_challenges", JSON.stringify(completed));
           }
         }
-      } catch (_e) {
+      } catch {
         setResult({ status: "fail", feedback: "Failed to parse AI response. Please try again." });
       }
 
-    } catch (_err) {
+    } catch {
       setResult({ status: "fail", feedback: "Network error occurred." });
     } finally {
       setLoading(false);
@@ -100,10 +100,10 @@ Do not wrap the JSON in markdown blocks.`
 
   return (
     <div className={styles.panelSection}>
-      <h2 className="heading-sm" style={{ marginBottom: '8px' }}>
+      <h2 className={styles.headingSm} style={{ marginBottom: '8px' }}>
         <span className="icon">🤖</span> Submit Solution (AI BYOK)
       </h2>
-      <p className="body-sm text-muted" style={{ marginBottom: '16px' }}>
+      <p className={`${styles.bodySm} ${styles.textMuted}`} style={{ marginBottom: '16px' }}>
         Paste your automation script below. Our AI will analyze your code for correctness and best practices.
       </p>
 
@@ -125,7 +125,7 @@ Do not wrap the JSON in markdown blocks.`
       </div>
 
       <button 
-        className={`btn btn-primary ${styles.btnSubmitSolution}`} 
+        className={`${styles.btn} ${styles.btnPrimary} ${styles.btnSubmitSolution}`} 
         onClick={handleValidate}
         disabled={loading || !hasKey}
         style={{ marginTop: '16px', width: '100%', justifyContent: 'center' }}
@@ -143,11 +143,11 @@ Do not wrap the JSON in markdown blocks.`
             {result.status === 'success' && <span className={styles.xpAwarded}>+{challenge.xp} XP</span>}
           </div>
           <div>
-            <p className="body-sm" style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>
+            <p className={styles.bodySm} style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>
               <strong>AI Feedback:</strong>
             </p>
             <div className={styles.feedbackCodeReview}>
-              <p className="body-sm" style={{ margin: 0 }}>{result.feedback}</p>
+              <p className={styles.bodySm} style={{ margin: 0 }}>{result.feedback}</p>
             </div>
           </div>
         </div>

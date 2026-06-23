@@ -1,523 +1,1153 @@
-/* -------------------------------------------------
-   CHALLENGES WORKSPACE (DETAIL PAGE)
-   ------------------------------------------------- */
+/* ==========================================================
+   CHALLENGES MODULE CSS
+   Two concerns:
+   1. Workspace (challenge detail page)
+   2. Dashboard (challenges home page)
+   ========================================================== */
 
-   .challengePage {
-    padding-bottom: var(--sp-12);
-  }
-  
-  .challengeHeader {
-    margin-bottom: var(--sp-8);
-  }
-  
-  .chBreadcrumbs {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.05em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    margin-bottom: var(--sp-4);
-  }
-  
-  .chBreadcrumbs a {
-    color: var(--accent);
-    text-decoration: none;
-  }
-  
-  .chBreadcrumbs a:hover {
-    text-decoration: underline;
-  }
-  
-  .chTitleRow {
-    display: flex;
-    align-items: center;
-    gap: var(--sp-5);
-    margin-bottom: var(--sp-3);
-    flex-wrap: wrap;
-  }
-  
-  .chBadges {
-    display: flex;
-    gap: var(--sp-2);
-  }
-  
-  .chDesc {
-    max-width: 600px;
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--text-dim);
-  }
-  
-  /* Split Workspace */
+/* ----------------------------------------------------------
+   BRIDGE VARS
+   Map the html-ref design tokens to this project's actual
+   globals.css custom properties so both pages render correctly.
+   ---------------------------------------------------------- */
+
+.challengePage,
+.dashPage {
+  /* colours */
+  --_text:          var(--foreground);
+  --_text-muted:    var(--muted-foreground);
+  --_text-dim:      color-mix(in srgb, var(--muted-foreground) 75%, var(--foreground));
+  --_surface:       var(--card);
+  --_surface2:      var(--muted);
+  --_bg:            var(--background);
+  --_bg2:           var(--muted);
+  --_border:        var(--border);
+  --_border-strong: var(--input);
+  --_border-glow:   color-mix(in srgb, var(--primary) 30%, var(--border));
+  --_accent:        var(--primary);
+  --_accent2:       var(--secondary);
+  --_accent3:       var(--brand-tertiary);
+  --_success:       var(--success);
+  --_warning:       var(--warning);
+  --_danger:        var(--destructive);
+  --_info:          var(--info);
+
+  /* typography */
+  --_font-display:  var(--font-space-grotesk), sans-serif;
+  --_font-body:     var(--font-inter), sans-serif;
+  --_font-mono:     var(--font-ibm-plex-mono), monospace;
+
+  /* motion */
+  --_fast:          0.15s ease;
+  --_base:          0.2s ease;
+
+  /* radii shortcuts */
+  --_r-sm:          var(--radius-sm);
+  --_r-md:          var(--radius-md);
+  --_r-lg:          var(--radius-lg);
+  --_r-xl:          var(--radius-xl);
+  --_r-full:        9999px;
+
+  /* spacing */
+  --_sp2:  8px;
+  --_sp3:  12px;
+  --_sp4:  16px;
+  --_sp5:  20px;
+  --_sp6:  24px;
+  --_sp7:  28px;
+  --_sp8:  32px;
+  --_sp9:  36px;
+  --_sp12: 48px;
+
+  /* shadows */
+  --_shadow-sm:    var(--home-card-shadow);
+  --_shadow-float: var(--shadow-float);
+}
+
+
+/* ==========================================================
+   1. WORKSPACE (CHALLENGE DETAIL PAGE)
+   ========================================================== */
+
+.challengePage {
+  padding-bottom: var(--_sp12);
+}
+
+.challengeHeader {
+  margin-bottom: var(--_sp8);
+}
+
+.chBreadcrumbs {
+  font-family: var(--_font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--_text-muted);
+  text-transform: uppercase;
+  margin-bottom: var(--_sp4);
+}
+
+.chBreadcrumbs a {
+  color: var(--_accent);
+  text-decoration: none;
+}
+
+.chBreadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.chTitleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--_sp5);
+  margin-bottom: var(--_sp3);
+  flex-wrap: wrap;
+}
+
+.chBadges {
+  display: flex;
+  gap: var(--_sp2);
+}
+
+.chDesc {
+  max-width: 600px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--_text-dim);
+}
+
+/* Split Workspace */
+.challengeWorkspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--_sp6);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
   .challengeWorkspace {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--sp-6);
-    align-items: start;
+    grid-template-columns: 1fr;
   }
-  
-  @media (max-width: 900px) {
-    .challengeWorkspace {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  .chPanel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-  }
-  
-  .panelSection {
-    padding: var(--sp-6) var(--sp-7);
-    border-bottom: 1px solid var(--border);
-  }
-  
-  .panelSection:last-child {
-    border-bottom: none;
-  }
-  
-  /* Left Panel - Instructions & Form */
-  .chTaskList {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-3);
-    margin-top: var(--sp-4);
-    list-style: none;
-    padding-left: 0;
-  }
-  
-  .chTaskList li {
-    display: flex;
-    gap: var(--sp-3);
-    font-size: 14px;
-    color: var(--text-muted);
-    align-items: flex-start;
-  }
-  
-  .tick {
-    flex-shrink: 0;
-    width: 20px;
-    height: 20px;
-    background: color-mix(in srgb, var(--accent) 15%, transparent);
-    color: var(--accent);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: bold;
-  }
-  
-  .formGroup {
-    margin-top: var(--sp-5);
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-2);
-  }
-  
-  .inputField {
-    background: var(--bg2);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-sm);
-    padding: 12px 14px;
-    color: var(--text);
-    font-family: var(--font-body);
-    font-size: 14px;
-    transition: border-color var(--t-fast);
-  }
-  
-  .inputField:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 1px var(--accent);
-    outline: none;
-  }
-  
-  .codeEditor {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    min-height: 200px;
-    resize: vertical;
-    line-height: 1.5;
-  }
-  
-  .btnSubmitSolution {
-    margin-top: var(--sp-5);
-    width: 100%;
-    justify-content: center;
-  }
-  
-  /* AI Feedback Result Box */
-  .aiFeedbackResult {
-    background: color-mix(in srgb, var(--success) 5%, var(--surface));
-    border-top: 1px solid color-mix(in srgb, var(--success) 20%, transparent);
-  }
-  
-  .aiFeedbackResult.failState {
-    background: color-mix(in srgb, var(--destructive) 5%, var(--surface));
-    border-top: 1px solid color-mix(in srgb, var(--destructive) 20%, transparent);
-  }
-  
-  .feedbackHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--sp-3);
-  }
-  
-  .feedbackStatus {
-    display: flex;
-    align-items: center;
-    gap: var(--sp-2);
-    color: var(--success);
-    font-weight: 600;
-  }
-  
-  .failState .feedbackStatus {
-    color: var(--destructive);
-  }
-  
-  .xpAwarded {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--accent2);
-    background: color-mix(in srgb, var(--accent2) 15%, transparent);
-    padding: 4px 8px;
-    border-radius: var(--radius-sm);
-  }
-  
-  .feedbackCodeReview {
-    margin-top: var(--sp-4);
-    background: var(--bg2);
-    padding: var(--sp-4);
-    border-radius: var(--radius-md);
-    border-left: 3px solid var(--warning);
+}
+
+.chPanel {
+  background: var(--_surface);
+  border: 1px solid var(--_border);
+  border-radius: var(--_r-xl);
+  overflow: hidden;
+  box-shadow: var(--_shadow-sm);
+}
+
+.panelSection {
+  padding: var(--_sp6) var(--_sp7);
+  border-bottom: 1px solid var(--_border);
+}
+
+.panelSection:last-child {
+  border-bottom: none;
+}
+
+/* Left Panel */
+.chTaskList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--_sp3);
+  margin-top: var(--_sp4);
+  list-style: none;
+  padding-left: 0;
+}
+
+.chTaskList li {
+  display: flex;
+  gap: var(--_sp3);
+  font-size: 14px;
+  color: var(--_text-muted);
+  align-items: flex-start;
+}
+
+.tick {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background: color-mix(in srgb, var(--_accent) 15%, transparent);
+  color: var(--_accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.formGroup {
+  margin-top: var(--_sp5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--_sp2);
+}
+
+.inputField {
+  background: var(--_bg2);
+  border: 1px solid var(--_border-strong);
+  border-radius: var(--_r-sm);
+  padding: 12px 14px;
+  color: var(--_text);
+  font-family: var(--_font-body);
+  font-size: 14px;
+  transition: border-color var(--_fast);
+}
+
+.inputField:focus {
+  border-color: var(--_accent);
+  box-shadow: 0 0 0 1px var(--_accent);
+  outline: none;
+}
+
+.codeEditor {
+  font-family: var(--_font-mono);
+  font-size: 13px;
+  min-height: 200px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.btnSubmitSolution {
+  margin-top: var(--_sp5);
+  width: 100%;
+  justify-content: center;
+}
+
+/* AI Feedback */
+.aiFeedbackResult {
+  background: color-mix(in srgb, var(--_success) 5%, var(--_surface));
+  border-top: 1px solid color-mix(in srgb, var(--_success) 20%, transparent);
+}
+
+.aiFeedbackResult.failState {
+  background: color-mix(in srgb, var(--_danger) 5%, var(--_surface));
+  border-top: 1px solid color-mix(in srgb, var(--_danger) 20%, transparent);
+}
+
+.feedbackHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--_sp3);
+}
+
+.feedbackStatus {
+  display: flex;
+  align-items: center;
+  gap: var(--_sp2);
+  color: var(--_success);
+  font-weight: 600;
+}
+
+.failState .feedbackStatus {
+  color: var(--_danger);
+}
+
+.xpAwarded {
+  font-family: var(--_font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--_accent2);
+  background: color-mix(in srgb, var(--_accent2) 15%, transparent);
+  padding: 4px 8px;
+  border-radius: var(--_r-sm);
+}
+
+.feedbackCodeReview {
+  margin-top: var(--_sp4);
+  background: var(--_bg2);
+  padding: var(--_sp4);
+  border-radius: var(--_r-md);
+  border-left: 3px solid var(--_warning);
+}
+
+.failState .feedbackCodeReview {
+  border-left: 3px solid var(--_danger);
+}
+
+/* Right Panel */
+.panelHeader {
+  background: var(--_bg2);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--_border);
+  display: flex;
+  align-items: center;
+  gap: var(--_sp4);
+}
+
+.windowControls {
+  display: flex;
+  gap: 6px;
+}
+
+.windowControls span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--_border-strong);
+}
+
+.windowControls span:nth-child(1) { background: var(--_danger); }
+.windowControls span:nth-child(2) { background: var(--_warning); }
+.windowControls span:nth-child(3) { background: var(--_success); }
+
+.windowTitle {
+  font-family: var(--_font-mono);
+  font-size: 12px;
+  color: var(--_text-muted);
+}
+
+.playgroundArea {
+  padding: var(--_sp7);
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--_sp6);
+  background: #fff;
+  color: #111;
+  border-bottom-left-radius: var(--_r-xl);
+  border-bottom-right-radius: var(--_r-xl);
+  position: relative;
+}
+
+:global(html[data-theme="dark"]) .playgroundArea {
+  background: #11141a;
+  color: #fff;
+}
+
+.pgInstructions {
+  background: color-mix(in srgb, var(--_info) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--_info) 30%, transparent);
+  padding: 12px;
+  border-radius: var(--_r-sm);
+  color: var(--_text);
+  font-size: 13px;
+}
+
+
+/* ==========================================================
+   2. CHALLENGES DASHBOARD (HOME PAGE)
+   ========================================================== */
+
+.dashPage {
+  padding-bottom: var(--_sp12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--_sp8);
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+
+.dashHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--_sp8);
+}
+
+.dashWelcome {
+  max-width: 480px;
+}
+
+/* Eyebrow label */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--_font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--_accent);
+  margin-bottom: var(--_sp3);
+}
+
+.eyebrowDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--_accent);
+  flex-shrink: 0;
+}
+
+.dashTitle {
+  font-family: var(--_font-display);
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--_text);
+  margin: 0 0 var(--_sp3);
+}
+
+.dashSubtitle {
+  font-family: var(--_font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--_text-muted);
+  margin: 0;
+}
+
+/* ── Stat Cards ──────────────────────────────────────────── */
+
+.dashStatsGrid {
+  display: flex;
+  gap: var(--_sp4);
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.dashStatCard {
+  background: var(--_surface);
+  border: 1px solid var(--_border);
+  border-radius: var(--_r-xl);
+  padding: var(--_sp5) var(--_sp6);
+  min-width: 148px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: var(--_shadow-sm);
+  transition: box-shadow var(--_fast), border-color var(--_fast);
+}
+
+.dashStatCard:hover {
+  border-color: var(--_border-strong);
+  box-shadow: var(--_shadow-float);
+}
+
+.statIconRow {
+  display: flex;
+  align-items: center;
+  gap: var(--_sp2);
+  margin-bottom: var(--_sp2);
+}
+
+.statEmoji {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.statBadge {
+  font-family: var(--_font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--_accent);
+  background: color-mix(in srgb, var(--_accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--_accent) 25%, transparent);
+  padding: 3px 8px;
+  border-radius: var(--_r-full);
+}
+
+.statValue {
+  font-family: var(--_font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--_text);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.statDim {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--_text-muted);
+}
+
+.statLabel {
+  font-size: 12px;
+  color: var(--_text-muted);
+}
+
+.statProgress {
+  height: 4px;
+  background: var(--_border-strong);
+  border-radius: var(--_r-full);
+  margin-top: var(--_sp2);
+  overflow: hidden;
+}
+
+.statProgressBar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--_accent), color-mix(in srgb, var(--_accent) 70%, var(--_accent2)));
+  border-radius: var(--_r-full);
+  transition: width 0.4s ease;
+}
+
+.statProgressLabel {
+  font-family: var(--_font-mono);
+  font-size: 10px;
+  color: var(--_text-muted);
+  margin-top: 4px;
+}
+
+/* ── Daily Hero Card ─────────────────────────────────────── */
+
+.heroSection {
+  /* intentionally minimal — padding handled by dashPage gap */
+}
+
+.dailyHeroCard {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--_accent) 5%, var(--_surface)),
+    var(--_surface)
+  );
+  border: 1px solid color-mix(in srgb, var(--_accent) 18%, var(--_border));
+  border-radius: var(--_r-xl);
+  padding: var(--_sp9);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--_sp8);
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.dailyHeroCard::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 70%;
+  padding-bottom: 70%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--_accent) 8%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .dailyHeroCard {
+    grid-template-columns: 1fr;
   }
 
-  .failState .feedbackCodeReview {
-    border-left: 3px solid var(--destructive);
+  .heroGraphic {
+    display: none;
   }
-  
-  /* Right Panel - Playground */
-  .panelHeader {
-    background: var(--bg2);
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: var(--sp-4);
-  }
-  
-  .windowControls {
-    display: flex;
-    gap: 6px;
-  }
-  
-  .windowControls span {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--border-strong);
-  }
-  
-  .windowControls span:nth-child(1) { background: var(--danger); }
-  .windowControls span:nth-child(2) { background: var(--warning); }
-  .windowControls span:nth-child(3) { background: var(--success); }
-  
-  .windowTitle {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-  
-  .playgroundArea {
-    padding: var(--sp-7);
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-6);
-    background: #fff; /* White background to simulate standard app */
-    color: #111;
-    border-bottom-left-radius: var(--radius-xl);
-    border-bottom-right-radius: var(--radius-xl);
-    position: relative;
-  }
-  
-  :global(html[data-theme="dark"]) .playgroundArea {
-    background: #11141a;
-    color: #fff;
-  }
-  
-  .pgInstructions {
-    background: color-mix(in srgb, var(--info) 10%, transparent);
-    border: 1px solid color-mix(in srgb, var(--info) 30%, transparent);
-    padding: 12px;
-    border-radius: var(--radius-sm);
-    color: var(--text);
-    font-size: 13px;
-  }
-  
-  /* -------------------------------------------------
-     CHALLENGES DASHBOARD (HOME)
-     ------------------------------------------------- */
-  
-  .dashPage {
-    padding-bottom: var(--sp-12);
-  }
-  
-  .dashHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: var(--sp-8);
-    margin-bottom: var(--sp-8);
-  }
-  
-  .dashWelcome {
-    max-width: 500px;
-  }
-  
-  .dashStatsGrid {
-    display: flex;
-    gap: var(--sp-4);
-    flex-wrap: wrap;
-  }
-  
-  .dashStatCard {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: var(--sp-5) var(--sp-6);
-    border-radius: var(--radius-lg);
-    min-width: 140px;
-  }
-  
-  .dashStatCard .statValue {
-    font-family: var(--font-display);
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 2px;
-  }
-  
-  .dashStatCard .statLabel {
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-  
-  .statProgress {
-    height: 4px;
-    background: var(--border);
-    border-radius: 4px;
-    margin-top: 8px;
-    overflow: hidden;
-  }
-  
-  .statProgressBar {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 4px;
-  }
-  
-  /* Daily Hero Card */
-  .dailyHeroCard {
-    background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 5%, var(--surface)), var(--surface));
-    border: 1px solid color-mix(in srgb, var(--accent) 15%, var(--border));
-    border-radius: var(--radius-xl);
-    padding: var(--sp-9);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--sp-8);
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .dailyHeroCard::after {
-    content: "";
-    position: absolute;
-    top: -50%; right: -20%;
-    width: 70%; padding-bottom: 70%;
-    border-radius: 50%;
-    background: radial-gradient(circle, color-mix(in srgb, var(--accent) 8%, transparent), transparent 70%);
-    pointer-events: none;
-  }
-  
-  @media (max-width: 900px) {
-    .dailyHeroCard {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  .mockBrowserWindow {
-    background: var(--bg);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-float);
-  }
-  
-  .mockBrowserHeader {
-    background: var(--bg2);
-    padding: 10px 14px;
-    display: flex;
-    gap: 6px;
-    border-bottom: 1px solid var(--border);
-  }
-  
-  .mockBrowserHeader span {
-    width: 10px; height: 10px; border-radius: 50%; background: var(--border-strong);
-  }
-  
-  .mockBrowserBody {
-    padding: var(--sp-6);
-    font-family: var(--font-mono);
-    font-size: 13px;
-    line-height: 1.8;
-    color: var(--text-dim);
-  }
-  
-  .mockBrowserBody .indent { padding-left: var(--sp-5); }
-  .mockBrowserBody .indent2 { padding-left: var(--sp-9); }
-  .mockBrowserBody .highlight { color: var(--accent); font-weight: 700; }
-  
-  /* Filters Bar */
-  .dashFiltersBar {
-    display: flex;
-    align-items: center;
-    gap: var(--sp-4);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 10px 16px;
-    border-radius: var(--radius-lg);
-    margin-bottom: var(--sp-8);
-    flex-wrap: wrap;
-  }
-  
-  .filterGroup {
-    display: flex;
-    gap: var(--sp-2);
-  }
-  
-  .filterDivider {
-    width: 1px;
-    height: 24px;
-    background: var(--border-strong);
-  }
-  
-  .filterPill {
-    padding: 6px 14px;
-    border-radius: var(--radius-full);
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-muted);
-    border: 1px solid transparent;
-    transition: all var(--t-fast);
-    cursor: pointer;
-    background: transparent;
-  }
-  
-  .filterPill:hover {
-    color: var(--text);
-    background: var(--surface2);
-  }
-  
-  .filterPillActive {
-    background: var(--surface2);
-    border-color: var(--border-strong);
-    color: var(--text);
-  }
-  
-  /* Challenge Grid */
-  .chGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: var(--sp-6);
-  }
-  
-  .chCard {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    display: flex;
-    transition: transform var(--t-base), box-shadow var(--t-base), border-color var(--t-base);
-    overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .chCard:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-sm);
-    border-color: var(--border-strong);
-  }
-  
-  .chCard.completed {
-    background: color-mix(in srgb, var(--bg2) 60%, var(--surface));
-    opacity: 0.85;
-  }
-  
-  .chCardStatus {
-    background: var(--bg2);
-    border-right: 1px solid var(--border);
-    padding: var(--sp-5) var(--sp-4);
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-  
-  .statusIcon {
-    font-size: 18px;
-  }
-  
-  .statusIcon.pending {
-    filter: grayscale(1) opacity(0.3);
-  }
-  
-  .chCardBody {
-    padding: var(--sp-5);
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .chCardTags {
-    display: flex;
-    gap: var(--sp-2);
-    margin-bottom: var(--sp-3);
-    flex-wrap: wrap;
-  }
-  
-  .chCardTitle {
-    font-family: var(--font-display);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: var(--sp-2);
-  }
-  
-  .chCardDesc {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: var(--sp-5);
-    line-height: 1.5;
-    flex: 1;
-  }
-  
-  .chCardFooter {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid var(--border);
-    padding-top: var(--sp-4);
-    margin-top: auto;
-  }
-  
-  .chXp {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-  }
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+}
+
+.heroTitle {
+  font-family: var(--_font-display);
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--_text);
+  margin: 0 0 var(--_sp3);
+}
+
+.heroDesc {
+  font-family: var(--_font-body);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--_text-dim);
+  margin: 0 0 var(--_sp6);
+  max-width: 480px;
+}
+
+.heroBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--_sp2);
+  margin-bottom: var(--_sp7);
+}
+
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_sp2);
+  padding: 14px 28px;
+  border-radius: var(--_r-full);
+  font-family: var(--_font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  background: linear-gradient(
+    135deg,
+    var(--_accent),
+    color-mix(in srgb, var(--_accent) 68%, var(--_accent2))
+  );
+  color: var(--primary-foreground);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--_accent) 28%, transparent);
+  transition: transform var(--_base), box-shadow var(--_base), filter var(--_base);
+}
+
+.heroCta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px color-mix(in srgb, var(--_accent) 38%, transparent);
+  filter: brightness(1.08);
+}
+
+/* Mock Browser (hero graphic) */
+.heroGraphic {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.mockBrowserWindow {
+  background: var(--_bg);
+  border: 1px solid var(--_border-strong);
+  border-radius: var(--_r-lg);
+  overflow: hidden;
+  box-shadow: var(--_shadow-float);
+  width: 100%;
+  max-width: 340px;
+}
+
+.mockBrowserHeader {
+  background: var(--_bg2);
+  padding: 10px 14px;
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--_border);
+}
+
+.mockBrowserHeader span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--_border-strong);
+}
+
+.mockBrowserHeader span:nth-child(1) { background: var(--_danger); }
+.mockBrowserHeader span:nth-child(2) { background: var(--_warning); }
+.mockBrowserHeader span:nth-child(3) { background: var(--_success); }
+
+.mockBrowserBody {
+  padding: var(--_sp6);
+  font-family: var(--_font-mono);
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--_text-dim);
+}
+
+.mockNode { }
+.mockIndent  { padding-left: var(--_sp5); }
+.mockIndent2 { padding-left: var(--_sp9); }
+.mockHighlight { color: var(--_accent); font-weight: 700; }
+
+/* ── Filters Bar ─────────────────────────────────────────── */
+
+.dashFiltersBar {
+  display: flex;
+  align-items: center;
+  gap: var(--_sp3);
+  background: var(--_surface);
+  border: 1px solid var(--_border);
+  padding: 10px 16px;
+  border-radius: var(--_r-lg);
+  margin-bottom: var(--_sp6);
+  flex-wrap: wrap;
+}
+
+.filterGroup {
+  display: flex;
+  gap: 4px;
+}
+
+.filterDivider {
+  width: 1px;
+  height: 22px;
+  background: var(--_border-strong);
+  flex-shrink: 0;
+}
+
+.filterPill {
+  padding: 6px 13px;
+  border-radius: var(--_r-full);
+  font-family: var(--_font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--_text-muted);
+  border: 1px solid transparent;
+  transition: all var(--_fast);
+  cursor: pointer;
+  background: transparent;
+  line-height: 1;
+}
+
+.filterPill:hover {
+  color: var(--_text);
+  background: var(--_surface2);
+}
+
+.filterPillActive {
+  background: var(--_surface2);
+  border-color: var(--_border-strong);
+  color: var(--_text);
+}
+
+/* Difficulty-coloured pills */
+.filterPillEasy { }
+.filterPillEasy:hover, .filterPillEasy.filterPillActive {
+  color: var(--_success);
+  background: color-mix(in srgb, var(--_success) 10%, transparent);
+  border-color: color-mix(in srgb, var(--_success) 30%, transparent);
+}
+
+.filterPillMedium { }
+.filterPillMedium:hover, .filterPillMedium.filterPillActive {
+  color: var(--_warning);
+  background: color-mix(in srgb, var(--_warning) 10%, transparent);
+  border-color: color-mix(in srgb, var(--_warning) 30%, transparent);
+}
+
+.filterPillHard { }
+.filterPillHard:hover, .filterPillHard.filterPillActive {
+  color: var(--_danger);
+  background: color-mix(in srgb, var(--_danger) 10%, transparent);
+  border-color: color-mix(in srgb, var(--_danger) 30%, transparent);
+}
+
+/* Search */
+.filterSearchWrap {
+  margin-left: auto;
+}
+
+.filterSearch {
+  background: var(--_bg2);
+  border: 1px solid var(--_border-strong);
+  border-radius: var(--_r-full);
+  padding: 7px 16px;
+  font-family: var(--_font-body);
+  font-size: 13px;
+  color: var(--_text);
+  width: 220px;
+  transition: border-color var(--_fast), box-shadow var(--_fast), width var(--_base);
+  outline: none;
+}
+
+.filterSearch::placeholder {
+  color: var(--_text-muted);
+}
+
+.filterSearch:focus {
+  border-color: var(--_accent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--_accent) 30%, transparent);
+  width: 260px;
+}
+
+/* ── Challenge Grid ──────────────────────────────────────── */
+
+.chGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--_sp5);
+}
+
+/* Empty State */
+.emptyState {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--_sp3);
+  padding: var(--_sp12) var(--_sp6);
+  text-align: center;
+}
+
+.emptyIcon {
+  font-size: 36px;
+}
+
+.emptyText {
+  font-size: 15px;
+  color: var(--_text-muted);
+  margin: 0;
+}
+
+.emptyReset {
+  font-family: var(--_font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--_accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Challenge Card */
+.chCard {
+  background: var(--_surface);
+  border: 1px solid var(--_border);
+  border-radius: var(--_r-lg);
+  display: flex;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition:
+    transform     var(--_base),
+    box-shadow    var(--_base),
+    border-color  var(--_base);
+}
+
+.chCard:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--_shadow-sm);
+  border-color: var(--_border-strong);
+}
+
+.chCardCompleted {
+  opacity: 0.75;
+}
+
+.chCardCompleted:hover {
+  opacity: 1;
+}
+
+/* Status column */
+.chCardStatus {
+  background: var(--_bg2);
+  border-right: 1px solid var(--_border);
+  padding: var(--_sp5) var(--_sp4);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.statusIcon {
+  font-size: 18px;
+}
+
+.statusPending {
+  filter: grayscale(1) opacity(0.3);
+}
+
+/* Card body */
+.chCardBody {
+  padding: var(--_sp5);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chCardTags {
+  display: flex;
+  gap: 6px;
+  margin-bottom: var(--_sp3);
+  flex-wrap: wrap;
+}
+
+.chCardTitle {
+  font-family: var(--_font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--_text);
+  margin: 0 0 var(--_sp2);
+  letter-spacing: -0.01em;
+}
+
+.chCardDesc {
+  font-size: 13px;
+  color: var(--_text-muted);
+  margin: 0 0 var(--_sp5);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.chCardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--_border);
+  padding-top: var(--_sp4);
+  margin-top: auto;
+}
+
+/* XP label */
+.chXp {
+  font-family: var(--_font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--_accent2);
+}
+
+.chXpDone {
+  color: var(--_text-muted);
+}
+
+/* Card inline button */
+.cardBtn {
+  font-family: var(--_font-display);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--_r-full);
+  transition: all var(--_fast);
+}
+
+.cardBtnPrimary {
+  background: linear-gradient(
+    135deg,
+    var(--_accent),
+    color-mix(in srgb, var(--_accent) 68%, var(--_accent2))
+  );
+  color: var(--primary-foreground);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--_accent) 22%, transparent);
+}
+
+.chCard:hover .cardBtnPrimary {
+  filter: brightness(1.08);
+}
+
+.cardBtnSecondary {
+  background: var(--_surface2);
+  color: var(--_text-muted);
+  border: 1px solid var(--_border-strong);
+}
+
+.chCard:hover .cardBtnSecondary {
+  color: var(--_text);
+  border-color: var(--_border-glow);
+}
+
+
+/* ==========================================================
+   3. SHARED UTILITIES — TYPOGRAPHY
+   ========================================================== */
+
+.headingLg {
+  font-family: var(--_font-display);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--_text);
+}
+
+.headingSm {
+  font-family: var(--_font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--_text);
+}
+
+.bodyLg {
+  font-family: var(--_font-body);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--_text-muted);
+}
+
+.bodyBase {
+  font-family: var(--_font-body);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--_text-muted);
+}
+
+.bodySm {
+  font-family: var(--_font-body);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.textMuted {
+  color: var(--_text-muted);
+}
+
+
+/* ==========================================================
+   4. SHARED UTILITIES — BUTTONS
+   ========================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_sp2);
+  padding: 13px 22px;
+  border-radius: var(--_r-full);
+  font-family: var(--_font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+  text-decoration: none;
+  position: relative;
+  transition:
+    transform     var(--_base),
+    box-shadow    var(--_base),
+    background    var(--_base),
+    color         var(--_base),
+    border-color  var(--_base);
+}
+
+.btn:hover  { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+
+.btnPrimary {
+  background: linear-gradient(
+    135deg,
+    var(--_accent),
+    color-mix(in srgb, var(--_accent) 68%, var(--_accent2))
+  );
+  color: var(--primary-foreground);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--_accent) 28%, transparent);
+}
+
+.btnPrimary:hover {
+  box-shadow: 0 16px 36px color-mix(in srgb, var(--_accent) 38%, transparent);
+  filter: brightness(1.08);
+}
+
+.btnSecondary {
+  background: var(--_surface);
+  color: var(--_text);
+  border: 1px solid var(--_border-strong);
+  box-shadow: var(--_shadow-sm);
+}
+
+.btnSecondary:hover {
+  background: var(--_surface2);
+  border-color: var(--_border-glow);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--_accent) 12%, transparent);
+}
+
+.btnSm { padding: 9px 16px; font-size: 12px; }
+.btnLg { padding: 16px 30px; font-size: 15px; }
+
+
+/* ==========================================================
+   5. SHARED UTILITIES — TAGS / CHIPS / BADGES
+   ========================================================== */
+
+/* Generic coloured badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: var(--_r-full);
+  font-family: var(--_font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--_c, var(--_accent)) 14%, transparent);
+  color: var(--_c, var(--_accent));
+  border: 1px solid color-mix(in srgb, var(--_c, var(--_accent)) 25%, transparent);
+}
+
+/* XP badge shown on hero */
+.xpBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--_r-full);
+  font-family: var(--_font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--_accent2) 14%, transparent);
+  color: var(--_accent2);
+  border: 1px solid color-mix(in srgb, var(--_accent2) 25%, transparent);
+}
+
+/* Topic tag (used on hero and cards) */
+.tagBadge,
+.tagPill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 9px;
+  border-radius: var(--_r-full);
+  font-family: var(--_font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--_text-muted) 10%, transparent);
+  color: var(--_text-muted);
+  white-space: nowrap;
+}
+
+/* Difficulty chips */
+.chipBeginner {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 9px;
+  border-radius: var(--_r-full);
+  font-family: var(--_font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--_success) 12%, transparent);
+  color: var(--_success);
+  border: 1px solid color-mix(in srgb, var(--_success) 25%, transparent);
+}
+
+.chipIntermediate {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 9px;
+  border-radius: var(--_r-full);
+  font-family: var(--_font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--_warning) 14%, transparent);
+  color: var(--_warning);
+  border: 1px solid color-mix(in srgb, var(--_warning) 25%, transparent);
+}
+
+.chipAdvanced {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 9px;
+  border-radius: var(--_r-full);
+  font-family: var(--_font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--_danger) 12%, transparent);
+  color: var(--_danger);
+  border: 1px solid color-mix(in srgb, var(--_danger) 25%, transparent);
+}
+
+.pillMuted {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 13px;
+  border-radius: var(--_r-full);
+  font-family: var(--_font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--_text-muted) 12%, transparent);
+  color: var(--_text-muted);
+}

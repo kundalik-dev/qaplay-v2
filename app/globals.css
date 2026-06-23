@@ -211,12 +211,17 @@
   }
 
   html {
-    font-family: var(--font-inter), sans-serif;
+    --font-base: var(--font-inter);
+    font-family: var(--font-base), sans-serif;
+  }
+
+  html[data-font="space-grotesk"] {
+    --font-base: var(--font-space-grotesk);
   }
 
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-base), sans-serif;
     min-height: 100vh;
     background-color: var(--background);
     background-image:

@@ -14,12 +14,12 @@ export default function ChallengeWorkspaceLayout({ challenge, children }: { chal
           <Link href="/challenges">Challenges</Link> <span className="sep">/</span> <span className="current" style={{ color: 'var(--text)' }}>{challenge.title}</span>
         </div>
         <div className={styles.chTitleRow}>
-          <h1 className="heading-lg" style={{ margin: 0 }}>{challenge.title}</h1>
+          <h1 className={styles.headingLg} style={{ margin: 0 }}>{challenge.title}</h1>
           <div className={styles.chBadges}>
-            <span className={challenge.difficulty === 'Hard' ? 'chip-advanced' : challenge.difficulty === 'Medium' ? 'chip-intermediate' : 'chip-beginner'}>
+            <span className={challenge.difficulty === 'Hard' ? styles.chipAdvanced : challenge.difficulty === 'Medium' ? styles.chipIntermediate : styles.chipBeginner}>
               {challenge.difficulty}
             </span>
-            <span className="badge" style={{ '--c': 'var(--accent2)' } as React.CSSProperties}>+{challenge.xp} XP</span>
+            <span className={styles.badge} style={{ '--c': 'var(--accent2)' } as React.CSSProperties}>+{challenge.xp} XP</span>
           </div>
         </div>
         <p className={styles.chDesc}>{challenge.description}</p>
@@ -31,7 +31,7 @@ export default function ChallengeWorkspaceLayout({ challenge, children }: { chal
         {/* LEFT PANEL: Instructions & Submission */}
         <div className={`${styles.chPanel} ${styles.chLeft}`}>
           <div className={styles.panelSection}>
-            <h2 className="heading-sm">📝 Instructions</h2>
+            <h2 className={styles.headingSm}>📝 Instructions</h2>
             <ul className={styles.chTaskList}>
               {challenge.instructions.map((inst, idx) => (
                 <li key={idx}>
