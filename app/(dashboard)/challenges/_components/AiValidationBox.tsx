@@ -6,10 +6,17 @@ import type { ChallengeMeta } from "@/data/challenges-registry";
 import { buildValidationSystemPrompt } from "@/data/challenges-registry";
 import { AiFeedbackResult } from "./ai-feedback-result";
 
-export default function AiValidationBox({ challenge }: { challenge: ChallengeMeta }) {
+export default function AiValidationBox({
+  challenge,
+}: {
+  challenge: ChallengeMeta;
+}) {
   const [code, setCode] = useState(challenge.boilerplate);
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<{ status: "success" | "fail" | null; feedback: string }>({
+  const [result, setResult] = useState<{
+    status: "success" | "fail" | null;
+    feedback: string;
+  }>({
     status: null,
     feedback: "",
   });
@@ -29,7 +36,9 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
     const model = settings.openrouter_model || "openai/gpt-4o-mini";
 
     if (!key) {
-      alert("Please configure your OpenRouter API Key in the Settings page first.");
+      alert(
+        "Please configure your OpenRouter API Key in the Settings page first.",
+      );
       return;
     }
 
@@ -39,27 +48,33 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
     const systemPrompt = buildValidationSystemPrompt(challenge);
 
     try {
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${key}`,
-          "HTTP-Referer": window.location.origin,
-          "X-Title": "QA Playground",
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://openrouter.ai/api/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${key}`,
+            "HTTP-Referer": window.location.origin,
+            "X-Title": "QA Playground",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model,
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: code },
+            ],
+          }),
         },
-        body: JSON.stringify({
-          model,
-          messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: code },
-          ],
-        }),
-      });
+      );
 
       const data = await response.json();
 
       if (data.error) {
-        setResult({ status: "fail", feedback: "API Error: " + data.error.message });
+        setResult({
+          status: "fail",
+          feedback: "API Error: " + data.error.message,
+        });
         setLoading(false);
         return;
       }
@@ -67,19 +82,28 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
       const content = data.choices[0]?.message?.content;
       try {
         const parsed = JSON.parse(content);
-        setResult({ status: parsed.pass ? "success" : "fail", feedback: parsed.feedback });
+        setResult({
+          status: parsed.pass ? "success" : "fail",
+          feedback: parsed.feedback,
+        });
 
         if (parsed.pass) {
           const completed = JSON.parse(
-            localStorage.getItem("qap_completed_challenges") || "[]"
+            localStorage.getItem("qap_completed_challenges") || "[]",
           );
           if (!completed.includes(challenge.id)) {
             completed.push(challenge.id);
-            localStorage.setItem("qap_completed_challenges", JSON.stringify(completed));
+            localStorage.setItem(
+              "qap_completed_challenges",
+              JSON.stringify(completed),
+            );
           }
         }
       } catch {
-        setResult({ status: "fail", feedback: "Failed to parse AI response. Please try again." });
+        setResult({
+          status: "fail",
+          feedback: "Failed to parse AI response. Please try again.",
+        });
       }
     } catch {
       setResult({ status: "fail", feedback: "Network error occurred." });
@@ -91,21 +115,30 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
   const systemPromptPreview = buildValidationSystemPrompt(challenge);
 
   return (
-    <div className={styles.panelSection} data-testid="ai-validation-box">
-
-      {/* Header */}
-      <h2 className={`${styles.headingSm} ${styles.aiBoxTitle}`}>
-        <span aria-hidden="true">🤖</span> Submit Solution
-      </h2>
-      <p className={`${styles.bodySm} ${styles.textMuted} ${styles.aiBoxIntro}`}>
-        Run your script locally, paste it below, and let AI validate your solution.
+    <div
+      className={styles.panelSection}
+      data-testid="ai-validation-box"
+      style={{ marginTop: 0, paddingTop: 0, borderTop: "none" }}
+    >
+      <p
+        className={`${styles.bodySm} ${styles.textMuted} ${styles.aiBoxIntro}`}
+        style={{ marginBottom: "16px" }}
+      >
+        Run your script locally, paste it below, and let AI validate your
+        solution.
       </p>
 
       {/* No-key warning */}
       {!hasKey && (
-        <div className={styles.noKeyWarning} data-testid="no-key-warning" role="alert">
+        <div
+          className={styles.noKeyWarning}
+          data-testid="no-key-warning"
+          role="alert"
+        >
           ⚠️ <strong>No API Key found.</strong> Go to the{" "}
-          <a href="/settings" className={styles.warningLink}>Settings page</a>{" "}
+          <a href="/settings" className={styles.warningLink}>
+            Settings page
+          </a>{" "}
           to configure your OpenRouter API key before submitting.
         </div>
       )}
@@ -147,7 +180,10 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
       </button>
 
       {/* Prompt preview (admin/dev tool) */}
-      <div className={styles.promptPreviewSection} data-testid="prompt-preview-section">
+      <div
+        className={styles.promptPreviewSection}
+        data-testid="prompt-preview-section"
+      >
         <button
           className={styles.promptToggleBtn}
           onClick={() => setShowPrompt((v) => !v)}
@@ -160,7 +196,8 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
           </span>
           <span>AI Validation Prompt</span>
           <span className={styles.promptToggleMeta}>
-            {challenge.validationConfig.strictness} · {challenge.validationConfig.requiredPatterns.length} rules
+            {challenge.validationConfig.strictness} ·{" "}
+            {challenge.validationConfig.requiredPatterns.length} rules
           </span>
         </button>
         {showPrompt && (

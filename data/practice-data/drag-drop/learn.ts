@@ -1,13 +1,18 @@
-import type { FaqItem, LearnCodeSnippet, MethodRow, TocItem } from "@/data/practice-data/types";
+import type {
+  FaqItem,
+  LearnCodeSnippet,
+  MethodRow,
+  TocItem,
+} from "@/data/practice-data/types";
 
 export const dragDropTocItems: TocItem[] = [
-  { id: "learn-overview",    label: "Overview" },
-  { id: "learn-basic",       label: "1 · Basic dragAndDrop" },
-  { id: "learn-locator",     label: "2 · locator.dragTo()" },
-  { id: "learn-mouse",       label: "3 · Low-level mouse events" },
-  { id: "learn-selenium",    label: "4 · Selenium Actions API" },
-  { id: "learn-methods",     label: "Method Summary", dividerBefore: true },
-  { id: "learn-faq",         label: "FAQ" },
+  { id: "learn-overview", label: "Overview" },
+  { id: "learn-basic", label: "1 · Basic dragAndDrop" },
+  { id: "learn-locator", label: "2 · locator.dragTo()" },
+  { id: "learn-mouse", label: "3 · Low-level mouse events" },
+  { id: "learn-selenium", label: "4 · Selenium Actions API" },
+  { id: "learn-methods", label: "Method Summary", dividerBefore: true },
+  { id: "learn-faq", label: "FAQ" },
 ];
 
 export const dragDropLearnDesc: Record<string, string> = {
@@ -250,69 +255,74 @@ cy.get('[data-item-id="item-1"]').trigger('dragover').trigger('drop');`,
 
 export const dragDropMethodRows: MethodRow[] = [
   {
-    action:       "High-level drag and drop",
-    selenium:     "Actions.dragAndDrop(src, tgt)",
+    action: "High-level drag and drop",
+    selenium: "Actions.dragAndDrop(src, tgt)",
     playwrightJs: "page.dragAndDrop(src, tgt)",
     playwrightPy: "page.drag_and_drop(src, tgt)",
-    cypress:      ".drag(target) (plugin)",
+    cypress: ".drag(target) (plugin)",
   },
   {
-    action:       "Locator-chained drag",
-    selenium:     "Actions.dragAndDrop(srcEl, tgtEl)",
+    action: "Locator-chained drag",
+    selenium: "Actions.dragAndDrop(srcEl, tgtEl)",
     playwrightJs: "locator.dragTo(targetLocator)",
     playwrightPy: "locator.drag_to(target_locator)",
-    cypress:      ".drag(selector) (plugin)",
+    cypress: ".drag(selector) (plugin)",
   },
   {
-    action:       "Manual mouse press/move",
-    selenium:     "clickAndHold → moveToElement → release",
+    action: "Manual mouse press/move",
+    selenium: "clickAndHold → moveToElement → release",
     playwrightJs: "mouse.down() → mouse.move() → mouse.up()",
     playwrightPy: "mouse.down() → mouse.move() → mouse.up()",
-    cypress:      "trigger('dragstart') → trigger('drop')",
+    cypress: "trigger('dragstart') → trigger('drop')",
   },
   {
-    action:       "HTML5 event dispatch",
-    selenium:     "JS: dispatchEvent(new DragEvent(…))",
+    action: "HTML5 event dispatch",
+    selenium: "JS: dispatchEvent(new DragEvent(…))",
     playwrightJs: "dispatchEvent('dragstart', { dataTransfer })",
     playwrightPy: "dispatch_event('dragstart', {'dataTransfer': dt})",
-    cypress:      "trigger('dragstart', { dataTransfer })",
+    cypress: "trigger('dragstart', { dataTransfer })",
   },
   {
-    action:       "Bounding box position",
-    selenium:     "element.getRect() → offsetX/offsetY",
+    action: "Bounding box position",
+    selenium: "element.getRect() → offsetX/offsetY",
     playwrightJs: "locator.boundingBox()",
     playwrightPy: "locator.bounding_box()",
-    cypress:      ".invoke('offset') / position: 'top'",
+    cypress: ".invoke('offset') / position: 'top'",
   },
 ];
 
 export const dragDropFaq: FaqItem[] = [
   {
-    question: "Why does dragAndDrop work in my test but nothing moves on screen?",
+    question:
+      "Why does dragAndDrop work in my test but nothing moves on screen?",
     answer:
       "Many drag-and-drop libraries listen to pointer events (mousedown, mousemove, mouseup) rather than HTML5 drag events (dragstart, drop). Playwright's dragAndDrop fires HTML5 events by default. If nothing moves, try the low-level mouse API: mouse.down(), mouse.move() with steps, then mouse.up(). The steps option adds intermediate mousemove events that trigger most pointer-based libraries.",
     testId: "faq-1",
   },
   {
-    question: "How do I locate an element inside a specific drag column without a data-testid?",
+    question:
+      "How do I locate an element inside a specific drag column without a data-testid?",
     answer:
-      "Scope from the column using its data-column-id attribute: page.locator('[data-column-id=\"todo\"]').locator('[data-task-id=\"task-2\"]'). In XPath use ancestor scoping: //div[@data-column-id=\"todo\"]//div[@data-task-id=\"task-2\"]. Never use nth() positional selectors for cross-column assertions — they break when cards move between columns.",
+      'Scope from the column using its data-column-id attribute: page.locator(\'[data-column-id="todo"]\').locator(\'[data-task-id="task-2"]\'). In XPath use ancestor scoping: //div[@data-column-id="todo"]//div[@data-task-id="task-2"]. Never use nth() positional selectors for cross-column assertions — they break when cards move between columns.',
     testId: "faq-2",
   },
   {
-    question: "How do I verify the order of items in a sortable list after reordering?",
+    question:
+      "How do I verify the order of items in a sortable list after reordering?",
     answer:
       "After dragging, read all items in document order: const items = await page.locator('[data-testid=\"dd-sort-item\"]').all(); then map over them to collect data-item-id attributes with getAttribute(). Compare the resulting array against your expected order. Alternatively, assert that the first item has the expected data-item-id: expect(items[0]).toHaveAttribute('data-item-id', 'item-3').",
     testId: "faq-3",
   },
   {
-    question: "Cypress has no built-in drag support — what is the recommended approach?",
+    question:
+      "Cypress has no built-in drag support — what is the recommended approach?",
     answer:
       "Install the cypress-drag-drop package and use .drag(target). If you cannot install plugins, trigger HTML5 events manually: create a DataTransfer object in the test, trigger 'dragstart' on the source with that object, then trigger 'dragover' and 'drop' on the target with the same object. Some apps also expose a custom drag attribute you can hook into.",
     testId: "faq-4",
   },
   {
-    question: "How do I test that a type-restricted zone correctly rejects an invalid drop?",
+    question:
+      "How do I test that a type-restricted zone correctly rejects an invalid drop?",
     answer:
       "Attempt the invalid drag and then assert the rejection state. If the zone shows an error message, locate it via role ('status', 'alert') or partial text match rather than a fragile CSS class. In Playwright: await expect(page.getByRole('status')).toContainText('wrong type'). In Selenium use XPath contains(): //p[contains(text(),'wrong')]. Assert that the dragged item has not moved into the zone by checking the zone's children.",
     testId: "faq-5",

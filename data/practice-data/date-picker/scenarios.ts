@@ -1,4 +1,7 @@
-import type { ScenarioMeta, FrameworkMethods } from "@/data/practice-data/types";
+import type {
+  ScenarioMeta,
+  FrameworkMethods,
+} from "@/data/practice-data/types";
 
 export const datePickerScenarios: ScenarioMeta[] = [
   {
@@ -68,35 +71,38 @@ export const datePickerScenarios: ScenarioMeta[] = [
   },
 ];
 
-export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", FrameworkMethods> = {
+export const frameworkMethods: Record<
+  "selenium" | "playwright" | "cypress",
+  FrameworkMethods
+> = {
   selenium: {
     label: "Selenium (Java)",
     methods: [
-      { color: "purple", label: "sendKeys(\"2025-06-15\")" },
-      { color: "blue",   label: "getAttribute(\"value\")" },
-      { color: "orange", label: "getAttribute(\"min\")" },
-      { color: "emerald",label: "getAttribute(\"max\")" },
-      { color: "slate",  label: "clear() → sendKeys()" },
+      { color: "purple", label: 'sendKeys("2025-06-15")' },
+      { color: "blue", label: 'getAttribute("value")' },
+      { color: "orange", label: 'getAttribute("min")' },
+      { color: "emerald", label: 'getAttribute("max")' },
+      { color: "slate", label: "clear() → sendKeys()" },
     ],
   },
   playwright: {
     label: "Playwright JS / PY",
     methods: [
-      { color: "purple", label: "fill(\"2025-06-15\")" },
-      { color: "blue",   label: "inputValue()" },
-      { color: "orange", label: "getAttribute(\"min\")" },
-      { color: "emerald",label: "getAttribute(\"max\")" },
-      { color: "slate",  label: "press(\"Tab\")" },
+      { color: "purple", label: 'fill("2025-06-15")' },
+      { color: "blue", label: "inputValue()" },
+      { color: "orange", label: 'getAttribute("min")' },
+      { color: "emerald", label: 'getAttribute("max")' },
+      { color: "slate", label: 'press("Tab")' },
     ],
   },
   cypress: {
     label: "Cypress JS",
     methods: [
-      { color: "purple", label: ".type(\"2025-06-15\")" },
-      { color: "blue",   label: ".invoke('val')" },
+      { color: "purple", label: '.type("2025-06-15")' },
+      { color: "blue", label: ".invoke('val')" },
       { color: "orange", label: ".invoke('attr', 'min')" },
-      { color: "emerald",label: ".invoke('attr', 'max')" },
-      { color: "slate",  label: ".clear().type()" },
+      { color: "emerald", label: ".invoke('attr', 'max')" },
+      { color: "slate", label: ".clear().type()" },
     ],
   },
 };

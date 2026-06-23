@@ -1,4 +1,8 @@
-import { createBreadcrumbJsonLd, createFaqPageJsonLd, createWebPageJsonLd } from "../structured-data";
+import {
+  createBreadcrumbJsonLd,
+  createFaqPageJsonLd,
+  createWebPageJsonLd,
+} from "../structured-data";
 import { shadowDomFaq } from "@/data/practice-data/shadow-dom";
 
 const name = "How to Automate Shadow DOM in Selenium and Playwright";
@@ -25,11 +29,14 @@ export const shadowDomPageWebPageJsonLd = createWebPageJsonLd({
 });
 
 export const shadowDomPageBreadcrumbJsonLd = createBreadcrumbJsonLd([
-  { name: "Home",       path: "/" },
-  { name: "Practice",   path: "/practice" },
+  { name: "Home", path: "/" },
+  { name: "Practice", path: "/practice" },
   { name: "Shadow DOM", path: "/practice/shadow-dom" },
 ]);
 
 export const shadowDomPageFaqJsonLd = createFaqPageJsonLd(
-  shadowDomFaq.map((item) => ({ question: item.question, answer: item.answer })),
+  shadowDomFaq.map((item) => ({
+    question: item.question,
+    answer: item.answer,
+  })),
 );

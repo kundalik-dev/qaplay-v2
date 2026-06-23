@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
-import { PracticePage }   from "./_components/practice-page";
-import { LearnTab }        from "./_components/learn-tab";
-import { linksMeta, linksTestCases, linksLearnCode } from "@/data/practice-data/links";
+import { PracticePage } from "./_components/practice-page";
+import { LearnTab } from "./_components/learn-tab";
+import {
+  linksMeta,
+  linksTestCases,
+  linksLearnCode,
+} from "@/data/practice-data/links";
 import { linksPageMetadata } from "@/data/meta-data/practice/links-page-meta-data";
 import { highlightLearnSnippet } from "@/lib/highlight";
 

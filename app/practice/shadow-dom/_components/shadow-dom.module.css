@@ -16,12 +16,19 @@
 }
 
 @media (max-width: 1024px) {
-  .practiceLayout { grid-template-columns: 1fr; }
-  .practiceSidebar { position: static; }
+  .practiceLayout {
+    grid-template-columns: 1fr;
+  }
+  .practiceSidebar {
+    position: static;
+  }
 }
 
 @media (max-width: 640px) {
-  .practiceLayout { gap: 16px; padding-block: 20px 48px; }
+  .practiceLayout {
+    gap: 16px;
+    padding-block: 20px 48px;
+  }
 }
 
 /* ── Shadow host shell ───────────────────────────────────────── */
@@ -112,7 +119,9 @@
 }
 
 @media (max-width: 700px) {
-  .multiHostGrid { grid-template-columns: 1fr; }
+  .multiHostGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ── Depth indicator (nested scenario) ──────────────────────── */

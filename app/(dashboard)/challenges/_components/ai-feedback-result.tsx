@@ -39,8 +39,14 @@ export function AiFeedbackResult({ status, feedback, xp, challengeId }: Props) {
           </div>
         </div>
         {isPass && (
-          <div className={styles.xpBlock} data-testid="xp-awarded" aria-label={`${xp} XP awarded`}>
-            <span className={styles.xpIcon} aria-hidden="true">⭐</span>
+          <div
+            className={styles.xpBlock}
+            data-testid="xp-awarded"
+            aria-label={`${xp} XP awarded`}
+          >
+            <span className={styles.xpIcon} aria-hidden="true">
+              ⭐
+            </span>
             <span className={styles.xpValue}>+{xp}</span>
             <span className={styles.xpLabel}>XP</span>
           </div>
@@ -96,12 +102,18 @@ export function AiFeedbackResult({ status, feedback, xp, challengeId }: Props) {
               className={`${styles.resultBtn} ${styles.resultBtnSecondary}`}
               onClick={() => {
                 const hintsBtn = document.querySelector<HTMLButtonElement>(
-                  `[data-testid="hints-toggle-btn"]`
+                  `[data-testid="hints-toggle-btn"]`,
                 );
-                if (hintsBtn && hintsBtn.getAttribute("aria-expanded") === "false") {
+                if (
+                  hintsBtn &&
+                  hintsBtn.getAttribute("aria-expanded") === "false"
+                ) {
                   hintsBtn.click();
                 }
-                hintsBtn?.scrollIntoView({ behavior: "smooth", block: "center" });
+                hintsBtn?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
               }}
               data-testid="show-hints-from-result-btn"
               type="button"

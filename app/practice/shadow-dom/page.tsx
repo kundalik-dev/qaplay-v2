@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { PracticePage } from "./_components/practice-page";
-import { LearnTab }      from "./_components/learn-tab";
-import { shadowDomMeta, shadowDomTestCases, shadowDomLearnCode } from "@/data/practice-data/shadow-dom";
+import { LearnTab } from "./_components/learn-tab";
+import {
+  shadowDomMeta,
+  shadowDomTestCases,
+  shadowDomLearnCode,
+} from "@/data/practice-data/shadow-dom";
 import { shadowDomPageMetadata } from "@/data/meta-data/practice/shadow-dom-page-meta-data";
 import {
   shadowDomPageWebPageJsonLd,
@@ -24,20 +28,28 @@ export default async function ShadowDomPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(shadowDomPageWebPageJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(shadowDomPageWebPageJsonLd),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(shadowDomPageBreadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(shadowDomPageBreadcrumbJsonLd),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(shadowDomPageFaqJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(shadowDomPageFaqJsonLd),
+        }}
       />
       <PracticePage
         meta={shadowDomMeta}
         testCases={shadowDomTestCases}
-        learnContent={<LearnTab snippets={{ basic, nested, evaluate, closed }} />}
+        learnContent={
+          <LearnTab snippets={{ basic, nested, evaluate, closed }} />
+        }
       />
     </>
   );

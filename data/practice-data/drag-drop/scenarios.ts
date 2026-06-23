@@ -1,4 +1,7 @@
-import type { ScenarioMeta, FrameworkMethods } from "@/data/practice-data/types";
+import type {
+  ScenarioMeta,
+  FrameworkMethods,
+} from "@/data/practice-data/types";
 
 export const dragDropScenarios: ScenarioMeta[] = [
   {
@@ -53,35 +56,38 @@ export const dragDropScenarios: ScenarioMeta[] = [
   },
 ];
 
-export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", FrameworkMethods> = {
+export const frameworkMethods: Record<
+  "selenium" | "playwright" | "cypress",
+  FrameworkMethods
+> = {
   selenium: {
     label: "Selenium (Java)",
     methods: [
       { color: "purple", label: "Actions.dragAndDrop(src, tgt)" },
-      { color: "blue",   label: "Actions.clickAndHold(src)" },
+      { color: "blue", label: "Actions.clickAndHold(src)" },
       { color: "orange", label: "Actions.moveToElement(tgt)" },
-      { color: "emerald",label: "Actions.release().perform()" },
-      { color: "slate",  label: "JS dragAndDrop() fallback" },
+      { color: "emerald", label: "Actions.release().perform()" },
+      { color: "slate", label: "JS dragAndDrop() fallback" },
     ],
   },
   playwright: {
     label: "Playwright JS / PY",
     methods: [
       { color: "purple", label: "page.dragAndDrop(src, tgt)" },
-      { color: "blue",   label: "locator.dragTo(target)" },
+      { color: "blue", label: "locator.dragTo(target)" },
       { color: "orange", label: "mouse.move() + down/up" },
-      { color: "emerald",label: "dispatchEvent('drop')" },
-      { color: "slate",  label: "dataTransfer simulation" },
+      { color: "emerald", label: "dispatchEvent('drop')" },
+      { color: "slate", label: "dataTransfer simulation" },
     ],
   },
   cypress: {
     label: "Cypress JS",
     methods: [
       { color: "purple", label: ".trigger('dragstart')" },
-      { color: "blue",   label: ".trigger('dragover')" },
+      { color: "blue", label: ".trigger('dragover')" },
       { color: "orange", label: ".trigger('drop')" },
-      { color: "emerald",label: "cypress-drag-drop plugin" },
-      { color: "slate",  label: ".drag() (plugin method)" },
+      { color: "emerald", label: "cypress-drag-drop plugin" },
+      { color: "slate", label: ".drag() (plugin method)" },
     ],
   },
 };

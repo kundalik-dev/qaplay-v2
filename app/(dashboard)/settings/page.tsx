@@ -53,7 +53,9 @@ export default function SettingsPage() {
     const current = JSON.parse(localStorage.getItem("qap_settings") || "{}");
     const merged = { ...current, ...updates };
     // Remove undefined keys to keep localStorage clean
-    Object.keys(merged).forEach(key => merged[key] === undefined && delete merged[key]);
+    Object.keys(merged).forEach(
+      (key) => merged[key] === undefined && delete merged[key],
+    );
     localStorage.setItem("qap_settings", JSON.stringify(merged));
   };
 
@@ -87,10 +89,10 @@ export default function SettingsPage() {
   const handleSaveApi = (e: React.FormEvent) => {
     e.preventDefault();
     const finalModel = isCustom ? customModel : model;
-    
+
     updateSettings({
       openrouter_key: key,
-      openrouter_model: finalModel
+      openrouter_model: finalModel,
     });
 
     setApiSaved(true);
@@ -99,7 +101,7 @@ export default function SettingsPage() {
 
   const handleSaveProfile = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Simulated API Call for Resume Upload
     if (resumeFile) {
       console.log("Simulating resume upload to API:", resumeFile.name);
@@ -296,19 +298,25 @@ export default function SettingsPage() {
                     />
                   </div>
                 </div>
-                
+
                 <div className={pageStyles.inputGroup}>
                   <label className={pageStyles.label}>Upload Resume</label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <label 
-                      className={cn(pageStyles.btn, pageStyles.btnSecondary)} 
-                      style={{ cursor: 'pointer' }}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                    }}
+                  >
+                    <label
+                      className={cn(pageStyles.btn, pageStyles.btnSecondary)}
+                      style={{ cursor: "pointer" }}
                     >
                       <Upload size={14} /> Choose File
-                      <input 
-                        type="file" 
-                        accept=".pdf,.doc,.docx,.md" 
-                        style={{ display: 'none' }}
+                      <input
+                        type="file"
+                        accept=".pdf,.doc,.docx,.md"
+                        style={{ display: "none" }}
                         onChange={(e) => {
                           if (e.target.files && e.target.files.length > 0) {
                             setResumeFile(e.target.files[0]);
@@ -317,11 +325,27 @@ export default function SettingsPage() {
                       />
                     </label>
                     {resumeFile ? (
-                      <span style={{ fontSize: '13px', color: 'var(--foreground)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <FileText size={14} className="text-primary" /> {resumeFile.name}
+                      <span
+                        style={{
+                          fontSize: "13px",
+                          color: "var(--foreground)",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "6px",
+                        }}
+                      >
+                        <FileText size={14} className="text-primary" />{" "}
+                        {resumeFile.name}
                       </span>
                     ) : (
-                      <span style={{ fontSize: '13px', color: 'var(--muted-foreground)' }}>No file chosen (PDF, DOCX, MD)</span>
+                      <span
+                        style={{
+                          fontSize: "13px",
+                          color: "var(--muted-foreground)",
+                        }}
+                      >
+                        No file chosen (PDF, DOCX, MD)
+                      </span>
                     )}
                   </div>
                 </div>

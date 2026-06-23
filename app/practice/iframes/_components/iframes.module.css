@@ -16,12 +16,19 @@
 }
 
 @media (max-width: 1024px) {
-  .practiceLayout { grid-template-columns: 1fr; }
-  .practiceSidebar { position: static; }
+  .practiceLayout {
+    grid-template-columns: 1fr;
+  }
+  .practiceSidebar {
+    position: static;
+  }
 }
 
 @media (max-width: 640px) {
-  .practiceLayout { gap: 16px; padding-block: 20px 48px; }
+  .practiceLayout {
+    gap: 16px;
+    padding-block: 20px 48px;
+  }
 }
 
 /* ── iframe wrapper shell ─────────────────────────────────────── */
@@ -48,9 +55,15 @@
   flex-shrink: 0;
 }
 
-.frameDotRed    { background: #ef4444; }
-.frameDotYellow { background: #f59e0b; }
-.frameDotGreen  { background: #22c55e; }
+.frameDotRed {
+  background: #ef4444;
+}
+.frameDotYellow {
+  background: #f59e0b;
+}
+.frameDotGreen {
+  background: #22c55e;
+}
 
 .frameUrl {
   flex: 1;
@@ -110,7 +123,9 @@
 }
 
 @media (max-width: 700px) {
-  .multiFrameGrid { grid-template-columns: 1fr; }
+  .multiFrameGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .frameLabel {

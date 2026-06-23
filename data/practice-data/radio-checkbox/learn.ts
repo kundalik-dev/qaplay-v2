@@ -1,13 +1,18 @@
-import type { FaqItem, LearnCodeSnippet, MethodRow, TocItem } from "@/data/practice-data/types";
+import type {
+  FaqItem,
+  LearnCodeSnippet,
+  MethodRow,
+  TocItem,
+} from "@/data/practice-data/types";
 
 export const radioCheckboxTocItems: TocItem[] = [
-  { id: "learn-overview",  label: "Overview" },
-  { id: "learn-checkbox",  label: "1 · Check / Uncheck" },
-  { id: "learn-radio",     label: "2 · Radio Groups" },
-  { id: "learn-assert",    label: "3 · Assert State" },
-  { id: "learn-disabled",  label: "4 · Disabled Controls" },
-  { id: "learn-methods",   label: "Method Summary", dividerBefore: true },
-  { id: "learn-faq",       label: "FAQ" },
+  { id: "learn-overview", label: "Overview" },
+  { id: "learn-checkbox", label: "1 · Check / Uncheck" },
+  { id: "learn-radio", label: "2 · Radio Groups" },
+  { id: "learn-assert", label: "3 · Assert State" },
+  { id: "learn-disabled", label: "4 · Disabled Controls" },
+  { id: "learn-methods", label: "Method Summary", dividerBefore: true },
+  { id: "learn-faq", label: "FAQ" },
 ];
 
 export const radioCheckboxLearnDesc: Record<string, string> = {
@@ -164,39 +169,39 @@ cy.get('[data-testid="radio-disabled"]').should('be.disabled');`,
 
 export const radioCheckboxMethodRows: MethodRow[] = [
   {
-    action:       "Check",
-    selenium:     "element.click() (if !isSelected())",
+    action: "Check",
+    selenium: "element.click() (if !isSelected())",
     playwrightJs: "locator.check()",
     playwrightPy: "locator.check()",
-    cypress:      ".check()",
+    cypress: ".check()",
   },
   {
-    action:       "Uncheck",
-    selenium:     "element.click() (if isSelected())",
+    action: "Uncheck",
+    selenium: "element.click() (if isSelected())",
     playwrightJs: "locator.uncheck()",
     playwrightPy: "locator.uncheck()",
-    cypress:      ".uncheck()",
+    cypress: ".uncheck()",
   },
   {
-    action:       "Assert checked",
-    selenium:     "isSelected()",
+    action: "Assert checked",
+    selenium: "isSelected()",
     playwrightJs: "expect(locator).toBeChecked()",
     playwrightPy: "expect(locator).to_be_checked()",
-    cypress:      ".should('be.checked')",
+    cypress: ".should('be.checked')",
   },
   {
-    action:       "Assert disabled",
-    selenium:     "!isEnabled()",
+    action: "Assert disabled",
+    selenium: "!isEnabled()",
     playwrightJs: "expect(locator).toBeDisabled()",
     playwrightPy: "expect(locator).to_be_disabled()",
-    cypress:      ".should('be.disabled')",
+    cypress: ".should('be.disabled')",
   },
   {
-    action:       "Check all in group",
-    selenium:     "findElements() + loop",
+    action: "Check all in group",
+    selenium: "findElements() + loop",
     playwrightJs: "locator.all() + for…of",
     playwrightPy: "locator.all() + for…in",
-    cypress:      ".check() (on multiple)",
+    cypress: ".check() (on multiple)",
   },
 ];
 
@@ -214,7 +219,8 @@ export const radioCheckboxFaq: FaqItem[] = [
     testId: "faq-2",
   },
   {
-    question: "What is the difference between isChecked() and isSelected() in Selenium?",
+    question:
+      "What is the difference between isChecked() and isSelected() in Selenium?",
     answer:
       "In Selenium, isSelected() works for both checkboxes and radio buttons. isChecked() is a Playwright-specific method. Both return a boolean true/false for the current checked state.",
     testId: "faq-3",

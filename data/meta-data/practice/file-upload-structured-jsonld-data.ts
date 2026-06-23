@@ -1,4 +1,8 @@
-import { createBreadcrumbJsonLd, createFaqPageJsonLd, createWebPageJsonLd } from "../structured-data";
+import {
+  createBreadcrumbJsonLd,
+  createFaqPageJsonLd,
+  createWebPageJsonLd,
+} from "../structured-data";
 import { fileUploadFaq } from "@/data/practice-data/file-upload";
 
 const name = "How to Handle File Upload in Selenium and Playwright";
@@ -25,11 +29,14 @@ export const fileUploadPageWebPageJsonLd = createWebPageJsonLd({
 });
 
 export const fileUploadPageBreadcrumbJsonLd = createBreadcrumbJsonLd([
-  { name: "Home",        path: "/" },
-  { name: "Practice",   path: "/practice" },
+  { name: "Home", path: "/" },
+  { name: "Practice", path: "/practice" },
   { name: "File Upload", path: "/practice/file-upload" },
 ]);
 
 export const fileUploadPageFaqJsonLd = createFaqPageJsonLd(
-  fileUploadFaq.map((item) => ({ question: item.question, answer: item.answer })),
+  fileUploadFaq.map((item) => ({
+    question: item.question,
+    answer: item.answer,
+  })),
 );

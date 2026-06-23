@@ -1,4 +1,8 @@
-import { createBreadcrumbJsonLd, createFaqPageJsonLd, createWebPageJsonLd } from "../structured-data";
+import {
+  createBreadcrumbJsonLd,
+  createFaqPageJsonLd,
+  createWebPageJsonLd,
+} from "../structured-data";
 import { dragDropFaq } from "@/data/practice-data/drag-drop";
 
 const name = "How to Automate Drag and Drop in Selenium and Playwright";
@@ -25,8 +29,8 @@ export const dragDropPageWebPageJsonLd = createWebPageJsonLd({
 });
 
 export const dragDropPageBreadcrumbJsonLd = createBreadcrumbJsonLd([
-  { name: "Home",       path: "/" },
-  { name: "Practice",   path: "/practice" },
+  { name: "Home", path: "/" },
+  { name: "Practice", path: "/practice" },
   { name: "Drag & Drop", path: "/practice/drag-drop" },
 ]);
 

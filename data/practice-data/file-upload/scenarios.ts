@@ -1,4 +1,7 @@
-import type { ScenarioMeta, FrameworkMethods } from "@/data/practice-data/types";
+import type {
+  ScenarioMeta,
+  FrameworkMethods,
+} from "@/data/practice-data/types";
 
 export const fileUploadScenarios: ScenarioMeta[] = [
   {
@@ -69,35 +72,38 @@ export const fileUploadScenarios: ScenarioMeta[] = [
   },
 ];
 
-export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", FrameworkMethods> = {
+export const frameworkMethods: Record<
+  "selenium" | "playwright" | "cypress",
+  FrameworkMethods
+> = {
   selenium: {
     label: "Selenium (Java)",
     methods: [
       { color: "purple", label: "element.sendKeys('/path/file')" },
-      { color: "blue",   label: "Robot class (drag & drop)" },
+      { color: "blue", label: "Robot class (drag & drop)" },
       { color: "orange", label: "JavascriptExecutor (hidden)" },
-      { color: "emerald",label: "getAttribute('value')" },
-      { color: "slate",  label: "visibilityOf(errorEl)" },
+      { color: "emerald", label: "getAttribute('value')" },
+      { color: "slate", label: "visibilityOf(errorEl)" },
     ],
   },
   playwright: {
     label: "Playwright JS / PY",
     methods: [
       { color: "purple", label: "setInputFiles('path')" },
-      { color: "blue",   label: "setInputFiles(['a','b'])" },
+      { color: "blue", label: "setInputFiles(['a','b'])" },
       { color: "orange", label: "dispatchEvent('drop', dt)" },
-      { color: "emerald",label: "getByRole('progressbar')" },
-      { color: "slate",  label: "waitFor({ state: 'hidden' })" },
+      { color: "emerald", label: "getByRole('progressbar')" },
+      { color: "slate", label: "waitFor({ state: 'hidden' })" },
     ],
   },
   cypress: {
     label: "Cypress JS",
     methods: [
       { color: "purple", label: ".selectFile('fixtures/f')" },
-      { color: "blue",   label: ".selectFile(['a','b'])" },
+      { color: "blue", label: ".selectFile(['a','b'])" },
       { color: "orange", label: ".selectFile(…, { action: 'drag-drop' })" },
-      { color: "emerald",label: ".should('have.attr', 'accept')" },
-      { color: "slate",  label: ".invoke('attr', 'aria-valuenow')" },
+      { color: "emerald", label: ".should('have.attr', 'accept')" },
+      { color: "slate", label: ".invoke('attr', 'aria-valuenow')" },
     ],
   },
 };

@@ -1,4 +1,9 @@
-import type { LearnCodeSnippet, MethodRow, FaqItem, TocItem } from "@/data/practice-data/types";
+import type {
+  LearnCodeSnippet,
+  MethodRow,
+  FaqItem,
+  TocItem,
+} from "@/data/practice-data/types";
 
 /* ── Learn descriptions ─────────────────────────────────────────────────── */
 export const shadowDomLearnDesc = {
@@ -15,7 +20,10 @@ export const shadowDomLearnDesc = {
 };
 
 /* ── Code snippets ──────────────────────────────────────────────────────── */
-export const shadowDomLearnCode: Record<"basic" | "nested" | "evaluate" | "closed", LearnCodeSnippet> = {
+export const shadowDomLearnCode: Record<
+  "basic" | "nested" | "evaluate" | "closed",
+  LearnCodeSnippet
+> = {
   basic: {
     pw: {
       lang: "typescript",
@@ -259,9 +267,9 @@ export const shadowDomMethodRows: MethodRow[] = [
   },
   {
     action: "No stable attributes (evaluate)",
-    selenium: "js.executeScript(\"el.shadowRoot.querySelector(...)\")",
+    selenium: 'js.executeScript("el.shadowRoot.querySelector(...)")',
     playwrightJs: "page.evaluate(() => el.shadowRoot...)",
-    playwrightPy: "page.evaluate(\"...\")",
+    playwrightPy: 'page.evaluate("...")',
     cypress: ".then(el => el[0].shadowRoot.querySelector(...))",
   },
   {
@@ -310,10 +318,10 @@ export const shadowDomFaq: FaqItem[] = [
 /* ── Table of contents ──────────────────────────────────────────────────── */
 export const shadowDomTocItems: TocItem[] = [
   { id: "learn-overview", label: "Overview" },
-  { id: "learn-basic",    label: "1 · Basic shadow root" },
-  { id: "learn-nested",   label: "2 · Nested shadow DOM" },
+  { id: "learn-basic", label: "1 · Basic shadow root" },
+  { id: "learn-nested", label: "2 · Nested shadow DOM" },
   { id: "learn-evaluate", label: "3 · evaluate() pattern" },
-  { id: "learn-closed",   label: "4 · Closed shadow roots", dividerBefore: true },
-  { id: "learn-methods",  label: "Method summary" },
-  { id: "learn-faq",      label: "FAQ" },
+  { id: "learn-closed", label: "4 · Closed shadow roots", dividerBefore: true },
+  { id: "learn-methods", label: "Method summary" },
+  { id: "learn-faq", label: "FAQ" },
 ];

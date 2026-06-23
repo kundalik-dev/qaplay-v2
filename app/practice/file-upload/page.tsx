@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { PracticePage } from "./_components/practice-page";
-import { LearnTab }      from "./_components/learn-tab";
-import { fileUploadMeta, fileUploadTestCases, fileUploadLearnCode } from "@/data/practice-data/file-upload";
+import { LearnTab } from "./_components/learn-tab";
+import {
+  fileUploadMeta,
+  fileUploadTestCases,
+  fileUploadLearnCode,
+} from "@/data/practice-data/file-upload";
 import { fileUploadPageMetadata } from "@/data/meta-data/practice/file-upload-page-meta-data";
 import {
   fileUploadPageWebPageJsonLd,
@@ -24,20 +28,28 @@ export default async function FileUploadPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(fileUploadPageWebPageJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(fileUploadPageWebPageJsonLd),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(fileUploadPageBreadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(fileUploadPageBreadcrumbJsonLd),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(fileUploadPageFaqJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(fileUploadPageFaqJsonLd),
+        }}
       />
       <PracticePage
         meta={fileUploadMeta}
         testCases={fileUploadTestCases}
-        learnContent={<LearnTab snippets={{ native, dragdrop, hidden, validate }} />}
+        learnContent={
+          <LearnTab snippets={{ native, dragdrop, hidden, validate }} />
+        }
       />
     </>
   );

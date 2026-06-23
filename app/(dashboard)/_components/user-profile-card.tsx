@@ -160,7 +160,9 @@ export function UserProfileCard({ isCollapsed }: UserProfileCardProps) {
         {!isCollapsed && (
           <>
             <span className={styles.profileInfo}>
-              <span className={styles.profileName}>{user.name ?? user.email}</span>
+              <span className={styles.profileName}>
+                {user.name ?? user.email}
+              </span>
               <span className={styles.profileEmail}>{user.email}</span>
             </span>
             <ChevronUp

@@ -65,19 +65,30 @@ async function resolveUserId(request: Request): Promise<string | null> {
 export async function GET(request: Request) {
   const userId = await resolveUserId(request);
   if (!userId) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401, headers: CORS });
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      { status: 401, headers: CORS },
+    );
   }
 
   const { searchParams } = new URL(request.url);
   const search = searchParams.get("search")?.trim() ?? "";
-  const type   = searchParams.get("type")?.trim() ?? "";
-  const tag    = searchParams.get("tag")?.trim() ?? "";
+  const type = searchParams.get("type")?.trim() ?? "";
+  const tag = searchParams.get("tag")?.trim() ?? "";
 
   const where: Prisma.ResourceWhereInput = { userId };
 
   if (type && type !== "ALL") {
     // Validate against known enum values to prevent injection
-    const validTypes = ["ARTICLE", "VIDEO", "COURSE", "BOOK", "TOOL", "DOCUMENTATION", "OTHER"];
+    const validTypes = [
+      "ARTICLE",
+      "VIDEO",
+      "COURSE",
+      "BOOK",
+      "TOOL",
+      "DOCUMENTATION",
+      "OTHER",
+    ];
     if (validTypes.includes(type)) {
       where.resourceType = type as import("@prisma/client").ResourceType;
     }
@@ -122,14 +133,20 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const userId = await resolveUserId(request);
   if (!userId) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401, headers: CORS });
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      { status: 401, headers: CORS },
+    );
   }
 
   let body: unknown;
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400, headers: CORS });
+    return NextResponse.json(
+      { error: "Invalid JSON" },
+      { status: 400, headers: CORS },
+    );
   }
 
   const { resourceType, title, url, description, tags, image, source } =
@@ -137,9 +154,12 @@ export async function POST(request: Request) {
 
   // Required fields
   if (
-    typeof resourceType !== "string" || !resourceType ||
-    typeof title !== "string" || !title.trim() ||
-    typeof url !== "string" || !url.trim()
+    typeof resourceType !== "string" ||
+    !resourceType ||
+    typeof title !== "string" ||
+    !title.trim() ||
+    typeof url !== "string" ||
+    !url.trim()
   ) {
     return NextResponse.json(
       { error: "resourceType, title, and url are required" },
@@ -147,7 +167,15 @@ export async function POST(request: Request) {
     );
   }
 
-  const validTypes = ["ARTICLE", "VIDEO", "COURSE", "BOOK", "TOOL", "DOCUMENTATION", "OTHER"];
+  const validTypes = [
+    "ARTICLE",
+    "VIDEO",
+    "COURSE",
+    "BOOK",
+    "TOOL",
+    "DOCUMENTATION",
+    "OTHER",
+  ];
   if (!validTypes.includes(resourceType)) {
     return NextResponse.json(
       { error: `resourceType must be one of: ${validTypes.join(", ")}` },
@@ -161,9 +189,10 @@ export async function POST(request: Request) {
       resourceType: resourceType as import("@prisma/client").ResourceType,
       title: (title as string).trim().slice(0, 300),
       url: (url as string).trim().slice(0, 2048),
-      description: typeof description === "string" && description.trim()
-        ? description.trim().slice(0, 1000)
-        : null,
+      description:
+        typeof description === "string" && description.trim()
+          ? description.trim().slice(0, 1000)
+          : null,
       tags: Array.isArray(tags)
         ? (tags as unknown[])
             .filter((t): t is string => typeof t === "string")
@@ -171,8 +200,14 @@ export async function POST(request: Request) {
             .filter(Boolean)
             .slice(0, 20)
         : [],
-      image: typeof image === "string" && image.trim() ? image.trim().slice(0, 2048) : null,
-      source: typeof source === "string" && source.trim() ? source.trim().slice(0, 50) : "web",
+      image:
+        typeof image === "string" && image.trim()
+          ? image.trim().slice(0, 2048)
+          : null,
+      source:
+        typeof source === "string" && source.trim()
+          ? source.trim().slice(0, 50)
+          : "web",
     },
   });
 

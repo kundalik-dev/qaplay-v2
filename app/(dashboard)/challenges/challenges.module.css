@@ -14,56 +14,59 @@
 .challengePage,
 .dashPage {
   /* colours */
-  --_text:          var(--foreground);
-  --_text-muted:    var(--muted-foreground);
-  --_text-dim:      color-mix(in srgb, var(--muted-foreground) 75%, var(--foreground));
-  --_surface:       var(--card);
-  --_surface2:      var(--muted);
-  --_bg:            var(--background);
-  --_bg2:           var(--muted);
-  --_border:        var(--border);
+  --_text: var(--foreground);
+  --_text-muted: var(--muted-foreground);
+  --_text-dim: color-mix(
+    in srgb,
+    var(--muted-foreground) 75%,
+    var(--foreground)
+  );
+  --_surface: var(--card);
+  --_surface2: var(--muted);
+  --_bg: var(--background);
+  --_bg2: var(--muted);
+  --_border: var(--border);
   --_border-strong: var(--input);
-  --_border-glow:   color-mix(in srgb, var(--primary) 30%, var(--border));
-  --_accent:        var(--primary);
-  --_accent2:       var(--secondary);
-  --_accent3:       var(--brand-tertiary);
-  --_success:       var(--success);
-  --_warning:       var(--warning);
-  --_danger:        var(--destructive);
-  --_info:          var(--info);
+  --_border-glow: color-mix(in srgb, var(--primary) 30%, var(--border));
+  --_accent: var(--primary);
+  --_accent2: var(--secondary);
+  --_accent3: var(--brand-tertiary);
+  --_success: var(--success);
+  --_warning: var(--warning);
+  --_danger: var(--destructive);
+  --_info: var(--info);
 
   /* typography */
-  --_font-display:  var(--font-space-grotesk), sans-serif;
-  --_font-body:     var(--font-inter), sans-serif;
-  --_font-mono:     var(--font-ibm-plex-mono), monospace;
+  --_font-display: var(--font-space-grotesk), sans-serif;
+  --_font-body: var(--font-inter), sans-serif;
+  --_font-mono: var(--font-ibm-plex-mono), monospace;
 
   /* motion */
-  --_fast:          0.15s ease;
-  --_base:          0.2s ease;
+  --_fast: 0.15s ease;
+  --_base: 0.2s ease;
 
   /* radii shortcuts */
-  --_r-sm:          var(--radius-sm);
-  --_r-md:          var(--radius-md);
-  --_r-lg:          var(--radius-lg);
-  --_r-xl:          var(--radius-xl);
-  --_r-full:        9999px;
+  --_r-sm: var(--radius-sm);
+  --_r-md: var(--radius-md);
+  --_r-lg: var(--radius-lg);
+  --_r-xl: var(--radius-xl);
+  --_r-full: 9999px;
 
   /* spacing */
-  --_sp2:  8px;
-  --_sp3:  12px;
-  --_sp4:  16px;
-  --_sp5:  20px;
-  --_sp6:  24px;
-  --_sp7:  28px;
-  --_sp8:  32px;
-  --_sp9:  36px;
+  --_sp2: 8px;
+  --_sp3: 12px;
+  --_sp4: 16px;
+  --_sp5: 20px;
+  --_sp6: 24px;
+  --_sp7: 28px;
+  --_sp8: 32px;
+  --_sp9: 36px;
   --_sp12: 48px;
 
   /* shadows */
-  --_shadow-sm:    var(--home-card-shadow);
+  --_shadow-sm: var(--home-card-shadow);
   --_shadow-float: var(--shadow-float);
 }
-
 
 /* ==========================================================
    0. PROBLEM STATEMENT
@@ -312,8 +315,14 @@
 }
 
 @keyframes fadeSlideInHint {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hintNum {
@@ -521,7 +530,10 @@
   text-decoration: none;
   white-space: nowrap;
   border: none;
-  transition: transform var(--_base), box-shadow var(--_base), filter var(--_base);
+  transition:
+    transform var(--_base),
+    box-shadow var(--_base),
+    filter var(--_base);
 }
 
 .resultBtn:hover {
@@ -559,7 +571,8 @@
   display: inline-block;
   width: 13px;
   height: 13px;
-  border: 2px solid color-mix(in srgb, var(--primary-foreground) 30%, transparent);
+  border: 2px solid
+    color-mix(in srgb, var(--primary-foreground) 30%, transparent);
   border-top-color: var(--primary-foreground);
   border-radius: 50%;
   animation: validateSpin 0.7s linear infinite;
@@ -567,7 +580,9 @@
 }
 
 @keyframes validateSpin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ==========================================================
@@ -843,7 +858,9 @@
   font-weight: 600;
   color: var(--_text-muted);
   text-align: left;
-  transition: background var(--_fast), color var(--_fast);
+  transition:
+    background var(--_fast),
+    color var(--_fast);
 }
 
 .promptToggleBtn:hover {
@@ -907,9 +924,15 @@
   background: var(--_border-strong);
 }
 
-.windowControls span:nth-child(1) { background: var(--_danger); }
-.windowControls span:nth-child(2) { background: var(--_warning); }
-.windowControls span:nth-child(3) { background: var(--_success); }
+.windowControls span:nth-child(1) {
+  background: var(--_danger);
+}
+.windowControls span:nth-child(2) {
+  background: var(--_warning);
+}
+.windowControls span:nth-child(3) {
+  background: var(--_success);
+}
 
 .windowTitle {
   font-family: var(--_font-mono);
@@ -943,7 +966,6 @@
   color: var(--_text);
   font-size: 13px;
 }
-
 
 /* ==========================================================
    2. CHALLENGES DASHBOARD (HOME PAGE)
@@ -1072,7 +1094,11 @@
 
 .statCardBarFill {
   height: 100%;
-  background: linear-gradient(90deg, var(--_accent), color-mix(in srgb, var(--_accent) 70%, var(--_accent2)));
+  background: linear-gradient(
+    90deg,
+    var(--_accent),
+    color-mix(in srgb, var(--_accent) 70%, var(--_accent2))
+  );
   border-radius: var(--_r-full);
   transition: width 0.4s ease;
 }
@@ -1175,7 +1201,10 @@
   );
   color: var(--primary-foreground);
   box-shadow: 0 12px 28px color-mix(in srgb, var(--_accent) 28%, transparent);
-  transition: transform var(--_base), box-shadow var(--_base), filter var(--_base);
+  transition:
+    transform var(--_base),
+    box-shadow var(--_base),
+    filter var(--_base);
 }
 
 .heroCta:hover {
@@ -1217,9 +1246,15 @@
   background: var(--_border-strong);
 }
 
-.mockBrowserHeader span:nth-child(1) { background: var(--_danger); }
-.mockBrowserHeader span:nth-child(2) { background: var(--_warning); }
-.mockBrowserHeader span:nth-child(3) { background: var(--_success); }
+.mockBrowserHeader span:nth-child(1) {
+  background: var(--_danger);
+}
+.mockBrowserHeader span:nth-child(2) {
+  background: var(--_warning);
+}
+.mockBrowserHeader span:nth-child(3) {
+  background: var(--_success);
+}
 
 .mockBrowserBody {
   padding: var(--_sp6);
@@ -1229,10 +1264,18 @@
   color: var(--_text-dim);
 }
 
-.mockNode { }
-.mockIndent  { padding-left: var(--_sp5); }
-.mockIndent2 { padding-left: var(--_sp9); }
-.mockHighlight { color: var(--_accent); font-weight: 700; }
+.mockNode {
+}
+.mockIndent {
+  padding-left: var(--_sp5);
+}
+.mockIndent2 {
+  padding-left: var(--_sp9);
+}
+.mockHighlight {
+  color: var(--_accent);
+  font-weight: 700;
+}
 
 /* ── Filters bar — QA Tools style ───────────────────────── */
 
@@ -1278,8 +1321,12 @@
   appearance: none;
 }
 
-.searchInput::placeholder { color: var(--_text-muted); }
-.searchInput:focus { border-color: var(--_accent); }
+.searchInput::placeholder {
+  color: var(--_text-muted);
+}
+.searchInput:focus {
+  border-color: var(--_accent);
+}
 
 .clearBtn {
   position: absolute;
@@ -1298,7 +1345,9 @@
   line-height: 1;
 }
 
-.clearBtn:hover { color: var(--_text); }
+.clearBtn:hover {
+  color: var(--_text);
+}
 
 /* Select dropdowns */
 .filterSelect {
@@ -1317,7 +1366,9 @@
   flex-shrink: 0;
 }
 
-.filterSelect:focus { border-color: var(--_accent); }
+.filterSelect:focus {
+  border-color: var(--_accent);
+}
 
 /* Result count + clear */
 .resultCount {
@@ -1346,7 +1397,9 @@
   transition: opacity var(--_fast);
 }
 
-.clearFiltersBtn:hover { opacity: 0.7; }
+.clearFiltersBtn:hover {
+  opacity: 0.7;
+}
 
 /* ── View toggle ─────────────────────────────────────────── */
 
@@ -1371,14 +1424,19 @@
   border: none;
   cursor: pointer;
   color: var(--_text-muted);
-  transition: background var(--_fast), color var(--_fast);
+  transition:
+    background var(--_fast),
+    color var(--_fast);
 }
 
 .viewBtn:first-child {
   border-right: 1px solid var(--_border);
 }
 
-.viewBtn:hover { background: var(--_surface2); color: var(--_text); }
+.viewBtn:hover {
+  background: var(--_surface2);
+  color: var(--_text);
+}
 
 .viewBtnActive {
   background: var(--_surface2);
@@ -1444,19 +1502,19 @@
   color: inherit;
   box-shadow: 0 8px 24px rgba(20, 42, 62, 0.06);
   transition:
-    transform     var(--_base),
-    box-shadow    var(--_base),
-    border-color  var(--_base);
+    transform var(--_base),
+    box-shadow var(--_base),
+    border-color var(--_base);
 }
 
 .chCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 36px rgba(20, 42, 62, 0.10);
+  box-shadow: 0 16px 36px rgba(20, 42, 62, 0.1);
   border-color: color-mix(in srgb, var(--_accent) 28%, var(--_border));
 }
 
 .chCardDone {
-  opacity: 0.70;
+  opacity: 0.7;
 }
 
 .chCardDone:hover {
@@ -1510,8 +1568,16 @@
   gap: 4px;
   flex-wrap: nowrap;
   overflow: hidden;
-  mask-image: linear-gradient(to right, black calc(100% - 20px), transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, black calc(100% - 20px), transparent 100%);
+  mask-image: linear-gradient(
+    to right,
+    black calc(100% - 20px),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    black calc(100% - 20px),
+    transparent 100%
+  );
 }
 
 /* Footer: status label (left) + action button (right) */
@@ -1605,7 +1671,6 @@
   border-color: var(--_border-glow);
 }
 
-
 /* ── Table view ──────────────────────────────────────────── */
 
 .tableWrap {
@@ -1639,12 +1704,26 @@
   white-space: nowrap;
 }
 
-.thStatus { width: 48px; padding-left: 20px; }
-.thTitle  { min-width: 180px; }
-.thDiff   { width: 100px; }
-.thTags   { width: 200px; }
-.thXp     { width: 70px; }
-.thAction { width: 100px; text-align: right; }
+.thStatus {
+  width: 48px;
+  padding-left: 20px;
+}
+.thTitle {
+  min-width: 180px;
+}
+.thDiff {
+  width: 100px;
+}
+.thTags {
+  width: 200px;
+}
+.thXp {
+  width: 70px;
+}
+.thAction {
+  width: 100px;
+  text-align: right;
+}
 
 /* Rows */
 .tableRow {
@@ -1652,14 +1731,20 @@
   transition: background var(--_fast);
 }
 
-.tableRow:last-child { border-bottom: none; }
+.tableRow:last-child {
+  border-bottom: none;
+}
 
 .tableRow:hover {
   background: color-mix(in srgb, var(--_accent) 3%, var(--_surface));
 }
 
-.tableRowDone { opacity: 0.70; }
-.tableRowDone:hover { opacity: 1; }
+.tableRowDone {
+  opacity: 0.7;
+}
+.tableRowDone:hover {
+  opacity: 1;
+}
 
 /* Cells */
 .table td {
@@ -1673,7 +1758,9 @@
   padding-left: 20px;
 }
 
-.tdTitle { min-width: 180px; }
+.tdTitle {
+  min-width: 180px;
+}
 
 .tableLink {
   font-family: var(--_font-display);
@@ -1685,7 +1772,9 @@
   transition: color var(--_fast);
 }
 
-.tableLink:hover { color: var(--_accent); }
+.tableLink:hover {
+  color: var(--_accent);
+}
 
 .tableDesc {
   font-size: 11px;
@@ -1698,8 +1787,12 @@
   overflow: hidden;
 }
 
-.tdDiff { width: 100px; }
-.tdTags { width: 200px; }
+.tdDiff {
+  width: 100px;
+}
+.tdTags {
+  width: 200px;
+}
 
 .tableTags {
   display: flex;
@@ -1730,7 +1823,10 @@
   letter-spacing: 0.01em;
   text-decoration: none;
   white-space: nowrap;
-  transition: background var(--_fast), border-color var(--_fast), color var(--_fast);
+  transition:
+    background var(--_fast),
+    border-color var(--_fast),
+    color var(--_fast);
 }
 
 .actBtnOpen {
@@ -1803,7 +1899,6 @@
   color: var(--_text-muted);
 }
 
-
 /* ==========================================================
    4. SHARED UTILITIES — BUTTONS
    ========================================================== */
@@ -1825,15 +1920,19 @@
   text-decoration: none;
   position: relative;
   transition:
-    transform     var(--_base),
-    box-shadow    var(--_base),
-    background    var(--_base),
-    color         var(--_base),
-    border-color  var(--_base);
+    transform var(--_base),
+    box-shadow var(--_base),
+    background var(--_base),
+    color var(--_base),
+    border-color var(--_base);
 }
 
-.btn:hover  { transform: translateY(-2px); }
-.btn:active { transform: translateY(0); }
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn:active {
+  transform: translateY(0);
+}
 
 .btnPrimary {
   background: linear-gradient(
@@ -1863,9 +1962,14 @@
   box-shadow: 0 8px 24px color-mix(in srgb, var(--_accent) 12%, transparent);
 }
 
-.btnSm { padding: 9px 16px; font-size: 12px; }
-.btnLg { padding: 16px 30px; font-size: 15px; }
-
+.btnSm {
+  padding: 9px 16px;
+  font-size: 12px;
+}
+.btnLg {
+  padding: 16px 30px;
+  font-size: 15px;
+}
 
 /* ==========================================================
    5. SHARED UTILITIES — TAGS / CHIPS / BADGES
@@ -1885,7 +1989,8 @@
   white-space: nowrap;
   background: color-mix(in srgb, var(--_c, var(--_accent)) 14%, transparent);
   color: var(--_c, var(--_accent));
-  border: 1px solid color-mix(in srgb, var(--_c, var(--_accent)) 25%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--_c, var(--_accent)) 25%, transparent);
 }
 
 /* XP badge shown on hero */

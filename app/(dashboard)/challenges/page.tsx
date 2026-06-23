@@ -14,37 +14,124 @@ const XP_PER_LEVEL = 25;
 /* ── Icons ─────────────────────────────────────────────────── */
 function IconGrid() {
   return (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-      <rect x="1" y="1" width="5.5" height="5.5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
-      <rect x="8.5" y="1" width="5.5" height="5.5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
-      <rect x="1" y="8.5" width="5.5" height="5.5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
-      <rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 15 15"
+      fill="none"
+      aria-hidden="true"
+    >
+      <rect
+        x="1"
+        y="1"
+        width="5.5"
+        height="5.5"
+        rx="1"
+        stroke="currentColor"
+        strokeWidth="1.4"
+      />
+      <rect
+        x="8.5"
+        y="1"
+        width="5.5"
+        height="5.5"
+        rx="1"
+        stroke="currentColor"
+        strokeWidth="1.4"
+      />
+      <rect
+        x="1"
+        y="8.5"
+        width="5.5"
+        height="5.5"
+        rx="1"
+        stroke="currentColor"
+        strokeWidth="1.4"
+      />
+      <rect
+        x="8.5"
+        y="8.5"
+        width="5.5"
+        height="5.5"
+        rx="1"
+        stroke="currentColor"
+        strokeWidth="1.4"
+      />
     </svg>
   );
 }
 
 function IconList() {
   return (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-      <line x1="1" y1="3.5" x2="14" y2="3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-      <line x1="1" y1="7.5" x2="14" y2="7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-      <line x1="1" y1="11.5" x2="14" y2="11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 15 15"
+      fill="none"
+      aria-hidden="true"
+    >
+      <line
+        x1="1"
+        y1="3.5"
+        x2="14"
+        y2="3.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <line
+        x1="1"
+        y1="7.5"
+        x2="14"
+        y2="7.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <line
+        x1="1"
+        y1="11.5"
+        x2="14"
+        y2="11.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 
 function IconSearch() {
   return (
-    <svg className={styles.searchIcon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-      <path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clipRule="evenodd"/>
+    <svg
+      className={styles.searchIcon}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path
+        fillRule="evenodd"
+        d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"
+        clipRule="evenodd"
+      />
     </svg>
   );
 }
 
 function IconClear() {
   return (
-    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" aria-hidden="true">
-      <path d="M4 4l8 8M12 4l-8 8"/>
+    <svg
+      width="11"
+      height="11"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="M4 4l8 8M12 4l-8 8" />
     </svg>
   );
 }
@@ -55,8 +142,8 @@ function DiffChip({ diff }: { diff: string }) {
     diff === "Hard"
       ? styles.chipHard
       : diff === "Medium"
-      ? styles.chipMedium
-      : styles.chipEasy;
+        ? styles.chipMedium
+        : styles.chipEasy;
   return <span className={cls}>{diff}</span>;
 }
 
@@ -70,11 +157,15 @@ export default function ChallengesDashboard() {
   const [view, setView] = useState<ViewMode>("card");
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("qap_completed_challenges") || "[]");
+    const saved = JSON.parse(
+      localStorage.getItem("qap_completed_challenges") || "[]",
+    );
     setCompletedIds(saved);
     const s = parseInt(localStorage.getItem("qap_user_streak") || "0", 10);
-    if (s === 0) { localStorage.setItem("qap_user_streak", "4"); setStreak(4); }
-    else setStreak(s);
+    if (s === 0) {
+      localStorage.setItem("qap_user_streak", "4");
+      setStreak(4);
+    } else setStreak(s);
   }, []);
 
   const totalXP = completedIds.reduce((acc, id) => {
@@ -113,14 +204,14 @@ export default function ChallengesDashboard() {
 
   return (
     <div className={styles.dashPage} data-testid="challenges-dashboard">
-
       {/* ── Page header ─────────────────────────────────────── */}
       <div className={styles.pageHeader} data-testid="challenges-header">
         <div className={styles.headerTop}>
           <div>
             <h1 className={styles.pageTitle}>Challenges</h1>
             <p className={styles.pageSubtitle}>
-              Complete challenges to earn XP, level up, and sharpen your automation skills.
+              Complete challenges to earn XP, level up, and sharpen your
+              automation skills.
             </p>
           </div>
 
@@ -137,12 +228,18 @@ export default function ChallengesDashboard() {
           <div className={styles.statCard} data-testid="stat-xp">
             <span className={styles.statCardMeta}>XP Earned</span>
             <strong className={styles.statCardValue}>
-              {totalXP}<span className={styles.statCardUnit}> XP</span>
+              {totalXP}
+              <span className={styles.statCardUnit}> XP</span>
             </strong>
             <div className={styles.statCardBar}>
-              <div className={styles.statCardBarFill} style={{ width: `${xpProgress}%` }} />
+              <div
+                className={styles.statCardBarFill}
+                style={{ width: `${xpProgress}%` }}
+              />
             </div>
-            <span className={styles.statCardSub}>{xpIntoLevel}/{XP_PER_LEVEL} to Level {level + 1}</span>
+            <span className={styles.statCardSub}>
+              {xpIntoLevel}/{XP_PER_LEVEL} to Level {level + 1}
+            </span>
           </div>
           <div className={styles.statCard} data-testid="stat-level">
             <span className={styles.statCardMeta}>Level</span>
@@ -152,7 +249,8 @@ export default function ChallengesDashboard() {
           <div className={styles.statCard} data-testid="stat-done">
             <span className={styles.statCardMeta}>Completed</span>
             <strong className={styles.statCardValue}>
-              {completedIds.length}<span className={styles.statCardUnit}>/{challenges.length}</span>
+              {completedIds.length}
+              <span className={styles.statCardUnit}>/{challenges.length}</span>
             </strong>
             <span className={styles.statCardSub}>challenges done</span>
           </div>
@@ -166,9 +264,8 @@ export default function ChallengesDashboard() {
         </div>
       </div>
 
-{/* ── Filters + list ───────────────────────────────────── */}
+      {/* ── Filters + list ───────────────────────────────────── */}
       <section data-testid="challenges-list-section">
-
         {/* Filter bar — QA Tools style */}
         <div className={styles.filtersBar} data-testid="challenges-filters">
           {/* Search */}
@@ -184,7 +281,11 @@ export default function ChallengesDashboard() {
               data-testid="challenges-search"
             />
             {search && (
-              <button className={styles.clearBtn} onClick={() => setSearch("")} aria-label="Clear search">
+              <button
+                className={styles.clearBtn}
+                onClick={() => setSearch("")}
+                aria-label="Clear search"
+              >
                 <IconClear />
               </button>
             )}
@@ -223,14 +324,23 @@ export default function ChallengesDashboard() {
               <span className={styles.resultCount} data-testid="result-count">
                 {filtered.length} result{filtered.length !== 1 ? "s" : ""}
               </span>
-              <button className={styles.clearFiltersBtn} onClick={clearFilters} data-testid="clear-filters">
+              <button
+                className={styles.clearFiltersBtn}
+                onClick={clearFilters}
+                data-testid="clear-filters"
+              >
                 Clear
               </button>
             </>
           )}
 
           {/* View toggle */}
-          <div className={styles.viewToggle} role="group" aria-label="View mode" data-testid="view-toggle">
+          <div
+            className={styles.viewToggle}
+            role="group"
+            aria-label="View mode"
+            data-testid="view-toggle"
+          >
             <button
               className={`${styles.viewBtn} ${view === "card" ? styles.viewBtnActive : ""}`}
               onClick={() => setView("card")}
@@ -256,8 +366,12 @@ export default function ChallengesDashboard() {
         {filtered.length === 0 && (
           <div className={styles.emptyState} data-testid="challenges-empty">
             <span className={styles.emptyIcon}>🔍</span>
-            <p className={styles.emptyText}>No challenges match your filters.</p>
-            <button className={styles.emptyReset} onClick={clearFilters}>Clear filters</button>
+            <p className={styles.emptyText}>
+              No challenges match your filters.
+            </p>
+            <button className={styles.emptyReset} onClick={clearFilters}>
+              Clear filters
+            </button>
           </div>
         )}
 
@@ -277,21 +391,31 @@ export default function ChallengesDashboard() {
                 >
                   <div className={styles.chCardTop}>
                     <DiffChip diff={ch.difficulty} />
-                    <span className={`${styles.chXp} ${done ? styles.chXpDone : ""}`}>+{ch.xp} XP</span>
+                    <span
+                      className={`${styles.chXp} ${done ? styles.chXpDone : ""}`}
+                    >
+                      +{ch.xp} XP
+                    </span>
                   </div>
                   <h3 className={styles.chCardTitle}>{ch.title}</h3>
                   <p className={styles.chCardDesc}>{ch.summary}</p>
                   <div className={styles.chCardTags}>
                     {ch.tags.map((t) => (
-                      <span key={t} className={styles.tagPill}>{t}</span>
+                      <span key={t} className={styles.tagPill}>
+                        {t}
+                      </span>
                     ))}
                   </div>
                   <div className={styles.chCardFooter}>
                     <span className={styles.chCardStatusLabel}>
-                      <span className={`${styles.statusDot} ${done ? styles.statusDotDone : styles.statusDotOpen}`} />
+                      <span
+                        className={`${styles.statusDot} ${done ? styles.statusDotDone : styles.statusDotOpen}`}
+                      />
                       {done ? "Completed" : "Open"}
                     </span>
-                    <span className={`${styles.cardBtn} ${done ? styles.cardBtnSecondary : styles.cardBtnPrimary}`}>
+                    <span
+                      className={`${styles.cardBtn} ${done ? styles.cardBtnSecondary : styles.cardBtnPrimary}`}
+                    >
                       {done ? "Review" : "Start"} →
                     </span>
                   </div>
@@ -307,11 +431,21 @@ export default function ChallengesDashboard() {
             <table className={styles.table}>
               <thead>
                 <tr>
-                  <th className={styles.thStatus} scope="col">Status</th>
-                  <th className={styles.thTitle} scope="col">Challenge</th>
-                  <th className={styles.thDiff} scope="col">Difficulty</th>
-                  <th className={styles.thTags} scope="col">Tags</th>
-                  <th className={styles.thXp} scope="col">XP</th>
+                  <th className={styles.thStatus} scope="col">
+                    Status
+                  </th>
+                  <th className={styles.thTitle} scope="col">
+                    Challenge
+                  </th>
+                  <th className={styles.thDiff} scope="col">
+                    Difficulty
+                  </th>
+                  <th className={styles.thTags} scope="col">
+                    Tags
+                  </th>
+                  <th className={styles.thXp} scope="col">
+                    XP
+                  </th>
                   <th className={styles.thAction} scope="col"></th>
                 </tr>
               </thead>
@@ -333,7 +467,10 @@ export default function ChallengesDashboard() {
                         />
                       </td>
                       <td className={styles.tdTitle}>
-                        <Link href={`/challenges/${ch.id}`} className={styles.tableLink}>
+                        <Link
+                          href={`/challenges/${ch.id}`}
+                          className={styles.tableLink}
+                        >
                           {ch.title}
                         </Link>
                         <p className={styles.tableDesc}>{ch.summary}</p>
@@ -344,12 +481,16 @@ export default function ChallengesDashboard() {
                       <td className={styles.tdTags}>
                         <div className={styles.tableTags}>
                           {ch.tags.map((t) => (
-                            <span key={t} className={styles.tagPill}>{t}</span>
+                            <span key={t} className={styles.tagPill}>
+                              {t}
+                            </span>
                           ))}
                         </div>
                       </td>
                       <td className={styles.tdXp}>
-                        <span className={`${styles.chXp} ${done ? styles.chXpDone : ""}`}>
+                        <span
+                          className={`${styles.chXp} ${done ? styles.chXpDone : ""}`}
+                        >
                           +{ch.xp} XP
                         </span>
                       </td>

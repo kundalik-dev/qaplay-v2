@@ -16,12 +16,19 @@
 }
 
 @media (max-width: 1024px) {
-  .practiceLayout { grid-template-columns: 1fr; }
-  .practiceSidebar { position: static; }
+  .practiceLayout {
+    grid-template-columns: 1fr;
+  }
+  .practiceSidebar {
+    position: static;
+  }
 }
 
 @media (max-width: 640px) {
-  .practiceLayout { gap: 16px; padding-block: 20px 48px; }
+  .practiceLayout {
+    gap: 16px;
+    padding-block: 20px 48px;
+  }
 }
 
 /* ── Checkbox / Radio item rows ──────────────────────────────── */
@@ -58,7 +65,9 @@
   padding: 14px;
   background: var(--card);
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
   display: flex;
   flex-direction: column;
   gap: 6px;

@@ -1,4 +1,8 @@
-import { createBreadcrumbJsonLd, createFaqPageJsonLd, createWebPageJsonLd } from "../structured-data";
+import {
+  createBreadcrumbJsonLd,
+  createFaqPageJsonLd,
+  createWebPageJsonLd,
+} from "../structured-data";
 import { dynamicWaitsFaq } from "@/data/practice-data/dynamic-waits";
 
 const name = "How to Handle Dynamic Waits in Selenium and Playwright";
@@ -24,11 +28,14 @@ export const dynamicWaitsPageWebPageJsonLd = createWebPageJsonLd({
 });
 
 export const dynamicWaitsPageBreadcrumbJsonLd = createBreadcrumbJsonLd([
-  { name: "Home",          path: "/" },
-  { name: "Practice",      path: "/practice" },
+  { name: "Home", path: "/" },
+  { name: "Practice", path: "/practice" },
   { name: "Dynamic Waits", path: "/practice/dynamic-waits" },
 ]);
 
 export const dynamicWaitsPageFaqJsonLd = createFaqPageJsonLd(
-  dynamicWaitsFaq.map((item) => ({ question: item.question, answer: item.answer })),
+  dynamicWaitsFaq.map((item) => ({
+    question: item.question,
+    answer: item.answer,
+  })),
 );

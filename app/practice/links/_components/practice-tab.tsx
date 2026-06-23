@@ -1,9 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { ScenarioCard, ProgressWidget, FrameworkMethodsPanel, UpNextCard } from "@/components/practice";
+import {
+  ScenarioCard,
+  ProgressWidget,
+  FrameworkMethodsPanel,
+  UpNextCard,
+} from "@/components/practice";
 import type { ProgressItem } from "@/components/practice";
-import { linksScenarios, frameworkMethods } from "@/data/practice-data/links/scenarios";
+import {
+  linksScenarios,
+  frameworkMethods,
+} from "@/data/practice-data/links/scenarios";
 import type { PracticePageMeta } from "@/data/practice-data/types";
 import styles from "./links.module.css";
 
@@ -24,7 +32,11 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
     done: completedIds.has(s.id.toLowerCase()),
   }));
 
-  const handleApiClick = async (setResult: (res: string) => void, status: number, label: string) => {
+  const handleApiClick = async (
+    setResult: (res: string) => void,
+    status: number,
+    label: string,
+  ) => {
     setResult(`Status Code: ${status} (${label})`);
     markDone("s07");
   };
@@ -40,27 +52,38 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
           <p className="mb-3 text-[10.5px] font-bold tracking-[0.08em] text-muted-foreground uppercase">
             Interactive Scenarios
           </p>
-          <div className="flex flex-col gap-[10px]" data-testid="scenarios-list">
-
+          <div
+            className="flex flex-col gap-[10px]"
+            data-testid="scenarios-list"
+          >
             {/* Scenario 1: Internal Following Links */}
-            <ScenarioCard {...linksScenarios[0]} onComplete={() => markDone("s01")}>
+            <ScenarioCard
+              {...linksScenarios[0]}
+              onComplete={() => markDone("s01")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-col gap-1.5">
                   <a
                     id="link-internal-home"
                     data-testid="link-internal-home"
-                    className="text-sm text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300 w-fit"
+                    className="w-fit text-sm text-blue-600 underline hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                     href="/"
-                    onClick={() => { setResult("Navigating to Home..."); markDone("s01"); }}
+                    onClick={() => {
+                      setResult("Navigating to Home...");
+                      markDone("s01");
+                    }}
                   >
                     Home
                   </a>
                   <a
                     id="link-internal-about"
                     data-testid="link-internal-about"
-                    className="text-sm text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300 w-fit"
+                    className="w-fit text-sm text-blue-600 underline hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                     href="/about-us"
-                    onClick={() => { setResult("Navigating to About Us..."); markDone("s01"); }}
+                    onClick={() => {
+                      setResult("Navigating to About Us...");
+                      markDone("s01");
+                    }}
                   >
                     About Us
                   </a>
@@ -69,7 +92,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* Scenario 2: External Links (New Tab) */}
-            <ScenarioCard {...linksScenarios[1]} onComplete={() => markDone("s02")}>
+            <ScenarioCard
+              {...linksScenarios[1]}
+              onComplete={() => markDone("s02")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-col gap-1.5">
                   <a
@@ -77,9 +103,12 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     rel="noopener noreferrer"
                     id="link-external-selenium"
                     data-testid="link-external-selenium"
-                    className="text-sm text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300 w-fit"
+                    className="w-fit text-sm text-blue-600 underline hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                     href="https://www.javatpoint.com/selenium-tutorial"
-                    onClick={() => { setResult("Opened Selenium Tutorial in new tab"); markDone("s02"); }}
+                    onClick={() => {
+                      setResult("Opened Selenium Tutorial in new tab");
+                      markDone("s02");
+                    }}
                   >
                     Selenium Automation Notes
                   </a>
@@ -88,9 +117,12 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     rel="noopener noreferrer"
                     id="link-external-course"
                     data-testid="link-external-course"
-                    className="text-sm text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300 w-fit"
+                    className="w-fit text-sm text-blue-600 underline hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                     href="https://www.udemy.com/course/selenium-real-time-examplesinterview-questions/"
-                    onClick={() => { setResult("Opened Course in new tab"); markDone("s02"); }}
+                    onClick={() => {
+                      setResult("Opened Course in new tab");
+                      markDone("s02");
+                    }}
                   >
                     Selenium Complete Course
                   </a>
@@ -99,7 +131,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* Scenario 3: Broken Links */}
-            <ScenarioCard {...linksScenarios[2]} onComplete={() => markDone("s03")}>
+            <ScenarioCard
+              {...linksScenarios[2]}
+              onComplete={() => markDone("s03")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-col gap-1.5">
                   <a
@@ -107,27 +142,37 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     rel="noopener noreferrer"
                     id="link-broken-newtab"
                     data-testid="link-broken-newtab"
-                    className="text-sm text-red-600 dark:text-red-400 underline hover:text-red-800 dark:hover:text-red-300 w-fit"
+                    className="w-fit text-sm text-red-600 underline hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
                     href="https://the-internet.herokuapp.com/status_codes/500"
-                    onClick={() => { setResult("Clicked broken link (new tab)"); markDone("s03"); }}
+                    onClick={() => {
+                      setResult("Clicked broken link (new tab)");
+                      markDone("s03");
+                    }}
                   >
                     Broken Link — Opens in New Tab
                   </a>
                   <a
                     id="link-broken-same"
                     data-testid="link-broken-same"
-                    className="text-sm text-red-600 dark:text-red-400 underline hover:text-red-800 dark:hover:text-red-300 w-fit"
+                    className="w-fit text-sm text-red-600 underline hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
                     href="https://the-internet.herokuapp.com/status_codes/500"
-                    onClick={() => { setResult("Clicked broken link (same tab)"); markDone("s03"); }}
+                    onClick={() => {
+                      setResult("Clicked broken link (same tab)");
+                      markDone("s03");
+                    }}
                   >
                     Broken Link — Same Tab
                   </a>
                   <a
                     id="link-broken-empty"
                     data-testid="link-broken-empty"
-                    className="text-sm text-red-600 dark:text-red-400 underline hover:text-red-800 dark:hover:text-red-300 w-fit"
+                    className="w-fit text-sm text-red-600 underline hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
                     href="#"
-                    onClick={(e) => { e.preventDefault(); setResult("Clicked empty href"); markDone("s03"); }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setResult("Clicked empty href");
+                      markDone("s03");
+                    }}
                   >
                     Broken Link — Empty href
                   </a>
@@ -136,7 +181,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* Scenario 4: Image Links */}
-            <ScenarioCard {...linksScenarios[3]} onComplete={() => markDone("s04")}>
+            <ScenarioCard
+              {...linksScenarios[3]}
+              onComplete={() => markDone("s04")}
+            >
               {({ setResult }) => (
                 <div className="flex items-center gap-3">
                   <a
@@ -144,9 +192,13 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     id="link-image-broken"
                     data-testid="link-image-broken"
                     aria-label="Broken image link"
-                    onClick={(e) => { e.preventDefault(); setResult("Clicked broken image link"); markDone("s04"); }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setResult("Clicked broken image link");
+                      markDone("s04");
+                    }}
                   >
-                    <div className="w-16 h-16 rounded border border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-[10px] text-muted-foreground text-center">
+                    <div className="flex h-16 w-16 items-center justify-center rounded border border-dashed border-gray-300 bg-gray-50 text-center text-[10px] text-muted-foreground dark:border-gray-600 dark:bg-gray-800">
                       Broken Image
                     </div>
                   </a>
@@ -157,12 +209,15 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     id="link-image-ironman"
                     data-testid="link-image-ironman"
                     aria-label="Iron Man image link"
-                    onClick={() => { setResult("Clicked Iron Man image link"); markDone("s04"); }}
+                    onClick={() => {
+                      setResult("Clicked Iron Man image link");
+                      markDone("s04");
+                    }}
                   >
                     {/* Using a standard img tag because next/image requires configured domains */}
                     <img
                       src="https://ashisheditz.com/wp-content/uploads/2023/10/4k-iron-man-wallpaper.jpg"
-                      className="w-20 h-14 object-cover rounded shadow"
+                      className="h-14 w-20 rounded object-cover shadow"
                       alt="Iron Man"
                       width="80"
                     />
@@ -172,21 +227,50 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* Scenario 5: Button Links */}
-            <ScenarioCard {...linksScenarios[4]} onComplete={() => markDone("s05")}>
+            <ScenarioCard
+              {...linksScenarios[4]}
+              onComplete={() => markDone("s05")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-wrap gap-2">
-                  <a id="link-btn-broken" data-testid="link-btn-broken" href="#" onClick={(e) => { e.preventDefault(); setResult("Clicked Broken Button"); markDone("s05"); }}>
-                    <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">
+                  <a
+                    id="link-btn-broken"
+                    data-testid="link-btn-broken"
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setResult("Clicked Broken Button");
+                      markDone("s05");
+                    }}
+                  >
+                    <button className="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium whitespace-nowrap text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50">
                       Broken Button
                     </button>
                   </a>
-                  <a id="link-btn-broken-2" data-testid="link-btn-broken-2" href="#" onClick={(e) => { e.preventDefault(); setResult("Clicked Broken Link Button"); markDone("s05"); }}>
-                    <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 h-9 px-4 py-2">
+                  <a
+                    id="link-btn-broken-2"
+                    data-testid="link-btn-broken-2"
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setResult("Clicked Broken Link Button");
+                      markDone("s05");
+                    }}
+                  >
+                    <button className="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-destructive px-4 py-2 text-sm font-medium whitespace-nowrap text-destructive-foreground shadow-sm transition-colors hover:bg-destructive/90 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50">
                       Broken Link Button
                     </button>
                   </a>
-                  <a id="link-btn-home" data-testid="link-btn-home" href="/" onClick={() => { setResult("Navigating Home via Button"); markDone("s05"); }}>
-                    <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">
+                  <a
+                    id="link-btn-home"
+                    data-testid="link-btn-home"
+                    href="/"
+                    onClick={() => {
+                      setResult("Navigating Home via Button");
+                      markDone("s05");
+                    }}
+                  >
+                    <button className="inline-flex h-9 items-center justify-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-sm font-medium whitespace-nowrap shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50">
                       Home Button
                     </button>
                   </a>
@@ -195,46 +279,66 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* Scenario 6: Text Links & Anchor */}
-            <ScenarioCard {...linksScenarios[5]} onComplete={() => markDone("s06")}>
+            <ScenarioCard
+              {...linksScenarios[5]}
+              onComplete={() => markDone("s06")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-col gap-1.5">
                   <a
                     id="link-text-garbled-1"
                     data-testid="link-text-garbled-1"
-                    className="text-sm text-blue-700 dark:text-blue-400 underline w-fit"
+                    className="w-fit text-sm text-blue-700 underline dark:text-blue-400"
                     href="/"
-                    onClick={() => { setResult("Clicked Garbled Link 1"); markDone("s06"); }}
+                    onClick={() => {
+                      setResult("Clicked Garbled Link 1");
+                      markDone("s06");
+                    }}
                   >
                     Homdf56e
                   </a>
                   <a
                     id="link-text-garbled-2"
                     data-testid="link-text-garbled-2"
-                    className="text-sm text-blue-700 dark:text-blue-400 underline w-fit"
+                    className="w-fit text-sm text-blue-700 underline dark:text-blue-400"
                     href="/about-us"
-                    onClick={() => { setResult("Clicked Garbled Link 2"); markDone("s06"); }}
+                    onClick={() => {
+                      setResult("Clicked Garbled Link 2");
+                      markDone("s06");
+                    }}
                   >
                     About 32 yhs
                   </a>
                   <a
                     id="link-text-long"
                     data-testid="link-text-long"
-                    className="text-sm text-blue-700 dark:text-blue-400 underline w-fit"
+                    className="w-fit text-sm text-blue-700 underline dark:text-blue-400"
                     href="#"
-                    onClick={(e) => { e.preventDefault(); setResult("Clicked Long Text Link"); markDone("s06"); }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setResult("Clicked Long Text Link");
+                      markDone("s06");
+                    }}
                   >
                     Test Links Page using Selenium Webdriver with Java and C#
                   </a>
                   <a
                     id="link-text-anchor"
                     data-testid="link-text-anchor"
-                    className="text-sm text-blue-700 dark:text-blue-400 underline w-fit"
+                    className="w-fit text-sm text-blue-700 underline dark:text-blue-400"
                     href="#anchor-target"
-                    onClick={() => { setResult("Navigated to #anchor-target"); markDone("s06"); }}
+                    onClick={() => {
+                      setResult("Navigated to #anchor-target");
+                      markDone("s06");
+                    }}
                   >
                     Links Anchor Text — Test Cases TC09
                   </a>
-                  <div id="anchor-target" data-testid="anchor-target" className="text-xs text-muted-foreground mt-2 p-2 bg-muted rounded scroll-mt-24">
+                  <div
+                    id="anchor-target"
+                    data-testid="anchor-target"
+                    className="mt-2 scroll-mt-24 rounded bg-muted p-2 text-xs text-muted-foreground"
+                  >
                     ↑ Anchor target reached
                   </div>
                 </div>
@@ -242,38 +346,70 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* Scenario 7: API Status Code Links */}
-            <ScenarioCard {...linksScenarios[6]} onComplete={() => markDone("s07")}>
+            <ScenarioCard
+              {...linksScenarios[6]}
+              onComplete={() => markDone("s07")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-wrap gap-2">
-                  <button onClick={() => handleApiClick(setResult, 201, "Create User")} className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 rounded-md px-3 text-xs">
+                  <button
+                    onClick={() =>
+                      handleApiClick(setResult, 201, "Create User")
+                    }
+                    className="inline-flex h-8 items-center justify-center gap-2 rounded-md border border-input bg-background px-3 text-xs font-medium whitespace-nowrap shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                  >
                     Create User (201)
                   </button>
-                  <button onClick={() => handleApiClick(setResult, 204, "No Content")} className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 rounded-md px-3 text-xs">
+                  <button
+                    onClick={() => handleApiClick(setResult, 204, "No Content")}
+                    className="inline-flex h-8 items-center justify-center gap-2 rounded-md border border-input bg-background px-3 text-xs font-medium whitespace-nowrap shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                  >
                     No Content (204)
                   </button>
-                  <button onClick={() => handleApiClick(setResult, 301, "Moved")} className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 rounded-md px-3 text-xs">
+                  <button
+                    onClick={() => handleApiClick(setResult, 301, "Moved")}
+                    className="inline-flex h-8 items-center justify-center gap-2 rounded-md border border-input bg-background px-3 text-xs font-medium whitespace-nowrap shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                  >
                     Moved (301)
                   </button>
-                  <button onClick={() => handleApiClick(setResult, 400, "Bad Request")} className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 rounded-md px-3 text-xs">
+                  <button
+                    onClick={() =>
+                      handleApiClick(setResult, 400, "Bad Request")
+                    }
+                    className="inline-flex h-8 items-center justify-center gap-2 rounded-md border border-input bg-background px-3 text-xs font-medium whitespace-nowrap shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                  >
                     Bad Request (400)
                   </button>
-                  <button onClick={() => handleApiClick(setResult, 401, "Unauthorized")} className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 rounded-md px-3 text-xs">
+                  <button
+                    onClick={() =>
+                      handleApiClick(setResult, 401, "Unauthorized")
+                    }
+                    className="inline-flex h-8 items-center justify-center gap-2 rounded-md border border-input bg-background px-3 text-xs font-medium whitespace-nowrap shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                  >
                     Unauthorized (401)
                   </button>
-                  <button onClick={() => handleApiClick(setResult, 403, "Forbidden")} className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 rounded-md px-3 text-xs">
+                  <button
+                    onClick={() => handleApiClick(setResult, 403, "Forbidden")}
+                    className="inline-flex h-8 items-center justify-center gap-2 rounded-md border border-input bg-background px-3 text-xs font-medium whitespace-nowrap shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                  >
                     Forbidden (403)
                   </button>
-                  <button onClick={() => handleApiClick(setResult, 404, "Not Found")} className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 rounded-md px-3 text-xs">
+                  <button
+                    onClick={() => handleApiClick(setResult, 404, "Not Found")}
+                    className="inline-flex h-8 items-center justify-center gap-2 rounded-md border border-input bg-background px-3 text-xs font-medium whitespace-nowrap shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                  >
                     Not Found (404)
                   </button>
                 </div>
               )}
             </ScenarioCard>
-
           </div>
         </section>
 
-        <aside className={styles.practiceSidebar} data-testid="practice-sidebar">
+        <aside
+          className={styles.practiceSidebar}
+          data-testid="practice-sidebar"
+        >
           <ProgressWidget items={progressItems} />
           <FrameworkMethodsPanel methods={frameworkMethods} />
           <UpNextCard {...upNext} />

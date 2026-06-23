@@ -128,7 +128,10 @@ export async function POST(request: Request) {
   if (rl) {
     const { success } = await rl.limit(chatId);
     if (!success) {
-      await sendTelegramMessage(chatId, "⏳ Too many messages. Please wait a minute.");
+      await sendTelegramMessage(
+        chatId,
+        "⏳ Too many messages. Please wait a minute.",
+      );
       return ok();
     }
   }
@@ -163,9 +166,15 @@ export async function POST(request: Request) {
   const { userId } = telegramUser;
 
   switch (type) {
-    case "todo":     await handleTodo(chatId, userId, text);     break;
-    case "resource": await handleResource(chatId, userId, text); break;
-    case "note":     await handleNote(chatId, userId, text);     break;
+    case "todo":
+      await handleTodo(chatId, userId, text);
+      break;
+    case "resource":
+      await handleResource(chatId, userId, text);
+      break;
+    case "note":
+      await handleNote(chatId, userId, text);
+      break;
     // "unknown" — ignore silently
   }
 
@@ -206,7 +215,9 @@ async function handleConnect(
   }
 
   // Guard: this chatId is already linked to a different account
-  const alreadyLinked = await prisma.telegramUser.findUnique({ where: { chatId } });
+  const alreadyLinked = await prisma.telegramUser.findUnique({
+    where: { chatId },
+  });
   if (alreadyLinked && alreadyLinked.userId !== record.userId) {
     await sendTelegramMessage(
       chatId,
@@ -235,14 +246,18 @@ async function handleResource(
 ): Promise<void> {
   const parsed = parseResource(text);
   if (!parsed) {
-    await sendTelegramMessage(chatId, "❌ Could not find a valid URL in your message.");
+    await sendTelegramMessage(
+      chatId,
+      "❌ Could not find a valid URL in your message.",
+    );
     return;
   }
 
   try {
     const meta = await fetchUrlMetadata(parsed.url);
     const title = (meta.title ?? parsed.url).slice(0, 300);
-    const description = (parsed.description ?? meta.description ?? null)?.slice(0, 1000) ?? null;
+    const description =
+      (parsed.description ?? meta.description ?? null)?.slice(0, 1000) ?? null;
     const image = meta.image ?? null;
 
     await prisma.resource.create({
@@ -263,8 +278,14 @@ async function handleResource(
       `✅ *Resource saved*\n${title}\n_Edit at qaplayground.dev → Resources_`,
     );
   } catch (err) {
-    console.error("[Webhook] handleResource:", err instanceof Error ? err.message : err);
-    await sendTelegramMessage(chatId, "❌ Failed to save resource. Please try again.");
+    console.error(
+      "[Webhook] handleResource:",
+      err instanceof Error ? err.message : err,
+    );
+    await sendTelegramMessage(
+      chatId,
+      "❌ Failed to save resource. Please try again.",
+    );
   }
 }
 

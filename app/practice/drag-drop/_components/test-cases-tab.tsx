@@ -1,5 +1,5 @@
 import { TestCasesTable } from "@/components/practice";
-import type { TestCase }   from "@/data/practice-data/types";
+import type { TestCase } from "@/data/practice-data/types";
 
 export function TestCasesTab({ testCases }: { testCases: TestCase[] }) {
   return (

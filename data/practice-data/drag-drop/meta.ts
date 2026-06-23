@@ -17,7 +17,8 @@ export const dragDropMeta: PracticePageMeta = {
   upNext: {
     icon: "🖼️",
     title: "iFrames",
-    description: "Switch into nested iframes and interact with embedded content",
+    description:
+      "Switch into nested iframes and interact with embedded content",
     href: "/practice/iframes",
   },
 };

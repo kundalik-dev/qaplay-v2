@@ -35,7 +35,7 @@ export function DragDropPlayground() {
   function handleDrop(col: Column) {
     if (!dragging) return;
     setTickets((prev) =>
-      prev.map((t) => (t.id === dragging ? { ...t, column: col } : t))
+      prev.map((t) => (t.id === dragging ? { ...t, column: col } : t)),
     );
     setDragging(null);
     setOverCol(null);
@@ -49,7 +49,6 @@ export function DragDropPlayground() {
   return (
     <div className={styles.playground} data-testid="drag-drop-playground">
       <div className={styles.kanbanBoard} data-testid="kanban-board">
-
         {/* To Do column */}
         <div
           className={`${styles.kanbanCol} ${overCol === "todo" ? styles.kanbanColOver : ""}`}
@@ -75,13 +74,20 @@ export function DragDropPlayground() {
               data-ticket-id={t.id}
               aria-label={`${t.label} — drag to move`}
             >
-              <svg className={styles.dragHandle} width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <circle cx="4" cy="3" r="1" fill="currentColor"/>
-                <circle cx="8" cy="3" r="1" fill="currentColor"/>
-                <circle cx="4" cy="6" r="1" fill="currentColor"/>
-                <circle cx="8" cy="6" r="1" fill="currentColor"/>
-                <circle cx="4" cy="9" r="1" fill="currentColor"/>
-                <circle cx="8" cy="9" r="1" fill="currentColor"/>
+              <svg
+                className={styles.dragHandle}
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                aria-hidden="true"
+              >
+                <circle cx="4" cy="3" r="1" fill="currentColor" />
+                <circle cx="8" cy="3" r="1" fill="currentColor" />
+                <circle cx="4" cy="6" r="1" fill="currentColor" />
+                <circle cx="8" cy="6" r="1" fill="currentColor" />
+                <circle cx="4" cy="9" r="1" fill="currentColor" />
+                <circle cx="8" cy="9" r="1" fill="currentColor" />
               </svg>
               {t.label}
             </div>
@@ -119,18 +125,23 @@ export function DragDropPlayground() {
           ))}
 
           {doneTickets.length > 0 && (
-            <span className={styles.kanbanSuccessHint} data-testid="done-success-hint">
+            <span
+              className={styles.kanbanSuccessHint}
+              data-testid="done-success-hint"
+            >
               Dropped successfully!
             </span>
           )}
 
           {doneTickets.length === 0 && (
-            <span className={styles.kanbanDropZoneHint} data-testid="done-drop-hint">
+            <span
+              className={styles.kanbanDropZoneHint}
+              data-testid="done-drop-hint"
+            >
               Drop here
             </span>
           )}
         </div>
-
       </div>
     </div>
   );

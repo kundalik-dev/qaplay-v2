@@ -1,18 +1,23 @@
-import type { FaqItem, LearnCodeSnippet, MethodRow, TocItem } from "@/data/practice-data/types";
+import type {
+  FaqItem,
+  LearnCodeSnippet,
+  MethodRow,
+  TocItem,
+} from "@/data/practice-data/types";
 
 export const datePickerTocItems: TocItem[] = [
-  { id: "learn-overview",    label: "Overview" },
-  { id: "learn-native",      label: "1 · Native Date Input" },
-  { id: "learn-calendar",    label: "2 · Calendar Widget" },
-  { id: "learn-range",       label: "3 · Date Range" },
+  { id: "learn-overview", label: "Overview" },
+  { id: "learn-native", label: "1 · Native Date Input" },
+  { id: "learn-calendar", label: "2 · Calendar Widget" },
+  { id: "learn-range", label: "3 · Date Range" },
   { id: "learn-constraints", label: "4 · Min / Max Constraints" },
-  { id: "learn-methods",     label: "Method Summary", dividerBefore: true },
-  { id: "learn-faq",         label: "FAQ" },
+  { id: "learn-methods", label: "Method Summary", dividerBefore: true },
+  { id: "learn-faq", label: "FAQ" },
 ];
 
 export const datePickerLearnDesc: Record<string, string> = {
   overview:
-    "Date pickers come in two forms: a plain HTML <input type=\"date\"> and a custom calendar widget built with divs or dialog. The automation strategy differs significantly between the two — always inspect the DOM first to identify which type you are working with.",
+    'Date pickers come in two forms: a plain HTML <input type="date"> and a custom calendar widget built with divs or dialog. The automation strategy differs significantly between the two — always inspect the DOM first to identify which type you are working with.',
   native:
     "Native date inputs accept ISO-format strings (YYYY-MM-DD) directly via fill() or sendKeys(). They expose min, max, and value attributes that are easy to assert. Avoid using keyboard arrow keys to navigate — just set the value string directly.",
   calendar:
@@ -164,37 +169,37 @@ cy.get('[data-testid="dp-constrained-input"]').type('2020-01-01')
 export const datePickerMethodRows: MethodRow[] = [
   {
     action: "Fill date",
-    selenium: "sendKeys(\"YYYY-MM-DD\")",
-    playwrightJs: "fill(\"YYYY-MM-DD\")",
-    playwrightPy: "fill(\"YYYY-MM-DD\")",
-    cypress: ".type(\"YYYY-MM-DD\")",
+    selenium: 'sendKeys("YYYY-MM-DD")',
+    playwrightJs: 'fill("YYYY-MM-DD")',
+    playwrightPy: 'fill("YYYY-MM-DD")',
+    cypress: '.type("YYYY-MM-DD")',
   },
   {
     action: "Get value",
-    selenium: "getAttribute(\"value\")",
+    selenium: 'getAttribute("value")',
     playwrightJs: "inputValue()",
     playwrightPy: "input_value()",
     cypress: ".invoke('val')",
   },
   {
     action: "Get min",
-    selenium: "getAttribute(\"min\")",
-    playwrightJs: "getAttribute(\"min\")",
-    playwrightPy: "get_attribute(\"min\")",
+    selenium: 'getAttribute("min")',
+    playwrightJs: 'getAttribute("min")',
+    playwrightPy: 'get_attribute("min")',
     cypress: ".invoke('attr', 'min')",
   },
   {
     action: "Get max",
-    selenium: "getAttribute(\"max\")",
-    playwrightJs: "getAttribute(\"max\")",
-    playwrightPy: "get_attribute(\"max\")",
+    selenium: 'getAttribute("max")',
+    playwrightJs: 'getAttribute("max")',
+    playwrightPy: 'get_attribute("max")',
     cypress: ".invoke('attr', 'max')",
   },
   {
     action: "Clear input",
     selenium: "clear()",
-    playwrightJs: "fill(\"\")",
-    playwrightPy: "fill(\"\")",
+    playwrightJs: 'fill("")',
+    playwrightPy: 'fill("")',
     cypress: ".clear()",
   },
 ];
@@ -209,7 +214,7 @@ export const datePickerFaq: FaqItem[] = [
   {
     question: "What is the correct date format for fill() and sendKeys()?",
     answer:
-      "For native <input type=\"date\">, always use the ISO format YYYY-MM-DD regardless of the locale displayed in the browser. Sending a locale-specific string like \"15 Jun 2025\" will not work.",
+      'For native <input type="date">, always use the ISO format YYYY-MM-DD regardless of the locale displayed in the browser. Sending a locale-specific string like "15 Jun 2025" will not work.',
     testId: "faq-2",
   },
   {
@@ -221,7 +226,7 @@ export const datePickerFaq: FaqItem[] = [
   {
     question: "How do I assert a date picker's selected value?",
     answer:
-      "For native inputs use inputValue() / getAttribute(\"value\"). For custom widgets, look for a result text element, an aria-label on the trigger button, or an aria-selected attribute on the selected day cell.",
+      'For native inputs use inputValue() / getAttribute("value"). For custom widgets, look for a result text element, an aria-label on the trigger button, or an aria-selected attribute on the selected day cell.',
     testId: "faq-4",
   },
 ];

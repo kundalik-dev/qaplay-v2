@@ -1,9 +1,17 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { ScenarioCard, ProgressWidget, FrameworkMethodsPanel, UpNextCard } from "@/components/practice";
+import {
+  ScenarioCard,
+  ProgressWidget,
+  FrameworkMethodsPanel,
+  UpNextCard,
+} from "@/components/practice";
 import type { ProgressItem } from "@/components/practice";
-import { shadowDomScenarios, shadowDomFrameworkMethods } from "@/data/practice-data/shadow-dom/scenarios";
+import {
+  shadowDomScenarios,
+  shadowDomFrameworkMethods,
+} from "@/data/practice-data/shadow-dom/scenarios";
 import type { PracticePageMeta } from "@/data/practice-data/types";
 import styles from "./shadow-dom.module.css";
 
@@ -16,7 +24,9 @@ interface PracticeTabProps {
 ══════════════════════════════════════════════════════════════ */
 function ShadowBadge({ mode }: { mode: "open" | "closed" }) {
   return (
-    <span className={`${styles.shadowBadge} ${mode === "closed" ? styles.shadowBadgeClosed : ""}`}>
+    <span
+      className={`${styles.shadowBadge} ${mode === "closed" ? styles.shadowBadgeClosed : ""}`}
+    >
       shadow: {mode}
     </span>
   );
@@ -26,7 +36,11 @@ function ShadowBadge({ mode }: { mode: "open" | "closed" }) {
    S01 · Basic shadow host — open mode, button with testid
    Beginner — auto-pierce by data-testid
 ══════════════════════════════════════════════════════════════ */
-function BasicShadowScenario({ onComplete }: { onComplete: (msg: string) => void }) {
+function BasicShadowScenario({
+  onComplete,
+}: {
+  onComplete: (msg: string) => void;
+}) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [count, setCount] = useState(0);
   const onCompleteStable = useCallback(onComplete, []);
@@ -65,12 +79,14 @@ function BasicShadowScenario({ onComplete }: { onComplete: (msg: string) => void
   return (
     <div className="flex flex-col gap-3">
       <p className="text-[11px] text-muted-foreground">
-        Click the button rendered inside an open shadow root. Playwright auto-pierces — just
-        chain locators.
+        Click the button rendered inside an open shadow root. Playwright
+        auto-pierces — just chain locators.
       </p>
       <div className={styles.shadowHostShell}>
         <div className={styles.shadowHostLabel}>
-          <code className="text-[10px]">[data-testid=&quot;shadow-host-basic&quot;]</code>
+          <code className="text-[10px]">
+            [data-testid=&quot;shadow-host-basic&quot;]
+          </code>
           <ShadowBadge mode="open" />
         </div>
         <div
@@ -96,7 +112,11 @@ function BasicShadowScenario({ onComplete }: { onComplete: (msg: string) => void
 const HOST_IDS = ["host-1", "host-2", "host-3"] as const;
 type HostId = (typeof HOST_IDS)[number];
 
-function MultiHostScenario({ onComplete }: { onComplete: (msg: string) => void }) {
+function MultiHostScenario({
+  onComplete,
+}: {
+  onComplete: (msg: string) => void;
+}) {
   const refs = useRef<Record<HostId, HTMLDivElement | null>>({
     "host-1": null,
     "host-2": null,
@@ -109,7 +129,9 @@ function MultiHostScenario({ onComplete }: { onComplete: (msg: string) => void }
     HOST_IDS.forEach((hostId) => {
       const el = refs.current[hostId];
       if (!el || el.shadowRoot) return;
-      const label = hostId.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase());
+      const label = hostId
+        .replace("-", " ")
+        .replace(/\b\w/g, (l) => l.toUpperCase());
       const shadow = el.attachShadow({ mode: "open" });
       shadow.innerHTML = `
         <style>
@@ -134,18 +156,23 @@ function MultiHostScenario({ onComplete }: { onComplete: (msg: string) => void }
   return (
     <div className="flex flex-col gap-3">
       <p className="text-[11px] text-muted-foreground">
-        Three shadow hosts share <code>data-testid=&quot;shadow-host&quot;</code>. Scope to the correct
+        Three shadow hosts share{" "}
+        <code>data-testid=&quot;shadow-host&quot;</code>. Scope to the correct
         one using <code>data-host-id</code>.
       </p>
       <div className={styles.multiHostGrid}>
         {HOST_IDS.map((hostId) => (
           <div key={hostId} className={styles.shadowHostShell}>
             <div className={styles.shadowHostLabel}>
-              <code className="text-[10px]">[data-host-id=&quot;{hostId}&quot;]</code>
+              <code className="text-[10px]">
+                [data-host-id=&quot;{hostId}&quot;]
+              </code>
               <ShadowBadge mode="open" />
             </div>
             <div
-              ref={(el) => { refs.current[hostId] = el; }}
+              ref={(el) => {
+                refs.current[hostId] = el;
+              }}
               data-testid="shadow-host"
               data-host-id={hostId}
               data-shadow-mode="open"
@@ -156,7 +183,9 @@ function MultiHostScenario({ onComplete }: { onComplete: (msg: string) => void }
       </div>
       {activated && (
         <div className={styles.shadowResultBanner}>
-          ✓ {activated.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())} activated
+          ✓{" "}
+          {activated.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}{" "}
+          activated
         </div>
       )}
     </div>
@@ -167,7 +196,11 @@ function MultiHostScenario({ onComplete }: { onComplete: (msg: string) => void }
    S03 · Nested shadow DOM — 2 levels
    Medium — outer host has testid; inner host has class + data-inner only
 ══════════════════════════════════════════════════════════════ */
-function NestedShadowScenario({ onComplete }: { onComplete: (msg: string) => void }) {
+function NestedShadowScenario({
+  onComplete,
+}: {
+  onComplete: (msg: string) => void;
+}) {
   const outerRef = useRef<HTMLDivElement>(null);
   const [done, setDone] = useState(false);
   const onCompleteStable = useCallback(onComplete, []);
@@ -197,7 +230,9 @@ function NestedShadowScenario({ onComplete }: { onComplete: (msg: string) => voi
     `;
 
     // Inner shadow root (inside outer shadow)
-    const innerHostEl = outerShadow.querySelector(".shadow-inner-host") as HTMLElement;
+    const innerHostEl = outerShadow.querySelector(
+      ".shadow-inner-host",
+    ) as HTMLElement;
     const innerShadow = innerHostEl.attachShadow({ mode: "open" });
     innerShadow.innerHTML = `
       <style>
@@ -235,7 +270,9 @@ function NestedShadowScenario({ onComplete }: { onComplete: (msg: string) => voi
       </div>
       <div className={styles.shadowHostShell}>
         <div className={styles.shadowHostLabel}>
-          <code className="text-[10px]">[data-testid=&quot;shadow-outer-host&quot;]</code>
+          <code className="text-[10px]">
+            [data-testid=&quot;shadow-outer-host&quot;]
+          </code>
           <ShadowBadge mode="open" />
         </div>
         <div
@@ -246,10 +283,15 @@ function NestedShadowScenario({ onComplete }: { onComplete: (msg: string) => voi
         />
       </div>
       <p className="text-[11px] text-muted-foreground">
-        Inner host has <code>class=&quot;shadow-inner-host&quot;</code> and <code>data-inner=&quot;true&quot;</code>{" "}
-        but <strong>no testid</strong>. Playwright pierces both levels automatically.
+        Inner host has <code>class=&quot;shadow-inner-host&quot;</code> and{" "}
+        <code>data-inner=&quot;true&quot;</code> but <strong>no testid</strong>.
+        Playwright pierces both levels automatically.
       </p>
-      {done && <div className={styles.shadowResultBanner}>✓ Inner shadow (level 2) activated</div>}
+      {done && (
+        <div className={styles.shadowResultBanner}>
+          ✓ Inner shadow (level 2) activated
+        </div>
+      )}
     </div>
   );
 }
@@ -258,7 +300,11 @@ function NestedShadowScenario({ onComplete }: { onComplete: (msg: string) => voi
    S04 · Form inside shadow DOM — getByRole / getByLabel
    Hard — input/select have no testid; submit button has testid
 ══════════════════════════════════════════════════════════════ */
-function FormShadowScenario({ onComplete }: { onComplete: (msg: string) => void }) {
+function FormShadowScenario({
+  onComplete,
+}: {
+  onComplete: (msg: string) => void;
+}) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [submitted, setSubmitted] = useState<string | null>(null);
   const onCompleteStable = useCallback(onComplete, []);
@@ -308,9 +354,15 @@ function FormShadowScenario({ onComplete }: { onComplete: (msg: string) => void 
     `;
     shadow.querySelector("form")!.addEventListener("submit", (e) => {
       e.preventDefault();
-      const name = (shadow.getElementById("shadow-name-input") as HTMLInputElement).value.trim();
-      const role = (shadow.getElementById("shadow-role-select") as HTMLSelectElement).value;
-      const msg = name ? `Submitted: ${name} (${role || "no role"}) ✓` : "Please fill in a name";
+      const name = (
+        shadow.getElementById("shadow-name-input") as HTMLInputElement
+      ).value.trim();
+      const role = (
+        shadow.getElementById("shadow-role-select") as HTMLSelectElement
+      ).value;
+      const msg = name
+        ? `Submitted: ${name} (${role || "no role"}) ✓`
+        : "Please fill in a name";
       setSubmitted(msg);
       if (name) onCompleteStable(msg);
     });
@@ -319,12 +371,15 @@ function FormShadowScenario({ onComplete }: { onComplete: (msg: string) => void 
   return (
     <div className="flex flex-col gap-3">
       <p className="text-[11px] text-muted-foreground">
-        Input and select have <code>id</code> and <code>name</code> but <strong>no data-testid</strong>.
-        Use <code>getByRole</code> or <code>getByLabel</code> inside the shadow scope.
+        Input and select have <code>id</code> and <code>name</code> but{" "}
+        <strong>no data-testid</strong>. Use <code>getByRole</code> or{" "}
+        <code>getByLabel</code> inside the shadow scope.
       </p>
       <div className={styles.shadowHostShell}>
         <div className={styles.shadowHostLabel}>
-          <code className="text-[10px]">[data-testid=&quot;shadow-form-host&quot;]</code>
+          <code className="text-[10px]">
+            [data-testid=&quot;shadow-form-host&quot;]
+          </code>
           <ShadowBadge mode="open" />
         </div>
         <div
@@ -334,7 +389,9 @@ function FormShadowScenario({ onComplete }: { onComplete: (msg: string) => void 
           className={styles.shadowHostContent}
         />
       </div>
-      {submitted && <div className={styles.shadowResultBanner}>{submitted}</div>}
+      {submitted && (
+        <div className={styles.shadowResultBanner}>{submitted}</div>
+      )}
     </div>
   );
 }
@@ -343,7 +400,11 @@ function FormShadowScenario({ onComplete }: { onComplete: (msg: string) => void 
    S05 · Dynamic content in shadow DOM
    Hard — content appears after delay; button has only aria-label
 ══════════════════════════════════════════════════════════════ */
-function DynamicShadowScenario({ onComplete }: { onComplete: (msg: string) => void }) {
+function DynamicShadowScenario({
+  onComplete,
+}: {
+  onComplete: (msg: string) => void;
+}) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [triggered, setTriggered] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -409,14 +470,19 @@ function DynamicShadowScenario({ onComplete }: { onComplete: (msg: string) => vo
     <div className="flex flex-col gap-3">
       <p className="text-[11px] text-muted-foreground">
         Content loads after ~1.5 s. The revealed button has{" "}
-        <code>aria-label=&quot;Trigger Shadow Action&quot;</code> but <strong>no testid</strong>. Spinner
-        has <code>role=&quot;status&quot;</code> only.
+        <code>aria-label=&quot;Trigger Shadow Action&quot;</code> but{" "}
+        <strong>no testid</strong>. Spinner has{" "}
+        <code>role=&quot;status&quot;</code> only.
       </p>
       <div className={styles.shadowHostShell}>
         <div className={styles.shadowHostLabel}>
-          <code className="text-[10px]">[data-testid=&quot;shadow-dynamic-host&quot;]</code>
+          <code className="text-[10px]">
+            [data-testid=&quot;shadow-dynamic-host&quot;]
+          </code>
           <ShadowBadge mode="open" />
-          {!loaded && <span className={styles.shadowLoadingPill}>loading…</span>}
+          {!loaded && (
+            <span className={styles.shadowLoadingPill}>loading…</span>
+          )}
           {loaded && <span className={styles.shadowReadyPill}>ready</span>}
         </div>
         <div
@@ -426,7 +492,11 @@ function DynamicShadowScenario({ onComplete }: { onComplete: (msg: string) => vo
           className={styles.shadowHostContent}
         />
       </div>
-      {triggered && <div className={styles.shadowResultBanner}>✓ Dynamic shadow action triggered</div>}
+      {triggered && (
+        <div className={styles.shadowResultBanner}>
+          ✓ Dynamic shadow action triggered
+        </div>
+      )}
     </div>
   );
 }
@@ -435,7 +505,11 @@ function DynamicShadowScenario({ onComplete }: { onComplete: (msg: string) => vo
    S06 · evaluate() — no stable attributes on inner elements
    Challenge — input has only name="evalCode"; button plain text only
 ══════════════════════════════════════════════════════════════ */
-function EvalShadowScenario({ onComplete }: { onComplete: (msg: string) => void }) {
+function EvalShadowScenario({
+  onComplete,
+}: {
+  onComplete: (msg: string) => void;
+}) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [executed, setExecuted] = useState(false);
   const onCompleteStable = useCallback(onComplete, []);
@@ -483,19 +557,22 @@ function EvalShadowScenario({ onComplete }: { onComplete: (msg: string) => void 
   return (
     <div className="flex flex-col gap-3">
       <p className="text-[11px] text-muted-foreground">
-        Input has only <code>name=&quot;evalCode&quot;</code>. The button has <strong>no attributes at all</strong> —
-        just text &quot;Execute&quot;. Standard locators cannot target these.
-        Use <code>page.evaluate()</code>.
+        Input has only <code>name=&quot;evalCode&quot;</code>. The button has{" "}
+        <strong>no attributes at all</strong> — just text &quot;Execute&quot;.
+        Standard locators cannot target these. Use <code>page.evaluate()</code>.
       </p>
       <div className={styles.shadowEvalNote}>
         <span className={styles.shadowEvalIcon}>⚠</span>
-        Standard locators (<code>getByTestId</code>, <code>getByRole</code>, <code>getByLabel</code>) will
-        NOT find elements with no stable attributes inside shadow DOM. You must use{" "}
-        <code>page.evaluate()</code> or <code>js.executeScript()</code>.
+        Standard locators (<code>getByTestId</code>, <code>getByRole</code>,{" "}
+        <code>getByLabel</code>) will NOT find elements with no stable
+        attributes inside shadow DOM. You must use <code>page.evaluate()</code>{" "}
+        or <code>js.executeScript()</code>.
       </div>
       <div className={styles.shadowHostShell}>
         <div className={styles.shadowHostLabel}>
-          <code className="text-[10px]">[data-testid=&quot;shadow-eval-host&quot;]</code>
+          <code className="text-[10px]">
+            [data-testid=&quot;shadow-eval-host&quot;]
+          </code>
           <ShadowBadge mode="open" />
         </div>
         <div
@@ -505,7 +582,11 @@ function EvalShadowScenario({ onComplete }: { onComplete: (msg: string) => void 
           className={styles.shadowHostContent}
         />
       </div>
-      {executed && <div className={styles.shadowResultBanner}>✓ evaluate() executed successfully</div>}
+      {executed && (
+        <div className={styles.shadowResultBanner}>
+          ✓ evaluate() executed successfully
+        </div>
+      )}
     </div>
   );
 }
@@ -537,62 +618,99 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
           <p className="mb-3 text-[10.5px] font-bold tracking-[0.08em] text-muted-foreground uppercase">
             Interactive Scenarios
           </p>
-          <div className="flex flex-col gap-[10px]" data-testid="scenarios-list">
-
+          <div
+            className="flex flex-col gap-[10px]"
+            data-testid="scenarios-list"
+          >
             {/* ── S01: Basic open shadow host ───────────────────── */}
-            <ScenarioCard {...shadowDomScenarios[0]} onComplete={() => markDone("s01")}>
+            <ScenarioCard
+              {...shadowDomScenarios[0]}
+              onComplete={() => markDone("s01")}
+            >
               {({ setResult }) => (
                 <BasicShadowScenario
-                  onComplete={(msg) => { setResult(msg); if (msg.includes("✓")) markDone("s01"); }}
+                  onComplete={(msg) => {
+                    setResult(msg);
+                    if (msg.includes("✓")) markDone("s01");
+                  }}
                 />
               )}
             </ScenarioCard>
 
             {/* ── S02: Multiple shadow hosts ────────────────────── */}
-            <ScenarioCard {...shadowDomScenarios[1]} onComplete={() => markDone("s02")}>
+            <ScenarioCard
+              {...shadowDomScenarios[1]}
+              onComplete={() => markDone("s02")}
+            >
               {({ setResult }) => (
                 <MultiHostScenario
-                  onComplete={(msg) => { setResult(msg); if (msg.includes("✓")) markDone("s02"); }}
+                  onComplete={(msg) => {
+                    setResult(msg);
+                    if (msg.includes("✓")) markDone("s02");
+                  }}
                 />
               )}
             </ScenarioCard>
 
             {/* ── S03: Nested shadow DOM ────────────────────────── */}
-            <ScenarioCard {...shadowDomScenarios[2]} onComplete={() => markDone("s03")}>
+            <ScenarioCard
+              {...shadowDomScenarios[2]}
+              onComplete={() => markDone("s03")}
+            >
               {({ setResult }) => (
                 <NestedShadowScenario
-                  onComplete={(msg) => { setResult(msg); if (msg.includes("✓")) markDone("s03"); }}
+                  onComplete={(msg) => {
+                    setResult(msg);
+                    if (msg.includes("✓")) markDone("s03");
+                  }}
                 />
               )}
             </ScenarioCard>
 
             {/* ── S04: Form inside shadow DOM ───────────────────── */}
-            <ScenarioCard {...shadowDomScenarios[3]} onComplete={() => markDone("s04")}>
+            <ScenarioCard
+              {...shadowDomScenarios[3]}
+              onComplete={() => markDone("s04")}
+            >
               {({ setResult }) => (
                 <FormShadowScenario
-                  onComplete={(msg) => { setResult(msg); if (msg.includes("✓")) markDone("s04"); }}
+                  onComplete={(msg) => {
+                    setResult(msg);
+                    if (msg.includes("✓")) markDone("s04");
+                  }}
                 />
               )}
             </ScenarioCard>
 
             {/* ── S05: Dynamic shadow content ───────────────────── */}
-            <ScenarioCard {...shadowDomScenarios[4]} onComplete={() => markDone("s05")}>
+            <ScenarioCard
+              {...shadowDomScenarios[4]}
+              onComplete={() => markDone("s05")}
+            >
               {({ setResult }) => (
                 <DynamicShadowScenario
-                  onComplete={(msg) => { setResult(msg); if (msg.includes("✓")) markDone("s05"); }}
+                  onComplete={(msg) => {
+                    setResult(msg);
+                    if (msg.includes("✓")) markDone("s05");
+                  }}
                 />
               )}
             </ScenarioCard>
 
             {/* ── S06: evaluate() to pierce shadow ─────────────── */}
-            <ScenarioCard {...shadowDomScenarios[5]} onComplete={() => markDone("s06")}>
+            <ScenarioCard
+              {...shadowDomScenarios[5]}
+              onComplete={() => markDone("s06")}
+            >
               {({ setResult }) => (
                 <EvalShadowScenario
-                  onComplete={(msg) => { setResult(msg); if (msg.includes("✓")) markDone("s06"); }}
+                  onComplete={(msg) => {
+                    setResult(msg);
+                    if (msg.includes("✓")) markDone("s06");
+                  }}
                 />
               )}
             </ScenarioCard>
-
           </div>
         </section>
 

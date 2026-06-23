@@ -1,4 +1,8 @@
-import { createBreadcrumbJsonLd, createFaqPageJsonLd, createWebPageJsonLd } from "../structured-data";
+import {
+  createBreadcrumbJsonLd,
+  createFaqPageJsonLd,
+  createWebPageJsonLd,
+} from "../structured-data";
 import { iframesFaq } from "@/data/practice-data/iframes";
 
 const name = "How to Handle iFrames in Selenium and Playwright";
@@ -25,9 +29,9 @@ export const iframesPageWebPageJsonLd = createWebPageJsonLd({
 });
 
 export const iframesPageBreadcrumbJsonLd = createBreadcrumbJsonLd([
-  { name: "Home",     path: "/" },
+  { name: "Home", path: "/" },
   { name: "Practice", path: "/practice" },
-  { name: "iFrames",  path: "/practice/iframes" },
+  { name: "iFrames", path: "/practice/iframes" },
 ]);
 
 export const iframesPageFaqJsonLd = createFaqPageJsonLd(

@@ -1,13 +1,18 @@
-import type { FaqItem, LearnCodeSnippet, MethodRow, TocItem } from "@/data/practice-data/types";
+import type {
+  FaqItem,
+  LearnCodeSnippet,
+  MethodRow,
+  TocItem,
+} from "@/data/practice-data/types";
 
 export const multiSelectTocItems: TocItem[] = [
-  { id: "learn-overview",   label: "Overview" },
-  { id: "learn-native",     label: "1 · Native selectOption" },
-  { id: "learn-custom",     label: "2 · Custom Checkbox Dropdown" },
-  { id: "learn-tags",       label: "3 · Tag / Pill Removal" },
+  { id: "learn-overview", label: "Overview" },
+  { id: "learn-native", label: "1 · Native selectOption" },
+  { id: "learn-custom", label: "2 · Custom Checkbox Dropdown" },
+  { id: "learn-tags", label: "3 · Tag / Pill Removal" },
   { id: "learn-searchable", label: "4 · Searchable Multi-Select" },
-  { id: "learn-methods",    label: "Method Summary", dividerBefore: true },
-  { id: "learn-faq",        label: "FAQ" },
+  { id: "learn-methods", label: "Method Summary", dividerBefore: true },
+  { id: "learn-faq", label: "FAQ" },
 ];
 
 export const multiSelectLearnDesc: Record<string, string> = {
@@ -17,8 +22,7 @@ export const multiSelectLearnDesc: Record<string, string> = {
     "Playwright's selectOption accepts a single value, an array of values, or option labels. Selenium uses the Select helper class which wraps the <select> element and exposes selectByValue, selectByVisibleText, and deselectByValue. Cypress uses .select() which also accepts arrays.",
   custom:
     "Custom dropdowns built from divs or checkboxes have no native selectOption support. You must click the trigger to open the panel, then click each option individually. Scope your locator to the panel's data-testid or role before clicking options to avoid targeting hidden duplicates.",
-  tags:
-    "Tag/pill interfaces show selected items as removable chips. The remove button often has no data-testid — locate it via the parent tag element's unique attribute (e.g. data-tag-value) and then target the child button by role or XPath.",
+  tags: "Tag/pill interfaces show selected items as removable chips. The remove button often has no data-testid — locate it via the parent tag element's unique attribute (e.g. data-tag-value) and then target the child button by role or XPath.",
   searchable:
     "Searchable multi-selects expose a combobox input that filters a listbox. Fill the input to filter, then click the matching option. Use role='combobox' and role='option' for locating. When options have a stable data attribute (e.g. data-option-id), prefer that for robustness.",
 };
@@ -252,57 +256,60 @@ cy.get('[data-testid="ms-search-chosen"]').should('contain.text', 'Vue.js');`,
 
 export const multiSelectMethodRows: MethodRow[] = [
   {
-    action:       "Select by value",
-    selenium:     "Select.selectByValue('v')",
+    action: "Select by value",
+    selenium: "Select.selectByValue('v')",
     playwrightJs: "selectOption('v')",
     playwrightPy: "select_option('v')",
-    cypress:      ".select('v')",
+    cypress: ".select('v')",
   },
   {
-    action:       "Select multiple",
-    selenium:     "selectByValue() × N (Select class)",
+    action: "Select multiple",
+    selenium: "selectByValue() × N (Select class)",
     playwrightJs: "selectOption(['v1','v2'])",
     playwrightPy: "select_option(['v1','v2'])",
-    cypress:      ".select(['v1','v2'])",
+    cypress: ".select(['v1','v2'])",
   },
   {
-    action:       "Deselect by value",
-    selenium:     "Select.deselectByValue('v')",
+    action: "Deselect by value",
+    selenium: "Select.deselectByValue('v')",
     playwrightJs: "selectOption(remaining[])",
     playwrightPy: "select_option(remaining[])",
-    cypress:      ".select(remaining[])",
+    cypress: ".select(remaining[])",
   },
   {
-    action:       "Custom option click",
-    selenium:     "panel.findElement(By.css('[data-value]')).click()",
+    action: "Custom option click",
+    selenium: "panel.findElement(By.css('[data-value]')).click()",
     playwrightJs: "locator('[data-value=\\'v\\']').click()",
     playwrightPy: "locator('[data-value=\"v\"]').click()",
-    cypress:      ".get('[data-value=\"v\"]').click()",
+    cypress: ".get('[data-value=\"v\"]').click()",
   },
   {
-    action:       "Child button (no testid)",
-    selenium:     "tag.findElement(By.tagName('button'))",
+    action: "Child button (no testid)",
+    selenium: "tag.findElement(By.tagName('button'))",
     playwrightJs: "locator('[data-tag-value]').getByRole('button')",
     playwrightPy: "locator('[data-tag-value]').get_by_role('button')",
-    cypress:      ".find('button').click()",
+    cypress: ".find('button').click()",
   },
 ];
 
 export const multiSelectFaq: FaqItem[] = [
   {
-    question: "Why doesn't selectOption work on a custom multi-select dropdown?",
+    question:
+      "Why doesn't selectOption work on a custom multi-select dropdown?",
     answer:
       "selectOption and the Selenium Select helper only work on native HTML <select> elements. Custom dropdowns built from divs or ul/li elements need to be interacted with by clicking the trigger to open, then clicking each option individually using role, text, or attribute locators.",
     testId: "faq-1",
   },
   {
-    question: "How do I select multiple options in a native <select multiple> with Playwright?",
+    question:
+      "How do I select multiple options in a native <select multiple> with Playwright?",
     answer:
       "Pass an array to selectOption: await locator.selectOption(['value1', 'value2']). Playwright handles the multi-selection internally without needing Ctrl key simulation. To deselect specific items, call selectOption with only the values you want to keep selected.",
     testId: "faq-2",
   },
   {
-    question: "How do I locate a remove button inside a tag/pill when it has no data-testid?",
+    question:
+      "How do I locate a remove button inside a tag/pill when it has no data-testid?",
     answer:
       "Scope from the parent tag element using its stable attribute (data-tag-value), then navigate to the child button: page.locator('[data-tag-value=\"react\"]').getByRole('button'). In XPath use: //li[@data-tag-value=\"react\"]//button. Always prefer the parent's stable attribute over a positional nth() selector.",
     testId: "faq-3",
@@ -310,7 +317,7 @@ export const multiSelectFaq: FaqItem[] = [
   {
     question: "How do I select an option inside a specific optgroup?",
     answer:
-      "In Playwright, selectOption by value works regardless of group: selectOption('node'). For XPath that enforces group membership use: //select[@data-testid=\"ms-grouped-select\"]//optgroup[@label=\"Backend\"]//option[@value=\"node\"]. In Selenium, Select.selectByValue('node') works too, but to assert the group you need to walk the DOM.",
+      'In Playwright, selectOption by value works regardless of group: selectOption(\'node\'). For XPath that enforces group membership use: //select[@data-testid="ms-grouped-select"]//optgroup[@label="Backend"]//option[@value="node"]. In Selenium, Select.selectByValue(\'node\') works too, but to assert the group you need to walk the DOM.',
     testId: "faq-4",
   },
 ];

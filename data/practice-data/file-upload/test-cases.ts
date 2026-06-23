@@ -8,22 +8,23 @@ export const fileUploadTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Navigate to <code>/practice/file-upload</code>.',
+      "Navigate to <code>/practice/file-upload</code>.",
       'Locate <code>[data-testid="fu-single-input"]</code>.',
-      'Call <code>setInputFiles(\'cypress/fixtures/sample.pdf\')</code>.',
-      'Assert the result area shows the file name.',
+      "Call <code>setInputFiles('cypress/fixtures/sample.pdf')</code>.",
+      "Assert the result area shows the file name.",
     ],
   },
   {
     id: "FU_002",
     scenario: "Upload multiple files via multi-file input",
-    expected: "All selected files are reflected; count matches number of files set.",
+    expected:
+      "All selected files are reflected; count matches number of files set.",
     type: "positive",
     priority: "high",
     steps: [
       'Locate <code>[data-testid="fu-multi-input"]</code>.',
-      'Call <code>setInputFiles([\'file1.pdf\', \'file2.png\'])</code>.',
-      'Assert the result shows 2 files listed.',
+      "Call <code>setInputFiles(['file1.pdf', 'file2.png'])</code>.",
+      "Assert the result shows 2 files listed.",
     ],
   },
   {
@@ -34,14 +35,15 @@ export const fileUploadTestCases: TestCase[] = [
     priority: "medium",
     steps: [
       'Set a file on <code>[data-testid="fu-single-input"]</code>.',
-      'Call <code>setInputFiles([])</code> to clear.',
-      'Assert no file name is displayed.',
+      "Call <code>setInputFiles([])</code> to clear.",
+      "Assert no file name is displayed.",
     ],
   },
   {
     id: "FU_004",
     scenario: "Assert file name displayed after selection (no testid on label)",
-    expected: "Filename span inside fu-filename-display shows selected file name.",
+    expected:
+      "Filename span inside fu-filename-display shows selected file name.",
     type: "positive",
     priority: "high",
     steps: [
@@ -58,7 +60,7 @@ export const fileUploadTestCases: TestCase[] = [
     priority: "medium",
     steps: [
       'Locate <code>[data-testid="fu-type-input"]</code>.',
-      'Assert <code>getAttribute(\'accept\')</code> equals <code>"image/*"</code>.',
+      "Assert <code>getAttribute('accept')</code> equals <code>\"image/*\"</code>.",
     ],
   },
   {
@@ -81,20 +83,21 @@ export const fileUploadTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Simulate a 500 KB file on <code>[data-testid="fu-size-input"]</code>.',
-      'Assert error paragraph is not visible.',
-      'Assert success indicator is visible.',
+      "Assert error paragraph is not visible.",
+      "Assert success indicator is visible.",
     ],
   },
   {
     id: "FU_008",
-    scenario: "Upload file exceeding size limit shows error (no testid on error)",
+    scenario:
+      "Upload file exceeding size limit shows error (no testid on error)",
     expected: "Error paragraph inside fu-size-panel is visible.",
     type: "negative",
     priority: "high",
     steps: [
       'Simulate a 3 MB file on <code>[data-testid="fu-size-input"]</code>.',
       'Scope to <code>[data-testid="fu-size-panel"]</code>.',
-      'Locate child element with class <code>error-msg</code>.',
+      "Locate child element with class <code>error-msg</code>.",
       'Assert it is visible and contains "2 MB".',
     ],
   },
@@ -106,7 +109,7 @@ export const fileUploadTestCases: TestCase[] = [
     priority: "medium",
     steps: [
       'Dispatch a <code>dragover</code> event on <code>[data-testid="fu-drop-zone"]</code>.',
-      'Assert the zone has the active drag-over visual state.',
+      "Assert the zone has the active drag-over visual state.",
     ],
   },
   {
@@ -117,8 +120,8 @@ export const fileUploadTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Locate <code>[data-testid="fu-drop-input"]</code> inside the drop zone.',
-      'Call <code>setInputFiles(\'sample.pdf\')</code>.',
-      'Assert the drop zone displays the file name.',
+      "Call <code>setInputFiles('sample.pdf')</code>.",
+      "Assert the drop zone displays the file name.",
     ],
   },
   {
@@ -129,8 +132,8 @@ export const fileUploadTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Locate <code>input[type="file"]</code> inside <code>[data-testid="fu-hidden-zone"]</code>.',
-      'Call <code>setInputFiles(\'sample.pdf\')</code> directly — do NOT click the input.',
-      'Assert the chosen file name is displayed.',
+      "Call <code>setInputFiles('sample.pdf')</code> directly — do NOT click the input.",
+      "Assert the chosen file name is displayed.",
     ],
   },
   {
@@ -141,7 +144,7 @@ export const fileUploadTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Select a file and click <code>[data-testid="fu-upload-btn"]</code>.',
-      'Assert <code>getByRole(\'progressbar\')</code> is visible.',
+      "Assert <code>getByRole('progressbar')</code> is visible.",
       'Poll <code>aria-valuenow</code> until it equals "100".',
     ],
   },
@@ -152,8 +155,8 @@ export const fileUploadTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Trigger upload and wait for progress bar.',
-      'Wait for <code>getByRole(\'progressbar\')</code> to have state <code>"hidden"</code>.',
+      "Trigger upload and wait for progress bar.",
+      "Wait for <code>getByRole('progressbar')</code> to have state <code>\"hidden\"</code>.",
       'Assert success message is visible inside <code>[data-testid="fu-progress-panel"]</code>.',
     ],
   },
@@ -164,7 +167,7 @@ export const fileUploadTestCases: TestCase[] = [
     type: "edge",
     priority: "medium",
     steps: [
-      'Do not select any file in the progress scenario.',
+      "Do not select any file in the progress scenario.",
       'Assert <code>[data-testid="fu-upload-btn"]</code> is disabled.',
     ],
   },

@@ -9,8 +9,10 @@ interface Props {
 
 export function ChallengeProblemStatement({ challenge }: Props) {
   return (
-    <div className={styles.panelSection} data-testid="problem-statement-section">
-
+    <div
+      className={styles.panelSection}
+      data-testid="problem-statement-section"
+    >
       {/* Problem Statement */}
       <div className={styles.psBlock} data-testid="problem-statement">
         <p className={styles.psSectionLabel}>Problem Statement</p>
@@ -25,14 +27,19 @@ export function ChallengeProblemStatement({ challenge }: Props) {
         <p className={styles.psSectionLabel}>What You Need to Do</p>
         <ul className={styles.psChecklist} aria-label="Expected behaviors">
           {challenge.expectedBehavior.map((item, i) => (
-            <li key={i} className={styles.psCheckItem} data-testid={`expected-item-${i}`}>
-              <span className={styles.psCheckIcon} aria-hidden="true">→</span>
+            <li
+              key={i}
+              className={styles.psCheckItem}
+              data-testid={`expected-item-${i}`}
+            >
+              <span className={styles.psCheckIcon} aria-hidden="true">
+                →
+              </span>
               <span dangerouslySetInnerHTML={{ __html: item }} />
             </li>
           ))}
         </ul>
       </div>
-
     </div>
   );
 }

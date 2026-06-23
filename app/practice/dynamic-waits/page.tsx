@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
-import { PracticePage }  from "./_components/practice-page";
-import { LearnTab }       from "./_components/learn-tab";
-import { dynamicWaitsMeta, dynamicWaitsTestCases, dynamicWaitsLearnCode } from "@/data/practice-data/dynamic-waits";
+import { PracticePage } from "./_components/practice-page";
+import { LearnTab } from "./_components/learn-tab";
+import {
+  dynamicWaitsMeta,
+  dynamicWaitsTestCases,
+  dynamicWaitsLearnCode,
+} from "@/data/practice-data/dynamic-waits";
 import { dynamicWaitsPageMetadata } from "@/data/meta-data/practice/dynamic-waits-page-meta-data";
 import {
   dynamicWaitsPageWebPageJsonLd,
@@ -24,20 +28,28 @@ export default async function DynamicWaitsPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(dynamicWaitsPageWebPageJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(dynamicWaitsPageWebPageJsonLd),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(dynamicWaitsPageBreadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(dynamicWaitsPageBreadcrumbJsonLd),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(dynamicWaitsPageFaqJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(dynamicWaitsPageFaqJsonLd),
+        }}
       />
       <PracticePage
         meta={dynamicWaitsMeta}
         testCases={dynamicWaitsTestCases}
-        learnContent={<LearnTab snippets={{ selector, function: fn, state, selenium }} />}
+        learnContent={
+          <LearnTab snippets={{ selector, function: fn, state, selenium }} />
+        }
       />
     </>
   );

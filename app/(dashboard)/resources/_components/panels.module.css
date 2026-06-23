@@ -16,7 +16,9 @@
 /* ── Spinner ─────────────────────────────────────────────────────────────── */
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spin {
@@ -112,7 +114,9 @@
   background: transparent;
   cursor: pointer;
   color: var(--muted-foreground);
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
 }
 
 .iconBtn:hover {
@@ -289,7 +293,11 @@
 .btnDisconnect {
   gap: 5px;
   color: var(--destructive, #ef4444) !important;
-  border-color: color-mix(in srgb, var(--destructive, #ef4444) 30%, transparent) !important;
+  border-color: color-mix(
+    in srgb,
+    var(--destructive, #ef4444) 30%,
+    transparent
+  ) !important;
 }
 
 /* ── Step list ───────────────────────────────────────────────────────────── */

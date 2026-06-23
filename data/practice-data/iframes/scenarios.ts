@@ -1,4 +1,7 @@
-import type { ScenarioMeta, FrameworkMethods } from "@/data/practice-data/types";
+import type {
+  ScenarioMeta,
+  FrameworkMethods,
+} from "@/data/practice-data/types";
 
 export const iframesScenarios: ScenarioMeta[] = [
   {
@@ -53,35 +56,38 @@ export const iframesScenarios: ScenarioMeta[] = [
   },
 ];
 
-export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", FrameworkMethods> = {
+export const frameworkMethods: Record<
+  "selenium" | "playwright" | "cypress",
+  FrameworkMethods
+> = {
   selenium: {
     label: "Selenium (Java)",
     methods: [
       { color: "purple", label: "switchTo().frame(element)" },
-      { color: "blue",   label: "switchTo().frame(name)" },
+      { color: "blue", label: "switchTo().frame(name)" },
       { color: "orange", label: "switchTo().frame(index)" },
-      { color: "emerald",label: "switchTo().parentFrame()" },
-      { color: "slate",  label: "switchTo().defaultContent()" },
+      { color: "emerald", label: "switchTo().parentFrame()" },
+      { color: "slate", label: "switchTo().defaultContent()" },
     ],
   },
   playwright: {
     label: "Playwright JS / PY",
     methods: [
       { color: "purple", label: "page.frameLocator(selector)" },
-      { color: "blue",   label: "frameLocator().frameLocator()" },
+      { color: "blue", label: "frameLocator().frameLocator()" },
       { color: "orange", label: "page.frame({ name: '…' })" },
-      { color: "emerald",label: "page.frame({ url: /…/ })" },
-      { color: "slate",  label: "frame.waitForSelector()" },
+      { color: "emerald", label: "page.frame({ url: /…/ })" },
+      { color: "slate", label: "frame.waitForSelector()" },
     ],
   },
   cypress: {
     label: "Cypress JS",
     methods: [
       { color: "purple", label: "cy.iframe() (plugin)" },
-      { color: "blue",   label: ".its('0.contentDocument')" },
+      { color: "blue", label: ".its('0.contentDocument')" },
       { color: "orange", label: ".find('body').find(sel)" },
-      { color: "emerald",label: "cy-iframe plugin" },
-      { color: "slate",  label: "{ includeShadowDom: true }" },
+      { color: "emerald", label: "cy-iframe plugin" },
+      { color: "slate", label: "{ includeShadowDom: true }" },
     ],
   },
 };

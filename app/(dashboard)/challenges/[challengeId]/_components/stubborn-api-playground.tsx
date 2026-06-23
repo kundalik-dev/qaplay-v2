@@ -34,7 +34,9 @@ export function StubbornApiPlayground() {
           <span>GET /api/user-stats</span>
           <span
             className={
-              apiState === "error" ? styles.apiStatusError : styles.apiStatusSuccess
+              apiState === "error"
+                ? styles.apiStatusError
+                : styles.apiStatusSuccess
             }
             data-testid="api-status-badge"
           >
@@ -45,7 +47,11 @@ export function StubbornApiPlayground() {
         <div className={styles.apiWidgetBody}>
           {apiState === "error" ? (
             <>
-              <div className={styles.errorBox} data-testid="api-error-box" role="alert">
+              <div
+                className={styles.errorBox}
+                data-testid="api-error-box"
+                role="alert"
+              >
                 <strong>Error 500:</strong> Failed to load user stats from{" "}
                 <code>/api/user-stats</code>
               </div>
@@ -60,7 +66,11 @@ export function StubbornApiPlayground() {
               </button>
             </>
           ) : (
-            <div className={styles.successBox} data-testid="api-success-box" role="status">
+            <div
+              className={styles.successBox}
+              data-testid="api-success-box"
+              role="status"
+            >
               <strong>✅ User Stats Loaded</strong>
               <div className={styles.dataRow}>
                 <span>status</span>

@@ -1,4 +1,7 @@
-import type { ScenarioMeta, FrameworkMethods } from "@/data/practice-data/types";
+import type {
+  ScenarioMeta,
+  FrameworkMethods,
+} from "@/data/practice-data/types";
 
 export const shadowDomScenarios: ScenarioMeta[] = [
   {
@@ -54,22 +57,28 @@ export const shadowDomScenarios: ScenarioMeta[] = [
   },
 ];
 
-export const shadowDomFrameworkMethods: Record<"selenium" | "playwright" | "cypress", FrameworkMethods> = {
+export const shadowDomFrameworkMethods: Record<
+  "selenium" | "playwright" | "cypress",
+  FrameworkMethods
+> = {
   selenium: {
     label: "Selenium (Java)",
     methods: [
       { color: "purple", label: "element.getShadowRoot()" },
-      { color: "blue",   label: "shadowRoot.findElement(By.cssSelector(...))" },
-      { color: "orange", label: "js.executeScript(\"el.shadowRoot.querySelector(...)\")" },
-      { color: "slate",  label: "No XPath inside shadow DOM" },
+      { color: "blue", label: "shadowRoot.findElement(By.cssSelector(...))" },
+      {
+        color: "orange",
+        label: 'js.executeScript("el.shadowRoot.querySelector(...)")',
+      },
+      { color: "slate", label: "No XPath inside shadow DOM" },
     ],
   },
   playwright: {
     label: "Playwright (JS/TS)",
     methods: [
-      { color: "green",  label: "Auto-pierces open shadow DOM" },
-      { color: "green",  label: "locator().locator() — chained scope" },
-      { color: "blue",   label: "getByRole / getByLabel inside shadow" },
+      { color: "green", label: "Auto-pierces open shadow DOM" },
+      { color: "green", label: "locator().locator() — chained scope" },
+      { color: "blue", label: "getByRole / getByLabel inside shadow" },
       { color: "orange", label: "page.evaluate(() => el.shadowRoot...)" },
     ],
   },
@@ -77,9 +86,12 @@ export const shadowDomFrameworkMethods: Record<"selenium" | "playwright" | "cypr
     label: "Cypress",
     methods: [
       { color: "emerald", label: "cy.get('[data-testid=...]').shadow()" },
-      { color: "blue",    label: ".shadow().find('[data-testid=...]')" },
-      { color: "orange",  label: "cy.get('host').then(el => el[0].shadowRoot.querySelector(...))" },
-      { color: "slate",   label: "cypress-shadow-zone plugin" },
+      { color: "blue", label: ".shadow().find('[data-testid=...]')" },
+      {
+        color: "orange",
+        label: "cy.get('host').then(el => el[0].shadowRoot.querySelector(...))",
+      },
+      { color: "slate", label: "cypress-shadow-zone plugin" },
     ],
   },
 };

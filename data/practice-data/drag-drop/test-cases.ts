@@ -8,10 +8,10 @@ export const dragDropTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Navigate to <code>/practice/drag-drop</code>.',
+      "Navigate to <code>/practice/drag-drop</code>.",
       'Locate <code>[data-testid="dd-item"]</code>.',
       'Locate <code>[data-testid="dd-drop-zone"]</code>.',
-      'Call <code>page.dragAndDrop(\'[data-testid="dd-item"]\', \'[data-testid="dd-drop-zone"]\')</code>.',
+      "Call <code>page.dragAndDrop('[data-testid=\"dd-item\"]', '[data-testid=\"dd-drop-zone\"]')</code>.",
       'Assert <code>[id="result-s01"]</code> contains "dropped".',
     ],
   },
@@ -24,8 +24,8 @@ export const dragDropTestCases: TestCase[] = [
     steps: [
       'Locate <code>[data-testid="dd-item"]</code> as <code>source</code>.',
       'Locate <code>[data-testid="dd-drop-zone"]</code> as <code>target</code>.',
-      'Call <code>source.dragTo(target)</code>.',
-      'Assert drop zone contains the dragged item.',
+      "Call <code>source.dragTo(target)</code>.",
+      "Assert drop zone contains the dragged item.",
     ],
   },
   {
@@ -37,7 +37,7 @@ export const dragDropTestCases: TestCase[] = [
     steps: [
       'Locate <code>[data-testid="dd-card"][data-card-id="card-2"]</code>.',
       'Locate <code>[data-testid="dd-zone"][data-zone-id="zone-b"]</code>.',
-      'Call <code>dragAndDrop</code> between the two.',
+      "Call <code>dragAndDrop</code> between the two.",
       'Assert <code>[data-zone-id="zone-b"]</code> contains the card text.',
     ],
   },
@@ -51,7 +51,7 @@ export const dragDropTestCases: TestCase[] = [
       'Drag <code>[data-card-id="card-1"]</code> to <code>[data-zone-id="zone-a"]</code>.',
       'Drag <code>[data-card-id="card-2"]</code> to <code>[data-zone-id="zone-b"]</code>.',
       'Drag <code>[data-card-id="card-3"]</code> to <code>[data-zone-id="zone-c"]</code>.',
-      'Assert result text shows all three matches.',
+      "Assert result text shows all three matches.",
     ],
   },
   {
@@ -74,7 +74,7 @@ export const dragDropTestCases: TestCase[] = [
     steps: [
       'Locate <code>[data-item-id="item-3"]</code> inside <code>[data-testid="dd-sort-list"]</code>.',
       'Locate <code>[data-item-id="item-1"]</code> as drop target.',
-      'Call <code>dragAndDrop</code>.',
+      "Call <code>dragAndDrop</code>.",
       'Assert <code>dd-sort-list</code> first child has <code>data-item-id="item-3"</code>.',
     ],
   },
@@ -85,32 +85,34 @@ export const dragDropTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Reorder any two items in the sortable list.',
+      "Reorder any two items in the sortable list.",
       'Assert <code>[id="result-s03"]</code> reflects the updated order.',
     ],
   },
   {
     id: "DD_008",
     scenario: "Move task-2 from Todo column to Done column (kanban)",
-    expected: "task-2 no longer appears in the Todo column; it appears in Done.",
+    expected:
+      "task-2 no longer appears in the Todo column; it appears in Done.",
     type: "positive",
     priority: "high",
     steps: [
       'Use XPath <code>//div[@data-column-id="todo"]//div[@data-task-id="task-2"]</code> as source.',
       'Use <code>[data-column-id="done"]</code> as target.',
-      'Assert task-2 is present in the Done column.',
-      'Assert task-2 is absent from the Todo column.',
+      "Assert task-2 is present in the Done column.",
+      "Assert task-2 is absent from the Todo column.",
     ],
   },
   {
     id: "DD_009",
-    scenario: "Locate kanban column heading via ancestor axis (no testid on heading)",
+    scenario:
+      "Locate kanban column heading via ancestor axis (no testid on heading)",
     expected: "Correct column heading found and asserted via XPath ancestor.",
     type: "positive",
     priority: "medium",
     steps: [
       'Locate a task inside a column: <code>//div[@data-column-id="todo"]//div[@data-task-id="task-1"]</code>.',
-      'Traverse to column heading: <code>ancestor::div[@data-column-id]//h3</code>.',
+      "Traverse to column heading: <code>ancestor::div[@data-column-id]//h3</code>.",
       'Assert heading text is "Todo".',
     ],
   },
@@ -123,8 +125,8 @@ export const dragDropTestCases: TestCase[] = [
     steps: [
       'Locate <code>[data-item-type="shape-circle"]</code>.',
       'Locate zone with <code>[data-accepts="shape-circle"]</code>.',
-      'Drag and drop.',
-      'Assert no error element is visible on the page.',
+      "Drag and drop.",
+      "Assert no error element is visible on the page.",
     ],
   },
   {
@@ -135,8 +137,8 @@ export const dragDropTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Drag <code>[data-item-type="shape-square"]</code> onto a zone with <code>[data-accepts="shape-circle"]</code>.',
-      'Assert an error element appears. Hint: <code>page.getByRole(\'status\')</code> or XPath <code>//p[contains(text(),"wrong")]</code>.',
-      'Assert the zone does not contain the square item.',
+      "Assert an error element appears. Hint: <code>page.getByRole('status')</code> or XPath <code>//p[contains(text(),\"wrong\")]</code>.",
+      "Assert the zone does not contain the square item.",
     ],
   },
   {
@@ -146,21 +148,22 @@ export const dragDropTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Use <code>page.getByRole(\'article\', { name: /Fix login bug/ })</code> as source.',
+      "Use <code>page.getByRole('article', { name: /Fix login bug/ })</code> as source.",
       'Locate <code>[data-column-id="done"]</code> as drop target.',
-      'Call <code>dragTo</code>.',
-      'Assert result text confirms the drop.',
+      "Call <code>dragTo</code>.",
+      "Assert result text confirms the drop.",
     ],
   },
   {
     id: "DD_013",
     scenario: "Move card between all three board columns in sequence",
-    expected: "Card moves Backlog → In Progress → Done; result reflects final column.",
+    expected:
+      "Card moves Backlog → In Progress → Done; result reflects final column.",
     type: "positive",
     priority: "medium",
     steps: [
       'Drag <code>[data-card-id="board-card-1"]</code> to <code>[data-column-id="in-progress"]</code>.',
-      'Assert card is in In Progress.',
+      "Assert card is in In Progress.",
       'Drag the same card to <code>[data-column-id="done"]</code>.',
       'Assert <code>[id="result-s06"]</code> shows Done column.',
     ],
@@ -172,8 +175,8 @@ export const dragDropTestCases: TestCase[] = [
     type: "edge",
     priority: "low",
     steps: [
-      'Perform several drags across different scenarios.',
-      'Click the Reset button for a scenario (if present).',
+      "Perform several drags across different scenarios.",
+      "Click the Reset button for a scenario (if present).",
       'Assert <code>[id="result-s01"]</code> reverts to initial result text.',
     ],
   },

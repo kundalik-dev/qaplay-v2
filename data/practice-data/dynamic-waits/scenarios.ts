@@ -1,4 +1,7 @@
-import type { ScenarioMeta, FrameworkMethods } from "@/data/practice-data/types";
+import type {
+  ScenarioMeta,
+  FrameworkMethods,
+} from "@/data/practice-data/types";
 
 export const dynamicWaitsScenarios: ScenarioMeta[] = [
   {
@@ -68,35 +71,38 @@ export const dynamicWaitsScenarios: ScenarioMeta[] = [
   },
 ];
 
-export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", FrameworkMethods> = {
+export const frameworkMethods: Record<
+  "selenium" | "playwright" | "cypress",
+  FrameworkMethods
+> = {
   selenium: {
     label: "Selenium (Java)",
     methods: [
       { color: "purple", label: "WebDriverWait" },
-      { color: "blue",   label: "ExpectedConditions" },
+      { color: "blue", label: "ExpectedConditions" },
       { color: "orange", label: "visibilityOfElementLocated()" },
-      { color: "emerald",label: "elementToBeClickable()" },
-      { color: "slate",  label: "invisibilityOf()" },
+      { color: "emerald", label: "elementToBeClickable()" },
+      { color: "slate", label: "invisibilityOf()" },
     ],
   },
   playwright: {
     label: "Playwright JS / PY",
     methods: [
       { color: "purple", label: "waitForSelector()" },
-      { color: "blue",   label: "waitForFunction()" },
+      { color: "blue", label: "waitForFunction()" },
       { color: "orange", label: "waitFor({ state })" },
-      { color: "emerald",label: "waitForResponse()" },
-      { color: "slate",  label: "waitForLoadState()" },
+      { color: "emerald", label: "waitForResponse()" },
+      { color: "slate", label: "waitForLoadState()" },
     ],
   },
   cypress: {
     label: "Cypress JS",
     methods: [
       { color: "purple", label: ".should('be.visible')" },
-      { color: "blue",   label: ".should('have.text', …)" },
+      { color: "blue", label: ".should('have.text', …)" },
       { color: "orange", label: ".should('not.exist')" },
-      { color: "emerald",label: "cy.intercept()" },
-      { color: "slate",  label: "{ timeout: N }" },
+      { color: "emerald", label: "cy.intercept()" },
+      { color: "slate", label: "{ timeout: N }" },
     ],
   },
 };

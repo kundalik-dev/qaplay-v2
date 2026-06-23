@@ -1,13 +1,18 @@
-import type { FaqItem, LearnCodeSnippet, MethodRow, TocItem } from "@/data/practice-data/types";
+import type {
+  FaqItem,
+  LearnCodeSnippet,
+  MethodRow,
+  TocItem,
+} from "@/data/practice-data/types";
 
 export const iframesTocItems: TocItem[] = [
-  { id: "learn-overview",  label: "Overview" },
-  { id: "learn-basic",     label: "1 · frameLocator basics" },
-  { id: "learn-nested",    label: "2 · Nested iframes" },
-  { id: "learn-locate",    label: "3 · Locate by name & title" },
-  { id: "learn-dynamic",   label: "4 · Dynamic iframe content" },
-  { id: "learn-methods",   label: "Method Summary", dividerBefore: true },
-  { id: "learn-faq",       label: "FAQ" },
+  { id: "learn-overview", label: "Overview" },
+  { id: "learn-basic", label: "1 · frameLocator basics" },
+  { id: "learn-nested", label: "2 · Nested iframes" },
+  { id: "learn-locate", label: "3 · Locate by name & title" },
+  { id: "learn-dynamic", label: "4 · Dynamic iframe content" },
+  { id: "learn-methods", label: "Method Summary", dividerBefore: true },
+  { id: "learn-faq", label: "FAQ" },
 ];
 
 export const iframesLearnDesc: Record<string, string> = {
@@ -290,45 +295,46 @@ cy.get('@dynBody').find('#dyn-result').should('contain.text', 'Secret revealed')
 
 export const iframesMethodRows: MethodRow[] = [
   {
-    action:       "Switch by element",
-    selenium:     "switchTo().frame(WebElement)",
+    action: "Switch by element",
+    selenium: "switchTo().frame(WebElement)",
     playwrightJs: "page.frameLocator('[data-testid]')",
     playwrightPy: "page.frame_locator('[data-testid]')",
-    cypress:      ".its('0.contentDocument.body')",
+    cypress: ".its('0.contentDocument.body')",
   },
   {
-    action:       "Switch by name",
-    selenium:     "switchTo().frame('name')",
+    action: "Switch by name",
+    selenium: "switchTo().frame('name')",
     playwrightJs: "frameLocator('iframe[name=\"…\"]')",
     playwrightPy: "frame_locator('iframe[name=\"…\"]')",
-    cypress:      "cy.get('iframe[name=\"…\"]').its(…)",
+    cypress: "cy.get('iframe[name=\"…\"]').its(…)",
   },
   {
-    action:       "Switch by title",
-    selenium:     "switchTo().frame(By.cssSelector('iframe[title]'))",
+    action: "Switch by title",
+    selenium: "switchTo().frame(By.cssSelector('iframe[title]'))",
     playwrightJs: "frameLocator('iframe[title=\"…\"]')",
     playwrightPy: "frame_locator('iframe[title=\"…\"]')",
-    cypress:      "cy.get('iframe[title=\"…\"]').its(…)",
+    cypress: "cy.get('iframe[title=\"…\"]').its(…)",
   },
   {
-    action:       "Nested frames",
-    selenium:     "switchTo().frame() × N levels",
+    action: "Nested frames",
+    selenium: "switchTo().frame() × N levels",
     playwrightJs: "frameLocator().frameLocator()",
     playwrightPy: "frame_locator().frame_locator()",
-    cypress:      "chain .its('contentDocument') × N",
+    cypress: "chain .its('contentDocument') × N",
   },
   {
-    action:       "Return to parent",
-    selenium:     "switchTo().parentFrame() / defaultContent()",
+    action: "Return to parent",
+    selenium: "switchTo().parentFrame() / defaultContent()",
     playwrightJs: "N/A — frameLocator is stateless",
     playwrightPy: "N/A — frame_locator is stateless",
-    cypress:      "N/A — callback scope handles it",
+    cypress: "N/A — callback scope handles it",
   },
 ];
 
 export const iframesFaq: FaqItem[] = [
   {
-    question: "What is the difference between frameLocator() and page.frame() in Playwright?",
+    question:
+      "What is the difference between frameLocator() and page.frame() in Playwright?",
     answer:
       "frameLocator() returns a FrameLocator — a scoped locator you chain getByRole, getByTestId, and other locator methods on. It is lazy: it resolves the frame only when you interact with an element inside it. page.frame() returns a Frame object (the actual frame reference), which has methods like frame.fill() and frame.click() that bypass the locator chain. Use frameLocator() for most cases; use page.frame() when you need the raw frame reference for advanced operations like frame.evaluate().",
     testId: "faq-1",
@@ -340,7 +346,8 @@ export const iframesFaq: FaqItem[] = [
     testId: "faq-2",
   },
   {
-    question: "How do I interact with an iframe element that has no data-testid, name, or title?",
+    question:
+      "How do I interact with an iframe element that has no data-testid, name, or title?",
     answer:
       "Use a CSS attribute selector on any stable attribute the iframe has: page.frameLocator('iframe[src*=\"/frames/\"]') targets by partial URL, page.frameLocator('iframe:nth-of-type(2)') uses position (fragile but sometimes necessary). In Selenium, use an index: driver.switchTo().frame(1). As a last resort, use a JavaScript executor to find the iframe by inspecting its content. Always prefer adding a name or title attribute to iframes you control.",
     testId: "faq-3",

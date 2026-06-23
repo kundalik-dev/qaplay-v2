@@ -1,13 +1,18 @@
-import type { FaqItem, LearnCodeSnippet, MethodRow, TocItem } from "@/data/practice-data/types";
+import type {
+  FaqItem,
+  LearnCodeSnippet,
+  MethodRow,
+  TocItem,
+} from "@/data/practice-data/types";
 
 export const fileUploadTocItems: TocItem[] = [
-  { id: "learn-overview",  label: "Overview" },
-  { id: "learn-native",    label: "1 · setInputFiles" },
-  { id: "learn-dragdrop",  label: "2 · Drag & Drop" },
-  { id: "learn-hidden",    label: "3 · Hidden File Inputs" },
-  { id: "learn-validate",  label: "4 · Validation Assertions" },
-  { id: "learn-methods",   label: "Method Summary", dividerBefore: true },
-  { id: "learn-faq",       label: "FAQ" },
+  { id: "learn-overview", label: "Overview" },
+  { id: "learn-native", label: "1 · setInputFiles" },
+  { id: "learn-dragdrop", label: "2 · Drag & Drop" },
+  { id: "learn-hidden", label: "3 · Hidden File Inputs" },
+  { id: "learn-validate", label: "4 · Validation Assertions" },
+  { id: "learn-methods", label: "Method Summary", dividerBefore: true },
+  { id: "learn-faq", label: "FAQ" },
 ];
 
 export const fileUploadLearnDesc: Record<string, string> = {
@@ -227,63 +232,67 @@ cy.get('[data-testid="fu-type-input"]')
 
 export const fileUploadMethodRows: MethodRow[] = [
   {
-    action:       "Upload single file",
-    selenium:     "element.sendKeys('/abs/path')",
+    action: "Upload single file",
+    selenium: "element.sendKeys('/abs/path')",
     playwrightJs: "setInputFiles('path')",
     playwrightPy: "set_input_files('path')",
-    cypress:      ".selectFile('fixtures/f')",
+    cypress: ".selectFile('fixtures/f')",
   },
   {
-    action:       "Upload multiple files",
-    selenium:     "sendKeys('a\\nb') or loop",
+    action: "Upload multiple files",
+    selenium: "sendKeys('a\\nb') or loop",
     playwrightJs: "setInputFiles(['a','b'])",
     playwrightPy: "set_input_files(['a','b'])",
-    cypress:      ".selectFile(['a','b'])",
+    cypress: ".selectFile(['a','b'])",
   },
   {
-    action:       "Clear file selection",
-    selenium:     "JS: input.value=''",
+    action: "Clear file selection",
+    selenium: "JS: input.value=''",
     playwrightJs: "setInputFiles([])",
     playwrightPy: "set_input_files([])",
-    cypress:      ".invoke('val','')",
+    cypress: ".invoke('val','')",
   },
   {
-    action:       "Hidden input",
-    selenium:     "JS removeStyle + sendKeys",
+    action: "Hidden input",
+    selenium: "JS removeStyle + sendKeys",
     playwrightJs: "setInputFiles() (works hidden)",
     playwrightPy: "set_input_files() (works hidden)",
-    cypress:      ".selectFile(…, { force: true })",
+    cypress: ".selectFile(…, { force: true })",
   },
   {
-    action:       "Drag-and-drop zone",
-    selenium:     "JS DataTransfer dispatch",
+    action: "Drag-and-drop zone",
+    selenium: "JS DataTransfer dispatch",
     playwrightJs: "dispatchEvent('drop', dt)",
     playwrightPy: "dispatch_event('drop', dt)",
-    cypress:      ".selectFile(…, { action: 'drag-drop' })",
+    cypress: ".selectFile(…, { action: 'drag-drop' })",
   },
 ];
 
 export const fileUploadFaq: FaqItem[] = [
   {
-    question: "Why doesn't clicking the file input open an OS dialog in Playwright?",
+    question:
+      "Why doesn't clicking the file input open an OS dialog in Playwright?",
     answer:
       "Playwright's setInputFiles injects the file directly into the input's FileList without triggering the native OS dialog. This is intentional — OS dialogs cannot be automated reliably in CI environments. Never use click() on a file input; always use setInputFiles instead.",
     testId: "faq-1",
   },
   {
-    question: "How do I upload a file to a drag-and-drop zone that has no visible input?",
+    question:
+      "How do I upload a file to a drag-and-drop zone that has no visible input?",
     answer:
       "Most drag-and-drop zones have a hidden <input type='file'> inside them that collects the file from the drop event. Locate it with: page.locator('[data-testid=\"fu-drop-zone\"] input[type=\"file\"]') and use setInputFiles. If no hidden input exists, dispatch a drop event with a DataTransfer object containing a File.",
     testId: "faq-2",
   },
   {
-    question: "How do I automate a custom upload button that hides the real file input?",
+    question:
+      "How do I automate a custom upload button that hides the real file input?",
     answer:
       "Do not click the styled button. Locate the hidden <input type='file'> inside the same container and call setInputFiles on it directly. Playwright's setInputFiles works even when the input is not visible. In Selenium, use JavascriptExecutor to remove the display:none style before calling sendKeys.",
     testId: "faq-3",
   },
   {
-    question: "How do I assert a file size or type validation error that has no data-testid?",
+    question:
+      "How do I assert a file size or type validation error that has no data-testid?",
     answer:
       "Scope your locator to the parent container that does have a data-testid, then find the error element inside it by class, role, or text: page.getByTestId('fu-size-panel').locator('.error-msg'). In XPath: //*[@data-testid='fu-size-panel']//p[contains(@class,'error-msg')]. Never rely on positional selectors like nth-child for error messages.",
     testId: "faq-4",

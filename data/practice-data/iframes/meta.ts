@@ -17,7 +17,8 @@ export const iframesMeta: PracticePageMeta = {
   upNext: {
     icon: "🌑",
     title: "Shadow DOM",
-    description: "Pierce shadow roots and locate elements inside web components",
+    description:
+      "Pierce shadow roots and locate elements inside web components",
     href: "/practice/shadow-dom",
   },
 };

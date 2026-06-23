@@ -1,9 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { ScenarioCard, ProgressWidget, FrameworkMethodsPanel, UpNextCard } from "@/components/practice";
+import {
+  ScenarioCard,
+  ProgressWidget,
+  FrameworkMethodsPanel,
+  UpNextCard,
+} from "@/components/practice";
 import type { ProgressItem } from "@/components/practice";
-import { tabsWindowsScenarios, frameworkMethods } from "@/data/practice-data/tabs-windows/scenarios";
+import {
+  tabsWindowsScenarios,
+  frameworkMethods,
+} from "@/data/practice-data/tabs-windows/scenarios";
 import type { PracticePageMeta } from "@/data/practice-data/types";
 import styles from "./tabs-windows.module.css";
 
@@ -20,9 +28,9 @@ const MULTI_TABS = [
 ];
 
 const REGISTRY_TABS = [
-  { tabId: "tab-a", name: "Tab A", url: "/",              status: "Open" },
-  { tabId: "tab-b", name: "Tab B", url: "/practice",      status: "Open" },
-  { tabId: "tab-c", name: "Tab C", url: "/practice/links",status: "Open" },
+  { tabId: "tab-a", name: "Tab A", url: "/", status: "Open" },
+  { tabId: "tab-b", name: "Tab B", url: "/practice", status: "Open" },
+  { tabId: "tab-c", name: "Tab C", url: "/practice/links", status: "Open" },
 ];
 
 /* ── Reusable small button ───────────────────────────────────── */
@@ -39,11 +47,16 @@ function ActionBtn({
     "inline-flex items-center justify-center gap-1.5 h-8 rounded-md px-3 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring cursor-pointer";
   const variants = {
     default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-    outline: "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
-    ghost:   "hover:bg-accent hover:text-accent-foreground",
+    outline:
+      "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+    ghost: "hover:bg-accent hover:text-accent-foreground",
   };
   return (
-    <button type="button" className={`${base} ${variants[variant]}`} onClick={onClick}>
+    <button
+      type="button"
+      className={`${base} ${variants[variant]}`}
+      onClick={onClick}
+    >
       {children}
     </button>
   );
@@ -51,8 +64,8 @@ function ActionBtn({
 
 export function PracticeTab({ upNext }: PracticeTabProps) {
   const [completedIds, setCompletedIds] = useState<Set<string>>(new Set());
-  const [openedTabs, setOpenedTabs]     = useState<Set<string>>(new Set());
-  const [focusedTab, setFocusedTab]     = useState<string | null>(null);
+  const [openedTabs, setOpenedTabs] = useState<Set<string>>(new Set());
+  const [focusedTab, setFocusedTab] = useState<string | null>(null);
 
   function markDone(id: string) {
     setCompletedIds((prev) => new Set([...prev, id]));
@@ -80,10 +93,15 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
           <p className="mb-3 text-[10.5px] font-bold tracking-[0.08em] text-muted-foreground uppercase">
             Interactive Scenarios
           </p>
-          <div className="flex flex-col gap-[10px]" data-testid="scenarios-list">
-
+          <div
+            className="flex flex-col gap-[10px]"
+            data-testid="scenarios-list"
+          >
             {/* ── S01: Open Link in New Tab ─────────────────────────────── */}
-            <ScenarioCard {...tabsWindowsScenarios[0]} onComplete={() => markDone("s01")}>
+            <ScenarioCard
+              {...tabsWindowsScenarios[0]}
+              onComplete={() => markDone("s01")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-wrap items-center gap-3">
                   <a
@@ -92,9 +110,11 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     href={PRACTICE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 h-8 rounded-md px-3 text-xs font-medium border border-input bg-background shadow-sm hover:bg-accent transition-colors"
+                    className="inline-flex h-8 items-center gap-1.5 rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent"
                     onClick={() => {
-                      setResult("New tab opened → assert context.pages().length === 2");
+                      setResult(
+                        "New tab opened → assert context.pages().length === 2",
+                      );
                       markDone("s01");
                     }}
                   >
@@ -108,7 +128,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* ── S02: Open Multiple Tabs ───────────────────────────────── */}
-            <ScenarioCard {...tabsWindowsScenarios[1]} onComplete={() => markDone("s02")}>
+            <ScenarioCard
+              {...tabsWindowsScenarios[1]}
+              onComplete={() => markDone("s02")}
+            >
               {({ setResult }) => (
                 <div
                   data-testid="tw-multi-tab-panel"
@@ -121,7 +144,7 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                       id={id}
                       data-testid={id}
                       data-tab-url={url}
-                      className={`inline-flex items-center gap-1.5 h-8 rounded-md px-3 text-xs font-medium border transition-colors ${
+                      className={`inline-flex h-8 items-center gap-1.5 rounded-md border px-3 text-xs font-medium transition-colors ${
                         openedTabs.has(id)
                           ? "border-primary/40 bg-primary/5 text-primary"
                           : "border-input bg-background hover:bg-accent"
@@ -129,7 +152,9 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                       onClick={() => {
                         openTab(url, id);
                         const opened = new Set([...openedTabs, id]);
-                        setResult(`${opened.size} tab${opened.size > 1 ? "s" : ""} opened`);
+                        setResult(
+                          `${opened.size} tab${opened.size > 1 ? "s" : ""} opened`,
+                        );
                         if (opened.size === MULTI_TABS.length) markDone("s02");
                       }}
                     >
@@ -141,7 +166,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* ── S03: Switch Back to Original Tab ─────────────────────── */}
-            <ScenarioCard {...tabsWindowsScenarios[2]} onComplete={() => markDone("s03")}>
+            <ScenarioCard
+              {...tabsWindowsScenarios[2]}
+              onComplete={() => markDone("s03")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-wrap gap-2">
                   <a
@@ -150,8 +178,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     href={PRACTICE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 h-8 rounded-md px-3 text-xs font-medium border border-input bg-background shadow-sm hover:bg-accent transition-colors"
-                    onClick={() => setResult("New tab opened — now switch back to this tab")}
+                    className="inline-flex h-8 items-center gap-1.5 rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent"
+                    onClick={() =>
+                      setResult("New tab opened — now switch back to this tab")
+                    }
                   >
                     ↗ Open New Tab
                   </a>
@@ -169,7 +199,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* ── S04: Assert New Tab URL and Title ────────────────────── */}
-            <ScenarioCard {...tabsWindowsScenarios[3]} onComplete={() => markDone("s04")}>
+            <ScenarioCard
+              {...tabsWindowsScenarios[3]}
+              onComplete={() => markDone("s04")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-col gap-2">
                   <a
@@ -180,23 +213,29 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     rel="noopener noreferrer"
                     data-expected-url-contains="qaplayground"
                     data-expected-title-contains="QA"
-                    className="inline-flex items-center gap-1.5 h-8 rounded-md px-3 text-xs font-medium border border-input bg-background shadow-sm hover:bg-accent transition-colors w-fit"
+                    className="inline-flex h-8 w-fit items-center gap-1.5 rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent"
                     onClick={() => {
-                      setResult("Tab opened → assert newPage.url() and newPage.title()");
+                      setResult(
+                        "Tab opened → assert newPage.url() and newPage.title()",
+                      );
                       markDone("s04");
                     }}
                   >
                     ↗ Open & Assert URL + Title
                   </a>
                   <p className="text-xs text-muted-foreground">
-                    Hint attributes: <code>data-expected-url-contains</code>, <code>data-expected-title-contains</code>
+                    Hint attributes: <code>data-expected-url-contains</code>,{" "}
+                    <code>data-expected-title-contains</code>
                   </p>
                 </div>
               )}
             </ScenarioCard>
 
             {/* ── S05: Close a Tab ─────────────────────────────────────── */}
-            <ScenarioCard {...tabsWindowsScenarios[4]} onComplete={() => markDone("s05")}>
+            <ScenarioCard
+              {...tabsWindowsScenarios[4]}
+              onComplete={() => markDone("s05")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-wrap gap-2">
                   <a
@@ -205,8 +244,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     href={PRACTICE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 h-8 rounded-md px-3 text-xs font-medium border border-input bg-background shadow-sm hover:bg-accent transition-colors"
-                    onClick={() => setResult("New tab opened → call newPage.close()")}
+                    className="inline-flex h-8 items-center gap-1.5 rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent"
+                    onClick={() =>
+                      setResult("New tab opened → call newPage.close()")
+                    }
                   >
                     ↗ Open Tab
                   </a>
@@ -224,7 +265,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* ── S06: Window Popup ────────────────────────────────────── */}
-            <ScenarioCard {...tabsWindowsScenarios[5]} onComplete={() => markDone("s06")}>
+            <ScenarioCard
+              {...tabsWindowsScenarios[5]}
+              onComplete={() => markDone("s06")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-col gap-2">
                   <button
@@ -232,59 +276,85 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     id="tw-popup-btn"
                     data-testid="tw-popup-btn"
                     data-popup-url={PRACTICE_URL}
-                    className="inline-flex items-center gap-1.5 h-8 rounded-md px-3 text-xs font-medium border border-input bg-background shadow-sm hover:bg-accent transition-colors w-fit"
+                    className="inline-flex h-8 w-fit items-center gap-1.5 rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent"
                     onClick={() => {
                       window.open(
                         PRACTICE_URL,
                         "qa-popup",
                         "width=800,height=600,noopener,noreferrer",
                       );
-                      setResult("Popup opened via window.open() → capture with waitForEvent('popup')");
+                      setResult(
+                        "Popup opened via window.open() → capture with waitForEvent('popup')",
+                      );
                       markDone("s06");
                     }}
                   >
                     🪟 Open Popup Window
                   </button>
                   <p className="text-xs text-muted-foreground">
-                    Uses <code>window.open()</code> with explicit size — Playwright captures via <code>page.waitForEvent(&apos;popup&apos;)</code>
+                    Uses <code>window.open()</code> with explicit size —
+                    Playwright captures via{" "}
+                    <code>page.waitForEvent(&apos;popup&apos;)</code>
                   </p>
                 </div>
               )}
             </ScenarioCard>
 
             {/* ── S07: Sibling Tab Buttons — Medium (no testid on btns) ── */}
-            <ScenarioCard {...tabsWindowsScenarios[6]} onComplete={() => markDone("s07")}>
+            <ScenarioCard
+              {...tabsWindowsScenarios[6]}
+              onComplete={() => markDone("s07")}
+            >
               {({ setResult }) => (
-                <div data-testid="tw-sibling-panel" className={styles.siblingPanel}>
+                <div
+                  data-testid="tw-sibling-panel"
+                  className={styles.siblingPanel}
+                >
                   <p className={styles.siblingPanelLabel}>Tab Launcher Panel</p>
                   {/* No data-testid on buttons intentionally */}
-                  {["Open Tab A", "Open Tab B", "Open Tab C"].map((label, i) => (
-                    <button
-                      key={label}
-                      type="button"
-                      aria-label={label}
-                      className="inline-flex items-center gap-1.5 h-8 rounded-md px-3 text-xs font-medium border border-input bg-background hover:bg-accent transition-colors w-fit"
-                      onClick={() => {
-                        window.open(MULTI_TABS[i].url, "_blank", "noopener,noreferrer");
-                        setResult(`${label} opened via sibling locator`);
-                        markDone("s07");
-                      }}
-                    >
-                      ↗ {label}
-                    </button>
-                  ))}
+                  {["Open Tab A", "Open Tab B", "Open Tab C"].map(
+                    (label, i) => (
+                      <button
+                        key={label}
+                        type="button"
+                        aria-label={label}
+                        className="inline-flex h-8 w-fit items-center gap-1.5 rounded-md border border-input bg-background px-3 text-xs font-medium transition-colors hover:bg-accent"
+                        onClick={() => {
+                          window.open(
+                            MULTI_TABS[i].url,
+                            "_blank",
+                            "noopener,noreferrer",
+                          );
+                          setResult(`${label} opened via sibling locator`);
+                          markDone("s07");
+                        }}
+                      >
+                        ↗ {label}
+                      </button>
+                    ),
+                  )}
                 </div>
               )}
             </ScenarioCard>
 
             {/* ── S08: Dynamic Tab Registry — Challenge ────────────────── */}
-            <ScenarioCard {...tabsWindowsScenarios[7]} onComplete={() => markDone("s08")}>
+            <ScenarioCard
+              {...tabsWindowsScenarios[7]}
+              onComplete={() => markDone("s08")}
+            >
               {({ setResult }) => (
-                <div data-testid="tw-registry-panel" className="overflow-x-auto">
-                  <p className="text-xs text-muted-foreground mb-2">
-                    No <code>data-testid</code> on rows or buttons. Use XPath by cell text or <code>data-tab-id</code>.
+                <div
+                  data-testid="tw-registry-panel"
+                  className="overflow-x-auto"
+                >
+                  <p className="mb-2 text-xs text-muted-foreground">
+                    No <code>data-testid</code> on rows or buttons. Use XPath by
+                    cell text or <code>data-tab-id</code>.
                   </p>
-                  <table className={styles.registryTable} aria-label="Open tab registry">
+                  <table
+                    className={styles.registryTable}
+                    aria-label="Open tab registry"
+                  >
                     <thead>
                       <tr>
                         <th>Tab Name</th>
@@ -301,7 +371,9 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                             <code className="text-[11px]">{url}</code>
                           </td>
                           <td>
-                            <span className={`${styles.tabBadge} ${focusedTab === tabId ? styles.tabBadgeOpen : ""}`}>
+                            <span
+                              className={`${styles.tabBadge} ${focusedTab === tabId ? styles.tabBadgeOpen : ""}`}
+                            >
                               {focusedTab === tabId ? "Active" : status}
                             </span>
                           </td>
@@ -310,7 +382,7 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                             <button
                               type="button"
                               aria-label={`Focus ${name}`}
-                              className="inline-flex items-center h-7 rounded px-2 text-[11px] font-medium border border-input bg-background hover:bg-accent transition-colors"
+                              className="inline-flex h-7 items-center rounded border border-input bg-background px-2 text-[11px] font-medium transition-colors hover:bg-accent"
                               onClick={() => {
                                 setFocusedTab(tabId);
                                 setResult(`Focused: ${name} (${url})`);
@@ -327,11 +399,13 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                 </div>
               )}
             </ScenarioCard>
-
           </div>
         </section>
 
-        <aside className={styles.practiceSidebar} data-testid="practice-sidebar">
+        <aside
+          className={styles.practiceSidebar}
+          data-testid="practice-sidebar"
+        >
           <ProgressWidget items={progressItems} />
           <FrameworkMethodsPanel methods={frameworkMethods} />
           <UpNextCard {...upNext} />

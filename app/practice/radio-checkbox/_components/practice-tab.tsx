@@ -1,9 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { ScenarioCard, ProgressWidget, FrameworkMethodsPanel, UpNextCard } from "@/components/practice";
+import {
+  ScenarioCard,
+  ProgressWidget,
+  FrameworkMethodsPanel,
+  UpNextCard,
+} from "@/components/practice";
 import type { ProgressItem } from "@/components/practice";
-import { radioCheckboxScenarios, frameworkMethods } from "@/data/practice-data/radio-checkbox/scenarios";
+import {
+  radioCheckboxScenarios,
+  frameworkMethods,
+} from "@/data/practice-data/radio-checkbox/scenarios";
 import type { PracticePageMeta } from "@/data/practice-data/types";
 import styles from "./radio-checkbox.module.css";
 
@@ -13,29 +21,33 @@ interface PracticeTabProps {
 
 const SKILLS = [
   { id: "skill-playwright", label: "Playwright" },
-  { id: "skill-selenium",   label: "Selenium" },
-  { id: "skill-cypress",    label: "Cypress" },
-  { id: "skill-webdriverio",label: "WebdriverIO" },
+  { id: "skill-selenium", label: "Selenium" },
+  { id: "skill-cypress", label: "Cypress" },
+  { id: "skill-webdriverio", label: "WebdriverIO" },
 ];
 
 const PLAN_CARDS = [
-  { plan: "starter",    name: "Starter",    price: "Free" },
-  { plan: "pro",        name: "Pro",        price: "$12 / mo" },
+  { plan: "starter", name: "Starter", price: "Free" },
+  { plan: "pro", name: "Pro", price: "$12 / mo" },
   { plan: "enterprise", name: "Enterprise", price: "$49 / mo" },
 ];
 
 const PERMISSIONS = [
-  { name: "perm_read_users",    label: "Read Users" },
-  { name: "perm_write_users",   label: "Write Users" },
-  { name: "perm_read_reports",  label: "Read Reports" },
+  { name: "perm_read_users", label: "Read Users" },
+  { name: "perm_write_users", label: "Write Users" },
+  { name: "perm_read_reports", label: "Read Reports" },
   { name: "perm_write_reports", label: "Write Reports" },
-  { name: "perm_read_billing",  label: "Read Billing" },
-  { name: "perm_delete_all",    label: "Delete All" },
+  { name: "perm_read_billing", label: "Read Billing" },
+  { name: "perm_delete_all", label: "Delete All" },
 ];
 
 /* ── Sub-components ──────────────────────────────────────────── */
 
-function CheckboxGroup({ onChange }: { onChange: (selected: string[]) => void }) {
+function CheckboxGroup({
+  onChange,
+}: {
+  onChange: (selected: string[]) => void;
+}) {
   const [checked, setChecked] = useState<Set<string>>(new Set());
 
   function toggle(id: string) {
@@ -60,7 +72,7 @@ function CheckboxGroup({ onChange }: { onChange: (selected: string[]) => void })
             value={skill.id}
             checked={checked.has(skill.id)}
             onChange={() => toggle(skill.id)}
-            className="h-4 w-4 rounded border-gray-300 accent-primary cursor-pointer"
+            className="h-4 w-4 cursor-pointer rounded border-gray-300 accent-primary"
           />
           <span className={styles.controlLabel}>{skill.label}</span>
         </label>
@@ -76,16 +88,23 @@ function PermissionList({ onChange }: { onChange: (label: string) => void }) {
     setChecked((prev) => {
       const next = new Set(prev);
       next.has(name) ? next.delete(name) : next.add(name);
-      const readOnly = PERMISSIONS.filter((p) => next.has(p.name) && p.label.startsWith("Read"));
-      onChange(readOnly.length ? `Read perms: ${readOnly.map((p) => p.label).join(", ")}` : "No read perms selected");
+      const readOnly = PERMISSIONS.filter(
+        (p) => next.has(p.name) && p.label.startsWith("Read"),
+      );
+      onChange(
+        readOnly.length
+          ? `Read perms: ${readOnly.map((p) => p.label).join(", ")}`
+          : "No read perms selected",
+      );
       return next;
     });
   }
 
   return (
     <div data-testid="rc-permissions-panel" className="flex flex-col">
-      <p className="text-xs text-muted-foreground mb-2">
-        No <code>data-testid</code> on inputs. Locate via <code>starts-with(@name, &quot;perm_&quot;)</code>.
+      <p className="mb-2 text-xs text-muted-foreground">
+        No <code>data-testid</code> on inputs. Locate via{" "}
+        <code>starts-with(@name, &quot;perm_&quot;)</code>.
       </p>
       {PERMISSIONS.map(({ name, label }) => (
         <div key={name} className={styles.permissionRow}>
@@ -95,7 +114,7 @@ function PermissionList({ onChange }: { onChange: (label: string) => void }) {
             name={name}
             checked={checked.has(name)}
             onChange={() => toggle(name)}
-            className="h-4 w-4 rounded border-gray-300 accent-primary cursor-pointer"
+            className="h-4 w-4 cursor-pointer rounded border-gray-300 accent-primary"
             aria-label={label}
           />
           <span className={styles.permissionName}>{label}</span>
@@ -128,7 +147,7 @@ function PlanCards({ onChange }: { onChange: (plan: string) => void }) {
           className={`${styles.planCard} ${selected === plan ? styles.planCardSelected : ""}`}
           onClick={() => select(plan)}
         >
-          <label className="flex items-center gap-2 cursor-pointer">
+          <label className="flex cursor-pointer items-center gap-2">
             <input
               type="radio"
               name="plan-card-radio"
@@ -173,10 +192,15 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
           <p className="mb-3 text-[10.5px] font-bold tracking-[0.08em] text-muted-foreground uppercase">
             Interactive Scenarios
           </p>
-          <div className="flex flex-col gap-[10px]" data-testid="scenarios-list">
-
+          <div
+            className="flex flex-col gap-[10px]"
+            data-testid="scenarios-list"
+          >
             {/* ── S01: Basic Checkbox ───────────────────────────────────── */}
-            <ScenarioCard {...radioCheckboxScenarios[0]} onComplete={() => markDone("s01")}>
+            <ScenarioCard
+              {...radioCheckboxScenarios[0]}
+              onComplete={() => markDone("s01")}
+            >
               {({ setResult }) => (
                 <label className={styles.controlRow} htmlFor="chk-accept-terms">
                   <input
@@ -184,19 +208,24 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     id="chk-accept-terms"
                     data-testid="chk-accept-terms"
                     name="accept_terms"
-                    className="h-4 w-4 rounded border-gray-300 accent-primary cursor-pointer"
+                    className="h-4 w-4 cursor-pointer rounded border-gray-300 accent-primary"
                     onChange={(e) => {
                       setResult(e.target.checked ? "Checked ✓" : "Unchecked");
                       if (e.target.checked) markDone("s01");
                     }}
                   />
-                  <span className={styles.controlLabel}>I accept the terms and conditions</span>
+                  <span className={styles.controlLabel}>
+                    I accept the terms and conditions
+                  </span>
                 </label>
               )}
             </ScenarioCard>
 
             {/* ── S02: Radio Group ──────────────────────────────────────── */}
-            <ScenarioCard {...radioCheckboxScenarios[1]} onComplete={() => markDone("s02")}>
+            <ScenarioCard
+              {...radioCheckboxScenarios[1]}
+              onComplete={() => markDone("s02")}
+            >
               {({ setResult }) => (
                 <div
                   data-testid="radio-plan-group"
@@ -206,17 +235,21 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                 >
                   {[
                     { value: "starter", label: "Starter" },
-                    { value: "pro",     label: "Pro" },
-                    { value: "business",label: "Business" },
+                    { value: "pro", label: "Pro" },
+                    { value: "business", label: "Business" },
                   ].map(({ value, label }) => (
-                    <label key={value} className={styles.controlRow} htmlFor={`radio-plan-${value}`}>
+                    <label
+                      key={value}
+                      className={styles.controlRow}
+                      htmlFor={`radio-plan-${value}`}
+                    >
                       <input
                         type="radio"
                         id={`radio-plan-${value}`}
                         name="plan"
                         value={value}
                         data-testid={`radio-plan-${value}`}
-                        className="h-4 w-4 accent-primary cursor-pointer"
+                        className="h-4 w-4 cursor-pointer accent-primary"
                         onChange={() => {
                           setResult(`Selected: ${label}`);
                           markDone("s02");
@@ -230,11 +263,16 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* ── S03: Checkbox Group – Select All ─────────────────────── */}
-            <ScenarioCard {...radioCheckboxScenarios[2]} onComplete={() => markDone("s03")}>
+            <ScenarioCard
+              {...radioCheckboxScenarios[2]}
+              onComplete={() => markDone("s03")}
+            >
               {({ setResult }) => (
                 <CheckboxGroup
                   onChange={(selected) => {
-                    setResult(selected.length ? selected.join(", ") : "None selected");
+                    setResult(
+                      selected.length ? selected.join(", ") : "None selected",
+                    );
                     if (selected.length === SKILLS.length) markDone("s03");
                   }}
                 />
@@ -242,7 +280,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* ── S04: Pre-checked Newsletter – Assert State ────────────── */}
-            <ScenarioCard {...radioCheckboxScenarios[3]} onComplete={() => markDone("s04")}>
+            <ScenarioCard
+              {...radioCheckboxScenarios[3]}
+              onComplete={() => markDone("s04")}
+            >
               {({ setResult }) => (
                 <label className={styles.controlRow} htmlFor="chk-newsletter">
                   <input
@@ -251,19 +292,31 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     data-testid="chk-newsletter"
                     name="newsletter"
                     defaultChecked
-                    className="h-4 w-4 rounded border-gray-300 accent-primary cursor-pointer"
+                    className="h-4 w-4 cursor-pointer rounded border-gray-300 accent-primary"
                     onChange={(e) => {
-                      setResult(e.target.checked ? "Checked (re-subscribed)" : "Unchecked (unsubscribed)");
+                      setResult(
+                        e.target.checked
+                          ? "Checked (re-subscribed)"
+                          : "Unchecked (unsubscribed)",
+                      );
                       markDone("s04");
                     }}
                   />
-                  <span className={styles.controlLabel}>Subscribe to newsletter <span className="text-xs text-muted-foreground">(pre-checked)</span></span>
+                  <span className={styles.controlLabel}>
+                    Subscribe to newsletter{" "}
+                    <span className="text-xs text-muted-foreground">
+                      (pre-checked)
+                    </span>
+                  </span>
                 </label>
               )}
             </ScenarioCard>
 
             {/* ── S05: Disabled Controls ───────────────────────────────── */}
-            <ScenarioCard {...radioCheckboxScenarios[4]} onComplete={() => markDone("s05")}>
+            <ScenarioCard
+              {...radioCheckboxScenarios[4]}
+              onComplete={() => markDone("s05")}
+            >
               {({ setResult }) => (
                 <div className="flex flex-col gap-2">
                   <label className={styles.controlRow} htmlFor="chk-disabled">
@@ -273,9 +326,11 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                       data-testid="chk-disabled"
                       name="disabled_pref"
                       disabled
-                      className="h-4 w-4 rounded border-gray-300 accent-primary cursor-not-allowed opacity-50"
+                      className="h-4 w-4 cursor-not-allowed rounded border-gray-300 accent-primary opacity-50"
                     />
-                    <span className="text-sm text-muted-foreground line-through">Disabled checkbox</span>
+                    <span className="text-sm text-muted-foreground line-through">
+                      Disabled checkbox
+                    </span>
                   </label>
                   <label className={styles.controlRow} htmlFor="radio-disabled">
                     <input
@@ -285,13 +340,15 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                       name="disabled_radio_group"
                       value="locked"
                       disabled
-                      className="h-4 w-4 accent-primary cursor-not-allowed opacity-50"
+                      className="h-4 w-4 cursor-not-allowed accent-primary opacity-50"
                     />
-                    <span className="text-sm text-muted-foreground line-through">Disabled radio</span>
+                    <span className="text-sm text-muted-foreground line-through">
+                      Disabled radio
+                    </span>
                   </label>
                   <button
                     type="button"
-                    className="inline-flex items-center justify-center h-8 rounded-md border border-input bg-background px-3 text-xs font-medium hover:bg-accent transition-colors w-fit mt-1"
+                    className="mt-1 inline-flex h-8 w-fit items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium transition-colors hover:bg-accent"
                     onClick={() => {
                       setResult("Both controls confirmed disabled");
                       markDone("s05");
@@ -304,23 +361,34 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* ── S06: Sibling-Located Controls (Hard — no testid on inputs) */}
-            <ScenarioCard {...radioCheckboxScenarios[5]} onComplete={() => markDone("s06")}>
+            <ScenarioCard
+              {...radioCheckboxScenarios[5]}
+              onComplete={() => markDone("s06")}
+            >
               {({ setResult }) => (
-                <div data-testid="rc-notification-prefs" className="flex flex-col">
+                <div
+                  data-testid="rc-notification-prefs"
+                  className="flex flex-col"
+                >
                   {/* No data-testid on inputs — practice XPath sibling/ancestor */}
                   {[
-                    { name: "notif_email_marketing", label: "Marketing emails" },
-                    { name: "notif_sms_alerts",      label: "SMS alerts" },
-                    { name: "notif_push_weekly",      label: "Weekly digest" },
+                    {
+                      name: "notif_email_marketing",
+                      label: "Marketing emails",
+                    },
+                    { name: "notif_sms_alerts", label: "SMS alerts" },
+                    { name: "notif_push_weekly", label: "Weekly digest" },
                   ].map(({ name, label }) => (
                     <div key={name} className={styles.fieldRow}>
                       <input
                         type="checkbox"
                         id={name}
                         name={name}
-                        className="h-4 w-4 rounded border-gray-300 accent-primary cursor-pointer"
+                        className="h-4 w-4 cursor-pointer rounded border-gray-300 accent-primary"
                         onChange={(e) => {
-                          setResult(`${label}: ${e.target.checked ? "on" : "off"}`);
+                          setResult(
+                            `${label}: ${e.target.checked ? "on" : "off"}`,
+                          );
                           markDone("s06");
                         }}
                       />
@@ -333,7 +401,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* ── S07: Plan Cards – Scoped Radio (Medium) ──────────────── */}
-            <ScenarioCard {...radioCheckboxScenarios[6]} onComplete={() => markDone("s07")}>
+            <ScenarioCard
+              {...radioCheckboxScenarios[6]}
+              onComplete={() => markDone("s07")}
+            >
               {({ setResult }) => (
                 <PlanCards
                   onChange={(plan) => {
@@ -345,7 +416,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* ── S08: Dynamic Permission List (Challenge — no testid) ─── */}
-            <ScenarioCard {...radioCheckboxScenarios[7]} onComplete={() => markDone("s08")}>
+            <ScenarioCard
+              {...radioCheckboxScenarios[7]}
+              onComplete={() => markDone("s08")}
+            >
               {({ setResult }) => (
                 <PermissionList
                   onChange={(label) => {
@@ -355,11 +429,13 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                 />
               )}
             </ScenarioCard>
-
           </div>
         </section>
 
-        <aside className={styles.practiceSidebar} data-testid="practice-sidebar">
+        <aside
+          className={styles.practiceSidebar}
+          data-testid="practice-sidebar"
+        >
           <ProgressWidget items={progressItems} />
           <FrameworkMethodsPanel methods={frameworkMethods} />
           <UpNextCard {...upNext} />

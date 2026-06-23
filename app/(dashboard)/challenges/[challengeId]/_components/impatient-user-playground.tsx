@@ -46,7 +46,11 @@ export function ImpatientUserPlayground() {
         </button>
 
         {phase === "processing" && (
-          <div className={styles.spinnerWrap} data-testid="processing-spinner" aria-live="polite">
+          <div
+            className={styles.spinnerWrap}
+            data-testid="processing-spinner"
+            aria-live="polite"
+          >
             <div className={styles.spinner} aria-hidden="true" />
             <span>Working… (random delay 1–7s)</span>
           </div>

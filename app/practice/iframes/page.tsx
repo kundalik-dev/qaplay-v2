@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { PracticePage } from "./_components/practice-page";
-import { LearnTab }      from "./_components/learn-tab";
-import { iframesMeta, iframesTestCases, iframesLearnCode } from "@/data/practice-data/iframes";
+import { LearnTab } from "./_components/learn-tab";
+import {
+  iframesMeta,
+  iframesTestCases,
+  iframesLearnCode,
+} from "@/data/practice-data/iframes";
 import { iframesPageMetadata } from "@/data/meta-data/practice/iframes-page-meta-data";
 import {
   iframesPageWebPageJsonLd,
@@ -24,20 +28,28 @@ export default async function IframesPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(iframesPageWebPageJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(iframesPageWebPageJsonLd),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(iframesPageBreadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(iframesPageBreadcrumbJsonLd),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(iframesPageFaqJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(iframesPageFaqJsonLd),
+        }}
       />
       <PracticePage
         meta={iframesMeta}
         testCases={iframesTestCases}
-        learnContent={<LearnTab snippets={{ basic, nested, locate, dynamic }} />}
+        learnContent={
+          <LearnTab snippets={{ basic, nested, locate, dynamic }} />
+        }
       />
     </>
   );

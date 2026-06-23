@@ -8,10 +8,10 @@ export const tabsWindowsTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Set up a listener with <code>context.waitForEvent(\'page\')</code> before clicking.',
+      "Set up a listener with <code>context.waitForEvent('page')</code> before clicking.",
       'Click <code>[data-testid="tw-open-new-tab"]</code>.',
-      'Await the new page context.',
-      'Assert <code>context.pages().length === 2</code>.',
+      "Await the new page context.",
+      "Assert <code>context.pages().length === 2</code>.",
     ],
   },
   {
@@ -21,9 +21,9 @@ export const tabsWindowsTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Capture the new page via <code>waitForEvent(\'page\')</code>.',
-      'Call <code>newPage.waitForLoadState()</code>.',
-      'Assert <code>newPage.url()</code> equals the expected URL.',
+      "Capture the new page via <code>waitForEvent('page')</code>.",
+      "Call <code>newPage.waitForLoadState()</code>.",
+      "Assert <code>newPage.url()</code> equals the expected URL.",
     ],
   },
   {
@@ -33,9 +33,9 @@ export const tabsWindowsTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Switch to the new tab context.',
-      'Wait for load state.',
-      'Assert <code>newPage.title()</code> contains the expected text.',
+      "Switch to the new tab context.",
+      "Wait for load state.",
+      "Assert <code>newPage.title()</code> contains the expected text.",
     ],
   },
   {
@@ -45,9 +45,9 @@ export const tabsWindowsTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Open a new tab and switch to it.',
-      'Call <code>context.pages()[0].bringToFront()</code>.',
-      'Assert the original page URL has not changed.',
+      "Open a new tab and switch to it.",
+      "Call <code>context.pages()[0].bringToFront()</code>.",
+      "Assert the original page URL has not changed.",
     ],
   },
   {
@@ -57,9 +57,9 @@ export const tabsWindowsTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Open a new tab — assert count is 2.',
-      'Call <code>newPage.close()</code>.',
-      'Assert <code>context.pages().length === 1</code>.',
+      "Open a new tab — assert count is 2.",
+      "Call <code>newPage.close()</code>.",
+      "Assert <code>context.pages().length === 1</code>.",
     ],
   },
   {
@@ -70,7 +70,7 @@ export const tabsWindowsTestCases: TestCase[] = [
     priority: "medium",
     steps: [
       'Click each of the three tab-open buttons inside <code>[data-testid="tw-multi-tab-panel"]</code>.',
-      'Assert <code>context.pages().length === 4</code>.',
+      "Assert <code>context.pages().length === 4</code>.",
     ],
   },
   {
@@ -80,9 +80,9 @@ export const tabsWindowsTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Register <code>page.waitForEvent(\'popup\')</code> before the click.',
+      "Register <code>page.waitForEvent('popup')</code> before the click.",
       'Click <code>[data-testid="tw-popup-btn"]</code>.',
-      'Await the popup page and assert its URL.',
+      "Await the popup page and assert its URL.",
     ],
   },
   {
@@ -92,10 +92,10 @@ export const tabsWindowsTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Store the original window handle.',
-      'Click the link that opens a new window.',
-      'Iterate <code>getWindowHandles()</code> and switch to the new handle.',
-      'Assert <code>getCurrentUrl()</code> in the new context.',
+      "Store the original window handle.",
+      "Click the link that opens a new window.",
+      "Iterate <code>getWindowHandles()</code> and switch to the new handle.",
+      "Assert <code>getCurrentUrl()</code> in the new context.",
     ],
   },
   {
@@ -106,8 +106,8 @@ export const tabsWindowsTestCases: TestCase[] = [
     priority: "medium",
     steps: [
       'Use XPath: <code>//div[@data-testid="tw-sibling-panel"]//button[normalize-space()="Open Tab B"]</code>.',
-      'Click the located button.',
-      'Assert result span updates.',
+      "Click the located button.",
+      "Assert result span updates.",
     ],
   },
   {
@@ -118,44 +118,48 @@ export const tabsWindowsTestCases: TestCase[] = [
     priority: "medium",
     steps: [
       'Use XPath: <code>//tr[td[normalize-space()="Tab C"]]//button[normalize-space()="Focus"]</code>.',
-      'Click the Focus button.',
-      'Assert the result span shows Tab C focused.',
+      "Click the Focus button.",
+      "Assert the result span shows Tab C focused.",
     ],
   },
   {
     id: "TW_011",
     scenario: "Verify tab with target=_blank has correct attribute",
-    expected: "The anchor element has target=\"_blank\" and rel=\"noopener noreferrer\".",
+    expected:
+      'The anchor element has target="_blank" and rel="noopener noreferrer".',
     type: "positive",
     priority: "medium",
     steps: [
-      'Locate the link element.',
+      "Locate the link element.",
       'Assert <code>getAttribute("target") === "_blank"</code>.',
       'Assert <code>getAttribute("rel")</code> contains <code>"noopener"</code>.',
     ],
   },
   {
     id: "TW_012",
-    scenario: "Verify Cypress can interact with a same-origin new tab by removing target",
-    expected: "After removing target attribute, the link navigates in the same tab.",
+    scenario:
+      "Verify Cypress can interact with a same-origin new tab by removing target",
+    expected:
+      "After removing target attribute, the link navigates in the same tab.",
     type: "positive",
     priority: "medium",
     steps: [
-      'Use <code>cy.get(\'a\').invoke(\'removeAttr\', \'target\')</code>.',
-      'Click the link.',
-      'Assert the URL changes in the current tab.',
+      "Use <code>cy.get('a').invoke('removeAttr', 'target')</code>.",
+      "Click the link.",
+      "Assert the URL changes in the current tab.",
     ],
   },
   {
     id: "TW_013",
     scenario: "Verify that interacting with a closed tab throws an error",
-    expected: "Calling methods on a closed page context raises a Target closed error.",
+    expected:
+      "Calling methods on a closed page context raises a Target closed error.",
     type: "negative",
     priority: "medium",
     steps: [
-      'Open and then close a new tab.',
-      'Attempt to call <code>newPage.url()</code> on the closed page.',
-      'Assert a <code>Target closed</code> error is thrown.',
+      "Open and then close a new tab.",
+      "Attempt to call <code>newPage.url()</code> on the closed page.",
+      "Assert a <code>Target closed</code> error is thrown.",
     ],
   },
   {
@@ -165,9 +169,9 @@ export const tabsWindowsTestCases: TestCase[] = [
     type: "edge",
     priority: "low",
     steps: [
-      'Open multiple tabs during the test.',
-      'Close each one with <code>page.close()</code>.',
-      'Assert only the original page remains in <code>context.pages()</code>.',
+      "Open multiple tabs during the test.",
+      "Close each one with <code>page.close()</code>.",
+      "Assert only the original page remains in <code>context.pages()</code>.",
     ],
   },
 ];

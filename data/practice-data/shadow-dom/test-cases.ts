@@ -9,8 +9,8 @@ export const shadowDomTestCases: TestCase[] = [
     priority: "high",
     steps: [
       "Navigate to /practice/shadow-dom",
-      "Locate shadow host: <code>[data-testid=\"shadow-host-basic\"]</code>",
-      "Locate button inside shadow: <code>[data-testid=\"shadow-btn-basic\"]</code>",
+      'Locate shadow host: <code>[data-testid="shadow-host-basic"]</code>',
+      'Locate button inside shadow: <code>[data-testid="shadow-btn-basic"]</code>',
       "Click the shadow button",
       "Assert click count span text incremented",
     ],
@@ -22,24 +22,25 @@ export const shadowDomTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      "Locate shadow host <code>[data-testid=\"shadow-host-basic\"]</code>",
-      "Pierce into shadow root and locate <code>[data-testid=\"shadow-btn-basic\"]</code>",
+      'Locate shadow host <code>[data-testid="shadow-host-basic"]</code>',
+      'Pierce into shadow root and locate <code>[data-testid="shadow-btn-basic"]</code>',
       "Assert element is visible",
       "Assert element is enabled (not disabled)",
     ],
   },
   {
     id: "SD_003",
-    scenario: "Assert click count span (no testid — locate by id inside shadow)",
+    scenario:
+      "Assert click count span (no testid — locate by id inside shadow)",
     expected: "Click count span updates correctly after each click",
     type: "positive",
     priority: "medium",
     steps: [
-      "Locate shadow host and click <code>[data-testid=\"shadow-btn-basic\"]</code> three times",
+      'Locate shadow host and click <code>[data-testid="shadow-btn-basic"]</code> three times',
       "Pierce shadow root and find <code>#shadow-click-count</code> (no testid)",
       "Assert text content equals '3'",
     ],
-    note: "Playwright pierces shadow by id. Selenium: shadowRoot.findElement(By.id(\"shadow-click-count\"))",
+    note: 'Playwright pierces shadow by id. Selenium: shadowRoot.findElement(By.id("shadow-click-count"))',
   },
   {
     id: "SD_004",
@@ -48,8 +49,8 @@ export const shadowDomTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      "Locate element with <code>data-testid=\"shadow-host\"</code> and <code>data-host-id=\"host-2\"</code>",
-      "Pierce shadow and click <code>[data-testid=\"shadow-action-btn\"]</code>",
+      'Locate element with <code>data-testid="shadow-host"</code> and <code>data-host-id="host-2"</code>',
+      'Pierce shadow and click <code>[data-testid="shadow-action-btn"]</code>',
       "Assert result shows 'Host 2 activated'",
       "Assert host-1 and host-3 results remain in initial state",
     ],
@@ -61,8 +62,8 @@ export const shadowDomTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      "Confirm there are 3 elements with <code>data-testid=\"shadow-host\"</code>",
-      "Use <code>[data-host-id=\"host-3\"]</code> to narrow scope",
+      'Confirm there are 3 elements with <code>data-testid="shadow-host"</code>',
+      'Use <code>[data-host-id="host-3"]</code> to narrow scope',
       "Click shadow action button inside host-3 only",
       "Assert host-3 result is updated, host-1 and host-2 are unchanged",
     ],
@@ -70,7 +71,8 @@ export const shadowDomTestCases: TestCase[] = [
   {
     id: "SD_006",
     scenario: "Selenium getShadowRoot() to find element inside shadow",
-    expected: "Shadow button found and clicked via Selenium getShadowRoot() API",
+    expected:
+      "Shadow button found and clicked via Selenium getShadowRoot() API",
     type: "positive",
     priority: "high",
     steps: [
@@ -89,9 +91,9 @@ export const shadowDomTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      "Locate outer shadow host: <code>[data-testid=\"shadow-outer-host\"]</code>",
-      "Inside outer shadow find inner host: <code>[data-inner=\"true\"]</code>",
-      "Inside inner shadow find button: <code>[data-testid=\"shadow-inner-btn\"]</code>",
+      'Locate outer shadow host: <code>[data-testid="shadow-outer-host"]</code>',
+      'Inside outer shadow find inner host: <code>[data-inner="true"]</code>',
+      'Inside inner shadow find button: <code>[data-testid="shadow-inner-btn"]</code>',
       "Click and assert result shows 'Inner shadow activated'",
     ],
   },
@@ -111,12 +113,14 @@ export const shadowDomTestCases: TestCase[] = [
   },
   {
     id: "SD_009",
-    scenario: "Fill form input inside shadow DOM — getByLabel (no testid on input)",
-    expected: "Form input fills correctly using label-based locator inside shadow",
+    scenario:
+      "Fill form input inside shadow DOM — getByLabel (no testid on input)",
+    expected:
+      "Form input fills correctly using label-based locator inside shadow",
     type: "positive",
     priority: "high",
     steps: [
-      "Locate shadow host: <code>[data-testid=\"shadow-form-host\"]</code>",
+      'Locate shadow host: <code>[data-testid="shadow-form-host"]</code>',
       "Use <code>getByRole('textbox', &#123; name: 'Full name' &#125;)</code> to find input",
       "Fill with 'Ada Lovelace'",
       "Assert input value is 'Ada Lovelace'",
@@ -130,8 +134,8 @@ export const shadowDomTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      "Locate shadow host: <code>[data-testid=\"shadow-form-host\"]</code>",
-      "Locate select by its associated label or <code>id=\"shadow-role-select\"</code>",
+      'Locate shadow host: <code>[data-testid="shadow-form-host"]</code>',
+      'Locate select by its associated label or <code>id="shadow-role-select"</code>',
       "Select 'Engineer' option",
       "Assert select value is updated",
     ],
@@ -144,7 +148,7 @@ export const shadowDomTestCases: TestCase[] = [
     priority: "high",
     steps: [
       "Fill name input and select role inside shadow form",
-      "Click <code>[data-testid=\"shadow-submit-btn\"]</code>",
+      'Click <code>[data-testid="shadow-submit-btn"]</code>',
       "Assert result message contains submitted name",
     ],
   },
@@ -155,20 +159,21 @@ export const shadowDomTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      "Locate shadow host: <code>[data-testid=\"shadow-dynamic-host\"]</code>",
-      "Spinner with <code>role=\"status\"</code> is initially visible (no testid)",
-      "Wait for button with <code>aria-label=\"Trigger Shadow Action\"</code> to appear (timeout 5000ms)",
+      'Locate shadow host: <code>[data-testid="shadow-dynamic-host"]</code>',
+      'Spinner with <code>role="status"</code> is initially visible (no testid)',
+      'Wait for button with <code>aria-label="Trigger Shadow Action"</code> to appear (timeout 5000ms)',
       "Click the button and assert result shows 'Dynamic action triggered'",
     ],
   },
   {
     id: "SD_013",
     scenario: "page.evaluate() to click button with no stable attributes",
-    expected: "Shadow button with no testid/aria-label is clicked via JS evaluate",
+    expected:
+      "Shadow button with no testid/aria-label is clicked via JS evaluate",
     type: "positive",
     priority: "high",
     steps: [
-      "Locate shadow host: <code>[data-testid=\"shadow-eval-host\"]</code>",
+      'Locate shadow host: <code>[data-testid="shadow-eval-host"]</code>',
       "Use <code>page.evaluate()</code> to access <code>hostEl.shadowRoot.querySelector('input[name=\"evalCode\"]')</code>",
       "Set value to test string",
       "Call <code>shadowRoot.querySelector('button').click()</code>",
@@ -178,12 +183,13 @@ export const shadowDomTestCases: TestCase[] = [
   },
   {
     id: "SD_014",
-    scenario: "Verify standard locators fail on closed shadow root; use evaluate",
+    scenario:
+      "Verify standard locators fail on closed shadow root; use evaluate",
     expected: "Standard DOM locators return no element; evaluate succeeds",
     type: "negative",
     priority: "medium",
     steps: [
-      "Locate shadow host: <code>[data-testid=\"shadow-eval-host\"]</code>",
+      'Locate shadow host: <code>[data-testid="shadow-eval-host"]</code>',
       "Attempt <code>hostEl.shadowRoot</code> — returns null for closed shadow",
       "Use <code>page.evaluate()</code> with JS that has stored reference to shadow root",
       "Click the plain button and verify result",

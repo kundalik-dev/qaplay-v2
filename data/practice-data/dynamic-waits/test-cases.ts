@@ -10,7 +10,7 @@ export const dynamicWaitsTestCases: TestCase[] = [
     steps: [
       'Click <code>[data-testid="dw-trigger-delayed"]</code>.',
       'Call <code>waitForSelector(\'[data-testid="dw-delayed-result"]\', { state: "visible" })</code>.',
-      'Assert the element text is not empty.',
+      "Assert the element text is not empty.",
     ],
   },
   {
@@ -20,9 +20,9 @@ export const dynamicWaitsTestCases: TestCase[] = [
     type: "negative",
     priority: "high",
     steps: [
-      'Do NOT click the trigger.',
-      'Call <code>waitForSelector(\'[data-testid="dw-delayed-result"]\', { timeout: 1000 })</code>.',
-      'Assert a <code>TimeoutError</code> is thrown.',
+      "Do NOT click the trigger.",
+      "Call <code>waitForSelector('[data-testid=\"dw-delayed-result\"]', { timeout: 1000 })</code>.",
+      "Assert a <code>TimeoutError</code> is thrown.",
     ],
   },
   {
@@ -67,9 +67,9 @@ export const dynamicWaitsTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Click the toast trigger.',
-      'Assert the toast appears.',
-      'Wait 4 seconds.',
+      "Click the toast trigger.",
+      "Assert the toast appears.",
+      "Wait 4 seconds.",
       'Assert <code>[data-testid="dw-toast"]</code> has state <code>"hidden"</code> or does not exist.',
     ],
   },
@@ -82,7 +82,7 @@ export const dynamicWaitsTestCases: TestCase[] = [
     steps: [
       'Click <code>[data-testid="dw-trigger-poll"]</code>.',
       'Call <code>page.waitForFunction(() => document.querySelector(\'[data-testid="dw-poll-count"]\')?.textContent === "5")</code>.',
-      'Assert the count span shows 5.',
+      "Assert the count span shows 5.",
     ],
   },
   {
@@ -94,8 +94,8 @@ export const dynamicWaitsTestCases: TestCase[] = [
     steps: [
       'Assert <code>[data-testid="dw-submit-btn"]</code> is disabled on load.',
       'Wait for <code>waitFor({ state: "enabled" })</code>.',
-      'Assert the button is now enabled.',
-      'Click it and assert the result.',
+      "Assert the button is now enabled.",
+      "Click it and assert the result.",
     ],
   },
   {
@@ -105,9 +105,9 @@ export const dynamicWaitsTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Click the status trigger.',
+      "Click the status trigger.",
       'Use <code>waitForFunction</code> until the span text is "Done".',
-      'Assert final text value.',
+      "Assert final text value.",
     ],
   },
   {
@@ -119,19 +119,20 @@ export const dynamicWaitsTestCases: TestCase[] = [
     steps: [
       'Click <code>[data-testid="dw-fetch-btn"]</code>.',
       'Wait for <code>[data-testid="dw-fetch-result"]</code> to be visible.',
-      'Assert its text is not empty.',
+      "Assert its text is not empty.",
     ],
   },
   {
     id: "DW_011",
     scenario: "Verify race-condition element can be caught within timeout",
-    expected: "Element is found before it disappears when timeout is sufficient.",
+    expected:
+      "Element is found before it disappears when timeout is sufficient.",
     type: "positive",
     priority: "medium",
     steps: [
       'Click <code>[data-testid="dw-race-btn"]</code> trigger.',
-      'Use <code>waitForSelector(\'[data-testid="dw-race-target"]\', { timeout: 5000 })</code>.',
-      'If found, assert it is visible; if not, assert a TimeoutError was thrown.',
+      "Use <code>waitForSelector('[data-testid=\"dw-race-target\"]', { timeout: 5000 })</code>.",
+      "If found, assert it is visible; if not, assert a TimeoutError was thrown.",
     ],
   },
   {
@@ -141,9 +142,9 @@ export const dynamicWaitsTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Click the trigger that produces a 3-second delay.',
-      'Use <code>cy.get(\'[data-testid="dw-delayed-result"]\', { timeout: 5000 }).should(\'be.visible\')</code>.',
-      'Assert the element appears.',
+      "Click the trigger that produces a 3-second delay.",
+      "Use <code>cy.get('[data-testid=\"dw-delayed-result\"]', { timeout: 5000 }).should('be.visible')</code>.",
+      "Assert the element appears.",
     ],
   },
   {
@@ -153,21 +154,23 @@ export const dynamicWaitsTestCases: TestCase[] = [
     type: "positive",
     priority: "low",
     steps: [
-      'Instantiate <code>new WebDriverWait(driver, Duration.ofSeconds(10)).pollingEvery(Duration.ofMillis(500))</code>.',
-      'Wait for <code>visibilityOfElementLocated</code> on the target element.',
-      'Assert the element is displayed.',
+      "Instantiate <code>new WebDriverWait(driver, Duration.ofSeconds(10)).pollingEvery(Duration.ofMillis(500))</code>.",
+      "Wait for <code>visibilityOfElementLocated</code> on the target element.",
+      "Assert the element is displayed.",
     ],
   },
   {
     id: "DW_014",
-    scenario: "Verify no hard sleep (Thread.sleep / page.waitForTimeout) is used",
-    expected: "Tests complete faster using condition-based waits rather than fixed delays.",
+    scenario:
+      "Verify no hard sleep (Thread.sleep / page.waitForTimeout) is used",
+    expected:
+      "Tests complete faster using condition-based waits rather than fixed delays.",
     type: "edge",
     priority: "low",
     steps: [
-      'Review test code for <code>Thread.sleep</code> or <code>page.waitForTimeout</code>.',
-      'Replace any fixed sleeps with <code>waitForSelector</code>, <code>waitForFunction</code>, or <code>ExpectedConditions</code>.',
-      'Assert tests still pass and run faster on average.',
+      "Review test code for <code>Thread.sleep</code> or <code>page.waitForTimeout</code>.",
+      "Replace any fixed sleeps with <code>waitForSelector</code>, <code>waitForFunction</code>, or <code>ExpectedConditions</code>.",
+      "Assert tests still pass and run faster on average.",
     ],
   },
 ];

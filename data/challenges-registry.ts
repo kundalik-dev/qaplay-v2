@@ -188,8 +188,8 @@ export function buildValidationSystemPrompt(challenge: ChallengeMeta): string {
     c.strictness === "strict"
       ? "Apply all rules exactly. A submission that misses even one required pattern must FAIL."
       : c.strictness === "moderate"
-      ? "Minor stylistic variations are acceptable if the core technique is correct."
-      : "Focus on the main concept. Forgive minor syntax issues or framework differences.";
+        ? "Minor stylistic variations are acceptable if the core technique is correct."
+        : "Focus on the main concept. Forgive minor syntax issues or framework differences.";
 
   const requiredSection = c.requiredPatterns
     .map((p, i) => `  ${i + 1}. ${p.pattern}\n     Why: ${p.reason}`)
@@ -237,7 +237,6 @@ Respond ONLY with a valid JSON object — no markdown fences, no extra text outs
 // ---------------------------------------------------------------------------
 
 export const challenges: ChallengeMeta[] = [
-
   // ── 1. Ghost Element ─────────────────────────────────────────────────────
   {
     id: "ghost-element",
@@ -252,7 +251,7 @@ export const challenges: ChallengeMeta[] = [
       "Modern web apps increasingly use Web Components and Shadow DOM to encapsulate UI logic. This means elements are hidden inside a <code>#shadow-root</code> that standard CSS selectors and XPath can't reach — a common source of test failures on real projects. This challenge simulates that scenario: a button is rendered inside a component with an open shadow root, and your script must interact with it without resorting to fragile DOM hacks.",
     expectedBehavior: [
       "Navigate to the challenge page",
-      "Locate the button labelled \"Reveal Secret\" inside the simulated shadow root",
+      'Locate the button labelled "Reveal Secret" inside the simulated shadow root',
       "Click the button using a stable, modern Playwright locator",
       "Assert that the secret token becomes visible after the click",
     ],
@@ -288,7 +287,8 @@ test('pierce the shadow DOM', async ({ page }) => {
       requiredPatterns: [
         {
           pattern: "Navigates to the challenge page with page.goto()",
-          reason: "The script must target the actual page where the button lives.",
+          reason:
+            "The script must target the actual page where the button lives.",
         },
         {
           pattern:
@@ -301,19 +301,23 @@ test('pierce the shadow DOM', async ({ page }) => {
           reason: "Clicking is the core action that triggers the token reveal.",
         },
         {
-          pattern: "Asserts that a success or token element becomes visible after clicking",
-          reason: "An assertion proves the script verified the outcome, not just clicked blindly.",
+          pattern:
+            "Asserts that a success or token element becomes visible after clicking",
+          reason:
+            "An assertion proves the script verified the outcome, not just clicked blindly.",
         },
       ],
       forbiddenPatterns: [
         {
-          pattern: "Uses a deeply nested XPath like //div/span/button or a multi-step XPath expression",
+          pattern:
+            "Uses a deeply nested XPath like //div/span/button or a multi-step XPath expression",
           reason:
             "Brittle XPath selectors break whenever the DOM structure changes. Playwright's built-in locators are the correct approach.",
         },
         {
           pattern: "Uses page.waitForTimeout() with a hardcoded number",
-          reason: "Hardcoded sleeps are a flakiness anti-pattern. Use expect().toBeVisible() instead.",
+          reason:
+            "Hardcoded sleeps are a flakiness anti-pattern. Use expect().toBeVisible() instead.",
         },
         {
           pattern:
@@ -341,7 +345,7 @@ test('pierce the shadow DOM', async ({ page }) => {
     problemStatement:
       "The #1 cause of flaky E2E tests is hardcoded sleeps like <code>page.waitForTimeout(3000)</code>. If the actual delay is longer than 3 seconds, your test fails. If it's shorter, you waste time. This challenge forces you to replace that habit with Playwright's smart waiting APIs, which poll the DOM until the element is in the expected state — no guessing, no flaking.",
     expectedBehavior: [
-      "Click the \"Start Processing\" button to trigger the async operation",
+      'Click the "Start Processing" button to trigger the async operation',
       "Wait dynamically for the success toast — do NOT use hardcoded sleeps",
       "Assert the toast's exact text while it is still visible",
       "Your script must handle any delay between 1 and 7 seconds reliably",
@@ -377,7 +381,8 @@ test('catch the fleeting success toast', async ({ page }) => {
         "The user must click 'Start Processing', then dynamically wait for a success toast to appear after a random 1–7s delay, and assert its text within the 800ms window it remains visible. The script must use Playwright's smart waiting APIs, not hardcoded sleeps.",
       requiredPatterns: [
         {
-          pattern: "Clicks the 'Start Processing' button using a stable locator",
+          pattern:
+            "Clicks the 'Start Processing' button using a stable locator",
           reason: "The button click is what triggers the processing sequence.",
         },
         {
@@ -387,18 +392,22 @@ test('catch the fleeting success toast', async ({ page }) => {
             "This is the smart-wait pattern — it polls until the element appears rather than sleeping a fixed amount.",
         },
         {
-          pattern: "Asserts the toast's text content with toContainText() or toHaveText()",
-          reason: "A bare visibility check is insufficient — the user must confirm the correct message appeared.",
+          pattern:
+            "Asserts the toast's text content with toContainText() or toHaveText()",
+          reason:
+            "A bare visibility check is insufficient — the user must confirm the correct message appeared.",
         },
       ],
       forbiddenPatterns: [
         {
-          pattern: "Uses page.waitForTimeout() with any numeric millisecond value",
+          pattern:
+            "Uses page.waitForTimeout() with any numeric millisecond value",
           reason:
             "Hardcoded sleeps are the exact anti-pattern this challenge is designed to teach against. Any use of waitForTimeout fails the submission.",
         },
         {
-          pattern: "Uses a fixed sleep, setTimeout, or sleep() equivalent anywhere in the test code",
+          pattern:
+            "Uses a fixed sleep, setTimeout, or sleep() equivalent anywhere in the test code",
           reason: "Same reason — hardcoded delays make tests flaky.",
         },
       ],
@@ -461,16 +470,20 @@ test('mock the stubborn API', async ({ page }) => {
         "The user must write a Playwright script that intercepts the GET /api/user-stats request using page.route() before the page loads, mocks the response with HTTP 200 and body { status: 'success', users: 42 }, then asserts the UI renders the success state.",
       requiredPatterns: [
         {
-          pattern: "Calls page.route() with a URL pattern matching /api/user-stats",
+          pattern:
+            "Calls page.route() with a URL pattern matching /api/user-stats",
           reason: "Without route(), no interception happens at all.",
         },
         {
           pattern: "The route handler calls route.fulfill() with status: 200",
-          reason: "fulfill() is the correct API for mocking responses; abort() and continue() do not provide a mocked body.",
+          reason:
+            "fulfill() is the correct API for mocking responses; abort() and continue() do not provide a mocked body.",
         },
         {
-          pattern: "The fulfilled response body contains { status: 'success', users: 42 }",
-          reason: "The challenge specifies an exact payload — the UI conditionally renders based on this data.",
+          pattern:
+            "The fulfilled response body contains { status: 'success', users: 42 }",
+          reason:
+            "The challenge specifies an exact payload — the UI conditionally renders based on this data.",
         },
         {
           pattern: "page.route() is called BEFORE page.goto()",
@@ -479,17 +492,21 @@ test('mock the stubborn API', async ({ page }) => {
         },
         {
           pattern: "Asserts the success UI element is visible after navigation",
-          reason: "An assertion confirms the mock worked — not just that the script ran without errors.",
+          reason:
+            "An assertion confirms the mock worked — not just that the script ran without errors.",
         },
       ],
       forbiddenPatterns: [
         {
           pattern: "Calls page.goto() before setting up page.route()",
-          reason: "The request fires on load — a late intercept misses it entirely.",
+          reason:
+            "The request fires on load — a late intercept misses it entirely.",
         },
         {
-          pattern: "Uses route.abort() or route.continue() instead of route.fulfill()",
-          reason: "abort() blocks the request; continue() passes it to the real server. Neither provides a mocked 200 response.",
+          pattern:
+            "Uses route.abort() or route.continue() instead of route.fulfill()",
+          reason:
+            "abort() blocks the request; continue() passes it to the real server. Neither provides a mocked 200 response.",
         },
       ],
       strictness: "strict",
@@ -509,10 +526,10 @@ test('mock the stubborn API', async ({ page }) => {
     xp: 10,
     tags: ["Mouse Events", "Drag & Drop", "Interactions"],
     problemStatement:
-      "Drag-and-drop is one of the trickiest interactions to automate reliably. The browser fires a chain of pointer events — <code>pointerdown</code>, <code>pointermove</code>, <code>pointerup</code> — and frameworks like React listen to all of them. A simple <code>click()</code> won't work. This challenge simulates a real kanban board where you must drag a ticket from \"To Do\" to \"Done\" using Playwright's pointer simulation APIs.",
+      'Drag-and-drop is one of the trickiest interactions to automate reliably. The browser fires a chain of pointer events — <code>pointerdown</code>, <code>pointermove</code>, <code>pointerup</code> — and frameworks like React listen to all of them. A simple <code>click()</code> won\'t work. This challenge simulates a real kanban board where you must drag a ticket from "To Do" to "Done" using Playwright\'s pointer simulation APIs.',
     expectedBehavior: [
-      "Locate the draggable ticket in the \"To Do\" column",
-      "Drag it to the \"Done\" column using Playwright's drag API or manual mouse events",
+      'Locate the draggable ticket in the "To Do" column',
+      'Drag it to the "Done" column using Playwright\'s drag API or manual mouse events',
       "Assert that the ticket appears in the Done column after the drop",
       "Assert that a success indicator is visible confirming the drag completed",
     ],
@@ -549,22 +566,28 @@ test('drag ticket to Done', async ({ page }) => {
         "The user must write a Playwright script that locates the draggable ticket in the To Do column, drags it to the Done column, and asserts that the ticket appears in Done. Either the high-level dragTo() API or manual mouse event simulation is acceptable.",
       requiredPatterns: [
         {
-          pattern: "Locates the draggable ticket using a stable selector (getByTestId, id, or role)",
-          reason: "The ticket must be reliably found before the drag can begin.",
+          pattern:
+            "Locates the draggable ticket using a stable selector (getByTestId, id, or role)",
+          reason:
+            "The ticket must be reliably found before the drag can begin.",
         },
         {
           pattern:
             "Performs the drag using locator.dragTo(target), or a manual mouse.down / mouse.move / mouse.up sequence targeting the Done column",
-          reason: "One of these approaches is required to simulate the full drag-and-drop pointer event chain.",
+          reason:
+            "One of these approaches is required to simulate the full drag-and-drop pointer event chain.",
         },
         {
-          pattern: "Asserts that the ticket or a success indicator appears in the Done column",
-          reason: "Confirms the drop succeeded — a bare drag call is not sufficient.",
+          pattern:
+            "Asserts that the ticket or a success indicator appears in the Done column",
+          reason:
+            "Confirms the drop succeeded — a bare drag call is not sufficient.",
         },
       ],
       forbiddenPatterns: [
         {
-          pattern: "Modifies the DOM directly via page.evaluate() to move the ticket without simulating drag events",
+          pattern:
+            "Modifies the DOM directly via page.evaluate() to move the ticket without simulating drag events",
           reason:
             "Injecting JS to teleport the element skips event simulation entirely and proves nothing about drag-and-drop automation skill.",
         },
@@ -574,5 +597,4 @@ test('drag ticket to Done', async ({ page }) => {
         "Accept both dragTo() and manual mouse event chains (mouse.down / mouse.move / mouse.up). The moderate strictness is intentional: drag-and-drop implementations vary, and minor differences in selector strategy should not fail an otherwise correct solution.",
     },
   },
-
 ];
