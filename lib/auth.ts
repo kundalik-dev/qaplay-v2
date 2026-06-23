@@ -32,6 +32,15 @@ const trustedOrigins: string[] = [];
 if (process.env.BETTER_AUTH_URL) {
   trustedOrigins.push(process.env.BETTER_AUTH_URL);
 }
+if (process.env.NEXT_PUBLIC_APP_URL) {
+  trustedOrigins.push(process.env.NEXT_PUBLIC_APP_URL);
+}
+if (process.env.VERCEL_URL) {
+  trustedOrigins.push(`https://${process.env.VERCEL_URL}`);
+}
+if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+  trustedOrigins.push(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}`);
+}
 if (process.env.TRUSTED_ORIGINS) {
   process.env.TRUSTED_ORIGINS.split(",")
     .map((o) => o.trim())
