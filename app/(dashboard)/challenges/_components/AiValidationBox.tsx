@@ -122,7 +122,7 @@ export default function AiValidationBox({
     >
       <p
         className={`${styles.bodySm} ${styles.textMuted} ${styles.aiBoxIntro}`}
-        style={{ marginBottom: "16px" }}
+        style={{ marginTop: "16px", marginBottom: "16px" }}
       >
         Run your script locally, paste it below, and let AI validate your
         solution.
@@ -158,49 +158,49 @@ export default function AiValidationBox({
         />
       </div>
 
-      {/* Submit button */}
-      <button
-        className={`${styles.btn} ${styles.btnPrimary} ${styles.btnSubmitSolution}`}
-        onClick={handleValidate}
-        disabled={loading || !hasKey}
-        data-testid="validate-btn"
-        aria-busy={loading}
-      >
-        {loading ? (
-          <>
-            <span className={styles.validateSpinner} aria-hidden="true" />
-            Validating…
-          </>
-        ) : (
-          <>
-            <span aria-hidden="true">✨</span>
-            Validate with AI
-          </>
-        )}
-      </button>
-
-      {/* Prompt preview (admin/dev tool) */}
-      <div
-        className={styles.promptPreviewSection}
-        data-testid="prompt-preview-section"
-      >
+      {/* Actions Row */}
+      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '16px', flexWrap: 'wrap' }}>
+        {/* Submit button */}
         <button
-          className={styles.promptToggleBtn}
+          className={`${styles.btn} ${styles.btnPrimary}`}
+          style={{ width: 'auto', padding: '8px 16px', fontSize: '13px', margin: 0, borderRadius: '9999px', height: '32px' }}
+          onClick={handleValidate}
+          disabled={loading || !hasKey}
+          data-testid="validate-btn"
+          aria-busy={loading}
+        >
+          {loading ? (
+            <>
+              <span className={styles.validateSpinner} aria-hidden="true" />
+              Validating…
+            </>
+          ) : (
+            <>
+              <span aria-hidden="true">✨</span>
+              Validate with AI
+            </>
+          )}
+        </button>
+
+        {/* Prompt toggle button */}
+        <button
+          className={`${styles.hintTriggerBtn} ${showPrompt ? styles.hintTriggerBtnOpen : ""}`}
           onClick={() => setShowPrompt((v) => !v)}
           data-testid="prompt-toggle-btn"
           aria-expanded={showPrompt}
           type="button"
         >
-          <span className={styles.promptToggleIcon} aria-hidden="true">
-            {showPrompt ? "▾" : "▸"}
-          </span>
-          <span>AI Validation Prompt</span>
-          <span className={styles.promptToggleMeta}>
-            {challenge.validationConfig.strictness} ·{" "}
-            {challenge.validationConfig.requiredPatterns.length} rules
+          <span aria-hidden="true">{showPrompt ? "▾" : "▸"}</span>
+          AI Validation Prompt
+          <span className={styles.hintCountBadge} style={{ textTransform: 'uppercase' }}>
+            {challenge.validationConfig.strictness} · {challenge.validationConfig.requiredPatterns.length} rules
           </span>
         </button>
-        {showPrompt && (
+      </div>
+
+      {/* Prompt preview body */}
+      {showPrompt && (
+        <div className={styles.promptPreviewSection} style={{ marginTop: '12px' }}>
           <pre
             className={styles.promptPreview}
             data-testid="prompt-preview"
@@ -208,8 +208,8 @@ export default function AiValidationBox({
           >
             {systemPromptPreview}
           </pre>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Result */}
       {result.status && (

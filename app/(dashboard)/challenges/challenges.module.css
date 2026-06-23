@@ -82,17 +82,17 @@
 
 .psSectionLabel {
   font-family: var(--_font-mono);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--_accent);
-  margin: 0 0 6px;
+  margin: 0 0 8px;
 }
 
 .psBody {
   font-family: var(--_font-body);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.65;
   color: var(--_text-muted);
   margin: 0;
@@ -120,7 +120,7 @@
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--_text-muted);
   font-family: var(--_font-body);
   line-height: 1.5;
@@ -131,7 +131,7 @@
   color: var(--_accent);
   font-weight: 700;
   margin-top: 1px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 /* ==========================================================
@@ -258,7 +258,7 @@
 .hintTriggerBtn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   border-radius: 9999px;
   border: 1px solid var(--_border);
   background: var(--_surface);
@@ -269,6 +269,13 @@
   padding: 5px 14px;
   cursor: pointer;
   transition: all var(--_fast);
+}
+
+.hintTriggerBtn > span[aria-hidden="true"] {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  font-size: 14px;
 }
 
 .hintTriggerBtn:hover {
@@ -287,13 +294,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
   background: color-mix(in srgb, var(--_accent) 18%, transparent);
   color: var(--_accent);
   font-family: var(--_font-mono);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
 }
 

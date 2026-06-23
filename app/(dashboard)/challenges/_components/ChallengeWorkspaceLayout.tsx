@@ -35,7 +35,7 @@ export default function ChallengeWorkspaceLayout({
 }: Props) {
   const [activeDrawer, setActiveDrawer] = useState<
     "instructions" | "hints" | "solution" | null
-  >("instructions");
+  >(null);
 
   return (
     <div className={styles.challengePage} data-testid="challenge-workspace">
@@ -68,86 +68,66 @@ export default function ChallengeWorkspaceLayout({
         data-testid="challenge-split-view"
       >
         {/* LEFT — Problem → Instructions → Hints → AI Validation */}
-        <div
-          className={`${styles.chPanel} ${styles.chLeft}`}
-          data-testid="challenge-left-panel"
-        >
-          {/* 1. Problem statement + expected behavior */}
-          <ChallengeProblemStatement challenge={challenge} />
+        <div className={styles.leftColumn}>
+          {/* 1. Problem statement + expected behavior (Card 1) */}
+          <div className={`${styles.chPanel} ${styles.chLeft}`} data-testid="challenge-problem-panel" style={{ marginBottom: '24px' }}>
+            <ChallengeProblemStatement challenge={challenge} />
+          </div>
 
-          {/* Drawer Toggle Buttons Row */}
-          <div
-            style={{
-              display: "flex",
-              gap: "8px",
-              flexWrap: "wrap",
-              marginBottom: "16px",
-            }}
-          >
+          {/* Drawer Toggle Buttons Row (Outside Card) */}
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
             <button
               type="button"
               className={`${styles.hintTriggerBtn} ${activeDrawer === "instructions" ? styles.hintTriggerBtnOpen : ""}`}
-              onClick={() =>
-                setActiveDrawer((v) =>
-                  v === "instructions" ? null : "instructions",
-                )
-              }
+              onClick={() => setActiveDrawer((v) => (v === "instructions" ? null : "instructions"))}
             >
               <span aria-hidden="true">📋</span>
               Instructions
-              <span className={styles.hintCountBadge}>
-                {challenge.instructions.length} steps
-              </span>
+              <span className={styles.hintCountBadge}>{challenge.instructions.length}</span>
             </button>
 
             {challenge.hints && challenge.hints.length > 0 && (
               <button
                 type="button"
                 className={`${styles.hintTriggerBtn} ${activeDrawer === "hints" ? styles.hintTriggerBtnOpen : ""}`}
-                onClick={() =>
-                  setActiveDrawer((v) => (v === "hints" ? null : "hints"))
-                }
+                onClick={() => setActiveDrawer((v) => (v === "hints" ? null : "hints"))}
               >
                 <span aria-hidden="true">💡</span>
                 Show Hints
-                <span className={styles.hintCountBadge}>
-                  {challenge.hints.length}
-                </span>
+                <span className={styles.hintCountBadge}>{challenge.hints.length}</span>
               </button>
             )}
 
             <button
               type="button"
               className={`${styles.hintTriggerBtn} ${activeDrawer === "solution" ? styles.hintTriggerBtnOpen : ""}`}
-              onClick={() =>
-                setActiveDrawer((v) => (v === "solution" ? null : "solution"))
-              }
+              onClick={() => setActiveDrawer((v) => (v === "solution" ? null : "solution"))}
             >
               <span aria-hidden="true">🤖</span>
               Submit Solution
             </button>
           </div>
 
-          {/* 2. Instructions accordion body */}
-          {activeDrawer === "instructions" && (
-            <ChallengeInstructions instructions={challenge.instructions} />
-          )}
+          {/* Drawer Bodies (Card 2) */}
+          {activeDrawer && (
+            <div className={`${styles.chPanel} ${styles.chLeft}`} data-testid="challenge-drawer-panel">
+              {/* 2. Instructions accordion body */}
+              {activeDrawer === "instructions" && (
+                <ChallengeInstructions instructions={challenge.instructions} />
+              )}
 
-          {/* 3. Hints body */}
-          {activeDrawer === "hints" &&
-            challenge.hints &&
-            challenge.hints.length > 0 && (
-              <div className={styles.hintsWrapper}>
-                <ChallengeHints
-                  hints={challenge.hints}
-                  challengeId={challenge.id}
-                />
-              </div>
-            )}
+              {/* 3. Hints body */}
+              {activeDrawer === "hints" && challenge.hints && challenge.hints.length > 0 && (
+                <div className={styles.hintsWrapper}>
+                  <ChallengeHints hints={challenge.hints} challengeId={challenge.id} />
+                </div>
+              )}
 
-          {/* 4. AI submission + validation body */}
-          {activeDrawer === "solution" && (
-            <AiValidationBox challenge={challenge} />
+              {/* 4. AI submission + validation body */}
+              {activeDrawer === "solution" && (
+                <AiValidationBox challenge={challenge} />
+              )}
+            </div>
           )}
         </div>
 
