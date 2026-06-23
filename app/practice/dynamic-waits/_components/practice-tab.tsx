@@ -114,17 +114,17 @@ function PollScenario({ onComplete }: { onComplete: (msg: string) => void }) {
     setCount(0);
     setRunning(true);
     intervalRef.current = setInterval(() => {
-      setCount((c) => {
-        const next = c + 1;
-        if (next >= 5) {
-          clearInterval(intervalRef.current!);
-          setRunning(false);
-          onComplete("Counter reached 5 ✓");
-        }
-        return next;
-      });
+      setCount((c) => c + 1);
     }, 500);
   }
+
+  useEffect(() => {
+    if (count >= 5 && running) {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      setRunning(false);
+      onComplete("Counter reached 5 ✓");
+    }
+  }, [count, running, onComplete]);
 
   function reset() {
     if (intervalRef.current) clearInterval(intervalRef.current);
