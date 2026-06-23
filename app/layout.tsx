@@ -60,15 +60,16 @@ export const metadata: Metadata = {
 const themeInitScript = `
 (function(){
   try{
-    var s=localStorage.getItem('qap-theme');
-    var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
-    document.documentElement.classList.toggle('dark',d);
-    if(s==='light') document.documentElement.classList.remove('dark');
+    var settings = JSON.parse(localStorage.getItem('qap_settings') || '{}');
+    var s = settings.theme;
+    var d = s ? s === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.classList.toggle('dark', d);
+    if(s === 'light') document.documentElement.classList.remove('dark');
     
-    var f=localStorage.getItem('qap-font');
+    var f = settings.font;
     if(f) document.documentElement.setAttribute('data-font', f);
 
-    var fz=localStorage.getItem('qap-font-size');
+    var fz = settings.fontSize;
     if(fz) document.documentElement.style.fontSize = fz + 'px';
   }catch(e){}
 })();

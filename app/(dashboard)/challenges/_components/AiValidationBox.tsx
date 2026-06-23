@@ -2,25 +2,28 @@
 
 import { useState, useEffect } from "react";
 import styles from "../challenges.module.css";
-import { ChallengeMeta } from "@/data/challenges-registry";
+import type { ChallengeMeta } from "@/data/challenges-registry";
 
 export default function AiValidationBox({ challenge }: { challenge: ChallengeMeta }) {
   const [code, setCode] = useState(challenge.boilerplate);
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<{ status: "success" | "fail" | null; feedback: string }>({ status: null, feedback: "" });
+  const [result, setResult] = useState<{ status: "success" | "fail" | null; feedback: string }>({
+    status: null,
+    feedback: "",
+  });
   const [hasKey, setHasKey] = useState(false);
 
   useEffect(() => {
-    // Check if key exists on mount
     Promise.resolve().then(() => {
-      const key = localStorage.getItem("qap_openrouter_key");
-      if (key) setHasKey(true);
+      const settings = JSON.parse(localStorage.getItem("qap_settings") || "{}");
+      if (settings.openrouter_key) setHasKey(true);
     });
   }, []);
 
   const handleValidate = async () => {
-    const key = localStorage.getItem("qap_openrouter_key");
-    const model = localStorage.getItem("qap_openrouter_model") || "openai/gpt-4o-mini";
+    const settings = JSON.parse(localStorage.getItem("qap_settings") || "{}");
+    const key = settings.openrouter_key;
+    const model = settings.openrouter_model || "openai/gpt-4o-mini";
 
     if (!key) {
       alert("Please configure your OpenRouter API Key in the Settings page first.");
@@ -34,37 +37,34 @@ export default function AiValidationBox({ challenge }: { challenge: ChallengeMet
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${key}`,
+          Authorization: `Bearer ${key}`,
           "HTTP-Referer": window.location.origin,
           "X-Title": "QA Playground",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: model,
+          model,
           messages: [
             {
               role: "system",
-              content: `You are an expert Senior QA Engineer evaluating automated test scripts. 
+              content: `You are an expert Senior QA Engineer evaluating automated test scripts.
 Your job is to validate the user's code against the following requirement:
 "${challenge.validationPrompt}"
 
 Respond ONLY in valid JSON format with exactly two keys:
 {
-  "pass": boolean, // true if code meets requirements, false otherwise
-  "feedback": string // 1-2 short sentences of constructive code review feedback
+  "pass": boolean,
+  "feedback": string
 }
-Do not wrap the JSON in markdown blocks.`
+Do not wrap the JSON in markdown blocks.`,
             },
-            {
-              role: "user",
-              content: code
-            }
-          ]
-        })
+            { role: "user", content: code },
+          ],
+        }),
       });
 
       const data = await response.json();
-      
+
       if (data.error) {
         setResult({ status: "fail", feedback: "API Error: " + data.error.message });
         setLoading(false);
@@ -74,14 +74,12 @@ Do not wrap the JSON in markdown blocks.`
       const content = data.choices[0]?.message?.content;
       try {
         const parsed = JSON.parse(content);
-        setResult({
-          status: parsed.pass ? "success" : "fail",
-          feedback: parsed.feedback
-        });
+        setResult({ status: parsed.pass ? "success" : "fail", feedback: parsed.feedback });
 
         if (parsed.pass) {
-          // Save to local storage
-          const completed = JSON.parse(localStorage.getItem("qap_completed_challenges") || "[]");
+          const completed = JSON.parse(
+            localStorage.getItem("qap_completed_challenges") || "[]"
+          );
           if (!completed.includes(challenge.id)) {
             completed.push(challenge.id);
             localStorage.setItem("qap_completed_challenges", JSON.stringify(completed));
@@ -90,7 +88,6 @@ Do not wrap the JSON in markdown blocks.`
       } catch {
         setResult({ status: "fail", feedback: "Failed to parse AI response. Please try again." });
       }
-
     } catch {
       setResult({ status: "fail", feedback: "Network error occurred." });
     } finally {
@@ -99,55 +96,75 @@ Do not wrap the JSON in markdown blocks.`
   };
 
   return (
-    <div className={styles.panelSection}>
-      <h2 className={styles.headingSm} style={{ marginBottom: '8px' }}>
-        <span className="icon">🤖</span> Submit Solution (AI BYOK)
+    <div className={styles.panelSection} data-testid="ai-validation-box">
+      <h2 className={`${styles.headingSm} ${styles.aiBoxTitle}`}>
+        <span aria-hidden="true">🤖</span> Submit Solution (AI BYOK)
       </h2>
-      <p className={`${styles.bodySm} ${styles.textMuted}`} style={{ marginBottom: '16px' }}>
-        Paste your automation script below. Our AI will analyze your code for correctness and best practices.
+      <p className={`${styles.bodySm} ${styles.textMuted} ${styles.aiBoxIntro}`}>
+        Paste your automation script below. Our AI will analyze your code for correctness and
+        best practices.
       </p>
 
       {!hasKey && (
-        <div style={{ background: 'color-mix(in srgb, var(--warning) 10%, transparent)', padding: '12px', borderRadius: '8px', marginBottom: '16px', border: '1px solid color-mix(in srgb, var(--warning) 30%, transparent)', fontSize: '13px' }}>
-          ⚠️ <strong>No API Key found.</strong> Go to the <a href="/settings" style={{ color: 'var(--accent)' }}>Settings page</a> to configure your OpenRouter API key before submitting.
+        <div className={styles.noKeyWarning} data-testid="no-key-warning" role="alert">
+          ⚠️ <strong>No API Key found.</strong> Go to the{" "}
+          <a href="/settings" className={styles.warningLink}>
+            Settings page
+          </a>{" "}
+          to configure your OpenRouter API key before submitting.
         </div>
       )}
 
       <div className={styles.formGroup}>
-        <label htmlFor="code-submission" style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)' }}>Your Automation Script</label>
-        <textarea 
-          id="code-submission" 
+        <label htmlFor="code-submission" className={styles.codeLabel}>
+          Your Automation Script
+        </label>
+        <textarea
+          id="code-submission"
           className={`${styles.inputField} ${styles.codeEditor}`}
           value={code}
           onChange={(e) => setCode(e.target.value)}
           spellCheck={false}
+          data-testid="code-submission-input"
         />
       </div>
 
-      <button 
-        className={`${styles.btn} ${styles.btnPrimary} ${styles.btnSubmitSolution}`} 
+      <button
+        className={`${styles.btn} ${styles.btnPrimary} ${styles.btnSubmitSolution}`}
         onClick={handleValidate}
         disabled={loading || !hasKey}
-        style={{ marginTop: '16px', width: '100%', justifyContent: 'center' }}
+        data-testid="validate-btn"
+        aria-busy={loading}
       >
-        <span className="icon">✨</span> {loading ? "Validating..." : "Validate with AI"}
+        <span aria-hidden="true">✨</span>{" "}
+        {loading ? "Validating…" : "Validate with AI"}
       </button>
 
       {result.status && (
-        <div className={`${styles.aiFeedbackResult} ${result.status === 'fail' ? styles.failState : ''}`} style={{ marginTop: '24px', padding: '16px', borderRadius: '8px' }}>
+        <div
+          className={`${styles.aiFeedbackResult} ${result.status === "fail" ? styles.failState : ""}`}
+          data-testid="ai-feedback-result"
+          data-status={result.status}
+          role="status"
+          aria-live="polite"
+        >
           <div className={styles.feedbackHeader}>
             <div className={styles.feedbackStatus}>
-              <span className="icon" style={{ marginRight: '8px' }}>{result.status === 'success' ? '✅' : '❌'}</span> 
-              <span>{result.status === 'success' ? 'Challenge Passed!' : 'Challenge Failed'}</span>
+              <span aria-hidden="true">{result.status === "success" ? "✅" : "❌"}</span>
+              <span>{result.status === "success" ? "Challenge Passed!" : "Challenge Failed"}</span>
             </div>
-            {result.status === 'success' && <span className={styles.xpAwarded}>+{challenge.xp} XP</span>}
+            {result.status === "success" && (
+              <span className={styles.xpAwarded} data-testid="xp-awarded">
+                +{challenge.xp} XP
+              </span>
+            )}
           </div>
           <div>
-            <p className={styles.bodySm} style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>
+            <p className={`${styles.bodySm} ${styles.feedbackLabel}`}>
               <strong>AI Feedback:</strong>
             </p>
             <div className={styles.feedbackCodeReview}>
-              <p className={styles.bodySm} style={{ margin: 0 }}>{result.feedback}</p>
+              <p className={`${styles.bodySm} ${styles.feedbackText}`}>{result.feedback}</p>
             </div>
           </div>
         </div>

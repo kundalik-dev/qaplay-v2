@@ -49,12 +49,21 @@ export default function SettingsPage() {
   const [profileSaved, setProfileSaved] = useState(false);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
 
+  const updateSettings = (updates: any) => {
+    const current = JSON.parse(localStorage.getItem("qap_settings") || "{}");
+    const merged = { ...current, ...updates };
+    // Remove undefined keys to keep localStorage clean
+    Object.keys(merged).forEach(key => merged[key] === undefined && delete merged[key]);
+    localStorage.setItem("qap_settings", JSON.stringify(merged));
+  };
+
   useEffect(() => {
     Promise.resolve().then(() => {
+      const settings = JSON.parse(localStorage.getItem("qap_settings") || "{}");
+
       // Load API settings
-      const savedKey = localStorage.getItem("qap_openrouter_key") || "";
-      const savedModel =
-        localStorage.getItem("qap_openrouter_model") || "openai/gpt-4o-mini";
+      const savedKey = settings.openrouter_key || "";
+      const savedModel = settings.openrouter_model || "openai/gpt-4o-mini";
 
       setKey(savedKey);
 
@@ -69,29 +78,20 @@ export default function SettingsPage() {
       }
 
       // Load Appearance settings
-      const savedTheme = localStorage.getItem("qap-theme") as
-        | "light"
-        | "dark"
-        | null;
-      setTheme(savedTheme || "system");
-
-      const savedFont = localStorage.getItem("qap-font") as
-        | "inter"
-        | "space-grotesk"
-        | null;
-      setFont(savedFont || "inter");
-
-      const savedFontSize = localStorage.getItem("qap-font-size");
-      if (savedFontSize) setFontSize(parseInt(savedFontSize));
+      setTheme(settings.theme || "system");
+      setFont(settings.font || "inter");
+      if (settings.fontSize) setFontSize(Number(settings.fontSize));
     });
   }, []);
 
   const handleSaveApi = (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem("qap_openrouter_key", key);
-
     const finalModel = isCustom ? customModel : model;
-    localStorage.setItem("qap_openrouter_model", finalModel);
+    
+    updateSettings({
+      openrouter_key: key,
+      openrouter_model: finalModel
+    });
 
     setApiSaved(true);
     setTimeout(() => setApiSaved(false), 3000);
@@ -120,27 +120,27 @@ export default function SettingsPage() {
   const handleThemeChange = (newTheme: "light" | "dark" | "system") => {
     setTheme(newTheme);
     if (newTheme === "system") {
-      localStorage.removeItem("qap-theme");
+      updateSettings({ theme: undefined });
       const isSystemDark = window.matchMedia(
         "(prefers-color-scheme: dark)",
       ).matches;
       document.documentElement.classList.toggle("dark", isSystemDark);
     } else {
-      localStorage.setItem("qap-theme", newTheme);
+      updateSettings({ theme: newTheme });
       document.documentElement.classList.toggle("dark", newTheme === "dark");
     }
   };
 
   const handleFontChange = (newFont: "inter" | "space-grotesk") => {
     setFont(newFont);
-    localStorage.setItem("qap-font", newFont);
+    updateSettings({ font: newFont });
     document.documentElement.setAttribute("data-font", newFont);
   };
 
   const handleFontSizeChange = (delta: number) => {
     const newSize = Math.max(12, Math.min(24, fontSize + delta));
     setFontSize(newSize);
-    localStorage.setItem("qap-font-size", newSize.toString());
+    updateSettings({ fontSize: newSize });
     document.documentElement.style.fontSize = `${newSize}px`;
   };
 

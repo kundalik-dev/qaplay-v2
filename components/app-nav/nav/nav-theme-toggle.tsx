@@ -4,7 +4,6 @@ import { useRef, useSyncExternalStore } from "react";
 
 import styles from "./nav.module.css";
 
-const THEME_KEY = "qap-theme";
 const THEME_REVEAL_DURATION = 760;
 const THEME_ICON_DURATION = 620;
 
@@ -17,7 +16,9 @@ function setTheme(isDark: boolean) {
   html.classList.toggle("dark", isDark);
 
   try {
-    localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
+    const settings = JSON.parse(localStorage.getItem("qap_settings") || "{}");
+    settings.theme = isDark ? "dark" : "light";
+    localStorage.setItem("qap_settings", JSON.stringify(settings));
   } catch {}
 
   dispatchThemeChange();

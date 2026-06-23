@@ -95,6 +95,15 @@
   text-decoration: underline;
 }
 
+.breadcrumbSep {
+  margin: 0 6px;
+  opacity: 0.4;
+}
+
+.breadcrumbCurrent {
+  color: var(--_text);
+}
+
 .chTitleRow {
   display: flex;
   align-items: center;
@@ -266,6 +275,44 @@
 
 .failState .feedbackCodeReview {
   border-left: 3px solid var(--_danger);
+}
+
+/* AI Validation Box helpers */
+.aiBoxTitle {
+  margin-bottom: 8px;
+}
+
+.aiBoxIntro {
+  margin-bottom: 16px;
+}
+
+.noKeyWarning {
+  background: color-mix(in srgb, var(--_warning) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--_warning) 30%, transparent);
+  border-radius: var(--_r-md);
+  padding: var(--_sp3);
+  margin-bottom: var(--_sp4);
+  font-size: 13px;
+}
+
+.warningLink {
+  color: var(--_accent);
+  text-underline-offset: 2px;
+}
+
+.codeLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--_text-muted);
+}
+
+.feedbackLabel {
+  color: var(--_text-muted);
+  margin-bottom: 12px;
+}
+
+.feedbackText {
+  margin: 0;
 }
 
 /* Right Panel */
