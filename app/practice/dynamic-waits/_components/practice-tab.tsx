@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { ScenarioCard, ProgressWidget, FrameworkMethodsPanel, UpNextCard } from "@/components/practice";
 import type { ProgressItem } from "@/components/practice";
 import { dynamicWaitsScenarios, frameworkMethods } from "@/data/practice-data/dynamic-waits/scenarios";
@@ -113,18 +113,19 @@ function PollScenario({ onComplete }: { onComplete: (msg: string) => void }) {
     if (running) return;
     setCount(0);
     setRunning(true);
+    
+    let currentCount = 0;
     intervalRef.current = setInterval(() => {
-      setCount((c) => c + 1);
+      currentCount++;
+      setCount(currentCount);
+      
+      if (currentCount >= 5) {
+        clearInterval(intervalRef.current!);
+        setRunning(false);
+        onComplete("Counter reached 5 ✓");
+      }
     }, 500);
   }
-
-  useEffect(() => {
-    if (count >= 5 && running) {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      setRunning(false);
-      onComplete("Counter reached 5 ✓");
-    }
-  }, [count, running, onComplete]);
 
   function reset() {
     if (intervalRef.current) clearInterval(intervalRef.current);
@@ -246,7 +247,7 @@ function StatusPanelScenario({ onComplete }: { onComplete: (msg: string) => void
         </span>
       </div>
       <p className="text-[11px] text-muted-foreground">
-        Locate via: <code>//div[@data-testid=&quot;dw-status-panel&quot;]//span[contains(@class,&quot;status-value&quot;)]</code>
+        Locate via: <code>{`//div[@data-testid="dw-status-panel"]//span[contains(@class,"status-value")]`}</code>
       </p>
     </div>
   );
