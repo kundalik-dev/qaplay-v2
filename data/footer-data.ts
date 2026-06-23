@@ -76,10 +76,10 @@ export const footerNavColumns: FooterNavColumn[] = [
     title: "Platform",
     links: [
       { label: "Practice Elements", href: "/practice" },
-      { label: "AI Mock Interviews", href: "/interview" },
-      { label: "Job Hub & CRM", href: "/jobs" },
+      { label: "AI Mock Interviews", href: "/interview-practice" },
+      { label: "Job Hub & CRM", href: "/job-crm" },
       { label: "Bank Demo", href: "/demo/bank" },
-      { label: "Study Tracker", href: "/study-tracker/dashboard" },
+      { label: "Dashboard", href: "/dashboard" },
       { label: "QA Tools", href: "/qa-tools" },
     ],
   },
@@ -87,11 +87,8 @@ export const footerNavColumns: FooterNavColumn[] = [
     title: "Learn",
     links: [
       { label: "Blog & Tutorials", href: "/blog" },
-      { label: "AI Syllabus", href: "/study-tracker/ai-syllabus-prompt" },
-      {
-        label: "Practice Sites",
-        href: "/practice/top-10-best-automation-practice-website",
-      },
+      { label: "Resources", href: "/resources" },
+      { label: "Interview Questions", href: "/interview-questions" },
       {
         label: "Automation Framework",
         href: "https://github.com/kundalik5545/QA_PlayGround_Automation_Framework",
@@ -110,7 +107,7 @@ export const footerNavColumns: FooterNavColumn[] = [
         external: true,
       },
       { label: "Privacy Policy", href: "/privacy-policy" },
-      { label: "Login", href: "/login" },
+      { label: "Login", href: "/auth/sign-in" },
     ],
   },
 ];
