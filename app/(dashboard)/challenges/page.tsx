@@ -111,8 +111,6 @@ export default function ChallengesDashboard() {
     setSearch("");
   }
 
-  const dailyChallenge = challenges[0];
-
   return (
     <div className={styles.dashPage} data-testid="challenges-dashboard">
 
@@ -134,68 +132,41 @@ export default function ChallengesDashboard() {
           )}
         </div>
 
-        {/* Inline stats strip */}
-        <div className={styles.statsStrip} data-testid="stats-strip">
-          <div className={styles.statItem} data-testid="stat-level">
-            <span className={styles.statItemIcon}>⚡</span>
-            <span className={styles.statItemValue}>Level {level}</span>
-            <span className={styles.statItemLabel}>·</span>
-            <span className={styles.statItemLabel}>{totalXP} XP</span>
-            <div className={styles.miniProgressWrap}>
-              <div className={styles.miniProgressBar} style={{ width: `${xpProgress}%` }} />
+        {/* Stats grid */}
+        <div className={styles.statsGrid} data-testid="stats-grid">
+          <div className={styles.statCard} data-testid="stat-xp">
+            <span className={styles.statCardMeta}>XP Earned</span>
+            <strong className={styles.statCardValue}>
+              {totalXP}<span className={styles.statCardUnit}> XP</span>
+            </strong>
+            <div className={styles.statCardBar}>
+              <div className={styles.statCardBarFill} style={{ width: `${xpProgress}%` }} />
             </div>
-            <span className={styles.statItemMuted}>{xpIntoLevel}/{XP_PER_LEVEL} to Lvl {level + 1}</span>
+            <span className={styles.statCardSub}>{xpIntoLevel}/{XP_PER_LEVEL} to Level {level + 1}</span>
           </div>
-          <span className={styles.statDivider} aria-hidden="true" />
-          <div className={styles.statItem} data-testid="stat-done">
-            <span className={styles.statItemIcon}>✅</span>
-            <span className={styles.statItemValue}>{completedIds.length}/{challenges.length}</span>
-            <span className={styles.statItemLabel}>done</span>
+          <div className={styles.statCard} data-testid="stat-level">
+            <span className={styles.statCardMeta}>Level</span>
+            <strong className={styles.statCardValue}>{level}</strong>
+            <span className={styles.statCardSub}>⚡ Automation Engineer</span>
           </div>
-          <span className={styles.statDivider} aria-hidden="true" />
-          <div className={styles.statItem} data-testid="stat-rank">
-            <span className={styles.statItemIcon}>🏆</span>
-            <span className={styles.statItemValue}>Top 15%</span>
-            <span className={styles.statItemLabel}>global</span>
+          <div className={styles.statCard} data-testid="stat-done">
+            <span className={styles.statCardMeta}>Completed</span>
+            <strong className={styles.statCardValue}>
+              {completedIds.length}<span className={styles.statCardUnit}>/{challenges.length}</span>
+            </strong>
+            <span className={styles.statCardSub}>challenges done</span>
+          </div>
+          <div className={styles.statCard} data-testid="stat-rank">
+            <span className={styles.statCardMeta}>Global Rank</span>
+            <strong className={styles.statCardValue}>
+              15<span className={styles.statCardUnit}>%</span>
+            </strong>
+            <span className={styles.statCardSub}>🏆 Top performers</span>
           </div>
         </div>
       </div>
 
-      {/* ── Daily hero card ──────────────────────────────────── */}
-      <section className={styles.heroSection} data-testid="daily-challenge-hero">
-        <div className={styles.dailyHeroCard}>
-          <div className={styles.heroContent}>
-            <p className={styles.eyebrow}>
-              <span className={styles.eyebrowDot} aria-hidden="true" />
-              Daily Recommended
-            </p>
-            <h2 className={styles.heroTitle}>{dailyChallenge.title}</h2>
-            <p className={styles.heroDesc}>{dailyChallenge.description}</p>
-            <div className={styles.heroBadges}>
-              <DiffChip diff={dailyChallenge.difficulty} />
-              <span className={styles.xpBadge}>+{dailyChallenge.xp} XP</span>
-              {dailyChallenge.tags.map((t) => (
-                <span key={t} className={styles.tagPill}>{t}</span>
-              ))}
-            </div>
-            <Link href={`/challenges/${dailyChallenge.id}`} className={styles.heroCta} data-testid="daily-challenge-cta">
-              Start Challenge ⚡
-            </Link>
-          </div>
-          <div className={styles.heroGraphic} aria-hidden="true">
-            <div className={styles.mockBrowserWindow}>
-              <div className={styles.mockBrowserHeader}><span /><span /><span /></div>
-              <div className={styles.mockBrowserBody}>
-                <div className={styles.mockNode}>&lt;my-component&gt;</div>
-                <div className={`${styles.mockNode} ${styles.mockIndent}`}>#shadow-root (open)</div>
-                <div className={`${styles.mockNode} ${styles.mockIndent2} ${styles.mockHighlight}`}>&lt;button&gt;Reveal&lt;/button&gt;</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Filters + list ───────────────────────────────────── */}
+{/* ── Filters + list ───────────────────────────────────── */}
       <section data-testid="challenges-list-section">
 
         {/* Filter bar — QA Tools style */}
@@ -304,28 +275,25 @@ export default function ChallengesDashboard() {
                   data-difficulty={ch.difficulty.toLowerCase()}
                   data-completed={done}
                 >
-                  <div className={styles.chCardStatus}>
-                    <span className={`${styles.statusIcon} ${!done ? styles.statusPending : ""}`}>
-                      {done ? "✅" : "⭕"}
-                    </span>
+                  <div className={styles.chCardTop}>
+                    <DiffChip diff={ch.difficulty} />
+                    <span className={`${styles.chXp} ${done ? styles.chXpDone : ""}`}>+{ch.xp} XP</span>
                   </div>
-                  <div className={styles.chCardBody}>
-                    <div className={styles.chCardTags}>
-                      <DiffChip diff={ch.difficulty} />
-                      {ch.tags.map((t) => (
-                        <span key={t} className={styles.tagPill}>{t}</span>
-                      ))}
-                    </div>
-                    <h3 className={styles.chCardTitle}>{ch.title}</h3>
-                    <p className={styles.chCardDesc}>{ch.summary}</p>
-                    <div className={styles.chCardFooter}>
-                      <span className={`${styles.chXp} ${done ? styles.chXpDone : ""}`}>
-                        +{ch.xp} XP
-                      </span>
-                      <span className={`${styles.cardBtn} ${done ? styles.cardBtnSecondary : styles.cardBtnPrimary}`}>
-                        {done ? "Review →" : "Start →"}
-                      </span>
-                    </div>
+                  <h3 className={styles.chCardTitle}>{ch.title}</h3>
+                  <p className={styles.chCardDesc}>{ch.summary}</p>
+                  <div className={styles.chCardTags}>
+                    {ch.tags.map((t) => (
+                      <span key={t} className={styles.tagPill}>{t}</span>
+                    ))}
+                  </div>
+                  <div className={styles.chCardFooter}>
+                    <span className={styles.chCardStatusLabel}>
+                      <span className={`${styles.statusDot} ${done ? styles.statusDotDone : styles.statusDotOpen}`} />
+                      {done ? "Completed" : "Open"}
+                    </span>
+                    <span className={`${styles.cardBtn} ${done ? styles.cardBtnSecondary : styles.cardBtnPrimary}`}>
+                      {done ? "Review" : "Start"} →
+                    </span>
                   </div>
                 </Link>
               );
@@ -359,9 +327,10 @@ export default function ChallengesDashboard() {
                       data-completed={done}
                     >
                       <td className={styles.tdStatus}>
-                        <span className={`${styles.statusIcon} ${!done ? styles.statusPending : ""}`} title={done ? "Completed" : "Incomplete"}>
-                          {done ? "✅" : "⭕"}
-                        </span>
+                        <span
+                          className={`${styles.statusDot} ${done ? styles.statusDotDone : styles.statusDotOpen}`}
+                          title={done ? "Completed" : "Open"}
+                        />
                       </td>
                       <td className={styles.tdTitle}>
                         <Link href={`/challenges/${ch.id}`} className={styles.tableLink}>
@@ -387,10 +356,10 @@ export default function ChallengesDashboard() {
                       <td className={styles.tdAction}>
                         <Link
                           href={`/challenges/${ch.id}`}
-                          className={`${styles.cardBtn} ${done ? styles.cardBtnSecondary : styles.cardBtnPrimary}`}
+                          className={`${styles.actBtn} ${done ? styles.actBtnDone : styles.actBtnOpen}`}
                           data-testid={`challenge-action-${ch.id}`}
                         >
-                          {done ? "Review →" : "Start →"}
+                          {done ? "Review" : "Start"} →
                         </Link>
                       </td>
                     </tr>

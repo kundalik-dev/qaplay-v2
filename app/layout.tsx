@@ -67,6 +67,9 @@ const themeInitScript = `
     
     var f=localStorage.getItem('qap-font');
     if(f) document.documentElement.setAttribute('data-font', f);
+
+    var fz=localStorage.getItem('qap-font-size');
+    if(fz) document.documentElement.style.fontSize = fz + 'px';
   }catch(e){}
 })();
 `.trim();
