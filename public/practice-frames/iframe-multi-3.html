@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Frame Three</title>
+  <style>
+    body { margin: 0; padding: 14px; font-family: system-ui, sans-serif; font-size: 12px; background: #fef9c3; color: #713f12; }
+    h4 { margin: 0 0 10px; font-size: 12px; font-weight: 700; color: #854d0e; text-transform: uppercase; letter-spacing: .05em; }
+    /* No data-testid, no aria-label, no name — locate by visible text only */
+    button { height: 30px; padding: 0 12px; background: #ca8a04; color: #fff; border: none; border-radius: 5px; font-size: 12px; font-weight: 500; cursor: pointer; }
+    button:hover { background: #a16207; }
+    #f3-result { margin-top: 8px; font-size: 11px; color: #6b7280; }
+    #f3-result.done { color: #059669; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <!-- Frame Three: button has NO data-testid, NO aria-label — locate by visible text only -->
+  <h4>Frame Three</h4>
+  <button type="button" onclick="act()">Confirm Action</button>
+  <p id="f3-result">Not confirmed</p>
+
+  <script>
+    function act() {
+      document.getElementById('f3-result').textContent = 'Frame Three confirmed ✓';
+      document.getElementById('f3-result').className = 'done';
+      parent.postMessage({ type: 'iframe-s03-f3', value: 'Frame Three: confirmed ✓' }, '*');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inner Frame</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 14px; font-family: system-ui, sans-serif; font-size: 12px; background: #fff; color: #111; }
+    label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 12px; color: #374151; }
+    .row { display: flex; gap: 8px; }
+    input[type="text"] { height: 32px; padding: 0 8px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 12px; flex: 1; min-width: 0; }
+    input[type="text"]:focus { border-color: #6366f1; outline: none; }
+    button { height: 32px; padding: 0 12px; background: #7c3aed; color: #fff; border: none; border-radius: 5px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+    button:hover { background: #6d28d9; }
+    #inner-result { margin-top: 8px; font-size: 11px; color: #6b7280; }
+    #inner-result.done { color: #059669; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <!--
+    This is the INNER frame (2 levels deep).
+    Input: id="inner-secret-input", data-testid="iframe-inner-input"
+    Button: data-testid="iframe-inner-submit"
+    Playwright: page.frameLocator('[data-testid="iframe-outer"]')
+                    .frameLocator('iframe[title="Inner Frame"]')
+                    .getByTestId('iframe-inner-input')
+                    .fill('secret')
+  -->
+  <label for="inner-secret-input">Secret code</label>
+  <div class="row">
+    <input
+      type="text"
+      id="inner-secret-input"
+      data-testid="iframe-inner-input"
+      name="secret"
+      placeholder="Enter secret code"
+      autocomplete="off"
+    />
+    <button
+      id="inner-submit-btn"
+      data-testid="iframe-inner-submit"
+      type="button"
+      onclick="handleSubmit()"
+    >
+      Unlock
+    </button>
+  </div>
+  <p id="inner-result">Locked</p>
+
+  <script>
+    function handleSubmit() {
+      var val = document.getElementById('inner-secret-input').value.trim();
+      var result = document.getElementById('inner-result');
+      if (val) {
+        result.textContent = 'Unlocked with: ' + val + ' ✓';
+        result.className = 'done';
+        // Bubble up through both frame levels
+        window.top.postMessage({ type: 'iframe-s04', value: 'Inner frame: unlocked with "' + val + '"' }, '*');
+      } else {
+        result.textContent = 'Enter a code to unlock.';
+      }
+    }
+  </script>
+</body>
+</html>

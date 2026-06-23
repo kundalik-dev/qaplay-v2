@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Form Iframe</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 16px; font-family: system-ui, sans-serif; font-size: 13px; background: #fff; color: #111; }
+    form { display: flex; flex-direction: column; gap: 12px; max-width: 280px; }
+    label { font-weight: 600; color: #374151; font-size: 12px; }
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    select { height: 34px; padding: 0 8px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; background: #fff; width: 100%; }
+    select:focus { border-color: #6366f1; outline: none; box-shadow: 0 0 0 2px rgba(99,102,241,.2); }
+    .check-row { display: flex; align-items: center; gap: 8px; }
+    input[type="checkbox"] { width: 15px; height: 15px; accent-color: #6366f1; cursor: pointer; }
+    .check-label { font-size: 13px; color: #374151; cursor: pointer; user-select: none; }
+    button { height: 32px; padding: 0 14px; background: #6366f1; color: #fff; border: none; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; align-self: flex-start; }
+    button:hover { background: #4f46e5; }
+    #result { font-size: 12px; color: #6b7280; margin-top: 2px; min-height: 18px; }
+    #result.success { color: #059669; font-weight: 500; }
+    #result.error { color: #dc2626; }
+  </style>
+</head>
+<body>
+  <form id="pref-form" data-testid="iframe-pref-form" onsubmit="return false;">
+    <div class="field">
+      <label for="iframe-lang-select">Preferred language</label>
+      <select id="iframe-lang-select" data-testid="iframe-lang-select" name="language">
+        <option value="">Select language</option>
+        <option value="javascript">JavaScript</option>
+        <option value="python">Python</option>
+        <option value="java">Java</option>
+        <option value="csharp">C#</option>
+      </select>
+    </div>
+
+    <div class="check-row">
+      <input
+        type="checkbox"
+        id="iframe-agree-chk"
+        data-testid="iframe-agree-chk"
+        name="agree"
+      />
+      <label class="check-label" for="iframe-agree-chk">I agree to the terms</label>
+    </div>
+
+    <button id="iframe-save-btn" data-testid="iframe-save-btn" type="button" onclick="handleSave()">
+      Save Preferences
+    </button>
+    <p id="result"></p>
+  </form>
+
+  <script>
+    function handleSave() {
+      var lang = document.getElementById('iframe-lang-select').value;
+      var agree = document.getElementById('iframe-agree-chk').checked;
+      var result = document.getElementById('result');
+      if (!lang) {
+        result.textContent = 'Please select a language.';
+        result.className = 'error';
+        parent.postMessage({ type: 'iframe-s02', value: 'Validation failed — no language selected' }, '*');
+        return;
+      }
+      if (!agree) {
+        result.textContent = 'Please accept the terms.';
+        result.className = 'error';
+        parent.postMessage({ type: 'iframe-s02', value: 'Validation failed — terms not accepted' }, '*');
+        return;
+      }
+      result.textContent = 'Saved: ' + lang + ' + terms accepted ✓';
+      result.className = 'success';
+      parent.postMessage({ type: 'iframe-s02', value: 'Saved: ' + lang + ' | agreed ✓' }, '*');
+    }
+  </script>
+</body>
+</html>

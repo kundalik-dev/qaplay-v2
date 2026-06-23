@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Frame One</title>
+  <style>
+    body { margin: 0; padding: 14px; font-family: system-ui, sans-serif; font-size: 12px; background: #eff6ff; color: #1e3a5f; }
+    h4 { margin: 0 0 10px; font-size: 12px; font-weight: 700; color: #1e40af; text-transform: uppercase; letter-spacing: .05em; }
+    button { height: 30px; padding: 0 12px; background: #3b82f6; color: #fff; border: none; border-radius: 5px; font-size: 12px; font-weight: 500; cursor: pointer; }
+    button:hover { background: #2563eb; }
+    #f1-result { margin-top: 8px; font-size: 11px; color: #6b7280; }
+    #f1-result.done { color: #059669; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <!-- Frame One: has data-testid on button — Beginner locator -->
+  <h4>Frame One</h4>
+  <button
+    id="f1-action-btn"
+    data-testid="iframe-f1-action-btn"
+    type="button"
+    onclick="act()"
+  >
+    Click Me
+  </button>
+  <p id="f1-result">Not clicked</p>
+
+  <script>
+    function act() {
+      document.getElementById('f1-result').textContent = 'Frame One clicked ✓';
+      document.getElementById('f1-result').className = 'done';
+      parent.postMessage({ type: 'iframe-s03-f1', value: 'Frame One: button clicked ✓' }, '*');
+    }
+  </script>
+</body>
+</html>
