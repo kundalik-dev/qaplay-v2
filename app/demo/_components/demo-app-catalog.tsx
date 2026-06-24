@@ -77,8 +77,8 @@ export function DemoAppCatalog() {
                   <Image
                     src={card.imageSrc}
                     alt={card.imageAlt}
-                    width={520}
-                    height={280}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, (max-width: 1280px) 33vw, 25vw"
                     className={styles.mediaImage}
                   />
                 </div>
