@@ -72,10 +72,10 @@ export function maskAccountNumber(num: string): string {
  * Compute running balances for a sorted transaction list (newest first).
  * Returns transactions with `runningBalance` field populated.
  */
-export function computeRunningBalances(
-  transactions: Array<{ id: string; amount: number; [key: string]: unknown }>,
+export function computeRunningBalances<T extends { amount: number }>(
+  transactions: T[],
   currentBalance: number,
-): Array<{ id: string; amount: number; runningBalance: number; [key: string]: unknown }> {
+): Array<T & { runningBalance: number }> {
   let balance = currentBalance;
   return transactions.map((txn) => {
     const rb = balance;
