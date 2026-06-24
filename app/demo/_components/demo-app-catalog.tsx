@@ -60,7 +60,7 @@ export function DemoAppCatalog() {
               <Link
                 key={card.title}
                 href={card.href}
-                target={card.title.includes("Bank") ? "_blank" : undefined}
+                target={"_blank"}
                 rel={
                   card.title.includes("Bank")
                     ? "noopener noreferrer"

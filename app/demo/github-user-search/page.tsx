@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { GithubSearchTabs } from "./_components/github-search-tabs";
 
 export const metadata: Metadata = {

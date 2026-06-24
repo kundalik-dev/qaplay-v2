@@ -47,7 +47,7 @@ export const demoAppCards: DemoAppCard[] = [
     description:
       "Practice automation locators on a real GitHub API integration. Search for GitHub users, view profiles, and solve intentional locator challenges.",
     href: "/demo/github-user-search",
-    imageSrc: "/images/bank-demo-app.png",
+    imageSrc: "/images/github-user-search-app.png",
     imageAlt: "GitHub User Search app preview",
     filters: ["all", "ui"],
     badge: "New",
