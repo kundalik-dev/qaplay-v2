@@ -4,24 +4,59 @@ import React, { useState, useMemo } from "react";
 import { useBankStore, Transaction } from "../store/useBankStore";
 import "../styles/bank.css";
 
-export default function DashboardPage() {
-  const { balance, transactions, deleteTransaction, user, accounts } =
-    useBankStore();
-  const [sortField, setSortField] = useState<"date" | "amount" | null>(null);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  const [categoryFilter, setCategoryFilter] = useState<string>("All");
-  const [isComboOpen, setIsComboOpen] = useState(false);
+/* ── Constants ──────────────────────────────────────────────────── */
+const CATEGORIES = [
+  "Income",
+  "Groceries",
+  "Utilities",
+  "Shopping",
+  "Transport",
+  "Dining",
+  "Health",
+];
+const FILTER_CATEGORIES = ["All", ...CATEGORIES];
+const PAGE_SIZE_OPTIONS = [5, 10, 20, 50];
 
-  const categories = [
-    "All",
-    "Income",
-    "Groceries",
-    "Utilities",
-    "Shopping",
-    "Transport",
-    "Dining",
-    "Health",
-  ];
+function nextTrxId(transactions: Transaction[]): string {
+  const nums = transactions
+    .map((t) => parseInt(t.id.replace("trx-", ""), 10))
+    .filter((n) => !isNaN(n));
+  const max = nums.length > 0 ? Math.max(...nums) : 1000;
+  return `trx-${max + 1}`;
+}
+
+/* ── Page ───────────────────────────────────────────────────────── */
+export default function DashboardPage() {
+  const {
+    balance,
+    transactions,
+    deleteTransaction,
+    updateTransaction,
+    addTransaction,
+    user,
+    accounts,
+  } = useBankStore();
+
+  /* Filters + sort */
+  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [isComboOpen, setIsComboOpen] = useState(false);
+  const [sortField, setSortField] = useState<"id" | "date" | "amount" | null>(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
+  /* Pagination */
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+
+  /* Modal */
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<"add" | "edit">("add");
+  const [editingTrx, setEditingTrx] = useState<Transaction | null>(null);
+
+  /* Form */
+  const [formDate, setFormDate] = useState("");
+  const [formDescription, setFormDescription] = useState("");
+  const [formAmount, setFormAmount] = useState("");
+  const [formCategory, setFormCategory] = useState("Income");
 
   /* ── Derived stats ──────────────────────────────────────────── */
   const totalIncome = transactions
@@ -38,7 +73,8 @@ export default function DashboardPage() {
       "ID,Date,Description,Amount,Category\n" +
       transactions
         .map(
-          (t) => `${t.id},${t.date},${t.description},${t.amount},${t.category}`,
+          (t) =>
+            `${t.id},${t.date},${t.description},${t.amount},${t.category}`,
         )
         .join("\n");
     const link = document.createElement("a");
@@ -54,15 +90,17 @@ export default function DashboardPage() {
   };
 
   /* ── Sort + filter ──────────────────────────────────────────── */
-  const sortedAndFilteredTransactions = useMemo(() => {
+  const sortedAndFiltered = useMemo(() => {
     let result = [...transactions];
-
-    if (categoryFilter !== "All") {
+    if (categoryFilter !== "All")
       result = result.filter((t) => t.category === categoryFilter);
-    }
-
     if (sortField) {
       result.sort((a, b) => {
+        if (sortField === "id") {
+          const numA = parseInt(a.id.replace("trx-", ""), 10);
+          const numB = parseInt(b.id.replace("trx-", ""), 10);
+          return sortOrder === "asc" ? numA - numB : numB - numA;
+        }
         if (sortField === "amount") {
           // P2 Bug: sorting amounts as strings (alphabetically) instead of numerically
           const valA = String(a.amount);
@@ -79,11 +117,21 @@ export default function DashboardPage() {
     return result;
   }, [transactions, sortField, sortOrder, categoryFilter]);
 
+  /* ── Pagination ─────────────────────────────────────────────── */
+  const totalPages = Math.max(1, Math.ceil(sortedAndFiltered.length / PAGE_SIZE));
+  const paginatedTrx = sortedAndFiltered.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE,
+  );
+
+  const handlePageChange = (page: number) =>
+    setCurrentPage(Math.max(1, Math.min(page, totalPages)));
+
   /* ── Delete (P1 bug preserved) ──────────────────────────────── */
   const handleDelete = (index: number, transaction: Transaction) => {
     if (transaction.category === "Utilities") {
       const wrongIndex = Math.max(0, index - 1);
-      const wrongTrx = sortedAndFilteredTransactions[wrongIndex];
+      const wrongTrx = paginatedTrx[wrongIndex];
       deleteTransaction(wrongTrx.id);
     } else {
       deleteTransaction(transaction.id);
@@ -91,14 +139,66 @@ export default function DashboardPage() {
   };
 
   const toggleSort = (field: "date" | "amount") => {
-    if (sortField === field) {
+    if (sortField === field)
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-    } else {
+    else {
       setSortField(field);
       setSortOrder("desc");
     }
   };
 
+  /* ── Modal helpers ──────────────────────────────────────────── */
+  const openAddModal = () => {
+    setModalMode("add");
+    setEditingTrx(null);
+    setFormDate(new Date().toISOString().slice(0, 10));
+    setFormDescription("");
+    setFormAmount("");
+    setFormCategory("Income");
+    setModalOpen(true);
+  };
+
+  const openEditModal = (trx: Transaction) => {
+    setModalMode("edit");
+    setEditingTrx(trx);
+    setFormDate(trx.date);
+    setFormDescription(trx.description);
+    setFormAmount(String(trx.amount));
+    setFormCategory(trx.category);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setEditingTrx(null);
+  };
+
+  const handleModalSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const amountNum = parseFloat(formAmount);
+    if (isNaN(amountNum)) return;
+    if (modalMode === "add") {
+      addTransaction({
+        id: nextTrxId(transactions),
+        date: formDate,
+        description: formDescription,
+        amount: amountNum,
+        category: formCategory,
+      });
+    } else if (editingTrx) {
+      updateTransaction({
+        ...editingTrx,
+        date: formDate,
+        description: formDescription,
+        amount: amountNum,
+        category: formCategory,
+      });
+    }
+    closeModal();
+    setCurrentPage(1);
+  };
+
+  /* ── Render ─────────────────────────────────────────────────── */
   return (
     <div data-testid="bank-dashboard">
       {/* Page heading */}
@@ -110,66 +210,50 @@ export default function DashboardPage() {
         your financial overview.
       </p>
 
-      {/* Balance card */}
-      <div className="bank-balance-card" data-testid="balance-card">
-        <div>
-          <p className="bank-balance-label">Total Balance</p>
-          <div className="bank-balance-amount" data-testid="account-balance">
+      {/* ── 4 Summary cards (beginner: data-testid on each card) ─ */}
+      <div
+        className="bank-stats-row bank-stats-row--four"
+        data-testid="stats-row"
+      >
+        {/* Balance card — slightly accented */}
+        <div
+          className="bank-stat-card bank-stat-card--balance"
+          data-testid="stat-balance"
+          data-card="balance"
+        >
+          <p className="bank-stat-label">Total Balance</p>
+          <p
+            className="bank-stat-value bank-stat-value--balance"
+            data-testid="account-balance"
+          >
             ${balance.toFixed(2)}
-          </div>
-          <div
-            style={{
-              marginTop: "0.5rem",
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.25rem",
-            }}
-          >
-            {(accounts || []).map((acc) => (
-              <p
-                key={acc.id}
-                className="bank-balance-account"
-                style={{ marginTop: 0 }}
-              >
-                {acc.name} · {acc.accountNumber}{" "}
-                <span style={{ opacity: 0.7 }}>
-                  (${acc.balance.toFixed(2)})
-                </span>
-              </p>
-            ))}
-          </div>
+          </p>
+          {(accounts || []).map((acc) => (
+            <p key={acc.id} className="bank-balance-account-mini">
+              {acc.name} · {acc.accountNumber}
+            </p>
+          ))}
         </div>
-        <div className="bank-export-group">
-          {/* P3 Bug: Typo in aria-label */}
-          <button
-            type="button"
-            className="bank-export-btn"
-            onClick={handleExportExcel}
-            aria-label="Export to Excl"
-            data-testid="export-excel-btn"
-          >
-            Export Excel
-          </button>
-          <button
-            type="button"
-            className="bank-export-btn"
-            onClick={handleExportPdf}
-            data-testid="export-pdf-btn"
-          >
-            Export PDF
-          </button>
-        </div>
-      </div>
 
-      {/* Quick stats */}
-      <div className="bank-stats-row" data-testid="stats-row">
-        <div className="bank-stat-card" data-testid="stat-income">
+        <div
+          className="bank-stat-card"
+          data-testid="stat-income"
+          data-card="income"
+        >
           <p className="bank-stat-label">Total Income</p>
-          <p className="bank-stat-value income" data-testid="stat-income-value">
+          <p
+            className="bank-stat-value income"
+            data-testid="stat-income-value"
+          >
             +${totalIncome.toFixed(2)}
           </p>
         </div>
-        <div className="bank-stat-card" data-testid="stat-expenses">
+
+        <div
+          className="bank-stat-card"
+          data-testid="stat-expenses"
+          data-card="expenses"
+        >
           <p className="bank-stat-label">Total Expenses</p>
           <p
             className="bank-stat-value expense"
@@ -178,7 +262,12 @@ export default function DashboardPage() {
             ${totalExpense.toFixed(2)}
           </p>
         </div>
-        <div className="bank-stat-card" data-testid="stat-transactions">
+
+        <div
+          className="bank-stat-card"
+          data-testid="stat-transactions"
+          data-card="transactions"
+        >
           <p className="bank-stat-label">Transactions</p>
           <p className="bank-stat-value" data-testid="stat-transaction-count">
             {transactions.length}
@@ -186,13 +275,29 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Action row */}
-      <div className="bank-action-row">
-        <h2 className="bank-section-title">Recent Transactions</h2>
+      {/* ── Action row: title + add btn | filter + exports ──────── */}
+      <div
+        className="bank-action-row bank-action-row--extended"
+        data-testid="action-row"
+      >
+        <div className="bank-action-row-left">
+          <h2 className="bank-section-title">Recent Transactions</h2>
+          {/* Beginner: clear role + data-testid */}
+          <button
+            type="button"
+            className="bank-add-btn"
+            onClick={openAddModal}
+            data-testid="add-transaction-btn"
+            aria-label="Add new transaction"
+          >
+            + Add Transaction
+          </button>
+        </div>
 
-        <div className="bank-filter-group">
+        <div className="bank-action-row-right">
           <span className="bank-filter-label">Category:</span>
-          {/* Challenge Locator: Custom Combobox */}
+
+          {/* Challenge Locator: Custom Combobox — no native select */}
           <div
             className="bank-combobox-wrapper"
             data-testid="category-filter-combobox"
@@ -220,13 +325,14 @@ export default function DashboardPage() {
                 <polyline points="6 9 12 15 18 9" />
               </svg>
             </button>
+
             {isComboOpen && (
               <ul
                 className="bank-combobox-list"
                 role="listbox"
                 data-testid="combobox-list"
               >
-                {categories.map((cat) => (
+                {FILTER_CATEGORIES.map((cat) => (
                   <li
                     key={cat}
                     role="option"
@@ -235,6 +341,7 @@ export default function DashboardPage() {
                     onClick={() => {
                       setCategoryFilter(cat);
                       setIsComboOpen(false);
+                      setCurrentPage(1);
                     }}
                     data-category-id={`cat-${cat.toLowerCase()}`}
                     data-testid={`combobox-option-${cat.toLowerCase()}`}
@@ -245,10 +352,30 @@ export default function DashboardPage() {
               </ul>
             )}
           </div>
+
+          {/* P3 Bug: Typo in aria-label ("Excl" instead of "Excel") */}
+          <button
+            type="button"
+            className="bank-export-btn-small"
+            onClick={handleExportExcel}
+            aria-label="Export to Excl"
+            data-testid="export-excel-btn"
+          >
+            Export Excel
+          </button>
+          <button
+            type="button"
+            className="bank-export-btn-small"
+            onClick={handleExportPdf}
+            data-testid="export-pdf-btn"
+            aria-label="Export to PDF"
+          >
+            Export PDF
+          </button>
         </div>
       </div>
 
-      {/* Transaction table */}
+      {/* ── Transaction table ────────────────────────────────────── */}
       <div
         className="bank-table-wrapper"
         data-testid="transaction-table-wrapper"
@@ -269,7 +396,8 @@ export default function DashboardPage() {
                     : "none"
                 }
               >
-                Date {sortField === "date" && (sortOrder === "asc" ? "↑" : "↓")}
+                Date{" "}
+                {sortField === "date" && (sortOrder === "asc" ? "↑" : "↓")}
               </th>
               <th>Description</th>
               <th>Category</th>
@@ -292,12 +420,19 @@ export default function DashboardPage() {
             </tr>
           </thead>
           <tbody>
-            {sortedAndFilteredTransactions.map((trx, index) => (
+            {paginatedTrx.map((trx, index) => (
+              /*
+               * Medium Locator: shared data-testid="transaction-row" + unique data-transaction-id
+               * Practice:
+               *   page.getByTestId('transaction-row').filter({ hasText: 'TechCorp Salary' })
+               *   page.locator('[data-testid="transaction-row"][data-transaction-id="trx-1001"]')
+               *   //tr[@data-transaction-id="trx-1001"]
+               */
               <tr
                 key={trx.id}
+                data-testid="transaction-row"
                 data-transaction-id={trx.id}
                 data-category={trx.category}
-                data-testid={`transaction-row-${trx.id}`}
               >
                 <td>{trx.id}</td>
                 <td>{trx.date}</td>
@@ -313,8 +448,27 @@ export default function DashboardPage() {
                   {trx.amount > 0 ? "+" : ""}
                   {trx.amount.toFixed(2)}
                 </td>
-                <td>
-                  {/* Medium/Hard Locator: no data-testid — use aria-label or ancestor XPath */}
+                <td className="bank-actions-cell">
+                  {/*
+                   * Medium Locator: no data-testid — use aria-label or ancestor XPath
+                   * Practice:
+                   *   row.getByRole('button', { name: /Edit transaction/ })
+                   *   //tr[@data-transaction-id="trx-1001"]//button[contains(@aria-label,"Edit")]
+                   */}
+                  <button
+                    type="button"
+                    className="bank-edit-btn"
+                    onClick={() => openEditModal(trx)}
+                    aria-label={`Edit transaction ${trx.id}`}
+                  >
+                    Edit
+                  </button>
+                  {/*
+                   * Hard Locator: no data-testid, sibling of Edit
+                   * Practice:
+                   *   //tr[@data-transaction-id="trx-1001"]//button[contains(@aria-label,"Delete")]
+                   *   //button[@aria-label="Edit transaction trx-1001"]/following-sibling::button
+                   */}
                   <button
                     type="button"
                     className="bank-delete-btn"
@@ -326,7 +480,8 @@ export default function DashboardPage() {
                 </td>
               </tr>
             ))}
-            {sortedAndFilteredTransactions.length === 0 && (
+
+            {paginatedTrx.length === 0 && (
               <tr>
                 <td colSpan={6} className="bank-table-empty">
                   No transactions found.
@@ -336,6 +491,243 @@ export default function DashboardPage() {
           </tbody>
         </table>
       </div>
+
+      {/* ── Pagination ───────────────────────────────────────────── */}
+      <nav
+        className="bank-pagination"
+        data-testid="pagination-controls"
+        aria-label="Transaction pagination"
+      >
+        <span
+          className="bank-pagination-info"
+          data-testid="pagination-info"
+        >
+          Page {currentPage} of {totalPages} &middot;{" "}
+          {sortedAndFiltered.length} transaction
+          {sortedAndFiltered.length !== 1 ? "s" : ""}
+        </span>
+
+        <div className="bank-pagination-buttons">
+          <button
+            type="button"
+            className="bank-page-btn"
+            onClick={() => handlePageChange(1)}
+            disabled={currentPage === 1}
+            aria-label="Go to first page"
+            data-testid="pagination-first"
+          >
+            «
+          </button>
+          <button
+            type="button"
+            className="bank-page-btn"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            aria-label="Go to previous page"
+            data-testid="pagination-prev"
+          >
+            ‹
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              type="button"
+              className={[
+                "bank-page-btn",
+                currentPage === page ? "active" : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
+              onClick={() => handlePageChange(page)}
+              aria-label={`Go to page ${page}`}
+              aria-current={currentPage === page ? "page" : undefined}
+              data-page={page}
+            >
+              {page}
+            </button>
+          ))}
+
+          <button
+            type="button"
+            className="bank-page-btn"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            aria-label="Go to next page"
+            data-testid="pagination-next"
+          >
+            ›
+          </button>
+          <button
+            type="button"
+            className="bank-page-btn"
+            onClick={() => handlePageChange(totalPages)}
+            disabled={currentPage === totalPages}
+            aria-label="Go to last page"
+            data-testid="pagination-last"
+          >
+            »
+          </button>
+        </div>
+      </nav>
+
+      {/* ── Add / Edit Modal ──────────────────────────────────────── */}
+      {modalOpen && (
+        <div
+          className="bank-modal-overlay"
+          data-testid="modal-overlay"
+          onClick={closeModal}
+        >
+          {/*
+           * Medium/Hard Locator: role="dialog" + aria-labelledby
+           * Practice:
+           *   page.getByRole('dialog', { name: 'Add Transaction' })
+           *   //*[@role="dialog" and .//h2[normalize-space()="Add Transaction"]]
+           */}
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="transaction-dialog-title"
+            data-testid="transaction-dialog"
+            className="bank-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="bank-modal-header">
+              <h2
+                id="transaction-dialog-title"
+                data-testid="modal-title"
+              >
+                {modalMode === "add" ? "Add Transaction" : "Edit Transaction"}
+              </h2>
+              {/* Challenge: no data-testid — use aria-label */}
+              <button
+                type="button"
+                className="bank-modal-close"
+                onClick={closeModal}
+                aria-label="Close dialog"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form
+              className="bank-modal-form"
+              onSubmit={handleModalSubmit}
+              data-testid="transaction-form"
+              aria-labelledby="transaction-dialog-title"
+            >
+              {/* Beginner: label + id + data-testid */}
+              <div className="bank-form-group">
+                <label htmlFor="trx-date" className="bank-form-label">
+                  Date
+                </label>
+                <input
+                  id="trx-date"
+                  type="date"
+                  className="bank-form-input"
+                  value={formDate}
+                  onChange={(e) => setFormDate(e.target.value)}
+                  required
+                  data-testid="trx-date-input"
+                />
+              </div>
+
+              {/* Beginner: label + id + data-testid */}
+              <div className="bank-form-group">
+                <label htmlFor="trx-description" className="bank-form-label">
+                  Description
+                </label>
+                <input
+                  id="trx-description"
+                  type="text"
+                  className="bank-form-input"
+                  value={formDescription}
+                  onChange={(e) => setFormDescription(e.target.value)}
+                  required
+                  placeholder="e.g. Grocery shopping"
+                  data-testid="trx-description-input"
+                />
+              </div>
+
+              {/*
+               * Hard Locator: no id, no data-testid — span label + sibling/ancestor XPath
+               * Practice:
+               *   //span[normalize-space()="Amount"]/following-sibling::div//input
+               *   //input[starts-with(@name,"trx_amount_")]
+               */}
+              <div className="bank-form-group">
+                <div className="bank-field-row">
+                  <span className="bank-field-label">Amount</span>
+                  <div className="bank-field-control">
+                    <input
+                      name="trx_amount_field"
+                      type="number"
+                      step="0.01"
+                      className="bank-form-input"
+                      value={formAmount}
+                      onChange={(e) => setFormAmount(e.target.value)}
+                      required
+                      placeholder="e.g. -45.50 or 1200.00"
+                    />
+                  </div>
+                  <p className="bank-field-hint">
+                    Use negative values for expenses
+                  </p>
+                </div>
+              </div>
+
+              {/* Medium: native select with label + data-testid */}
+              <div className="bank-form-group">
+                <label htmlFor="trx-category" className="bank-form-label">
+                  Category
+                </label>
+                <select
+                  id="trx-category"
+                  className="bank-form-input"
+                  value={formCategory}
+                  onChange={(e) => setFormCategory(e.target.value)}
+                  data-testid="trx-category-select"
+                >
+                  {CATEGORIES.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="bank-modal-footer">
+                <button
+                  type="button"
+                  className="bank-modal-cancel-btn"
+                  onClick={closeModal}
+                  data-testid="modal-cancel-btn"
+                >
+                  Cancel
+                </button>
+                {/*
+                 * Beginner: data-testid + aria-label with dynamic content
+                 * Practice:
+                 *   page.getByTestId('modal-submit-btn')
+                 *   page.getByRole('button', { name: /Save changes to transaction/ })
+                 */}
+                <button
+                  type="submit"
+                  className="bank-modal-submit-btn"
+                  data-testid="modal-submit-btn"
+                  aria-label={
+                    modalMode === "add"
+                      ? "Save new transaction"
+                      : `Save changes to transaction ${editingTrx?.id}`
+                  }
+                >
+                  {modalMode === "add" ? "Add Transaction" : "Save Changes"}
+                </button>
+              </div>
+            </form>
+          </section>
+        </div>
+      )}
     </div>
   );
 }

@@ -171,6 +171,11 @@
   text-align: left;
 }
 
+.bank-nav-item svg {
+  flex-shrink: 0;
+  display: block;
+}
+
 .bank-nav-item:hover {
   background: #f3f0ff;
   color: #7c3aed;
@@ -814,13 +819,304 @@
     padding: 1.5rem;
   }
 
-  .bank-stats-row {
+  .bank-stats-row,
+  .bank-stats-row--four {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .bank-login-right {
     width: 460px;
   }
+}
+
+/* ─── 4-column stats row ──────────────────────────────────────────── */
+.bank-stats-row--four {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Balance card accent */
+.bank-stat-card--balance {
+  border-left: 4px solid #7c3aed;
+  background: linear-gradient(135deg, #faf8ff 0%, #f3f0ff 100%);
+}
+
+.bank-stat-value--balance {
+  background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bank-balance-account-mini {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 0.25rem;
+}
+
+/* ─── Extended action row ─────────────────────────────────────────── */
+.bank-action-row--extended {
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.bank-action-row-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.bank-action-row-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ─── Add transaction button ──────────────────────────────────────── */
+.bank-add-btn {
+  padding: 0.4rem 0.875rem;
+  background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
+  white-space: nowrap;
+}
+
+.bank-add-btn:hover {
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+  transform: translateY(-1px);
+}
+
+/* ─── Small export buttons (in action row) ────────────────────────── */
+.bank-export-btn-small {
+  padding: 0.4rem 0.75rem;
+  background: #ffffff;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.bank-export-btn-small:hover {
+  border-color: #7c3aed;
+  color: #7c3aed;
+  background: #f9f5ff;
+}
+
+/* ─── Action cell + edit button ───────────────────────────────────── */
+.bank-actions-cell {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.bank-edit-btn {
+  padding: 0.3125rem 0.75rem;
+  background: transparent;
+  color: #7c3aed;
+  border: 1px solid #c4b5fd;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.bank-edit-btn:hover {
+  background: #7c3aed;
+  color: #ffffff;
+  border-color: #7c3aed;
+}
+
+/* ─── Pagination ──────────────────────────────────────────────────── */
+.bank-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 0;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.bank-pagination-info {
+  font-size: 0.8125rem;
+  color: #9ca3af;
+}
+
+.bank-pagination-buttons {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.bank-page-btn {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 0.5rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  color: #4b5563;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bank-page-btn:hover:not(:disabled) {
+  border-color: #7c3aed;
+  color: #7c3aed;
+  background: #f9f5ff;
+}
+
+.bank-page-btn.active {
+  background: #7c3aed;
+  border-color: #7c3aed;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.bank-page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ─── Modal overlay + dialog ──────────────────────────────────────── */
+.bank-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 27, 75, 0.45);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 400;
+  padding: 1rem;
+}
+
+.bank-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 24px 64px rgba(124, 58, 237, 0.18);
+  overflow: hidden;
+}
+
+.bank-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.bank-modal-header h2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1e1b4b;
+  margin: 0;
+}
+
+.bank-modal-close {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+  transition: color 0.15s ease;
+}
+
+.bank-modal-close:hover {
+  color: #6b7280;
+}
+
+.bank-modal-form {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ─── Hard locator field-row pattern ─────────────────────────────── */
+.bank-field-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.bank-field-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.bank-field-control {
+  /* wrapper for XPath ancestor practice */
+}
+
+.bank-field-hint {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* ─── Modal footer buttons ────────────────────────────────────────── */
+.bank-modal-footer {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.bank-modal-cancel-btn {
+  padding: 0.625rem 1.25rem;
+  background: #f3f4f6;
+  color: #6b7280;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.bank-modal-cancel-btn:hover {
+  background: #e5e7eb;
+}
+
+.bank-modal-submit-btn {
+  padding: 0.625rem 1.25rem;
+  background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 10px rgba(124, 58, 237, 0.25);
+}
+
+.bank-modal-submit-btn:hover {
+  box-shadow: 0 5px 16px rgba(124, 58, 237, 0.35);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {
@@ -878,7 +1174,8 @@
     align-items: flex-start;
   }
 
-  .bank-stats-row {
+  .bank-stats-row,
+  .bank-stats-row--four {
     grid-template-columns: 1fr;
   }
 }

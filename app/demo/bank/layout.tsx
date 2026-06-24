@@ -356,7 +356,7 @@ export default function BankDemoLayout({
             <Link
               key={item.label}
               href={item.href}
-              className={`bank-nav-item${pathname === item.href && item.href !== "/demo/bank/dashboard" ? "active" : pathname === "/demo/bank/dashboard" && item.label === "Dashboard" ? "active" : ""}`}
+              className={["bank-nav-item", pathname === item.href && item.href !== "/demo/bank/dashboard" ? "active" : pathname === "/demo/bank/dashboard" && item.label === "Dashboard" ? "active" : ""].filter(Boolean).join(" ")}
               data-testid={item.testid}
               data-nav={item.label.toLowerCase()}
             >

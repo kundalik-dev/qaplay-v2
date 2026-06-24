@@ -35,6 +35,7 @@ interface BankState {
   ) => void;
   deleteTransaction: (id: string) => void; // P1 intentional bug will be inside the component calling this, or here. Let's put it in the component to easily see it.
   addTransaction: (trx: Transaction) => void;
+  updateTransaction: (trx: Transaction) => void;
   addAccount: (account: BankAccount) => void;
 }
 
@@ -100,6 +101,18 @@ export const useBankStore = create<BankState>()(
           transactions: [trx, ...state.transactions],
           balance: state.balance + trx.amount,
         })),
+
+      updateTransaction: (trx) =>
+        set((state) => {
+          const old = state.transactions.find((t) => t.id === trx.id);
+          const diff = old ? trx.amount - old.amount : 0;
+          return {
+            transactions: state.transactions.map((t) =>
+              t.id === trx.id ? trx : t,
+            ),
+            balance: state.balance + diff,
+          };
+        }),
 
       addAccount: (account) =>
         set((state) => ({
