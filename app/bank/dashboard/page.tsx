@@ -67,10 +67,10 @@ export default function DashboardPage() {
 
       {/* ── Total balance stat ───────────────────────────────────── */}
       <div
-        className="mb-6 rounded-xl border border-violet-200 bg-gradient-to-r from-violet-600 to-violet-800 p-5 text-white"
+        className="mb-6 max-w-md rounded-xl border border-blue-200 bg-gradient-to-r from-blue-600 to-blue-800 p-5 text-white"
         data-testid="total-balance-card"
       >
-        <p className="text-sm text-violet-200">Total Net Worth</p>
+        <p className="text-sm text-blue-200">Total Net Worth</p>
         {/*
          * Hard locator: total balance value — no data-testid, sibling of label paragraph
          * XPath: //div[@data-testid="total-balance-card"]//p[2]
@@ -82,7 +82,7 @@ export default function DashboardPage() {
         >
           {formatCurrency(totalBalance)}
         </p>
-        <p className="mt-1 text-xs text-violet-300">
+        <p className="mt-1 text-xs text-blue-300">
           Across {accounts.length} account{accounts.length !== 1 ? "s" : ""}
         </p>
       </div>

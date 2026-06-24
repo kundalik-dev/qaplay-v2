@@ -111,17 +111,16 @@ export default function AccountsPage() {
                 </div>
               )}
 
-              <div className="mt-auto pt-3">
+              <div className="mt-auto pt-4">
                 <Button
                   asChild
                   variant="outline"
-                  size="sm"
-                  className="w-full"
+                  className="group/btn relative w-full overflow-hidden flex items-center justify-center gap-2 border-slate-200 bg-slate-50/50 text-slate-700 transition-all hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700 hover:shadow-sm dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300 dark:hover:border-violet-700 dark:hover:bg-violet-900/30 dark:hover:text-violet-300"
                   data-testid="view-account-transactions-btn"
                 >
                   <Link href={`/bank/accounts/${account.id}`}>
-                    View Transactions
-                    <ArrowRight className="ml-1.5 h-3.5 w-3.5" aria-hidden="true" />
+                    <span className="font-medium">View Transactions</span>
+                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1" aria-hidden="true" />
                   </Link>
                 </Button>
               </div>
