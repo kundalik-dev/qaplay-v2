@@ -18,7 +18,7 @@
   position: fixed;
   inset: 0;
   overflow: hidden;
-  background: #f3f0ff;
+  background: #ffffff;
   font-family:
     "Inter",
     -apple-system,
@@ -177,7 +177,7 @@
 }
 
 .bank-nav-item:hover {
-  background: #f3f0ff;
+  background: #ffffff;
   color: #7c3aed;
 }
 
@@ -210,16 +210,17 @@
 
 /* ─── Page heading ────────────────────────────────────────────── */
 .bank-page-title {
-  font-size: 1.5rem;
+  font-size: 1.625rem;
   font-weight: 700;
-  color: #1e1b4b;
+  color: #111827;
   margin-bottom: 0.25rem;
+  letter-spacing: -0.01em;
 }
 
 .bank-page-subtitle {
   font-size: 0.875rem;
   color: #6b7280;
-  margin-bottom: 1.75rem;
+  margin-bottom: 2rem;
 }
 
 /* ─── Balance card ────────────────────────────────────────────── */
@@ -280,13 +281,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.875rem;
 }
 
 .bank-section-title {
   font-size: 1rem;
   font-weight: 600;
-  color: #1e1b4b;
+  color: #111827;
 }
 
 .bank-filter-group {
@@ -359,12 +360,12 @@
 }
 
 .bank-combobox-option:hover {
-  background: #f3f0ff;
+  background: #ffffff;
   color: #7c3aed;
 }
 
 .bank-combobox-option[aria-selected="true"] {
-  background: #ede9fe;
+  background: #f3f4f6;
   color: #7c3aed;
   font-weight: 500;
 }
@@ -385,16 +386,16 @@
 }
 
 .bank-table thead tr {
-  background: #f9f5ff;
+  background: #f9fafb;
 }
 
 .bank-table th {
-  padding: 0.875rem 1.25rem;
-  font-size: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  color: #7c3aed;
+  color: #6b7280;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
   border-bottom: 1px solid #e5e7eb;
   white-space: nowrap;
 }
@@ -420,7 +421,7 @@
 }
 
 .bank-table tbody tr:hover {
-  background: #faf8ff;
+  background: #f9fafb;
 }
 
 .bank-table-empty {
@@ -468,21 +469,56 @@
 .bank-stat-card {
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 1.25rem 1.5rem;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition: box-shadow 0.2s ease;
 }
+
+.bank-stat-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07), 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* ─── Stat card top row (label + icon) ───────────────────────── */
+.bank-stat-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.bank-stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.bank-stat-icon--balance { background: #ede9fe; color: #7c3aed; }
+.bank-stat-icon--income  { background: #d1fae5; color: #059669; }
+.bank-stat-icon--expense { background: #fee2e2; color: #dc2626; }
+.bank-stat-icon--count   { background: #dbeafe; color: #2563eb; }
 
 .bank-stat-label {
   font-size: 0.8125rem;
+  font-weight: 500;
   color: #6b7280;
-  margin-bottom: 0.375rem;
+  margin-bottom: 0;
+  line-height: 1.4;
 }
 
 .bank-stat-value {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  color: #1e1b4b;
+  color: #111827;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .bank-stat-value.income {
@@ -522,9 +558,9 @@
   border-radius: 6px;
   background: linear-gradient(
     90deg,
-    #ede9fe 0%,
-    #f5f3ff 40%,
-    #ede9fe 80%
+    #f3f4f6 0%,
+    #ffffff 40%,
+    #f3f4f6 80%
   );
   background-size: 600px 100%;
   animation: bank-shimmer 1.4s ease-in-out infinite;
@@ -619,9 +655,9 @@
   height: 44px;
   background: linear-gradient(
     90deg,
-    #f3f0ff 0%,
-    #f9f5ff 40%,
-    #f3f0ff 80%
+    #ffffff 0%,
+    #f9fafb 40%,
+    #ffffff 80%
   );
   background-size: 600px 100%;
   animation: bank-shimmer 1.4s ease-in-out infinite;
@@ -679,7 +715,7 @@
   inset: 0;
   align-items: center;
   justify-content: center;
-  background: #f3f0ff;
+  background: #ffffff;
   font-size: 0.875rem;
   color: #7c3aed;
   font-family: "Inter", sans-serif;
@@ -694,7 +730,7 @@
   position: fixed;
   inset: 0;
   overflow-y: auto;
-  background: #f3f0ff;
+  background: #ffffff;
   font-family:
     "Inter",
     -apple-system,
@@ -1002,8 +1038,8 @@
 
 /* Balance card accent */
 .bank-stat-card--balance {
-  border-left: 4px solid #7c3aed;
-  background: linear-gradient(135deg, #faf8ff 0%, #f3f0ff 100%);
+  border-top: 3px solid #7c3aed;
+  background: #ffffff;
 }
 
 .bank-stat-value--balance {
@@ -1038,10 +1074,19 @@
   flex-wrap: wrap;
 }
 
+/* Divider between export cluster and primary CTA */
+.bank-action-divider {
+  width: 1px;
+  height: 20px;
+  background: #e5e7eb;
+  margin: 0 0.25rem;
+  flex-shrink: 0;
+}
+
 /* ─── Add transaction button ──────────────────────────────────────── */
 .bank-add-btn {
-  padding: 0.4rem 0.875rem;
-  background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+  padding: 0.5rem 1rem;
+  background: #7c3aed;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -1049,12 +1094,16 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
+  box-shadow: 0 1px 3px rgba(124, 58, 237, 0.3);
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
 }
 
 .bank-add-btn:hover {
-  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+  background: #6d28d9;
+  box-shadow: 0 3px 10px rgba(124, 58, 237, 0.35);
   transform: translateY(-1px);
 }
 
@@ -1075,7 +1124,7 @@
 .bank-export-btn-small:hover {
   border-color: #7c3aed;
   color: #7c3aed;
-  background: #f9f5ff;
+  background: #f9fafb;
 }
 
 /* ─── Action cell + edit button ───────────────────────────────────── */
@@ -1111,7 +1160,7 @@
 .bank-reset-sort-btn {
   margin-left: 0.5rem;
   padding: 0.125rem 0.375rem;
-  background: #ede9fe;
+  background: #f3f4f6;
   color: #7c3aed;
   border: 1px solid #c4b5fd;
   border-radius: 4px;
@@ -1199,7 +1248,7 @@
 .bank-page-btn:hover:not(:disabled) {
   border-color: #7c3aed;
   color: #7c3aed;
-  background: #f9f5ff;
+  background: #f9fafb;
 }
 
 .bank-page-btn.active {

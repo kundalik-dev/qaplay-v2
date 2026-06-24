@@ -21,6 +21,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
   const [dynamicModalOpen, setDynamicModalOpen] = useState(false);
   const [challengeModalOpen, setChallengeModalOpen] = useState(false);
 
+  // Dynamic IDs generated when the modal opens (stable across re-renders so
+  // partial-match locator practice stays consistent while the modal is open).
+  const [dynamicModalSuffix, setDynamicModalSuffix] = useState(0);
+
   function markDone(id: string) {
     setCompletedIds((prev) => new Set([...prev, id]));
   }
@@ -169,6 +173,7 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                     className="flex h-9 items-center justify-center rounded-md bg-purple-600 px-4 text-sm font-medium text-white hover:bg-purple-700"
                     data-testid="btn-open-dynamic-modal"
                     onClick={() => {
+                      setDynamicModalSuffix(Math.floor(Math.random() * 10000));
                       setDynamicModalOpen(true);
                       setResult("Opened");
                     }}
@@ -190,14 +195,14 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                         </p>
                         <div className="flex justify-end gap-2">
                           <button
-                            id={`cancel-modal-${Math.floor(Math.random() * 10000)}`}
+                            id={`cancel-modal-${dynamicModalSuffix}`}
                             onClick={() => setDynamicModalOpen(false)}
                             className="h-9 rounded bg-gray-200 px-4 text-sm font-medium text-gray-900 hover:bg-gray-300"
                           >
                             Cancel
                           </button>
                           <button
-                            id={`confirm-modal-${Math.floor(Math.random() * 10000)}`}
+                            id={`confirm-modal-${dynamicModalSuffix}`}
                             onClick={() => {
                               setDynamicModalOpen(false);
                               setResult("Confirmed");

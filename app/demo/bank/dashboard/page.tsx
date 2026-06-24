@@ -222,13 +222,20 @@ export default function DashboardPage() {
         className="bank-stats-row bank-stats-row--four"
         data-testid="stats-row"
       >
-        {/* Balance card — slightly accented */}
+        {/* Balance card — top-accent */}
         <div
           className="bank-stat-card bank-stat-card--balance"
           data-testid="stat-balance"
           data-card="balance"
         >
-          <p className="bank-stat-label">Total Balance</p>
+          <div className="bank-stat-card-top">
+            <p className="bank-stat-label">Total Balance</p>
+            <span className="bank-stat-icon bank-stat-icon--balance" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+              </svg>
+            </span>
+          </div>
           <p
             className="bank-stat-value bank-stat-value--balance"
             data-testid="account-balance"
@@ -247,7 +254,14 @@ export default function DashboardPage() {
           data-testid="stat-income"
           data-card="income"
         >
-          <p className="bank-stat-label">Total Income</p>
+          <div className="bank-stat-card-top">
+            <p className="bank-stat-label">Total Income</p>
+            <span className="bank-stat-icon bank-stat-icon--income" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+              </svg>
+            </span>
+          </div>
           <p
             className="bank-stat-value income"
             data-testid="stat-income-value"
@@ -261,7 +275,14 @@ export default function DashboardPage() {
           data-testid="stat-expenses"
           data-card="expenses"
         >
-          <p className="bank-stat-label">Total Expenses</p>
+          <div className="bank-stat-card-top">
+            <p className="bank-stat-label">Total Expenses</p>
+            <span className="bank-stat-icon bank-stat-icon--expense" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/>
+              </svg>
+            </span>
+          </div>
           <p
             className="bank-stat-value expense"
             data-testid="stat-expense-value"
@@ -275,30 +296,28 @@ export default function DashboardPage() {
           data-testid="stat-transactions"
           data-card="transactions"
         >
-          <p className="bank-stat-label">Transactions</p>
+          <div className="bank-stat-card-top">
+            <p className="bank-stat-label">Transactions</p>
+            <span className="bank-stat-icon bank-stat-icon--count" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+                <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+              </svg>
+            </span>
+          </div>
           <p className="bank-stat-value" data-testid="stat-transaction-count">
             {transactions.length}
           </p>
         </div>
       </div>
 
-      {/* ── Action row: title + add btn | filter + exports ──────── */}
+      {/* ── Action row: title | filter + exports + add btn ─────── */}
       <div
         className="bank-action-row bank-action-row--extended"
         data-testid="action-row"
       >
         <div className="bank-action-row-left">
           <h2 className="bank-section-title">Recent Transactions</h2>
-          {/* Beginner: clear role + data-testid */}
-          <button
-            type="button"
-            className="bank-add-btn"
-            onClick={openAddModal}
-            data-testid="add-transaction-btn"
-            aria-label="Add new transaction"
-          >
-            + Add Transaction
-          </button>
         </div>
 
         <div className="bank-action-row-right">
@@ -378,6 +397,23 @@ export default function DashboardPage() {
             aria-label="Export to PDF"
           >
             Export PDF
+          </button>
+
+          {/* Divider before primary CTA */}
+          <div className="bank-action-divider" aria-hidden="true" />
+
+          {/* Beginner: clear role + data-testid */}
+          <button
+            type="button"
+            className="bank-add-btn"
+            onClick={openAddModal}
+            data-testid="add-transaction-btn"
+            aria-label="Add new transaction"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Add Transaction
           </button>
         </div>
       </div>

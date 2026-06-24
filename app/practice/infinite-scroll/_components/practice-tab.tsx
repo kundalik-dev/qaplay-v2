@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState } from "react";
 import { ScenarioCard, ProgressWidget, FrameworkMethodsPanel, UpNextCard } from "@/components/practice";
 import type { ProgressItem } from "@/components/practice";
 import { infiniteScrollScenarios, frameworkMethods } from "@/data/practice-data/infinite-scroll/scenarios";
@@ -76,7 +76,7 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
     setVirtualStart(startIndex);
   };
   
-  const visibleItems = [];
+  const visibleItems: number[] = [];
   const startNode = Math.max(0, virtualStart - 2);
   const endNode = Math.min(virtualTotal, virtualStart + Math.ceil(containerHeight / itemHeight) + 2);
   
