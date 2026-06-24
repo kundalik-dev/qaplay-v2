@@ -96,12 +96,12 @@ export const interviewSectionContent: InterviewSectionContent = {
   ],
   ctas: [
     {
-      href: "/interview",
+      href: "/interview-practice",
       label: "Start Interview",
       variant: "homePrimary",
     },
     {
-      href: "/interview/roles",
+      href: "/interview-practice",
       label: "Choose a role",
       variant: "homeSecondary",
     },

@@ -58,7 +58,7 @@ export const featureCards: FeatureCard[] = [
     title: "Bank Demo App",
     description:
       "A realistic multi-page banking workflow for building a full end-to-end automation suite like a real project.",
-    href: "/bank",
+    href: "/demo/bank",
     linkLabel: "Open bank demo",
   },
   {

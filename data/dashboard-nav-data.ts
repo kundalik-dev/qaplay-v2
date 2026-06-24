@@ -16,6 +16,7 @@ import {
   Wrench,
   Globe,
   Settings,
+  Home,
 } from "lucide-react";
 
 export interface DashboardNavItem {
@@ -38,12 +39,12 @@ export const dashboardNavGroups: DashboardNavGroup[] = [
   {
     label: "Main",
     items: [
-      // {
-      //   label: "Home",
-      //   href: "/",
-      //   icon: Home,
-      //   testId: "nav-dashboard",
-      // },
+      {
+        label: "Home",
+        href: "/",
+        icon: Home,
+        testId: "nav-home",
+      },
       {
         label: "Dashboard",
         href: "/dashboard",

@@ -62,7 +62,7 @@ export const roadmapSectionContent: RoadmapSectionContent = {
       title: "Build an E2E Framework",
       description:
         "Build a full suite on the Bank Demo — page objects, assertions, and reporting you can show in interviews.",
-      href: "/bank",
+      href: "/demo/bank",
       linkLabel: "Open Bank Demo",
       icon: Building2,
       tone: "brand-tertiary",

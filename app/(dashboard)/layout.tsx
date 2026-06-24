@@ -1,12 +1,8 @@
 import type { ReactNode } from "react";
-import Link from "next/link";
-import { Home } from "lucide-react";
 
 import { DashboardShell } from "./_components/dashboard-shell";
 import { DashboardTopNav } from "./_components/dashboard-topnav";
 import { NavThemeToggle } from "@/components/app-nav/nav/nav-theme-toggle";
-
-import styles from "./_components/dashboard.module.css";
 
 /**
  * Dashboard group layout.
@@ -24,15 +20,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     <DashboardTopNav
       actions={
         <>
-          <Link
-            href="/"
-            aria-label="Go to Home"
-            title="Go to Home"
-            className={styles.topNavAction}
-          >
-            <Home size={18} />
-            Home
-          </Link>
           <NavThemeToggle />
         </>
       }

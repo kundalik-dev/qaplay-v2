@@ -88,7 +88,7 @@ export function CtaSection() {
                   Start Practicing Free
                 </Link>
                 <Link
-                  href="/interview"
+                  href="/interview-practice"
                   className={buttonVariants({
                     variant: "homeSecondary",
                     size: "home",
@@ -99,7 +99,7 @@ export function CtaSection() {
                   Try a Mock Interview
                 </Link>
                 <Link
-                  href="/jobs"
+                  href="/job-crm"
                   className={buttonVariants({
                     variant: "homeGhost",
                     size: "home",
