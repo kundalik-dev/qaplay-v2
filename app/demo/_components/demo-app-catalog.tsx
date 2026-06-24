@@ -13,6 +13,13 @@ import { cn } from "@/lib/utils";
 
 import styles from "./demo-app-catalog.module.css";
 
+const DESCRIPTION_MAX_LENGTH = 130;
+
+function truncate(text: string, maxLength: number = DESCRIPTION_MAX_LENGTH) {
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength).trimEnd()}...`;
+}
+
 export function DemoAppCatalog() {
   const [activeFilter, setActiveFilter] = useState<DemoAppFilter>("all");
 
@@ -60,7 +67,7 @@ export function DemoAppCatalog() {
               <Link
                 key={card.title}
                 href={card.href}
-                target={card.title.includes("Bank") ? "_blank" : undefined}
+                target={"_blank"}
                 rel={
                   card.title.includes("Bank")
                     ? "noopener noreferrer"
@@ -77,21 +84,23 @@ export function DemoAppCatalog() {
                   <Image
                     src={card.imageSrc}
                     alt={card.imageAlt}
-                    width={520}
-                    height={280}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, (max-width: 1280px) 33vw, 25vw"
                     className={styles.mediaImage}
                   />
                 </div>
 
-                <div className={styles.cardTop}>
+                {/* <div className={styles.cardTop}>
                   <div className={styles.cardEyebrow}>{card.eyebrow}</div>
                   <div className={styles.cardBadge}>{card.badge}</div>
-                </div>
+                </div> */}
 
                 <h2 className={styles.cardTitle}>{card.title}</h2>
-                <p className={styles.cardDescription}>{card.description}</p>
+                <p className={styles.cardDescription}>
+                  {truncate(card.description)}
+                </p>
 
-                <div className={styles.highlightList}>
+                {/* <div className={styles.highlightList}>
                   {card.highlights.slice(0, 2).map((highlight) => (
                     <div key={highlight} className={styles.highlightItem}>
                       <span
@@ -101,7 +110,7 @@ export function DemoAppCatalog() {
                       <span>{highlight}</span>
                     </div>
                   ))}
-                </div>
+                </div> */}
 
                 <div className={styles.cardFooter}>
                   <div className={styles.cardMeta}>

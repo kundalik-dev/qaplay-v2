@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import { DashboardShell } from "./_components/dashboard-shell";
 import { DashboardTopNav } from "./_components/dashboard-topnav";
+import { NavThemeToggle } from "@/components/app-nav/nav/nav-theme-toggle";
 
 /**
  * Dashboard group layout.
@@ -15,7 +16,15 @@ import { DashboardTopNav } from "./_components/dashboard-topnav";
  * override breadcrumbs via their own wrappers.
  */
 export default function DashboardLayout({ children }: { children: ReactNode }) {
-  const topNav = <DashboardTopNav />;
+  const topNav = (
+    <DashboardTopNav
+      actions={
+        <>
+          <NavThemeToggle />
+        </>
+      }
+    />
+  );
 
   return <DashboardShell topNav={topNav}>{children}</DashboardShell>;
 }

@@ -1,0 +1,53 @@
+/* ── Shared layout (copy verbatim from buttons.module.css) ─── */
+.practiceLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 24px;
+  padding-block: 24px 64px;
+}
+
+.practiceSidebar {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .practiceLayout { grid-template-columns: 1fr; }
+  .practiceSidebar { position: static; }
+}
+
+@media (max-width: 640px) {
+  .practiceLayout { gap: 16px; padding-block: 20px 48px; }
+}
+
+/* ── Element-specific variants ──────────────────────────────── */
+
+.scrollContainer {
+  height: 200px;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background-color: #f9fafb;
+  padding: 8px;
+}
+
+.listItem {
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #374151;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+}
+
+.listItem:last-child {
+  margin-bottom: 0;
+}
