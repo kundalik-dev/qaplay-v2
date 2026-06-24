@@ -48,11 +48,21 @@ if (process.env.TRUSTED_ORIGINS) {
     .forEach((o) => trustedOrigins.push(o));
 }
 
+// ── Base URL ───────────────────────────────────────────────────────────────────
+// BETTER_AUTH_URL takes priority. Fall back to NEXT_PUBLIC_APP_URL so the OAuth
+// callback URL is always the deployed origin in production, never localhost.
+// Trailing slashes are stripped to avoid double-slash URLs.
+const authBaseURL = (
+  process.env.BETTER_AUTH_URL ||
+  process.env.NEXT_PUBLIC_APP_URL ||
+  "http://localhost:3000"
+).replace(/\/$/, "");
+
 // ── Auth instance ──────────────────────────────────────────────────────────────
 export const auth = betterAuth({
   // ── Core ────────────────────────────────────────────────────────────────────
   secret: process.env.BETTER_AUTH_SECRET,
-  baseURL: process.env.BETTER_AUTH_URL,
+  baseURL: authBaseURL,
 
   // Reject cross-origin requests from unlisted origins
   trustedOrigins,
