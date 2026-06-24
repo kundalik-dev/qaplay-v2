@@ -1,3 +1,5 @@
+@reference "../../../globals.css";
+
 .container {
   @apply w-full max-w-[1100px] mx-auto px-4 sm:px-7 py-8 space-y-8;
 }
@@ -139,7 +141,7 @@
 }
 
 .detailText {
-  @apply detail-text text-foreground truncate;
+  @apply text-foreground truncate;
 }
 
 .followersCard {

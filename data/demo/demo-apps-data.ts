@@ -42,6 +42,22 @@ export const demoAppCards: DemoAppCard[] = [
       "Multi-step validation practice",
     ],
   },
+  {
+    title: "GitHub User Search",
+    description:
+      "Practice automation locators on a real GitHub API integration. Search for GitHub users, view profiles, and solve intentional locator challenges.",
+    href: "/demo/github-user-search",
+    imageSrc: "/images/bank-demo-app.png",
+    imageAlt: "GitHub User Search app preview",
+    filters: ["all", "ui"],
+    badge: "New",
+    eyebrow: "Locator Practice",
+    highlights: [
+      "Intentional locator challenges",
+      "Real GitHub API integration",
+      "Positive & negative test scenarios",
+    ],
+  },
   // {
   //   title: "Shopping Demo App",
   //   description:

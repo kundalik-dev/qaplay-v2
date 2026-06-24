@@ -42,12 +42,10 @@ export default function GithubSearchDemoPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      <div 
-        className="min-h-screen bg-background"
+      <div
         data-testid="github-search-page"
         data-section="demo"
       >
-
         <GithubSearchTabs />
       </div>
     </>
