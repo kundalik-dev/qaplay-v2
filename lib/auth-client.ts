@@ -17,12 +17,12 @@ function getBaseURL() {
   if (typeof window !== "undefined") {
     return window.location.origin;
   }
-  if (process.env.NEXT_PUBLIC_APP_URL) {
-    return process.env.NEXT_PUBLIC_APP_URL;
-  }
-  if (process.env.NEXT_PUBLIC_VERCEL_URL) {
-    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
-  }
+  const envURL =
+    process.env.NEXT_PUBLIC_APP_URL ||
+    (process.env.NEXT_PUBLIC_VERCEL_URL
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+      : null);
+  if (envURL) return envURL.replace(/\/$/, "");
   return "http://localhost:3000";
 }
 
