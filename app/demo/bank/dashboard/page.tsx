@@ -118,10 +118,10 @@ export default function DashboardPage() {
   }, [transactions, sortField, sortOrder, categoryFilter]);
 
   /* ── Pagination ─────────────────────────────────────────────── */
-  const totalPages = Math.max(1, Math.ceil(sortedAndFiltered.length / PAGE_SIZE));
+  const totalPages = Math.max(1, Math.ceil(sortedAndFiltered.length / pageSize));
   const paginatedTrx = sortedAndFiltered.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE,
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize,
   );
 
   const handlePageChange = (page: number) =>
@@ -138,13 +138,20 @@ export default function DashboardPage() {
     }
   };
 
-  const toggleSort = (field: "date" | "amount") => {
+  const toggleSort = (field: "id" | "date" | "amount") => {
     if (sortField === field)
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     else {
       setSortField(field);
       setSortOrder("desc");
     }
+    setCurrentPage(1);
+  };
+
+  const resetSort = () => {
+    setSortField(null);
+    setSortOrder("desc");
+    setCurrentPage(1);
   };
 
   /* ── Modal helpers ──────────────────────────────────────────── */
@@ -383,7 +390,21 @@ export default function DashboardPage() {
         <table className="bank-table" data-testid="transactions-table">
           <thead>
             <tr>
-              <th>ID</th>
+              <th
+                className="sortable"
+                onClick={() => toggleSort("id")}
+                data-testid="sort-id-header"
+                aria-sort={
+                  sortField === "id"
+                    ? sortOrder === "asc"
+                      ? "ascending"
+                      : "descending"
+                    : "none"
+                }
+              >
+                ID{" "}
+                {sortField === "id" && (sortOrder === "asc" ? "↑" : "↓")}
+              </th>
               <th
                 className="sortable"
                 onClick={() => toggleSort("date")}
@@ -416,7 +437,21 @@ export default function DashboardPage() {
                 Amount{" "}
                 {sortField === "amount" && (sortOrder === "asc" ? "↑" : "↓")}
               </th>
-              <th>Actions</th>
+              <th>
+                <span>Actions</span>
+                {sortField && (
+                  <button
+                    type="button"
+                    className="bank-reset-sort-btn"
+                    onClick={resetSort}
+                    data-testid="reset-sort-btn"
+                    aria-label="Reset sorting"
+                    title="Reset sorting"
+                  >
+                    ↺ Reset
+                  </button>
+                )}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -498,15 +533,50 @@ export default function DashboardPage() {
         data-testid="pagination-controls"
         aria-label="Transaction pagination"
       >
-        <span
-          className="bank-pagination-info"
-          data-testid="pagination-info"
-        >
-          Page {currentPage} of {totalPages} &middot;{" "}
-          {sortedAndFiltered.length} transaction
-          {sortedAndFiltered.length !== 1 ? "s" : ""}
-        </span>
+        {/* Left: page-size picker */}
+        <div className="bank-pagination-left">
+          <label
+            htmlFor="page-size-select"
+            className="bank-page-size-label"
+          >
+            Show
+          </label>
+          {/*
+           * Medium Locator: native select with label + data-testid
+           * Practice:
+           *   page.getByLabel('Show').selectOption('10')
+           *   page.getByTestId('page-size-select').selectOption({ value: '20' })
+           */}
+          <select
+            id="page-size-select"
+            className="bank-page-size-select"
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+              setCurrentPage(1);
+            }}
+            data-testid="page-size-select"
+            aria-label="Transactions per page"
+          >
+            {PAGE_SIZE_OPTIONS.map((n) => (
+              <option key={n} value={n}>
+                {n}
+              </option>
+            ))}
+          </select>
+          <span className="bank-page-size-label">per page</span>
+          <span
+            className="bank-pagination-info"
+            data-testid="pagination-info"
+          >
+            &mdash; Page <strong>{currentPage}</strong> of{" "}
+            <strong>{totalPages}</strong> &middot;{" "}
+            {sortedAndFiltered.length} transaction
+            {sortedAndFiltered.length !== 1 ? "s" : ""}
+          </span>
+        </div>
 
+        {/* Right: page buttons */}
         <div className="bank-pagination-buttons">
           <button
             type="button"

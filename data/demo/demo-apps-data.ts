@@ -31,7 +31,7 @@ export const demoAppCards: DemoAppCard[] = [
     description:
       "Practice realistic banking journeys with forms, validations, account workflows, and stable targets for automation coverage.",
     href: "/demo/bank",
-    imageSrc: "/icons/homePage.png",
+    imageSrc: "/images/bank-demo-app.png",
     imageAlt: "Bank demo app preview",
     filters: ["all", "ui", "e2e"],
     badge: "New",
@@ -42,22 +42,22 @@ export const demoAppCards: DemoAppCard[] = [
       "Multi-step validation practice",
     ],
   },
-  {
-    title: "Shopping Demo App",
-    description:
-      "Test cart flows, product exploration, and checkout-style interactions in a compact retail demo built for QA practice.",
-    href: "/demo/shopping",
-    imageSrc: "/images/sauce-demo-app.png",
-    imageAlt: "Shopping demo app preview",
-    filters: ["all", "ui", "e2e"],
-    badge: "Popular",
-    eyebrow: "Web Automation",
-    highlights: [
-      "Product browse and cart coverage",
-      "Checkout interaction practice",
-      "Good fit for regression scenarios",
-    ],
-  },
+  // {
+  //   title: "Shopping Demo App",
+  //   description:
+  //     "Test cart flows, product exploration, and checkout-style interactions in a compact retail demo built for QA practice.",
+  //   href: "/demo/shopping",
+  //   imageSrc: "/images/sauce-demo-app.png",
+  //   imageAlt: "Shopping demo app preview",
+  //   filters: ["all", "ui", "e2e"],
+  //   badge: "Popular",
+  //   eyebrow: "Web Automation",
+  //   highlights: [
+  //     "Product browse and cart coverage",
+  //     "Checkout interaction practice",
+  //     "Good fit for regression scenarios",
+  //   ],
+  // },
   {
     title: "Sauce Demo",
     description:

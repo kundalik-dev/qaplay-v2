@@ -270,15 +270,87 @@ export default function BankDemoLayout({
     }
   }, [isReady, isLoggedIn, pathname, router]);
 
-  /* Loading */
+  /* Loading — skeleton shell */
   if (!isReady) {
     return (
       <div
-        className="bank-loading"
+        className="bank-page"
         data-testid="demo-bank-layout"
         data-section="demo-bank"
+        aria-busy="true"
+        aria-label="Loading secure banking portal"
       >
-        Loading secure banking portal…
+        {/* Topbar skeleton */}
+        <header className="bank-topbar bank-topbar--skeleton">
+          <div className="bank-skel bank-skel--brand" />
+          <div className="bank-topbar-right">
+            <div className="bank-skel bank-skel--avatar" />
+            <div className="bank-skel bank-skel--btn" />
+          </div>
+        </header>
+
+        <div className="bank-body">
+          {/* Sidebar skeleton */}
+          <aside className="bank-sidebar bank-sidebar--skeleton" aria-hidden="true">
+            <div className="bank-skel bank-skel--label" />
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="bank-skel bank-skel--nav-item" />
+            ))}
+            <div className="bank-skel bank-skel--label" style={{ marginTop: "1rem" }} />
+            {[1, 2].map((i) => (
+              <div key={i} className="bank-skel bank-skel--nav-item" />
+            ))}
+          </aside>
+
+          {/* Main content skeleton */}
+          <main className="bank-main" aria-hidden="true">
+            {/* Page title */}
+            <div className="bank-skel bank-skel--title" />
+            <div className="bank-skel bank-skel--subtitle" />
+
+            {/* 4 stat cards */}
+            <div className="bank-stats-row bank-stats-row--four bank-skel-cards-row">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="bank-stat-card bank-skel-card">
+                  <div className="bank-skel bank-skel--card-label" />
+                  <div className="bank-skel bank-skel--card-value" />
+                </div>
+              ))}
+            </div>
+
+            {/* Action row */}
+            <div className="bank-action-row" style={{ marginBottom: "1rem" }}>
+              <div className="bank-skel bank-skel--section-title" />
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                <div className="bank-skel bank-skel--btn" />
+                <div className="bank-skel bank-skel--btn" />
+              </div>
+            </div>
+
+            {/* Table skeleton */}
+            <div className="bank-table-wrapper">
+              <div className="bank-skel-table-head" />
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="bank-skel-table-row">
+                  <div className="bank-skel bank-skel--cell bank-skel--cell-sm" />
+                  <div className="bank-skel bank-skel--cell bank-skel--cell-sm" />
+                  <div className="bank-skel bank-skel--cell bank-skel--cell-lg" />
+                  <div className="bank-skel bank-skel--cell bank-skel--cell-sm" />
+                  <div className="bank-skel bank-skel--cell bank-skel--cell-sm" />
+                  <div className="bank-skel bank-skel--cell bank-skel--cell-xs" />
+                </div>
+              ))}
+            </div>
+
+            {/* Loading indicator */}
+            <div className="bank-loading-indicator">
+              <span className="bank-loading-dot" />
+              <span className="bank-loading-dot" />
+              <span className="bank-loading-dot" />
+              <span className="bank-loading-text">Loading secure banking portal…</span>
+            </div>
+          </main>
+        </div>
       </div>
     );
   }

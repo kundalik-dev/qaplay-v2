@@ -506,7 +506,173 @@
   letter-spacing: 0.02em;
 }
 
-/* ─── Loading state ───────────────────────────────────────────── */
+/* ─── Skeleton shimmer keyframe ───────────────────────────────── */
+@keyframes bank-shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+@keyframes bank-dot-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40%            { transform: translateY(-6px); opacity: 1; }
+}
+
+/* ─── Base skeleton block ─────────────────────────────────────── */
+.bank-skel {
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    #ede9fe 0%,
+    #f5f3ff 40%,
+    #ede9fe 80%
+  );
+  background-size: 600px 100%;
+  animation: bank-shimmer 1.4s ease-in-out infinite;
+}
+
+/* Topbar skeleton variants */
+.bank-topbar--skeleton {
+  pointer-events: none;
+}
+
+.bank-skel--brand {
+  width: 160px;
+  height: 28px;
+}
+
+.bank-skel--avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
+
+.bank-skel--btn {
+  width: 80px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+/* Sidebar skeleton variants */
+.bank-sidebar--skeleton {
+  pointer-events: none;
+}
+
+.bank-skel--label {
+  width: 60px;
+  height: 10px;
+  margin: 0.5rem 0.75rem 0.375rem;
+}
+
+.bank-skel--nav-item {
+  width: 100%;
+  height: 36px;
+  border-radius: 8px;
+  margin-bottom: 2px;
+}
+
+/* Main content skeleton variants */
+.bank-skel--title {
+  width: 160px;
+  height: 28px;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+}
+
+.bank-skel--subtitle {
+  width: 280px;
+  height: 16px;
+  margin-bottom: 1.75rem;
+  border-radius: 4px;
+}
+
+.bank-skel--section-title {
+  width: 180px;
+  height: 18px;
+  border-radius: 4px;
+}
+
+/* Stat cards */
+.bank-skel-cards-row {
+  margin-bottom: 2rem;
+}
+
+.bank-skel-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.bank-skel--card-label {
+  width: 80px;
+  height: 13px;
+  border-radius: 4px;
+}
+
+.bank-skel--card-value {
+  width: 120px;
+  height: 32px;
+  border-radius: 6px;
+}
+
+/* Table skeleton */
+.bank-skel-table-head {
+  height: 44px;
+  background: linear-gradient(
+    90deg,
+    #f3f0ff 0%,
+    #f9f5ff 40%,
+    #f3f0ff 80%
+  );
+  background-size: 600px 100%;
+  animation: bank-shimmer 1.4s ease-in-out infinite;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.bank-skel-table-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.bank-skel--cell {
+  height: 14px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.bank-skel--cell-xs  { width: 60px; }
+.bank-skel--cell-sm  { width: 90px; }
+.bank-skel--cell-lg  { width: 180px; }
+
+/* Loading dots */
+.bank-loading-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 1.25rem 0;
+}
+
+.bank-loading-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #7c3aed;
+  animation: bank-dot-bounce 1.2s ease-in-out infinite;
+}
+
+.bank-loading-dot:nth-child(2) { animation-delay: 0.15s; }
+.bank-loading-dot:nth-child(3) { animation-delay: 0.3s; }
+
+.bank-loading-text {
+  font-size: 0.8125rem;
+  color: #9ca3af;
+  margin-left: 0.25rem;
+}
+
+/* ─── Legacy plain loading (kept for safety) ──────────────────── */
 .bank-loading {
   display: flex;
   position: fixed;
@@ -937,6 +1103,32 @@
   border-color: #7c3aed;
 }
 
+/* ─── Reset sort button (inside th) ──────────────────────────────── */
+.bank-table th {
+  position: relative;
+}
+
+.bank-reset-sort-btn {
+  margin-left: 0.5rem;
+  padding: 0.125rem 0.375rem;
+  background: #ede9fe;
+  color: #7c3aed;
+  border: 1px solid #c4b5fd;
+  border-radius: 4px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.bank-reset-sort-btn:hover {
+  background: #7c3aed;
+  color: #ffffff;
+  border-color: #7c3aed;
+}
+
 /* ─── Pagination ──────────────────────────────────────────────────── */
 .bank-pagination {
   display: flex;
@@ -947,9 +1139,38 @@
   flex-wrap: wrap;
 }
 
+.bank-pagination-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .bank-pagination-info {
   font-size: 0.8125rem;
   color: #9ca3af;
+}
+
+.bank-page-size-label {
+  font-size: 0.8125rem;
+  color: #6b7280;
+}
+
+.bank-page-size-select {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.bank-page-size-select:hover,
+.bank-page-size-select:focus {
+  border-color: #7c3aed;
+  outline: none;
 }
 
 .bank-pagination-buttons {
