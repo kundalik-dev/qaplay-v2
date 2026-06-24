@@ -13,6 +13,13 @@ import { cn } from "@/lib/utils";
 
 import styles from "./demo-app-catalog.module.css";
 
+const DESCRIPTION_MAX_LENGTH = 130;
+
+function truncate(text: string, maxLength: number = DESCRIPTION_MAX_LENGTH) {
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength).trimEnd()}...`;
+}
+
 export function DemoAppCatalog() {
   const [activeFilter, setActiveFilter] = useState<DemoAppFilter>("all");
 
@@ -83,15 +90,17 @@ export function DemoAppCatalog() {
                   />
                 </div>
 
-                <div className={styles.cardTop}>
+                {/* <div className={styles.cardTop}>
                   <div className={styles.cardEyebrow}>{card.eyebrow}</div>
                   <div className={styles.cardBadge}>{card.badge}</div>
-                </div>
+                </div> */}
 
                 <h2 className={styles.cardTitle}>{card.title}</h2>
-                <p className={styles.cardDescription}>{card.description}</p>
+                <p className={styles.cardDescription}>
+                  {truncate(card.description)}
+                </p>
 
-                <div className={styles.highlightList}>
+                {/* <div className={styles.highlightList}>
                   {card.highlights.slice(0, 2).map((highlight) => (
                     <div key={highlight} className={styles.highlightItem}>
                       <span
@@ -101,7 +110,7 @@ export function DemoAppCatalog() {
                       <span>{highlight}</span>
                     </div>
                   ))}
-                </div>
+                </div> */}
 
                 <div className={styles.cardFooter}>
                   <div className={styles.cardMeta}>
