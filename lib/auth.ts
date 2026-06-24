@@ -49,13 +49,11 @@ if (process.env.TRUSTED_ORIGINS) {
 }
 
 // ── Base URL ───────────────────────────────────────────────────────────────────
-// BETTER_AUTH_URL takes priority. Fall back to NEXT_PUBLIC_APP_URL so the OAuth
-// callback URL is always the deployed origin in production, never localhost.
-// Trailing slashes are stripped to avoid double-slash URLs.
+// NEXT_PUBLIC_APP_URL is the single source of truth — set to http://localhost:3000
+// in .env for local dev and https://qaplay-v2.vercel.app in the Vercel dashboard
+// for production. Trailing slash stripped to avoid double-slash paths.
 const authBaseURL = (
-  process.env.BETTER_AUTH_URL ||
-  process.env.NEXT_PUBLIC_APP_URL ||
-  "http://localhost:3000"
+  process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
 ).replace(/\/$/, "");
 
 // ── Auth instance ──────────────────────────────────────────────────────────────

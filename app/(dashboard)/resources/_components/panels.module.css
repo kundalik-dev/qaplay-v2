@@ -1,5 +1,44 @@
 /* ── Shared panel styles (ApiKeysDialog + TelegramBotPanel) ──────────────── */
 
+/* Dialog title inner — flex so the icon aligns perfectly with the text */
+.dialogTitleInner {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+/* Right side of dialog header: groups the Chrome CTA + close button */
+.dialogHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* "Add to Chrome" button in the dialog header */
+.addToChromeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--primary) 40%, transparent);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+
+.addToChromeBtn:hover {
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  border-color: color-mix(in srgb, var(--primary) 60%, transparent);
+}
+
 /* Slightly wider dialog for panels that need more room */
 .wideDialog {
   max-width: 520px;
@@ -405,4 +444,61 @@
 
 .helpAnchor:hover {
   color: #15803d;
+}
+
+/* ── Telegram footer — three buttons in one row ──────────────────────────── */
+
+.telegramFooter {
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Regenerate / Generate token — solid blue */
+.btnBlue {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  height: 34px;
+  border-radius: var(--radius-md, 6px);
+  border: none;
+  background: #3b82f6;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.btnBlue:hover {
+  opacity: 0.88;
+}
+
+.btnBlue:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Open Telegram — site primary color */
+.btnOpenTelegram {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  height: 34px;
+  border-radius: var(--radius-md, 6px);
+  border: none;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.btnOpenTelegram:hover {
+  opacity: 0.88;
 }

@@ -14,16 +14,8 @@
 import { createAuthClient } from "better-auth/react";
 
 function getBaseURL() {
-  if (typeof window !== "undefined") {
-    return window.location.origin;
-  }
-  const envURL =
-    process.env.NEXT_PUBLIC_APP_URL ||
-    (process.env.NEXT_PUBLIC_VERCEL_URL
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-      : null);
-  if (envURL) return envURL.replace(/\/$/, "");
-  return "http://localhost:3000";
+  if (typeof window !== "undefined") return window.location.origin;
+  return (process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000").replace(/\/$/, "");
 }
 
 export const authClient = createAuthClient({

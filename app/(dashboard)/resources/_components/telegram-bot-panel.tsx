@@ -122,11 +122,10 @@ export function TelegramBotPanel({
           {/* Header */}
           <div className={styles.dialogHeader}>
             <h2 className={styles.dialogTitle}>
-              <Send
-                size={15}
-                style={{ verticalAlign: "middle", marginRight: 6 }}
-              />
-              Telegram Bot
+              <span className={panelStyles.dialogTitleInner}>
+                <Send size={15} />
+                Telegram Bot
+              </span>
             </h2>
             <button
               className={styles.dialogCloseBtn}
@@ -245,8 +244,20 @@ export function TelegramBotPanel({
                   </li>
                 </ol>
 
+                {/* Setup guide link — inline, below steps */}
+                <a
+                  href="/help/telegram-setup"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={panelStyles.helpAnchor}
+                  style={{ marginBottom: 14, display: "inline-flex" }}
+                >
+                  <ExternalLink size={11} />
+                  Setup guide &amp; command reference
+                </a>
+
                 {/* Token display */}
-                {status?.token ? (
+                {status?.token && (
                   <div className={panelStyles.tokenSection}>
                     <div className={panelStyles.tokenMeta}>
                       <span className={panelStyles.tokenLabel}>
@@ -285,74 +296,43 @@ export function TelegramBotPanel({
                         )}
                       </button>
                     </div>
-                    <button
-                      className={[
-                        styles.btnOutline,
-                        panelStyles.fullWidth,
-                      ].join(" ")}
-                      onClick={() => void generateToken()}
-                      disabled={generating}
-                      data-testid="refresh-telegram-token-btn"
-                    >
-                      {generating ? (
-                        <Loader2 size={13} className={panelStyles.spin} />
-                      ) : (
-                        <RefreshCw size={13} />
-                      )}
-                      Regenerate token
-                    </button>
                   </div>
-                ) : (
-                  <button
-                    className={[styles.btnPrimary, panelStyles.fullWidth].join(
-                      " ",
-                    )}
-                    onClick={() => void generateToken()}
-                    disabled={generating}
-                    id="generate-telegram-token-btn"
-                    data-testid="generate-telegram-token-btn"
-                  >
-                    {generating ? (
-                      <Loader2 size={13} className={panelStyles.spin} />
-                    ) : (
-                      <Send size={13} />
-                    )}
-                    Generate Connect Token
-                  </button>
                 )}
+              </div>
+            )}
+          </div>
 
+          {/* Footer — three action buttons */}
+          <div className={[styles.dialogFooter, panelStyles.telegramFooter].join(" ")}>
+            {!status?.linked && (
+              <>
+                <button
+                  className={panelStyles.btnBlue}
+                  onClick={() => void generateToken()}
+                  disabled={generating}
+                  id={status?.token ? "refresh-telegram-token-btn" : "generate-telegram-token-btn"}
+                  data-testid={status?.token ? "refresh-telegram-token-btn" : "generate-telegram-token-btn"}
+                >
+                  {generating ? (
+                    <Loader2 size={13} className={panelStyles.spin} />
+                  ) : (
+                    <RefreshCw size={13} />
+                  )}
+                  {status?.token ? "Regenerate token" : "Generate token"}
+                </button>
                 <a
                   href={BOT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={[
-                    panelStyles.btnTelegram,
-                    panelStyles.fullWidth,
-                  ].join(" ")}
-                  style={{ marginTop: 8, justifyContent: "center" }}
+                  className={panelStyles.btnOpenTelegram}
                   data-testid="open-telegram-bot-btn"
                 >
                   <Send size={13} />
                   Open Telegram
                   <ExternalLink size={11} style={{ opacity: 0.7 }} />
                 </a>
-              </div>
+              </>
             )}
-
-            <div className={panelStyles.helpLink}>
-              <a
-                href="/help/telegram-setup"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={panelStyles.helpAnchor}
-              >
-                <ExternalLink size={11} />
-                Setup guide &amp; command reference
-              </a>
-            </div>
-          </div>
-
-          <div className={styles.dialogFooter}>
             <button className={styles.btnOutline} onClick={onClose}>
               Close
             </button>

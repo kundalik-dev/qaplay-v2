@@ -1,10 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check, Copy, KeyRound, Loader2, Trash2, X } from "lucide-react";
+import {
+  Check,
+  Copy,
+  ExternalLink,
+  Globe,
+  KeyRound,
+  Loader2,
+  Trash2,
+  X,
+} from "lucide-react";
 
 import styles from "./resources.module.css";
 import panelStyles from "./panels.module.css";
+
+const CHROME_STORE_URL =
+  "https://chromewebstore.google.com/detail/jegdkegbomfbmhhimfjgacdblcoodfpd?utm_source=item-share-cb";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -142,25 +154,38 @@ export function ApiKeysDialog({
           {/* Header */}
           <div className={styles.dialogHeader}>
             <h2 className={styles.dialogTitle}>
-              <KeyRound
-                size={15}
-                style={{ verticalAlign: "middle", marginRight: 6 }}
-              />
-              API Keys
+              <span className={panelStyles.dialogTitleInner}>
+                <KeyRound size={15} />
+                API Keys
+              </span>
             </h2>
-            <button
-              className={styles.dialogCloseBtn}
-              onClick={onClose}
-              aria-label="Close"
-            >
-              <X size={16} />
-            </button>
+            <div className={panelStyles.dialogHeaderActions}>
+              <a
+                href={CHROME_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={panelStyles.addToChromeBtn}
+                data-testid="add-to-chrome-btn"
+                aria-label="Add QA Playground Clipper to Chrome"
+              >
+                <Globe size={13} />
+                Add to Chrome
+                <ExternalLink size={11} />
+              </a>
+              <button
+                className={styles.dialogCloseBtn}
+                onClick={onClose}
+                aria-label="Close"
+              >
+                <X size={16} />
+              </button>
+            </div>
           </div>
 
           <div className={styles.dialogBody}>
             <p className={panelStyles.panelDesc}>
-              Use these keys in the <strong>QA Playground Clipper</strong>{" "}
-              Chrome extension to save resources directly from any webpage.
+              Generate keys and paste them into the <strong>QA Clipper</strong>{" "}
+              extension to save resources directly from any webpage.
             </p>
 
             {/* New key revealed callout */}
