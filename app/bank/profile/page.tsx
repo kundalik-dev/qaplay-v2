@@ -18,7 +18,7 @@ import { useBankAppStore, useCurrentUser } from "../store/useBankAppStore";
 import { isValidEmail, isValidPhone } from "../lib/utils";
 
 export default function ProfilePage() {
-  const { currentUsername, updateProfile, changePassword, resetUserData, logout } = useBankAppStore();
+  const { currentUsername, updateProfile, changePassword, resetUserData } = useBankAppStore();
   const currentUser = useCurrentUser();
   const profile = currentUser?.profile;
 

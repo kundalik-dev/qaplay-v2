@@ -25,21 +25,22 @@ const CATEGORY_COLORS: Record<string, string> = {
   Transfer: "bg-slate-100 text-slate-700",
 };
 
+function SortIcon({ field, sortField, sortOrder }: { field: SortField; sortField: SortField | null; sortOrder: SortOrder }) {
+  if (sortField !== field)
+    return <span className="ml-1 text-slate-300">↕</span>;
+  return sortOrder === "asc" ? (
+    <ArrowUp className="ml-1 inline h-3 w-3" aria-hidden="true" />
+  ) : (
+    <ArrowDown className="ml-1 inline h-3 w-3" aria-hidden="true" />
+  );
+}
+
 export function TransactionsTable({
   transactions,
   sortField,
   sortOrder,
   onSort,
 }: TransactionsTableProps) {
-  function SortIcon({ field }: { field: SortField }) {
-    if (sortField !== field)
-      return <span className="ml-1 text-slate-300">↕</span>;
-    return sortOrder === "asc" ? (
-      <ArrowUp className="ml-1 inline h-3 w-3" aria-hidden="true" />
-    ) : (
-      <ArrowDown className="ml-1 inline h-3 w-3" aria-hidden="true" />
-    );
-  }
 
   return (
     <div
@@ -65,7 +66,7 @@ export function TransactionsTable({
                   : "none"
               }
             >
-              Date <SortIcon field="date" />
+              Date <SortIcon field="date" sortField={sortField} sortOrder={sortOrder} />
             </th>
             <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400">
               Description
@@ -85,7 +86,7 @@ export function TransactionsTable({
                   : "none"
               }
             >
-              Amount <SortIcon field="amount" />
+              Amount <SortIcon field="amount" sortField={sortField} sortOrder={sortOrder} />
             </th>
             {/* Hard locator: Running Balance header — no data-testid */}
             <th className="px-4 py-3 text-right text-xs font-semibold text-slate-600 dark:text-slate-400">

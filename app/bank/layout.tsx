@@ -248,7 +248,8 @@ export default function BankLayout({ children }: { children: React.ReactNode }) 
   // Seed data once on mount
   useEffect(() => {
     seedIfNeeded();
-    setIsReady(true);
+    const timer = setTimeout(() => setIsReady(true), 0);
+    return () => clearTimeout(timer);
   }, [seedIfNeeded]);
 
   // Auth guard

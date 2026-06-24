@@ -3,7 +3,7 @@
 import React from "react";
 import { Bell, CheckCheck, Info, CheckCircle2, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+
 import { Separator } from "@/components/ui/separator";
 import { useBankAppStore } from "../store/useBankAppStore";
 import { formatRelativeTime } from "../lib/utils";

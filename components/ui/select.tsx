@@ -15,7 +15,7 @@ const Select: React.FC<
     {...props}
     onValueChange={
       onValueChange
-        ? (value, eventDetails) => {
+        ? (value) => {
             if (value !== null && value !== undefined) {
               onValueChange(value as string);
             }

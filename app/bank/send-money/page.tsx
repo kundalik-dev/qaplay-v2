@@ -51,9 +51,7 @@ export default function SendMoneyPage() {
   const [showNewPayeeForm, setShowNewPayeeForm] = useState(savedPayees.length === 0);
 
   const fromAccount = accounts.find((a) => a.id === fromId);
-  const resolvedPayee = selectedPayeeId !== "new"
-    ? savedPayees.find((p) => p.id === selectedPayeeId)
-    : null;
+
 
   const handleSelectPayee = (id: string) => {
     setSelectedPayeeId(id);
