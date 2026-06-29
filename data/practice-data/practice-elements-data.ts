@@ -230,6 +230,17 @@ export const practiceCards: PracticeCard[] = [
     testId: "infinite-scroll",
   },
   {
+    href: "/practice/annotations",
+    iconSrc: "/mainicons/elements.svg",
+    iconAlt: "Annotations icon",
+    title: "Annotations",
+    description:
+      "Practice test.skip(), test.slow(), test.fixme(), test.fail(), test.step(), and data-driven test patterns.",
+    level: "Intermediate",
+    tag: "ANNOT",
+    testId: "annotations",
+  },
+  {
     href: "/demo/bank",
     iconSrc: "/mainicons/bank-v2.svg",
     iconAlt: "Bank Demo App icon",

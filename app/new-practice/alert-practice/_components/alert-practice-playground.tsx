@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import styles from "../../_components/playground.module.css";
+import styles from "../../_components/css-modules/playground.module.css";
 import { ALERT_CARDS_DATA } from "./data/alert-cards-data";
 import { ALERT_CARDS } from "./cards/alert-cards";
 

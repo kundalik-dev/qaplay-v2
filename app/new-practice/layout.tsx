@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import styles from "./_components/practice-layout.module.css";
+import styles from "./_components/css-modules/practice-layout.module.css";
 import { cn } from "@/lib/utils";
 
 /**

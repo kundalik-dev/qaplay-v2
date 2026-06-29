@@ -16,7 +16,6 @@ export {
   PracticeBlock,
   PracticeButton,
   OutputBox,
-  controlStyles,
 } from "./practice-block";
 export type {
   BlockBadge,

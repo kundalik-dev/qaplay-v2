@@ -7,7 +7,7 @@ import type {
   NewPracticeLevel,
 } from "@/data/new-practice/new-practice-cards-data";
 
-import styles from "./new-practice-grid.module.css";
+import styles from "./css-modules/new-practice-grid.module.css";
 
 const levelStyleMap: Record<NewPracticeLevel, string> = {
   Beginner: styles.levelBeginner,

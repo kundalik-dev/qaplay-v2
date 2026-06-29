@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import styles from "./practice-shell.module.css";
+import styles from "./css-modules/practice-shell.module.css";
 
 interface PracticePanelProps {
   /** When true, removes inner padding (for full-bleed content like tables). */

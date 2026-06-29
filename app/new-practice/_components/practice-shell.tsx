@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import styles from "./practice-shell.module.css";
+import styles from "./css-modules/practice-shell.module.css";
 
 interface PracticeShellProps {
   /** Optional small uppercase label shown above the title. */
