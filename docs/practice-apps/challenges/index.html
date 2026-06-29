@@ -1,0 +1,1436 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Challenges — QA Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Design tokens ── */
+    :root {
+      --bg:           #0a0c10;
+      --bg2:          #0f1117;
+      --surface:      #161b24;
+      --surface2:     #1e2433;
+      --surface3:     #242d3e;
+      --border:       rgba(255,255,255,0.07);
+      --border-s:     rgba(255,255,255,0.13);
+      --accent:       #00ffaa;
+      --accent2:      #7b61ff;
+      --accent3:      #ff6b35;
+      --text:         #e8edf5;
+      --text-muted:   #7a8499;
+      --text-dim:     #4a5266;
+      --success:      #27c93f;
+      --warning:      #ffbd2e;
+      --danger:       #ff5f56;
+      --info:         #44d9e8;
+      --shadow-card:  0 18px 48px rgba(0,0,0,0.35);
+      --shadow-float: 0 22px 50px rgba(0,0,0,0.55);
+      --glow:         0 0 40px rgba(0,255,170,0.12);
+      --radius-sm:    8px;
+      --radius-md:    12px;
+      --radius-lg:    20px;
+      --font-display: "Space Grotesk", sans-serif;
+      --font-body:    "Inter", sans-serif;
+      --font-mono:    "IBM Plex Mono", monospace;
+      --t-base:       0.22s ease;
+      --t-slow:       0.35s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Grid background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,170,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,170,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,12,16,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .site-header .logo {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.3px;
+      text-decoration: none;
+    }
+    .site-header .sep { color: var(--text-dim); margin: 0 4px; }
+    .site-header .page-title {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* ── Page wrapper ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 56px 48px 80px;
+    }
+
+    /* ── Page hero ── */
+    .page-hero { margin-bottom: 48px; }
+    .page-hero h1 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+    .page-hero h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .page-hero p {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 560px;
+    }
+
+    /* ── Filter bar ── */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    .filter-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-right: 4px;
+    }
+    .filter-btn {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border-s);
+      background: var(--surface);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--t-base);
+    }
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 600; }
+
+    /* ── Challenge cards grid ── */
+    .challenges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .challenge-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      cursor: pointer;
+      transition: all var(--t-slow);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .challenge-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity var(--t-base);
+    }
+    .challenge-card:hover {
+      border-color: rgba(0,255,170,0.2);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card), var(--glow);
+    }
+    .challenge-card:hover::before { opacity: 1; }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .card-icon.bug     { background: rgba(255,95,86,0.12); }
+    .card-icon.skip    { background: rgba(255,189,46,0.12); }
+    .card-icon.step    { background: rgba(0,255,170,0.1); }
+    .card-icon.data    { background: rgba(68,217,232,0.1); }
+    .card-icon.tag     { background: rgba(123,97,255,0.1); }
+
+    .difficulty-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 100px;
+      flex-shrink: 0;
+    }
+    .diff-beginner  { background: rgba(39,201,63,0.15);  color: #27c93f; border: 1px solid rgba(39,201,63,0.25); }
+    .diff-intermediate { background: rgba(255,189,46,0.12); color: #ffbd2e; border: 1px solid rgba(255,189,46,0.22); }
+    .diff-advanced  { background: rgba(255,95,86,0.12);  color: #ff5f56; border: 1px solid rgba(255,95,86,0.22); }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag-chip {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--surface2);
+      color: var(--accent);
+      border: 1px solid rgba(0,255,170,0.15);
+    }
+    .tag-chip.purple { color: var(--accent2); border-color: rgba(123,97,255,0.2); }
+    .tag-chip.orange { color: var(--accent3); border-color: rgba(255,107,53,0.2); }
+    .tag-chip.info   { color: var(--info);    border-color: rgba(68,217,232,0.2); }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .framework-dots { display: flex; gap: 6px; align-items: center; }
+    .fw-dot {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--surface2);
+      color: var(--text-dim);
+    }
+    .open-btn {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap var(--t-base);
+    }
+    .challenge-card:hover .open-btn { gap: 8px; }
+
+    /* ── Modal overlay ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 7, 12, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--t-slow);
+      overflow-y: auto;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* ── Challenge window ── */
+    .challenge-window {
+      background: var(--bg2);
+      border: 1px solid var(--border-s);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 1060px;
+      margin: auto;
+      box-shadow: var(--shadow-float);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+      transform: translateY(20px) scale(0.98);
+      transition: transform var(--t-slow);
+      min-height: 0;
+    }
+    .modal-overlay.open .challenge-window {
+      transform: translateY(0) scale(1);
+    }
+
+    /* Window chrome bar */
+    .window-chrome {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .chrome-dots { display: flex; gap: 6px; }
+    .chrome-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .dot-red    { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green  { background: #27c93f; }
+    .chrome-title {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      flex: 1;
+      text-align: center;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: color var(--t-base), background var(--t-base);
+    }
+    .close-btn:hover { color: var(--danger); background: rgba(255,95,86,0.1); }
+
+    /* Window body — two-panel layout */
+    .window-body {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      min-height: 0;
+    }
+
+    /* ── Info panel (left) ── */
+    .info-panel {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      overflow-y: auto;
+    }
+
+    .challenge-meta { display: flex; flex-direction: column; gap: 8px; }
+    .challenge-meta .chal-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .challenge-meta .chal-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .meta-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+
+    .info-section { display: flex; flex-direction: column; gap: 8px; }
+    .info-section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .info-section-content {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .info-section-content strong { color: var(--text); font-weight: 600; }
+
+    /* Objective checklist */
+    .objective-list { display: flex; flex-direction: column; gap: 7px; }
+    .objective-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .obj-num {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(0,255,170,0.1);
+      border: 1px solid rgba(0,255,170,0.2);
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Annotation pills */
+    .ann-list { display: flex; flex-direction: column; gap: 6px; }
+    .ann-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+    }
+    .ann-pill code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+    }
+    .ann-pill .ann-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Locator table */
+    .locator-table { display: flex; flex-direction: column; gap: 5px; }
+    .locator-row {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 6px;
+      align-items: baseline;
+      font-size: 11px;
+    }
+    .loc-type {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+      text-align: center;
+    }
+    .loc-type.testid { background: rgba(39,201,63,0.12); color: #27c93f; }
+    .loc-type.id     { background: rgba(68,217,232,0.1);  color: var(--info); }
+    .loc-type.aria   { background: rgba(255,189,46,0.1);  color: var(--warning); }
+    .loc-type.dyn    { background: rgba(255,107,53,0.1);  color: var(--accent3); }
+    .loc-value {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      word-break: break-all;
+    }
+
+    /* Code snippet */
+    .code-block {
+      background: var(--bg);
+      border: 1px solid var(--border-s);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: #93c5fd;
+      line-height: 1.7;
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .code-block .c-kw  { color: #c084fc; }
+    .code-block .c-fn  { color: #60a5fa; }
+    .code-block .c-str { color: #86efac; }
+    .code-block .c-cm  { color: var(--text-dim); font-style: italic; }
+    .code-block .c-ann { color: var(--warning); }
+
+    /* ── Practice panel (right) ── */
+    .practice-panel {
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      background: var(--bg2);
+    }
+
+    .practice-header {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .practice-header h2 {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .practice-header p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .reset-btn {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 100px;
+      border: 1px solid var(--border-s);
+      background: var(--surface);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--t-base);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .practice-body { padding: 28px; display: flex; flex-direction: column; gap: 20px; }
+
+    /* Bug cards inside practice */
+    .practice-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+
+    .bug-card-dark {
+      background: var(--surface);
+      border: 1px solid rgba(255,95,86,0.2);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .info-card-dark {
+      background: var(--surface);
+      border: 1px solid rgba(68,217,232,0.2);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .practice-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .practice-card-title {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .bug-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(255,95,86,0.12);
+      color: var(--danger);
+      border: 1px solid rgba(255,95,86,0.2);
+    }
+    .expected-fail-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(68,217,232,0.1);
+      color: var(--info);
+      border: 1px solid rgba(68,217,232,0.2);
+    }
+    .practice-hint {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .practice-hint code {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      background: var(--surface2);
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: var(--accent);
+    }
+
+    /* Counter */
+    .counter-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .counter-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-s);
+      background: var(--surface2);
+      color: var(--text);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--t-base);
+      font-family: var(--font-body);
+    }
+    .counter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .counter-val {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      min-width: 44px;
+      text-align: center;
+    }
+    .bug-label {
+      font-size: 10px;
+      color: var(--danger);
+      font-style: italic;
+    }
+
+    /* Practice action buttons */
+    .prac-btn {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: all var(--t-base);
+      width: fit-content;
+    }
+    .prac-btn.danger {
+      background: rgba(255,95,86,0.15);
+      color: var(--danger);
+      border: 1px solid rgba(255,95,86,0.25);
+    }
+    .prac-btn.danger:hover { background: rgba(255,95,86,0.25); }
+    .prac-btn.muted {
+      background: var(--surface2);
+      color: var(--text-muted);
+      border: 1px solid var(--border-s);
+    }
+    .prac-btn.muted:hover { border-color: var(--info); color: var(--info); }
+
+    /* Output box */
+    .output-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      min-height: 32px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 4px;
+    }
+    .output-box.success { color: var(--success); border-color: rgba(39,201,63,0.2); }
+    .output-box.error   { color: var(--danger);  border-color: rgba(255,95,86,0.2); }
+
+    /* ── Expected assertion box ── */
+    .assertion-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+    }
+    .assertion-section h3 {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .assertion-section h3::before {
+      content: '✓';
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(0,255,170,0.1);
+      color: var(--accent);
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .assertion-list { display: flex; flex-direction: column; gap: 8px; }
+    .assertion-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--surface2);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+    .assert-icon { font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+    .assert-body { display: flex; flex-direction: column; gap: 2px; }
+    .assert-label { font-size: 12px; font-weight: 600; color: var(--text); }
+    .assert-desc  { font-size: 11px; color: var(--text-muted); }
+    .assert-desc code {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      background: var(--surface);
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: var(--accent);
+    }
+
+    /* ── Tabs (code examples) ── */
+    .tab-bar {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+    .tab-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all var(--t-base);
+      margin-bottom: -1px;
+    }
+    .tab-btn:hover { color: var(--text-muted); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .code-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+    /* ── Responsive ── */
+    @media (max-width: 800px) {
+      .page { padding: 32px 20px 60px; }
+      .site-header { padding: 0 20px; }
+      .window-body { grid-template-columns: 1fr; }
+      .info-panel { border-right: none; border-bottom: 1px solid var(--border); }
+      .modal-overlay { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header" data-testid="site-header">
+    <a href="#" class="logo">QA Playground</a>
+    <span class="sep">/</span>
+    <span class="page-title">Challenges</span>
+  </header>
+
+  <!-- ── Page ── -->
+  <main class="page" data-testid="challenges-page">
+
+    <div class="page-hero" data-testid="page-hero">
+      <h1>Practice <span>Challenges</span></h1>
+      <p>Real-world UI scenarios to practice Playwright, Selenium, and Cypress. Each challenge targets a specific automation skill.</p>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar" data-testid="filter-bar" role="group" aria-label="Filter challenges">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-btn active" data-filter="all"           data-testid="filter-all"          onclick="filterCards('all', this)">All</button>
+      <button class="filter-btn"        data-filter="beginner"      data-testid="filter-beginner"     onclick="filterCards('beginner', this)">Beginner</button>
+      <button class="filter-btn"        data-filter="intermediate"  data-testid="filter-intermediate" onclick="filterCards('intermediate', this)">Intermediate</button>
+      <button class="filter-btn"        data-filter="advanced"      data-testid="filter-advanced"     onclick="filterCards('advanced', this)">Advanced</button>
+      <button class="filter-btn"        data-filter="playwright"    data-testid="filter-playwright"   onclick="filterCards('playwright', this)">Playwright</button>
+      <button class="filter-btn"        data-filter="selenium"      data-testid="filter-selenium"     onclick="filterCards('selenium', this)">Selenium</button>
+    </div>
+
+    <!-- Cards grid -->
+    <div class="challenges-grid" data-testid="challenges-grid" id="challenges-grid">
+
+      <!-- Card 1: Known Bugs — ACTIVE challenge -->
+      <article
+        class="challenge-card"
+        data-testid="challenge-card-known-bugs"
+        data-challenge="known-bugs"
+        data-difficulty="intermediate"
+        data-frameworks="playwright,selenium,cypress"
+        onclick="openChallenge()"
+        role="button"
+        tabindex="0"
+        aria-label="Open Known Bugs & Expected Failures challenge"
+        onkeydown="if(event.key==='Enter')openChallenge()"
+      >
+        <div class="card-top">
+          <div class="card-icon bug">🐛</div>
+          <span class="difficulty-badge diff-intermediate" data-testid="card-difficulty-known-bugs">Intermediate</span>
+        </div>
+        <div>
+          <div class="card-title" data-testid="card-title-known-bugs">Known Bugs &amp; Expected Failures</div>
+          <div class="card-desc" data-testid="card-desc-known-bugs" style="margin-top:6px">
+            Practice marking tests for known bugs using <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface2);padding:1px 5px;border-radius:3px;color:var(--accent)">test.fixme()</code> and verifying bugs still exist with <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface2);padding:1px 5px;border-radius:3px;color:var(--accent)">test.fail()</code>.
+          </div>
+        </div>
+        <div class="card-tags">
+          <span class="tag-chip" data-testid="tag-fixme">test.fixme()</span>
+          <span class="tag-chip" data-testid="tag-fail">test.fail()</span>
+          <span class="tag-chip orange" data-testid="tag-annotations">annotations</span>
+        </div>
+        <div class="card-footer">
+          <div class="framework-dots">
+            <span class="fw-dot">PW</span>
+            <span class="fw-dot">SE</span>
+            <span class="fw-dot">CY</span>
+          </div>
+          <span class="open-btn">Open →</span>
+        </div>
+      </article>
+
+      <!-- Card 2: Feature Flags (locked/dim) -->
+      <article
+        class="challenge-card"
+        data-testid="challenge-card-feature-flags"
+        data-challenge="feature-flags"
+        data-difficulty="beginner"
+        data-frameworks="playwright,selenium"
+        style="opacity:0.5; cursor:not-allowed;"
+        role="button"
+        tabindex="0"
+        aria-label="Feature Flags challenge — coming soon"
+      >
+        <div class="card-top">
+          <div class="card-icon skip">🚩</div>
+          <span class="difficulty-badge diff-beginner" data-testid="card-difficulty-feature-flags">Beginner</span>
+        </div>
+        <div>
+          <div class="card-title" data-testid="card-title-feature-flags">Feature Flags &amp; Environment Conditions</div>
+          <div class="card-desc" style="margin-top:6px">Toggle feature flags and practice conditionally skipping tests based on environment state.</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag-chip">test.skip()</span>
+          <span class="tag-chip orange">annotations</span>
+        </div>
+        <div class="card-footer">
+          <div class="framework-dots">
+            <span class="fw-dot">PW</span>
+            <span class="fw-dot">SE</span>
+          </div>
+          <span style="font-size:11px;color:var(--text-dim)">Coming soon</span>
+        </div>
+      </article>
+
+      <!-- Card 3: Multi-step flow (locked) -->
+      <article
+        class="challenge-card"
+        data-testid="challenge-card-multistep"
+        data-challenge="multi-step"
+        data-difficulty="intermediate"
+        data-frameworks="playwright"
+        style="opacity:0.5; cursor:not-allowed;"
+        role="button"
+        tabindex="0"
+        aria-label="Multi-step flow challenge — coming soon"
+      >
+        <div class="card-top">
+          <div class="card-icon step">🪜</div>
+          <span class="difficulty-badge diff-intermediate" data-testid="card-difficulty-multistep">Intermediate</span>
+        </div>
+        <div>
+          <div class="card-title" data-testid="card-title-multistep">Multi-Step Checkout Flow</div>
+          <div class="card-desc" style="margin-top:6px">Navigate a 3-step checkout and group actions with named test steps for clean report output.</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag-chip">test.step()</span>
+          <span class="tag-chip purple">multi-step</span>
+        </div>
+        <div class="card-footer">
+          <div class="framework-dots">
+            <span class="fw-dot">PW</span>
+          </div>
+          <span style="font-size:11px;color:var(--text-dim)">Coming soon</span>
+        </div>
+      </article>
+
+      <!-- Card 4: Data-driven (locked) -->
+      <article
+        class="challenge-card"
+        data-testid="challenge-card-data-driven"
+        data-challenge="data-driven"
+        data-difficulty="advanced"
+        data-frameworks="playwright,selenium"
+        style="opacity:0.5; cursor:not-allowed;"
+        role="button"
+        tabindex="0"
+        aria-label="Data-driven login challenge — coming soon"
+      >
+        <div class="card-top">
+          <div class="card-icon data">📊</div>
+          <span class="difficulty-badge diff-advanced" data-testid="card-difficulty-data-driven">Advanced</span>
+        </div>
+        <div>
+          <div class="card-title" data-testid="card-title-data-driven">Data-Driven Login</div>
+          <div class="card-desc" style="margin-top:6px">Run the same login test across multiple user roles and credential sets using parameterization.</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag-chip info">test.each()</span>
+          <span class="tag-chip info">@DataProvider</span>
+        </div>
+        <div class="card-footer">
+          <div class="framework-dots">
+            <span class="fw-dot">PW</span>
+            <span class="fw-dot">SE</span>
+          </div>
+          <span style="font-size:11px;color:var(--text-dim)">Coming soon</span>
+        </div>
+      </article>
+
+    </div><!-- /challenges-grid -->
+  </main>
+
+
+  <!-- ══════════════════════════════════════════════════
+       CHALLENGE MODAL: Known Bugs & Expected Failures
+  ══════════════════════════════════════════════════ -->
+  <div
+    class="modal-overlay"
+    id="challenge-modal"
+    data-testid="challenge-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    onclick="handleOverlayClick(event)"
+  >
+    <div class="challenge-window" data-testid="challenge-window">
+
+      <!-- Window chrome -->
+      <div class="window-chrome" data-testid="window-chrome">
+        <div class="chrome-dots">
+          <div class="chrome-dot dot-red"></div>
+          <div class="chrome-dot dot-yellow"></div>
+          <div class="chrome-dot dot-green"></div>
+        </div>
+        <span class="chrome-title" data-testid="window-chrome-title">annotations/known-bugs — QA Playground Challenge</span>
+        <button class="close-btn" data-testid="modal-close-btn" onclick="closeChallenge()" aria-label="Close challenge">✕</button>
+      </div>
+
+      <!-- Two-panel body -->
+      <div class="window-body">
+
+        <!-- ── LEFT: Info panel ── -->
+        <aside class="info-panel" data-testid="challenge-info-panel">
+
+          <!-- Meta -->
+          <div class="challenge-meta">
+            <div class="chal-title" id="modal-title">Known Bugs &amp; Expected Failures</div>
+            <div class="chal-subtitle">Annotations Challenge · Section 3 of 7</div>
+            <div class="meta-badges">
+              <span class="difficulty-badge diff-intermediate">Intermediate</span>
+              <span class="tag-chip">annotations</span>
+            </div>
+          </div>
+
+          <!-- Objective -->
+          <div class="info-section">
+            <div class="info-section-label">🎯 Objective</div>
+            <div class="objective-list" data-testid="objective-list">
+              <div class="objective-item">
+                <span class="obj-num">1</span>
+                <span>Identify the <strong>buggy counter</strong> (adds 2 instead of 1) and mark the test with <strong>test.fixme('BUG-101')</strong></span>
+              </div>
+              <div class="objective-item">
+                <span class="obj-num">2</span>
+                <span>Click the <strong>flaky action</strong> (50% success) and decide whether to use <strong>test.fixme()</strong> or configure retries</span>
+              </div>
+              <div class="objective-item">
+                <span class="obj-num">3</span>
+                <span>Trigger the <strong>always-errors button</strong> and use <strong>test.fail()</strong> to confirm the bug still exists</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Annotations used -->
+          <div class="info-section">
+            <div class="info-section-label">📌 Annotations Used</div>
+            <div class="ann-list" data-testid="annotations-list">
+              <div class="ann-pill" data-testid="ann-fixme">
+                <code>test.fixme()</code>
+                <span class="ann-desc">Skips test, keeps it visible in report as "needs fix"</span>
+              </div>
+              <div class="ann-pill" data-testid="ann-fail">
+                <code>test.fail()</code>
+                <span class="ann-desc">Passes only if the assertion fails — confirms bug exists</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Key selectors -->
+          <div class="info-section">
+            <div class="info-section-label">🔍 Key Selectors</div>
+            <div class="locator-table" data-testid="locator-table">
+              <div class="locator-row">
+                <span class="loc-type testid">testid</span>
+                <span class="loc-value">btn-buggy-inc</span>
+              </div>
+              <div class="locator-row">
+                <span class="loc-type testid">testid</span>
+                <span class="loc-value">buggy-counter</span>
+              </div>
+              <div class="locator-row">
+                <span class="loc-type id">id</span>
+                <span class="loc-value">#btn-inc / #btn-dec</span>
+              </div>
+              <div class="locator-row">
+                <span class="loc-type aria">aria</span>
+                <span class="loc-value">getByLabel('Increase counter')</span>
+              </div>
+              <div class="locator-row">
+                <span class="loc-type dyn">dyn</span>
+                <span class="loc-value">[data-bug-id="BUG-101"]</span>
+              </div>
+              <div class="locator-row">
+                <span class="loc-type testid">testid</span>
+                <span class="loc-value">btn-flaky</span>
+              </div>
+              <div class="locator-row">
+                <span class="loc-type testid">testid</span>
+                <span class="loc-value">btn-expected-fail</span>
+              </div>
+              <div class="locator-row">
+                <span class="loc-type dyn">dyn</span>
+                <span class="loc-value">[data-outcome="always-error"]</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Code example -->
+          <div class="info-section">
+            <div class="info-section-label">💡 Example Test Code</div>
+            <div class="code-section">
+              <div class="tab-bar" data-testid="code-tabs">
+                <button class="tab-btn active" data-tab="pw" onclick="switchTab('pw', this)">Playwright</button>
+                <button class="tab-btn" data-tab="cy" onclick="switchTab('cy', this)">Cypress</button>
+                <button class="tab-btn" data-tab="se" onclick="switchTab('se', this)">Selenium</button>
+              </div>
+              <div id="tab-pw" class="tab-panel active" data-testid="code-panel-playwright">
+                <pre class="code-block"><span class="c-cm">// BUG-101: counter adds 2 not 1</span>
+<span class="c-kw">test</span>.<span class="c-fn">fixme</span>(<span class="c-str">'BUG-101'</span>, <span class="c-kw">async</span> ({ page }) => {
+  <span class="c-kw">await</span> page.<span class="c-fn">click</span>(<span class="c-str">'[data-testid="btn-buggy-inc"]'</span>);
+  <span class="c-kw">await</span> <span class="c-fn">expect</span>(page.<span class="c-fn">getByTestId</span>(<span class="c-str">'buggy-counter'</span>))
+    .<span class="c-fn">toHaveText</span>(<span class="c-str">'1'</span>); <span class="c-cm">// will fail (shows 2)</span>
+});
+
+<span class="c-cm">// BUG-202: always-error endpoint</span>
+<span class="c-kw">test</span>(<span class="c-str">'always errors'</span>, <span class="c-kw">async</span> ({ page }) => {
+  <span class="c-kw">test</span>.<span class="c-fn">fail</span>(); <span class="c-cm">// expect failure</span>
+  <span class="c-kw">await</span> page.<span class="c-fn">click</span>(<span class="c-str">'[data-testid="btn-expected-fail"]'</span>);
+  <span class="c-kw">await</span> <span class="c-fn">expect</span>(page.<span class="c-fn">getByTestId</span>(<span class="c-str">'expected-fail-result'</span>))
+    .<span class="c-fn">toContainText</span>(<span class="c-str">'Error 500'</span>);
+});</pre>
+              </div>
+              <div id="tab-cy" class="tab-panel" data-testid="code-panel-cypress">
+                <pre class="code-block"><span class="c-cm">// Cypress: mark known bugs</span>
+it(<span class="c-str">'BUG-101 counter adds 2'</span>, () => {
+  <span class="c-cm">// Use cy.skip() with cypress-skip plugin</span>
+  cy.<span class="c-fn">get</span>(<span class="c-str">'[data-testid="btn-buggy-inc"]'</span>).<span class="c-fn">click</span>();
+  cy.<span class="c-fn">get</span>(<span class="c-str">'[data-testid="buggy-counter"]'</span>)
+    .<span class="c-fn">should</span>(<span class="c-str">'have.text'</span>, <span class="c-str">'1'</span>); <span class="c-cm">// fails: shows 2</span>
+});
+
+it(<span class="c-str">'always-error button'</span>, () => {
+  cy.<span class="c-fn">get</span>(<span class="c-str">'[data-outcome="always-error"]'</span>).<span class="c-fn">click</span>();
+  cy.<span class="c-fn">get</span>(<span class="c-str">'[data-testid="expected-fail-result"]'</span>)
+    .<span class="c-fn">should</span>(<span class="c-str">'contain.text'</span>, <span class="c-str">'Error 500'</span>);
+});</pre>
+              </div>
+              <div id="tab-se" class="tab-panel" data-testid="code-panel-selenium">
+                <pre class="code-block"><span class="c-cm">// TestNG — mark known broken tests</span>
+<span class="c-ann">@Test</span>(enabled = <span class="c-kw">false</span>,
+      description = <span class="c-str">"BUG-101"</span>)
+<span class="c-kw">public void</span> <span class="c-fn">counterAddsTwoNotOne</span>() {
+  driver.<span class="c-fn">findElement</span>(By.<span class="c-fn">id</span>(<span class="c-str">"btn-inc"</span>)).<span class="c-fn">click</span>();
+  String val = driver.<span class="c-fn">findElement</span>(
+    By.<span class="c-fn">cssSelector</span>(<span class="c-str">"[data-testid='buggy-counter']"</span>)
+  ).<span class="c-fn">getText</span>();
+  Assert.<span class="c-fn">assertEquals</span>(val, <span class="c-str">"1"</span>);
+}
+
+<span class="c-cm">// Expected exception — always errors</span>
+<span class="c-ann">@Test</span>(expectedExceptions = RuntimeException.<span class="c-kw">class</span>)
+<span class="c-kw">public void</span> <span class="c-fn">alwaysErrors</span>() { ... }</pre>
+              </div>
+            </div>
+          </div>
+
+        </aside><!-- /info-panel -->
+
+        <!-- ── RIGHT: Practice panel ── -->
+        <section class="practice-panel" data-testid="challenge-practice-panel">
+
+          <div class="practice-header" data-testid="practice-header">
+            <div>
+              <h2>Challenge Playground</h2>
+              <p>Interact with these elements and write tests against them</p>
+            </div>
+            <button class="reset-btn" data-testid="reset-btn" onclick="resetChallenge()" aria-label="Reset all challenge state">
+              ↺ Reset
+            </button>
+          </div>
+
+          <div class="practice-body" data-testid="practice-body">
+
+            <!-- Three practice cards -->
+            <div class="practice-cards" data-testid="practice-cards">
+
+              <!-- Card A: Buggy Counter -->
+              <div class="bug-card-dark" data-testid="bug-card-counter">
+                <div class="practice-card-header">
+                  <span class="practice-card-title">Buggy Counter</span>
+                  <span class="bug-tag" data-testid="bug-tag-101" data-bug-id="BUG-101">⚠ BUG-101</span>
+                </div>
+                <p class="practice-hint">
+                  Click <strong style="color:var(--text)">+</strong> and check the value.
+                  Bug: increments by <strong style="color:var(--danger)">2</strong> instead of 1.<br/>
+                  Annotate: <code>test.fixme('BUG-101')</code>
+                </p>
+                <div class="counter-row">
+                  <button
+                    class="counter-btn"
+                    id="btn-dec"
+                    data-testid="btn-buggy-dec"
+                    aria-label="Decrease counter"
+                    onclick="buggyChange(-1)"
+                  >−</button>
+                  <span
+                    id="buggy-counter"
+                    data-testid="buggy-counter"
+                    role="status"
+                    aria-label="Counter value"
+                    aria-live="polite"
+                    class="counter-val"
+                  >0</span>
+                  <button
+                    class="counter-btn"
+                    id="btn-inc"
+                    data-testid="btn-buggy-inc"
+                    aria-label="Increase counter"
+                    onclick="buggyChange(1)"
+                  >+</button>
+                </div>
+                <p class="bug-label" data-testid="counter-bug-label">Bug: +1 click adds 2. Decrement is correct.</p>
+                <div class="output-box" id="counter-output" data-testid="counter-output" role="status" aria-live="polite">
+                  Click + to see the bug
+                </div>
+              </div>
+
+              <!-- Card B: Flaky Action -->
+              <div class="bug-card-dark" data-testid="bug-card-flaky">
+                <div class="practice-card-header">
+                  <span class="practice-card-title">Flaky Action</span>
+                  <span class="bug-tag" data-testid="bug-tag-202" data-bug-id="BUG-202">⚠ BUG-202</span>
+                </div>
+                <p class="practice-hint">
+                  Succeeds ~50% of runs. Use <code>test.fixme()</code> or configure <code>retries: 2</code> in playwright.config.
+                </p>
+                <button
+                  class="prac-btn danger"
+                  id="btn-flaky"
+                  data-testid="btn-flaky"
+                  data-reliability="50pct"
+                  onclick="clickFlaky()"
+                >
+                  Run Flaky Action
+                </button>
+                <div
+                  class="output-box"
+                  id="flaky-result"
+                  data-testid="flaky-result"
+                  role="alert"
+                  aria-live="assertive"
+                >
+                  Not clicked yet
+                </div>
+              </div>
+
+              <!-- Card C: Always Errors -->
+              <div class="info-card-dark" data-testid="bug-card-expected-fail">
+                <div class="practice-card-header">
+                  <span class="practice-card-title">Always Errors</span>
+                  <span class="expected-fail-tag">test.fail()</span>
+                </div>
+                <p class="practice-hint">
+                  Always returns Error 500. Use <code>test.fail()</code> — test "passes" when the assertion fails, confirming the bug still exists.
+                </p>
+                <button
+                  class="prac-btn muted"
+                  id="btn-expected-fail"
+                  data-testid="btn-expected-fail"
+                  data-outcome="always-error"
+                  onclick="triggerExpectedFail()"
+                >
+                  Submit (always errors)
+                </button>
+                <div
+                  class="output-box"
+                  id="expected-fail-result"
+                  data-testid="expected-fail-result"
+                  role="alert"
+                  aria-live="assertive"
+                >
+                  Not submitted yet
+                </div>
+              </div>
+
+            </div><!-- /practice-cards -->
+
+            <!-- What to assert section -->
+            <div class="assertion-section" data-testid="assertion-section">
+              <h3>What to Assert</h3>
+              <div class="assertion-list" data-testid="assertion-list">
+
+                <div class="assertion-item" data-testid="assertion-counter">
+                  <span class="assert-icon">🐛</span>
+                  <div class="assert-body">
+                    <span class="assert-label">BUG-101 — Counter increments by 2</span>
+                    <span class="assert-desc">
+                      After 1 click: <code>[data-testid="buggy-counter"]</code> text should be <code>"1"</code>
+                      but will be <code>"2"</code>. Mark with <code>test.fixme('BUG-101')</code>.
+                    </span>
+                  </div>
+                </div>
+
+                <div class="assertion-item" data-testid="assertion-flaky">
+                  <span class="assert-icon">⚡</span>
+                  <div class="assert-body">
+                    <span class="assert-label">BUG-202 — Flaky 50% success rate</span>
+                    <span class="assert-desc">
+                      <code>[data-testid="flaky-result"]</code> role=alert should contain
+                      <code>"Success"</code>. Fails ~50% of runs.
+                      Use <code>test.fixme()</code> or <code>retries: 2</code>.
+                    </span>
+                  </div>
+                </div>
+
+                <div class="assertion-item" data-testid="assertion-expected-fail">
+                  <span class="assert-icon">✗</span>
+                  <div class="assert-body">
+                    <span class="assert-label">Expected Failure — Always Error 500</span>
+                    <span class="assert-desc">
+                      <code>[data-testid="expected-fail-result"]</code> must contain <code>"Error 500"</code>.
+                      Wrap test with <code>test.fail()</code> — test passes when this assertion is true (bug confirmed).
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- /assertion-section -->
+
+          </div><!-- /practice-body -->
+        </section><!-- /practice-panel -->
+
+      </div><!-- /window-body -->
+    </div><!-- /challenge-window -->
+  </div><!-- /modal-overlay -->
+
+
+  <script>
+    /* ═══════════════════════════
+       Modal open / close
+    ═══════════════════════════ */
+    function openChallenge() {
+      const overlay = document.getElementById('challenge-modal');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      // Focus close button for a11y
+      setTimeout(() => overlay.querySelector('[data-testid="modal-close-btn"]').focus(), 100);
+    }
+
+    function closeChallenge() {
+      const overlay = document.getElementById('challenge-modal');
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('challenge-modal')) closeChallenge();
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeChallenge();
+    });
+
+    /* ═══════════════════════════
+       Filter cards
+    ═══════════════════════════ */
+    function filterCards(filter, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('.challenge-card').forEach(card => {
+        if (filter === 'all') {
+          card.style.display = '';
+          return;
+        }
+        const diff = card.dataset.difficulty || '';
+        const fw   = card.dataset.frameworks || '';
+        const show = diff === filter || fw.includes(filter);
+        card.style.display = show ? '' : 'none';
+      });
+    }
+
+    /* ═══════════════════════════
+       Code tabs
+    ═══════════════════════════ */
+    function switchTab(id, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + id).classList.add('active');
+    }
+
+    /* ═══════════════════════════
+       BUG-101: Buggy counter
+    ═══════════════════════════ */
+    let bugCount = 0;
+
+    function buggyChange(dir) {
+      if (dir > 0) bugCount += 2; // BUG: should be += 1
+      else         bugCount = Math.max(0, bugCount - 1);
+      const el = document.getElementById('buggy-counter');
+      el.textContent = bugCount;
+      const out = document.getElementById('counter-output');
+      if (dir > 0) {
+        out.textContent = `Clicked + → expected 1 step, got ${bugCount === 2 && bugCount !== 0 ? '2 (BUG!)' : bugCount + ' (BUG!)'}`;
+        out.className   = 'output-box error';
+      } else {
+        out.textContent = `Decremented → value is ${bugCount}`;
+        out.className   = 'output-box';
+      }
+    }
+
+    /* ═══════════════════════════
+       BUG-202: Flaky action
+    ═══════════════════════════ */
+    function clickFlaky() {
+      const ok  = Math.random() >= 0.5;
+      const box = document.getElementById('flaky-result');
+      if (ok) {
+        box.textContent = '✓ Success this time. (Run again — it will fail ~50% of the time)';
+        box.className   = 'output-box success';
+      } else {
+        box.textContent = '✗ Failed this time. (50% chance — use test.fixme() or retries)';
+        box.className   = 'output-box error';
+      }
+    }
+
+    /* ═══════════════════════════
+       Always-errors action
+    ═══════════════════════════ */
+    function triggerExpectedFail() {
+      const box = document.getElementById('expected-fail-result');
+      box.textContent = '✗ Error 500: Internal Server Error — always fails. Use test.fail() to confirm bug still exists.';
+      box.className   = 'output-box error';
+    }
+
+    /* ═══════════════════════════
+       Reset
+    ═══════════════════════════ */
+    function resetChallenge() {
+      bugCount = 0;
+      document.getElementById('buggy-counter').textContent = '0';
+
+      const counter = document.getElementById('counter-output');
+      counter.textContent = 'Click + to see the bug';
+      counter.className   = 'output-box';
+
+      const flaky = document.getElementById('flaky-result');
+      flaky.textContent = 'Not clicked yet';
+      flaky.className   = 'output-box';
+
+      const fail = document.getElementById('expected-fail-result');
+      fail.textContent = 'Not submitted yet';
+      fail.className   = 'output-box';
+    }
+  </script>
+</body>
+</html>
