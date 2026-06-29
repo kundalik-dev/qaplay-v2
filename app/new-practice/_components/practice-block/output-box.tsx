@@ -2,14 +2,12 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
-import styles from "./practice-block.module.css";
-
 export type OutputTone = "default" | "danger" | "success";
 
 const toneClass: Record<OutputTone, string> = {
   default: "",
-  danger: styles.toneDanger,
-  success: styles.toneSuccess,
+  danger: "tone-danger",
+  success: "tone-success",
 };
 
 interface OutputBoxProps {
@@ -35,7 +33,7 @@ export function OutputBox({
     <div
       id={id}
       data-testid={testId}
-      className={cn(styles.outputBox, toneClass[tone])}
+      className={cn("output-box", toneClass[tone])}
     >
       {children}
     </div>

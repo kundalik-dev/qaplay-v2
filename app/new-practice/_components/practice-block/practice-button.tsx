@@ -2,14 +2,12 @@ import type { ButtonHTMLAttributes } from "react";
 
 import { cn } from "@/lib/utils";
 
-import styles from "./practice-block.module.css";
-
 export type PracticeButtonVariant = "primary" | "secondary" | "danger";
 
 const variantClass: Record<PracticeButtonVariant, string> = {
-  primary: styles.btnPrimary,
-  secondary: styles.btnSecondary,
-  danger: styles.btnDanger,
+  primary: "btn-primary",
+  secondary: "btn-secondary",
+  danger: "btn-danger",
 };
 
 interface PracticeButtonProps
@@ -31,7 +29,7 @@ export function PracticeButton({
   return (
     <button
       type={type}
-      className={cn(styles.btn, variantClass[variant], className)}
+      className={cn("btn", variantClass[variant], className)}
       {...rest}
     />
   );
