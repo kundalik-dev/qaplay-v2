@@ -10,3 +10,17 @@ export {
   TestCasesView,
   LearnView,
 } from "./element-workspace";
+
+// Reusable scenario framework (one block per practice scenario)
+export {
+  PracticeBlock,
+  PracticeButton,
+  OutputBox,
+  controlStyles,
+} from "./practice-block";
+export type {
+  BlockBadge,
+  BadgeTone,
+  PracticeButtonVariant,
+  OutputTone,
+} from "./practice-block";

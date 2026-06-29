@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import { alertPracticeContent } from "@/data/new-practice/elements/alert-practice";
+import type { HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
+import { highlightLearnSnippet } from "@/lib/highlight";
 import {
   ElementWorkspace,
   LearnView,
@@ -16,7 +18,22 @@ export const metadata: Metadata = {
   description: meta.description,
 };
 
-export default function AlertPracticePage() {
+export default async function AlertPracticePage() {
+  // Pre-highlight every learn snippet on the server, keyed by section id.
+  const highlightedEntries = await Promise.all(
+    learn
+      .filter((section) => section.snippets)
+      .map(
+        async (section) =>
+          [
+            section.id,
+            await highlightLearnSnippet(section.snippets!),
+          ] as const,
+      ),
+  );
+  const highlighted: Record<string, HighlightedLearnCodeSnippet> =
+    Object.fromEntries(highlightedEntries);
+
   return (
     <ElementWorkspace
       meta={meta}
@@ -27,7 +44,13 @@ export default function AlertPracticePage() {
         </PracticeView>
       }
       testCasesContent={<TestCasesView testCases={testCases} />}
-      learnContent={<LearnView sections={learn} />}
+      learnContent={
+        <LearnView
+          sections={learn}
+          highlighted={highlighted}
+          sectionClassName="border-0 bg-transparent rounded-none shadow-none"
+        />
+      }
     />
   );
 }

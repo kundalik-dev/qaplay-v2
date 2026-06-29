@@ -23,7 +23,8 @@
   background-color: var(--practice-surface);
   background-image: var(--practice-surface-gradient);
   background-attachment: fixed;
-  padding-block: clamp(1.5rem, 4vw, 3rem);
+  padding-top: 5.5rem;
+  padding-bottom: clamp(1.5rem, 4vw, 3rem);
 }
 
 /* Dark — gently lifted slate, never pure black */
@@ -42,4 +43,9 @@
   max-width: 80rem;
   margin-inline: auto;
   padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+/* Default paragraph size across all practice playground pages. */
+.surface :global(p) {
+  font-size: 15px;
 }

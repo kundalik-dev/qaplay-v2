@@ -8,9 +8,17 @@
  * The Practice tab is route-specific custom UI, so it is NOT part of the data.
  */
 
-import type { TestCase } from "@/data/practice-data/types";
+import type { LearnCodeSnippet, TestCase } from "@/data/practice-data/types";
 
 export type ElementLevel = "Beginner" | "Intermediate" | "Advanced";
+
+export interface ElementUpNext {
+  title: string;
+  description: string;
+  href: string;
+  iconSrc: string;
+  iconAlt: string;
+}
 
 export interface ElementMeta {
   /** Route slug, e.g. "alert-practice" */
@@ -23,16 +31,8 @@ export interface ElementMeta {
   level: ElementLevel;
   /** Optional short tags shown next to the title */
   tags?: string[];
-}
-
-/** A single code sample inside a Learn section. */
-export interface LearnCode {
-  /** Language hint for styling/labels, e.g. "ts", "js", "java" */
-  lang: string;
-  /** Optional caption above the block, e.g. "Playwright" */
-  label?: string;
-  /** Raw code (rendered verbatim in a <pre>) */
-  code: string;
+  /** Optional next element to show in the sidebar */
+  upNext?: ElementUpNext;
 }
 
 /** A documentation block in the Learn tab. */
@@ -41,12 +41,18 @@ export interface LearnSection {
   id: string;
   /** Section heading */
   heading: string;
-  /** Intro paragraph — HTML allowed (<code>, <strong>, <em>) */
+  /** Plain-text description shown under the heading (no HTML). */
+  desc?: string;
+  /** Optional extra paragraph below the description — HTML allowed. */
   body?: string;
   /** Optional bullet list — each item HTML-allowed */
   bullets?: string[];
-  /** Optional code samples */
-  code?: LearnCode[];
+  /**
+   * Optional framework code block (Playwright / Selenium / Cypress).
+   * Rendered with the shared LearnCodeBlock (tabs + Copy + syntax highlight).
+   * Highlighting is done server-side in the page before rendering.
+   */
+  snippets?: LearnCodeSnippet;
 }
 
 /** Everything a reusable element workspace needs (minus the custom Practice UI). */

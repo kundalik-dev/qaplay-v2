@@ -21,7 +21,6 @@ const DASHBOARD_PREFIXES = [
   "/chrome",
   "/demo/bank",
   "/bank",
-  "/new-practice",
 ];
 
 function isDashboardRoute(pathname: string): boolean {

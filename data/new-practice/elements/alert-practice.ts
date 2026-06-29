@@ -13,6 +13,13 @@ export const alertPracticeContent: ElementContent = {
       "Trigger and handle native browser dialogs — alert, confirm, and prompt — and assert the resulting page state.",
     level: "Beginner",
     tags: ["Dialogs", "Browser"],
+    upNext: {
+      title: "Keyboard Actions",
+      description: "Practice key presses, shortcuts, and modifier combinations across inputs.",
+      href: "/new-practice/keyboard-actions",
+      iconSrc: "/mainicons/buttons-v2.svg",
+      iconAlt: "Keyboard Actions icon",
+    },
   },
 
   testCases: [
@@ -71,39 +78,210 @@ export const alertPracticeContent: ElementContent = {
 
   learn: [
     {
-      id: "what-are-dialogs",
-      heading: "What are browser dialogs?",
-      body: "Native dialogs (<code>alert</code>, <code>confirm</code>, <code>prompt</code>) are rendered by the browser, not the page DOM. You cannot click them with a normal locator — automation tools expose a dedicated event to handle them.",
+      id: "learn-overview",
+      heading: "Overview",
+      desc: "Dialogs appear in real applications for confirmations, warnings, and notifications. Automating them well means knowing how to open, assert, interact, and close them — including edge cases like backdrop clicks and keyboard dismissal.",
     },
     {
-      id: "handle-in-playwright",
-      heading: "Handling dialogs in Playwright",
-      body: "Attach a <code>page.on('dialog', ...)</code> listener <strong>before</strong> the action that opens the dialog, then accept or dismiss it.",
-      bullets: [
-        "<code>dialog.accept(promptText?)</code> — confirm / submit a prompt value.",
-        "<code>dialog.dismiss()</code> — cancel the dialog.",
-        "Register the handler before the click that triggers it.",
-      ],
-      code: [
-        {
-          lang: "ts",
-          label: "Playwright",
+      id: "learn-native-alert",
+      heading: "1 · Handle a Native Alert",
+      desc: "Native dialogs are not in the DOM. Register a dialog handler before the click, assert the message, then accept it.",
+      snippets: {
+        pw: {
+          lang: "TypeScript",
           code: `page.on('dialog', async (dialog) => {
-  expect(dialog.type()).toBe('confirm');
+  expect(dialog.message()).toBe('Hello! This is a simple alert.');
   await dialog.accept();
 });
 
-await page.getByTestId('show-confirm').click();`,
+await page.getByTestId('simple-alert').click();`,
         },
-      ],
+        sel: {
+          lang: "Java",
+          code: `driver.findElement(By.cssSelector("[data-testid='simple-alert']")).click();
+
+Alert alert = driver.switchTo().alert();
+assertEquals("Hello! This is a simple alert.", alert.getText());
+alert.accept();`,
+        },
+        cy: {
+          lang: "JavaScript",
+          code: `cy.on('window:alert', (text) => {
+  expect(text).to.equal('Hello! This is a simple alert.');
+});
+
+cy.get('[data-testid="simple-alert"]').click();`,
+        },
+      },
     },
     {
-      id: "common-pitfalls",
-      heading: "Common pitfalls",
+      id: "learn-confirm",
+      heading: "2 · Confirm — Accept vs Dismiss",
+      desc: "Drive both branches and assert the side effect written to the DOM, not the dialog text.",
+      snippets: {
+        pw: {
+          lang: "TypeScript",
+          code: `page.on('dialog', (dialog) => dialog.accept()); // OK branch
+
+await page.getByTestId('confirm-action').click();
+await expect(page.getByTestId('confirm-result'))
+  .toContainText('Account deleted');`,
+        },
+        sel: {
+          lang: "Java",
+          code: `driver.findElement(By.cssSelector("[data-testid='confirm-action']")).click();
+driver.switchTo().alert().accept();
+
+String result = driver
+  .findElement(By.cssSelector("[data-testid='confirm-result']"))
+  .getText();
+assertTrue(result.contains("Account deleted"));`,
+        },
+        cy: {
+          lang: "JavaScript",
+          code: `cy.on('window:confirm', () => true); // accept
+
+cy.get('[data-testid="confirm-action"]').click();
+cy.get('[data-testid="confirm-result"]').should('contain', 'Account deleted');`,
+        },
+      },
+    },
+    {
+      id: "learn-prompt",
+      heading: "3 · Prompt — Pass Text",
+      desc: "Feed text into the prompt with accept(value), then assert the greeting the app renders.",
+      snippets: {
+        pw: {
+          lang: "TypeScript",
+          code: `page.on('dialog', (dialog) => dialog.accept('Ada'));
+
+await page.getByTestId('prompt-action').click();
+await expect(page.getByTestId('prompt-result')).toContainText('Hello, Ada!');`,
+        },
+        sel: {
+          lang: "Java",
+          code: `driver.findElement(By.cssSelector("[data-testid='prompt-action']")).click();
+
+Alert prompt = driver.switchTo().alert();
+prompt.sendKeys("Ada");
+prompt.accept();`,
+        },
+        cy: {
+          lang: "JavaScript",
+          code: `cy.window().then((win) => cy.stub(win, 'prompt').returns('Ada'));
+
+cy.get('[data-testid="prompt-action"]').click();
+cy.get('[data-testid="prompt-result"]').should('contain', 'Hello, Ada!');`,
+        },
+      },
+    },
+    {
+      id: "learn-html-dialog",
+      heading: "4 · HTML <dialog> Element",
+      desc: "This is real DOM, not a JS dialog — use normal locators, assert visibility, and check returnValue after closing.",
+      snippets: {
+        pw: {
+          lang: "TypeScript",
+          code: `await page.getByTestId('open-html-dialog').click();
+
+const dialog = page.getByTestId('html-dialog');
+await expect(dialog).toBeVisible();
+
+await page.getByTestId('html-dialog-confirm').click();
+await expect(dialog).toBeHidden();`,
+        },
+        sel: {
+          lang: "Java",
+          code: `driver.findElement(By.cssSelector("[data-testid='open-html-dialog']")).click();
+
+WebElement dialog = driver.findElement(By.cssSelector("[data-testid='html-dialog']"));
+assertTrue(dialog.isDisplayed());
+
+driver.findElement(By.cssSelector("[data-testid='html-dialog-confirm']")).click();`,
+        },
+        cy: {
+          lang: "JavaScript",
+          code: `cy.get('[data-testid="open-html-dialog"]').click();
+cy.get('[data-testid="html-dialog"]').should('be.visible');
+
+cy.get('[data-testid="html-dialog-confirm"]').click();
+cy.get('[data-testid="html-dialog"]').should('not.be.visible');`,
+        },
+      },
+    },
+    {
+      id: "learn-custom-modal",
+      heading: "5 · Custom Modal (role=dialog)",
+      desc: "Locate by role/testid, assert visibility, and verify it closes via the ✕, Cancel, overlay click, or Esc.",
+      snippets: {
+        pw: {
+          lang: "TypeScript",
+          code: `await page.getByTestId('open-custom-modal').click();
+
+const modal = page.getByTestId('custom-modal');
+await expect(modal).toBeVisible();
+
+await page.keyboard.press('Escape');
+await expect(modal).toBeHidden();`,
+        },
+        sel: {
+          lang: "Java",
+          code: `driver.findElement(By.cssSelector("[data-testid='open-custom-modal']")).click();
+
+WebElement modal = driver.findElement(By.cssSelector("[data-testid='custom-modal']"));
+assertTrue(modal.isDisplayed());
+
+new Actions(driver).sendKeys(Keys.ESCAPE).perform();`,
+        },
+        cy: {
+          lang: "JavaScript",
+          code: `cy.get('[data-testid="open-custom-modal"]').click();
+cy.get('[data-testid="custom-modal"]').should('be.visible');
+
+cy.get('body').type('{esc}');
+cy.get('[data-testid="custom-modal"]').should('not.be.visible');`,
+        },
+      },
+    },
+    {
+      id: "learn-toast",
+      heading: "6 · Toast / Snackbar",
+      desc: "Assert the toast becomes visible immediately, then auto-hides — using web-first waits, never fixed sleeps.",
+      snippets: {
+        pw: {
+          lang: "TypeScript",
+          code: `await page.getByTestId('toast-success').click();
+
+const toast = page.getByTestId('toast');
+await expect(toast).toBeVisible();
+await expect(toast).toBeHidden(); // auto-dismiss after ~3s`,
+        },
+        sel: {
+          lang: "Java",
+          code: `driver.findElement(By.cssSelector("[data-testid='toast-success']")).click();
+
+new WebDriverWait(driver, Duration.ofSeconds(5)).until(
+  ExpectedConditions.visibilityOfElementLocated(
+    By.cssSelector("[data-testid='toast']")));`,
+        },
+        cy: {
+          lang: "JavaScript",
+          code: `cy.get('[data-testid="toast-success"]').click();
+
+cy.get('[data-testid="toast"]').should('be.visible');
+cy.get('[data-testid="toast"]').should('not.exist');`,
+        },
+      },
+    },
+    {
+      id: "learn-pitfalls",
+      heading: "Common Pitfalls",
+      desc: "Watch out for these — they cause the most flaky dialog tests.",
       bullets: [
-        "Registering the handler <em>after</em> the click — the dialog is already gone.",
-        "Forgetting that Playwright auto-dismisses dialogs with no handler.",
-        "Trying to locate the dialog text with a DOM selector (it isn't in the DOM).",
+        "Registering the handler <em>after</em> the click — the native dialog is already gone.",
+        "Forgetting that Playwright auto-dismisses dialogs when no handler is attached.",
+        "Trying to locate native dialog text with a DOM selector — it isn't in the DOM.",
+        "Using fixed <code>waitForTimeout</code> for toasts instead of web-first assertions.",
       ],
     },
   ],
