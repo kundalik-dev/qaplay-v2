@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import styles from "./_components/practice-layout.module.css";
+import { cn } from "@/lib/utils";
 
 /**
  * Practice playground layout.
@@ -15,7 +16,7 @@ const PracticeNewLayout = ({ children }: { children: ReactNode }) => {
     <div
       data-testid="practice-layout"
       data-section="practice"
-      className={styles.surface}
+      className={cn(styles.surface, "")}
     >
       <div className={styles.container}>{children}</div>
     </div>

@@ -21,22 +21,12 @@ const levelStyleMap: Record<ElementLevel, string> = {
 
 interface ElementWorkspaceProps {
   meta: ElementMeta;
-  /** Custom practice UI (route-specific HTML/CSS). */
   practiceContent: ReactNode;
-  /** Reusable test-cases view. */
   testCasesContent: ReactNode;
-  /** Reusable learn view. */
   learnContent: ReactNode;
-  /** Count shown on the Test Cases nav item. */
   testCaseCount?: number;
 }
 
-/**
- * ElementWorkspace — dashboard-style shell for a single practice element.
- * Left vertical nav switches the right-hand content between the three tabs.
- * Tab contents are passed in as ReactNodes (composition) so this client
- * component never imports server components directly.
- */
 export function ElementWorkspace({
   meta,
   practiceContent,
@@ -53,12 +43,7 @@ export function ElementWorkspace({
     count?: number;
   }> = [
     { id: "practice", label: "Practice", icon: FlaskConical },
-    {
-      id: "test-cases",
-      label: "Test Cases",
-      icon: ListChecks,
-      count: testCaseCount,
-    },
+    { id: "test-cases", label: "Test Cases", icon: ListChecks, count: testCaseCount },
     { id: "learn", label: "Learn", icon: BookOpen },
   ];
 
@@ -75,94 +60,89 @@ export function ElementWorkspace({
       data-section="element-workspace"
       data-element={meta.slug}
     >
-      {/* ── Left sidebar ──────────────────────────────────────────── */}
-      <div className={styles.sidebar}>
-        <nav
-          className={styles.nav}
-          data-testid="workspace-nav"
-          aria-label={`${meta.title} sections`}
-        >
-          <span className={styles.navHeading}>Sections</span>
-          {tabs.map((tab) => {
-            const Icon = tab.icon;
-            const isActive = active === tab.id;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                className={cn(
-                  styles.navItem,
-                  isActive && styles.navItemActive,
-                )}
-                data-testid={`workspace-tab-${tab.id}`}
-                data-active={isActive ? "true" : undefined}
-                aria-current={isActive ? "true" : undefined}
-                onClick={() => setActive(tab.id)}
-              >
-                <Icon className={styles.navIcon} aria-hidden="true" />
-                <span className={styles.navLabel}>{tab.label}</span>
-                {typeof tab.count === "number" && (
-                  <span className={styles.navCount}>{tab.count}</span>
-                )}
-              </button>
-            );
-          })}
-        </nav>
-
-        {/* ── Up Next card ──────────────────────────────────────── */}
-        {meta.upNext && (
-          <Link
-            href={meta.upNext.href}
-            className={styles.upNextCard}
-            data-testid="workspace-up-next"
+      {/* ── Full-width header ─────────────────────────────────────────────── */}
+      <header className={styles.header} data-testid="workspace-header">
+        <div className={styles.titleRow}>
+          <h1 className={styles.title}>{meta.title}</h1>
+          <span
+            className={cn(styles.levelBadge, levelStyleMap[meta.level])}
+            data-level={meta.level.toLowerCase()}
           >
-            <span className={styles.upNextLabel}>Up Next</span>
-            <div className={styles.upNextBody}>
-              <div className={styles.upNextIcon}>
-                <Image
-                  src={meta.upNext.iconSrc}
-                  alt={meta.upNext.iconAlt}
-                  width={28}
-                  height={28}
-                />
-              </div>
-              <div className={styles.upNextText}>
-                <span className={styles.upNextTitle}>{meta.upNext.title}</span>
-                <span className={styles.upNextDesc}>{meta.upNext.description}</span>
-              </div>
-              <ChevronRight className={styles.upNextChevron} aria-hidden="true" />
-            </div>
-          </Link>
-        )}
-      </div>
-
-      {/* ── Right content area ────────────────────────────────────── */}
-      <div className={styles.main}>
-        <header className={styles.header} data-testid="workspace-header">
-          <div className={styles.headingGroup}>
-            <div className={styles.titleRow}>
-              <h1 className={styles.title}>{meta.title}</h1>
-              <span
-                className={cn(styles.levelBadge, levelStyleMap[meta.level])}
-                data-level={meta.level.toLowerCase()}
-              >
-                <span className={styles.levelDot} aria-hidden="true" />
-                {meta.level}
-              </span>
-            </div>
-            <p className={styles.description}>{meta.description}</p>
-            {meta.tags && meta.tags.length > 0 && (
-              <div className={styles.tagRow}>
-                {meta.tags.map((tag) => (
-                  <span key={tag} className={styles.tag}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
+            <span className={styles.levelDot} aria-hidden="true" />
+            {meta.level}
+          </span>
+        </div>
+        <p className={styles.description}>{meta.description}</p>
+        {meta.tags && meta.tags.length > 0 && (
+          <div className={styles.tagRow}>
+            {meta.tags.map((tag) => (
+              <span key={tag} className={styles.tag}>{tag}</span>
+            ))}
           </div>
-        </header>
+        )}
+      </header>
 
+      {/* ── Two-column body ───────────────────────────────────────────────── */}
+      <div className={styles.body}>
+
+        {/* Left sidebar */}
+        <div className={styles.sidebar}>
+          <nav
+            className={styles.nav}
+            data-testid="workspace-nav"
+            aria-label={`${meta.title} sections`}
+          >
+            <span className={styles.navHeading}>Sections</span>
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              const isActive = active === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  className={cn(styles.navItem, isActive && styles.navItemActive)}
+                  data-testid={`workspace-tab-${tab.id}`}
+                  data-active={isActive ? "true" : undefined}
+                  aria-current={isActive ? "true" : undefined}
+                  onClick={() => setActive(tab.id)}
+                >
+                  <Icon className={styles.navIcon} aria-hidden="true" />
+                  <span className={styles.navLabel}>{tab.label}</span>
+                  {typeof tab.count === "number" && (
+                    <span className={styles.navCount}>{tab.count}</span>
+                  )}
+                </button>
+              );
+            })}
+          </nav>
+
+          {meta.upNext && (
+            <Link
+              href={meta.upNext.href}
+              className={styles.upNextCard}
+              data-testid="workspace-up-next"
+            >
+              <span className={styles.upNextLabel}>Up Next</span>
+              <div className={styles.upNextBody}>
+                <div className={styles.upNextIcon}>
+                  <Image
+                    src={meta.upNext.iconSrc}
+                    alt={meta.upNext.iconAlt}
+                    width={28}
+                    height={28}
+                  />
+                </div>
+                <div className={styles.upNextText}>
+                  <span className={styles.upNextTitle}>{meta.upNext.title}</span>
+                  <span className={styles.upNextDesc}>{meta.upNext.description}</span>
+                </div>
+                <ChevronRight className={styles.upNextChevron} aria-hidden="true" />
+              </div>
+            </Link>
+          )}
+        </div>
+
+        {/* Right content panel */}
         <section
           className={cn(
             styles.panel,

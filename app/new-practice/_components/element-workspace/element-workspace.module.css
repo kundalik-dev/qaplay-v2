@@ -7,6 +7,22 @@
    ========================================================================== */
 
 .workspace {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 2vw, 22px);
+}
+
+/* ── Full-width header ──────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Two-column body ────────────────────────────────────────────────────── */
+
+.body {
   display: grid;
   grid-template-columns: 232px minmax(0, 1fr);
   gap: clamp(16px, 2vw, 28px);
@@ -107,26 +123,6 @@
   color: var(--primary);
 }
 
-/* ── Right content area ─────────────────────────────────────────────────── */
-
-.main {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  min-width: 0;
-}
-
-.header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.headingGroup {
-  min-width: 0;
-}
-
 .titleRow {
   display: flex;
   flex-wrap: wrap;
@@ -156,8 +152,8 @@
 .tagRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
+  gap: 5px;
+  margin-top: 8px;
 }
 
 .tag {
@@ -348,7 +344,7 @@
 /* ── Responsive: stack nav above content ────────────────────────────────── */
 
 @media (max-width: 860px) {
-  .workspace {
+  .body {
     grid-template-columns: 1fr;
   }
 
