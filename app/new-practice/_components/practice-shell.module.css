@@ -1,0 +1,75 @@
+/* =============================================================================
+   PRACTICE PLAYGROUND — SHELL + PANEL
+   -----------------------------------------------------------------------------
+   Reusable structural pieces for every practice playground page.
+   Built entirely on the project's existing design tokens, so light/dark
+   theming comes for free.
+   ========================================================================== */
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.headingGroup {
+  min-width: 0;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.title {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--foreground);
+}
+
+.description {
+  margin-top: 0.5rem;
+  max-width: 64ch;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--muted-foreground);
+}
+
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.panel {
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 6px);
+  background-color: var(--card);
+  color: var(--card-foreground);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow: var(--shadow-float);
+  backdrop-filter: blur(6px);
+}
+
+.panelFlush {
+  padding: 0;
+  overflow: hidden;
+}

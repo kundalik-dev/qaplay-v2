@@ -1,15 +1,23 @@
-import React from "react";
+import type { ReactNode } from "react";
 
-const PracticeNewLayout = ({ children }: { children: React.ReactNode }) => {
+import styles from "./_components/practice-layout.module.css";
+
+/**
+ * Practice playground layout.
+ *
+ * - No global navbar/footer (suppressed via DASHBOARD_PREFIXES in
+ *   components/app-nav/conditional-site-chrome.tsx).
+ * - Paints its own calm, low-strain surface that covers the global grid
+ *   background. Light/dark aware.
+ */
+const PracticeNewLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div
       data-testid="practice-layout"
       data-section="practice"
-      className="min-h-screen w-full pt-24 pb-16 md:pt-28"
+      className={styles.surface}
     >
-      <div className="practice-layout-container mx-auto w-full max-w-7xl px-1 sm:px-6 lg:px-8">
-        {children}
-      </div>
+      <div className={styles.container}>{children}</div>
     </div>
   );
 };

@@ -1,0 +1,109 @@
+/* Learn tab — documentation typography + plain code blocks. */
+
+.learn {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.section {
+  scroll-margin-top: 24px;
+}
+
+.heading {
+  margin: 0 0 10px;
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.body {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.list {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.listItem {
+  position: relative;
+  padding-left: 20px;
+  color: var(--muted-foreground);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.listItem::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+/* Inline code inside body/list (HTML-injected) */
+.body :global(code),
+.listItem :global(code) {
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.85em;
+}
+
+.body :global(strong),
+.listItem :global(strong) {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+/* ── Code block ─────────────────────────────────────────────────────────── */
+
+.codeBlock {
+  margin: 16px 0 0;
+}
+
+.codeLabel {
+  display: inline-block;
+  margin-bottom: 6px;
+  color: var(--muted-foreground);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pre {
+  margin: 0;
+  padding: 16px 18px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--muted) 55%, transparent);
+  color: var(--foreground);
+  font-family: var(--font-jetbrains-mono), var(--font-ibm-plex-mono), monospace;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  tab-size: 2;
+}
+
+:global(html.dark) .pre {
+  background: color-mix(in srgb, #000 35%, var(--muted));
+}

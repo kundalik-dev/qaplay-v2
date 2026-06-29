@@ -1,0 +1,7 @@
+/* Alert Practice — custom UI styles. Write your own element styling here. */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
