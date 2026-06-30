@@ -8,6 +8,8 @@ import type {
   TestCasePriority,
 } from "@/data/practice-data/types";
 
+// ─── Badge style maps ─────────────────────────────────────────────────────────
+
 const TYPE_STYLES: Record<TestCaseType, string> = {
   positive:
     "bg-[color-mix(in_srgb,var(--success)_10%,transparent)] text-[var(--success-readable)] border-[color-mix(in_srgb,var(--success)_30%,transparent)]",
@@ -23,11 +25,43 @@ const PRIORITY_STYLES: Record<TestCasePriority, string> = {
   low: "bg-muted text-muted-foreground border-border",
 };
 
+const TYPE_ICONS: Record<TestCaseType, string> = {
+  positive: "✅",
+  negative: "❌",
+  edge: "⚠️",
+};
+
 type FilterType = "all" | TestCaseType;
 
 interface TestCasesTableProps {
   testCases: TestCase[];
 }
+
+// ─── Chevron icon ─────────────────────────────────────────────────────────────
+
+function ChevronIcon({ open }: { open: boolean }) {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn("transition-transform duration-200", open && "rotate-180")}
+      aria-hidden="true"
+    >
+      <path
+        d="M3 5L7 9L11 5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+// ─── Main component ───────────────────────────────────────────────────────────
 
 export function TestCasesTable({ testCases }: TestCasesTableProps) {
   const [filter, setFilter] = useState<FilterType>("all");
@@ -39,18 +73,14 @@ export function TestCasesTable({ testCases }: TestCasesTableProps) {
   function toggleExpand(id: string) {
     setExpanded((prev) => {
       const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
+      next.has(id) ? next.delete(id) : next.add(id);
       return next;
     });
   }
 
   function setFilterActive(f: FilterType) {
     setFilter(f);
-    setExpanded(new Set()); // collapse all when switching filter
+    setExpanded(new Set());
   }
 
   const filters: Array<{ id: FilterType; label: string }> = [
@@ -62,13 +92,14 @@ export function TestCasesTable({ testCases }: TestCasesTableProps) {
 
   return (
     <div data-testid="test-cases-table">
-      {/* Toolbar */}
+      {/* ── Toolbar ── */}
       <div className="mb-4 flex flex-col gap-2.5 sm:flex-row sm:items-center">
         <div className="flex max-w-full gap-1 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
           {filters.map((f) => (
             <button
               key={f.id}
               onClick={() => setFilterActive(f.id)}
+              data-testid={`filter-${f.id}`}
               className={cn(
                 "flex-shrink-0 rounded-[20px] border px-3 py-[5px] text-[12px] font-medium transition-all",
                 filter === f.id
@@ -86,85 +117,183 @@ export function TestCasesTable({ testCases }: TestCasesTableProps) {
         </span>
       </div>
 
-      {/* Card list */}
-      <div className="flex flex-col gap-2">
-        {filtered.map((tc) => {
-          const isOpen = expanded.has(tc.id);
-          return (
-            <div
-              key={tc.id}
-              className="overflow-hidden rounded-[10px] border border-border bg-card"
-              data-testid={`tc-row-${tc.id.toLowerCase()}`}
-              data-type={tc.type}
-              data-priority={tc.priority}
-            >
-              {/* Header (clickable) */}
-              <button
-                className="flex w-full flex-col gap-3 px-4 py-[14px] text-left transition-colors hover:bg-muted/40 sm:flex-row sm:items-start"
-                onClick={() => toggleExpand(tc.id)}
-                data-testid={`expand-${tc.id.toLowerCase()}`}
-                aria-expanded={isOpen}
-              >
-                <span className="mt-[1px] flex-shrink-0 rounded-[4px] border border-border bg-muted px-[7px] py-[2px] font-[family-name:var(--font-ibm-plex-mono)] text-[10px] font-bold text-muted-foreground">
-                  {tc.id}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <div className="mb-1 text-[13.5px] font-semibold text-foreground">
-                    {tc.scenario}
-                  </div>
-                  <div className="text-[12px] text-muted-foreground">
-                    Expected: {tc.expected}
-                  </div>
-                </div>
-                <div className="flex flex-shrink-0 flex-wrap items-center gap-[6px]">
-                  <span
-                    className={cn(
-                      "rounded-[4px] border px-2 py-[2px] text-[10.5px] font-semibold capitalize",
-                      TYPE_STYLES[tc.type],
-                    )}
-                  >
-                    {tc.type}
-                  </span>
-                  <span
-                    className={cn(
-                      "rounded-[4px] border px-2 py-[2px] text-[10.5px] font-semibold capitalize",
-                      PRIORITY_STYLES[tc.priority],
-                    )}
-                  >
-                    {tc.priority}
-                  </span>
-                </div>
-              </button>
+      {/* ── Table ── */}
+      <div className="overflow-hidden rounded-[12px] border border-border">
+        <table className="w-full border-collapse text-left" role="table">
+          {/* Head */}
+          <thead>
+            <tr className="border-b border-border bg-muted/60">
+              <th className="px-4 py-[10px] font-[family-name:var(--font-ibm-plex-mono)] text-[10px] font-bold tracking-[0.07em] text-muted-foreground uppercase">
+                ID
+              </th>
+              <th className="px-3 py-[10px] font-[family-name:var(--font-ibm-plex-mono)] text-[10px] font-bold tracking-[0.07em] text-muted-foreground uppercase">
+                Scenario
+              </th>
+              <th className="hidden px-3 py-[10px] font-[family-name:var(--font-ibm-plex-mono)] text-[10px] font-bold tracking-[0.07em] text-muted-foreground uppercase sm:table-cell">
+                Type
+              </th>
+              <th className="hidden px-3 py-[10px] font-[family-name:var(--font-ibm-plex-mono)] text-[10px] font-bold tracking-[0.07em] text-muted-foreground uppercase sm:table-cell">
+                Priority
+              </th>
+              <th className="w-10 px-3 py-[10px]" aria-label="Expand" />
+            </tr>
+          </thead>
 
-              {/* Expanded body */}
-              {isOpen && (
-                <div className="px-4 pb-[14px]">
-                  {tc.note && (
-                    <div className="mb-[10px] rounded-[6px] border border-[color-mix(in_srgb,var(--info)_25%,transparent)] bg-[color-mix(in_srgb,var(--info)_8%,transparent)] px-[10px] py-2 text-[12px] text-foreground/80">
-                      ℹ️ {tc.note}
-                    </div>
-                  )}
-                  <div className="mb-2 pt-1 text-[10px] font-bold tracking-[0.07em] text-muted-foreground uppercase">
-                    Steps
-                  </div>
-                  <div className="flex flex-col gap-[6px]">
-                    {tc.steps.map((step, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-muted-foreground"
-                      >
-                        <span className="mt-[1px] flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] text-[10px] font-bold text-primary">
-                          {idx + 1}
-                        </span>
-                        <span dangerouslySetInnerHTML={{ __html: step }} />
+          {/* Body */}
+          <tbody>
+            {filtered.map((tc, index) => {
+              const isOpen = expanded.has(tc.id);
+              const isLast = index === filtered.length - 1;
+
+              return (
+                <>
+                  {/* ── Data row ── */}
+                  <tr
+                    key={tc.id}
+                    data-testid={`tc-row-${tc.id.toLowerCase()}`}
+                    data-type={tc.type}
+                    data-priority={tc.priority}
+                    className={cn(
+                      "group cursor-pointer transition-colors hover:bg-muted/40",
+                      isOpen ? "bg-muted/30" : "bg-card",
+                      !isLast || isOpen ? "border-b border-border" : "",
+                    )}
+                    onClick={() => toggleExpand(tc.id)}
+                    aria-expanded={isOpen}
+                  >
+                    {/* ID */}
+                    <td className="px-4 py-[13px] align-top">
+                      <span className="inline-block rounded-[4px] border border-border bg-muted px-[7px] py-[2px] font-[family-name:var(--font-ibm-plex-mono)] text-[10px] font-bold whitespace-nowrap text-muted-foreground">
+                        {tc.id}
+                      </span>
+                    </td>
+
+                    {/* Scenario + expected */}
+                    <td className="px-3 py-[13px] align-top">
+                      <div className="mb-[3px] text-[13px] font-semibold text-foreground">
+                        {tc.scenario}
                       </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        })}
+                      <div className="text-[11.5px] leading-[1.5] text-muted-foreground">
+                        Expected: {tc.expected}
+                      </div>
+                      {/* badges visible only on mobile */}
+                      <div className="mt-2 flex flex-wrap gap-1.5 sm:hidden">
+                        <span
+                          className={cn(
+                            "rounded-[4px] border px-[7px] py-[2px] text-[10px] font-semibold capitalize",
+                            TYPE_STYLES[tc.type],
+                          )}
+                        >
+                          {TYPE_ICONS[tc.type]} {tc.type}
+                        </span>
+                        <span
+                          className={cn(
+                            "rounded-[4px] border px-[7px] py-[2px] text-[10px] font-semibold capitalize",
+                            PRIORITY_STYLES[tc.priority],
+                          )}
+                        >
+                          {tc.priority}
+                        </span>
+                      </div>
+                    </td>
+
+                    {/* Type badge */}
+                    <td className="hidden px-3 py-[13px] align-top sm:table-cell">
+                      <span
+                        className={cn(
+                          "inline-block rounded-[4px] border px-[8px] py-[3px] text-[10.5px] font-semibold capitalize",
+                          TYPE_STYLES[tc.type],
+                        )}
+                      >
+                        {tc.type}
+                      </span>
+                    </td>
+
+                    {/* Priority badge */}
+                    <td className="hidden px-3 py-[13px] align-top sm:table-cell">
+                      <span
+                        className={cn(
+                          "inline-block rounded-[4px] border px-[8px] py-[3px] text-[10.5px] font-semibold capitalize",
+                          PRIORITY_STYLES[tc.priority],
+                        )}
+                      >
+                        {tc.priority}
+                      </span>
+                    </td>
+
+                    {/* Expand chevron */}
+                    <td className="w-10 px-3 py-[13px] align-top">
+                      <button
+                        className="flex h-6 w-6 items-center justify-center rounded-full border border-border bg-muted text-muted-foreground transition-colors group-hover:border-primary/40 group-hover:text-primary"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleExpand(tc.id);
+                        }}
+                        data-testid={`expand-${tc.id.toLowerCase()}`}
+                        aria-label={isOpen ? "Collapse steps" : "Expand steps"}
+                        tabIndex={-1}
+                      >
+                        <ChevronIcon open={isOpen} />
+                      </button>
+                    </td>
+                  </tr>
+
+                  {/* ── Detail row (steps) ── */}
+                  {isOpen && (
+                    <tr
+                      key={`${tc.id}-detail`}
+                      data-testid={`tc-steps-${tc.id.toLowerCase()}`}
+                      className={cn(
+                        "bg-[color-mix(in_srgb,var(--primary)_3%,var(--card))]",
+                        !isLast ? "border-b border-border" : "",
+                      )}
+                    >
+                      <td />
+                      <td colSpan={4} className="px-3 py-4 pr-5">
+                        {tc.note && (
+                          <div className="mb-3 flex items-start gap-2 rounded-[6px] border border-[color-mix(in_srgb,var(--info)_25%,transparent)] bg-[color-mix(in_srgb,var(--info)_8%,transparent)] px-3 py-2 text-[12px] text-foreground/80">
+                            <span className="mt-[1px] flex-shrink-0">ℹ️</span>
+                            <span>{tc.note}</span>
+                          </div>
+                        )}
+
+                        <div className="mb-2 text-[10px] font-bold tracking-[0.08em] text-muted-foreground uppercase">
+                          Steps
+                        </div>
+
+                        <ol className="flex flex-col gap-[7px]" role="list">
+                          {tc.steps.map((step, idx) => (
+                            <li
+                              key={idx}
+                              className="flex items-start gap-2.5 text-[12.5px] leading-[1.55] text-muted-foreground"
+                            >
+                              <span className="mt-[1px] flex h-[18px] w-[18px] flex-shrink-0 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--primary)_12%,transparent)] text-[9px] font-bold text-primary">
+                                {idx + 1}
+                              </span>
+                              <span dangerouslySetInnerHTML={{ __html: step }} />
+                            </li>
+                          ))}
+                        </ol>
+                      </td>
+                    </tr>
+                  )}
+                </>
+              );
+            })}
+
+            {/* Empty state */}
+            {filtered.length === 0 && (
+              <tr>
+                <td
+                  colSpan={5}
+                  className="px-4 py-10 text-center text-[13px] text-muted-foreground"
+                >
+                  No test cases match this filter.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );

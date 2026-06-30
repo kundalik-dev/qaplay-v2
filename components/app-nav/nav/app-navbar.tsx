@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { usePathname } from "next/navigation";
+
 import { cn } from "@/lib/utils";
 import { navBrand, navLinks, navCta, navAuth } from "@/data/nav-data";
 import { buttonVariants } from "@/components/ui/button";
@@ -15,6 +17,8 @@ import styles from "./nav.module.css";
 
 export function AppNavbar() {
   const { data: session } = authClient.useSession();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -69,15 +73,17 @@ export function AppNavbar() {
               </Link>
             )}
 
-            <Link
-              href={navCta.href}
-              className={cn(
-                buttonVariants({ variant: "homePrimary", size: "home-sm" }),
-                styles.cta,
-              )}
-            >
-              {navCta.label}
-            </Link>
+            {isHome && (
+              <Link
+                href={navCta.href}
+                className={cn(
+                  buttonVariants({ variant: "homePrimary", size: "home-sm" }),
+                  styles.cta,
+                )}
+              >
+                {navCta.label}
+              </Link>
+            )}
 
             <button
               type="button"
@@ -121,16 +127,18 @@ export function AppNavbar() {
             </Link>
           )}
 
-          <Link
-            href={navCta.href}
-            className={cn(
-              buttonVariants({ variant: "homePrimary", size: "home" }),
-              styles.mobileCta,
-            )}
-            onClick={closeMobile}
-          >
-            {navCta.label}
-          </Link>
+          {isHome && (
+            <Link
+              href={navCta.href}
+              className={cn(
+                buttonVariants({ variant: "homePrimary", size: "home" }),
+                styles.mobileCta,
+              )}
+              onClick={closeMobile}
+            >
+              {navCta.label}
+            </Link>
+          )}
 
           <div className={styles.mobileThemeRow}>
             <span className={styles.mobileThemeLabel}>Switch theme</span>

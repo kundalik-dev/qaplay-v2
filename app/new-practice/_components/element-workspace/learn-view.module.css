@@ -1,0 +1,66 @@
+/* Learn tab — stacked DocSection cards (code blocks come from LearnCodeBlock). */
+
+.learn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.body {
+  margin: 0 0 12px;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.body :global(code) {
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.85em;
+}
+
+.body :global(strong) {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.list {
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.listItem {
+  position: relative;
+  padding-left: 20px;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.listItem::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+.listItem :global(code) {
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.85em;
+}

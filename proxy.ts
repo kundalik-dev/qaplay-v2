@@ -61,6 +61,19 @@ function signInUrl(request: NextRequest): URL {
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // ── Dev-only auth bypass ───────────────────────────────────────────────────
+  // Lets local development skip the session check on protected routes.
+  // Fenced behind NODE_ENV so it can NEVER take effect in a production build —
+  // Next.js hard-sets NODE_ENV to "production" on `next build`/`next start` and
+  // on Vercel, so even a stray DISABLE_AUTH=true in a prod env is ignored.
+  // Enable by adding `DISABLE_AUTH=true` to .env.local.
+  if (
+    process.env.NODE_ENV !== "production" &&
+    process.env.DISABLE_AUTH === "true"
+  ) {
+    return NextResponse.next();
+  }
+
   // Skip static files and Next.js internals
   if (
     pathname.startsWith("/_next") ||

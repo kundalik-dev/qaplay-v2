@@ -1069,4 +1069,151 @@ html.theme-transition-active::view-transition-new(root) {
       font-size: 0.95rem;
     }
   }
+
+  /* ── Shared control primitives ───────────────────────────────────────────── */
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 9px 18px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      filter 0.15s ease,
+      background-color 0.15s ease;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  .btn-primary:hover {
+    filter: brightness(0.94);
+  }
+  .btn-secondary {
+    background: color-mix(in srgb, var(--muted) 70%, transparent);
+    border-color: var(--border);
+    color: var(--foreground);
+  }
+  .btn-secondary:hover {
+    background: var(--muted);
+  }
+  .btn-danger {
+    background: var(--destructive);
+    color: var(--destructive-foreground);
+  }
+  .btn-danger:hover {
+    filter: brightness(0.94);
+  }
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 14px;
+  }
+  .form-label {
+    color: var(--foreground);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .form-input {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid var(--input);
+    border-radius: 7px;
+    background: var(--card);
+    color: var(--foreground);
+    font-family: inherit;
+    font-size: 0.9rem;
+  }
+  .form-input:focus {
+    outline: 2px solid color-mix(in srgb, var(--primary) 50%, transparent);
+    outline-offset: 1px;
+  }
+  .output-box {
+    margin-top: 12px;
+    padding: 10px 14px;
+    min-height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--muted) 45%, transparent);
+    color: var(--muted-foreground);
+    font-family: var(--font-jetbrains-mono), var(--font-ibm-plex-mono), monospace;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+  .tone-danger {
+    color: var(--destructive-readable);
+  }
+  .tone-success {
+    color: var(--success-readable);
+  }
+
+  /* ── Cheat-sheet tables ──────────────────────────────────────────────────── */
+  .table-wrap {
+    overflow-x: auto;
+  }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+  .table th {
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--muted) 60%, transparent);
+    color: var(--foreground);
+    text-align: left;
+    font-weight: 600;
+  }
+  .table td {
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted-foreground);
+  }
+  .table code {
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--primary) 12%, transparent);
+    color: var(--primary);
+    font-family: var(--font-ibm-plex-mono), monospace;
+    font-size: 0.82em;
+  }
+
+  /* ── Toast / snackbar ────────────────────────────────────────────────────── */
+  .toast-stack {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1100;
+  }
+  .toast {
+    min-width: 220px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    background: #1f2933;
+    color: #fff;
+    font-size: 0.875rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  }
+  .toast-success {
+    background: #166534;
+  }
+  .toast-error {
+    background: #b0101a;
+  }
 }

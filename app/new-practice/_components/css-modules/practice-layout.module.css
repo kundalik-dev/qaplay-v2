@@ -1,0 +1,51 @@
+/* =============================================================================
+   PRACTICE PLAYGROUND — LAYOUT SURFACE
+   -----------------------------------------------------------------------------
+   A calm, low-strain background for any practice playground.
+   - Opaque, so it fully covers the global grid + glow painted on <body>.
+   - Soft, low-contrast tones (no pure white / pure black) to reduce eye strain.
+   - Light + dark variants driven by the global `html.dark` class.
+   ========================================================================== */
+
+.surface {
+  /* Light defaults — soft, desaturated blue-grey */
+  --practice-surface: #e9eef3;
+  --practice-surface-gradient: radial-gradient(
+    130% 90% at 50% -10%,
+    #f4f7fa 0%,
+    #e9eef3 50%,
+    #e2e9ef 100%
+  );
+
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--practice-surface);
+  background-image: var(--practice-surface-gradient);
+  background-attachment: fixed;
+  padding-top: 5.5rem;
+  padding-bottom: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* Dark — gently lifted slate, never pure black */
+:global(html.dark) .surface {
+  --practice-surface: #0e1218;
+  --practice-surface-gradient: radial-gradient(
+    130% 90% at 50% -10%,
+    #161c25 0%,
+    #11161d 50%,
+    #0d1117 100%
+  );
+}
+
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+/* Default paragraph size across all practice playground pages. */
+.surface :global(p) {
+  font-size: 15px;
+}

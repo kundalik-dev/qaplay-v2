@@ -1,0 +1,546 @@
+/* ── Practice Layout ────────────────────────────────────────────────────────── */
+
+.practiceLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 24px;
+  padding-block: 24px 64px;
+}
+
+.practiceSidebar {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  gap: 16px;
+}
+
+/* ── Feature flag toggles ───────────────────────────────────────────────────── */
+
+.flagGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-block: 10px;
+}
+
+.flagRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.flagRow:last-child {
+  border-bottom: none;
+}
+
+.flagLabel {
+  font-size: 13px;
+  min-width: 160px;
+  color: var(--foreground);
+}
+
+/* Toggle switch */
+.switchBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 13px;
+}
+
+.switchTrack {
+  width: 40px;
+  height: 22px;
+  background: var(--muted);
+  border-radius: 11px;
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+
+.switchTrack::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background: var(--background);
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: left 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.switchBtn[aria-checked="true"] .switchTrack {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.switchBtn[aria-checked="true"] .switchTrack::after {
+  left: 20px;
+}
+
+.switchState {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  min-width: 26px;
+  font-weight: 600;
+}
+
+.switchBtn[aria-checked="true"] .switchState {
+  color: var(--primary);
+}
+
+/* Environment badge */
+.envRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.envLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.envPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.envStaging {
+  background: #fff3cd;
+  color: #92400e;
+}
+
+.envProd {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.envSwitchBtn {
+  padding: 3px 10px;
+  font-size: 12px;
+}
+
+/* Beta panel */
+.betaPanel {
+  margin-top: 12px;
+  padding: 14px;
+  background: color-mix(in srgb, var(--primary) 8%, var(--background));
+  border: 1px dashed var(--primary);
+  border-radius: 6px;
+}
+
+.betaTitle {
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.betaDesc {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  margin-bottom: 10px;
+}
+
+/* ── Slow operations ────────────────────────────────────────────────────────── */
+
+.btnRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.loadingBox {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--muted);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.loadingLabel {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  margin-bottom: 6px;
+}
+
+.progressWrap {
+  height: 5px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 3px;
+  width: 0;
+  transition: width 0.1s linear;
+}
+
+.skeletonLines {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.skeleton {
+  height: 12px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--muted) 25%,
+    var(--border) 50%,
+    var(--muted) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.reportTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.reportTable th {
+  background: var(--muted);
+  text-align: left;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.reportTable td {
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+}
+
+/* ── Known bugs ─────────────────────────────────────────────────────────────── */
+
+.cardRow {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bugCard {
+  background: color-mix(in srgb, #ef4444 5%, var(--background));
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  padding: 14px 16px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.infoCard {
+  background: color-mix(in srgb, var(--primary) 5%, var(--background));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.bugCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.bugBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.counterRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.counterDisplay {
+  font-size: 26px;
+  font-weight: 700;
+  min-width: 42px;
+  text-align: center;
+  color: var(--foreground);
+}
+
+.bugNote {
+  font-size: 11px;
+  color: #991b1b;
+  margin-top: 6px;
+}
+
+/* ── Checkout stepper ───────────────────────────────────────────────────────── */
+
+.stepper {
+  display: flex;
+  margin-bottom: 18px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.stepTab {
+  flex: 1;
+  padding: 9px 6px;
+  text-align: center;
+  font-size: 12px;
+  background: var(--muted);
+  border-right: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+.stepTab:last-child {
+  border-right: none;
+}
+
+.stepTab.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.stepTab.done {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.stepNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.12);
+  font-size: 10px;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.stepTab.active .stepNum {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.stepTab.done .stepNum {
+  background: #166534;
+  color: #fff;
+}
+
+.stepPanel {
+  display: none;
+}
+
+.stepPanel.active {
+  display: block;
+}
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.fieldLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.fieldInput,
+.fieldSelect {
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-size: 13px;
+  background: var(--background);
+  color: var(--foreground);
+  width: 100%;
+}
+
+.fieldInput:focus,
+.fieldSelect:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 0;
+}
+
+.orderConfirmation {
+  padding: 14px 16px;
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  border-radius: 6px;
+  margin-top: 12px;
+  font-size: 14px;
+  color: #166534;
+}
+
+/* ── Data-driven login ──────────────────────────────────────────────────────── */
+
+.loginGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.credTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.credTable th {
+  background: var(--muted);
+  text-align: left;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.credTable td {
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.roleBadge {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.roleAdmin  { background: #fee2e2; color: #991b1b; }
+.roleEditor { background: #dbeafe; color: #1d4ed8; }
+.roleViewer { background: #dcfce7; color: #166534; }
+.roleInvalid { background: var(--muted); color: var(--muted-foreground); }
+
+.dashboard {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.dashPanel {
+  display: none;
+}
+
+.dashPanel.visible {
+  display: block;
+}
+
+.dashTitle {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.dashBtnRow {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* ── Shared output box ──────────────────────────────────────────────────────── */
+
+.outputBox {
+  margin-top: 10px;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 12px;
+  min-height: 32px;
+  color: var(--muted-foreground);
+  white-space: pre-wrap;
+  font-family: monospace;
+}
+
+/* ── Responsive breakpoints ─────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .practiceLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .practiceSidebar {
+    position: static;
+  }
+
+  .cardRow {
+    flex-direction: column;
+  }
+
+  .loginGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .practiceLayout {
+    gap: 16px;
+    padding-block: 20px 48px;
+  }
+
+  .fieldGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .btnRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

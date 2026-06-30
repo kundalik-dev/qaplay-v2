@@ -1,0 +1,295 @@
+/* =============================================================================
+   PRACTICE BLOCK — reusable scenario framework
+   -----------------------------------------------------------------------------
+   One <PracticeBlock> renders a single practice scenario:
+     index + title + difficulty badges
+     "What to test" callout (always visible)
+     "Show hint" toggle (detailed guidance, collapsed by default)
+     the interactive UI (children)
+   Shared control primitives (buttons, inputs, output box) live here too so
+   every practice element reuses the same look. Token-driven → light/dark safe.
+   ========================================================================== */
+
+.block {
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 4px);
+  background: var(--card);
+  box-shadow: var(--shadow-float);
+  overflow: hidden; /* clip header/footer fills to the rounded corners */
+}
+
+.block + .block {
+  margin-top: 18px;
+}
+
+/* ── Card header (title) ─────────────────────────────────────────────────── */
+
+.head {
+  padding: 18px clamp(18px, 2.4vw, 26px);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Card body (the interactive HTML) ────────────────────────────────────── */
+
+.blockBody {
+  padding: clamp(24px, 3.2vw, 36px) clamp(18px, 2.4vw, 26px);
+}
+
+/* ── Card footer (what-to-test + show hint) ──────────────────────────────── */
+
+.footer {
+  padding: 18px clamp(18px, 2.4vw, 26px);
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--muted) 30%, transparent);
+}
+
+.title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--primary) 13%, transparent);
+  color: var(--primary);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* ── Badges ──────────────────────────────────────────────────────────────── */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.badgeGreen {
+  background: color-mix(in srgb, var(--success) 14%, transparent);
+  color: var(--success-readable);
+}
+.badgeBlue {
+  background: color-mix(in srgb, var(--info) 16%, transparent);
+  color: var(--info-readable);
+}
+.badgeOrange {
+  background: color-mix(in srgb, var(--warning) 18%, transparent);
+  color: var(--warning-readable);
+}
+.badgeRed {
+  background: color-mix(in srgb, var(--destructive) 14%, transparent);
+  color: var(--destructive-readable);
+}
+
+/* ── What to test callout ────────────────────────────────────────────────── */
+
+.whatToTest {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  padding: 13px 15px;
+  border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--primary) 5%, transparent);
+}
+
+.whatToTestLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px 3px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  color: var(--primary);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.whatToTestIcon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.whatToTestText {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* ── Hint toggle ─────────────────────────────────────────────────────────── */
+
+.hintToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  padding: 8px 15px;
+  border: 1px solid color-mix(in srgb, var(--primary) 28%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  color: var(--primary);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.hintToggle:hover {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+}
+
+.hintIcon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.hintPanel {
+  margin: 12px 0 0;
+  padding: 12px 14px;
+  border: 1px dashed color-mix(in srgb, var(--border) 88%, var(--foreground));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--muted) 35%, transparent);
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.hintPanel p {
+  margin: 0 0 8px;
+}
+.hintPanel p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Inline code / strong inside any block ───────────────────────────────── */
+
+.block :global(code) {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.85em;
+}
+
+.block :global(strong) {
+  color: var(--foreground);
+  font-weight: 700;
+}
+
+/* ── Raw-HTML auto-styling ───────────────────────────────────────────────────
+   Lets future elements drop plain, class-less HTML straight into a block body
+   and still get the design-system look — no helper components required, e.g.:
+
+     <PracticeBlock title="My element" whatToTest={...} hint={...}>
+       <button data-testid="go">Click me</button>
+       <input data-testid="name" placeholder="Type…" />
+       <output data-testid="result">Result appears here…</output>
+     </PracticeBlock>
+
+   Only class-less elements are matched (`:not([class])`), so the helper
+   components (PracticeButton, OutputBox, etc.) and any custom-classed markup
+   are left completely untouched.
+   ----------------------------------------------------------------------------- */
+
+.blockBody :global(button:not([class])) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 8px 8px 0;
+  padding: 9px 18px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    filter 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.blockBody :global(button:not([class]):hover) {
+  filter: brightness(0.94);
+}
+
+.blockBody :global(label:not([class])) {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--foreground);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.blockBody :global(input:not([class])),
+.blockBody :global(select:not([class])),
+.blockBody :global(textarea:not([class])) {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 9px 11px;
+  border: 1px solid var(--input);
+  border-radius: 7px;
+  background: var(--card);
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.blockBody :global(input:not([class]):focus),
+.blockBody :global(select:not([class]):focus),
+.blockBody :global(textarea:not([class]):focus) {
+  outline: 2px solid color-mix(in srgb, var(--primary) 50%, transparent);
+  outline-offset: 1px;
+}
+
+.blockBody :global(output:not([class])),
+.blockBody :global(pre:not([class])) {
+  display: block;
+  margin-top: 4px;
+  padding: 10px 14px;
+  min-height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--muted) 45%, transparent);
+  color: var(--muted-foreground);
+  font-family: var(--font-jetbrains-mono), var(--font-ibm-plex-mono), monospace;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+
