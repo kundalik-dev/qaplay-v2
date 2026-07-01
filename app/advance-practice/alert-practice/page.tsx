@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { alertPracticeContent } from "@/data/new-practice/elements/alert-practice";
+import { alertPracticeContent } from "@/data/advance-practice/elements/alert-practice";
 import type { HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
 import { highlightLearnSnippet } from "@/lib/highlight";
 import {
@@ -25,10 +25,7 @@ export default async function AlertPracticePage() {
       .filter((section) => section.snippets)
       .map(
         async (section) =>
-          [
-            section.id,
-            await highlightLearnSnippet(section.snippets!),
-          ] as const,
+          [section.id, await highlightLearnSnippet(section.snippets!)] as const,
       ),
   );
   const highlighted: Record<string, HighlightedLearnCodeSnippet> =

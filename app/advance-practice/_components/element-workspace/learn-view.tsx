@@ -1,6 +1,6 @@
 import { DocSection, LearnCodeBlock } from "@/components/practice";
 import type { HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
-import type { LearnSection } from "@/data/new-practice/types";
+import type { LearnSection } from "@/data/advance-practice/types";
 
 import styles from "./learn-view.module.css";
 
@@ -20,7 +20,11 @@ interface LearnViewProps {
  * the shared LearnCodeBlock (framework tabs + Copy + syntax highlighting),
  * matching the look of the original /practice learn pages.
  */
-export function LearnView({ sections, highlighted, sectionClassName }: LearnViewProps) {
+export function LearnView({
+  sections,
+  highlighted,
+  sectionClassName,
+}: LearnViewProps) {
   return (
     <div className={styles.learn} data-testid="learn-view">
       {sections.map((section) => {
