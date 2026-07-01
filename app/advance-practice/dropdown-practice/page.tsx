@@ -420,6 +420,7 @@ const DropDownPractice = () => {
             className={styles.customTrigger}
             role="combobox"
             aria-expanded={statusOpen}
+            aria-controls="status-panel"
             aria-haspopup="listbox"
             tabIndex={0}
             data-testid="status-trigger"
@@ -512,7 +513,12 @@ const DropDownPractice = () => {
               <li className={styles.noResult}>No cities found</li>
             )}
             {citySuggestions.map((city) => (
-              <li key={city} role="option" onClick={() => chooseCity(city)}>
+              <li
+                key={city}
+                role="option"
+                aria-selected={city === chosenCity}
+                onClick={() => chooseCity(city)}
+              >
                 {city}
               </li>
             ))}

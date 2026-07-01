@@ -10,7 +10,6 @@ import {
   FaqSection,
   HomeFeaturePreview,
   HomeHero,
-  InterviewSection,
   PracticeNewSection,
   ReviewSection,
   RoadmapSection,

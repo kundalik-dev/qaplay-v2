@@ -7,16 +7,12 @@
 
 import type { LucideIcon } from "lucide-react";
 import {
-  BriefcaseBusiness,
-  BrainCircuit,
   HelpCircle,
-  LayoutDashboard,
   LibraryBig,
   Trophy,
   Wrench,
   Globe,
   Settings,
-  Home,
 } from "lucide-react";
 
 export interface DashboardNavItem {
