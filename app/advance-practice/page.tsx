@@ -1,4 +1,4 @@
-import { newPracticeCards } from "@/data/new-practice/new-practice-cards-data";
+import { newPracticeCards } from "@/data/advance-practice/new-practice-cards-data";
 
 import { NewPracticeGrid, PracticeShell } from "./_components";
 

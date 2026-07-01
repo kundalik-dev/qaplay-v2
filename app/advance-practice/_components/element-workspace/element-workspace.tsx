@@ -7,7 +7,7 @@ import Link from "next/link";
 import { BookOpen, ChevronRight, FlaskConical, ListChecks } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import type { ElementLevel, ElementMeta } from "@/data/new-practice/types";
+import type { ElementLevel, ElementMeta } from "@/data/advance-practice/types";
 
 import styles from "./element-workspace.module.css";
 
@@ -43,7 +43,12 @@ export function ElementWorkspace({
     count?: number;
   }> = [
     { id: "practice", label: "Practice", icon: FlaskConical },
-    { id: "test-cases", label: "Test Cases", icon: ListChecks, count: testCaseCount },
+    {
+      id: "test-cases",
+      label: "Test Cases",
+      icon: ListChecks,
+      count: testCaseCount,
+    },
     { id: "learn", label: "Learn", icon: BookOpen },
   ];
 
@@ -76,7 +81,9 @@ export function ElementWorkspace({
         {meta.tags && meta.tags.length > 0 && (
           <div className={styles.tagRow}>
             {meta.tags.map((tag) => (
-              <span key={tag} className={styles.tag}>{tag}</span>
+              <span key={tag} className={styles.tag}>
+                {tag}
+              </span>
             ))}
           </div>
         )}
@@ -84,7 +91,6 @@ export function ElementWorkspace({
 
       {/* ── Two-column body ───────────────────────────────────────────────── */}
       <div className={styles.body}>
-
         {/* Left sidebar */}
         <div className={styles.sidebar}>
           <nav
@@ -100,7 +106,10 @@ export function ElementWorkspace({
                 <button
                   key={tab.id}
                   type="button"
-                  className={cn(styles.navItem, isActive && styles.navItemActive)}
+                  className={cn(
+                    styles.navItem,
+                    isActive && styles.navItemActive,
+                  )}
                   data-testid={`workspace-tab-${tab.id}`}
                   data-active={isActive ? "true" : undefined}
                   aria-current={isActive ? "true" : undefined}
@@ -133,10 +142,17 @@ export function ElementWorkspace({
                   />
                 </div>
                 <div className={styles.upNextText}>
-                  <span className={styles.upNextTitle}>{meta.upNext.title}</span>
-                  <span className={styles.upNextDesc}>{meta.upNext.description}</span>
+                  <span className={styles.upNextTitle}>
+                    {meta.upNext.title}
+                  </span>
+                  <span className={styles.upNextDesc}>
+                    {meta.upNext.description}
+                  </span>
                 </div>
-                <ChevronRight className={styles.upNextChevron} aria-hidden="true" />
+                <ChevronRight
+                  className={styles.upNextChevron}
+                  aria-hidden="true"
+                />
               </div>
             </Link>
           )}
@@ -146,7 +162,8 @@ export function ElementWorkspace({
         <section
           className={cn(
             styles.panel,
-            (active === "practice" || active === "test-cases") && styles.panelFlush,
+            (active === "practice" || active === "test-cases") &&
+              styles.panelFlush,
           )}
           data-testid={`workspace-panel-${active}`}
           aria-label={`${active} content`}

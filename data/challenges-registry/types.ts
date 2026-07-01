@@ -89,7 +89,7 @@ export interface ChallengeMeta {
   /** One-sentence summary shown on dashboard cards */
   summary: string;
   /** Longer description shown in the challenge header */
-  description: string;
+  description?: string;
   /** Controls the difficulty chip colour and filter options */
   difficulty: "Easy" | "Medium" | "Hard";
   /** XP awarded on passing */

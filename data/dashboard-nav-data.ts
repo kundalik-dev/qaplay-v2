@@ -7,16 +7,12 @@
 
 import type { LucideIcon } from "lucide-react";
 import {
-  BriefcaseBusiness,
-  BrainCircuit,
   HelpCircle,
-  LayoutDashboard,
   LibraryBig,
   Trophy,
   Wrench,
   Globe,
   Settings,
-  Home,
 } from "lucide-react";
 
 export interface DashboardNavItem {
@@ -36,34 +32,34 @@ export interface DashboardNavGroup {
 }
 
 export const dashboardNavGroups: DashboardNavGroup[] = [
-  {
-    label: "Main",
-    items: [
-      {
-        label: "Home",
-        href: "/",
-        icon: Home,
-        testId: "nav-home",
-      },
-      {
-        label: "Dashboard",
-        href: "/dashboard",
-        icon: LayoutDashboard,
-        testId: "nav-dashboard",
-        requiresAuth: true,
-      },
-    ],
-  },
+  // {
+  //   label: "Main",
+  //   items: [
+  //     {
+  //       label: "Home",
+  //       href: "/",
+  //       icon: Home,
+  //       testId: "nav-home",
+  //     },
+  //     {
+  //       label: "Dashboard",
+  //       href: "/dashboard",
+  //       icon: LayoutDashboard,
+  //       testId: "nav-dashboard",
+  //       requiresAuth: true,
+  //     },
+  //   ],
+  // },
   {
     label: "Practice",
     items: [
-      {
-        label: "Interview Practice",
-        href: "/interview-practice",
-        icon: BrainCircuit,
-        testId: "nav-interview-practice",
-        requiresAuth: true,
-      },
+      // {
+      //   label: "Interview Practice",
+      //   href: "/interview-practice",
+      //   icon: BrainCircuit,
+      //   testId: "nav-interview-practice",
+      //   requiresAuth: true,
+      // },
       {
         label: "Challenges",
         href: "/challenges",
@@ -88,13 +84,13 @@ export const dashboardNavGroups: DashboardNavGroup[] = [
         icon: Wrench,
         testId: "nav-qa-tools",
       },
-      {
-        label: "Job CRM",
-        href: "/job-crm",
-        icon: BriefcaseBusiness,
-        testId: "nav-job-crm",
-        requiresAuth: true,
-      },
+      // {
+      //   label: "Job CRM",
+      //   href: "/job-crm",
+      //   icon: BriefcaseBusiness,
+      //   testId: "nav-job-crm",
+      //   requiresAuth: true,
+      // },
       {
         label: "Resources",
         href: "/resources",

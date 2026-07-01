@@ -17,7 +17,8 @@ export const annotationsTestCases: TestCase[] = [
   {
     id: "ANN_002",
     scenario: "Beta panel visible after toggling feature flag ON",
-    expected: "beta-panel appears with text 'Beta Feature Visible' and enabled action button",
+    expected:
+      "beta-panel appears with text 'Beta Feature Visible' and enabled action button",
     type: "positive",
     priority: "high",
     steps: [
@@ -32,7 +33,8 @@ export const annotationsTestCases: TestCase[] = [
   {
     id: "ANN_003",
     scenario: "Environment badge updates when switching environments",
-    expected: "env-badge changes from 'Staging' to 'Production' after button click",
+    expected:
+      "env-badge changes from 'Staging' to 'Production' after button click",
     type: "positive",
     priority: "medium",
     steps: [
@@ -44,7 +46,8 @@ export const annotationsTestCases: TestCase[] = [
   },
   {
     id: "ANN_004",
-    scenario: "Loading indicator aria-busy attribute transitions during slow op",
+    scenario:
+      "Loading indicator aria-busy attribute transitions during slow op",
     expected: "aria-busy changes from false → true → false as report generates",
     type: "positive",
     priority: "high",
@@ -75,7 +78,8 @@ export const annotationsTestCases: TestCase[] = [
   {
     id: "ANN_006",
     scenario: "Buggy counter increments by 2 instead of 1 (BUG-101)",
-    expected: "Counter shows 6 after 3 clicks — annotation test.fixme() marks it broken",
+    expected:
+      "Counter shows 6 after 3 clicks — annotation test.fixme() marks it broken",
     type: "negative",
     priority: "high",
     steps: [
@@ -103,14 +107,15 @@ export const annotationsTestCases: TestCase[] = [
   {
     id: "ANN_008",
     scenario: "test.fail() confirms BUG-101 still exists (regression check)",
-    expected: "test.fail() annotation inverts result — test 'passes' when assertion fails",
+    expected:
+      "test.fail() annotation inverts result — test 'passes' when assertion fails",
     type: "edge",
     priority: "medium",
     steps: [
       "Add <code>test.fail()</code> annotation at top of test",
       'Click <code>[data-testid="btn-buggy-inc"]</code> 3 times',
       'Assert <code>toHaveText("3")</code> — this assertion FAILS (actual: "6")',
-      'test.fail() causes the test to PASS because it expected a failure',
+      "test.fail() causes the test to PASS because it expected a failure",
       "If bug is fixed, assertion passes → test.fail() flips → whole test FAILS (remove annotation)",
     ],
     note: "This is a regression guard. When the test starts failing unexpectedly, the bug has been fixed.",
@@ -118,7 +123,8 @@ export const annotationsTestCases: TestCase[] = [
   {
     id: "ANN_009",
     scenario: "Checkout step 1 — cart review and quantity update",
-    expected: "Cart table shows both products; total updates on quantity change",
+    expected:
+      "Cart table shows both products; total updates on quantity change",
     type: "positive",
     priority: "high",
     steps: [
@@ -132,7 +138,8 @@ export const annotationsTestCases: TestCase[] = [
   {
     id: "ANN_010",
     scenario: "Checkout step 2 — fill shipping form and proceed",
-    expected: "Step 1 tab shows done class; step 2 panel is visible after form fill",
+    expected:
+      "Step 1 tab shows done class; step 2 panel is visible after form fill",
     type: "positive",
     priority: "high",
     steps: [
@@ -178,8 +185,10 @@ export const annotationsTestCases: TestCase[] = [
   },
   {
     id: "ANN_013",
-    scenario: "Data-driven login — Invalid credentials show error, no dashboard",
-    expected: "login-result shows 'Invalid credentials'; role-dashboard is hidden",
+    scenario:
+      "Data-driven login — Invalid credentials show error, no dashboard",
+    expected:
+      "login-result shows 'Invalid credentials'; role-dashboard is hidden",
     type: "negative",
     priority: "high",
     steps: [
@@ -193,7 +202,8 @@ export const annotationsTestCases: TestCase[] = [
   {
     id: "ANN_014",
     scenario: "Logout restores initial login state for next test iteration",
-    expected: "Form fields cleared, dashboard hidden, login button visible again",
+    expected:
+      "Form fields cleared, dashboard hidden, login button visible again",
     type: "positive",
     priority: "medium",
     steps: [

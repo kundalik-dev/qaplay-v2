@@ -40,7 +40,9 @@ export default function DashboardPage() {
   /* Filters + sort */
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [isComboOpen, setIsComboOpen] = useState(false);
-  const [sortField, setSortField] = useState<"id" | "date" | "amount" | null>(null);
+  const [sortField, setSortField] = useState<"id" | "date" | "amount" | null>(
+    null,
+  );
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   /* Pagination */
@@ -73,8 +75,7 @@ export default function DashboardPage() {
       "ID,Date,Description,Amount,Category\n" +
       transactions
         .map(
-          (t) =>
-            `${t.id},${t.date},${t.description},${t.amount},${t.category}`,
+          (t) => `${t.id},${t.date},${t.description},${t.amount},${t.category}`,
         )
         .join("\n");
     const link = document.createElement("a");
@@ -118,7 +119,10 @@ export default function DashboardPage() {
   }, [transactions, sortField, sortOrder, categoryFilter]);
 
   /* ── Pagination ─────────────────────────────────────────────── */
-  const totalPages = Math.max(1, Math.ceil(sortedAndFiltered.length / pageSize));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(sortedAndFiltered.length / pageSize),
+  );
   const paginatedTrx = sortedAndFiltered.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize,
@@ -139,8 +143,7 @@ export default function DashboardPage() {
   };
 
   const toggleSort = (field: "id" | "date" | "amount") => {
-    if (sortField === field)
-      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    if (sortField === field) setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     else {
       setSortField(field);
       setSortOrder("desc");
@@ -230,9 +233,22 @@ export default function DashboardPage() {
         >
           <div className="bank-stat-card-top">
             <p className="bank-stat-label">Total Balance</p>
-            <span className="bank-stat-icon bank-stat-icon--balance" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+            <span
+              className="bank-stat-icon bank-stat-icon--balance"
+              aria-hidden="true"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="2" y="5" width="20" height="14" rx="2" />
+                <line x1="2" y1="10" x2="22" y2="10" />
               </svg>
             </span>
           </div>
@@ -256,16 +272,26 @@ export default function DashboardPage() {
         >
           <div className="bank-stat-card-top">
             <p className="bank-stat-label">Total Income</p>
-            <span className="bank-stat-icon bank-stat-icon--income" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+            <span
+              className="bank-stat-icon bank-stat-icon--income"
+              aria-hidden="true"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                <polyline points="17 6 23 6 23 12" />
               </svg>
             </span>
           </div>
-          <p
-            className="bank-stat-value income"
-            data-testid="stat-income-value"
-          >
+          <p className="bank-stat-value income" data-testid="stat-income-value">
             +${totalIncome.toFixed(2)}
           </p>
         </div>
@@ -277,9 +303,22 @@ export default function DashboardPage() {
         >
           <div className="bank-stat-card-top">
             <p className="bank-stat-label">Total Expenses</p>
-            <span className="bank-stat-icon bank-stat-icon--expense" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/>
+            <span
+              className="bank-stat-icon bank-stat-icon--expense"
+              aria-hidden="true"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
+                <polyline points="17 18 23 18 23 12" />
               </svg>
             </span>
           </div>
@@ -298,10 +337,26 @@ export default function DashboardPage() {
         >
           <div className="bank-stat-card-top">
             <p className="bank-stat-label">Transactions</p>
-            <span className="bank-stat-icon bank-stat-icon--count" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
-                <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+            <span
+              className="bank-stat-icon bank-stat-icon--count"
+              aria-hidden="true"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="8" y1="6" x2="21" y2="6" />
+                <line x1="8" y1="12" x2="21" y2="12" />
+                <line x1="8" y1="18" x2="21" y2="18" />
+                <line x1="3" y1="6" x2="3.01" y2="6" />
+                <line x1="3" y1="12" x2="3.01" y2="12" />
+                <line x1="3" y1="18" x2="3.01" y2="18" />
               </svg>
             </span>
           </div>
@@ -410,8 +465,19 @@ export default function DashboardPage() {
             data-testid="add-transaction-btn"
             aria-label="Add new transaction"
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
             Add Transaction
           </button>
@@ -438,8 +504,7 @@ export default function DashboardPage() {
                     : "none"
                 }
               >
-                ID{" "}
-                {sortField === "id" && (sortOrder === "asc" ? "↑" : "↓")}
+                ID {sortField === "id" && (sortOrder === "asc" ? "↑" : "↓")}
               </th>
               <th
                 className="sortable"
@@ -453,8 +518,7 @@ export default function DashboardPage() {
                     : "none"
                 }
               >
-                Date{" "}
-                {sortField === "date" && (sortOrder === "asc" ? "↑" : "↓")}
+                Date {sortField === "date" && (sortOrder === "asc" ? "↑" : "↓")}
               </th>
               <th>Description</th>
               <th>Category</th>
@@ -571,10 +635,7 @@ export default function DashboardPage() {
       >
         {/* Left: page-size picker */}
         <div className="bank-pagination-left">
-          <label
-            htmlFor="page-size-select"
-            className="bank-page-size-label"
-          >
+          <label htmlFor="page-size-select" className="bank-page-size-label">
             Show
           </label>
           {/*
@@ -601,13 +662,10 @@ export default function DashboardPage() {
             ))}
           </select>
           <span className="bank-page-size-label">per page</span>
-          <span
-            className="bank-pagination-info"
-            data-testid="pagination-info"
-          >
+          <span className="bank-pagination-info" data-testid="pagination-info">
             &mdash; Page <strong>{currentPage}</strong> of{" "}
-            <strong>{totalPages}</strong> &middot;{" "}
-            {sortedAndFiltered.length} transaction
+            <strong>{totalPages}</strong> &middot; {sortedAndFiltered.length}{" "}
+            transaction
             {sortedAndFiltered.length !== 1 ? "s" : ""}
           </span>
         </div>
@@ -639,10 +697,7 @@ export default function DashboardPage() {
             <button
               key={page}
               type="button"
-              className={[
-                "bank-page-btn",
-                currentPage === page ? "active" : "",
-              ]
+              className={["bank-page-btn", currentPage === page ? "active" : ""]
                 .filter(Boolean)
                 .join(" ")}
               onClick={() => handlePageChange(page)}
@@ -699,10 +754,7 @@ export default function DashboardPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="bank-modal-header">
-              <h2
-                id="transaction-dialog-title"
-                data-testid="modal-title"
-              >
+              <h2 id="transaction-dialog-title" data-testid="modal-title">
                 {modalMode === "add" ? "Add Transaction" : "Edit Transaction"}
               </h2>
               {/* Challenge: no data-testid — use aria-label */}

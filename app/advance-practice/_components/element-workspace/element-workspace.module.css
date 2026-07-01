@@ -333,7 +333,9 @@
   height: 14px;
   margin-top: 2px;
   color: var(--muted-foreground);
-  transition: color 0.15s ease, transform 0.15s ease;
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .upNextCard:hover .upNextChevron {
@@ -371,4 +373,3 @@
     display: none;
   }
 }
-

@@ -14,6 +14,7 @@ description: >
 # New Practice Route — QA Playground V2
 
 Reference implementations to read before writing any code:
+
 - `app/practice/alerts-dialogs` — complex interactive UI (dialogs, portals)
 - `app/practice/radio-checkbox-new` — sub-components inside practice-tab
 
@@ -114,7 +115,11 @@ interface PracticePageProps {
   learnContent: ReactNode;
 }
 
-export function PracticePage({ meta, testCases, learnContent }: PracticePageProps) {
+export function PracticePage({
+  meta,
+  testCases,
+  learnContent,
+}: PracticePageProps) {
   return (
     <div
       data-testid={`${meta.element}-page`}
@@ -362,8 +367,12 @@ Every element gets its own CSS module. Never share `practiceLayout`/`practiceSid
 /* e.g. trigger buttons, form controls, overlays, sub-component styles */
 
 @media (max-width: 1024px) {
-  .practiceLayout { grid-template-columns: 1fr; }
-  .practiceSidebar { position: static; }
+  .practiceLayout {
+    grid-template-columns: 1fr;
+  }
+  .practiceSidebar {
+    position: static;
+  }
 }
 
 @media (max-width: 640px) {
@@ -377,13 +386,13 @@ Every element gets its own CSS module. Never share `practiceLayout`/`practiceSid
 
 ### CSS placement guide
 
-| What                                       | Where                             |
-|--------------------------------------------|-----------------------------------|
-| Layout grid, sidebar                       | `[element].module.css` (always)   |
-| Trigger buttons, inputs, overlays          | `[element].module.css`            |
-| Sub-component styles (plan cards, etc.)    | Same `[element].module.css`       |
-| Styles shared across 2+ practice routes   | `components/practice/` shared     |
-| Truly global concerns                      | `globals.css`                     |
+| What                                    | Where                           |
+| --------------------------------------- | ------------------------------- |
+| Layout grid, sidebar                    | `[element].module.css` (always) |
+| Trigger buttons, inputs, overlays       | `[element].module.css`          |
+| Sub-component styles (plan cards, etc.) | Same `[element].module.css`     |
+| Styles shared across 2+ practice routes | `components/practice/` shared   |
+| Truly global concerns                   | `globals.css`                   |
 
 Never use inline styles. Never put element-specific CSS in `globals.css`.
 
@@ -633,6 +642,7 @@ Every interactive element in `practice-tab.tsx`:
 - `aria-label` on controls that intentionally lack `data-testid` (creates a challenge)
 
 Scenario card fields:
+
 - `testId` in `ScenarioMeta` → `data-testid` on the card root
 - `resultId` → `id` on the result `<span>` inside the card
 

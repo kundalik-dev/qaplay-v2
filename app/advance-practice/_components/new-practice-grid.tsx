@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-import type { NewPracticeCard } from "@/data/new-practice/new-practice-cards-data";
+import type { NewPracticeCard } from "@/data/advance-practice/new-practice-cards-data";
 
 import { NewPracticeElementCard } from "./new-practice-card";
 import styles from "./css-modules/new-practice-grid.module.css";

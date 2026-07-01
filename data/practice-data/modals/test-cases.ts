@@ -8,9 +8,9 @@ export const modalsTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Navigate to <code>/practice/modals</code>',
+      "Navigate to <code>/practice/modals</code>",
       'Locate <code>[data-testid="btn-open-simple-modal"]</code> and click',
-      'Assert modal container is visible',
+      "Assert modal container is visible",
     ],
   },
   {
@@ -20,9 +20,9 @@ export const modalsTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Open the simple modal',
+      "Open the simple modal",
       'Locate <code>[data-testid="btn-close-simple-modal"]</code> and click',
-      'Assert modal container is hidden',
+      "Assert modal container is hidden",
       'Assert result text updates to "Closed"',
     ],
   },
@@ -34,8 +34,8 @@ export const modalsTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Filter <code>[data-testid="card-course"]</code> by text',
-      'Click the scoped open button',
-      'Assert the modal header matches the card text',
+      "Click the scoped open button",
+      "Assert the modal header matches the card text",
     ],
   },
   {
@@ -45,9 +45,9 @@ export const modalsTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Open the card modal',
-      'Locate the close button inside the active modal and click',
-      'Assert result text updates',
+      "Open the card modal",
+      "Locate the close button inside the active modal and click",
+      "Assert result text updates",
     ],
   },
   {
@@ -57,9 +57,9 @@ export const modalsTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Click the open button for dynamic modal',
-      'Locate the confirm button using partial attributes (e.g. <code>starts-with</code>)',
-      'Click the button and assert result updates',
+      "Click the open button for dynamic modal",
+      "Locate the confirm button using partial attributes (e.g. <code>starts-with</code>)",
+      "Click the button and assert result updates",
     ],
   },
   {
@@ -69,10 +69,10 @@ export const modalsTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Click the open button for missing locator modal',
-      'Locate the modal using <code>getByRole(\'dialog\')</code>',
+      "Click the open button for missing locator modal",
+      "Locate the modal using <code>getByRole('dialog')</code>",
       'Locate the "Accept" button using ARIA label or sibling text',
-      'Click and assert result updates',
+      "Click and assert result updates",
     ],
   },
   {
@@ -82,9 +82,9 @@ export const modalsTestCases: TestCase[] = [
     type: "edge",
     priority: "low",
     steps: [
-      'Open any modal',
-      'Attempt to click an element outside the modal',
-      'Assert action is intercepted by overlay',
+      "Open any modal",
+      "Attempt to click an element outside the modal",
+      "Assert action is intercepted by overlay",
     ],
   },
   {
@@ -94,9 +94,9 @@ export const modalsTestCases: TestCase[] = [
     type: "edge",
     priority: "medium",
     steps: [
-      'Open any modal',
-      'Click on the modal overlay/backdrop',
-      'Assert the modal is hidden',
+      "Open any modal",
+      "Click on the modal overlay/backdrop",
+      "Assert the modal is hidden",
     ],
   },
 ];

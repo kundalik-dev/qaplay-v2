@@ -291,12 +291,18 @@ export default function BankDemoLayout({
 
         <div className="bank-body">
           {/* Sidebar skeleton */}
-          <aside className="bank-sidebar bank-sidebar--skeleton" aria-hidden="true">
+          <aside
+            className="bank-sidebar bank-sidebar--skeleton"
+            aria-hidden="true"
+          >
             <div className="bank-skel bank-skel--label" />
             {[1, 2, 3, 4, 5].map((i) => (
               <div key={i} className="bank-skel bank-skel--nav-item" />
             ))}
-            <div className="bank-skel bank-skel--label" style={{ marginTop: "1rem" }} />
+            <div
+              className="bank-skel bank-skel--label"
+              style={{ marginTop: "1rem" }}
+            />
             {[1, 2].map((i) => (
               <div key={i} className="bank-skel bank-skel--nav-item" />
             ))}
@@ -347,7 +353,9 @@ export default function BankDemoLayout({
               <span className="bank-loading-dot" />
               <span className="bank-loading-dot" />
               <span className="bank-loading-dot" />
-              <span className="bank-loading-text">Loading secure banking portal…</span>
+              <span className="bank-loading-text">
+                Loading secure banking portal…
+              </span>
             </div>
           </main>
         </div>
@@ -428,7 +436,17 @@ export default function BankDemoLayout({
             <Link
               key={item.label}
               href={item.href}
-              className={["bank-nav-item", pathname === item.href && item.href !== "/demo/bank/dashboard" ? "active" : pathname === "/demo/bank/dashboard" && item.label === "Dashboard" ? "active" : ""].filter(Boolean).join(" ")}
+              className={[
+                "bank-nav-item",
+                pathname === item.href && item.href !== "/demo/bank/dashboard"
+                  ? "active"
+                  : pathname === "/demo/bank/dashboard" &&
+                      item.label === "Dashboard"
+                    ? "active"
+                    : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
               data-testid={item.testid}
               data-nav={item.label.toLowerCase()}
             >

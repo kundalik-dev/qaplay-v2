@@ -1148,7 +1148,8 @@ html.theme-transition-active::view-transition-new(root) {
     border-radius: 8px;
     background: color-mix(in srgb, var(--muted) 45%, transparent);
     color: var(--muted-foreground);
-    font-family: var(--font-jetbrains-mono), var(--font-ibm-plex-mono), monospace;
+    font-family:
+      var(--font-jetbrains-mono), var(--font-ibm-plex-mono), monospace;
     font-size: 0.8rem;
     line-height: 1.5;
     white-space: pre-wrap;

@@ -10,7 +10,6 @@ import {
   FaqSection,
   HomeFeaturePreview,
   HomeHero,
-  InterviewSection,
   PracticeNewSection,
   ReviewSection,
   RoadmapSection,
@@ -33,7 +32,7 @@ export default function Home() {
       <PracticeNewSection />
       <HomeFeaturePreview />
       {/* <JobHuntSection /> */}
-      <InterviewSection />
+      {/* <InterviewSection /> */}
       <RoadmapSection />
       <ReviewSection />
       <CtaSection />

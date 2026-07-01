@@ -1,9 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { ScenarioCard, ProgressWidget, FrameworkMethodsPanel, UpNextCard } from "@/components/practice";
+import {
+  ScenarioCard,
+  ProgressWidget,
+  FrameworkMethodsPanel,
+  UpNextCard,
+} from "@/components/practice";
 import type { ProgressItem } from "@/components/practice";
-import { modalScenarios, frameworkMethods } from "@/data/practice-data/modals/scenarios";
+import {
+  modalScenarios,
+  frameworkMethods,
+} from "@/data/practice-data/modals/scenarios";
 import type { PracticePageMeta } from "@/data/practice-data/types";
 import styles from "./modals.module.css";
 import { X } from "lucide-react";
@@ -46,10 +54,15 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
           <p className="mb-3 text-[10.5px] font-bold tracking-[0.08em] text-muted-foreground uppercase">
             Interactive Scenarios
           </p>
-          <div className="flex flex-col gap-[10px]" data-testid="scenarios-list">
-
+          <div
+            className="flex flex-col gap-[10px]"
+            data-testid="scenarios-list"
+          >
             {/* S01: Simple Modal */}
-            <ScenarioCard {...modalScenarios[0]} onComplete={() => markDone("s01")}>
+            <ScenarioCard
+              {...modalScenarios[0]}
+              onComplete={() => markDone("s01")}
+            >
               {({ setResult, complete }) => (
                 <div className="flex flex-col items-start gap-4">
                   <button
@@ -64,15 +77,20 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                   </button>
 
                   {simpleModalOpen && (
-                    <div className={styles.modalOverlay} onClick={() => setSimpleModalOpen(false)}>
+                    <div
+                      className={styles.modalOverlay}
+                      onClick={() => setSimpleModalOpen(false)}
+                    >
                       <div
                         className={styles.modalContent}
                         role="dialog"
                         data-testid="modal-simple"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <div className="flex justify-between items-center mb-4">
-                          <h3 className="text-lg font-semibold">Simple Modal</h3>
+                        <div className="mb-4 flex items-center justify-between">
+                          <h3 className="text-lg font-semibold">
+                            Simple Modal
+                          </h3>
                           <button
                             data-testid="btn-close-simple-modal"
                             onClick={() => {
@@ -80,14 +98,15 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                               setResult("Closed");
                               complete();
                             }}
-                            className="p-1 rounded hover:bg-gray-100"
+                            className="rounded p-1 hover:bg-gray-100"
                             aria-label="Close modal"
                           >
                             <X size={16} />
                           </button>
                         </div>
-                        <p className="text-sm text-gray-600 mb-6">
-                          This is a beginner-friendly modal with stable locators.
+                        <p className="mb-6 text-sm text-gray-600">
+                          This is a beginner-friendly modal with stable
+                          locators.
                         </p>
                         <div className="flex justify-end">
                           <button
@@ -110,18 +129,33 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* S02: Modal from Repeated Card */}
-            <ScenarioCard {...modalScenarios[1]} onComplete={() => markDone("s02")}>
+            <ScenarioCard
+              {...modalScenarios[1]}
+              onComplete={() => markDone("s02")}
+            >
               {({ setResult, complete }) => (
                 <div className="flex flex-col gap-4">
                   <div className="flex gap-4">
                     <article className={styles.card} data-testid="card-course">
-                      <h4 className="font-semibold text-sm">Playwright Basics</h4>
-                      <p className="text-xs text-gray-500 mb-3">Beginner course</p>
-                      <button className={styles.cardBtn} data-testid="btn-open-course" onClick={() => setResult("Wrong card clicked")}>Details</button>
+                      <h4 className="text-sm font-semibold">
+                        Playwright Basics
+                      </h4>
+                      <p className="mb-3 text-xs text-gray-500">
+                        Beginner course
+                      </p>
+                      <button
+                        className={styles.cardBtn}
+                        data-testid="btn-open-course"
+                        onClick={() => setResult("Wrong card clicked")}
+                      >
+                        Details
+                      </button>
                     </article>
                     <article className={styles.card} data-testid="card-course">
-                      <h4 className="font-semibold text-sm">Advanced Locators</h4>
-                      <p className="text-xs text-gray-500 mb-3">Hard course</p>
+                      <h4 className="text-sm font-semibold">
+                        Advanced Locators
+                      </h4>
+                      <p className="mb-3 text-xs text-gray-500">Hard course</p>
                       <button
                         className={styles.cardBtn}
                         data-testid="btn-open-course"
@@ -136,15 +170,22 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                   </div>
 
                   {cardModalOpen && (
-                    <div className={styles.modalOverlay} onClick={() => setCardModalOpen(false)}>
+                    <div
+                      className={styles.modalOverlay}
+                      onClick={() => setCardModalOpen(false)}
+                    >
                       <div
                         className={styles.modalContent}
                         role="dialog"
                         data-testid="modal-card"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <h3 className="text-lg font-semibold mb-2">Advanced Locators</h3>
-                        <p className="text-sm text-gray-600 mb-6">Course details go here...</p>
+                        <h3 className="mb-2 text-lg font-semibold">
+                          Advanced Locators
+                        </h3>
+                        <p className="mb-6 text-sm text-gray-600">
+                          Course details go here...
+                        </p>
                         <div className="flex justify-end gap-2">
                           <button
                             data-testid="btn-close-course"
@@ -166,7 +207,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* S03: Dynamic ID Modal */}
-            <ScenarioCard {...modalScenarios[2]} onComplete={() => markDone("s03")}>
+            <ScenarioCard
+              {...modalScenarios[2]}
+              onComplete={() => markDone("s03")}
+            >
               {({ setResult, complete }) => (
                 <div className="flex flex-col items-start gap-4">
                   <button
@@ -182,16 +226,22 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                   </button>
 
                   {dynamicModalOpen && (
-                    <div className={styles.modalOverlay} onClick={() => setDynamicModalOpen(false)}>
+                    <div
+                      className={styles.modalOverlay}
+                      onClick={() => setDynamicModalOpen(false)}
+                    >
                       <div
                         className={styles.modalContent}
                         role="dialog"
                         data-testid="modal-dynamic"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <h3 className="text-lg font-semibold mb-4">Confirm Action</h3>
-                        <p className="text-sm text-gray-600 mb-6">
-                          The button below has a dynamic ID. Find it using a partial match!
+                        <h3 className="mb-4 text-lg font-semibold">
+                          Confirm Action
+                        </h3>
+                        <p className="mb-6 text-sm text-gray-600">
+                          The button below has a dynamic ID. Find it using a
+                          partial match!
                         </p>
                         <div className="flex justify-end gap-2">
                           <button
@@ -221,7 +271,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             </ScenarioCard>
 
             {/* S04: Challenge Modal (Missing Locators) */}
-            <ScenarioCard {...modalScenarios[3]} onComplete={() => markDone("s04")}>
+            <ScenarioCard
+              {...modalScenarios[3]}
+              onComplete={() => markDone("s04")}
+            >
               {({ setResult, complete }) => (
                 <div className="flex flex-col items-start gap-4">
                   <button
@@ -236,16 +289,25 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                   </button>
 
                   {challengeModalOpen && (
-                    <div className={styles.modalOverlay} onClick={() => setChallengeModalOpen(false)}>
+                    <div
+                      className={styles.modalOverlay}
+                      onClick={() => setChallengeModalOpen(false)}
+                    >
                       <div
                         className={styles.modalContent}
                         role="dialog"
                         aria-labelledby="challenge-modal-title"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <h3 id="challenge-modal-title" className="text-lg font-semibold mb-4">Terms of Service</h3>
-                        <p className="text-sm text-gray-600 mb-6">
-                          Please accept the terms. The buttons lack test ids! Use ARIA or text content.
+                        <h3
+                          id="challenge-modal-title"
+                          className="mb-4 text-lg font-semibold"
+                        >
+                          Terms of Service
+                        </h3>
+                        <p className="mb-6 text-sm text-gray-600">
+                          Please accept the terms. The buttons lack test ids!
+                          Use ARIA or text content.
                         </p>
                         <div className="flex justify-end gap-2">
                           <button
@@ -273,11 +335,13 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
                 </div>
               )}
             </ScenarioCard>
-
           </div>
         </section>
 
-        <aside className={styles.practiceSidebar} data-testid="practice-sidebar">
+        <aside
+          className={styles.practiceSidebar}
+          data-testid="practice-sidebar"
+        >
           <ProgressWidget items={progressItems} />
           <FrameworkMethodsPanel methods={frameworkMethods} />
           <UpNextCard {...upNext} />

@@ -348,7 +348,11 @@ export const SEED_PAYEES: Payee[] = [
 
 export const SEED_BILLERS: Biller[] = [
   { id: "biller-001", name: "City Electric Co.", referenceNumber: "ACC-0042" },
-  { id: "biller-002", name: "Metro Water Utility", referenceNumber: "ACC-7731" },
+  {
+    id: "biller-002",
+    name: "Metro Water Utility",
+    referenceNumber: "ACC-7731",
+  },
   { id: "biller-003", name: "FastNet Internet", referenceNumber: "ACC-2219" },
 ];
 

@@ -35,8 +35,8 @@ export const elementContent: ElementContent = {
       id: "ELM_001",
       scenario: "Perform the basic positive action",
       expected: "The result element shows the expected text.",
-      type: "positive",  // "positive" | "negative" | "edge"
-      priority: "high",  // "high" | "medium" | "low"
+      type: "positive", // "positive" | "negative" | "edge"
+      priority: "high", // "high" | "medium" | "low"
       steps: [
         "Navigate to <code>/new-practice/element</code>.",
         'Locate <code>[data-testid="action-btn-1"]</code>.',
@@ -62,11 +62,7 @@ export const elementContent: ElementContent = {
       expected: "Expected outcome for the edge case.",
       type: "edge",
       priority: "low",
-      steps: [
-        "Step one.",
-        "Step two.",
-        "Assert the outcome.",
-      ],
+      steps: ["Step one.", "Step two.", "Assert the outcome."],
       note: "Optional note — e.g. browser-specific behaviour or known limitation.",
     },
   ],

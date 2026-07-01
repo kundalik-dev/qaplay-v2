@@ -10,8 +10,10 @@ interface AccountSummaryCardsProps {
 }
 
 const TYPE_STYLES: Record<string, string> = {
-  Checking: "bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300",
-  Savings: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
+  Checking:
+    "bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300",
+  Savings:
+    "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
   Credit: "bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300",
 };
 
@@ -110,7 +112,9 @@ export function AccountSummaryCards({ accounts }: AccountSummaryCardsProps) {
               />
             )}
             <span>
-              {account.type === "Savings" ? "High-yield savings" : `${account.type} account`}
+              {account.type === "Savings"
+                ? "High-yield savings"
+                : `${account.type} account`}
             </span>
           </div>
 
@@ -122,9 +126,7 @@ export function AccountSummaryCards({ accounts }: AccountSummaryCardsProps) {
             className="w-full"
             data-testid="view-transactions-btn"
           >
-            <Link href={`/bank/accounts/${account.id}`}>
-              View Transactions
-            </Link>
+            <Link href={`/bank/accounts/${account.id}`}>View Transactions</Link>
           </Button>
         </article>
       ))}

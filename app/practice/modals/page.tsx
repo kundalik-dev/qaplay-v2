@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { PracticePage }   from "./_components/practice-page";
-import { LearnTab }        from "./_components/learn-tab";
-import { modalsMeta }  from "@/data/practice-data/modals/meta";
+import { PracticePage } from "./_components/practice-page";
+import { LearnTab } from "./_components/learn-tab";
+import { modalsMeta } from "@/data/practice-data/modals/meta";
 import { modalsTestCases } from "@/data/practice-data/modals/test-cases";
 import { modalsLearnCode } from "@/data/practice-data/modals/learn";
 import { highlightLearnSnippet } from "@/lib/highlight";

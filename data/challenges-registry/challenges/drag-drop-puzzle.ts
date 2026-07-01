@@ -5,8 +5,8 @@ export const dragDropPuzzle: ChallengeMeta = {
   id: "drag-drop-puzzle",
   title: "Drag & Drop Puzzle",
   summary: "Simulate mouse pointer events to drag a ticket to 'Done'.",
-  description:
-    "Native drag-and-drop can be tricky to automate. Simulate the full pointer event sequence to drag a ticket from the To Do column into the Done column.",
+  // description:
+  //   "Native drag-and-drop can be tricky to automate. Simulate the full pointer event sequence to drag a ticket from the To Do column into the Done column.",
   difficulty: "Medium",
   xp: 10,
   tags: ["Mouse Events", "Drag & Drop", "Interactions"],

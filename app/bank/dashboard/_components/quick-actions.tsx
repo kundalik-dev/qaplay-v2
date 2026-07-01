@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowLeftRight, Send, Receipt } from "lucide-react";
 
-
 interface QuickActionsProps {
   isFrozen: boolean;
 }
@@ -74,7 +73,10 @@ export function QuickActions({ isFrozen }: QuickActionsProps) {
                 className="flex cursor-not-allowed items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 opacity-50 dark:border-slate-700 dark:bg-slate-800/50"
               >
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-violet-100 dark:bg-violet-900/30">
-                  <Icon className="h-4 w-4 text-violet-600 dark:text-violet-400" aria-hidden="true" />
+                  <Icon
+                    className="h-4 w-4 text-violet-600 dark:text-violet-400"
+                    aria-hidden="true"
+                  />
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
@@ -95,7 +97,10 @@ export function QuickActions({ isFrozen }: QuickActionsProps) {
               data-action={action.label.toLowerCase().replace(/\s+/g, "-")}
             >
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-violet-100 dark:bg-violet-900/30">
-                <Icon className="h-4 w-4 text-violet-600 dark:text-violet-400" aria-hidden="true" />
+                <Icon
+                  className="h-4 w-4 text-violet-600 dark:text-violet-400"
+                  aria-hidden="true"
+                />
               </div>
               <div>
                 <p className="text-sm font-medium text-slate-700 dark:text-slate-300">

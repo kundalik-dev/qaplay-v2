@@ -18,7 +18,8 @@ import { useBankAppStore, useCurrentUser } from "../store/useBankAppStore";
 import { isValidEmail, isValidPhone } from "../lib/utils";
 
 export default function ProfilePage() {
-  const { currentUsername, updateProfile, changePassword, resetUserData } = useBankAppStore();
+  const { currentUsername, updateProfile, changePassword, resetUserData } =
+    useBankAppStore();
   const currentUser = useCurrentUser();
   const profile = currentUser?.profile;
 
@@ -62,9 +63,23 @@ export default function ProfilePage() {
   const handleSaveProfile = (e: React.FormEvent) => {
     e.preventDefault();
     setProfileError(null);
-    if (!email.trim() || !isValidEmail(email)) { setProfileError("Please enter a valid email address."); return; }
-    if (phone && !isValidPhone(phone)) { setProfileError("Phone must be in format (XXX) XXX-XXXX or +1XXXXXXXXXX."); return; }
-    updateProfile(currentUsername!, { firstName, lastName, email, phone, address });
+    if (!email.trim() || !isValidEmail(email)) {
+      setProfileError("Please enter a valid email address.");
+      return;
+    }
+    if (phone && !isValidPhone(phone)) {
+      setProfileError(
+        "Phone must be in format (XXX) XXX-XXXX or +1XXXXXXXXXX.",
+      );
+      return;
+    }
+    updateProfile(currentUsername!, {
+      firstName,
+      lastName,
+      email,
+      phone,
+      address,
+    });
     setIsEditing(false);
     setProfileSuccess(true);
     setTimeout(() => setProfileSuccess(false), 3000);
@@ -75,10 +90,13 @@ export default function ProfilePage() {
     setPwError(null);
     setPwSuccess(false);
     const err = changePassword(currentUsername!, currentPw, newPw, confirmPw);
-    if (err) { setPwError(err); }
-    else {
+    if (err) {
+      setPwError(err);
+    } else {
       setPwSuccess(true);
-      setCurrentPw(""); setNewPw(""); setConfirmPw("");
+      setCurrentPw("");
+      setNewPw("");
+      setConfirmPw("");
       setTimeout(() => setPwSuccess(false), 3000);
     }
   };
@@ -89,8 +107,15 @@ export default function ProfilePage() {
   };
 
   return (
-    <div data-testid="profile-page" data-section="profile" className="max-w-2xl">
-      <h1 className="mb-6 text-2xl font-bold text-slate-900 dark:text-white" data-testid="profile-page-title">
+    <div
+      data-testid="profile-page"
+      data-section="profile"
+      className="max-w-2xl"
+    >
+      <h1
+        className="mb-6 text-2xl font-bold text-slate-900 dark:text-white"
+        data-testid="profile-page-title"
+      >
         Profile & Settings
       </h1>
 
@@ -103,7 +128,9 @@ export default function ProfilePage() {
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <User className="h-4 w-4 text-slate-500" aria-hidden="true" />
-            <h2 className="font-semibold text-slate-900 dark:text-white">Personal Information</h2>
+            <h2 className="font-semibold text-slate-900 dark:text-white">
+              Personal Information
+            </h2>
           </div>
           <Button
             type="button"
@@ -117,12 +144,20 @@ export default function ProfilePage() {
         </div>
 
         {profileSuccess && (
-          <div className="mb-4 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700" role="status" data-testid="profile-save-success">
+          <div
+            className="mb-4 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700"
+            role="status"
+            data-testid="profile-save-success"
+          >
             Profile updated successfully.
           </div>
         )}
         {profileError && (
-          <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700" role="alert" data-testid="profile-error">
+          <div
+            className="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
+            role="alert"
+            data-testid="profile-error"
+          >
             {profileError}
           </div>
         )}
@@ -135,36 +170,98 @@ export default function ProfilePage() {
         {!isEditing ? (
           <div className="space-y-3 text-sm" data-testid="profile-display">
             {[
-              { label: "Username", value: currentUsername, testid: "profile-username" },
-              { label: "First Name", value: profile?.firstName, testid: "profile-first-name" },
-              { label: "Last Name", value: profile?.lastName, testid: "profile-last-name" },
-              { label: "Email", value: profile?.email, testid: "profile-email" },
-              { label: "Phone", value: profile?.phone, testid: "profile-phone" },
-              { label: "Address", value: profile?.address, testid: "profile-address" },
+              {
+                label: "Username",
+                value: currentUsername,
+                testid: "profile-username",
+              },
+              {
+                label: "First Name",
+                value: profile?.firstName,
+                testid: "profile-first-name",
+              },
+              {
+                label: "Last Name",
+                value: profile?.lastName,
+                testid: "profile-last-name",
+              },
+              {
+                label: "Email",
+                value: profile?.email,
+                testid: "profile-email",
+              },
+              {
+                label: "Phone",
+                value: profile?.phone,
+                testid: "profile-phone",
+              },
+              {
+                label: "Address",
+                value: profile?.address,
+                testid: "profile-address",
+              },
             ].map(({ label, value, testid }) => (
               <div key={label} className="flex gap-4">
                 <span className="w-28 shrink-0 text-slate-500">{label}</span>
-                <span className="font-medium text-slate-900 dark:text-white" data-testid={testid}>
+                <span
+                  className="font-medium text-slate-900 dark:text-white"
+                  data-testid={testid}
+                >
                   {value ?? "—"}
                 </span>
               </div>
             ))}
           </div>
         ) : (
-          <form onSubmit={handleSaveProfile} data-testid="profile-edit-form" noValidate>
+          <form
+            onSubmit={handleSaveProfile}
+            data-testid="profile-edit-form"
+            noValidate
+          >
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <Label htmlFor="profile-first-name-input" className="mb-1 block text-xs font-medium text-slate-600">First Name</Label>
-                <Input id="profile-first-name-input" value={firstName} onChange={(e) => setFirstName(e.target.value)} data-testid="profile-first-name-input" />
+                <Label
+                  htmlFor="profile-first-name-input"
+                  className="mb-1 block text-xs font-medium text-slate-600"
+                >
+                  First Name
+                </Label>
+                <Input
+                  id="profile-first-name-input"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  data-testid="profile-first-name-input"
+                />
               </div>
               <div>
-                <Label htmlFor="profile-last-name-input" className="mb-1 block text-xs font-medium text-slate-600">Last Name</Label>
-                <Input id="profile-last-name-input" value={lastName} onChange={(e) => setLastName(e.target.value)} data-testid="profile-last-name-input" />
+                <Label
+                  htmlFor="profile-last-name-input"
+                  className="mb-1 block text-xs font-medium text-slate-600"
+                >
+                  Last Name
+                </Label>
+                <Input
+                  id="profile-last-name-input"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  data-testid="profile-last-name-input"
+                />
               </div>
             </div>
             <div className="mt-3">
-              <Label htmlFor="profile-email-input" className="mb-1 block text-xs font-medium text-slate-600">Email</Label>
-              <Input id="profile-email-input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} data-testid="profile-email-input" />
+              <Label
+                htmlFor="profile-email-input"
+                className="mb-1 block text-xs font-medium text-slate-600"
+              >
+                Email
+              </Label>
+              <Input
+                id="profile-email-input"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                data-testid="profile-email-input"
+              />
             </div>
             {/*
              * Hard locator: phone input — span label, no for/id linkage
@@ -172,19 +269,55 @@ export default function ProfilePage() {
              * CSS: [data-testid="profile-edit-form"] input[name="phone_field"]
              */}
             <div className="mt-3">
-              <span className="mb-1 block text-xs font-medium text-slate-600">Phone</span>
+              <span className="mb-1 block text-xs font-medium text-slate-600">
+                Phone
+              </span>
               <div>
-                <Input name="phone_field" type="tel" placeholder="(415) 555-0101" value={phone} onChange={(e) => setPhone(e.target.value)} data-testid="profile-phone-input" />
+                <Input
+                  name="phone_field"
+                  type="tel"
+                  placeholder="(415) 555-0101"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  data-testid="profile-phone-input"
+                />
               </div>
-              <p className="mt-0.5 text-xs text-slate-400">Format: (XXX) XXX-XXXX or +1XXXXXXXXXX</p>
+              <p className="mt-0.5 text-xs text-slate-400">
+                Format: (XXX) XXX-XXXX or +1XXXXXXXXXX
+              </p>
             </div>
             <div className="mt-3">
-              <Label htmlFor="profile-address-input" className="mb-1 block text-xs font-medium text-slate-600">Address</Label>
-              <Input id="profile-address-input" value={address} onChange={(e) => setAddress(e.target.value)} data-testid="profile-address-input" />
+              <Label
+                htmlFor="profile-address-input"
+                className="mb-1 block text-xs font-medium text-slate-600"
+              >
+                Address
+              </Label>
+              <Input
+                id="profile-address-input"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                data-testid="profile-address-input"
+              />
             </div>
             <div className="mt-4 flex gap-2">
-              <Button type="submit" size="sm" data-testid="save-profile-btn" className="bg-violet-600 hover:bg-violet-700">Save Changes</Button>
-              <Button type="button" variant="outline" size="sm" onClick={handleEditToggle} data-testid="cancel-edit-profile-btn">Cancel</Button>
+              <Button
+                type="submit"
+                size="sm"
+                data-testid="save-profile-btn"
+                className="bg-violet-600 hover:bg-violet-700"
+              >
+                Save Changes
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleEditToggle}
+                data-testid="cancel-edit-profile-btn"
+              >
+                Cancel
+              </Button>
             </div>
           </form>
         )}
@@ -200,34 +333,92 @@ export default function ProfilePage() {
       >
         <div className="mb-4 flex items-center gap-2">
           <Lock className="h-4 w-4 text-slate-500" />
-          <h2 className="font-semibold text-slate-900 dark:text-white">Change Password</h2>
+          <h2 className="font-semibold text-slate-900 dark:text-white">
+            Change Password
+          </h2>
         </div>
 
         {pwSuccess && (
-          <div className="mb-4 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700" role="status" data-testid="password-change-success">
+          <div
+            className="mb-4 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700"
+            role="status"
+            data-testid="password-change-success"
+          >
             Password changed successfully.
           </div>
         )}
         {pwError && (
-          <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700" role="alert" data-testid="password-change-error">
+          <div
+            className="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
+            role="alert"
+            data-testid="password-change-error"
+          >
             {pwError}
           </div>
         )}
 
-        <form onSubmit={handleChangePassword} data-testid="change-password-form" className="space-y-3" noValidate>
+        <form
+          onSubmit={handleChangePassword}
+          data-testid="change-password-form"
+          className="space-y-3"
+          noValidate
+        >
           <div>
-            <Label htmlFor="current-password" className="mb-1 block text-xs font-medium text-slate-600">Current Password</Label>
-            <Input id="current-password" type="password" value={currentPw} onChange={(e) => setCurrentPw(e.target.value)} data-testid="current-password-input" autoComplete="current-password" />
+            <Label
+              htmlFor="current-password"
+              className="mb-1 block text-xs font-medium text-slate-600"
+            >
+              Current Password
+            </Label>
+            <Input
+              id="current-password"
+              type="password"
+              value={currentPw}
+              onChange={(e) => setCurrentPw(e.target.value)}
+              data-testid="current-password-input"
+              autoComplete="current-password"
+            />
           </div>
           <div>
-            <Label htmlFor="new-password" className="mb-1 block text-xs font-medium text-slate-600">New Password</Label>
-            <Input id="new-password" type="password" value={newPw} onChange={(e) => setNewPw(e.target.value)} data-testid="new-password-input" autoComplete="new-password" />
+            <Label
+              htmlFor="new-password"
+              className="mb-1 block text-xs font-medium text-slate-600"
+            >
+              New Password
+            </Label>
+            <Input
+              id="new-password"
+              type="password"
+              value={newPw}
+              onChange={(e) => setNewPw(e.target.value)}
+              data-testid="new-password-input"
+              autoComplete="new-password"
+            />
           </div>
           <div>
-            <Label htmlFor="confirm-new-password" className="mb-1 block text-xs font-medium text-slate-600">Confirm New Password</Label>
-            <Input id="confirm-new-password" type="password" value={confirmPw} onChange={(e) => setConfirmPw(e.target.value)} data-testid="confirm-password-input" autoComplete="new-password" />
+            <Label
+              htmlFor="confirm-new-password"
+              className="mb-1 block text-xs font-medium text-slate-600"
+            >
+              Confirm New Password
+            </Label>
+            <Input
+              id="confirm-new-password"
+              type="password"
+              value={confirmPw}
+              onChange={(e) => setConfirmPw(e.target.value)}
+              data-testid="confirm-password-input"
+              autoComplete="new-password"
+            />
           </div>
-          <Button type="submit" size="sm" data-testid="save-password-btn" className="bg-violet-600 hover:bg-violet-700">Change Password</Button>
+          <Button
+            type="submit"
+            size="sm"
+            data-testid="save-password-btn"
+            className="bg-violet-600 hover:bg-violet-700"
+          >
+            Change Password
+          </Button>
         </form>
       </section>
 
@@ -241,7 +432,9 @@ export default function ProfilePage() {
       >
         <div className="mb-4 flex items-center gap-2">
           <ShieldCheck className="h-4 w-4 text-slate-500" />
-          <h2 className="font-semibold text-slate-900 dark:text-white">Security</h2>
+          <h2 className="font-semibold text-slate-900 dark:text-white">
+            Security
+          </h2>
         </div>
         {/*
          * Challenge locator: 2FA toggle — button with aria-pressed, no data-testid
@@ -253,14 +446,22 @@ export default function ProfilePage() {
           data-testid="two-fa-row"
         >
           <div>
-            <p className="text-sm font-medium text-slate-900 dark:text-white">Two-Factor Authentication</p>
-            <p className="text-xs text-slate-500">UI demonstration only — no real 2FA implemented</p>
+            <p className="text-sm font-medium text-slate-900 dark:text-white">
+              Two-Factor Authentication
+            </p>
+            <p className="text-xs text-slate-500">
+              UI demonstration only — no real 2FA implemented
+            </p>
           </div>
           <button
             type="button"
             role="switch"
             aria-checked={twoFaEnabled}
-            aria-label={twoFaEnabled ? "Disable Two-Factor Authentication" : "Enable Two-Factor Authentication"}
+            aria-label={
+              twoFaEnabled
+                ? "Disable Two-Factor Authentication"
+                : "Enable Two-Factor Authentication"
+            }
             onClick={() => setTwoFaEnabled(!twoFaEnabled)}
             data-testid="two-fa-toggle"
             className={[
@@ -288,10 +489,14 @@ export default function ProfilePage() {
       >
         <div className="mb-3 flex items-center gap-2">
           <Trash2 className="h-4 w-4 text-red-600" />
-          <h2 className="font-semibold text-red-700 dark:text-red-400">Danger Zone</h2>
+          <h2 className="font-semibold text-red-700 dark:text-red-400">
+            Danger Zone
+          </h2>
         </div>
         <p className="mb-4 text-sm text-red-600 dark:text-red-400">
-          Resetting your data will restore all accounts, transactions, payees, billers, and notifications to their default seed values. This cannot be undone.
+          Resetting your data will restore all accounts, transactions, payees,
+          billers, and notifications to their default seed values. This cannot
+          be undone.
         </p>
         <Button
           type="button"
@@ -315,7 +520,9 @@ export default function ProfilePage() {
           <DialogHeader>
             <DialogTitle id="reset-dialog-title">Reset all data?</DialogTitle>
             <DialogDescription>
-              All your accounts, transactions, payees, billers, and notifications will be restored to seed defaults. This action cannot be undone.
+              All your accounts, transactions, payees, billers, and
+              notifications will be restored to seed defaults. This action
+              cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2">

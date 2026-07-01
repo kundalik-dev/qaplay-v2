@@ -38,7 +38,8 @@ import { ELEMENT_CARDS_DATA, CardData } from "../data/element-cards-data";
 
 // ── Shared data lookup ────────────────────────────────────────────────────────
 
-const data = (id: string) => ELEMENT_CARDS_DATA.find((c: CardData) => c.id === id)!;
+const data = (id: string) =>
+  ELEMENT_CARDS_DATA.find((c: CardData) => c.id === id)!;
 
 // ── Shared BaseCard wrapper ───────────────────────────────────────────────────
 
@@ -141,7 +142,7 @@ export function ScenarioThreeCard({ index }: { index: number }) {
 // IMPORTANT: Keep in the SAME ORDER as ELEMENT_CARDS_DATA in cards-data.tsx
 
 export const ELEMENT_CARDS = [
-  ScenarioOneCard,    // index 0 → ELEMENT_CARDS_DATA[0]  (id: "scenario-1")
-  ScenarioTwoCard,    // index 1 → ELEMENT_CARDS_DATA[1]  (id: "scenario-2")
-  ScenarioThreeCard,  // index 2 → ELEMENT_CARDS_DATA[2]  (id: "scenario-3")
+  ScenarioOneCard, // index 0 → ELEMENT_CARDS_DATA[0]  (id: "scenario-1")
+  ScenarioTwoCard, // index 1 → ELEMENT_CARDS_DATA[1]  (id: "scenario-2")
+  ScenarioThreeCard, // index 2 → ELEMENT_CARDS_DATA[2]  (id: "scenario-3")
 ];

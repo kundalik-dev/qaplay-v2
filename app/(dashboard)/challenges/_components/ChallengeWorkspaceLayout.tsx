@@ -37,6 +37,7 @@ export default function ChallengeWorkspaceLayout({
     "instructions" | "hints" | "solution" | null
   >(null);
 
+  const showSubmitButton = false; // TODO: Implement logic to determine if the submit button should be shown
   return (
     <div className={styles.challengePage} data-testid="challenge-workspace">
       {/* ── Challenge Header ── */}
@@ -119,16 +120,18 @@ export default function ChallengeWorkspaceLayout({
               </button>
             )}
 
-            <button
-              type="button"
-              className={`${styles.hintTriggerBtn} ${activeDrawer === "solution" ? styles.hintTriggerBtnOpen : ""}`}
-              onClick={() =>
-                setActiveDrawer((v) => (v === "solution" ? null : "solution"))
-              }
-            >
-              <span aria-hidden="true">🤖</span>
-              Submit Solution
-            </button>
+            {showSubmitButton && (
+              <button
+                type="button"
+                className={`${styles.hintTriggerBtn} ${activeDrawer === "solution" ? styles.hintTriggerBtnOpen : ""}`}
+                onClick={() =>
+                  setActiveDrawer((v) => (v === "solution" ? null : "solution"))
+                }
+              >
+                <span aria-hidden="true">🤖</span>
+                Submit Solution
+              </button>
+            )}
           </div>
 
           {/* Drawer Bodies (Card 2) */}

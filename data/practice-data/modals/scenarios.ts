@@ -1,4 +1,7 @@
-import type { ScenarioMeta, FrameworkMethods } from "@/data/practice-data/types";
+import type {
+  ScenarioMeta,
+  FrameworkMethods,
+} from "@/data/practice-data/types";
 
 export const modalScenarios: ScenarioMeta[] = [
   {
@@ -35,8 +38,29 @@ export const modalScenarios: ScenarioMeta[] = [
   },
 ];
 
-export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", FrameworkMethods> = {
-  selenium:   { label: "Selenium (Java)",   methods: [{ color: "blue", label: "switchTo().activeElement()" }, { color: "purple", label: "click()" }] },
-  playwright: { label: "Playwright JS / PY", methods: [{ color: "blue", label: "getByRole('dialog')" }, { color: "purple", label: "click()" }] },
-  cypress:    { label: "Cypress JS",         methods: [{ color: "blue", label: "cy.get('.modal')" }, { color: "purple", label: ".click()" }] },
+export const frameworkMethods: Record<
+  "selenium" | "playwright" | "cypress",
+  FrameworkMethods
+> = {
+  selenium: {
+    label: "Selenium (Java)",
+    methods: [
+      { color: "blue", label: "switchTo().activeElement()" },
+      { color: "purple", label: "click()" },
+    ],
+  },
+  playwright: {
+    label: "Playwright JS / PY",
+    methods: [
+      { color: "blue", label: "getByRole('dialog')" },
+      { color: "purple", label: "click()" },
+    ],
+  },
+  cypress: {
+    label: "Cypress JS",
+    methods: [
+      { color: "blue", label: "cy.get('.modal')" },
+      { color: "purple", label: ".click()" },
+    ],
+  },
 };

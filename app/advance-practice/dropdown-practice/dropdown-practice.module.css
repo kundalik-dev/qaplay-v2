@@ -1,0 +1,233 @@
+/* =============================================================================
+   DROPDOWN PRACTICE — page-local layout & widget styles
+   -----------------------------------------------------------------------------
+   Shared primitives (.output-box, .btn, .btn-primary, .form-field, .form-label,
+   .form-input) already live in app/globals.css and are used directly in the
+   markup. Only the styling that is unique to this page — page chrome, badges,
+   the custom (non-native) dropdown widget, and the autocomplete widget — lives
+   here. Token-driven so it stays light/dark safe.
+   ========================================================================== */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: clamp(20px, 3vw, 40px) 16px 64px;
+}
+
+.intro {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* ── Section card ─────────────────────────────────────────────────────────── */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(18px, 2.4vw, 26px);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 4px);
+  background: var(--card);
+  box-shadow: var(--shadow-float);
+}
+
+.sectionTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.hint {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.hint code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.85em;
+}
+
+/* ── Badges ──────────────────────────────────────────────────────────────── */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.badgeGreen {
+  background: color-mix(in srgb, var(--success) 14%, transparent);
+  color: var(--success-readable);
+}
+.badgeBlue {
+  background: color-mix(in srgb, var(--info) 16%, transparent);
+  color: var(--info-readable);
+}
+.badgeOrange {
+  background: color-mix(in srgb, var(--warning) 18%, transparent);
+  color: var(--warning-readable);
+}
+.badgeRed {
+  background: color-mix(in srgb, var(--destructive) 14%, transparent);
+  color: var(--destructive-readable);
+}
+
+/* ── Field row / field ───────────────────────────────────────────────────── */
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1 1 240px;
+  max-width: 340px;
+}
+
+.field label {
+  color: var(--foreground);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ── Custom (non-native) dropdown ─────────────────────────────────────────── */
+
+.customSelect {
+  position: relative;
+  max-width: 280px;
+}
+
+.customTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 12px;
+  border: 1px solid var(--input);
+  border-radius: 7px;
+  background: var(--card);
+  color: var(--foreground);
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.customTrigger:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--primary) 50%, transparent);
+  outline-offset: 1px;
+}
+
+.customPanel {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--popover);
+  box-shadow: var(--shadow-float);
+}
+
+.customOption {
+  padding: 9px 12px;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.customOption:hover {
+  background: color-mix(in srgb, var(--muted) 60%, transparent);
+}
+
+.customOptionDisabled {
+  color: var(--muted-foreground);
+  cursor: not-allowed;
+}
+
+.customOptionDisabled:hover {
+  background: none;
+}
+
+/* ── Autocomplete ─────────────────────────────────────────────────────────── */
+
+.autocomplete {
+  position: relative;
+  max-width: 340px;
+}
+
+.suggestions {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.suggestions:not(:empty) {
+  border: 1px solid var(--border);
+  background: var(--popover);
+  box-shadow: var(--shadow-float);
+}
+
+.suggestions li {
+  padding: 9px 12px;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.suggestions li:hover {
+  background: color-mix(in srgb, var(--muted) 60%, transparent);
+}
+
+.noResult {
+  color: var(--muted-foreground);
+  cursor: default;
+}
+
+.noResult:hover {
+  background: none;
+}
+
+@media (max-width: 640px) {
+  .row {
+    flex-direction: column;
+  }
+  .field {
+    max-width: none;
+  }
+}

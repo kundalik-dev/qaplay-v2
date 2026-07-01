@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import type {
   NewPracticeCard,
   NewPracticeLevel,
-} from "@/data/new-practice/new-practice-cards-data";
+} from "@/data/advance-practice/new-practice-cards-data";
 
 import styles from "./css-modules/new-practice-grid.module.css";
 

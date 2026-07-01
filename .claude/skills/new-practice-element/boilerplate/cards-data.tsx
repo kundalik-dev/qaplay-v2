@@ -31,14 +31,20 @@ export const ELEMENT_CARDS_DATA: CardData[] = [
     whatToTest: (
       <>
         Describe what the automation engineer should test. Use{" "}
-        <code>data-testid="action-btn-1"</code> to locate and click the button,
-        then assert the result in <code>#result-1</code>.
+        <code>data-testid=&quot;action-btn-1&quot;</code> to locate and click
+        the button, then assert the result in <code>#result-1</code>.
       </>
     ),
     hint: (
       <p>
-        Playwright: <code>await page.getByTestId(&apos;action-btn-1&apos;).click()</code>.
-        Then assert: <code>await expect(page.getByTestId(&apos;result-1&apos;)).toContainText(&apos;Done&apos;)</code>.
+        Playwright:{" "}
+        <code>await page.getByTestId(&apos;action-btn-1&apos;).click()</code>.
+        Then assert:{" "}
+        <code>
+          await
+          expect(page.getByTestId(&apos;result-1&apos;)).toContainText(&apos;Done&apos;)
+        </code>
+        .
       </p>
     ),
   },
@@ -48,11 +54,7 @@ export const ELEMENT_CARDS_DATA: CardData[] = [
     group: "Basic Scenarios",
     title: "Scenario Two",
     badges: [{ label: "Intermediate", tone: "blue" }],
-    whatToTest: (
-      <>
-        What to test for scenario two.
-      </>
-    ),
+    whatToTest: <>What to test for scenario two.</>,
     hint: <p>Hint for scenario two.</p>,
   },
 

@@ -21,9 +21,7 @@ export default function DashboardPage() {
   const transactions = useUserTransactions(currentUsername);
 
   // slow_user artificial delay
-  const [isVisible, setIsVisible] = useState(
-    !currentUser?.loadDelay,
-  );
+  const [isVisible, setIsVisible] = useState(!currentUser?.loadDelay);
 
   useEffect(() => {
     if (currentUser?.loadDelay) {
@@ -38,7 +36,11 @@ export default function DashboardPage() {
 
   if (!isVisible) {
     return (
-      <div data-testid="dashboard-loading" aria-busy="true" aria-label="Loading dashboard">
+      <div
+        data-testid="dashboard-loading"
+        aria-busy="true"
+        aria-label="Loading dashboard"
+      >
         <Skeleton className="mb-1 h-7 w-48" />
         <Skeleton className="mb-6 h-4 w-64" />
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">

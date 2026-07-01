@@ -15,7 +15,8 @@ export const alertPracticeContent: ElementContent = {
     tags: ["Dialogs", "Browser"],
     upNext: {
       title: "Keyboard Actions",
-      description: "Practice key presses, shortcuts, and modifier combinations across inputs.",
+      description:
+        "Practice key presses, shortcuts, and modifier combinations across inputs.",
       href: "/new-practice/keyboard-actions",
       iconSrc: "/mainicons/buttons-v2.svg",
       iconAlt: "Keyboard Actions icon",

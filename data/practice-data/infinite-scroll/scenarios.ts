@@ -1,4 +1,7 @@
-import type { ScenarioMeta, FrameworkMethods } from "@/data/practice-data/types";
+import type {
+  ScenarioMeta,
+  FrameworkMethods,
+} from "@/data/practice-data/types";
 
 export const infiniteScrollScenarios: ScenarioMeta[] = [
   {
@@ -35,8 +38,20 @@ export const infiniteScrollScenarios: ScenarioMeta[] = [
   },
 ];
 
-export const frameworkMethods: Record<"selenium" | "playwright" | "cypress", FrameworkMethods> = {
-  selenium:   { label: "Selenium (Java)",   methods: [{ color: "blue", label: "executeScript('window.scrollBy()')" }] },
-  playwright: { label: "Playwright JS / PY", methods: [{ color: "purple", label: "locator.scrollIntoViewIfNeeded()" }] },
-  cypress:    { label: "Cypress JS",         methods: [{ color: "blue", label: "cy.scrollTo('bottom')" }] },
+export const frameworkMethods: Record<
+  "selenium" | "playwright" | "cypress",
+  FrameworkMethods
+> = {
+  selenium: {
+    label: "Selenium (Java)",
+    methods: [{ color: "blue", label: "executeScript('window.scrollBy()')" }],
+  },
+  playwright: {
+    label: "Playwright JS / PY",
+    methods: [{ color: "purple", label: "locator.scrollIntoViewIfNeeded()" }],
+  },
+  cypress: {
+    label: "Cypress JS",
+    methods: [{ color: "blue", label: "cy.scrollTo('bottom')" }],
+  },
 };

@@ -51,7 +51,10 @@ const buttonVariants = cva(
 
 import * as React from "react";
 
-interface ButtonProps extends React.ComponentPropsWithoutRef<typeof ButtonPrimitive>, VariantProps<typeof buttonVariants> {
+interface ButtonProps
+  extends
+    React.ComponentPropsWithoutRef<typeof ButtonPrimitive>,
+    VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 

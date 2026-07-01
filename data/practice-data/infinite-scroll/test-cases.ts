@@ -9,8 +9,8 @@ export const infiniteScrollTestCases: TestCase[] = [
     priority: "high",
     steps: [
       'Locate the scroll container <code>[data-testid="scroll-container-simple"]</code>',
-      'Scroll to the bottom of the container',
-      'Assert the DOM list count has increased',
+      "Scroll to the bottom of the container",
+      "Assert the DOM list count has increased",
     ],
   },
   {
@@ -20,7 +20,7 @@ export const infiniteScrollTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Scroll the simple list until no more items load',
+      "Scroll the simple list until no more items load",
       'Assert <code>[data-testid="end-of-list-simple"]</code> is visible',
     ],
   },
@@ -31,9 +31,9 @@ export const infiniteScrollTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Begin a scrolling loop in the dynamic container',
+      "Begin a scrolling loop in the dynamic container",
       'On each scroll, check for <code>[data-invoice-id="INV-042"]</code>',
-      'Once visible, click the item action',
+      "Once visible, click the item action",
     ],
   },
   {
@@ -43,9 +43,9 @@ export const infiniteScrollTestCases: TestCase[] = [
     type: "negative",
     priority: "high",
     steps: [
-      'Verify Item 1 is present initially',
-      'Scroll rapidly to Item 50',
-      'Assert Item 1 does not exist in the DOM',
+      "Verify Item 1 is present initially",
+      "Scroll rapidly to Item 50",
+      "Assert Item 1 does not exist in the DOM",
     ],
   },
   {
@@ -55,7 +55,7 @@ export const infiniteScrollTestCases: TestCase[] = [
     type: "positive",
     priority: "high",
     steps: [
-      'Scroll the challenge container down twice',
+      "Scroll the challenge container down twice",
       'Assert the "Load More" button is visible and clickable',
     ],
   },
@@ -66,9 +66,9 @@ export const infiniteScrollTestCases: TestCase[] = [
     type: "positive",
     priority: "medium",
     steps: [
-      'Trigger the Load More button',
-      'Wait for the loading indicator to disappear',
-      'Locate the final target item and click it',
+      "Trigger the Load More button",
+      "Wait for the loading indicator to disappear",
+      "Locate the final target item and click it",
     ],
   },
   {
@@ -78,9 +78,9 @@ export const infiniteScrollTestCases: TestCase[] = [
     type: "edge",
     priority: "low",
     steps: [
-      'Trigger a scroll to bottom',
-      'Assert loading spinner is visible',
-      'Wait and assert loading spinner is hidden',
+      "Trigger a scroll to bottom",
+      "Assert loading spinner is visible",
+      "Wait and assert loading spinner is hidden",
     ],
   },
   {
@@ -90,9 +90,9 @@ export const infiniteScrollTestCases: TestCase[] = [
     type: "negative",
     priority: "low",
     steps: [
-      'Scroll down to load a batch',
-      'Scroll back to the top of the container',
-      'Assert no new items or loaders are appended to the top',
+      "Scroll down to load a batch",
+      "Scroll back to the top of the container",
+      "Assert no new items or loaders are appended to the top",
     ],
   },
 ];

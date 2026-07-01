@@ -66,7 +66,10 @@ export default function BankLoginPage() {
             <Building2 className="h-7 w-7 text-white" />
           </div>
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-white" data-testid="login-page-title">
+            <h1
+              className="text-2xl font-bold text-white"
+              data-testid="login-page-title"
+            >
               SecureBank
             </h1>
             <p className="mt-0.5 text-sm text-slate-400">
@@ -165,7 +168,7 @@ export default function BankLoginPage() {
                  */}
                 <button
                   type="button"
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
+                  className="absolute top-1/2 right-2.5 -translate-y-1/2 text-slate-400 hover:text-slate-200"
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
                   tabIndex={-1}
@@ -238,8 +241,16 @@ export default function BankLoginPage() {
             {[
               { user: "standard_user", pw: "bank_sauce", note: "Full access" },
               { user: "locked_user", pw: "bank_sauce", note: "Locked account" },
-              { user: "frozen_user", pw: "bank_sauce", note: "Frozen — no transfers" },
-              { user: "overdraft_user", pw: "bank_sauce", note: "Negative balance" },
+              {
+                user: "frozen_user",
+                pw: "bank_sauce",
+                note: "Frozen — no transfers",
+              },
+              {
+                user: "overdraft_user",
+                pw: "bank_sauce",
+                note: "Negative balance",
+              },
               { user: "slow_user", pw: "bank_sauce", note: "Slow loading" },
               { user: "admin_user", pw: "admin_sauce", note: "Admin view" },
             ].map((c) => (

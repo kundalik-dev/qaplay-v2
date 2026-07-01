@@ -32,7 +32,7 @@ export interface NewPracticeCard {
 
 export const newPracticeCards: NewPracticeCard[] = [
   {
-    href: "/new-practice/alert-practice",
+    href: "/advance-practice/alert-practice",
     iconSrc: "/mainicons/alert.svg",
     iconAlt: "Alert Practice icon",
     title: "Alert Practice",
@@ -42,9 +42,20 @@ export const newPracticeCards: NewPracticeCard[] = [
     tag: "BROWSER",
     testId: "alert-practice",
   },
+  {
+    href: "/advance-practice/dropdown-practice",
+    iconSrc: "/mainicons/dropdowns-v2.svg",
+    iconAlt: "Dropdown Practice icon",
+    title: "DropDown Practice",
+    description:
+      "Trigger and handle different types of drowpdowns - single, multiple, hidden, auto-suggest.",
+    level: "Beginner",
+    tag: "BROWSER",
+    testId: "dropdown-practice",
+  },
   // ── Dummy placeholders below — wire up real routes as you build them ──────
   {
-    href: "/new-practice/keyboard-actions",
+    href: "/advance-practice/keyboard-actions",
     iconSrc: "/mainicons/buttons-v2.svg",
     iconAlt: "Keyboard Actions icon",
     title: "Keyboard Actions",
@@ -55,7 +66,7 @@ export const newPracticeCards: NewPracticeCard[] = [
     testId: "keyboard-actions",
   },
   {
-    href: "/new-practice/network-mock",
+    href: "/advance-practice/network-mock",
     iconSrc: "/mainicons/frame.svg",
     iconAlt: "Network Mock icon",
     title: "Network Mocking",
@@ -66,7 +77,7 @@ export const newPracticeCards: NewPracticeCard[] = [
     testId: "network-mock",
   },
   {
-    href: "/new-practice/date-time",
+    href: "/advance-practice/date-time",
     iconSrc: "/mainicons/calendar.svg",
     iconAlt: "Date & Time icon",
     title: "Date & Time",

@@ -44,8 +44,7 @@ const testCases = [
       "Search for a valid user",
       "Locate the biography text by finding the paragraph that is a sibling of the hidden <code>Biography</code> span. Use XPath: <code>//span[text()='Biography']/following-sibling::p</code>",
     ],
-    expected:
-      "The correct bio text is successfully retrieved from the DOM.",
+    expected: "The correct bio text is successfully retrieved from the DOM.",
   },
   {
     id: "GH-004",
@@ -53,7 +52,7 @@ const testCases = [
     type: "challenge" as const,
     steps: [
       "Search for 'kundalik-dev'",
-      "Locate the Location detail text without using a direct test ID. Hint: Use the <code>aria-label=\"Location\"</code> icon and find its sibling <code>span.detail-text</code>",
+      'Locate the Location detail text without using a direct test ID. Hint: Use the <code>aria-label="Location"</code> icon and find its sibling <code>span.detail-text</code>',
     ],
     expected:
       "The correct location text or 'Not specified' is successfully retrieved.",
@@ -66,23 +65,26 @@ const typeBadge: Record<
 > = {
   positive: {
     label: "Positive",
-    className: "bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400 dark:border-emerald-800",
+    className:
+      "bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400 dark:border-emerald-800",
   },
   negative: {
     label: "Negative",
-    className: "bg-red-50 text-red-700 border border-red-200 dark:bg-red-950 dark:text-red-400 dark:border-red-800",
+    className:
+      "bg-red-50 text-red-700 border border-red-200 dark:bg-red-950 dark:text-red-400 dark:border-red-800",
   },
   challenge: {
     label: "Challenge",
-    className: "bg-violet-50 text-violet-700 border border-violet-200 dark:bg-violet-950 dark:text-violet-400 dark:border-violet-800",
+    className:
+      "bg-violet-50 text-violet-700 border border-violet-200 dark:bg-violet-950 dark:text-violet-400 dark:border-violet-800",
   },
 };
 
 export function TestCasesTab() {
   return (
-    <div className="w-full max-w-[1100px] mx-auto px-4 sm:px-7 pb-10">
+    <div className="mx-auto w-full max-w-[1100px] px-4 pb-10 sm:px-7">
       {/* Section header */}
-      <div className="flex items-center gap-3 mb-4 pt-2">
+      <div className="mb-4 flex items-center gap-3 pt-2">
         <h2 className="text-base font-semibold text-foreground">
           Automation Test Cases
         </h2>
@@ -97,43 +99,43 @@ export function TestCasesTab() {
           <Accordion className="divide-y divide-border">
             {testCases.map((tc) => (
               <AccordionItem key={tc.id} value={tc.id} className="border-none">
-                <AccordionTrigger className="px-5 py-4 hover:no-underline hover:bg-muted/40 rounded-none transition-colors">
-                  <div className="flex items-center gap-3 flex-1 min-w-0 pr-3">
+                <AccordionTrigger className="rounded-none px-5 py-4 transition-colors hover:bg-muted/40 hover:no-underline">
+                  <div className="flex min-w-0 flex-1 items-center gap-3 pr-3">
                     {/* ID chip */}
-                    <span className="text-xs font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded shrink-0">
+                    <span className="shrink-0 rounded bg-muted px-2 py-0.5 font-mono text-xs text-muted-foreground">
                       {tc.id}
                     </span>
                     {/* Title */}
-                    <span className="text-sm font-medium text-foreground truncate">
+                    <span className="truncate text-sm font-medium text-foreground">
                       {tc.title}
                     </span>
                     {/* Type badge */}
                     <span
-                      className={`ml-auto text-[10px] font-semibold uppercase px-2 py-0.5 rounded shrink-0 ${typeBadge[tc.type].className}`}
+                      className={`ml-auto shrink-0 rounded px-2 py-0.5 text-[10px] font-semibold uppercase ${typeBadge[tc.type].className}`}
                     >
                       {typeBadge[tc.type].label}
                     </span>
                   </div>
                 </AccordionTrigger>
 
-                <AccordionContent className="px-5 pb-5 pt-1">
+                <AccordionContent className="px-5 pt-1 pb-5">
                   <div className="space-y-4">
                     {/* Steps */}
                     <div>
-                      <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                      <p className="mb-2 text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">
                         Steps
                       </p>
-                      <ol className="space-y-1.5 list-none">
+                      <ol className="list-none space-y-1.5">
                         {tc.steps.map((step, idx) => (
                           <li
                             key={idx}
                             className="flex gap-2.5 text-sm text-muted-foreground"
                           >
-                            <span className="shrink-0 size-5 rounded-full bg-muted flex items-center justify-center text-[11px] font-semibold text-foreground mt-0.5">
+                            <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-muted text-[11px] font-semibold text-foreground">
                               {idx + 1}
                             </span>
                             <span
-                              className="[&_code]:bg-muted [&_code]:text-primary [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[11px] [&_code]:font-mono"
+                              className="[&_code]:rounded [&_code]:bg-muted [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[11px] [&_code]:text-primary"
                               dangerouslySetInnerHTML={{ __html: step }}
                             />
                           </li>
@@ -142,13 +144,15 @@ export function TestCasesTab() {
                     </div>
 
                     {/* Expected result */}
-                    <div className="flex gap-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-lg px-4 py-3">
-                      <CheckCircle2 className="text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5 size-4" />
+                    <div className="flex gap-3 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 dark:border-emerald-800 dark:bg-emerald-950/40">
+                      <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
                       <div>
-                        <p className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mb-1">
+                        <p className="mb-1 text-[11px] font-semibold tracking-wider text-emerald-700 uppercase dark:text-emerald-400">
                           Expected Result
                         </p>
-                        <p className="text-sm text-foreground/80">{tc.expected}</p>
+                        <p className="text-sm text-foreground/80">
+                          {tc.expected}
+                        </p>
                       </div>
                     </div>
                   </div>

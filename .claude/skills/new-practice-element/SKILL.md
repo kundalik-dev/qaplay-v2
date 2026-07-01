@@ -107,6 +107,7 @@ export default async function [Element]Page() {
 ```
 
 **Rules**:
+
 - No `"use client"` — this is an async Server Component.
 - All `await` work (snippet highlighting) happens here; child components stay sync.
 - `testId` on `<PracticeView>` should be `"[element]-practice-view"`.
@@ -200,6 +201,7 @@ export function [Element]Playground() {
 ```
 
 **Key points**:
+
 - Import `playground.module.css` from `../../_components/css-modules/` (shared, do NOT copy it).
 - `data-testid` on the root div: `"[element]-practice-playground"`.
 
@@ -228,7 +230,9 @@ Create for styles unique to this element's cards (modals, hover zones, tables, e
   z-index: 1000;
 }
 
-.modalOverlayOpen { display: flex; }
+.modalOverlayOpen {
+  display: flex;
+}
 
 .modal {
   width: 90%;
@@ -385,11 +389,11 @@ export const [ELEMENT]_CARDS = [
 
 ### PracticeBlock building blocks
 
-| Component | Purpose |
-|-----------|---------|
-| `PracticeBlock` | Scenario container (title, badges, what-to-test, hint toggle) |
-| `PracticeButton` | Themed button; `variant`: `"primary"` \| `"secondary"` \| `"danger"` |
-| `OutputBox` | DOM-visible result area; `tone`: `"default"` \| `"success"` \| `"danger"` |
+| Component        | Purpose                                                                   |
+| ---------------- | ------------------------------------------------------------------------- |
+| `PracticeBlock`  | Scenario container (title, badges, what-to-test, hint toggle)             |
+| `PracticeButton` | Themed button; `variant`: `"primary"` \| `"secondary"` \| `"danger"`      |
+| `OutputBox`      | DOM-visible result area; `tone`: `"default"` \| `"success"` \| `"danger"` |
 
 All imported from `"../../../_components/practice-block"`.
 
@@ -402,15 +406,15 @@ All imported from `"../../../_components/practice-block"`.
 
 ### Global CSS helpers (no import needed — from globals.css)
 
-| Class | Purpose |
-|-------|---------|
-| `.btn-row` | Flex row for button groups |
-| `.form-field` | Stacked label + input |
-| `.form-label` | Styled label |
-| `.form-input` | Styled input |
-| `.table-wrap` / `.table` | Scrollable table |
-| `.toast` / `.toast-success` / `.toast-error` | Toast notification |
-| `.toast-stack` | Toast container |
+| Class                                        | Purpose                    |
+| -------------------------------------------- | -------------------------- |
+| `.btn-row`                                   | Flex row for button groups |
+| `.form-field`                                | Stacked label + input      |
+| `.form-label`                                | Styled label               |
+| `.form-input`                                | Styled input               |
+| `.table-wrap` / `.table`                     | Scrollable table           |
+| `.toast` / `.toast-success` / `.toast-error` | Toast notification         |
+| `.toast-stack`                               | Toast container            |
 
 ---
 
@@ -492,6 +496,7 @@ export const [element]Content: ElementContent = {
 ```
 
 **Learn section fields**:
+
 - `desc` — plain text shown under heading
 - `body` — extra HTML paragraph (use sparingly)
 - `bullets` — `string[]`, each item can contain HTML
@@ -521,18 +526,21 @@ Add to `data/new-practice/new-practice-cards-data.ts` inside `newPracticeCards`:
 ## 9. Architecture Rules
 
 ### Server / Client boundary
+
 - `page.tsx` — async Server Component; all `await` work here; passes pre-computed data as props.
 - `[element]-playground.tsx` — `'use client'`; never import into another server component.
 - `[element]-cards.tsx` — `'use client'` (uses `useState`).
 - `data/new-practice/elements/[element].ts` — pure data; no `'use client'`.
 
 ### Shared vs. route-local
+
 - `playground.module.css` in `app/new-practice/_components/css-modules/` — **shared, never copy, import via `../../_components/css-modules/playground.module.css`**.
 - `[element]-playground.module.css` — **route-local, always create**, even if initially empty.
 - `PracticeBlock`, `PracticeButton`, `OutputBox` from `app/new-practice/_components/practice-block/` — shared.
 - `ElementWorkspace`, `LearnView`, `PracticeView`, `TestCasesView` from `app/new-practice/_components/` — shared.
 
 ### CARDS array sync rule
+
 `[ELEMENT]_CARDS[i]` renders with metadata from `[ELEMENT]_CARDS_DATA[i]`. They **must** stay the same length and in the same order.
 
 ---

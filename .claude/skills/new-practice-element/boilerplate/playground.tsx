@@ -19,8 +19,10 @@ export function ElementPlayground() {
   const ActiveCard = ELEMENT_CARDS[currentCard];
 
   return (
-    <div className={styles.playground} data-testid="element-practice-playground">
-
+    <div
+      className={styles.playground}
+      data-testid="element-practice-playground"
+    >
       {/* ── Active card ──────────────────────────────────────────────────── */}
       <div data-testid={`practice-card-${currentCard + 1}`}>
         <ActiveCard index={currentCard + 1} />
@@ -30,7 +32,9 @@ export function ElementPlayground() {
       <div className={styles.paginationHeader}>
         <div className={styles.paginationMeta}>
           <span className={styles.groupLabel}>{meta.group}</span>
-          <span className={styles.cardCounter}>{currentCard + 1} / {total}</span>
+          <span className={styles.cardCounter}>
+            {currentCard + 1} / {total}
+          </span>
         </div>
 
         <div className={styles.paginationControls}>

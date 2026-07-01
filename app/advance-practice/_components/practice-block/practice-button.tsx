@@ -10,8 +10,7 @@ const variantClass: Record<PracticeButtonVariant, string> = {
   danger: "btn-danger",
 };
 
-interface PracticeButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface PracticeButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: PracticeButtonVariant;
 }
 

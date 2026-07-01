@@ -6,9 +6,16 @@ import { useParams } from "next/navigation";
 import { ArrowLeft, Download, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useBankAppStore, useUserAccounts, useUserTransactions } from "../../store/useBankAppStore";
+import {
+  useBankAppStore,
+  useUserAccounts,
+  useUserTransactions,
+} from "../../store/useBankAppStore";
 import { formatCurrency, computeRunningBalances } from "../../lib/utils";
-import { TransactionFilterBar, type FilterType } from "./_components/transaction-filter-bar";
+import {
+  TransactionFilterBar,
+  type FilterType,
+} from "./_components/transaction-filter-bar";
 import { TransactionsTable } from "./_components/transactions-table";
 import type { Transaction } from "../../lib/types";
 
@@ -31,7 +38,9 @@ export default function AccountDetailPage() {
   const allTransactions = useUserTransactions(currentUsername);
 
   const account = accounts.find((a) => a.id === accountId);
-  const accountTransactions = allTransactions.filter((t) => t.accountId === accountId);
+  const accountTransactions = allTransactions.filter(
+    (t) => t.accountId === accountId,
+  );
 
   // ── Filter state ──────────────────────────────────────────────────────────
   const [search, setSearch] = useState("");
@@ -42,7 +51,12 @@ export default function AccountDetailPage() {
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const hasActiveFilters = !!(search || filterType !== "all" || dateFrom || dateTo);
+  const hasActiveFilters = !!(
+    search ||
+    filterType !== "all" ||
+    dateFrom ||
+    dateTo
+  );
 
   const handleClearFilters = () => {
     setSearch("");
@@ -87,7 +101,15 @@ export default function AccountDetailPage() {
     }
 
     return result;
-  }, [accountTransactions, search, filterType, dateFrom, dateTo, sortField, sortOrder]);
+  }, [
+    accountTransactions,
+    search,
+    filterType,
+    dateFrom,
+    dateTo,
+    sortField,
+    sortOrder,
+  ]);
 
   // Add running balances
   const withRunning = useMemo(
@@ -97,13 +119,18 @@ export default function AccountDetailPage() {
 
   // ── Pagination ─────────────────────────────────────────────────────────────
   const totalPages = Math.max(1, Math.ceil(withRunning.length / PAGE_SIZE));
-  const paginated = withRunning.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+  const paginated = withRunning.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE,
+  );
 
   // ── CSV download ───────────────────────────────────────────────────────────
   const handleDownload = () => {
     const header = "ID,Date,Description,Category,Amount\n";
     const rows = filteredAndSorted
-      .map((t) => `${t.id},${t.date},"${t.description}",${t.category},${t.amount}`)
+      .map(
+        (t) => `${t.id},${t.date},"${t.description}",${t.category},${t.amount}`,
+      )
       .join("\n");
     const blob = new Blob([header + rows], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
@@ -126,9 +153,19 @@ export default function AccountDetailPage() {
           Account not found
         </h1>
         <p className="mt-1 text-sm text-slate-500">
-          The account <code className="rounded bg-slate-100 px-1 py-0.5 text-xs">{accountId}</code> doesn&apos;t exist.
+          The account{" "}
+          <code className="rounded bg-slate-100 px-1 py-0.5 text-xs">
+            {accountId}
+          </code>{" "}
+          doesn&apos;t exist.
         </p>
-        <Button asChild variant="outline" size="sm" className="mt-4" data-testid="back-to-accounts-btn">
+        <Button
+          asChild
+          variant="outline"
+          size="sm"
+          className="mt-4"
+          data-testid="back-to-accounts-btn"
+        >
           <Link href="/bank/accounts">Back to Accounts</Link>
         </Button>
       </div>
@@ -136,7 +173,11 @@ export default function AccountDetailPage() {
   }
 
   return (
-    <div data-testid="account-detail-page" data-section="account-detail" data-account-id={accountId}>
+    <div
+      data-testid="account-detail-page"
+      data-section="account-detail"
+      data-account-id={accountId}
+    >
       {/* Back nav */}
       <Link
         href="/bank/accounts"
@@ -157,7 +198,10 @@ export default function AccountDetailPage() {
             >
               {account.name}
             </h1>
-            <Badge className={TYPE_STYLES[account.type] ?? ""} data-testid="account-detail-type-badge">
+            <Badge
+              className={TYPE_STYLES[account.type] ?? ""}
+              data-testid="account-detail-type-badge"
+            >
               {account.type}
             </Badge>
           </div>
@@ -175,7 +219,9 @@ export default function AccountDetailPage() {
           <p
             className={[
               "text-2xl font-bold tabular-nums",
-              account.isOverdrawn ? "text-red-600" : "text-slate-900 dark:text-white",
+              account.isOverdrawn
+                ? "text-red-600"
+                : "text-slate-900 dark:text-white",
             ].join(" ")}
             data-testid="account-detail-balance"
           >
@@ -196,13 +242,25 @@ export default function AccountDetailPage() {
       {/* Filter bar */}
       <TransactionFilterBar
         search={search}
-        onSearchChange={(v) => { setSearch(v); setCurrentPage(1); }}
+        onSearchChange={(v) => {
+          setSearch(v);
+          setCurrentPage(1);
+        }}
         filterType={filterType}
-        onFilterTypeChange={(v) => { setFilterType(v); setCurrentPage(1); }}
+        onFilterTypeChange={(v) => {
+          setFilterType(v);
+          setCurrentPage(1);
+        }}
         dateFrom={dateFrom}
-        onDateFromChange={(v) => { setDateFrom(v); setCurrentPage(1); }}
+        onDateFromChange={(v) => {
+          setDateFrom(v);
+          setCurrentPage(1);
+        }}
         dateTo={dateTo}
-        onDateToChange={(v) => { setDateTo(v); setCurrentPage(1); }}
+        onDateToChange={(v) => {
+          setDateTo(v);
+          setCurrentPage(1);
+        }}
         onClearFilters={handleClearFilters}
         hasActiveFilters={hasActiveFilters}
       />
@@ -221,10 +279,7 @@ export default function AccountDetailPage() {
         data-testid="pagination-controls"
         aria-label="Transaction pagination"
       >
-        <p
-          className="text-xs text-slate-500"
-          data-testid="pagination-info"
-        >
+        <p className="text-xs text-slate-500" data-testid="pagination-info">
           {filteredAndSorted.length === 0
             ? "No transactions"
             : `Showing ${(currentPage - 1) * PAGE_SIZE + 1}–${Math.min(currentPage * PAGE_SIZE, filteredAndSorted.length)} of ${filteredAndSorted.length}`}
@@ -273,7 +328,9 @@ export default function AccountDetailPage() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+            onClick={() =>
+              setCurrentPage(Math.min(totalPages, currentPage + 1))
+            }
             disabled={currentPage === totalPages}
             aria-label="Next page"
             data-testid="pagination-next"

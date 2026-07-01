@@ -139,7 +139,8 @@ export const useBankAppStore = create<BankStore>()(
           }
           transactions[username] = userTxns;
 
-          payees[username] = username === "standard_user" ? [...SEED_PAYEES] : [];
+          payees[username] =
+            username === "standard_user" ? [...SEED_PAYEES] : [];
           billers[username] = [...SEED_BILLERS];
           notifications[username] = createSeedNotifications(username);
         }
@@ -229,8 +230,7 @@ export const useBankAppStore = create<BankStore>()(
           return "Current password is incorrect.";
         if (newPw.length < 8)
           return "New password must be at least 8 characters.";
-        if (newPw !== confirmPw)
-          return "New passwords do not match.";
+        if (newPw !== confirmPw) return "New passwords do not match.";
 
         set((s) => ({
           users: {
@@ -278,7 +278,11 @@ export const useBankAppStore = create<BankStore>()(
 
         const updatedAccounts = userAccounts.map((a) => {
           if (a.id === fromAccountId)
-            return { ...a, balance: a.balance - amount, isOverdrawn: a.balance - amount < 0 };
+            return {
+              ...a,
+              balance: a.balance - amount,
+              isOverdrawn: a.balance - amount < 0,
+            };
           if (a.id === toAccountId)
             return { ...a, balance: a.balance + amount };
           return a;
@@ -305,7 +309,14 @@ export const useBankAppStore = create<BankStore>()(
       },
 
       // ── sendMoney ─────────────────────────────────────────────────────
-      sendMoney: (username, fromAccountId, payee, amount, note, savePayeeFlag) => {
+      sendMoney: (
+        username,
+        fromAccountId,
+        payee,
+        amount,
+        note,
+        savePayeeFlag,
+      ) => {
         const state = get();
         const userAccounts = state.accounts[username] ?? [];
         const fromAcc = userAccounts.find((a) => a.id === fromAccountId);
@@ -329,7 +340,11 @@ export const useBankAppStore = create<BankStore>()(
 
         const updatedAccounts = userAccounts.map((a) =>
           a.id === fromAccountId
-            ? { ...a, balance: a.balance - amount, isOverdrawn: a.balance - amount < 0 }
+            ? {
+                ...a,
+                balance: a.balance - amount,
+                isOverdrawn: a.balance - amount < 0,
+              }
             : a,
         );
 
@@ -361,7 +376,15 @@ export const useBankAppStore = create<BankStore>()(
       },
 
       // ── payBill ───────────────────────────────────────────────────────
-      payBill: (username, fromAccountId, biller, amount, paymentDate, memo, saveBillerFlag) => {
+      payBill: (
+        username,
+        fromAccountId,
+        biller,
+        amount,
+        paymentDate,
+        memo,
+        saveBillerFlag,
+      ) => {
         const state = get();
         const userAccounts = state.accounts[username] ?? [];
         const fromAcc = userAccounts.find((a) => a.id === fromAccountId);
@@ -389,7 +412,11 @@ export const useBankAppStore = create<BankStore>()(
         const updatedAccounts = isToday
           ? userAccounts.map((a) =>
               a.id === fromAccountId
-                ? { ...a, balance: a.balance - amount, isOverdrawn: a.balance - amount < 0 }
+                ? {
+                    ...a,
+                    balance: a.balance - amount,
+                    isOverdrawn: a.balance - amount < 0,
+                  }
                 : a,
             )
           : userAccounts;
@@ -493,9 +520,7 @@ export function useCurrentUser() {
 }
 
 export function useUserAccounts(username: string | null) {
-  return useBankAppStore((s) =>
-    username ? (s.accounts[username] ?? []) : [],
-  );
+  return useBankAppStore((s) => (username ? (s.accounts[username] ?? []) : []));
 }
 
 export function useUserTransactions(username: string | null) {
