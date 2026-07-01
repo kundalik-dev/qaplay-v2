@@ -113,14 +113,20 @@ const DropDownPractice = () => {
     if (!select) return;
     const chosen = Array.from(select.selectedOptions).map((o) => o.text);
     setMultiOutput(
-      chosen.length ? `Selected (${chosen.length}): ${chosen.join(", ")}` : "Nothing selected",
+      chosen.length
+        ? `Selected (${chosen.length}): ${chosen.join(", ")}`
+        : "Nothing selected",
     );
   }
 
   /* ── 3. Optgroup / grouped select ─────────────────────────────────────── */
   const [car, setCar] = useState("");
-  const carGroup = CAR_GROUPS.find((g) => g.options.some((o) => o.value === car))?.label;
-  const optgroupOutput = car ? `Model: ${car} (Group: ${carGroup ?? "None"})` : "No car selected";
+  const carGroup = CAR_GROUPS.find((g) =>
+    g.options.some((o) => o.value === car),
+  )?.label;
+  const optgroupOutput = car
+    ? `Model: ${car} (Group: ${carGroup ?? "None"})`
+    : "No car selected";
 
   /* ── 4. Custom / hidden non-native dropdown ───────────────────────────── */
   const [statusOpen, setStatusOpen] = useState(false);
@@ -160,14 +166,16 @@ const DropDownPractice = () => {
 
   useEffect(() => {
     const query = cityQuery.trim();
-    if (!query) {
-      setCitySuggestions([]);
-      setShowNoResult(false);
-      return;
-    }
     // simulate async render latency so learners practice auto-waiting
     const timer = setTimeout(() => {
-      const matches = CITIES.filter((c) => c.toLowerCase().includes(query.toLowerCase()));
+      if (!query) {
+        setCitySuggestions([]);
+        setShowNoResult(false);
+        return;
+      }
+      const matches = CITIES.filter((c) =>
+        c.toLowerCase().includes(query.toLowerCase()),
+      );
       setCitySuggestions(matches);
       setShowNoResult(matches.length === 0);
     }, 250);
@@ -176,7 +184,10 @@ const DropDownPractice = () => {
 
   useEffect(() => {
     function handleOutsideClick(e: MouseEvent) {
-      if (autocompleteRef.current && !autocompleteRef.current.contains(e.target as Node)) {
+      if (
+        autocompleteRef.current &&
+        !autocompleteRef.current.contains(e.target as Node)
+      ) {
         setCitySuggestions([]);
         setShowNoResult(false);
       }
@@ -206,20 +217,25 @@ const DropDownPractice = () => {
     <div className={styles.container} data-testid="dropdown-practice-page">
       <h1 className={styles.sectionTitle}>Dropdowns Practice</h1>
       <p className={styles.intro}>
-        Native and non-native dropdowns for practicing Playwright locators &amp; interactions.
-        Each section notes the locator strategy to try. Selections are echoed into an output box
-        for assertions.
+        Native and non-native dropdowns for practicing Playwright locators &amp;
+        interactions. Each section notes the locator strategy to try. Selections
+        are echoed into an output box for assertions.
       </p>
 
       {/* 1. NATIVE SINGLE SELECT */}
-      <section className={styles.section} id="sec-native-single" data-testid="sec-native-single">
+      <section
+        className={styles.section}
+        id="sec-native-single"
+        data-testid="sec-native-single"
+      >
         <h2 className={styles.sectionTitle}>
           1. Native single-select{" "}
           <span className={cn(styles.badge, styles.badgeGreen)}>Beginner</span>
         </h2>
         <p className={styles.hint}>
-          Standard &lt;select&gt;. Use <code>selectOption()</code> by value / label / index.
-          Locate by id, name, label, or role &quot;combobox&quot;.
+          Standard &lt;select&gt;. Use <code>selectOption()</code> by value /
+          label / index. Locate by id, name, label, or role
+          &quot;combobox&quot;.
         </p>
         <div className={styles.row}>
           <div className={styles.field}>
@@ -242,7 +258,9 @@ const DropDownPractice = () => {
             </select>
           </div>
           <div className={styles.field}>
-            <label htmlFor="currency">Currency (has preselected + disabled)</label>
+            <label htmlFor="currency">
+              Currency (has preselected + disabled)
+            </label>
             <select
               id="currency"
               name="currency"
@@ -259,20 +277,31 @@ const DropDownPractice = () => {
             </select>
           </div>
         </div>
-        <div className="output-box" data-testid="native-single-output" id="native-single-output">
+        <div
+          className="output-box"
+          data-testid="native-single-output"
+          id="native-single-output"
+        >
           {nativeSingleOutput}
         </div>
       </section>
 
       {/* 2. NATIVE MULTI SELECT */}
-      <section className={styles.section} id="sec-native-multi" data-testid="sec-native-multi">
+      <section
+        className={styles.section}
+        id="sec-native-multi"
+        data-testid="sec-native-multi"
+      >
         <h2 className={styles.sectionTitle}>
           2. Native multi-select{" "}
-          <span className={cn(styles.badge, styles.badgeBlue)}>Intermediate</span>
+          <span className={cn(styles.badge, styles.badgeBlue)}>
+            Intermediate
+          </span>
         </h2>
         <p className={styles.hint}>
-          &lt;select multiple&gt;. Pass an array to <code>selectOption([...])</code>. Practice
-          selecting/clearing many, reading all selected options.
+          &lt;select multiple&gt;. Pass an array to{" "}
+          <code>selectOption([...])</code>. Practice selecting/clearing many,
+          reading all selected options.
         </p>
         <div className={styles.field} style={{ maxWidth: 340 }}>
           <label htmlFor="skills">Skills (Ctrl/Cmd + click for many)</label>
@@ -300,21 +329,34 @@ const DropDownPractice = () => {
         >
           Show selected skills
         </button>
-        <div className="output-box" data-testid="native-multi-output" id="native-multi-output">
+        <div
+          className="output-box"
+          data-testid="native-multi-output"
+          id="native-multi-output"
+        >
           {multiOutput}
         </div>
       </section>
 
       {/* 3. OPTGROUP / GROUPED SELECT */}
-      <section className={styles.section} id="sec-optgroup" data-testid="sec-optgroup">
+      <section
+        className={styles.section}
+        id="sec-optgroup"
+        data-testid="sec-optgroup"
+      >
         <h2 className={styles.sectionTitle}>
           3. Grouped select (optgroup){" "}
-          <span className={cn(styles.badge, styles.badgeBlue)}>Intermediate</span>
+          <span className={cn(styles.badge, styles.badgeBlue)}>
+            Intermediate
+          </span>
         </h2>
         <p className={styles.hint}>
-          Options nested inside &lt;optgroup&gt;. Practice locating an option under a specific
-          group label, and scoping with{" "}
-          <code>locator(&apos;optgroup[label=&quot;...&quot;] &gt; option&apos;)</code>.
+          Options nested inside &lt;optgroup&gt;. Practice locating an option
+          under a specific group label, and scoping with{" "}
+          <code>
+            locator(&apos;optgroup[label=&quot;...&quot;] &gt; option&apos;)
+          </code>
+          .
         </p>
         <div className={styles.field}>
           <label htmlFor="car">Car model</label>
@@ -329,7 +371,11 @@ const DropDownPractice = () => {
           >
             <option value="">-- Choose a model --</option>
             {CAR_GROUPS.map((group) => (
-              <optgroup label={group.label} key={group.label} disabled={group.disabled}>
+              <optgroup
+                label={group.label}
+                key={group.label}
+                disabled={group.disabled}
+              >
                 {group.options.map((o) => (
                   <option key={o.value} value={o.value}>
                     {o.label}
@@ -339,21 +385,30 @@ const DropDownPractice = () => {
             ))}
           </select>
         </div>
-        <div className="output-box" data-testid="optgroup-output" id="optgroup-output">
+        <div
+          className="output-box"
+          data-testid="optgroup-output"
+          id="optgroup-output"
+        >
           {optgroupOutput}
         </div>
       </section>
 
       {/* 4. CUSTOM / HIDDEN NON-NATIVE DROPDOWN */}
-      <section className={styles.section} id="sec-custom" data-testid="sec-custom">
+      <section
+        className={styles.section}
+        id="sec-custom"
+        data-testid="sec-custom"
+      >
         <h2 className={styles.sectionTitle}>
           4. Custom dropdown (non-native / hidden){" "}
           <span className={cn(styles.badge, styles.badgeOrange)}>Advanced</span>
         </h2>
         <p className={styles.hint}>
-          No &lt;select&gt;. A div-based widget (like OrangeHRM / React-Select). Options are
-          hidden in the DOM until you click the trigger. <code>selectOption()</code> will NOT
-          work — click trigger, then click the option. Practice waiting for the panel to appear.
+          No &lt;select&gt;. A div-based widget (like OrangeHRM / React-Select).
+          Options are hidden in the DOM until you click the trigger.{" "}
+          <code>selectOption()</code> will NOT work — click trigger, then click
+          the option. Practice waiting for the panel to appear.
         </p>
         <div
           className={styles.customSelect}
@@ -377,7 +432,9 @@ const DropDownPractice = () => {
               }
             }}
           >
-            <span id="status-value">{selectedStatus?.label ?? "Select status"}</span>
+            <span id="status-value">
+              {selectedStatus?.label ?? "Select status"}
+            </span>
           </div>
           <div
             className={styles.customPanel}
@@ -389,7 +446,10 @@ const DropDownPractice = () => {
             {STATUS_OPTIONS.map((opt) => (
               <div
                 key={opt.value}
-                className={cn(styles.customOption, opt.disabled && styles.customOptionDisabled)}
+                className={cn(
+                  styles.customOption,
+                  opt.disabled && styles.customOptionDisabled,
+                )}
                 role="option"
                 aria-selected={opt.value === statusValue}
                 aria-disabled={opt.disabled}
@@ -401,21 +461,30 @@ const DropDownPractice = () => {
             ))}
           </div>
         </div>
-        <div className="output-box" data-testid="custom-output" id="custom-output">
+        <div
+          className="output-box"
+          data-testid="custom-output"
+          id="custom-output"
+        >
           {customOutput}
         </div>
       </section>
 
       {/* 5. AUTOCOMPLETE / AUTO-SUGGEST */}
-      <section className={styles.section} id="sec-autocomplete" data-testid="sec-autocomplete">
+      <section
+        className={styles.section}
+        id="sec-autocomplete"
+        data-testid="sec-autocomplete"
+      >
         <h2 className={styles.sectionTitle}>
           5. Autocomplete / auto-suggest{" "}
           <span className={cn(styles.badge, styles.badgeOrange)}>Advanced</span>
         </h2>
         <p className={styles.hint}>
-          Type to filter a dynamically-rendered suggestion list. Suggestions appear only after
-          typing. Practice: type → wait for list → click matching option. Handle &quot;no
-          results&quot; and keyboard navigation.
+          Type to filter a dynamically-rendered suggestion list. Suggestions
+          appear only after typing. Practice: type → wait for list → click
+          matching option. Handle &quot;no results&quot; and keyboard
+          navigation.
         </p>
         <div
           className={styles.autocomplete}
@@ -439,7 +508,9 @@ const DropDownPractice = () => {
             role="listbox"
             data-testid="city-suggestions"
           >
-            {showNoResult && <li className={styles.noResult}>No cities found</li>}
+            {showNoResult && (
+              <li className={styles.noResult}>No cities found</li>
+            )}
             {citySuggestions.map((city) => (
               <li key={city} role="option" onClick={() => chooseCity(city)}>
                 {city}
@@ -447,21 +518,29 @@ const DropDownPractice = () => {
             ))}
           </ul>
         </div>
-        <div className="output-box" data-testid="autocomplete-output" id="autocomplete-output">
+        <div
+          className="output-box"
+          data-testid="autocomplete-output"
+          id="autocomplete-output"
+        >
           {chosenCity ? `City: ${chosenCity}` : "No city chosen"}
         </div>
       </section>
 
       {/* 6. DEPENDENT / CASCADING DROPDOWNS */}
-      <section className={styles.section} id="sec-dependent" data-testid="sec-dependent">
+      <section
+        className={styles.section}
+        id="sec-dependent"
+        data-testid="sec-dependent"
+      >
         <h2 className={styles.sectionTitle}>
           6. Dependent / cascading dropdowns{" "}
           <span className={cn(styles.badge, styles.badgeRed)}>Advanced</span>
         </h2>
         <p className={styles.hint}>
-          Second dropdown&apos;s options are generated dynamically from the first (and disabled
-          until the first is chosen). Practice: assert options change, assert disabled state,
-          chained selection.
+          Second dropdown&apos;s options are generated dynamically from the
+          first (and disabled until the first is chosen). Practice: assert
+          options change, assert disabled state, chained selection.
         </p>
         <div className={styles.row}>
           <div className={styles.field}>
@@ -508,7 +587,11 @@ const DropDownPractice = () => {
             </select>
           </div>
         </div>
-        <div className="output-box" data-testid="dependent-output" id="dependent-output">
+        <div
+          className="output-box"
+          data-testid="dependent-output"
+          id="dependent-output"
+        >
           {dependentOutput}
         </div>
       </section>

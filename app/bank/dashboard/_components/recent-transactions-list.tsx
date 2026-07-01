@@ -21,11 +21,16 @@ const CATEGORY_COLORS: Record<string, string> = {
   Transfer: "bg-slate-100 text-slate-700",
 };
 
-export function RecentTransactionsList({ transactions }: RecentTransactionsListProps) {
+export function RecentTransactionsList({
+  transactions,
+}: RecentTransactionsListProps) {
   const recent = transactions.slice(0, 5);
 
   return (
-    <section data-testid="recent-transactions-section" aria-label="Recent transactions">
+    <section
+      data-testid="recent-transactions-section"
+      aria-label="Recent transactions"
+    >
       <div className="mb-3 flex items-center justify-between">
         <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300">
           Recent Transactions
@@ -76,12 +81,20 @@ export function RecentTransactionsList({ transactions }: RecentTransactionsListP
                     ? "bg-emerald-100 dark:bg-emerald-900/30"
                     : "bg-red-100 dark:bg-red-900/30",
                 ].join(" ")}
-                aria-label={txn.amount > 0 ? "Credit transaction" : "Debit transaction"}
+                aria-label={
+                  txn.amount > 0 ? "Credit transaction" : "Debit transaction"
+                }
               >
                 {txn.amount > 0 ? (
-                  <ArrowDownLeft className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />
+                  <ArrowDownLeft
+                    className="h-3.5 w-3.5 text-emerald-600"
+                    aria-hidden="true"
+                  />
                 ) : (
-                  <ArrowUpRight className="h-3.5 w-3.5 text-red-600" aria-hidden="true" />
+                  <ArrowUpRight
+                    className="h-3.5 w-3.5 text-red-600"
+                    aria-hidden="true"
+                  />
                 )}
               </div>
 
@@ -96,10 +109,7 @@ export function RecentTransactionsList({ transactions }: RecentTransactionsListP
                  * Hard locator: date — no data-testid, must scope using parent row
                  * XPath: //div[@data-transaction-id="txn-acc-checking-1-001"]//time
                  */}
-                <time
-                  dateTime={txn.date}
-                  className="text-xs text-slate-500"
-                >
+                <time dateTime={txn.date} className="text-xs text-slate-500">
                   {formatDate(txn.date)}
                 </time>
               </div>

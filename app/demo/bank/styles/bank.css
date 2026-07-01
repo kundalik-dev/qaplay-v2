@@ -471,7 +471,9 @@
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -479,7 +481,9 @@
 }
 
 .bank-stat-card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07), 0 8px 20px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.07),
+    0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
 /* ─── Stat card top row (label + icon) ───────────────────────── */
@@ -500,10 +504,22 @@
   flex-shrink: 0;
 }
 
-.bank-stat-icon--balance { background: #ede9fe; color: #7c3aed; }
-.bank-stat-icon--income  { background: #d1fae5; color: #059669; }
-.bank-stat-icon--expense { background: #fee2e2; color: #dc2626; }
-.bank-stat-icon--count   { background: #dbeafe; color: #2563eb; }
+.bank-stat-icon--balance {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+.bank-stat-icon--income {
+  background: #d1fae5;
+  color: #059669;
+}
+.bank-stat-icon--expense {
+  background: #fee2e2;
+  color: #dc2626;
+}
+.bank-stat-icon--count {
+  background: #dbeafe;
+  color: #2563eb;
+}
 
 .bank-stat-label {
   font-size: 0.8125rem;
@@ -544,24 +560,31 @@
 
 /* ─── Skeleton shimmer keyframe ───────────────────────────────── */
 @keyframes bank-shimmer {
-  0%   { background-position: -600px 0; }
-  100% { background-position: 600px 0; }
+  0% {
+    background-position: -600px 0;
+  }
+  100% {
+    background-position: 600px 0;
+  }
 }
 
 @keyframes bank-dot-bounce {
-  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
-  40%            { transform: translateY(-6px); opacity: 1; }
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  40% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
 }
 
 /* ─── Base skeleton block ─────────────────────────────────────── */
 .bank-skel {
   border-radius: 6px;
-  background: linear-gradient(
-    90deg,
-    #f3f4f6 0%,
-    #ffffff 40%,
-    #f3f4f6 80%
-  );
+  background: linear-gradient(90deg, #f3f4f6 0%, #ffffff 40%, #f3f4f6 80%);
   background-size: 600px 100%;
   animation: bank-shimmer 1.4s ease-in-out infinite;
 }
@@ -653,12 +676,7 @@
 /* Table skeleton */
 .bank-skel-table-head {
   height: 44px;
-  background: linear-gradient(
-    90deg,
-    #ffffff 0%,
-    #f9fafb 40%,
-    #ffffff 80%
-  );
+  background: linear-gradient(90deg, #ffffff 0%, #f9fafb 40%, #ffffff 80%);
   background-size: 600px 100%;
   animation: bank-shimmer 1.4s ease-in-out infinite;
   border-bottom: 1px solid #e5e7eb;
@@ -678,9 +696,15 @@
   flex-shrink: 0;
 }
 
-.bank-skel--cell-xs  { width: 60px; }
-.bank-skel--cell-sm  { width: 90px; }
-.bank-skel--cell-lg  { width: 180px; }
+.bank-skel--cell-xs {
+  width: 60px;
+}
+.bank-skel--cell-sm {
+  width: 90px;
+}
+.bank-skel--cell-lg {
+  width: 180px;
+}
 
 /* Loading dots */
 .bank-loading-indicator {
@@ -699,8 +723,12 @@
   animation: bank-dot-bounce 1.2s ease-in-out infinite;
 }
 
-.bank-loading-dot:nth-child(2) { animation-delay: 0.15s; }
-.bank-loading-dot:nth-child(3) { animation-delay: 0.3s; }
+.bank-loading-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.bank-loading-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
 
 .bank-loading-text {
   font-size: 0.8125rem;
@@ -1089,7 +1117,9 @@
   color: #7c3aed;
   opacity: 0;
   transform: scale(0.85);
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
 }
 
 .bank-cred-badge-btn:hover .bank-cred-copy-icon,

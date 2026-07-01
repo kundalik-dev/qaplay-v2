@@ -268,7 +268,8 @@ export const annotationsFaq: FaqItem[] = [
     testId: "faq-test-slow",
   },
   {
-    question: "What does test.fail() do — isn't that the same as a failing test?",
+    question:
+      "What does test.fail() do — isn't that the same as a failing test?",
     answer:
       "test.fail() inverts the result. The test 'passes' only if the assertion inside fails. Use it to confirm a known bug still exists. If someone fixes the bug and the assertion starts passing, test.fail() will make the whole test fail — signalling you to remove the annotation.",
     testId: "faq-test-fail",
@@ -280,7 +281,8 @@ export const annotationsFaq: FaqItem[] = [
     testId: "faq-test-step",
   },
   {
-    question: "What is @DataProvider in TestNG and what is the equivalent in Playwright?",
+    question:
+      "What is @DataProvider in TestNG and what is the equivalent in Playwright?",
     answer:
       "@DataProvider returns a 2D Object[][] array; @Test(dataProvider='name') runs once per row. In Playwright the idiomatic equivalent is a for-of loop: for (const user of users) { test(user.role, async ({ page }) => { … }) }. You can also use test.describe.parallel() with an array to run them concurrently.",
     testId: "faq-data-provider",

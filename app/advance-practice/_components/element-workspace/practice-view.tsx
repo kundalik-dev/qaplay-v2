@@ -30,7 +30,10 @@ export function PracticeView({
       data-section="practice-view"
     >
       {children ?? (
-        <div className={styles.placeholder} data-testid={`${testId}-placeholder`}>
+        <div
+          className={styles.placeholder}
+          data-testid={`${testId}-placeholder`}
+        >
           <p className={styles.placeholderTitle}>Practice UI goes here</p>
           <p className={styles.placeholderBody}>
             Add your custom HTML/CSS practice element as children of{" "}

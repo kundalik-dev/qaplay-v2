@@ -4,8 +4,6 @@
    Themed with design tokens; behaviour/locators preserved from source.
    ========================================================================== */
 
-
-
 /* ── Native HTML <dialog> ────────────────────────────────────────────────── */
 
 .htmlDialog {
@@ -94,8 +92,6 @@
   margin-top: 18px;
 }
 
-
-
 /* ── Non-click triggers ──────────────────────────────────────────────────── */
 
 .hoverZone {
@@ -126,5 +122,3 @@
   background: var(--muted);
   font-size: 0.78em;
 }
-
-

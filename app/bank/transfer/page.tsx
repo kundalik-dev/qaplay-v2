@@ -52,13 +52,31 @@ export default function TransferPage() {
     e.preventDefault();
     setError(null);
 
-    if (!fromId) { setError("Please select a From account."); return; }
-    if (!toId) { setError("Please select a To account."); return; }
-    if (fromId === toId) { setError("From and To accounts must be different."); return; }
+    if (!fromId) {
+      setError("Please select a From account.");
+      return;
+    }
+    if (!toId) {
+      setError("Please select a To account.");
+      return;
+    }
+    if (fromId === toId) {
+      setError("From and To accounts must be different.");
+      return;
+    }
     const amt = parseFloat(amount);
-    if (!amount || isNaN(amt) || amt <= 0) { setError("Please enter a valid amount."); return; }
-    if (dateType === "scheduled" && !scheduledDate) { setError("Please select a transfer date."); return; }
-    if (dateType === "scheduled" && scheduledDate < todayISO()) { setError("Transfer date cannot be in the past."); return; }
+    if (!amount || isNaN(amt) || amt <= 0) {
+      setError("Please enter a valid amount.");
+      return;
+    }
+    if (dateType === "scheduled" && !scheduledDate) {
+      setError("Please select a transfer date.");
+      return;
+    }
+    if (dateType === "scheduled" && scheduledDate < todayISO()) {
+      setError("Transfer date cannot be in the past.");
+      return;
+    }
 
     setShowConfirm(true);
   };
@@ -98,13 +116,21 @@ export default function TransferPage() {
 
       <div className="mb-6 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-100 dark:bg-violet-900/30">
-          <ArrowLeftRight className="h-5 w-5 text-violet-600" aria-hidden="true" />
+          <ArrowLeftRight
+            className="h-5 w-5 text-violet-600"
+            aria-hidden="true"
+          />
         </div>
         <div>
-          <h1 className="text-xl font-bold text-slate-900 dark:text-white" data-testid="transfer-page-title">
+          <h1
+            className="text-xl font-bold text-slate-900 dark:text-white"
+            data-testid="transfer-page-title"
+          >
             Transfer Money
           </h1>
-          <p className="text-sm text-slate-500">Move funds between your accounts</p>
+          <p className="text-sm text-slate-500">
+            Move funds between your accounts
+          </p>
         </div>
       </div>
 
@@ -138,10 +164,20 @@ export default function TransferPage() {
           >
             {/* From Account — Beginner: getByLabel + getByTestId */}
             <div className="mb-4">
-              <Label htmlFor="transfer-from-trigger" className="mb-1.5 block text-sm font-medium text-slate-700">
+              <Label
+                htmlFor="transfer-from-trigger"
+                className="mb-1.5 block text-sm font-medium text-slate-700"
+              >
                 From Account
               </Label>
-              <Select value={fromId} onValueChange={(v) => { setFromId(v); setToId(""); }} disabled={isFrozen}>
+              <Select
+                value={fromId}
+                onValueChange={(v) => {
+                  setFromId(v);
+                  setToId("");
+                }}
+                disabled={isFrozen}
+              >
                 <SelectTrigger
                   id="transfer-from-trigger"
                   data-testid="transfer-from-select"
@@ -166,10 +202,17 @@ export default function TransferPage() {
 
             {/* To Account */}
             <div className="mb-4">
-              <Label htmlFor="transfer-to-trigger" className="mb-1.5 block text-sm font-medium text-slate-700">
+              <Label
+                htmlFor="transfer-to-trigger"
+                className="mb-1.5 block text-sm font-medium text-slate-700"
+              >
                 To Account
               </Label>
-              <Select value={toId} onValueChange={setToId} disabled={isFrozen || !fromId}>
+              <Select
+                value={toId}
+                onValueChange={setToId}
+                disabled={isFrozen || !fromId}
+              >
                 <SelectTrigger
                   id="transfer-to-trigger"
                   data-testid="transfer-to-select"
@@ -194,11 +237,16 @@ export default function TransferPage() {
 
             {/* Amount — Beginner: getByLabel + getByTestId */}
             <div className="mb-4">
-              <Label htmlFor="transfer-amount" className="mb-1.5 block text-sm font-medium text-slate-700">
+              <Label
+                htmlFor="transfer-amount"
+                className="mb-1.5 block text-sm font-medium text-slate-700"
+              >
                 Amount
               </Label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-slate-400">$</span>
+                <span className="absolute top-1/2 left-3 -translate-y-1/2 text-sm text-slate-400">
+                  $
+                </span>
                 <Input
                   id="transfer-amount"
                   name="amount"
@@ -215,7 +263,10 @@ export default function TransferPage() {
               </div>
               {fromAccount && (
                 <p className="mt-1 text-xs text-slate-500">
-                  Available: <span data-testid="transfer-available-balance">{formatCurrency(fromAccount.balance)}</span>
+                  Available:{" "}
+                  <span data-testid="transfer-available-balance">
+                    {formatCurrency(fromAccount.balance)}
+                  </span>
                 </p>
               )}
             </div>
@@ -247,7 +298,9 @@ export default function TransferPage() {
 
             {/* Transfer date — Medium: radio group + conditional date picker */}
             <div className="mb-5">
-              <p className="mb-2 text-sm font-medium text-slate-700">Transfer Date</p>
+              <p className="mb-2 text-sm font-medium text-slate-700">
+                Transfer Date
+              </p>
               <div
                 className="flex gap-4"
                 role="radiogroup"
@@ -280,7 +333,10 @@ export default function TransferPage() {
                  * Practice: await page.locator('[data-testid="transfer-scheduled-date-input"]').waitFor()
                  */
                 <div className="mt-3">
-                  <Label htmlFor="transfer-scheduled-date" className="mb-1.5 block text-xs text-slate-600">
+                  <Label
+                    htmlFor="transfer-scheduled-date"
+                    className="mb-1.5 block text-xs text-slate-600"
+                  >
                     Select date
                   </Label>
                   <Input
@@ -325,7 +381,9 @@ export default function TransferPage() {
           aria-label="Confirm transfer"
         >
           <DialogHeader>
-            <DialogTitle data-testid="transfer-confirm-title">Confirm Transfer</DialogTitle>
+            <DialogTitle data-testid="transfer-confirm-title">
+              Confirm Transfer
+            </DialogTitle>
           </DialogHeader>
 
           <div
@@ -335,7 +393,10 @@ export default function TransferPage() {
             {[
               { label: "From", value: fromAccount?.name },
               { label: "To", value: toAccount?.name },
-              { label: "Amount", value: amount ? formatCurrency(parseFloat(amount)) : "" },
+              {
+                label: "Amount",
+                value: amount ? formatCurrency(parseFloat(amount)) : "",
+              },
               { label: "Date", value: transferDate },
               ...(memo ? [{ label: "Memo", value: memo }] : []),
             ].map(({ label, value }) => (
@@ -347,7 +408,9 @@ export default function TransferPage() {
                */
               <div key={label} className="flex justify-between">
                 <span className="text-slate-500">{label}</span>
-                <span className="font-medium text-slate-900 dark:text-white">{value}</span>
+                <span className="font-medium text-slate-900 dark:text-white">
+                  {value}
+                </span>
               </div>
             ))}
           </div>

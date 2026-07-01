@@ -17,7 +17,8 @@ export const annotationsMeta: PracticePageMeta = {
   upNext: {
     icon: "🖱️",
     title: "Drag & Drop",
-    description: "Practice drag-and-drop interactions, sortable lists, and reordering elements",
+    description:
+      "Practice drag-and-drop interactions, sortable lists, and reordering elements",
     href: "/practice/drag-drop",
   },
 };

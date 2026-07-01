@@ -25,7 +25,15 @@ const CATEGORY_COLORS: Record<string, string> = {
   Transfer: "bg-slate-100 text-slate-700",
 };
 
-function SortIcon({ field, sortField, sortOrder }: { field: SortField; sortField: SortField | null; sortOrder: SortOrder }) {
+function SortIcon({
+  field,
+  sortField,
+  sortOrder,
+}: {
+  field: SortField;
+  sortField: SortField | null;
+  sortOrder: SortOrder;
+}) {
   if (sortField !== field)
     return <span className="ml-1 text-slate-300">↕</span>;
   return sortOrder === "asc" ? (
@@ -41,7 +49,6 @@ export function TransactionsTable({
   sortOrder,
   onSort,
 }: TransactionsTableProps) {
-
   return (
     <div
       className="overflow-x-auto rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800"
@@ -55,7 +62,7 @@ export function TransactionsTable({
         <thead>
           <tr className="border-b border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-900/50">
             <th
-              className="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-400"
+              className="cursor-pointer px-4 py-3 text-left text-xs font-semibold text-slate-600 select-none hover:text-slate-900 dark:text-slate-400"
               onClick={() => onSort("date")}
               data-testid="sort-date-header"
               aria-sort={
@@ -66,7 +73,12 @@ export function TransactionsTable({
                   : "none"
               }
             >
-              Date <SortIcon field="date" sortField={sortField} sortOrder={sortOrder} />
+              Date{" "}
+              <SortIcon
+                field="date"
+                sortField={sortField}
+                sortOrder={sortOrder}
+              />
             </th>
             <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400">
               Description
@@ -75,7 +87,7 @@ export function TransactionsTable({
               Category
             </th>
             <th
-              className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-400"
+              className="cursor-pointer px-4 py-3 text-right text-xs font-semibold text-slate-600 select-none hover:text-slate-900 dark:text-slate-400"
               onClick={() => onSort("amount")}
               data-testid="sort-amount-header"
               aria-sort={
@@ -86,7 +98,12 @@ export function TransactionsTable({
                   : "none"
               }
             >
-              Amount <SortIcon field="amount" sortField={sortField} sortOrder={sortOrder} />
+              Amount{" "}
+              <SortIcon
+                field="amount"
+                sortField={sortField}
+                sortOrder={sortOrder}
+              />
             </th>
             {/* Hard locator: Running Balance header — no data-testid */}
             <th className="px-4 py-3 text-right text-xs font-semibold text-slate-600 dark:text-slate-400">
@@ -114,7 +131,7 @@ export function TransactionsTable({
             >
               {/* Beginner: getByTestId inside row */}
               <td
-                className="whitespace-nowrap px-4 py-3 text-xs text-slate-600 dark:text-slate-400"
+                className="px-4 py-3 text-xs whitespace-nowrap text-slate-600 dark:text-slate-400"
                 data-testid="txn-date"
               >
                 <time dateTime={txn.date}>{formatDate(txn.date)}</time>
@@ -158,7 +175,7 @@ export function TransactionsTable({
                *   //tr[@data-transaction-id="txn-acc-checking-1-001"]/td[5]
                *   //tr[@data-transaction-id="txn-acc-checking-1-001"]//td[last()]
                */}
-              <td className="px-4 py-3 text-right text-sm tabular-nums text-slate-600 dark:text-slate-400">
+              <td className="px-4 py-3 text-right text-sm text-slate-600 tabular-nums dark:text-slate-400">
                 {txn.runningBalance !== undefined
                   ? formatCurrency(txn.runningBalance)
                   : "—"}

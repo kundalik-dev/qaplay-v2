@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { PracticePage }   from "./_components/practice-page";
-import { LearnTab }        from "./_components/learn-tab";
-import { infiniteScrollMeta }  from "@/data/practice-data/infinite-scroll/meta";
+import { PracticePage } from "./_components/practice-page";
+import { LearnTab } from "./_components/learn-tab";
+import { infiniteScrollMeta } from "@/data/practice-data/infinite-scroll/meta";
 import { infiniteScrollTestCases } from "@/data/practice-data/infinite-scroll/test-cases";
 import { infiniteScrollLearnCode } from "@/data/practice-data/infinite-scroll/learn";
 import { highlightLearnSnippet } from "@/lib/highlight";

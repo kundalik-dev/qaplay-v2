@@ -20,7 +20,6 @@ export function AlertPracticePlayground() {
 
   return (
     <div className={styles.playground} data-testid="alert-practice-playground">
-
       {/* ── Active card ────────────────────────────────────────────────────── */}
       <div data-testid={`practice-card-${currentCard + 1}`}>
         <ActiveCard index={currentCard + 1} />
@@ -30,7 +29,9 @@ export function AlertPracticePlayground() {
       <div className={styles.paginationHeader}>
         <div className={styles.paginationMeta}>
           <span className={styles.groupLabel}>{meta.group}</span>
-          <span className={styles.cardCounter}>{currentCard + 1} / {total}</span>
+          <span className={styles.cardCounter}>
+            {currentCard + 1} / {total}
+          </span>
         </div>
 
         {/* Prev / Next */}

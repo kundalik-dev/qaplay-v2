@@ -49,7 +49,7 @@ export function TransactionFilterBar({
           </Label>
           <div className="relative">
             <Search
-              className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400"
+              className="absolute top-1/2 left-2.5 h-3.5 w-3.5 -translate-y-1/2 text-slate-400"
               aria-hidden="true"
             />
             <Input
@@ -130,7 +130,11 @@ export function TransactionFilterBar({
                     : "text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-700",
                 ].join(" ")}
               >
-                {type === "all" ? "All" : type === "credit" ? "Credits" : "Debits"}
+                {type === "all"
+                  ? "All"
+                  : type === "credit"
+                    ? "Credits"
+                    : "Debits"}
               </button>
             ))}
           </div>

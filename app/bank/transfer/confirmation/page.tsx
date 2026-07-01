@@ -21,7 +21,8 @@ export default function TransferConfirmationPage() {
 
   if (!lastTransferResult) return null;
 
-  const { refId, fromAccount, toAccount, amount, memo, date } = lastTransferResult;
+  const { refId, fromAccount, toAccount, amount, memo, date } =
+    lastTransferResult;
 
   return (
     <div
@@ -61,18 +62,37 @@ export default function TransferConfirmationPage() {
         className="mb-6 w-full rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-800"
         data-testid="transfer-confirmation-summary"
       >
-        <h2 className="mb-3 text-sm font-semibold text-slate-700">Transfer Details</h2>
+        <h2 className="mb-3 text-sm font-semibold text-slate-700">
+          Transfer Details
+        </h2>
         <div className="space-y-2 text-sm">
           {[
-            { label: "From", value: fromAccount.name, testid: "confirm-from-account" },
-            { label: "To", value: toAccount.name, testid: "confirm-to-account" },
-            { label: "Amount", value: formatCurrency(amount), testid: "confirm-amount" },
+            {
+              label: "From",
+              value: fromAccount.name,
+              testid: "confirm-from-account",
+            },
+            {
+              label: "To",
+              value: toAccount.name,
+              testid: "confirm-to-account",
+            },
+            {
+              label: "Amount",
+              value: formatCurrency(amount),
+              testid: "confirm-amount",
+            },
             { label: "Date", value: formatDate(date), testid: "confirm-date" },
-            ...(memo ? [{ label: "Memo", value: memo, testid: "confirm-memo" }] : []),
+            ...(memo
+              ? [{ label: "Memo", value: memo, testid: "confirm-memo" }]
+              : []),
           ].map(({ label, value, testid }) => (
             <div key={label} className="flex justify-between">
               <span className="text-slate-500">{label}</span>
-              <span className="font-medium text-slate-900 dark:text-white" data-testid={testid}>
+              <span
+                className="font-medium text-slate-900 dark:text-white"
+                data-testid={testid}
+              >
                 {value}
               </span>
             </div>

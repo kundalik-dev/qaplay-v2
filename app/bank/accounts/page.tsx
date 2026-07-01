@@ -20,7 +20,10 @@ export default function AccountsPage() {
   return (
     <div data-testid="accounts-page" data-section="accounts">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-white" data-testid="accounts-page-title">
+        <h1
+          className="text-2xl font-bold text-slate-900 dark:text-white"
+          data-testid="accounts-page-title"
+        >
           My Accounts
         </h1>
         <p className="mt-0.5 text-sm text-slate-500">
@@ -45,7 +48,10 @@ export default function AccountsPage() {
          *   page.locator('[data-testid="account-card"][data-account-type="savings"]')
          *   XPath: //article[@data-account-type="checking"]//p[contains(@class,"text-2xl")]
          */
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" data-testid="accounts-grid">
+        <div
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          data-testid="accounts-grid"
+        >
           {accounts.map((account) => (
             <article
               key={account.id}
@@ -58,7 +64,10 @@ export default function AccountsPage() {
               <div className="mb-4 flex items-start justify-between">
                 <div className="flex items-center gap-2">
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-100 dark:bg-violet-900/30">
-                    <CreditCard className="h-4 w-4 text-violet-600" aria-hidden="true" />
+                    <CreditCard
+                      className="h-4 w-4 text-violet-600"
+                      aria-hidden="true"
+                    />
                   </div>
                   <div>
                     <h2
@@ -115,12 +124,15 @@ export default function AccountsPage() {
                 <Button
                   asChild
                   variant="outline"
-                  className="group/btn relative w-full overflow-hidden flex items-center justify-center gap-2 border-slate-200 bg-slate-50/50 text-slate-700 transition-all hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700 hover:shadow-sm dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300 dark:hover:border-violet-700 dark:hover:bg-violet-900/30 dark:hover:text-violet-300"
+                  className="group/btn relative flex w-full items-center justify-center gap-2 overflow-hidden border-slate-200 bg-slate-50/50 text-slate-700 transition-all hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700 hover:shadow-sm dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300 dark:hover:border-violet-700 dark:hover:bg-violet-900/30 dark:hover:text-violet-300"
                   data-testid="view-account-transactions-btn"
                 >
                   <Link href={`/bank/accounts/${account.id}`}>
                     <span className="font-medium">View Transactions</span>
-                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1" aria-hidden="true" />
+                    <ArrowRight
+                      className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1"
+                      aria-hidden="true"
+                    />
                   </Link>
                 </Button>
               </div>

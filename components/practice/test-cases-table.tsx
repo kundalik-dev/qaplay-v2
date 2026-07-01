@@ -270,7 +270,9 @@ export function TestCasesTable({ testCases }: TestCasesTableProps) {
                               <span className="mt-[1px] flex h-[18px] w-[18px] flex-shrink-0 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--primary)_12%,transparent)] text-[9px] font-bold text-primary">
                                 {idx + 1}
                               </span>
-                              <span dangerouslySetInnerHTML={{ __html: step }} />
+                              <span
+                                dangerouslySetInnerHTML={{ __html: step }}
+                              />
                             </li>
                           ))}
                         </ol>

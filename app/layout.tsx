@@ -88,7 +88,10 @@ export default function RootLayout({
     >
       <head>
         {/* Theme init must run before first paint to avoid flash. */}
-        <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
         <JsonLd data={siteOrganizationJsonLd} />
         <JsonLd data={siteWebSiteJsonLd} />
       </head>

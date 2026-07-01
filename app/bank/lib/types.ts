@@ -79,7 +79,14 @@ export interface TransferResult {
 export interface SendResult {
   refId: string;
   fromAccount: Account;
-  payee: Payee | { name: string; accountNumber: string; routingNumber: string; bankName: string };
+  payee:
+    | Payee
+    | {
+        name: string;
+        accountNumber: string;
+        routingNumber: string;
+        bankName: string;
+      };
   amount: number;
   note: string;
   date: string;

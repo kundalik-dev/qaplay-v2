@@ -303,15 +303,27 @@ export function TelegramBotPanel({
           </div>
 
           {/* Footer — three action buttons */}
-          <div className={[styles.dialogFooter, panelStyles.telegramFooter].join(" ")}>
+          <div
+            className={[styles.dialogFooter, panelStyles.telegramFooter].join(
+              " ",
+            )}
+          >
             {!status?.linked && (
               <>
                 <button
                   className={panelStyles.btnBlue}
                   onClick={() => void generateToken()}
                   disabled={generating}
-                  id={status?.token ? "refresh-telegram-token-btn" : "generate-telegram-token-btn"}
-                  data-testid={status?.token ? "refresh-telegram-token-btn" : "generate-telegram-token-btn"}
+                  id={
+                    status?.token
+                      ? "refresh-telegram-token-btn"
+                      : "generate-telegram-token-btn"
+                  }
+                  data-testid={
+                    status?.token
+                      ? "refresh-telegram-token-btn"
+                      : "generate-telegram-token-btn"
+                  }
                 >
                   {generating ? (
                     <Loader2 size={13} className={panelStyles.spin} />

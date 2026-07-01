@@ -162,10 +162,7 @@ export default function LoginPage() {
       data-section="bank-login"
     >
       <Toaster position="top-center" />
-      <div
-        className="bank-login-container"
-        data-testid="bank-login-container"
-      >
+      <div className="bank-login-container" data-testid="bank-login-container">
         {/* Left branding panel */}
         <div className="bank-login-left" data-testid="bank-login-branding">
           <div className="bank-login-left-inner">
@@ -178,9 +175,8 @@ export default function LoginPage() {
               <span>SecureBank</span>
             </p>
             <p className="bank-login-tagline">
-              Your premier automation testing practice ground. Master complex
-              UI interactions, state management, and end-to-end testing
-              scenarios.
+              Your premier automation testing practice ground. Master complex UI
+              interactions, state management, and end-to-end testing scenarios.
             </p>
 
             {/* Demo credentials — shown under branding */}
@@ -215,7 +211,10 @@ export default function LoginPage() {
                         >
                           {cred.username}
                         </span>
-                        <Copy className="bank-cred-copy-icon" aria-hidden="true" />
+                        <Copy
+                          className="bank-cred-copy-icon"
+                          aria-hidden="true"
+                        />
                       </button>
                     </div>
                     <div className="bank-cred-row">
@@ -236,7 +235,10 @@ export default function LoginPage() {
                         >
                           {cred.password}
                         </span>
-                        <Copy className="bank-cred-copy-icon" aria-hidden="true" />
+                        <Copy
+                          className="bank-cred-copy-icon"
+                          aria-hidden="true"
+                        />
                       </button>
                     </div>
                   </div>
@@ -307,7 +309,9 @@ export default function LoginPage() {
                     type="button"
                     className="bank-password-toggle"
                     onClick={() => setShowPassword((v) => !v)}
-                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
                     data-testid="password-toggle"
                   >
                     {showPassword ? <EyeOffIcon /> : <EyeIcon />}

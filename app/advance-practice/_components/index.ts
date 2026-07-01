@@ -12,11 +12,7 @@ export {
 } from "./element-workspace";
 
 // Reusable scenario framework (one block per practice scenario)
-export {
-  PracticeBlock,
-  PracticeButton,
-  OutputBox,
-} from "./practice-block";
+export { PracticeBlock, PracticeButton, OutputBox } from "./practice-block";
 export type {
   BlockBadge,
   BadgeTone,

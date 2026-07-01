@@ -61,10 +61,7 @@ export default function ForgotPasswordPage() {
         >
           {submitted ? (
             /* Success state — Beginner: getByTestId("forgot-password-success-msg") */
-            <div
-              className="text-center"
-              data-testid="forgot-password-success"
-            >
+            <div className="text-center" data-testid="forgot-password-success">
               <div
                 className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-900/40 text-green-400"
                 aria-hidden="true"

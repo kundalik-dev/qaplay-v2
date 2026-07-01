@@ -1,7 +1,13 @@
 "use client";
 
 import React from "react";
-import { Bell, CheckCheck, Info, CheckCircle2, AlertTriangle } from "lucide-react";
+import {
+  Bell,
+  CheckCheck,
+  Info,
+  CheckCircle2,
+  AlertTriangle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { Separator } from "@/components/ui/separator";
@@ -21,9 +27,10 @@ const TYPE_COLORS = {
 };
 
 export default function NotificationsPage() {
-  const { currentUsername, markNotificationRead, markAllNotificationsRead } = useBankAppStore();
-  const notifications: Notification[] = useBankAppStore(
-    (s) => (currentUsername ? s.notifications[currentUsername] ?? [] : []),
+  const { currentUsername, markNotificationRead, markAllNotificationsRead } =
+    useBankAppStore();
+  const notifications: Notification[] = useBankAppStore((s) =>
+    currentUsername ? (s.notifications[currentUsername] ?? []) : [],
   );
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
@@ -32,7 +39,10 @@ export default function NotificationsPage() {
     <div data-testid="notifications-page" data-section="notifications">
       <div className="mb-6 flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white" data-testid="notifications-page-title">
+          <h1
+            className="text-2xl font-bold text-slate-900 dark:text-white"
+            data-testid="notifications-page-title"
+          >
             Notifications
           </h1>
           <p className="mt-0.5 text-sm text-slate-500">
@@ -88,7 +98,9 @@ export default function NotificationsPage() {
                 <div
                   className={[
                     "flex gap-3 px-4 py-4 transition-colors",
-                    !notif.isRead ? "bg-violet-50/40 dark:bg-violet-900/10" : "",
+                    !notif.isRead
+                      ? "bg-violet-50/40 dark:bg-violet-900/10"
+                      : "",
                   ].join(" ")}
                   data-testid="notification-item"
                   data-notification-id={notif.id}
@@ -129,7 +141,9 @@ export default function NotificationsPage() {
                         <button
                           type="button"
                           className="shrink-0 text-xs text-violet-600 hover:text-violet-800"
-                          onClick={() => markNotificationRead(currentUsername!, notif.id)}
+                          onClick={() =>
+                            markNotificationRead(currentUsername!, notif.id)
+                          }
                           data-testid="mark-read-btn"
                           data-notification-id={notif.id}
                           aria-label={`Mark "${notif.title}" as read`}
@@ -166,4 +180,3 @@ export default function NotificationsPage() {
     </div>
   );
 }
-

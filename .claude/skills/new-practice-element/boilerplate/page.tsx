@@ -25,10 +25,7 @@ export default async function ElementPage() {
       .filter((section) => section.snippets)
       .map(
         async (section) =>
-          [
-            section.id,
-            await highlightLearnSnippet(section.snippets!),
-          ] as const,
+          [section.id, await highlightLearnSnippet(section.snippets!)] as const,
       ),
   );
   const highlighted: Record<string, HighlightedLearnCodeSnippet> =

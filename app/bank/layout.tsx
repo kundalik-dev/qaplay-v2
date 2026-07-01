@@ -130,7 +130,7 @@ function BankSidebar({
       </div>
 
       {/* Main nav */}
-      <p className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
+      <p className="mb-1 px-2 text-[10px] font-semibold tracking-widest text-slate-500 uppercase">
         Main
       </p>
       <nav className="flex flex-col gap-0.5" data-testid="sidebar-main-nav">
@@ -161,7 +161,7 @@ function BankSidebar({
       <Separator className="my-3 bg-slate-800" />
 
       {/* Account nav */}
-      <p className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
+      <p className="mb-1 px-2 text-[10px] font-semibold tracking-widest text-slate-500 uppercase">
         Account
       </p>
       <nav className="flex flex-col gap-0.5" data-testid="sidebar-account-nav">
@@ -236,7 +236,11 @@ function BankSidebar({
 
 // ─── Layout ───────────────────────────────────────────────────────────────────
 
-export default function BankLayout({ children }: { children: React.ReactNode }) {
+export default function BankLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const router = useRouter();
   const { currentUsername, logout, seedIfNeeded } = useBankAppStore();

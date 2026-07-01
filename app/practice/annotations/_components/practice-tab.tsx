@@ -58,10 +58,24 @@ function FeatureFlagsPanel({ onComplete, setResult }: FeatureFlagsPanelProps) {
     );
   }
 
-  const flagDefs: { key: FlagKey; label: string; labelId: string; hasId?: boolean }[] = [
-    { key: "dark-mode", label: "Dark Mode", labelId: "dark-mode-label", hasId: true },
+  const flagDefs: {
+    key: FlagKey;
+    label: string;
+    labelId: string;
+    hasId?: boolean;
+  }[] = [
+    {
+      key: "dark-mode",
+      label: "Dark Mode",
+      labelId: "dark-mode-label",
+      hasId: true,
+    },
     { key: "beta-ui", label: "Beta UI", labelId: "beta-ui-label", hasId: true },
-    { key: "analytics", label: "Advanced Analytics", labelId: "analytics-label" },
+    {
+      key: "analytics",
+      label: "Advanced Analytics",
+      labelId: "analytics-label",
+    },
   ];
 
   return (
@@ -112,7 +126,9 @@ function FeatureFlagsPanel({ onComplete, setResult }: FeatureFlagsPanelProps) {
               onClick={() => toggleFlag(key)}
             >
               <span className={styles.switchTrack} />
-              <span className={styles.switchState}>{flags[key] ? "ON" : "OFF"}</span>
+              <span className={styles.switchState}>
+                {flags[key] ? "ON" : "OFF"}
+              </span>
             </button>
           </div>
         ))}
@@ -128,8 +144,8 @@ function FeatureFlagsPanel({ onComplete, setResult }: FeatureFlagsPanelProps) {
         >
           <p className={styles.betaTitle}>Beta Feature Visible</p>
           <p className={styles.betaDesc}>
-            Only visible when "Beta UI" flag is ON.{" "}
-            Test: <code>test.skip(!betaOn, 'Beta UI not enabled')</code>
+            Only visible when &quot;Beta UI&quot; flag is ON. Test:{" "}
+            <code>test.skip(!betaOn, &apos;Beta UI not enabled&apos;)</code>
           </p>
           <button id="btn-beta-action" data-testid="btn-beta-action">
             Beta Action
@@ -229,7 +245,11 @@ function SlowReportPanel({ onComplete, setResult }: SlowReportPanelProps) {
           aria-label="Operation in progress"
           className={styles.loadingBox}
         >
-          <div id="loading-label" data-testid="loading-label" className={styles.loadingLabel}>
+          <div
+            id="loading-label"
+            data-testid="loading-label"
+            className={styles.loadingLabel}
+          >
             {loadingLabel}
           </div>
           <div className={styles.progressWrap}>
@@ -344,7 +364,9 @@ function BuggyCounterPanel({ onComplete, setResult }: BuggyCounterPanelProps) {
               ⚠ BUG-101
             </span>
           </div>
-          <p className={styles.bugNote}>Increments by 2 instead of 1. Use test.fixme('BUG-101').</p>
+          <p className={styles.bugNote}>
+            Increments by 2 instead of 1. Use test.fixme(&apos;BUG-101&apos;).
+          </p>
           <div className={styles.counterRow}>
             <button
               id="btn-dec"
@@ -373,7 +395,9 @@ function BuggyCounterPanel({ onComplete, setResult }: BuggyCounterPanelProps) {
               +
             </button>
           </div>
-          <p className={styles.bugNote}>Bug: +1 click adds 2. Decrement is correct.</p>
+          <p className={styles.bugNote}>
+            Bug: +1 click adds 2. Decrement is correct.
+          </p>
         </div>
       </div>
     </div>
@@ -396,7 +420,9 @@ function FlakyPanel({ onComplete, setResult }: FlakyPanelProps) {
 
   function clickFlaky() {
     const ok = Math.random() >= 0.5;
-    setFlakyResult(ok ? "✓ Success this time." : "✗ Failed this time (50% chance).");
+    setFlakyResult(
+      ok ? "✓ Success this time." : "✗ Failed this time (50% chance).",
+    );
     setFlakyColor(ok ? "#166534" : "#991b1b");
     setResult(`Flaky action: ${ok ? "Success" : "Failed"} (50% reliability)`);
     if (!completedRef.current) {
@@ -428,7 +454,9 @@ function FlakyPanel({ onComplete, setResult }: FlakyPanelProps) {
               ⚠ BUG-202
             </span>
           </div>
-          <p className={styles.bugNote}>Succeeds ~50% of runs. Use test.fixme() or retries: 2.</p>
+          <p className={styles.bugNote}>
+            Succeeds ~50% of runs. Use test.fixme() or retries: 2.
+          </p>
           <button
             id="btn-flaky"
             data-testid="btn-flaky"
@@ -455,7 +483,8 @@ function FlakyPanel({ onComplete, setResult }: FlakyPanelProps) {
             <span style={{ fontSize: 11, fontWeight: 700 }}>test.fail()</span>
           </div>
           <p className={styles.bugNote}>
-            Always returns an error. test.fail() confirms the bug — test "passes" if it fails.
+            Always returns an error. test.fail() confirms the bug — test
+            &quot;passes&quot; if it fails.
           </p>
           <button
             id="btn-expected-fail"
@@ -491,7 +520,11 @@ type StepStatus = "pending" | "active" | "done";
 
 function CheckoutStepper({ onComplete, setResult }: CheckoutStepperProps) {
   const [currentStep, setCurrentStep] = useState(1);
-  const [stepStatus, setStepStatus] = useState<StepStatus[]>(["active", "pending", "pending"]);
+  const [stepStatus, setStepStatus] = useState<StepStatus[]>([
+    "active",
+    "pending",
+    "pending",
+  ]);
   const [orderId, setOrderId] = useState<string | null>(null);
 
   // Cart state
@@ -503,12 +536,13 @@ function CheckoutStepper({ onComplete, setResult }: CheckoutStepperProps) {
 
   function goToStep(step: number) {
     setCurrentStep(step);
-    setStepStatus((prev) =>
-      prev.map((_, i) => {
-        if (i + 1 < step) return "done";
-        if (i + 1 === step) return "active";
-        return "pending";
-      }) as StepStatus[],
+    setStepStatus(
+      (prev) =>
+        prev.map((_, i) => {
+          if (i + 1 < step) return "done";
+          if (i + 1 === step) return "active";
+          return "pending";
+        }) as StepStatus[],
     );
     setResult(`Moved to step ${step}`);
   }
@@ -562,7 +596,11 @@ function CheckoutStepper({ onComplete, setResult }: CheckoutStepperProps) {
         role="tabpanel"
         aria-labelledby="step-tab-1"
       >
-        <table aria-label="Cart items" data-testid="cart-table" className={styles.reportTable}>
+        <table
+          aria-label="Cart items"
+          data-testid="cart-table"
+          className={styles.reportTable}
+        >
           <thead>
             <tr>
               <th>Product</th>
@@ -583,7 +621,9 @@ function CheckoutStepper({ onComplete, setResult }: CheckoutStepperProps) {
                   min={1}
                   aria-label="Quantity for Wireless Headphones"
                   style={{ width: 52, padding: "3px 6px" }}
-                  onChange={(e) => setQty1(Math.max(1, parseInt(e.target.value) || 1))}
+                  onChange={(e) =>
+                    setQty1(Math.max(1, parseInt(e.target.value) || 1))
+                  }
                 />
               </td>
               <td data-testid="cart-price-1" data-price="149.99">
@@ -612,10 +652,17 @@ function CheckoutStepper({ onComplete, setResult }: CheckoutStepperProps) {
           </tbody>
         </table>
         <p style={{ fontWeight: 700, fontSize: 14, marginTop: 8 }}>
-          Total: <span id="cart-total" data-testid="cart-total">${total}</span>
+          Total:{" "}
+          <span id="cart-total" data-testid="cart-total">
+            ${total}
+          </span>
         </p>
         <div className={styles.btnRow} style={{ marginTop: 10 }}>
-          <button id="btn-to-shipping" data-testid="btn-to-shipping" onClick={() => goToStep(2)}>
+          <button
+            id="btn-to-shipping"
+            data-testid="btn-to-shipping"
+            onClick={() => goToStep(2)}
+          >
             Continue to Shipping →
           </button>
         </div>
@@ -698,7 +745,11 @@ function CheckoutStepper({ onComplete, setResult }: CheckoutStepperProps) {
           >
             ← Back
           </button>
-          <button id="btn-to-payment" data-testid="btn-to-payment" onClick={() => goToStep(3)}>
+          <button
+            id="btn-to-payment"
+            data-testid="btn-to-payment"
+            onClick={() => goToStep(3)}
+          >
             Continue to Payment →
           </button>
         </div>
@@ -767,7 +818,11 @@ function CheckoutStepper({ onComplete, setResult }: CheckoutStepperProps) {
           >
             ← Back
           </button>
-          <button id="btn-place-order" data-testid="btn-place-order" onClick={placeOrder}>
+          <button
+            id="btn-place-order"
+            data-testid="btn-place-order"
+            onClick={placeOrder}
+          >
             Place Order
           </button>
         </div>
@@ -794,7 +849,10 @@ function CheckoutStepper({ onComplete, setResult }: CheckoutStepperProps) {
 
 // ── S06: Data-Driven Login ───────────────────────────────────────────────────
 
-const USERS: Record<string, { pw: string; role: "admin" | "editor" | "viewer" }> = {
+const USERS: Record<
+  string,
+  { pw: string; role: "admin" | "editor" | "viewer" }
+> = {
   "admin@test.com": { pw: "admin123", role: "admin" },
   "editor@test.com": { pw: "editor123", role: "editor" },
   "viewer@test.com": { pw: "viewer123", role: "viewer" },
@@ -806,7 +864,9 @@ interface DataDrivenLoginProps {
 }
 
 function DataDrivenLogin({ onComplete, setResult }: DataDrivenLoginProps) {
-  const [loggedInRole, setLoggedInRole] = useState<"admin" | "editor" | "viewer" | null>(null);
+  const [loggedInRole, setLoggedInRole] = useState<
+    "admin" | "editor" | "viewer" | null
+  >(null);
   const [loginMsg, setLoginMsg] = useState("Login result will appear here…");
   const [loginColor, setLoginColor] = useState<string | undefined>(undefined);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -830,7 +890,9 @@ function DataDrivenLogin({ onComplete, setResult }: DataDrivenLoginProps) {
       setLoginMsg(`✓ Logged in as ${email} (role: ${user.role})`);
       setLoginColor("#166534");
       setLoggedInRole(user.role);
-      setResult(`Logged in as ${user.role} — assert [data-role-panel="${user.role}"] is visible`);
+      setResult(
+        `Logged in as ${user.role} — assert [data-role-panel="${user.role}"] is visible`,
+      );
       onComplete();
     },
     [onComplete, setResult],
@@ -846,10 +908,38 @@ function DataDrivenLogin({ onComplete, setResult }: DataDrivenLoginProps) {
   }
 
   const CRED_ROWS = [
-    { role: "admin", email: "admin@test.com", pw: "admin123", badge: "roleAdmin", label: "Admin", expects: "Full dashboard" },
-    { role: "editor", email: "editor@test.com", pw: "editor123", badge: "roleEditor", label: "Editor", expects: "Edit panel only" },
-    { role: "viewer", email: "viewer@test.com", pw: "viewer123", badge: "roleViewer", label: "Viewer", expects: "Read-only view" },
-    { role: "invalid", email: "bad@test.com", pw: "wrong", badge: "roleInvalid", label: "Invalid", expects: "Error message" },
+    {
+      role: "admin",
+      email: "admin@test.com",
+      pw: "admin123",
+      badge: "roleAdmin",
+      label: "Admin",
+      expects: "Full dashboard",
+    },
+    {
+      role: "editor",
+      email: "editor@test.com",
+      pw: "editor123",
+      badge: "roleEditor",
+      label: "Editor",
+      expects: "Edit panel only",
+    },
+    {
+      role: "viewer",
+      email: "viewer@test.com",
+      pw: "viewer123",
+      badge: "roleViewer",
+      label: "Viewer",
+      expects: "Read-only view",
+    },
+    {
+      role: "invalid",
+      email: "bad@test.com",
+      pw: "wrong",
+      badge: "roleInvalid",
+      label: "Invalid",
+      expects: "Error message",
+    },
   ];
 
   return (
@@ -857,7 +947,12 @@ function DataDrivenLogin({ onComplete, setResult }: DataDrivenLoginProps) {
       <div className={styles.loginGrid}>
         {/* Login form */}
         <div>
-          <form id="login-form" data-testid="login-form" onSubmit={doLogin} noValidate>
+          <form
+            id="login-form"
+            data-testid="login-form"
+            onSubmit={doLogin}
+            noValidate
+          >
             <div className={styles.field}>
               <label className={styles.fieldLabel} htmlFor="login-email">
                 Email
@@ -947,7 +1042,9 @@ function DataDrivenLogin({ onComplete, setResult }: DataDrivenLoginProps) {
                   data-role={row.role}
                 >
                   <td>
-                    <span className={`${styles.roleBadge} ${styles[row.badge as keyof typeof styles]}`}>
+                    <span
+                      className={`${styles.roleBadge} ${styles[row.badge as keyof typeof styles]}`}
+                    >
                       {row.label}
                     </span>
                   </td>
@@ -1014,7 +1111,13 @@ function DataDrivenLogin({ onComplete, setResult }: DataDrivenLoginProps) {
             className={`${styles.dashPanel}${loggedInRole === "viewer" ? ` ${styles.visible}` : ""}`}
           >
             <p className={styles.dashTitle}>Viewer Dashboard</p>
-            <p style={{ fontSize: 13, color: "var(--muted-foreground)", margin: "6px 0 0" }}>
+            <p
+              style={{
+                fontSize: 13,
+                color: "var(--muted-foreground)",
+                margin: "6px 0 0",
+              }}
+            >
               Read-only access. No edit buttons visible.
             </p>
           </div>
@@ -1051,7 +1154,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
             Interactive Scenarios
           </p>
 
-          <div className="flex flex-col gap-[10px]" data-testid="scenarios-list">
+          <div
+            className="flex flex-col gap-[10px]"
+            data-testid="scenarios-list"
+          >
             {/* S01 — Feature Flags / test.skip */}
             <ScenarioCard
               {...annotationsScenarios[0]}
@@ -1081,7 +1187,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
               onComplete={() => markDone("s03")}
             >
               {({ setResult, complete }) => (
-                <BuggyCounterPanel onComplete={complete} setResult={setResult} />
+                <BuggyCounterPanel
+                  onComplete={complete}
+                  setResult={setResult}
+                />
               )}
             </ScenarioCard>
 
@@ -1117,7 +1226,10 @@ export function PracticeTab({ upNext }: PracticeTabProps) {
           </div>
         </section>
 
-        <aside className={styles.practiceSidebar} data-testid="practice-sidebar">
+        <aside
+          className={styles.practiceSidebar}
+          data-testid="practice-sidebar"
+        >
           <ProgressWidget items={progressItems} />
           <FrameworkMethodsPanel methods={frameworkMethods} />
           <UpNextCard {...upNext} />
