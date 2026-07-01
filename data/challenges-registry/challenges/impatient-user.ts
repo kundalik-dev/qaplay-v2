@@ -5,13 +5,13 @@ export const impatientUser: ChallengeMeta = {
   id: "impatient-user",
   title: "The Impatient User",
   summary: "Wait for a randomly-delayed success toast before it disappears.",
-  description:
-    "A common flakiness cause in E2E tests is hardcoded sleeps. This challenge forces you to use smart, dynamic waits for elements that appear and disappear rapidly.",
+  // description:
+  //   "A common flakiness cause in E2E tests is hardcoded sleeps. This challenge forces you to use smart, dynamic waits for elements that appear and disappear rapidly.",
   difficulty: "Medium",
   xp: 10,
   tags: ["Dynamic Waits", "Timing", "Flakiness"],
   problemStatement:
-    "The #1 cause of flaky E2E tests is hardcoded sleeps like <code>page.waitForTimeout(3000)</code>. If the actual delay is longer than 3 seconds, your test fails. If it's shorter, you waste time. This challenge forces you to replace that habit with Playwright's smart waiting APIs, which poll the DOM until the element is in the expected state — no guessing, no flaking.",
+    "The #1 cause of flaky E2E tests is hardcoded sleeps like <code>page.waitForTimeout(3000)</code>. If the actual delay is longer than 3 seconds, your test fails. If it's shorter, you waste time. </br></br> This challenge forces you to replace that habit with Playwright's smart waiting APIs, which poll the DOM until the element is in the expected state — no guessing, no flaking.",
   expectedBehavior: [
     'Click the "Start Processing" button to trigger the async operation',
     "Wait dynamically for the success toast — do NOT use hardcoded sleeps",

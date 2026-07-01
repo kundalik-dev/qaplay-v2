@@ -5,15 +5,14 @@ export const ghostElement: ChallengeMeta = {
   id: "ghost-element",
   title: "The Ghost Element",
   summary: "Traverse the shadow DOM to interact with an encapsulated button.",
-  description:
-    "Dive into Web Components. Traverse the shadow DOM to find and interact with an encapsulated button. A must-know skill for modern web automation.",
+  // description:
+  //   "Dive into Web Components. Traverse the shadow DOM to find and interact with an encapsulated button. A must-know skill for modern web automation.",
   difficulty: "Hard",
   xp: 15,
   tags: ["Shadow DOM", "Web Components"],
-  problemStatement:
-    "Modern web apps increasingly use Web Components and Shadow DOM to encapsulate UI logic. This means elements are hidden inside a <code>#shadow-root</code> that standard CSS selectors and XPath can't reach — a common source of test failures on real projects. This challenge simulates that scenario: a button is rendered inside a component with an open shadow root, and your script must interact with it without resorting to fragile DOM hacks.",
+  problemStatement: `Modern web apps increasingly use Web Components and Shadow DOM to encapsulate UI logic. This means elements are hidden inside a <code>#shadow-root</code> that standard CSS selectors and XPath can't reach — a common source of test failures on real projects. </br></br> This challenge simulates that scenario: a button is rendered inside a component with an open shadow root, and your script must interact with it without resorting to fragile DOM hacks.`,
   expectedBehavior: [
-    "Navigate to the challenge page",
+    "Navigate to the challenge page <strong><a href='http://localhost:3000/challenges/ghost-element'>http://localhost:3000/challenges/ghost-element</a></strong>",
     'Locate the button labelled "Reveal Secret" inside the simulated shadow root',
     "Click the button using a stable, modern Playwright locator",
     "Assert that the secret token becomes visible after the click",
@@ -50,7 +49,8 @@ test('pierce the shadow DOM', async ({ page }) => {
     requiredPatterns: [
       {
         pattern: "Navigates to the challenge page with page.goto()",
-        reason: "The script must target the actual page where the button lives.",
+        reason:
+          "The script must target the actual page where the button lives.",
       },
       {
         pattern:

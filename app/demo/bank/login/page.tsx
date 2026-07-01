@@ -2,6 +2,9 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { Copy } from "lucide-react";
+import { Toaster } from "@/components/ui/sonner";
 import { useBankStore } from "../store/useBankStore";
 import "../styles/bank.css";
 
@@ -143,168 +146,208 @@ export default function LoginPage() {
     setRememberMe(false);
   };
 
+  const handleCopyCredential = async (value: string, label: string) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      toast.success(`${label} copied`, { description: value });
+    } catch {
+      toast.error(`Couldn't copy ${label.toLowerCase()}`);
+    }
+  };
+
   return (
     <div
       className="bank-login-page"
       data-testid="bank-login-page"
       data-section="bank-login"
     >
-      {/* Left branding panel */}
-      <div className="bank-login-left" data-testid="bank-login-branding">
-        <div className="bank-login-left-inner">
-          <div className="bank-login-icon-circle" aria-hidden="true">
-            <BankIcon />
-          </div>
-          <p className="bank-login-welcome">
-            Welcome to
-            <br />
-            <span>SecureBank</span>
-          </p>
-          <p className="bank-login-tagline">
-            Your premier automation testing practice ground. Master complex UI
-            interactions, state management, and end-to-end testing scenarios.
-          </p>
+      <Toaster position="top-center" />
+      <div
+        className="bank-login-container"
+        data-testid="bank-login-container"
+      >
+        {/* Left branding panel */}
+        <div className="bank-login-left" data-testid="bank-login-branding">
+          <div className="bank-login-left-inner">
+            <div className="bank-login-icon-circle" aria-hidden="true">
+              <BankIcon />
+            </div>
+            <p className="bank-login-welcome">
+              Welcome to
+              <br />
+              <span>SecureBank</span>
+            </p>
+            <p className="bank-login-tagline">
+              Your premier automation testing practice ground. Master complex
+              UI interactions, state management, and end-to-end testing
+              scenarios.
+            </p>
 
-          {/* Demo credentials — shown under branding */}
-          <div
-            className="bank-credentials-section"
-            data-testid="demo-credentials"
-          >
-            <p className="bank-credentials-title">Demo Credentials</p>
-            <div className="bank-credentials-cards">
-              {DEMO_CREDENTIALS.map((cred) => (
-                <div
-                  key={cred.username}
-                  className="bank-cred-card"
-                  data-role={cred.role.toLowerCase().replace(" ", "-")}
-                >
-                  <span className="bank-cred-role">{cred.role}</span>
-                  <div className="bank-cred-row">
-                    <span className="bank-cred-key">Username</span>
-                    <span
-                      className="bank-cred-badge"
-                      data-testid={`cred-username-${cred.username}`}
-                    >
-                      {cred.username}
-                    </span>
+            {/* Demo credentials — shown under branding */}
+            <div
+              className="bank-credentials-section"
+              data-testid="demo-credentials"
+            >
+              <p className="bank-credentials-title">Demo Credentials</p>
+              <div className="bank-credentials-cards">
+                {DEMO_CREDENTIALS.map((cred) => (
+                  <div
+                    key={cred.username}
+                    className="bank-cred-card"
+                    data-role={cred.role.toLowerCase().replace(" ", "-")}
+                  >
+                    <span className="bank-cred-role">{cred.role}</span>
+                    <div className="bank-cred-row">
+                      <span className="bank-cred-key">Username</span>
+                      <button
+                        type="button"
+                        className="bank-cred-badge-btn"
+                        data-testid={`copy-username-${cred.username}`}
+                        data-copy-value="username"
+                        aria-label={`Copy username ${cred.username}`}
+                        onClick={() =>
+                          handleCopyCredential(cred.username, "Username")
+                        }
+                      >
+                        <span
+                          className="bank-cred-badge"
+                          data-testid={`cred-username-${cred.username}`}
+                        >
+                          {cred.username}
+                        </span>
+                        <Copy className="bank-cred-copy-icon" aria-hidden="true" />
+                      </button>
+                    </div>
+                    <div className="bank-cred-row">
+                      <span className="bank-cred-key">Password</span>
+                      <button
+                        type="button"
+                        className="bank-cred-badge-btn"
+                        data-testid={`copy-password-${cred.username}`}
+                        data-copy-value="password"
+                        aria-label={`Copy password for ${cred.username}`}
+                        onClick={() =>
+                          handleCopyCredential(cred.password, "Password")
+                        }
+                      >
+                        <span
+                          className="bank-cred-badge"
+                          data-testid={`cred-password-${cred.username}`}
+                        >
+                          {cred.password}
+                        </span>
+                        <Copy className="bank-cred-copy-icon" aria-hidden="true" />
+                      </button>
+                    </div>
                   </div>
-                  <div className="bank-cred-row">
-                    <span className="bank-cred-key">Password</span>
-                    <span
-                      className="bank-cred-badge"
-                      data-testid={`cred-password-${cred.username}`}
-                    >
-                      {cred.password}
-                    </span>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Right form card */}
-      <div className="bank-login-right">
-        <div className="bank-login-card" data-testid="bank-login-card">
-          <div className="bank-login-card-logo" aria-hidden="true">
-            <BankIcon />
-          </div>
-          <h1 className="bank-login-card-title" data-testid="login-header">
-            Sign in to SecureBank
-          </h1>
-          <p className="bank-login-card-subtitle">
-            Enter your credentials to continue
-          </p>
-
-          {error && (
-            <div
-              className="bank-login-error"
-              role="alert"
-              data-testid="login-error"
-            >
-              {error}
+        {/* Right form card */}
+        <div className="bank-login-right">
+          <div className="bank-login-card" data-testid="bank-login-card">
+            <div className="bank-login-card-logo" aria-hidden="true">
+              <BankIcon />
             </div>
-          )}
+            <h1 className="bank-login-card-title" data-testid="login-header">
+              Sign in to SecureBank
+            </h1>
+            <p className="bank-login-card-subtitle">
+              Enter your credentials to continue
+            </p>
 
-          <form onSubmit={handleSubmit} data-testid="login-form" noValidate>
-            <div className="bank-form-group">
-              <label htmlFor="username" className="bank-form-label">
-                Username
-              </label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="bank-form-input"
-                placeholder="Enter your username"
-                autoComplete="username"
-                data-testid="login-username"
-              />
-            </div>
-
-            <div className="bank-form-group">
-              <label htmlFor="password" className="bank-form-label">
-                Password
-              </label>
-              <div className="bank-password-wrapper">
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="bank-form-input"
-                  placeholder="Enter your password"
-                  autoComplete="current-password"
-                  data-testid="login-password"
-                />
-                <button
-                  type="button"
-                  className="bank-password-toggle"
-                  onClick={() => setShowPassword((v) => !v)}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                  data-testid="password-toggle"
-                >
-                  {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-                </button>
+            {error && (
+              <div
+                className="bank-login-error"
+                role="alert"
+                data-testid="login-error"
+              >
+                {error}
               </div>
-            </div>
+            )}
 
-            <div className="bank-remember-row">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="bank-remember-checkbox"
-                data-testid="login-remember-me"
-              />
-              <label htmlFor="remember-me" className="bank-remember-label">
-                Remember me
-              </label>
-            </div>
+            <form onSubmit={handleSubmit} data-testid="login-form" noValidate>
+              <div className="bank-form-group">
+                <label htmlFor="username" className="bank-form-label">
+                  Username
+                </label>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="bank-form-input"
+                  placeholder="Enter your username"
+                  autoComplete="username"
+                  data-testid="login-username"
+                />
+              </div>
 
-            <button
-              type="submit"
-              className="bank-login-btn"
-              data-testid="login-submit"
-            >
-              Login
-            </button>
+              <div className="bank-form-group">
+                <label htmlFor="password" className="bank-form-label">
+                  Password
+                </label>
+                <div className="bank-password-wrapper">
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="bank-form-input"
+                    placeholder="Enter your password"
+                    autoComplete="current-password"
+                    data-testid="login-password"
+                  />
+                  <button
+                    type="button"
+                    className="bank-password-toggle"
+                    onClick={() => setShowPassword((v) => !v)}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    data-testid="password-toggle"
+                  >
+                    {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                  </button>
+                </div>
+              </div>
 
-            <button
-              type="button"
-              className="bank-clear-btn"
-              onClick={handleClear}
-              data-testid="login-clear"
-            >
-              Clear
-            </button>
-          </form>
+              <div className="bank-remember-row">
+                <input
+                  id="remember-me"
+                  name="remember-me"
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="bank-remember-checkbox"
+                  data-testid="login-remember-me"
+                />
+                <label htmlFor="remember-me" className="bank-remember-label">
+                  Remember me
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                className="bank-login-btn"
+                data-testid="login-submit"
+              >
+                Login
+              </button>
+
+              <button
+                type="button"
+                className="bank-clear-btn"
+                onClick={handleClear}
+                data-testid="login-clear"
+              >
+                Clear
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
