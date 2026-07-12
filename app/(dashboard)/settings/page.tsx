@@ -132,7 +132,7 @@ export default function SettingsPage() {
   const handleThemeChange = (newTheme: "light" | "dark" | "system") => {
     setTheme(newTheme);
     if (newTheme === "system") {
-      updateSettings({ theme: undefined });
+      updateSettings({ theme: "system" });
       const isSystemDark = window.matchMedia(
         "(prefers-color-scheme: dark)",
       ).matches;

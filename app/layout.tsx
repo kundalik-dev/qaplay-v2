@@ -63,7 +63,7 @@ const themeInitScript = `
   try{
     var settings = JSON.parse(localStorage.getItem('qap_settings') || '{}');
     var s = settings.theme;
-    var d = s === 'dark';
+    var d = s === 'dark' || (s === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
     document.documentElement.classList.toggle('dark', d);
 
     var f = settings.font;
@@ -83,7 +83,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable} ${jetbrainsMono.variable} dark`}
+      className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <head>

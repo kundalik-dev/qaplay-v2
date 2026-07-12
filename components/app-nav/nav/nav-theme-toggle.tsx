@@ -166,7 +166,7 @@ export function NavThemeToggle() {
         window.removeEventListener("qap-theme-change", onStoreChange);
     },
     () => document.documentElement.classList.contains("dark"),
-    () => true,
+    () => false,
   );
 
   const toggle = () => {
