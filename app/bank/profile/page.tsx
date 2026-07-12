@@ -222,7 +222,7 @@ export default function ProfilePage() {
               <div>
                 <Label
                   htmlFor="profile-first-name-input"
-                  className="mb-1 block text-xs font-medium text-slate-600"
+                  className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
                 >
                   First Name
                 </Label>
@@ -236,7 +236,7 @@ export default function ProfilePage() {
               <div>
                 <Label
                   htmlFor="profile-last-name-input"
-                  className="mb-1 block text-xs font-medium text-slate-600"
+                  className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
                 >
                   Last Name
                 </Label>
@@ -251,7 +251,7 @@ export default function ProfilePage() {
             <div className="mt-3">
               <Label
                 htmlFor="profile-email-input"
-                className="mb-1 block text-xs font-medium text-slate-600"
+                className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
               >
                 Email
               </Label>
@@ -269,7 +269,7 @@ export default function ProfilePage() {
              * CSS: [data-testid="profile-edit-form"] input[name="phone_field"]
              */}
             <div className="mt-3">
-              <span className="mb-1 block text-xs font-medium text-slate-600">
+              <span className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400">
                 Phone
               </span>
               <div>
@@ -289,7 +289,7 @@ export default function ProfilePage() {
             <div className="mt-3">
               <Label
                 htmlFor="profile-address-input"
-                className="mb-1 block text-xs font-medium text-slate-600"
+                className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
               >
                 Address
               </Label>
@@ -366,7 +366,7 @@ export default function ProfilePage() {
           <div>
             <Label
               htmlFor="current-password"
-              className="mb-1 block text-xs font-medium text-slate-600"
+              className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
             >
               Current Password
             </Label>
@@ -382,7 +382,7 @@ export default function ProfilePage() {
           <div>
             <Label
               htmlFor="new-password"
-              className="mb-1 block text-xs font-medium text-slate-600"
+              className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
             >
               New Password
             </Label>
@@ -398,7 +398,7 @@ export default function ProfilePage() {
           <div>
             <Label
               htmlFor="confirm-new-password"
-              className="mb-1 block text-xs font-medium text-slate-600"
+              className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
             >
               Confirm New Password
             </Label>

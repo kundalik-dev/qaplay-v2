@@ -2,10 +2,12 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 import { Building2, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Toaster } from "@/components/ui/sonner";
 import { isValidEmail } from "../lib/utils";
 
 export default function ForgotPasswordPage() {
@@ -32,14 +34,18 @@ export default function ForgotPasswordPage() {
     await new Promise((r) => setTimeout(r, 600));
     setIsLoading(false);
     setSubmitted(true);
+    toast.success("Email has been sent", {
+      id: "forgot-password-email-sent-toast",
+    });
   };
 
   return (
     <div
-      className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-violet-950 px-4 py-12"
+      className="flex min-h-screen items-center justify-center bg-white px-4 py-12"
       data-testid="forgot-password-page"
       data-section="bank-forgot-password"
     >
+      <Toaster position="bottom-right" />
       <div className="w-full max-w-sm">
         {/* Brand */}
         <div className="mb-8 flex flex-col items-center gap-3">
@@ -50,26 +56,26 @@ export default function ForgotPasswordPage() {
             <Building2 className="h-7 w-7 text-white" />
           </div>
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-white">SecureBank</h1>
-            <p className="mt-0.5 text-sm text-slate-400">Reset your password</p>
+            <h1 className="text-2xl font-bold text-slate-900">SecureBank</h1>
+            <p className="mt-0.5 text-sm text-slate-500">Reset your password</p>
           </div>
         </div>
 
         <div
-          className="rounded-2xl border border-slate-700 bg-slate-800/80 p-6 shadow-xl backdrop-blur"
+          className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xl"
           data-testid="forgot-password-card"
         >
           {submitted ? (
             /* Success state — Beginner: getByTestId("forgot-password-success-msg") */
             <div className="text-center" data-testid="forgot-password-success">
               <div
-                className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-900/40 text-green-400"
+                className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-600"
                 aria-hidden="true"
               >
                 ✓
               </div>
               <p
-                className="text-sm text-slate-300"
+                className="text-sm text-slate-700"
                 data-testid="forgot-password-success-msg"
               >
                 If an account with that email exists, you&apos;ll receive a
@@ -80,7 +86,7 @@ export default function ForgotPasswordPage() {
               </p>
               <Link
                 href="/bank/login"
-                className="mt-5 inline-flex items-center gap-1.5 text-sm text-violet-400 hover:text-violet-300 hover:underline"
+                className="mt-5 inline-flex items-center gap-1.5 text-sm text-violet-600 hover:text-violet-700 hover:underline"
                 data-testid="back-to-login-link"
               >
                 <ArrowLeft className="h-3.5 w-3.5" />
@@ -89,14 +95,14 @@ export default function ForgotPasswordPage() {
             </div>
           ) : (
             <>
-              <p className="mb-5 text-sm text-slate-400">
+              <p className="mb-5 text-sm text-slate-500">
                 Enter the email address associated with your account and
                 we&apos;ll send you a link to reset your password.
               </p>
 
               {error && (
                 <div
-                  className="mb-4 rounded-lg border border-red-800 bg-red-900/40 px-3 py-2.5 text-sm text-red-300"
+                  className="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700"
                   role="alert"
                   data-testid="forgot-password-error"
                 >
@@ -113,7 +119,7 @@ export default function ForgotPasswordPage() {
                 <div className="mb-5">
                   <Label
                     htmlFor="forgot-email"
-                    className="mb-1.5 block text-sm font-medium text-slate-300"
+                    className="mb-1.5 block text-sm font-medium text-slate-700"
                   >
                     Email address
                   </Label>
@@ -127,7 +133,7 @@ export default function ForgotPasswordPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={isLoading}
                     data-testid="forgot-email-input"
-                    className="border-slate-600 bg-slate-700/60 text-white placeholder:text-slate-500 focus-visible:ring-violet-500"
+                    className="border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 focus-visible:ring-violet-500"
                   />
                 </div>
 
@@ -144,7 +150,7 @@ export default function ForgotPasswordPage() {
               <div className="mt-4 text-center">
                 <Link
                   href="/bank/login"
-                  className="inline-flex items-center gap-1.5 text-sm text-violet-400 hover:text-violet-300 hover:underline"
+                  className="inline-flex items-center gap-1.5 text-sm text-violet-600 hover:text-violet-700 hover:underline"
                   data-testid="back-to-login-link"
                 >
                   <ArrowLeft className="h-3.5 w-3.5" />

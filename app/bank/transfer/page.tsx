@@ -166,7 +166,7 @@ export default function TransferPage() {
             <div className="mb-4">
               <Label
                 htmlFor="transfer-from-trigger"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 From Account
               </Label>
@@ -204,7 +204,7 @@ export default function TransferPage() {
             <div className="mb-4">
               <Label
                 htmlFor="transfer-to-trigger"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 To Account
               </Label>
@@ -239,7 +239,7 @@ export default function TransferPage() {
             <div className="mb-4">
               <Label
                 htmlFor="transfer-amount"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Amount
               </Label>
@@ -298,7 +298,7 @@ export default function TransferPage() {
 
             {/* Transfer date — Medium: radio group + conditional date picker */}
             <div className="mb-5">
-              <p className="mb-2 text-sm font-medium text-slate-700">
+              <p className="mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                 Transfer Date
               </p>
               <div
@@ -310,7 +310,7 @@ export default function TransferPage() {
                 {(["today", "scheduled"] as const).map((type) => (
                   <label
                     key={type}
-                    className="flex cursor-pointer items-center gap-2 text-sm text-slate-600"
+                    className="flex cursor-pointer items-center gap-2 text-sm text-slate-600 dark:text-slate-400"
                     data-testid={`date-type-${type}`}
                   >
                     <input
@@ -335,7 +335,7 @@ export default function TransferPage() {
                 <div className="mt-3">
                   <Label
                     htmlFor="transfer-scheduled-date"
-                    className="mb-1.5 block text-xs text-slate-600"
+                    className="mb-1.5 block text-xs text-slate-600 dark:text-slate-400"
                   >
                     Select date
                   </Label>

@@ -81,6 +81,11 @@ export default function TransactionsPage() {
             ? a.date.localeCompare(b.date)
             : b.date.localeCompare(a.date);
         }
+        if (sortField === "category") {
+          return sortOrder === "asc"
+            ? a.category.localeCompare(b.category)
+            : b.category.localeCompare(a.category);
+        }
         return sortOrder === "asc" ? a.amount - b.amount : b.amount - a.amount;
       });
     }

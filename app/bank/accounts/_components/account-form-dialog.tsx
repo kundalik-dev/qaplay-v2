@@ -110,7 +110,7 @@ export function AccountFormDialog({
           <div className="mb-4">
             <Label
               htmlFor="account-form-name"
-              className="mb-1.5 block text-sm font-medium text-slate-700"
+              className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
             >
               Account Name
             </Label>
@@ -129,7 +129,7 @@ export function AccountFormDialog({
           <div className="mb-4">
             <Label
               htmlFor="account-form-type-trigger"
-              className="mb-1.5 block text-sm font-medium text-slate-700"
+              className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
             >
               Account Type
             </Label>
@@ -166,7 +166,7 @@ export function AccountFormDialog({
              * XPath: //span[normalize-space()="Starting Balance"]/following-sibling::div//input
              *        //input[starts-with(@name,"account_balance_")]
              */}
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
+            <span className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
               {mode === "add" ? "Starting Balance" : "Balance"}
             </span>
             <div className="relative">

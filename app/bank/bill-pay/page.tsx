@@ -164,7 +164,7 @@ export default function BillPayPage() {
             <div className="mb-4">
               <Label
                 htmlFor="bill-pay-from-trigger"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 From Account
               </Label>
@@ -210,7 +210,7 @@ export default function BillPayPage() {
             <div className="mb-4">
               <Label
                 htmlFor="bill-amount"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Amount
               </Label>
@@ -238,7 +238,7 @@ export default function BillPayPage() {
             <div className="mb-4">
               <Label
                 htmlFor="bill-payment-date"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Payment Date
               </Label>
@@ -261,7 +261,7 @@ export default function BillPayPage() {
             <div className="mb-5">
               <Label
                 htmlFor="bill-memo"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Memo (optional)
               </Label>

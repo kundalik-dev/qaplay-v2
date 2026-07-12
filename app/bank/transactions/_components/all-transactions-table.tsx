@@ -3,7 +3,7 @@ import { formatCurrency, formatDate } from "../../lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { ArrowUp, ArrowDown } from "lucide-react";
 
-export type SortField = "date" | "amount";
+export type SortField = "date" | "amount" | "category";
 export type SortOrder = "asc" | "desc";
 
 export interface TransactionWithAccount extends Transaction {
@@ -91,8 +91,24 @@ export function AllTransactionsTable({
             <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400">
               Description
             </th>
-            <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400">
-              Category
+            <th
+              className="cursor-pointer px-4 py-3 text-left text-xs font-semibold text-slate-600 select-none hover:text-slate-900 dark:text-slate-400"
+              onClick={() => onSort("category")}
+              data-testid="all-txn-sort-category-header"
+              aria-sort={
+                sortField === "category"
+                  ? sortOrder === "asc"
+                    ? "ascending"
+                    : "descending"
+                  : "none"
+              }
+            >
+              Category{" "}
+              <SortIcon
+                field="category"
+                sortField={sortField}
+                sortOrder={sortOrder}
+              />
             </th>
             <th
               className="cursor-pointer px-4 py-3 text-right text-xs font-semibold text-slate-600 select-none hover:text-slate-900 dark:text-slate-400"

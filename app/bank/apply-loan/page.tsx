@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Landmark } from "lucide-react";
+import { ArrowLeft, Landmark, ScrollText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -26,18 +26,34 @@ import {
   useBankAppStore,
   useCurrentUser,
   useUserAccounts,
+  useUserLoanApplications,
 } from "../store/useBankAppStore";
 import { formatCurrency } from "../lib/utils";
 import type { LoanType } from "../lib/types";
+import { LoanHistoryFilterBar } from "./_components/loan-history-filter-bar";
+import {
+  LoanHistoryTable,
+  type SortField,
+  type SortOrder,
+} from "./_components/loan-history-table";
 
 const LOAN_TYPES: LoanType[] = ["Personal", "Auto", "Home", "Student"];
 const TERM_OPTIONS = [12, 24, 36, 48, 60];
+const PAGE_SIZE = 5;
+
+// Intentional QA-practice bug: the "error_user" seeded account (see
+// app/bank/lib/seed-data.ts) always has its most-recently-added loan
+// excluded from the displayed total, so the total is wrong and stays
+// wrong even after applying for a new loan. Every other account sums
+// correctly, including right after a new application is added.
+const BUGGY_TOTAL_USERNAME = "error_user";
 
 export default function ApplyLoanPage() {
   const router = useRouter();
   const { currentUsername, applyLoan } = useBankAppStore();
   const currentUser = useCurrentUser();
   const accounts = useUserAccounts(currentUsername);
+  const loanHistory = useUserLoanApplications(currentUsername);
   const isFrozen = currentUser?.status === "frozen";
 
   const [loanType, setLoanType] = useState<LoanType | "">("");
@@ -47,6 +63,76 @@ export default function ApplyLoanPage() {
   const [purpose, setPurpose] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
+
+  // ── Loan history: filter, sort, paginate ────────────────────────────────
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [sortField, setSortField] = useState<SortField | null>("date");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
+  const [historyPage, setHistoryPage] = useState(1);
+
+  const hasActiveHistoryFilters = !!(dateFrom || dateTo);
+
+  const handleClearHistoryFilters = () => {
+    setDateFrom("");
+    setDateTo("");
+    setHistoryPage(1);
+  };
+
+  const handleHistorySort = (field: SortField) => {
+    if (sortField === field) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortField(field);
+      setSortOrder("desc");
+    }
+    setHistoryPage(1);
+  };
+
+  // Date-filtered, in original (newest-first) store order — the buggy
+  // total below relies on this order, independent of the column the
+  // table happens to be sorted by.
+  const dateFilteredHistory = useMemo<LoanApplication[]>(() => {
+    let result = loanHistory;
+    if (dateFrom) result = result.filter((l) => l.date >= dateFrom);
+    if (dateTo) result = result.filter((l) => l.date <= dateTo);
+    return result;
+  }, [loanHistory, dateFrom, dateTo]);
+
+  const sortedHistory = useMemo<LoanApplication[]>(() => {
+    if (!sortField) return dateFilteredHistory;
+    return [...dateFilteredHistory].sort((a, b) => {
+      if (sortField === "date") {
+        return sortOrder === "asc"
+          ? a.date.localeCompare(b.date)
+          : b.date.localeCompare(a.date);
+      }
+      return sortOrder === "asc" ? a.amount - b.amount : b.amount - a.amount;
+    });
+  }, [dateFilteredHistory, sortField, sortOrder]);
+
+  const historyTotalPages = Math.max(
+    1,
+    Math.ceil(sortedHistory.length / PAGE_SIZE),
+  );
+  const paginatedHistory = sortedHistory.slice(
+    (historyPage - 1) * PAGE_SIZE,
+    historyPage * PAGE_SIZE,
+  );
+
+  const correctTotal = dateFilteredHistory.reduce(
+    (sum, l) => sum + l.amount,
+    0,
+  );
+  // Bug: for BUGGY_TOTAL_USERNAME, the most-recently-added loan within the
+  // current date filter is silently dropped from the total, so it never
+  // matches the sum of the visible rows — and stays wrong right after a
+  // new application is added, since the new loan becomes that excluded
+  // "most recent" entry.
+  const displayedTotal =
+    currentUsername === BUGGY_TOTAL_USERNAME
+      ? correctTotal - (dateFilteredHistory[0]?.amount ?? 0)
+      : correctTotal;
 
   const disbursementAccount = accounts.find((a) => a.id === accountId);
 
@@ -157,7 +243,7 @@ export default function ApplyLoanPage() {
             <div className="mb-4">
               <Label
                 htmlFor="loan-type-trigger"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Loan Type
               </Label>
@@ -192,7 +278,7 @@ export default function ApplyLoanPage() {
             <div className="mb-4">
               <Label
                 htmlFor="loan-amount"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Loan Amount
               </Label>
@@ -220,7 +306,7 @@ export default function ApplyLoanPage() {
             <div className="mb-4">
               <Label
                 htmlFor="loan-term-trigger"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Term Length
               </Label>
@@ -259,7 +345,7 @@ export default function ApplyLoanPage() {
             <div className="mb-4">
               <Label
                 htmlFor="loan-account-trigger"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Disbursement Account
               </Label>
@@ -297,7 +383,7 @@ export default function ApplyLoanPage() {
                * XPath: //span[normalize-space()="Purpose"]/following-sibling::div//textarea
                *        //textarea[starts-with(@name,"loan_purpose_")]
                */}
-              <span className="mb-1.5 block text-sm font-medium text-slate-700">
+              <span className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
                 Purpose
               </span>
               <Textarea
@@ -330,6 +416,125 @@ export default function ApplyLoanPage() {
             </div>
           </form>
         </div>
+      </div>
+
+      {/* Applied loans history */}
+      <div className="mt-10" data-testid="loan-history-section">
+        <div className="mb-4 flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-100 dark:bg-violet-900/30">
+            <ScrollText
+              className="h-4.5 w-4.5 text-violet-600"
+              aria-hidden="true"
+            />
+          </div>
+          <div>
+            <h2
+              className="text-lg font-bold text-slate-900 dark:text-white"
+              data-testid="loan-history-title"
+            >
+              Applied Loans
+            </h2>
+            <p className="text-sm text-slate-500">
+              History of loan applications on this account
+            </p>
+          </div>
+        </div>
+
+        <LoanHistoryFilterBar
+          dateFrom={dateFrom}
+          onDateFromChange={(v) => {
+            setDateFrom(v);
+            setHistoryPage(1);
+          }}
+          dateTo={dateTo}
+          onDateToChange={(v) => {
+            setDateTo(v);
+            setHistoryPage(1);
+          }}
+          onClearFilters={handleClearHistoryFilters}
+          hasActiveFilters={hasActiveHistoryFilters}
+        />
+
+        <LoanHistoryTable
+          loans={paginatedHistory}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSort={handleHistorySort}
+          totalAmount={displayedTotal}
+        />
+
+        {/* Pagination row */}
+        <nav
+          className="mt-4 flex flex-wrap items-center justify-between gap-2"
+          data-testid="loan-history-pagination-controls"
+          aria-label="Loan history pagination"
+        >
+          <p
+            className="text-xs text-slate-500"
+            data-testid="loan-history-pagination-info"
+          >
+            {sortedHistory.length === 0
+              ? "No loan applications"
+              : `Showing ${(historyPage - 1) * PAGE_SIZE + 1}–${Math.min(historyPage * PAGE_SIZE, sortedHistory.length)} of ${sortedHistory.length}`}
+          </p>
+
+          <div className="flex items-center gap-1">
+            {/*
+             * Challenge locator: pagination buttons — aria-label only on prev/next
+             * Individual page number buttons: data-page attribute, no data-testid
+             * Practice:
+             *   page.getByRole('button', { name: 'Previous page' })
+             *   page.locator('[data-page="2"]').click()
+             *   XPath: //button[@aria-current="page"]
+             */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setHistoryPage(Math.max(1, historyPage - 1))}
+              disabled={historyPage === 1}
+              aria-label="Previous page"
+              data-testid="loan-history-pagination-prev"
+              className="h-7 px-2 text-xs"
+            >
+              ‹
+            </Button>
+
+            {Array.from({ length: historyTotalPages }, (_, i) => i + 1).map(
+              (page) => (
+                <button
+                  key={page}
+                  type="button"
+                  onClick={() => setHistoryPage(page)}
+                  aria-label={`Go to page ${page}`}
+                  aria-current={historyPage === page ? "page" : undefined}
+                  data-page={page}
+                  className={[
+                    "h-7 min-w-[1.75rem] rounded-md px-1.5 text-xs font-medium transition-colors",
+                    historyPage === page
+                      ? "bg-violet-600 text-white"
+                      : "border border-slate-200 text-slate-600 hover:bg-slate-50",
+                  ].join(" ")}
+                >
+                  {page}
+                </button>
+              ),
+            )}
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                setHistoryPage(Math.min(historyTotalPages, historyPage + 1))
+              }
+              disabled={historyPage === historyTotalPages}
+              aria-label="Next page"
+              data-testid="loan-history-pagination-next"
+              className="h-7 px-2 text-xs"
+            >
+              ›
+            </Button>
+          </div>
+        </nav>
       </div>
 
       {/* Confirmation dialog */}

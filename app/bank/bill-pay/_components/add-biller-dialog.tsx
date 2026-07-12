@@ -80,7 +80,7 @@ export function AddBillerDialog({
           <div className="mb-4">
             <Label
               htmlFor="add-biller-name"
-              className="mb-1.5 block text-sm font-medium text-slate-700"
+              className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
             >
               Biller Name
             </Label>
@@ -101,7 +101,7 @@ export function AddBillerDialog({
              * XPath: //span[normalize-space()="Account / Reference Number"]/following-sibling::input
              *        //input[starts-with(@name,"biller_ref_")]
              */}
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
+            <span className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
               Account / Reference Number
             </span>
             <Input

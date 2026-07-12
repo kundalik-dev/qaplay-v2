@@ -47,7 +47,7 @@ export function BillerCombobox({
       <div className="mb-1.5 flex items-center justify-between">
         <Label
           htmlFor="biller-search-input"
-          className="block text-sm font-medium text-slate-700"
+          className="block text-sm font-medium text-slate-700 dark:text-slate-300"
         >
           Biller
         </Label>

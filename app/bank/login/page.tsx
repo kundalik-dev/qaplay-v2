@@ -65,7 +65,7 @@ export default function BankLoginPage() {
 
   return (
     <div
-      className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-violet-950 px-4 py-12"
+      className="flex min-h-screen items-center justify-center bg-white px-4 py-12"
       data-testid="bank-login-page"
       data-section="bank-login"
     >
@@ -80,12 +80,12 @@ export default function BankLoginPage() {
           </div>
           <div className="text-center">
             <h1
-              className="text-2xl font-bold text-white"
+              className="text-2xl font-bold text-slate-900"
               data-testid="login-page-title"
             >
               SecureBank
             </h1>
-            <p className="mt-0.5 text-sm text-slate-400">
+            <p className="mt-0.5 text-sm text-slate-500">
               Sign in to your account
             </p>
           </div>
@@ -93,13 +93,13 @@ export default function BankLoginPage() {
 
         {/* Card */}
         <div
-          className="rounded-2xl border border-slate-700 bg-slate-800/80 p-6 shadow-xl backdrop-blur"
+          className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xl"
           data-testid="login-card"
         >
           {/* Error banner — Beginner: getByTestId("login-error-banner") */}
           {error && (
             <div
-              className="mb-4 flex items-start justify-between gap-2 rounded-lg border border-red-800 bg-red-900/40 px-3 py-2.5 text-sm text-red-300"
+              className="mb-4 flex items-start justify-between gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700"
               role="alert"
               data-testid="login-error-banner"
             >
@@ -111,7 +111,7 @@ export default function BankLoginPage() {
                */}
               <button
                 type="button"
-                className="shrink-0 leading-none text-red-400 hover:text-red-200"
+                className="shrink-0 leading-none text-red-500 hover:text-red-700"
                 onClick={() => setError(null)}
                 aria-label="Dismiss error"
               >
@@ -134,7 +134,7 @@ export default function BankLoginPage() {
             <div className="mb-4">
               <Label
                 htmlFor="login-username"
-                className="mb-1.5 block text-sm font-medium text-slate-300"
+                className="mb-1.5 block text-sm font-medium text-slate-700"
               >
                 Username
               </Label>
@@ -149,7 +149,7 @@ export default function BankLoginPage() {
                 disabled={isLoading}
                 data-testid="login-username-input"
                 aria-describedby={error ? "login-error-banner" : undefined}
-                className="border-slate-600 bg-slate-700/60 text-white placeholder:text-slate-500 focus-visible:ring-violet-500"
+                className="border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 focus-visible:ring-violet-500"
               />
             </div>
 
@@ -157,7 +157,7 @@ export default function BankLoginPage() {
             <div className="mb-4">
               <Label
                 htmlFor="login-password"
-                className="mb-1.5 block text-sm font-medium text-slate-300"
+                className="mb-1.5 block text-sm font-medium text-slate-700"
               >
                 Password
               </Label>
@@ -172,7 +172,7 @@ export default function BankLoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={isLoading}
                   data-testid="login-password-input"
-                  className="border-slate-600 bg-slate-700/60 pr-10 text-white placeholder:text-slate-500 focus-visible:ring-violet-500"
+                  className="border-slate-300 bg-white pr-10 text-slate-900 placeholder:text-slate-400 focus-visible:ring-violet-500"
                 />
                 {/*
                  * Hard locator: toggle — no data-testid, aria-label only
@@ -181,7 +181,7 @@ export default function BankLoginPage() {
                  */}
                 <button
                   type="button"
-                  className="absolute top-1/2 right-2.5 -translate-y-1/2 text-slate-400 hover:text-slate-200"
+                  className="absolute top-1/2 right-2.5 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
                   tabIndex={-1}
@@ -202,7 +202,7 @@ export default function BankLoginPage() {
                 checked={rememberMe}
                 onCheckedChange={(v) => setRememberMe(!!v)}
                 data-testid="login-remember-me-checkbox"
-                className="border-slate-500"
+                className="border-slate-300"
               />
               {/*
                * Hard locator: label has no `for` attribute — must use sibling XPath
@@ -212,7 +212,7 @@ export default function BankLoginPage() {
                */}
               <label
                 htmlFor="login-remember-me"
-                className="cursor-pointer text-sm text-slate-400"
+                className="cursor-pointer text-sm text-slate-600"
               >
                 Remember me
               </label>
@@ -234,7 +234,7 @@ export default function BankLoginPage() {
           <div className="mt-4 text-center">
             <Link
               href="/bank/forgot-password"
-              className="text-sm text-violet-400 hover:text-violet-300 hover:underline"
+              className="text-sm text-violet-600 hover:text-violet-700 hover:underline"
               data-testid="forgot-password-link"
             >
               Forgot password?
@@ -244,10 +244,10 @@ export default function BankLoginPage() {
 
         {/* Test credentials hint */}
         <div
-          className="mt-4 rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-3"
+          className="mt-4 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3"
           data-testid="test-credentials-panel"
         >
-          <p className="text-xs font-medium text-slate-400">
+          <p className="text-xs font-medium text-slate-500">
             Test credentials
           </p>
           <div className="mt-3 overflow-x-auto">
@@ -256,7 +256,7 @@ export default function BankLoginPage() {
               data-testid="test-credentials-table"
             >
               <thead>
-                <tr className="border-b border-slate-700 text-left text-slate-400">
+                <tr className="border-b border-slate-200 text-left text-slate-500">
                   <th className="px-2 py-1 font-medium">Username</th>
                   <th className="px-2 py-1 font-medium">Password</th>
                   <th className="px-2 py-1 font-medium">Description</th>
@@ -290,6 +290,11 @@ export default function BankLoginPage() {
                     note: "Slow loading",
                   },
                   {
+                    user: "error_user",
+                    pw: "bank_sauce",
+                    note: "Wrong loan total",
+                  },
+                  {
                     user: "admin_user",
                     pw: "admin_sauce",
                     note: "Admin view",
@@ -304,11 +309,11 @@ export default function BankLoginPage() {
                    */
                   <tr
                     key={c.user}
-                    className="border-b border-slate-800/60 font-mono hover:bg-slate-700/40 last:border-b-0"
+                    className="border-b border-slate-200 font-mono hover:bg-slate-100 last:border-b-0"
                     data-testid="credential-row"
                     data-username={c.user}
                   >
-                    <td className="group/username px-2 py-1 text-violet-300">
+                    <td className="group/username px-2 py-1 text-violet-600">
                       <span className="inline-flex items-center gap-1.5">
                         {c.user}
                         <button
@@ -316,19 +321,19 @@ export default function BankLoginPage() {
                           onClick={() =>
                             handleCopy(c.user, `${c.user}-username`)
                           }
-                          className="opacity-0 transition-opacity group-hover/username:opacity-100 focus-visible:opacity-100 text-slate-400 hover:text-violet-300"
+                          className="opacity-0 transition-opacity group-hover/username:opacity-100 focus-visible:opacity-100 text-slate-400 hover:text-violet-600"
                           aria-label={`Copy username ${c.user}`}
                           data-testid="copy-username-btn"
                         >
                           {copiedField === `${c.user}-username` ? (
-                            <Check className="h-3 w-3 text-emerald-400" />
+                            <Check className="h-3 w-3 text-emerald-600" />
                           ) : (
                             <Copy className="h-3 w-3" />
                           )}
                         </button>
                       </span>
                     </td>
-                    <td className="group/password px-2 py-1 text-slate-400">
+                    <td className="group/password px-2 py-1 text-slate-600">
                       <span className="inline-flex items-center gap-1.5">
                         {c.pw}
                         <button
@@ -336,12 +341,12 @@ export default function BankLoginPage() {
                           onClick={() =>
                             handleCopy(c.pw, `${c.user}-password`)
                           }
-                          className="opacity-0 transition-opacity group-hover/password:opacity-100 focus-visible:opacity-100 text-slate-400 hover:text-violet-300"
+                          className="opacity-0 transition-opacity group-hover/password:opacity-100 focus-visible:opacity-100 text-slate-400 hover:text-violet-600"
                           aria-label={`Copy password for ${c.user}`}
                           data-testid="copy-password-btn"
                         >
                           {copiedField === `${c.user}-password` ? (
-                            <Check className="h-3 w-3 text-emerald-400" />
+                            <Check className="h-3 w-3 text-emerald-600" />
                           ) : (
                             <Copy className="h-3 w-3" />
                           )}

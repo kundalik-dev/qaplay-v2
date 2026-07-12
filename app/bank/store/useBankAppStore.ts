@@ -24,6 +24,7 @@ import {
   createSeedAccounts,
   createSeedTransactions,
   createSeedNotifications,
+  createSeedLoanApplications,
 } from "../lib/seed-data";
 import { generateRefId, generateTxnId, todayISO } from "../lib/utils";
 
@@ -175,7 +176,10 @@ export const useBankAppStore = create<BankStore>()(
             username === "standard_user" ? [...SEED_PAYEES] : [];
           billers[username] = [...SEED_BILLERS];
           notifications[username] = createSeedNotifications(username);
-          loanApplications[username] = [];
+          loanApplications[username] = createSeedLoanApplications(
+            username,
+            userAccounts,
+          );
         }
 
         set({
@@ -239,7 +243,10 @@ export const useBankAppStore = create<BankStore>()(
             ...state.notifications,
             [username]: createSeedNotifications(username),
           },
-          loanApplications: { ...state.loanApplications, [username]: [] },
+          loanApplications: {
+            ...state.loanApplications,
+            [username]: createSeedLoanApplications(username, userAccounts),
+          },
         }));
       },
 

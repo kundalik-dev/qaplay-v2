@@ -188,7 +188,7 @@ export default function SendMoneyPage() {
             <div className="mb-4">
               <Label
                 htmlFor="send-from-trigger"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 From Account
               </Label>
@@ -221,7 +221,7 @@ export default function SendMoneyPage() {
 
             {/* Payee section */}
             <div className="mb-4">
-              <p className="mb-2 text-sm font-medium text-slate-700">Payee</p>
+              <p className="mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">Payee</p>
 
               {savedPayees.length > 0 && (
                 /*
@@ -302,7 +302,7 @@ export default function SendMoneyPage() {
                   <div>
                     <Label
                       htmlFor="new-payee-name"
-                      className="mb-1 block text-xs font-medium text-slate-600"
+                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
                     >
                       Payee Name
                     </Label>
@@ -319,7 +319,7 @@ export default function SendMoneyPage() {
                   <div>
                     <Label
                       htmlFor="new-payee-bank"
-                      className="mb-1 block text-xs font-medium text-slate-600"
+                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
                     >
                       Bank Name
                     </Label>
@@ -339,7 +339,7 @@ export default function SendMoneyPage() {
                      * XPath: //span[normalize-space()="Routing Number (9 digits)"]/following-sibling::div//input
                      * CSS: [data-testid="new-payee-form"] input[name="routing_number_field"]
                      */}
-                    <span className="mb-1 block text-xs font-medium text-slate-600">
+                    <span className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400">
                       Routing Number (9 digits)
                     </span>
                     <div>
@@ -361,7 +361,7 @@ export default function SendMoneyPage() {
                   <div>
                     <Label
                       htmlFor="new-payee-account"
-                      className="mb-1 block text-xs font-medium text-slate-600"
+                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
                     >
                       Account Number
                     </Label>
@@ -388,7 +388,7 @@ export default function SendMoneyPage() {
                     />
                     <Label
                       htmlFor="save-payee"
-                      className="cursor-pointer text-xs text-slate-600"
+                      className="cursor-pointer text-xs text-slate-600 dark:text-slate-400"
                     >
                       Save this payee for future transfers
                     </Label>
@@ -401,7 +401,7 @@ export default function SendMoneyPage() {
             <div className="mb-4">
               <Label
                 htmlFor="send-amount"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Amount
               </Label>
@@ -429,7 +429,7 @@ export default function SendMoneyPage() {
             <div className="mb-5">
               <Label
                 htmlFor="send-note"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Note (optional)
               </Label>

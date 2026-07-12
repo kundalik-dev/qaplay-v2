@@ -5,6 +5,7 @@ import type {
   Payee,
   Biller,
   Notification,
+  LoanApplication,
 } from "./types";
 
 // ─── Users ───────────────────────────────────────────────────────────────────
@@ -87,6 +88,24 @@ export const SEED_USERS: Record<string, UserRecord> = {
       email: "admin@securebank.example.com",
       phone: "(415) 555-0001",
       address: "1 SecureBank Plaza, San Francisco, CA 94111",
+    },
+  },
+  // Intentional-bug practice user: the "Applied Loans" total on
+  // app/bank/apply-loan miscalculates for this account only (see
+  // createSeedLoanApplications' consumer in the apply-loan page, which
+  // excludes the most recently added loan from the displayed total for
+  // this username). Every other account computes the total correctly.
+  error_user: {
+    username: "error_user",
+    password: "bank_sauce",
+    role: "standard",
+    status: "active",
+    profile: {
+      firstName: "Riley",
+      lastName: "Nguyen",
+      email: "riley.nguyen@example.com",
+      phone: "(415) 555-0606",
+      address: "88 Bryant Street, San Francisco, CA 94107",
     },
   },
 };
@@ -432,4 +451,100 @@ export function createSeedNotifications(username: string): Notification[] {
   }
 
   return base;
+}
+
+// ─── Loan Applications ────────────────────────────────────────────────────────
+
+/**
+ * Seed loan application history, newest first (matches the ordering the
+ * store uses when a new application is prepended in `applyLoan`). Every
+ * account gets the same 7 historical applications so the loan history
+ * table on app/bank/apply-loan has enough rows to demo sorting, date
+ * filtering, and 5-per-page pagination out of the box.
+ */
+export function createSeedLoanApplications(
+  username: string,
+  accounts: Account[],
+): LoanApplication[] {
+  const disbursementAccount =
+    accounts.find((a) => a.type === "Checking") ?? accounts[0];
+  if (!disbursementAccount) return [];
+
+  const entries: Array<{
+    date: string;
+    loanType: LoanApplication["loanType"];
+    amount: number;
+    termMonths: number;
+    purpose: string;
+    status: LoanApplication["status"];
+  }> = [
+    {
+      date: "2026-06-15",
+      loanType: "Home",
+      amount: 15000,
+      termMonths: 36,
+      purpose: "Roof repair",
+      status: "pending",
+    },
+    {
+      date: "2026-05-28",
+      loanType: "Auto",
+      amount: 9800,
+      termMonths: 48,
+      purpose: "Used car — down payment assist",
+      status: "approved",
+    },
+    {
+      date: "2026-05-07",
+      loanType: "Personal",
+      amount: 2500,
+      termMonths: 12,
+      purpose: "Medical expenses",
+      status: "pending",
+    },
+    {
+      date: "2026-04-19",
+      loanType: "Student",
+      amount: 12000,
+      termMonths: 36,
+      purpose: "Tuition — Spring semester",
+      status: "approved",
+    },
+    {
+      date: "2026-04-02",
+      loanType: "Home",
+      amount: 45000,
+      termMonths: 60,
+      purpose: "Kitchen renovation",
+      status: "pending",
+    },
+    {
+      date: "2026-03-11",
+      loanType: "Personal",
+      amount: 5000,
+      termMonths: 24,
+      purpose: "Debt consolidation",
+      status: "approved",
+    },
+    {
+      date: "2026-02-03",
+      loanType: "Auto",
+      amount: 18500,
+      termMonths: 60,
+      purpose: "Vehicle purchase — 2023 Honda Civic",
+      status: "approved",
+    },
+  ];
+
+  return entries.map((entry, i) => ({
+    id: `loan-seed-${i + 1}`,
+    refId: `LOAN-${entry.date.replace(/-/g, "")}-${1000 + i}`,
+    loanType: entry.loanType,
+    amount: entry.amount,
+    termMonths: entry.termMonths,
+    purpose: entry.purpose,
+    disbursementAccount,
+    status: entry.status,
+    date: entry.date,
+  }));
 }

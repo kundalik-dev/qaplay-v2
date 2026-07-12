@@ -56,7 +56,7 @@ export default function SendMoneyConfirmationPage() {
         className="mb-6 w-full rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-800"
         data-testid="send-confirmation-summary"
       >
-        <h2 className="mb-3 text-sm font-semibold text-slate-700">
+        <h2 className="mb-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
           Payment Details
         </h2>
         <div className="space-y-2 text-sm">
