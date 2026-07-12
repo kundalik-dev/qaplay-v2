@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
@@ -69,11 +68,22 @@ export function PracticeElementCard({ card }: PracticeCardProps) {
         </div>
 
         <div className={styles.iconBox} aria-hidden="true">
-          <Image
+          {/*
+            Plain <img> instead of next/image: these are static local SVGs
+            served straight from /public, so routing them through the
+            /_next/image optimizer would add an extra network hop per icon
+            for no benefit. loading="lazy" + decoding="async" defers
+            below-the-fold icon requests and the Cache-Control header set
+            in next.config.ts (headers()) lets the browser cache them
+            indefinitely after the first paint.
+          */}
+          <img
             src={iconSrc}
             alt={iconAlt}
             width={26}
             height={26}
+            loading="lazy"
+            decoding="async"
             className="object-contain"
           />
         </div>

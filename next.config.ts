@@ -26,6 +26,23 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  async headers() {
+    return [
+      {
+        // Static SVG icons (practice card icons, nav icons, etc.) never
+        // change content at a given path — cache them aggressively in the
+        // browser so repeat visits to /practice don't re-request them.
+        source: "/:path((?:mainicons|icons).*\\.svg)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
