@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 import {
   Save,
   Palette,
@@ -17,7 +18,10 @@ import {
 } from "lucide-react";
 import pageStyles from "./settings.module.css";
 import dashboardStyles from "../_components/dashboard.module.css";
+import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
+
+const COMING_SOON_DESCRIPTION = "This feature is still under development.";
 
 const MODELS = [
   { id: "openai/gpt-4o-mini", name: "OpenAI GPT-4o Mini (Default)" },
@@ -46,7 +50,6 @@ export default function SettingsPage() {
   const [fontSize, setFontSize] = useState<number>(16);
 
   // Profile State
-  const [profileSaved, setProfileSaved] = useState(false);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
 
   const updateSettings = (updates: Record<string, unknown>) => {
@@ -102,21 +105,28 @@ export default function SettingsPage() {
   const handleSaveProfile = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Simulated API Call for Resume Upload
     if (resumeFile) {
-      console.log("Simulating resume upload to API:", resumeFile.name);
-      /*
-      const formData = new FormData();
-      formData.append("resume", resumeFile);
-      fetch("/api/upload-resume", { method: "POST", body: formData })
-        .then(res => res.json())
-        .then(data => console.log("Upload success", data))
-        .catch(err => console.error("Upload failed", err));
-      */
+      toast.info("Resume upload is coming soon!", {
+        description: COMING_SOON_DESCRIPTION,
+      });
+      return;
     }
 
-    setProfileSaved(true);
-    setTimeout(() => setProfileSaved(false), 3000);
+    toast.info("Profile updates are coming soon!", {
+      description: COMING_SOON_DESCRIPTION,
+    });
+  };
+
+  const handleUploadPhoto = () => {
+    toast.info("Photo upload is coming soon!", {
+      description: COMING_SOON_DESCRIPTION,
+    });
+  };
+
+  const handleDeleteAccount = () => {
+    toast.error("Account deletion is coming soon!", {
+      description: COMING_SOON_DESCRIPTION,
+    });
   };
 
   const handleThemeChange = (newTheme: "light" | "dark" | "system") => {
@@ -149,6 +159,7 @@ export default function SettingsPage() {
 
   return (
     <div className={cn(dashboardStyles.main, pageStyles.page)}>
+      <Toaster position="top-center" />
       {/* Header */}
       <div className={pageStyles.topBar}>
         <div className={pageStyles.titleGroup}>
@@ -230,6 +241,8 @@ export default function SettingsPage() {
                 </div>
                 <div>
                   <button
+                    type="button"
+                    onClick={handleUploadPhoto}
                     className={cn(
                       pageStyles.btn,
                       pageStyles.btnSecondary,
@@ -357,18 +370,6 @@ export default function SettingsPage() {
                   >
                     Save Changes
                   </button>
-                  {profileSaved && (
-                    <span
-                      style={{
-                        color: "var(--success)",
-                        fontSize: "13px",
-                        fontWeight: 500,
-                        marginLeft: "8px",
-                      }}
-                    >
-                      ✓ Saved successfully
-                    </span>
-                  )}
                 </div>
               </form>
             </div>
@@ -382,7 +383,11 @@ export default function SettingsPage() {
                   Permanently delete your account and all associated data.
                 </p>
               </div>
-              <button className={cn(pageStyles.btn, pageStyles.btnDanger)}>
+              <button
+                type="button"
+                onClick={handleDeleteAccount}
+                className={cn(pageStyles.btn, pageStyles.btnDanger)}
+              >
                 Delete Account
               </button>
             </div>

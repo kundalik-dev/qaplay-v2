@@ -11,9 +11,8 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { Separator } from "@/components/ui/separator";
-import { useBankAppStore } from "../store/useBankAppStore";
+import { useBankAppStore, useUserNotifications } from "../store/useBankAppStore";
 import { formatRelativeTime } from "../lib/utils";
-import type { Notification } from "../lib/types";
 
 const TYPE_ICON = {
   info: Info,
@@ -29,9 +28,7 @@ const TYPE_COLORS = {
 export default function NotificationsPage() {
   const { currentUsername, markNotificationRead, markAllNotificationsRead } =
     useBankAppStore();
-  const notifications: Notification[] = useBankAppStore((s) =>
-    currentUsername ? (s.notifications[currentUsername] ?? []) : [],
-  );
+  const notifications = useUserNotifications(currentUsername);
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 

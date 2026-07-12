@@ -7,7 +7,6 @@ import { ArrowLeft, Receipt } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -26,44 +25,49 @@ import {
   useBankAppStore,
   useCurrentUser,
   useUserAccounts,
+  useUserBillers,
 } from "../store/useBankAppStore";
 import { formatCurrency, todayISO } from "../lib/utils";
+import { BillerCombobox } from "./_components/biller-combobox";
+import { AddBillerDialog } from "./_components/add-biller-dialog";
 
 export default function BillPayPage() {
   const router = useRouter();
-  const { currentUsername, payBill } = useBankAppStore();
-  const savedBillers = useBankAppStore((s) =>
-    currentUsername ? (s.billers[currentUsername] ?? []) : [],
-  );
+  const { currentUsername, payBill, saveBiller } = useBankAppStore();
+  const savedBillers = useUserBillers(currentUsername);
   const currentUser = useCurrentUser();
   const accounts = useUserAccounts(currentUsername);
   const isFrozen = currentUser?.status === "frozen";
 
   const [fromId, setFromId] = useState("");
-  const [selectedBillerId, setSelectedBillerId] = useState("new");
+  const [selectedBillerId, setSelectedBillerId] = useState("");
   const [billerName, setBillerName] = useState("");
   const [billerRef, setBillerRef] = useState("");
-  const [saveBiller, setSaveBiller] = useState(false);
   const [amount, setAmount] = useState("");
   const [paymentDate, setPaymentDate] = useState(todayISO());
   const [memo, setMemo] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [addBillerOpen, setAddBillerOpen] = useState(false);
 
   const fromAccount = accounts.find((a) => a.id === fromId);
 
   const handleSelectBiller = (id: string) => {
     setSelectedBillerId(id);
-    if (id !== "new") {
-      const b = savedBillers.find((b) => b.id === id);
-      if (b) {
-        setBillerName(b.name);
-        setBillerRef(b.referenceNumber);
-      }
-    } else {
-      setBillerName("");
-      setBillerRef("");
+    const b = savedBillers.find((b) => b.id === id);
+    if (b) {
+      setBillerName(b.name);
+      setBillerRef(b.referenceNumber);
     }
+  };
+
+  const handleAddBiller = (values: { name: string; referenceNumber: string }) => {
+    if (!currentUsername) return;
+    const newId = saveBiller(currentUsername, values);
+    setSelectedBillerId(newId);
+    setBillerName(values.name);
+    setBillerRef(values.referenceNumber);
+    setAddBillerOpen(false);
   };
 
   const handleReview = (e: React.FormEvent) => {
@@ -73,12 +77,8 @@ export default function BillPayPage() {
       setError("Please select an account.");
       return;
     }
-    if (!billerName.trim()) {
-      setError("Please enter or select a biller.");
-      return;
-    }
-    if (!billerRef.trim()) {
-      setError("Please enter the reference number.");
+    if (!billerName.trim() || !billerRef.trim()) {
+      setError("Please select a biller.");
       return;
     }
     const amt = parseFloat(amount);
@@ -101,7 +101,7 @@ export default function BillPayPage() {
       parseFloat(amount),
       paymentDate,
       memo,
-      saveBiller && selectedBillerId === "new",
+      false,
     );
     if (err) {
       setError(err);
@@ -195,125 +195,15 @@ export default function BillPayPage() {
               </Select>
             </div>
 
-            {/* Biller selection */}
+            {/* Biller selection — searchable dropdown */}
             <div className="mb-4">
-              <p className="mb-2 text-sm font-medium text-slate-700">Biller</p>
-              {/*
-               * Medium locator: saved biller cards — data-testid="biller-card" + data-biller-id
-               * Practice:
-               *   page.getByTestId('biller-card').filter({ hasText: 'City Electric' })
-               *   page.locator('[data-testid="biller-card"][data-biller-id="biller-001"]')
-               */}
-              <div className="mb-3 space-y-2" data-testid="saved-billers-list">
-                {savedBillers.map((b) => (
-                  <label
-                    key={b.id}
-                    className={[
-                      "flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-colors",
-                      selectedBillerId === b.id
-                        ? "border-violet-400 bg-violet-50"
-                        : "border-slate-200 hover:border-slate-300",
-                    ].join(" ")}
-                    data-testid="biller-card"
-                    data-biller-id={b.id}
-                  >
-                    <input
-                      type="radio"
-                      name="billerSelection"
-                      value={b.id}
-                      checked={selectedBillerId === b.id}
-                      onChange={() => handleSelectBiller(b.id)}
-                      className="accent-violet-600"
-                    />
-                    <div>
-                      <p className="text-sm font-medium text-slate-900">
-                        {b.name}
-                      </p>
-                      <p className="text-xs text-slate-500">
-                        Ref: {b.referenceNumber}
-                      </p>
-                    </div>
-                  </label>
-                ))}
-                <label
-                  className={[
-                    "flex cursor-pointer items-center gap-3 rounded-lg border p-3",
-                    selectedBillerId === "new"
-                      ? "border-violet-400 bg-violet-50"
-                      : "border-dashed border-slate-300",
-                  ].join(" ")}
-                  data-testid="new-biller-option"
-                >
-                  <input
-                    type="radio"
-                    name="billerSelection"
-                    value="new"
-                    checked={selectedBillerId === "new"}
-                    onChange={() => handleSelectBiller("new")}
-                    className="accent-violet-600"
-                  />
-                  <span className="text-sm text-slate-600">
-                    Add a new biller
-                  </span>
-                </label>
-              </div>
-
-              {selectedBillerId === "new" && (
-                <div
-                  className="space-y-3 rounded-lg border border-slate-200 bg-slate-50 p-4"
-                  data-testid="new-biller-form"
-                >
-                  <div>
-                    <Label
-                      htmlFor="new-biller-name"
-                      className="mb-1 block text-xs font-medium text-slate-600"
-                    >
-                      Biller Name
-                    </Label>
-                    <Input
-                      id="new-biller-name"
-                      type="text"
-                      placeholder="e.g. City Electric Co."
-                      value={billerName}
-                      onChange={(e) => setBillerName(e.target.value)}
-                      disabled={isFrozen}
-                      data-testid="new-biller-name-input"
-                    />
-                  </div>
-                  <div>
-                    <Label
-                      htmlFor="new-biller-ref"
-                      className="mb-1 block text-xs font-medium text-slate-600"
-                    >
-                      Account / Reference Number
-                    </Label>
-                    <Input
-                      id="new-biller-ref"
-                      type="text"
-                      placeholder="e.g. ACC-0042"
-                      value={billerRef}
-                      onChange={(e) => setBillerRef(e.target.value)}
-                      disabled={isFrozen}
-                      data-testid="new-biller-ref-input"
-                    />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Checkbox
-                      id="save-biller"
-                      checked={saveBiller}
-                      onCheckedChange={(v) => setSaveBiller(!!v)}
-                      disabled={isFrozen}
-                      data-testid="save-biller-checkbox"
-                    />
-                    <Label
-                      htmlFor="save-biller"
-                      className="cursor-pointer text-xs text-slate-600"
-                    >
-                      Save this biller for future payments
-                    </Label>
-                  </div>
-                </div>
-              )}
+              <BillerCombobox
+                billers={savedBillers}
+                selectedBillerId={selectedBillerId}
+                onSelectBiller={handleSelectBiller}
+                onAddNew={() => setAddBillerOpen(true)}
+                disabled={isFrozen}
+              />
             </div>
 
             {/* Amount */}
@@ -451,6 +341,13 @@ export default function BillPayPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Add biller dialog */}
+      <AddBillerDialog
+        open={addBillerOpen}
+        onOpenChange={setAddBillerOpen}
+        onSubmit={handleAddBiller}
+      />
     </div>
   );
 }

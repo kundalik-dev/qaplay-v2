@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeftRight, Send, Receipt } from "lucide-react";
+import { ArrowLeftRight, Send, Receipt, Landmark, History } from "lucide-react";
 
 interface QuickActionsProps {
   isFrozen: boolean;
@@ -27,6 +27,20 @@ const ACTIONS = [
     testid: "quick-action-bill-pay",
     description: "Pay utilities and services",
   },
+  {
+    label: "Apply for Loan",
+    href: "/bank/apply-loan",
+    icon: Landmark,
+    testid: "quick-action-apply-loan",
+    description: "Personal, auto, home & more",
+  },
+  {
+    label: "Transactions",
+    href: "/bank/transactions",
+    icon: History,
+    testid: "quick-action-transactions",
+    description: "View all account activity",
+  },
 ];
 
 export function QuickActions({ isFrozen }: QuickActionsProps) {
@@ -51,7 +65,7 @@ export function QuickActions({ isFrozen }: QuickActionsProps) {
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {ACTIONS.map((action) => {
           const Icon = action.icon;
 

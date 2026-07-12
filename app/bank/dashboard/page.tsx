@@ -1,16 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { formatCurrency } from "../lib/utils";
 import {
   useBankAppStore,
   useCurrentUser,
   useUserAccounts,
   useUserTransactions,
 } from "../store/useBankAppStore";
-import { AccountSummaryCards } from "./_components/account-summary-cards";
 import { QuickActions } from "./_components/quick-actions";
 import { RecentTransactionsList } from "./_components/recent-transactions-list";
+import { StatCards } from "./_components/stat-cards";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 
@@ -33,6 +32,21 @@ export default function DashboardPage() {
   const totalBalance = accounts.reduce((sum, a) => sum + a.balance, 0);
   const isFrozen = currentUser?.status === "frozen";
   const firstName = currentUser?.profile.firstName ?? currentUsername ?? "User";
+
+  const now = new Date();
+  const currentMonthTxns = transactions.filter((txn) => {
+    const d = new Date(txn.date + "T12:00:00Z");
+    return (
+      d.getUTCFullYear() === now.getUTCFullYear() &&
+      d.getUTCMonth() === now.getUTCMonth()
+    );
+  });
+  const monthlyIncome = currentMonthTxns
+    .filter((txn) => txn.amount > 0)
+    .reduce((sum, txn) => sum + txn.amount, 0);
+  const monthlyExpense = currentMonthTxns
+    .filter((txn) => txn.amount < 0)
+    .reduce((sum, txn) => sum + Math.abs(txn.amount), 0);
 
   if (!isVisible) {
     return (
@@ -67,37 +81,13 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* ── Total balance stat ───────────────────────────────────── */}
-      <div
-        className="mb-6 max-w-md rounded-xl border border-blue-200 bg-gradient-to-r from-blue-600 to-blue-800 p-5 text-white"
-        data-testid="total-balance-card"
-      >
-        <p className="text-sm text-blue-200">Total Net Worth</p>
-        {/*
-         * Hard locator: total balance value — no data-testid, sibling of label paragraph
-         * XPath: //div[@data-testid="total-balance-card"]//p[2]
-         *        //div[@data-testid="total-balance-card"]/p[contains(@class,"text-3xl")]
-         */}
-        <p
-          className="mt-1 text-3xl font-bold tabular-nums"
-          data-testid="dashboard-total-balance"
-        >
-          {formatCurrency(totalBalance)}
-        </p>
-        <p className="mt-1 text-xs text-blue-300">
-          Across {accounts.length} account{accounts.length !== 1 ? "s" : ""}
-        </p>
-      </div>
-
-      {/* ── Account summary cards ─────────────────────────────────── */}
-      <section className="mb-6" aria-label="Account summaries">
-        <h2 className="mb-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
-          Your Accounts
-        </h2>
-        <AccountSummaryCards accounts={accounts} />
-      </section>
-
-      <Separator className="my-6" />
+      {/* ── Top stat cards ───────────────────────────────────────── */}
+      <StatCards
+        netWorth={totalBalance}
+        accountCount={accounts.length}
+        monthlyIncome={monthlyIncome}
+        monthlyExpense={monthlyExpense}
+      />
 
       {/* ── Quick actions ─────────────────────────────────────────── */}
       <div className="mb-6">

@@ -26,6 +26,7 @@ import {
   useBankAppStore,
   useCurrentUser,
   useUserAccounts,
+  useUserPayees,
 } from "../store/useBankAppStore";
 import {
   formatCurrency,
@@ -36,9 +37,7 @@ import {
 export default function SendMoneyPage() {
   const router = useRouter();
   const { currentUsername, sendMoney } = useBankAppStore();
-  const savedPayees = useBankAppStore((s) =>
-    currentUsername ? (s.payees[currentUsername] ?? []) : [],
-  );
+  const savedPayees = useUserPayees(currentUsername);
   const currentUser = useCurrentUser();
   const accounts = useUserAccounts(currentUsername);
   const isFrozen = currentUser?.status === "frozen";

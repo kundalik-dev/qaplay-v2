@@ -30,7 +30,7 @@ export const demoAppCards: DemoAppCard[] = [
     title: "Bank Demo App",
     description:
       "Practice realistic banking journeys with forms, validations, account workflows, and stable targets for automation coverage.",
-    href: "/demo/bank",
+    href: "/bank",
     imageSrc: "/images/bank-demo-app.png",
     imageAlt: "Bank demo app preview",
     filters: ["all", "ui", "e2e"],

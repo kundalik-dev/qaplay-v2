@@ -354,6 +354,25 @@ export const SEED_BILLERS: Biller[] = [
     referenceNumber: "ACC-7731",
   },
   { id: "biller-003", name: "FastNet Internet", referenceNumber: "ACC-2219" },
+  {
+    id: "biller-004",
+    name: "Pacific Gas & Power",
+    referenceNumber: "ACC-3345",
+  },
+  { id: "biller-005", name: "Skyline Cable TV", referenceNumber: "ACC-5567" },
+  { id: "biller-006", name: "Verizon Wireless", referenceNumber: "ACC-8890" },
+  {
+    id: "biller-007",
+    name: "SafeGuard Insurance",
+    referenceNumber: "ACC-1123",
+  },
+  {
+    id: "biller-008",
+    name: "GreenWaste Disposal",
+    referenceNumber: "ACC-4456",
+  },
+  { id: "biller-009", name: "StreamMax", referenceNumber: "ACC-9901" },
+  { id: "biller-010", name: "AT&T Landline", referenceNumber: "ACC-1145" },
 ];
 
 // ─── Notifications ────────────────────────────────────────────────────────────

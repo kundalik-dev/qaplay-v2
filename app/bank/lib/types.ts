@@ -101,6 +101,22 @@ export interface BillPayResult {
   memo: string;
 }
 
+// ─── Loan Application ────────────────────────────────────────────────────────
+
+export type LoanType = "Personal" | "Auto" | "Home" | "Student";
+
+export interface LoanApplication {
+  id: string; // e.g. "loan-1"
+  refId: string; // e.g. "LOAN-20260712-0042"
+  loanType: LoanType;
+  amount: number;
+  termMonths: number;
+  purpose: string;
+  disbursementAccount: Account;
+  status: "pending" | "approved";
+  date: string; // ISO date string
+}
+
 // ─── Store Shape ─────────────────────────────────────────────────────────────
 
 export interface BankAppState {
@@ -113,10 +129,12 @@ export interface BankAppState {
   payees: Record<string, Payee[]>;
   billers: Record<string, Biller[]>;
   notifications: Record<string, Notification[]>;
+  loanApplications: Record<string, LoanApplication[]>;
 
   lastTransferResult: TransferResult | null;
   lastSendResult: SendResult | null;
   lastBillPayResult: BillPayResult | null;
+  lastLoanResult: LoanApplication | null;
 }
 
 export type TransactionCategory =

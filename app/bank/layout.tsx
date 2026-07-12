@@ -9,6 +9,8 @@ import {
   ArrowLeftRight,
   Send,
   Receipt,
+  Landmark,
+  History,
   Bell,
   User,
   LogOut,
@@ -19,6 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { NavThemeToggle } from "@/components/app-nav/nav/nav-theme-toggle";
 import {
   useBankAppStore,
   useCurrentUser,
@@ -63,6 +66,20 @@ const NAV_MAIN = [
     testid: "sidebar-link-bill-pay",
     nav: "bill-pay",
   },
+  {
+    label: "Transactions",
+    href: "/bank/transactions",
+    icon: History,
+    testid: "sidebar-link-transactions",
+    nav: "transactions",
+  },
+  {
+    label: "Apply Loan",
+    href: "/bank/apply-loan",
+    icon: Landmark,
+    testid: "sidebar-link-apply-loan",
+    nav: "apply-loan",
+  },
 ];
 
 const NAV_ACCOUNT = [
@@ -91,120 +108,112 @@ function BankSidebar({
   pathname,
   username,
   unreadCount,
-  onLogout,
   onClose,
 }: {
   pathname: string;
   username: string;
   unreadCount: number;
-  onLogout: () => void;
   onClose?: () => void;
 }) {
   return (
     <aside
-      className="flex h-full w-56 flex-col bg-slate-900 px-3 py-4"
+      className="flex h-full w-56 flex-col border-r border-slate-200 bg-white px-3 py-4 dark:border-slate-800 dark:bg-slate-900"
       data-testid="bank-sidebar"
       role="navigation"
       aria-label="Main navigation"
     >
-      {/* Brand */}
-      <div className="mb-6 flex items-center gap-2 px-2">
-        <div
-          className="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-600"
-          aria-hidden="true"
-        >
-          <Building2 className="h-4 w-4 text-white" />
-        </div>
-        <span className="text-sm font-bold text-white">SecureBank</span>
+      {/* Scrollable nav area */}
+      <div className="flex-1 overflow-y-auto">
+        {/* Mobile close */}
         {onClose && (
-          <button
-            type="button"
-            className="ml-auto text-slate-400 hover:text-white"
-            onClick={onClose}
-            aria-label="Close navigation menu"
-            data-testid="mobile-menu-close-btn"
-          >
-            <X className="h-4 w-4" />
-          </button>
+          <div className="mb-6 flex items-center px-2">
+            <button
+              type="button"
+              className="ml-auto text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+              onClick={onClose}
+              aria-label="Close navigation menu"
+              data-testid="mobile-menu-close-btn"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
         )}
+
+        {/* Main nav */}
+        <p className="mb-1 px-2 text-[10px] font-semibold tracking-widest text-slate-500 uppercase">
+          Main
+        </p>
+        <nav className="flex flex-col gap-0.5" data-testid="sidebar-main-nav">
+          {NAV_MAIN.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={[
+                  "flex items-center gap-2.5 rounded-md px-2 py-2 text-sm transition-colors",
+                  isActive
+                    ? "bg-violet-600 font-medium text-white"
+                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white",
+                ].join(" ")}
+                data-testid={item.testid}
+                data-nav={item.nav}
+                onClick={onClose}
+              >
+                <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        <Separator className="my-3" />
+
+        {/* Account nav */}
+        <p className="mb-1 px-2 text-[10px] font-semibold tracking-widest text-slate-500 uppercase">
+          Account
+        </p>
+        <nav className="flex flex-col gap-0.5" data-testid="sidebar-account-nav">
+          {NAV_ACCOUNT.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname.startsWith(item.href);
+            const isNotifications = item.nav === "notifications";
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={[
+                  "flex items-center gap-2.5 rounded-md px-2 py-2 text-sm transition-colors",
+                  isActive
+                    ? "bg-violet-600 font-medium text-white"
+                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white",
+                ].join(" ")}
+                data-testid={item.testid}
+                data-nav={item.nav}
+                onClick={onClose}
+              >
+                <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                <span>{item.label}</span>
+                {isNotifications && unreadCount > 0 && (
+                  <Badge
+                    className="ml-auto h-4 min-w-[1rem] rounded-full bg-violet-500 px-1 text-[10px] text-white"
+                    data-testid="sidebar-notification-badge"
+                    aria-label={`${unreadCount} unread notification${unreadCount === 1 ? "" : "s"}`}
+                  >
+                    {unreadCount}
+                  </Badge>
+                )}
+              </Link>
+            );
+          })}
+        </nav>
       </div>
 
-      {/* Main nav */}
-      <p className="mb-1 px-2 text-[10px] font-semibold tracking-widest text-slate-500 uppercase">
-        Main
-      </p>
-      <nav className="flex flex-col gap-0.5" data-testid="sidebar-main-nav">
-        {NAV_MAIN.map((item) => {
-          const Icon = item.icon;
-          const isActive = pathname.startsWith(item.href);
-          return (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={[
-                "flex items-center gap-2.5 rounded-md px-2 py-2 text-sm transition-colors",
-                isActive
-                  ? "bg-violet-600 font-medium text-white"
-                  : "text-slate-400 hover:bg-slate-800 hover:text-white",
-              ].join(" ")}
-              data-testid={item.testid}
-              data-nav={item.nav}
-              onClick={onClose}
-            >
-              <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-              <span>{item.label}</span>
-            </Link>
-          );
-        })}
-      </nav>
-
-      <Separator className="my-3 bg-slate-800" />
-
-      {/* Account nav */}
-      <p className="mb-1 px-2 text-[10px] font-semibold tracking-widest text-slate-500 uppercase">
-        Account
-      </p>
-      <nav className="flex flex-col gap-0.5" data-testid="sidebar-account-nav">
-        {NAV_ACCOUNT.map((item) => {
-          const Icon = item.icon;
-          const isActive = pathname.startsWith(item.href);
-          const isNotifications = item.nav === "notifications";
-          return (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={[
-                "flex items-center gap-2.5 rounded-md px-2 py-2 text-sm transition-colors",
-                isActive
-                  ? "bg-violet-600 font-medium text-white"
-                  : "text-slate-400 hover:bg-slate-800 hover:text-white",
-              ].join(" ")}
-              data-testid={item.testid}
-              data-nav={item.nav}
-              onClick={onClose}
-            >
-              <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-              <span>{item.label}</span>
-              {isNotifications && unreadCount > 0 && (
-                <Badge
-                  className="ml-auto h-4 min-w-[1rem] rounded-full bg-violet-500 px-1 text-[10px] text-white"
-                  data-testid="sidebar-notification-badge"
-                  aria-label={`${unreadCount} unread notification${unreadCount === 1 ? "" : "s"}`}
-                >
-                  {unreadCount}
-                </Badge>
-              )}
-            </Link>
-          );
-        })}
-      </nav>
-
-      <div className="mt-auto" />
-
-      {/* User + logout */}
-      <Separator className="mb-3 bg-slate-800" />
+      {/* User info — pinned to bottom */}
+      <Separator className="mb-3 shrink-0" />
       <div
-        className="mb-2 flex items-center gap-2 rounded-md px-2 py-1.5"
+        className="mb-1 flex shrink-0 items-center gap-2 rounded-md px-2 py-1.5"
         data-testid="sidebar-user-info"
       >
         {/*
@@ -217,19 +226,10 @@ function BankSidebar({
         >
           {username.slice(0, 2).toUpperCase()}
         </div>
-        <span className="truncate text-xs text-slate-300">{username}</span>
+        <span className="truncate text-xs text-slate-600 dark:text-slate-300">
+          {username}
+        </span>
       </div>
-
-      <button
-        type="button"
-        className="flex w-full items-center gap-2.5 rounded-md px-2 py-2 text-sm text-slate-400 transition-colors hover:bg-red-900/40 hover:text-red-400"
-        onClick={onLogout}
-        data-testid="sidebar-logout-btn"
-        data-nav="logout"
-      >
-        <LogOut className="h-4 w-4 shrink-0" aria-hidden="true" />
-        <span>Logout</span>
-      </button>
     </aside>
   );
 }
@@ -276,19 +276,22 @@ export default function BankLayout({
   if (!isReady) {
     return (
       <div
-        className="flex min-h-screen animate-pulse flex-col bg-slate-50"
+        className="flex min-h-screen animate-pulse flex-col bg-slate-50 dark:bg-slate-950"
         data-testid="bank-loading-skeleton"
         aria-busy="true"
         aria-label="Loading SecureBank"
       >
-        <div className="h-14 w-full bg-slate-200" />
+        <div className="h-14 w-full bg-slate-200 dark:bg-slate-900" />
         <div className="flex flex-1">
-          <div className="hidden w-56 bg-slate-300 md:block" />
+          <div className="hidden w-56 bg-slate-300 md:block dark:bg-slate-800" />
           <div className="flex-1 p-6">
-            <div className="mb-4 h-6 w-48 rounded bg-slate-200" />
+            <div className="mb-4 h-6 w-48 rounded bg-slate-200 dark:bg-slate-800" />
             <div className="grid grid-cols-4 gap-4">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-28 rounded-xl bg-slate-200" />
+                <div
+                  key={i}
+                  className="h-28 rounded-xl bg-slate-200 dark:bg-slate-800"
+                />
               ))}
             </div>
           </div>
@@ -309,13 +312,13 @@ export default function BankLayout({
 
   return (
     <div
-      className="flex min-h-screen flex-col bg-slate-50 dark:bg-slate-950"
+      className="flex h-screen flex-col overflow-hidden bg-slate-50 dark:bg-slate-950"
       data-testid="bank-app-shell"
       data-section="bank-app"
     >
       {/* ── Top Bar ────────────────────────────────────────────────────── */}
       <header
-        className="sticky top-0 z-30 flex h-14 items-center border-b border-slate-200 bg-white px-4 dark:border-slate-800 dark:bg-slate-900"
+        className="flex h-14 shrink-0 items-center border-b border-slate-200 bg-white px-4 dark:border-slate-800 dark:bg-slate-900"
         data-testid="bank-topbar"
       >
         {/* Mobile hamburger */}
@@ -347,6 +350,9 @@ export default function BankLayout({
         </Link>
 
         <div className="ml-auto flex items-center gap-2">
+          {/* Theme toggle */}
+          <NavThemeToggle />
+
           {/* Notification bell */}
           <Link
             href="/bank/notifications"
@@ -371,7 +377,7 @@ export default function BankLayout({
           </Link>
 
           {/* User chip */}
-          <Link
+          {/* <Link
             href="/bank/profile"
             className="flex items-center gap-1.5 rounded-md px-2 py-1 text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
             data-testid="nav-user-menu"
@@ -383,7 +389,7 @@ export default function BankLayout({
               {(currentUsername ?? "U").slice(0, 2).toUpperCase()}
             </div>
             <span className="hidden text-xs sm:inline">{currentUsername}</span>
-          </Link>
+          </Link> */}
 
           {/* Topbar logout */}
           <Button
@@ -408,7 +414,6 @@ export default function BankLayout({
             pathname={pathname}
             username={currentUsername ?? ""}
             unreadCount={unreadCount}
-            onLogout={handleLogout}
           />
         </div>
 
@@ -428,7 +433,6 @@ export default function BankLayout({
                 pathname={pathname}
                 username={currentUsername ?? ""}
                 unreadCount={unreadCount}
-                onLogout={handleLogout}
                 onClose={() => setMobileMenuOpen(false)}
               />
             </div>

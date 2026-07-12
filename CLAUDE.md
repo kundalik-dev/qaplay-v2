@@ -1,5 +1,9 @@
 @AGENTS.md
 
+## Bank App Rules
+
+`bank-claude.md` (repo root, next to this file) holds rules specific to the `app/bank` module — its purpose and locator strategy conventions, with more coding rules to be added over time. Read it before working on anything under `app/bank`.
+
 ## Project Intent
 
 This project is a modern, full-width QA learning platform focused on:

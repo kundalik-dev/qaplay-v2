@@ -27,7 +27,7 @@ export const navBrand: NavBrand = {
 export const navLinks: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Practice", href: "/practice" },
-  { label: "Advance Practice", href: "/advance-practice" },
+  // { label: "Advance Practice", href: "/advance-practice" },
   { label: "Demo Apps", href: "/demo" },
   // { label: "Dashboard", href: "/dashboard" },
   { label: "Challenges", href: "/challenges" },

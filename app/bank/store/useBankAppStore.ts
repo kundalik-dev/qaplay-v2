@@ -5,6 +5,7 @@ import { persist } from "zustand/middleware";
 import type {
   BankAppState,
   Account,
+  AccountType,
   Transaction,
   Payee,
   Biller,
@@ -12,6 +13,8 @@ import type {
   TransferResult,
   SendResult,
   BillPayResult,
+  LoanApplication,
+  LoanType,
   UserProfile,
 } from "../lib/types";
 import {
@@ -81,11 +84,37 @@ interface BankAppActions {
     saveBiller: boolean,
   ) => string | null;
 
+  /** Apply for a loan. Returns error string or null on success. */
+  applyLoan: (
+    username: string,
+    loanType: LoanType,
+    amount: number,
+    termMonths: number,
+    purpose: string,
+    disbursementAccountId: string,
+  ) => string | null;
+
+  /** Add a new account for a user. Returns the new account's id. */
+  addAccount: (
+    username: string,
+    account: { name: string; type: AccountType; balance: number },
+  ) => string;
+
+  /** Update an existing account's fields. */
+  updateAccount: (
+    username: string,
+    accountId: string,
+    patch: Partial<Pick<Account, "name" | "type" | "balance">>,
+  ) => void;
+
+  /** Delete an account and its transactions. */
+  deleteAccount: (username: string, accountId: string) => void;
+
   /** Save a new payee for a user. */
   savePayee: (username: string, payee: Omit<Payee, "id">) => void;
 
-  /** Save a new biller for a user. */
-  saveBiller: (username: string, biller: Omit<Biller, "id">) => void;
+  /** Save a new biller for a user. Returns the new biller's id. */
+  saveBiller: (username: string, biller: Omit<Biller, "id">) => string;
 
   /** Mark one notification as read. */
   markNotificationRead: (username: string, notifId: string) => void;
@@ -115,9 +144,11 @@ export const useBankAppStore = create<BankStore>()(
       payees: {},
       billers: {},
       notifications: {},
+      loanApplications: {},
       lastTransferResult: null,
       lastSendResult: null,
       lastBillPayResult: null,
+      lastLoanResult: null,
 
       // ── seedIfNeeded ─────────────────────────────────────────────────
       seedIfNeeded: () => {
@@ -128,6 +159,7 @@ export const useBankAppStore = create<BankStore>()(
         const payees: Record<string, Payee[]> = {};
         const billers: Record<string, Biller[]> = {};
         const notifications: Record<string, Notification[]> = {};
+        const loanApplications: Record<string, LoanApplication[]> = {};
 
         for (const username of Object.keys(SEED_USERS)) {
           const userAccounts = createSeedAccounts(username);
@@ -143,6 +175,7 @@ export const useBankAppStore = create<BankStore>()(
             username === "standard_user" ? [...SEED_PAYEES] : [];
           billers[username] = [...SEED_BILLERS];
           notifications[username] = createSeedNotifications(username);
+          loanApplications[username] = [];
         }
 
         set({
@@ -153,6 +186,7 @@ export const useBankAppStore = create<BankStore>()(
           payees,
           billers,
           notifications,
+          loanApplications,
         });
       },
 
@@ -205,6 +239,7 @@ export const useBankAppStore = create<BankStore>()(
             ...state.notifications,
             [username]: createSeedNotifications(username),
           },
+          loanApplications: { ...state.loanApplications, [username]: [] },
         }));
       },
 
@@ -448,6 +483,110 @@ export const useBankAppStore = create<BankStore>()(
         return null;
       },
 
+      // ── applyLoan ────────────────────────────────────────────────────
+      applyLoan: (
+        username,
+        loanType,
+        amount,
+        termMonths,
+        purpose,
+        disbursementAccountId,
+      ) => {
+        const state = get();
+        const userAccounts = state.accounts[username] ?? [];
+        const disbursementAccount = userAccounts.find(
+          (a) => a.id === disbursementAccountId,
+        );
+
+        if (!disbursementAccount) return "Please select a valid account.";
+        if (amount <= 0) return "Please enter a valid loan amount.";
+        if (amount > 250000) return "Loan amount cannot exceed $250,000.";
+        if (!purpose.trim()) return "Please describe the purpose of the loan.";
+
+        const refId = generateRefId("LOAN");
+        const existing = state.loanApplications[username] ?? [];
+        const application: LoanApplication = {
+          id: `loan-${existing.length + 1}`,
+          refId,
+          loanType,
+          amount,
+          termMonths,
+          purpose,
+          disbursementAccount,
+          status: "pending",
+          date: todayISO(),
+        };
+
+        set((s) => ({
+          loanApplications: {
+            ...s.loanApplications,
+            [username]: [application, ...existing],
+          },
+          lastLoanResult: application,
+        }));
+        return null;
+      },
+
+      // ── addAccount ───────────────────────────────────────────────────
+      addAccount: (username, account) => {
+        const state = get();
+        const existing = state.accounts[username] ?? [];
+        const id = `acc-${account.type.toLowerCase()}-${Date.now()}`;
+        const last4 = String(Math.floor(1000 + Math.random() * 9000));
+        const newAccount: Account = {
+          id,
+          name: account.name,
+          type: account.type,
+          accountNumber: `****${last4}`,
+          balance: account.balance,
+          isOverdrawn: account.balance < 0,
+        };
+
+        set((s) => ({
+          accounts: { ...s.accounts, [username]: [...existing, newAccount] },
+        }));
+        return id;
+      },
+
+      // ── updateAccount ────────────────────────────────────────────────
+      updateAccount: (username, accountId, patch) => {
+        set((s) => ({
+          accounts: {
+            ...s.accounts,
+            [username]: (s.accounts[username] ?? []).map((a) =>
+              a.id === accountId
+                ? {
+                    ...a,
+                    ...patch,
+                    isOverdrawn:
+                      patch.balance !== undefined
+                        ? patch.balance < 0
+                        : a.isOverdrawn,
+                  }
+                : a,
+            ),
+          },
+        }));
+      },
+
+      // ── deleteAccount ────────────────────────────────────────────────
+      deleteAccount: (username, accountId) => {
+        set((s) => ({
+          accounts: {
+            ...s.accounts,
+            [username]: (s.accounts[username] ?? []).filter(
+              (a) => a.id !== accountId,
+            ),
+          },
+          transactions: {
+            ...s.transactions,
+            [username]: (s.transactions[username] ?? []).filter(
+              (t) => t.accountId !== accountId,
+            ),
+          },
+        }));
+      },
+
       // ── savePayee ─────────────────────────────────────────────────────
       savePayee: (username, payee) => {
         const newPayee: Payee = { ...payee, id: `payee-${Date.now()}` };
@@ -468,6 +607,7 @@ export const useBankAppStore = create<BankStore>()(
             [username]: [...(s.billers[username] ?? []), newBiller],
           },
         }));
+        return newBiller.id;
       },
 
       // ── markNotificationRead ──────────────────────────────────────────
@@ -501,16 +641,28 @@ export const useBankAppStore = create<BankStore>()(
           lastTransferResult: null,
           lastSendResult: null,
           lastBillPayResult: null,
+          lastLoanResult: null,
         });
       },
     }),
     {
-      name: "bank-app-v1", // localStorage key — different from demo/bank's "qaplay-bank-storage"
+      // localStorage key — bumped whenever seed data / store shape changes so
+      // existing sessions pick up new seed data instead of using stale state.
+      name: "bank-app-v2",
     },
   ),
 );
 
 // ─── Convenience selectors ────────────────────────────────────────────────────
+
+// Shared stable reference so selectors that fall back to "no data yet" don't
+// return a brand-new array identity on every call — a fresh `[] ?? []`
+// literal on each render trips React's "getSnapshot should be cached" check
+// and can cascade into a "Maximum update depth exceeded" crash.
+const EMPTY_ARRAY: readonly unknown[] = [];
+function emptyArray<T>(): T[] {
+  return EMPTY_ARRAY as T[];
+}
 
 export function useCurrentUser() {
   return useBankAppStore((s) => {
@@ -520,19 +672,53 @@ export function useCurrentUser() {
 }
 
 export function useUserAccounts(username: string | null) {
-  return useBankAppStore((s) => (username ? (s.accounts[username] ?? []) : []));
+  return useBankAppStore((s) =>
+    username ? (s.accounts[username] ?? emptyArray<Account>()) : emptyArray<Account>(),
+  );
 }
 
 export function useUserTransactions(username: string | null) {
   return useBankAppStore((s) =>
-    username ? (s.transactions[username] ?? []) : [],
+    username
+      ? (s.transactions[username] ?? emptyArray<Transaction>())
+      : emptyArray<Transaction>(),
+  );
+}
+
+export function useUserLoanApplications(username: string | null) {
+  return useBankAppStore((s) =>
+    username
+      ? (s.loanApplications[username] ?? emptyArray<LoanApplication>())
+      : emptyArray<LoanApplication>(),
+  );
+}
+
+export function useUserBillers(username: string | null) {
+  return useBankAppStore((s) =>
+    username ? (s.billers[username] ?? emptyArray<Biller>()) : emptyArray<Biller>(),
+  );
+}
+
+export function useUserPayees(username: string | null) {
+  return useBankAppStore((s) =>
+    username ? (s.payees[username] ?? emptyArray<Payee>()) : emptyArray<Payee>(),
+  );
+}
+
+export function useUserNotifications(username: string | null) {
+  return useBankAppStore((s) =>
+    username
+      ? (s.notifications[username] ?? emptyArray<Notification>())
+      : emptyArray<Notification>(),
   );
 }
 
 export function useUnreadNotificationCount(username: string | null) {
   return useBankAppStore((s) =>
     username
-      ? (s.notifications[username] ?? []).filter((n) => !n.isRead).length
+      ? (s.notifications[username] ?? emptyArray<Notification>()).filter(
+          (n) => !n.isRead,
+        ).length
       : 0,
   );
 }

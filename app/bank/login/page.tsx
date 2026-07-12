@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Building2, Eye, EyeOff } from "lucide-react";
+import { Building2, Check, Copy, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,6 +20,19 @@ export default function BankLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
+
+  const handleCopy = async (value: string, fieldKey: string) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopiedField(fieldKey);
+      setTimeout(() => {
+        setCopiedField((current) => (current === fieldKey ? null : current));
+      }, 1200);
+    } catch {
+      // Clipboard API unavailable — silently ignore
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -230,51 +243,120 @@ export default function BankLoginPage() {
         </div>
 
         {/* Test credentials hint */}
-        <details
+        <div
           className="mt-4 rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-3"
           data-testid="test-credentials-panel"
         >
-          <summary className="cursor-pointer text-xs font-medium text-slate-400 hover:text-slate-300">
+          <p className="text-xs font-medium text-slate-400">
             Test credentials
-          </summary>
-          <div className="mt-3 space-y-1.5">
-            {[
-              { user: "standard_user", pw: "bank_sauce", note: "Full access" },
-              { user: "locked_user", pw: "bank_sauce", note: "Locked account" },
-              {
-                user: "frozen_user",
-                pw: "bank_sauce",
-                note: "Frozen — no transfers",
-              },
-              {
-                user: "overdraft_user",
-                pw: "bank_sauce",
-                note: "Negative balance",
-              },
-              { user: "slow_user", pw: "bank_sauce", note: "Slow loading" },
-              { user: "admin_user", pw: "admin_sauce", note: "Admin view" },
-            ].map((c) => (
-              /*
-               * Medium locator: repeated credential rows
-               * data-testid="credential-row" + data-username for scoping
-               * Practice:
-               *   page.getByTestId('credential-row').filter({ hasText: 'locked_user' })
-               *   page.locator('[data-testid="credential-row"][data-username="locked_user"]')
-               */
-              <div
-                key={c.user}
-                className="flex flex-wrap items-center gap-x-2 gap-y-0.5 rounded px-2 py-1 font-mono text-[11px] hover:bg-slate-700/40"
-                data-testid="credential-row"
-                data-username={c.user}
-              >
-                <span className="text-violet-300">{c.user}</span>
-                <span className="text-slate-500">/</span>
-                <span className="text-slate-400">{c.pw}</span>
-                <span className="text-slate-600">— {c.note}</span>
-              </div>
-            ))}
+          </p>
+          <div className="mt-3 overflow-x-auto">
+            <table
+              className="w-full border-collapse text-[11px]"
+              data-testid="test-credentials-table"
+            >
+              <thead>
+                <tr className="border-b border-slate-700 text-left text-slate-400">
+                  <th className="px-2 py-1 font-medium">Username</th>
+                  <th className="px-2 py-1 font-medium">Password</th>
+                  <th className="px-2 py-1 font-medium">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  {
+                    user: "standard_user",
+                    pw: "bank_sauce",
+                    note: "Full access",
+                  },
+                  {
+                    user: "locked_user",
+                    pw: "bank_sauce",
+                    note: "Locked account",
+                  },
+                  {
+                    user: "frozen_user",
+                    pw: "bank_sauce",
+                    note: "Frozen — no transfers",
+                  },
+                  {
+                    user: "overdraft_user",
+                    pw: "bank_sauce",
+                    note: "Negative balance",
+                  },
+                  {
+                    user: "slow_user",
+                    pw: "bank_sauce",
+                    note: "Slow loading",
+                  },
+                  {
+                    user: "admin_user",
+                    pw: "admin_sauce",
+                    note: "Admin view",
+                  },
+                ].map((c) => (
+                  /*
+                   * Medium locator: repeated credential rows
+                   * data-testid="credential-row" + data-username for scoping
+                   * Practice:
+                   *   page.getByTestId('credential-row').filter({ hasText: 'locked_user' })
+                   *   page.locator('[data-testid="credential-row"][data-username="locked_user"]')
+                   */
+                  <tr
+                    key={c.user}
+                    className="border-b border-slate-800/60 font-mono hover:bg-slate-700/40 last:border-b-0"
+                    data-testid="credential-row"
+                    data-username={c.user}
+                  >
+                    <td className="group/username px-2 py-1 text-violet-300">
+                      <span className="inline-flex items-center gap-1.5">
+                        {c.user}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleCopy(c.user, `${c.user}-username`)
+                          }
+                          className="opacity-0 transition-opacity group-hover/username:opacity-100 focus-visible:opacity-100 text-slate-400 hover:text-violet-300"
+                          aria-label={`Copy username ${c.user}`}
+                          data-testid="copy-username-btn"
+                        >
+                          {copiedField === `${c.user}-username` ? (
+                            <Check className="h-3 w-3 text-emerald-400" />
+                          ) : (
+                            <Copy className="h-3 w-3" />
+                          )}
+                        </button>
+                      </span>
+                    </td>
+                    <td className="group/password px-2 py-1 text-slate-400">
+                      <span className="inline-flex items-center gap-1.5">
+                        {c.pw}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleCopy(c.pw, `${c.user}-password`)
+                          }
+                          className="opacity-0 transition-opacity group-hover/password:opacity-100 focus-visible:opacity-100 text-slate-400 hover:text-violet-300"
+                          aria-label={`Copy password for ${c.user}`}
+                          data-testid="copy-password-btn"
+                        >
+                          {copiedField === `${c.user}-password` ? (
+                            <Check className="h-3 w-3 text-emerald-400" />
+                          ) : (
+                            <Copy className="h-3 w-3" />
+                          )}
+                        </button>
+                      </span>
+                    </td>
+                    <td className="px-2 py-1 font-sans text-slate-500">
+                      {c.note}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </details>
+        </div>
       </div>
     </div>
   );

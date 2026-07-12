@@ -3,7 +3,6 @@ import type { Transaction } from "../../lib/types";
 import { formatCurrency, formatDate } from "../../lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, ArrowDownLeft } from "lucide-react";
 
 interface RecentTransactionsListProps {
   transactions: Transaction[];
@@ -55,86 +54,100 @@ export function RecentTransactionsList({
         </p>
       ) : (
         <div
-          className="divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white dark:divide-slate-700 dark:border-slate-700 dark:bg-slate-800"
-          data-testid="recent-transactions-list"
+          className="overflow-x-auto rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800"
+          data-testid="recent-transactions-table-wrapper"
         >
-          {recent.map((txn) => (
-            /*
-             * Medium locator: repeated rows — shared testid + unique data-transaction-id
-             * Practice:
-             *   page.getByTestId('recent-txn-row').filter({ hasText: 'Direct Deposit' })
-             *   page.locator('[data-testid="recent-txn-row"][data-transaction-id="txn-acc-checking-1-001"]')
-             *   XPath: //div[@data-transaction-id="txn-acc-checking-1-001"]
-             */
-            <div
-              key={txn.id}
-              className="flex items-center gap-3 px-4 py-3"
-              data-testid="recent-txn-row"
-              data-transaction-id={txn.id}
-              data-category={txn.category}
-            >
-              {/* Icon — Challenge: no data-testid, aria-label based */}
-              <div
-                className={[
-                  "flex h-8 w-8 shrink-0 items-center justify-center rounded-full",
-                  txn.amount > 0
-                    ? "bg-emerald-100 dark:bg-emerald-900/30"
-                    : "bg-red-100 dark:bg-red-900/30",
-                ].join(" ")}
-                aria-label={
-                  txn.amount > 0 ? "Credit transaction" : "Debit transaction"
-                }
-              >
-                {txn.amount > 0 ? (
-                  <ArrowDownLeft
-                    className="h-3.5 w-3.5 text-emerald-600"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <ArrowUpRight
-                    className="h-3.5 w-3.5 text-red-600"
-                    aria-hidden="true"
-                  />
-                )}
-              </div>
-
-              <div className="min-w-0 flex-1">
-                <p
-                  className="truncate text-sm font-medium text-slate-900 dark:text-white"
-                  data-testid="recent-txn-description"
+          <table
+            className="w-full text-sm"
+            data-testid="recent-transactions-table"
+            aria-label="Recent transactions"
+          >
+            <thead>
+              <tr className="border-b border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-900/50">
+                {/* Beginner: getByTestId on header cell */}
+                <th
+                  className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400"
+                  data-testid="recent-txn-header-date"
                 >
-                  {txn.description}
-                </p>
+                  Date
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400">
+                  Description
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400">
+                  Category
+                </th>
                 {/*
-                 * Hard locator: date — no data-testid, must scope using parent row
-                 * XPath: //div[@data-transaction-id="txn-acc-checking-1-001"]//time
+                 * Hard locator: Amount header — no data-testid
+                 * XPath: //table[@data-testid="recent-transactions-table"]//th[last()]
                  */}
-                <time dateTime={txn.date} className="text-xs text-slate-500">
-                  {formatDate(txn.date)}
-                </time>
-              </div>
+                <th className="px-4 py-3 text-right text-xs font-semibold text-slate-600 dark:text-slate-400">
+                  Amount
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
+              {recent.map((txn) => (
+                /*
+                 * Medium locator: shared data-testid + unique data-transaction-id + data-category
+                 * Practice:
+                 *   page.getByTestId('recent-txn-row').filter({ hasText: 'Direct Deposit' })
+                 *   page.locator('[data-testid="recent-txn-row"][data-transaction-id="txn-acc-checking-1-001"]')
+                 *   XPath: //tr[@data-transaction-id="txn-acc-checking-1-001"]
+                 */
+                <tr
+                  key={txn.id}
+                  className="transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/30"
+                  data-testid="recent-txn-row"
+                  data-transaction-id={txn.id}
+                  data-category={txn.category}
+                  data-type={txn.type}
+                >
+                  {/* Beginner: getByTestId inside row */}
+                  <td
+                    className="px-4 py-3 text-xs whitespace-nowrap text-slate-500"
+                    data-testid="recent-txn-date"
+                  >
+                    <time dateTime={txn.date}>{formatDate(txn.date)}</time>
+                  </td>
 
-              <Badge
-                className={`shrink-0 text-xs ${CATEGORY_COLORS[txn.category] ?? "bg-slate-100 text-slate-600"}`}
-                data-category-label={txn.category}
-              >
-                {txn.category}
-              </Badge>
+                  <td
+                    className="px-4 py-3 text-sm font-medium text-slate-900 dark:text-white"
+                    data-testid="recent-txn-description"
+                  >
+                    {txn.description}
+                  </td>
 
-              <p
-                className={[
-                  "shrink-0 text-sm font-semibold tabular-nums",
-                  txn.amount > 0
-                    ? "text-emerald-600 dark:text-emerald-400"
-                    : "text-slate-900 dark:text-white",
-                ].join(" ")}
-                data-testid="recent-txn-amount"
-              >
-                {txn.amount > 0 ? "+" : ""}
-                {formatCurrency(txn.amount)}
-              </p>
-            </div>
-          ))}
+                  <td className="px-4 py-3">
+                    <Badge
+                      className={`text-xs ${CATEGORY_COLORS[txn.category] ?? "bg-slate-100 text-slate-600"}`}
+                      data-category-label={txn.category}
+                    >
+                      {txn.category}
+                    </Badge>
+                  </td>
+
+                  {/*
+                   * Hard locator: amount cell — no data-testid, aria-label carries the
+                   * sign/context; must be scoped from the row's data-transaction-id.
+                   * Practice: page.locator('[data-transaction-id="txn-1001"]').getByLabel(/transaction amount/i)
+                   */}
+                  <td
+                    className={[
+                      "px-4 py-3 text-right text-sm font-semibold tabular-nums",
+                      txn.amount > 0
+                        ? "text-emerald-600 dark:text-emerald-400"
+                        : "text-slate-900 dark:text-white",
+                    ].join(" ")}
+                    aria-label={`Transaction amount ${formatCurrency(txn.amount)}`}
+                  >
+                    {txn.amount > 0 ? "+" : ""}
+                    {formatCurrency(txn.amount)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </section>
