@@ -101,7 +101,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
+  gap: 28px 24px;
 }
 
 .card {
@@ -110,9 +110,9 @@
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  padding: 0 0 14px;
+  padding: 0 0 16px;
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 20px;
   background: color-mix(in srgb, var(--card) 82%, transparent);
   backdrop-filter: blur(var(--home-card-blur));
   -webkit-backdrop-filter: blur(var(--home-card-blur));
@@ -175,6 +175,11 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.4s ease;
+}
+
+.card:hover .mediaImage {
+  transform: scale(1.04);
 }
 
 .cardTop {
@@ -216,8 +221,8 @@
 .cardTitle {
   position: relative;
   z-index: 1;
-  margin-top: 10px;
-  padding: 0 12px;
+  margin-top: 16px;
+  padding: 0 16px;
   color: var(--foreground);
   font-family: var(--font-space-grotesk), sans-serif;
   font-size: clamp(1rem, 1.25vw, 1.18rem);
@@ -230,7 +235,7 @@
   position: relative;
   z-index: 1;
   margin-top: 8px;
-  padding: 0 12px;
+  padding: 0 16px;
   color: var(--foreground);
   opacity: 0.72;
   font-size: 0.875rem;
@@ -271,8 +276,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-top: 12px;
-  padding: 12px 12px 0;
+  margin-top: 14px;
+  padding: 14px 16px 0;
   border-top: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
 }
 
@@ -322,12 +327,14 @@
 @media (max-width: 1280px) {
   .grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px 20px;
   }
 }
 
 @media (max-width: 960px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 18px;
   }
 }
 
@@ -342,6 +349,7 @@
 
   .grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .filterPill {
