@@ -1,0 +1,75 @@
+[
+  {
+    "id": "TC-DASH-001",
+    "name": "Verify Dashboard Load",
+    "expected": "Dashboard loads successfully with welcome message",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Login with valid credentials",
+      "Navigate to Dashboard",
+      "Assert welcome message is visible"
+    ]
+  },
+  {
+    "id": "TC-DASH-002",
+    "name": "Verify Total Balance Display",
+    "expected": "Total balance sum matches the individual account balances",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Login and view Dashboard",
+      "Calculate sum of all checking and savings accounts",
+      "Assert total balance displays the correct sum"
+    ]
+  },
+  {
+    "id": "TC-DASH-003",
+    "name": "Verify Recent Transactions Widget",
+    "expected": "Recent transactions widget displays up to 5 latest transactions",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Navigate to Dashboard",
+      "Locate the Recent Transactions widget",
+      "Assert that maximum 5 transactions are shown",
+      "Assert transactions are sorted by date descending"
+    ]
+  },
+  {
+    "id": "TC-DASH-004",
+    "name": "Verify Quick Transfer Link",
+    "expected": "Clicking quick transfer navigates to /bank/transfer",
+    "severity": "Low",
+    "priority": "P3",
+    "steps": [
+      "Navigate to Dashboard",
+      "Click the 'Transfer' quick action button",
+      "Assert URL changes to /bank/transfer"
+    ]
+  },
+  {
+    "id": "TC-DASH-005",
+    "name": "Verify Quick Pay Bill Link",
+    "expected": "Clicking quick pay bill navigates to /bank/bill-pay",
+    "severity": "Low",
+    "priority": "P3",
+    "steps": [
+      "Navigate to Dashboard",
+      "Click the 'Pay Bill' quick action button",
+      "Assert URL changes to /bank/bill-pay"
+    ]
+  },
+  {
+    "id": "TC-DASH-006",
+    "name": "Verify Theme Toggle",
+    "expected": "Clicking the moon/sun icon toggles dark mode",
+    "severity": "Low",
+    "priority": "P3",
+    "steps": [
+      "Navigate to Dashboard",
+      "Click the theme toggle icon in the top navigation bar",
+      "Assert that the 'dark' class is added/removed from the HTML tag"
+    ]
+  }
+]

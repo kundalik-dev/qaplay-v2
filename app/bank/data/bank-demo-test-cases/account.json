@@ -1,0 +1,77 @@
+[
+  {
+    "id": "TC-ACC-001",
+    "name": "Verify Accounts List Load",
+    "expected": "Accounts page loads and displays user's accounts",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Login with valid credentials",
+      "Navigate to Accounts page",
+      "Assert checking and savings accounts are listed"
+    ]
+  },
+  {
+    "id": "TC-ACC-002",
+    "name": "Verify Account Details Display",
+    "expected": "Account details like name, type, and masked account number are visible",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Navigate to Accounts page",
+      "Select an account",
+      "Assert account name is visible",
+      "Assert account number is masked (e.g. ****4321)"
+    ]
+  },
+  {
+    "id": "TC-ACC-003",
+    "name": "Verify Overdraft Banner",
+    "expected": "Accounts with negative balance show an overdraft banner or indicator",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Login as overdraft_user",
+      "Navigate to Accounts page",
+      "Assert overdraft warning indicator is present on the checking account"
+    ]
+  },
+  {
+    "id": "TC-ACC-004",
+    "name": "Verify Frozen Account Alert",
+    "expected": "Frozen accounts display a prominent disabled banner",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Login as frozen_user",
+      "Navigate to Accounts page",
+      "Assert 'Account Frozen' banner is visible"
+    ]
+  },
+  {
+    "id": "TC-ACC-005",
+    "name": "Verify Copy Account Number",
+    "expected": "Clicking copy icon copies the account number to clipboard",
+    "severity": "Low",
+    "priority": "P3",
+    "steps": [
+      "Navigate to Accounts page",
+      "Click the copy icon next to an account number",
+      "Assert a success tick appears",
+      "Assert clipboard contains the account number"
+    ]
+  },
+  {
+    "id": "TC-ACC-006",
+    "name": "Verify Add Account Functionality",
+    "expected": "User can add a new savings account",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Navigate to Accounts page",
+      "Click 'Open New Account'",
+      "Select 'Savings' and submit",
+      "Assert new account appears in the list"
+    ]
+  }
+]

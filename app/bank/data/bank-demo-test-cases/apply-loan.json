@@ -1,0 +1,86 @@
+[
+  {
+    "id": "TC-LOAN-001",
+    "name": "Verify Apply Loan Form Load",
+    "expected": "Apply Loan dialog opens with required fields",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Navigate to Apply Loan page",
+      "Click 'Apply for Loan' button",
+      "Assert the loan application dialog appears",
+      "Assert Loan Type, Amount, Term, and Purpose fields are present"
+    ]
+  },
+  {
+    "id": "TC-LOAN-002",
+    "name": "Verify Maximum Loan Amount Validation",
+    "expected": "Error is shown if loan amount exceeds $250,000",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Open Apply Loan dialog",
+      "Select Loan Type and enter amount '300000'",
+      "Fill other required fields",
+      "Click Review Application",
+      "Assert 'Loan amount cannot exceed $250,000' error is displayed"
+    ]
+  },
+  {
+    "id": "TC-LOAN-003",
+    "name": "Verify Successful Loan Application",
+    "expected": "Loan application completes successfully and appears in history",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Open Apply Loan dialog",
+      "Select 'Personal' loan type, amount '5000', term '24 months'",
+      "Select a disbursement account and enter purpose",
+      "Click Review Application, then Submit Application",
+      "Assert confirmation page displays 'Loan Application Received'",
+      "Navigate back to Apply Loan page",
+      "Assert the new loan appears in the 'Applied Loans' history table"
+    ]
+  },
+  {
+    "id": "TC-LOAN-004",
+    "name": "Verify Loan History Bug Reproduction",
+    "expected": "For error_user, the displayed total does not include the latest loan",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Login as 'error_user'",
+      "Navigate to Apply Loan page",
+      "Note the displayed Total amount",
+      "Manually sum the amounts of the visible loans in the table",
+      "Assert that the displayed Total is incorrect (missing the most recent loan amount)"
+    ]
+  },
+  {
+    "id": "TC-LOAN-005",
+    "name": "Verify Frozen Account Block",
+    "expected": "Apply Loan button is disabled for frozen accounts",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Login as frozen_user",
+      "Navigate to Apply Loan page",
+      "Assert 'Loan applications are disabled' banner is visible",
+      "Assert 'Apply for Loan' button is disabled"
+    ]
+  },
+  {
+    "id": "TC-LOAN-006",
+    "name": "Verify History Pagination",
+    "expected": "History table paginates correctly (5 items per page)",
+    "severity": "Low",
+    "priority": "P3",
+    "steps": [
+      "Navigate to Apply Loan page",
+      "Scroll to Applied Loans section",
+      "Assert exactly 5 rows are visible on the first page",
+      "Click the 'Next' pagination arrow or page 2",
+      "Assert the remaining history items are displayed"
+    ]
+  }
+]

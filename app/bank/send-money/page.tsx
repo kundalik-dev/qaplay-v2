@@ -3,11 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Send, ChevronDown, ChevronUp } from "lucide-react";
+import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -28,55 +27,62 @@ import {
   useUserAccounts,
   useUserPayees,
 } from "../store/useBankAppStore";
-import {
-  formatCurrency,
-  isValidRoutingNumber,
-  isValidAccountNumber,
-} from "../lib/utils";
+import { formatCurrency } from "../lib/utils";
+import { PayeeSelect } from "./_components/payee-select";
+import { AddPayeeDialog } from "./_components/add-payee-dialog";
 
 export default function SendMoneyPage() {
   const router = useRouter();
-  const { currentUsername, sendMoney } = useBankAppStore();
+  const { currentUsername, sendMoney, savePayee } = useBankAppStore();
   const savedPayees = useUserPayees(currentUsername);
   const currentUser = useCurrentUser();
   const accounts = useUserAccounts(currentUsername);
   const isFrozen = currentUser?.status === "frozen";
 
   const [fromId, setFromId] = useState("");
-  const [selectedPayeeId, setSelectedPayeeId] = useState<string>("new");
+  const [selectedPayeeId, setSelectedPayeeId] = useState("");
   const [payeeName, setPayeeName] = useState("");
   const [payeeAccount, setPayeeAccount] = useState("");
   const [payeeRouting, setPayeeRouting] = useState("");
   const [payeeBank, setPayeeBank] = useState("");
-  const [savePayee, setSavePayee] = useState(false);
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [showNewPayeeForm, setShowNewPayeeForm] = useState(
-    savedPayees.length === 0,
-  );
+  const [addPayeeOpen, setAddPayeeOpen] = useState(false);
 
   const fromAccount = accounts.find((a) => a.id === fromId);
 
   const handleSelectPayee = (id: string) => {
     setSelectedPayeeId(id);
-    if (id !== "new") {
-      const p = savedPayees.find((p) => p.id === id);
-      if (p) {
-        setPayeeName(p.name);
-        setPayeeAccount(p.accountNumber);
-        setPayeeRouting(p.routingNumber);
-        setPayeeBank(p.bankName);
-      }
-      setShowNewPayeeForm(false);
-    } else {
-      setPayeeName("");
-      setPayeeAccount("");
-      setPayeeRouting("");
-      setPayeeBank("");
-      setShowNewPayeeForm(true);
+    const p = savedPayees.find((p) => p.id === id);
+    if (p) {
+      setPayeeName(p.name);
+      setPayeeAccount(p.accountNumber);
+      setPayeeRouting(p.routingNumber);
+      setPayeeBank(p.bankName);
     }
+  };
+
+  const handleAddPayee = (values: {
+    name: string;
+    bankName: string;
+    routingNumber: string;
+    accountNumber: string;
+  }) => {
+    if (!currentUsername) return;
+    const newId = savePayee(currentUsername, {
+      name: values.name,
+      bankName: values.bankName,
+      routingNumber: values.routingNumber,
+      accountNumber: values.accountNumber,
+    });
+    setSelectedPayeeId(newId);
+    setPayeeName(values.name);
+    setPayeeBank(values.bankName);
+    setPayeeRouting(values.routingNumber);
+    setPayeeAccount(values.accountNumber);
+    setAddPayeeOpen(false);
   };
 
   const handleReview = (e: React.FormEvent) => {
@@ -87,16 +93,8 @@ export default function SendMoneyPage() {
       setError("Please select an account.");
       return;
     }
-    if (!payeeName.trim()) {
-      setError("Please enter the payee name.");
-      return;
-    }
-    if (!isValidRoutingNumber(payeeRouting)) {
-      setError("Routing number must be exactly 9 digits.");
-      return;
-    }
-    if (!isValidAccountNumber(payeeAccount)) {
-      setError("Account number must be 8–17 digits.");
+    if (!selectedPayeeId) {
+      setError("Please select a payee.");
       return;
     }
     const amt = parseFloat(amount);
@@ -120,7 +118,7 @@ export default function SendMoneyPage() {
       },
       parseFloat(amount),
       note,
-      savePayee && selectedPayeeId === "new",
+      false,
     );
     if (err) {
       setError(err);
@@ -210,182 +208,15 @@ export default function SendMoneyPage() {
               </Select>
             </div>
 
-            {/* Payee section */}
+            {/* Payee selection — searchable dropdown + add-new modal, same pattern as Bill Pay */}
             <div className="mb-4">
-              <p className="mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">Payee</p>
-
-              {savedPayees.length > 0 && (
-                /*
-                 * Medium locator: repeated payee cards — data-testid="payee-card" + data-payee-id
-                 * Practice:
-                 *   page.getByTestId('payee-card').filter({ hasText: 'Rahul Sharma' })
-                 *   page.locator('[data-testid="payee-card"][data-payee-id="payee-001"]')
-                 */
-                <div className="mb-3 space-y-2" data-testid="saved-payees-list">
-                  {savedPayees.map((p) => (
-                    <label
-                      key={p.id}
-                      className={[
-                        "flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-colors",
-                        selectedPayeeId === p.id
-                          ? "border-violet-400 bg-violet-50"
-                          : "border-slate-200 hover:border-slate-300",
-                      ].join(" ")}
-                      data-testid="payee-card"
-                      data-payee-id={p.id}
-                    >
-                      <input
-                        type="radio"
-                        name="payeeSelection"
-                        value={p.id}
-                        checked={selectedPayeeId === p.id}
-                        onChange={() => handleSelectPayee(p.id)}
-                        className="accent-violet-600"
-                      />
-                      <div>
-                        <p className="text-sm font-medium text-slate-900">
-                          {p.name}
-                        </p>
-                        <p className="text-xs text-slate-500">
-                          {p.bankName} · ****{p.accountNumber.slice(-4)}
-                        </p>
-                      </div>
-                    </label>
-                  ))}
-
-                  {/* "Add new payee" option */}
-                  <label
-                    className={[
-                      "flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-colors",
-                      selectedPayeeId === "new"
-                        ? "border-violet-400 bg-violet-50"
-                        : "border-dashed border-slate-300 hover:border-slate-400",
-                    ].join(" ")}
-                    data-testid="new-payee-option"
-                  >
-                    <input
-                      type="radio"
-                      name="payeeSelection"
-                      value="new"
-                      checked={selectedPayeeId === "new"}
-                      onChange={() => handleSelectPayee("new")}
-                      className="accent-violet-600"
-                    />
-                    <span className="text-sm text-slate-600 dark:text-slate-400">
-                      Add a new payee
-                    </span>
-                    {selectedPayeeId === "new" ? (
-                      <ChevronUp className="ml-auto h-4 w-4 text-slate-400" />
-                    ) : (
-                      <ChevronDown className="ml-auto h-4 w-4 text-slate-400" />
-                    )}
-                  </label>
-                </div>
-              )}
-
-              {/* New payee form — visible when "new" selected */}
-              {(showNewPayeeForm || savedPayees.length === 0) && (
-                <div
-                  className="space-y-3 rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-600 dark:bg-slate-900"
-                  data-testid="new-payee-form"
-                >
-                  {/* Beginner: label + id + data-testid */}
-                  <div>
-                    <Label
-                      htmlFor="new-payee-name"
-                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
-                    >
-                      Payee Name
-                    </Label>
-                    <Input
-                      id="new-payee-name"
-                      type="text"
-                      placeholder="Full name"
-                      value={payeeName}
-                      onChange={(e) => setPayeeName(e.target.value)}
-                      disabled={isFrozen}
-                      data-testid="new-payee-name-input"
-                    />
-                  </div>
-                  <div>
-                    <Label
-                      htmlFor="new-payee-bank"
-                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
-                    >
-                      Bank Name
-                    </Label>
-                    <Input
-                      id="new-payee-bank"
-                      type="text"
-                      placeholder="e.g. Chase Bank"
-                      value={payeeBank}
-                      onChange={(e) => setPayeeBank(e.target.value)}
-                      disabled={isFrozen}
-                      data-testid="new-payee-bank-input"
-                    />
-                  </div>
-                  <div>
-                    {/*
-                     * Hard locator: routing number — label exists but uses non-standard span
-                     * XPath: //span[normalize-space()="Routing Number (9 digits)"]/following-sibling::div//input
-                     * CSS: [data-testid="new-payee-form"] input[name="routing_number_field"]
-                     */}
-                    <span className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400">
-                      Routing Number (9 digits)
-                    </span>
-                    <div>
-                      <Input
-                        name="routing_number_field"
-                        type="text"
-                        inputMode="numeric"
-                        maxLength={9}
-                        placeholder="9-digit routing number"
-                        value={payeeRouting}
-                        onChange={(e) =>
-                          setPayeeRouting(e.target.value.replace(/\D/g, ""))
-                        }
-                        disabled={isFrozen}
-                        data-testid="new-payee-routing-input"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label
-                      htmlFor="new-payee-account"
-                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
-                    >
-                      Account Number
-                    </Label>
-                    <Input
-                      id="new-payee-account"
-                      type="text"
-                      inputMode="numeric"
-                      placeholder="8–17 digits"
-                      value={payeeAccount}
-                      onChange={(e) =>
-                        setPayeeAccount(e.target.value.replace(/\D/g, ""))
-                      }
-                      disabled={isFrozen}
-                      data-testid="new-payee-account-input"
-                    />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Checkbox
-                      id="save-payee"
-                      checked={savePayee}
-                      onCheckedChange={(v) => setSavePayee(!!v)}
-                      disabled={isFrozen}
-                      data-testid="save-payee-checkbox"
-                    />
-                    <Label
-                      htmlFor="save-payee"
-                      className="cursor-pointer text-xs text-slate-600 dark:text-slate-400"
-                    >
-                      Save this payee for future transfers
-                    </Label>
-                  </div>
-                </div>
-              )}
+              <PayeeSelect
+                payees={savedPayees}
+                selectedPayeeId={selectedPayeeId}
+                onSelectPayee={handleSelectPayee}
+                onAddNew={() => setAddPayeeOpen(true)}
+                disabled={isFrozen}
+              />
             </div>
 
             {/* Amount */}
@@ -500,6 +331,13 @@ export default function SendMoneyPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Add payee dialog */}
+      <AddPayeeDialog
+        open={addPayeeOpen}
+        onOpenChange={setAddPayeeOpen}
+        onSubmit={handleAddPayee}
+      />
     </div>
   );
 }

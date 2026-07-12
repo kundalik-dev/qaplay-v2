@@ -1,0 +1,83 @@
+[
+  {
+    "id": "TC-SEND-001",
+    "name": "Verify Send Money Form Load",
+    "expected": "Send money form loads with payee options",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Navigate to Send Money page",
+      "Assert 'From Account' dropdown is present",
+      "Assert Payee list or 'Add a new payee' option is present"
+    ]
+  },
+  {
+    "id": "TC-SEND-002",
+    "name": "Verify Add New Payee Validation",
+    "expected": "Validation errors appear for invalid routing or account numbers",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Select 'Add a new payee'",
+      "Enter an invalid routing number (e.g. 123)",
+      "Click Review & Send",
+      "Assert 'Routing number must be exactly 9 digits' error displays"
+    ]
+  },
+  {
+    "id": "TC-SEND-003",
+    "name": "Verify Successful Send Money",
+    "expected": "Send money transaction succeeds and shows confirmation",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Select a valid From Account",
+      "Select an existing payee",
+      "Enter a valid amount (e.g. 25.00)",
+      "Click Review & Send, then Confirm & Send",
+      "Assert confirmation page shows 'Send Money Successful'"
+    ]
+  },
+  {
+    "id": "TC-SEND-004",
+    "name": "Verify Save Payee Functionality",
+    "expected": "New payee is saved for future transactions when checkbox is selected",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Select 'Add a new payee'",
+      "Fill in valid payee details",
+      "Check 'Save this payee for future transfers'",
+      "Complete the send money transaction",
+      "Navigate back to Send Money page",
+      "Assert the new payee is now listed in the saved payees"
+    ]
+  },
+  {
+    "id": "TC-SEND-005",
+    "name": "Verify Insufficient Funds",
+    "expected": "Error is shown if amount exceeds balance",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Select From Account",
+      "Select an existing payee",
+      "Enter an amount larger than the account balance",
+      "Click Review & Send",
+      "Assert 'Insufficient funds' error is displayed"
+    ]
+  },
+  {
+    "id": "TC-SEND-006",
+    "name": "Verify Frozen Account Block",
+    "expected": "Send money is disabled for frozen accounts",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Login as frozen_user",
+      "Navigate to Send Money page",
+      "Assert 'Sending money is disabled' banner is visible",
+      "Assert Review & Send button is disabled"
+    ]
+  }
+]

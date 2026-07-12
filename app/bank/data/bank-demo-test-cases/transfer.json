@@ -1,0 +1,82 @@
+[
+  {
+    "id": "TC-XFER-001",
+    "name": "Verify Internal Transfer Form Load",
+    "expected": "Transfer form loads with from/to dropdowns",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Navigate to Transfer page",
+      "Assert From Account and To Account dropdowns are present",
+      "Assert Amount input is present"
+    ]
+  },
+  {
+    "id": "TC-XFER-002",
+    "name": "Verify Same Account Validation",
+    "expected": "Error shows if From and To accounts are the same",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Select same account for From and To",
+      "Enter valid amount",
+      "Click Review Transfer",
+      "Assert error 'From and To accounts must be different' is displayed"
+    ]
+  },
+  {
+    "id": "TC-XFER-003",
+    "name": "Verify Insufficient Funds Validation",
+    "expected": "Error shows when transfer amount exceeds available balance",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Select valid From and To accounts",
+      "Enter amount greater than From account balance",
+      "Click Review Transfer",
+      "Assert 'Insufficient funds' error is displayed"
+    ]
+  },
+  {
+    "id": "TC-XFER-004",
+    "name": "Verify Successful Internal Transfer",
+    "expected": "Transfer succeeds and shows confirmation page",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Select valid From and To accounts",
+      "Enter valid amount (e.g. 50.00)",
+      "Click Review Transfer",
+      "Click Confirm Transfer in the dialog",
+      "Assert confirmation page displays 'Transfer Successful'"
+    ]
+  },
+  {
+    "id": "TC-XFER-005",
+    "name": "Verify Scheduled Transfer Flow",
+    "expected": "Scheduled transfers require a future date",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Select valid accounts and amount",
+      "Select 'Schedule for later' radio button",
+      "Select a past date",
+      "Click Review Transfer",
+      "Assert error 'Transfer date cannot be in the past' is displayed"
+    ]
+  },
+  {
+    "id": "TC-XFER-006",
+    "name": "Verify Transfer Balances Update",
+    "expected": "Account balances update immediately after successful transfer",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Record starting balances of From and To accounts",
+      "Perform a successful transfer of $10",
+      "Navigate to Dashboard",
+      "Assert From account balance decreased by $10",
+      "Assert To account balance increased by $10"
+    ]
+  }
+]

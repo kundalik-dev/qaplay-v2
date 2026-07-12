@@ -599,6 +599,7 @@ export const useBankAppStore = create<BankStore>()(
             [username]: [...(s.payees[username] ?? []), newPayee],
           },
         }));
+        return newPayee.id;
       },
 
       // ── saveBiller ────────────────────────────────────────────────────

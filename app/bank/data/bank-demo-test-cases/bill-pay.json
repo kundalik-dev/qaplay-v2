@@ -1,0 +1,83 @@
+[
+  {
+    "id": "TC-BILL-001",
+    "name": "Verify Bill Pay Form Load",
+    "expected": "Bill Pay form loads with biller selection",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Navigate to Bill Pay page",
+      "Assert 'From Account' dropdown is present",
+      "Assert Biller combobox/dropdown is present"
+    ]
+  },
+  {
+    "id": "TC-BILL-002",
+    "name": "Verify Biller Selection",
+    "expected": "User can select an existing biller",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Click the Biller selection dropdown",
+      "Search for 'City Electric'",
+      "Select the biller",
+      "Assert the biller name is displayed in the input field"
+    ]
+  },
+  {
+    "id": "TC-BILL-003",
+    "name": "Verify Add New Biller",
+    "expected": "User can add a new biller via the dialog",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Click Biller dropdown and select 'Add New Biller'",
+      "Enter Biller Name and Reference Number in the dialog",
+      "Click 'Add Biller'",
+      "Assert the new biller is now selected in the main form"
+    ]
+  },
+  {
+    "id": "TC-BILL-004",
+    "name": "Verify Successful Bill Payment",
+    "expected": "Bill payment transaction succeeds",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Select a valid From Account",
+      "Select a Biller",
+      "Enter a valid amount (e.g. 100.00)",
+      "Click Review Payment, then Confirm Payment",
+      "Assert confirmation page displays 'Bill Payment Scheduled' or 'Successful'"
+    ]
+  },
+  {
+    "id": "TC-BILL-005",
+    "name": "Verify Future Payment Date",
+    "expected": "User can schedule a bill payment for a future date",
+    "severity": "Low",
+    "priority": "P3",
+    "steps": [
+      "Select Account and Biller",
+      "Enter valid amount",
+      "Select a Payment Date 5 days in the future",
+      "Complete the payment flow",
+      "Navigate to Transactions page",
+      "Assert the transaction does not immediately deduct from the balance (since it's scheduled)"
+    ]
+  },
+  {
+    "id": "TC-BILL-006",
+    "name": "Verify Insufficient Funds",
+    "expected": "Error is shown if bill amount exceeds available balance",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Select From Account",
+      "Select Biller",
+      "Enter an amount larger than account balance",
+      "Click Review Payment",
+      "Assert 'Insufficient funds' error is displayed"
+    ]
+  }
+]

@@ -17,6 +17,7 @@ import {
   Building2,
   Menu,
   X,
+  ListChecks,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -79,6 +80,13 @@ const NAV_MAIN = [
     icon: Landmark,
     testid: "sidebar-link-apply-loan",
     nav: "apply-loan",
+  },
+  {
+    label: "Test Cases",
+    href: "/bank/test-cases",
+    icon: ListChecks,
+    testid: "sidebar-link-test-cases",
+    nav: "test-cases",
   },
 ];
 

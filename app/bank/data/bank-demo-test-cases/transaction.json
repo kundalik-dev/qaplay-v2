@@ -1,0 +1,77 @@
+[
+  {
+    "id": "TC-TXN-001",
+    "name": "Verify Transactions Page Load",
+    "expected": "Transactions page loads and displays recent activity",
+    "severity": "High",
+    "priority": "P1",
+    "steps": [
+      "Navigate to Transactions page",
+      "Assert the Transactions table is visible",
+      "Assert table contains columns like Date, Description, Category, Amount"
+    ]
+  },
+  {
+    "id": "TC-TXN-002",
+    "name": "Verify Account Filter",
+    "expected": "Filtering by account only shows transactions for that account",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Navigate to Transactions page",
+      "Select a specific 'Checking' account from the filter dropdown",
+      "Assert all visible transactions belong to the selected account"
+    ]
+  },
+  {
+    "id": "TC-TXN-003",
+    "name": "Verify Search Functionality",
+    "expected": "Searching for a term filters the transaction list correctly",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Navigate to Transactions page",
+      "Enter 'Transfer' in the search bar",
+      "Assert all visible transactions contain 'Transfer' in their description or category"
+    ]
+  },
+  {
+    "id": "TC-TXN-004",
+    "name": "Verify Date Sorting",
+    "expected": "Clicking the Date column header toggles sorting order",
+    "severity": "Low",
+    "priority": "P3",
+    "steps": [
+      "Navigate to Transactions page",
+      "Click the Date column header",
+      "Assert transactions are sorted by date ascending",
+      "Click the Date column header again",
+      "Assert transactions are sorted by date descending"
+    ]
+  },
+  {
+    "id": "TC-TXN-005",
+    "name": "Verify Pagination",
+    "expected": "Pagination controls correctly navigate through transaction pages",
+    "severity": "Medium",
+    "priority": "P2",
+    "steps": [
+      "Navigate to Transactions page",
+      "Assert pagination 'Next' button is enabled if multiple pages exist",
+      "Click 'Next'",
+      "Assert the second page of transactions is displayed"
+    ]
+  },
+  {
+    "id": "TC-TXN-006",
+    "name": "Verify Empty State",
+    "expected": "No transactions message is shown when filters return no results",
+    "severity": "Low",
+    "priority": "P3",
+    "steps": [
+      "Navigate to Transactions page",
+      "Search for a non-existent string like 'XYZ123NonExistent'",
+      "Assert 'No transactions found' message is displayed"
+    ]
+  }
+]
