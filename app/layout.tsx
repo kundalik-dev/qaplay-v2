@@ -5,6 +5,7 @@ import {
   JetBrains_Mono,
   Space_Grotesk,
 } from "next/font/google";
+import Script from "next/script";
 
 import {
   ConditionalSiteChrome,
@@ -87,6 +88,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <link
+          rel="preconnect"
+          href="https://cloud.umami.is"
+          crossOrigin="anonymous"
+        />
         {/* Theme init must run before first paint to avoid flash. */}
         <script
           suppressHydrationWarning
@@ -113,6 +119,24 @@ export default function RootLayout({
 
         {/* Footer — hidden on dashboard routes. */}
         <ConditionalSiteFooter />
+
+        {/* Umami Analytics */}
+        <Script
+          id="umami-analytics"
+          src="https://cloud.umami.is/script.js"
+          data-website-id="b5f3d51f-b071-48a6-a70b-2346af1f7625"
+          strategy="afterInteractive"
+        />
+
+        {/* Google Analytics (GA4) */}
+        <Script
+          id="google-analytics-src"
+          src="https://www.googletagmanager.com/gtag/js?id=G-Z4H9RTYGS4"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics-init" strategy="afterInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z4H9RTYGS4');`}
+        </Script>
       </body>
     </html>
   );
