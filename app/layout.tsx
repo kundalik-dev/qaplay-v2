@@ -57,16 +57,15 @@ export const metadata: Metadata = {
 };
 
 // Inline script injected before page paint to prevent theme FOUC.
-// Reads localStorage qap-theme, falls back to OS preference, defaults dark.
+// Reads localStorage qap-theme; defaults to light when no preference is stored.
 const themeInitScript = `
 (function(){
   try{
     var settings = JSON.parse(localStorage.getItem('qap_settings') || '{}');
     var s = settings.theme;
-    var d = s ? s === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var d = s === 'dark';
     document.documentElement.classList.toggle('dark', d);
-    if(s === 'light') document.documentElement.classList.remove('dark');
-    
+
     var f = settings.font;
     if(f) document.documentElement.setAttribute('data-font', f);
 
