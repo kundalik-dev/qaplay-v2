@@ -165,7 +165,7 @@ export function LoanHistoryTable({
               </td>
 
               <td
-                className="px-4 py-3 text-right text-sm font-semibold tabular-nums text-slate-900 dark:text-white"
+                className="px-4 py-3 text-right text-sm font-semibold text-slate-900 tabular-nums dark:text-white"
                 data-testid="loan-history-amount"
               >
                 {formatCurrency(loan.amount)}
@@ -210,7 +210,7 @@ export function LoanHistoryTable({
                * practice account — see apply-loan/page.tsx.
                */}
               <td
-                className="px-4 py-3 text-right text-sm font-bold tabular-nums text-slate-900 dark:text-white"
+                className="px-4 py-3 text-right text-sm font-bold text-slate-900 tabular-nums dark:text-white"
                 data-testid="loan-history-total-value"
               >
                 {formatCurrency(totalAmount)}

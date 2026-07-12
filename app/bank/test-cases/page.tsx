@@ -47,9 +47,9 @@ const PRIORITY_STYLES: Record<string, string> = {
 };
 
 export default function TestCasesPage() {
-  const [completedCases, setCompletedCases] = useState<
-    Record<string, boolean>
-  >({});
+  const [completedCases, setCompletedCases] = useState<Record<string, boolean>>(
+    {},
+  );
   const [expandedCases, setExpandedCases] = useState<Record<string, boolean>>(
     {},
   );
@@ -83,10 +83,7 @@ export default function TestCasesPage() {
     <div data-testid="test-cases-page" data-section="test-cases">
       <div className="mb-6 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-100 dark:bg-violet-900/30">
-          <ListChecks
-            className="h-5 w-5 text-violet-600"
-            aria-hidden="true"
-          />
+          <ListChecks className="h-5 w-5 text-violet-600" aria-hidden="true" />
         </div>
         <div>
           <h1

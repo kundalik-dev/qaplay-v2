@@ -11,7 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { Separator } from "@/components/ui/separator";
-import { useBankAppStore, useUserNotifications } from "../store/useBankAppStore";
+import {
+  useBankAppStore,
+  useUserNotifications,
+} from "../store/useBankAppStore";
 import { formatRelativeTime } from "../lib/utils";
 
 const TYPE_ICON = {

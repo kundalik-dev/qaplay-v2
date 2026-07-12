@@ -677,7 +677,9 @@ export function useCurrentUser() {
 
 export function useUserAccounts(username: string | null) {
   return useBankAppStore((s) =>
-    username ? (s.accounts[username] ?? emptyArray<Account>()) : emptyArray<Account>(),
+    username
+      ? (s.accounts[username] ?? emptyArray<Account>())
+      : emptyArray<Account>(),
   );
 }
 
@@ -699,13 +701,17 @@ export function useUserLoanApplications(username: string | null) {
 
 export function useUserBillers(username: string | null) {
   return useBankAppStore((s) =>
-    username ? (s.billers[username] ?? emptyArray<Biller>()) : emptyArray<Biller>(),
+    username
+      ? (s.billers[username] ?? emptyArray<Biller>())
+      : emptyArray<Biller>(),
   );
 }
 
 export function useUserPayees(username: string | null) {
   return useBankAppStore((s) =>
-    username ? (s.payees[username] ?? emptyArray<Payee>()) : emptyArray<Payee>(),
+    username
+      ? (s.payees[username] ?? emptyArray<Payee>())
+      : emptyArray<Payee>(),
   );
 }
 

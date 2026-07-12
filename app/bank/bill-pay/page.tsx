@@ -61,7 +61,10 @@ export default function BillPayPage() {
     }
   };
 
-  const handleAddBiller = (values: { name: string; referenceNumber: string }) => {
+  const handleAddBiller = (values: {
+    name: string;
+    referenceNumber: string;
+  }) => {
     if (!currentUsername) return;
     const newId = saveBiller(currentUsername, values);
     setSelectedBillerId(newId);

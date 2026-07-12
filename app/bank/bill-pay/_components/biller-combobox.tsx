@@ -68,7 +68,7 @@ export function BillerCombobox({
       {/* Beginner: getByLabel + getByTestId on the searchable input */}
       <div className="relative">
         <Search
-          className="absolute top-1/2 left-3 -translate-y-1/2 h-3.5 w-3.5 text-slate-400"
+          className="absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-slate-400"
           aria-hidden="true"
         />
         <Input

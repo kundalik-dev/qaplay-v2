@@ -247,9 +247,7 @@ export default function BankLoginPage() {
           className="mt-4 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3"
           data-testid="test-credentials-panel"
         >
-          <p className="text-xs font-medium text-slate-500">
-            Test credentials
-          </p>
+          <p className="text-xs font-medium text-slate-500">Test credentials</p>
           <div className="mt-3 overflow-x-auto">
             <table
               className="w-full border-collapse text-[11px]"
@@ -309,7 +307,7 @@ export default function BankLoginPage() {
                    */
                   <tr
                     key={c.user}
-                    className="border-b border-slate-200 font-mono hover:bg-slate-100 last:border-b-0"
+                    className="border-b border-slate-200 font-mono last:border-b-0 hover:bg-slate-100"
                     data-testid="credential-row"
                     data-username={c.user}
                   >
@@ -321,7 +319,7 @@ export default function BankLoginPage() {
                           onClick={() =>
                             handleCopy(c.user, `${c.user}-username`)
                           }
-                          className="opacity-0 transition-opacity group-hover/username:opacity-100 focus-visible:opacity-100 text-slate-400 hover:text-violet-600"
+                          className="text-slate-400 opacity-0 transition-opacity group-hover/username:opacity-100 hover:text-violet-600 focus-visible:opacity-100"
                           aria-label={`Copy username ${c.user}`}
                           data-testid="copy-username-btn"
                         >
@@ -338,10 +336,8 @@ export default function BankLoginPage() {
                         {c.pw}
                         <button
                           type="button"
-                          onClick={() =>
-                            handleCopy(c.pw, `${c.user}-password`)
-                          }
-                          className="opacity-0 transition-opacity group-hover/password:opacity-100 focus-visible:opacity-100 text-slate-400 hover:text-violet-600"
+                          onClick={() => handleCopy(c.pw, `${c.user}-password`)}
+                          className="text-slate-400 opacity-0 transition-opacity group-hover/password:opacity-100 hover:text-violet-600 focus-visible:opacity-100"
                           aria-label={`Copy password for ${c.user}`}
                           data-testid="copy-password-btn"
                         >

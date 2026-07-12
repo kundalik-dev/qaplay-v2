@@ -35,7 +35,10 @@ export function DeleteAccountDialog({
             className="flex items-center gap-2"
             data-testid="delete-account-dialog-title"
           >
-            <AlertTriangle className="h-4 w-4 text-red-600" aria-hidden="true" />
+            <AlertTriangle
+              className="h-4 w-4 text-red-600"
+              aria-hidden="true"
+            />
             Delete Account
           </DialogTitle>
         </DialogHeader>
@@ -48,8 +51,8 @@ export function DeleteAccountDialog({
           >
             {account?.name}
           </span>
-          ? This will also remove its transaction history. This action cannot
-          be undone.
+          ? This will also remove its transaction history. This action cannot be
+          undone.
         </p>
 
         <DialogFooter className="gap-2">

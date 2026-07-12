@@ -51,7 +51,11 @@ export function PayeeSelect({
         </button>
       </div>
 
-      <Select value={selectedPayeeId} onValueChange={onSelectPayee} disabled={disabled}>
+      <Select
+        value={selectedPayeeId}
+        onValueChange={onSelectPayee}
+        disabled={disabled}
+      >
         <SelectTrigger
           id="payee-select-trigger"
           data-testid="payee-select"

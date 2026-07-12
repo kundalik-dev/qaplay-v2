@@ -76,7 +76,11 @@ export default function ApplyLoanConfirmationPage() {
         </h2>
         <div className="space-y-2 text-sm">
           {[
-            { label: "Loan Type", value: loanType, testid: "confirm-loan-type" },
+            {
+              label: "Loan Type",
+              value: loanType,
+              testid: "confirm-loan-type",
+            },
             {
               label: "Amount",
               value: formatCurrency(amount),
@@ -92,7 +96,11 @@ export default function ApplyLoanConfirmationPage() {
               value: disbursementAccount.name,
               testid: "confirm-loan-account",
             },
-            { label: "Purpose", value: purpose, testid: "confirm-loan-purpose" },
+            {
+              label: "Purpose",
+              value: purpose,
+              testid: "confirm-loan-purpose",
+            },
             {
               label: "Submitted",
               value: formatDate(date),

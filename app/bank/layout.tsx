@@ -182,7 +182,10 @@ function BankSidebar({
         <p className="mb-1 px-2 text-[10px] font-semibold tracking-widest text-slate-500 uppercase">
           Account
         </p>
-        <nav className="flex flex-col gap-0.5" data-testid="sidebar-account-nav">
+        <nav
+          className="flex flex-col gap-0.5"
+          data-testid="sidebar-account-nav"
+        >
           {NAV_ACCOUNT.map((item) => {
             const Icon = item.icon;
             const isActive = pathname.startsWith(item.href);

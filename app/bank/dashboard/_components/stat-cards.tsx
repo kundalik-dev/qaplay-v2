@@ -54,7 +54,7 @@ export function StatCards({
           </p>
         </div>
         <p
-          className="text-xl font-bold tabular-nums text-slate-900 dark:text-white"
+          className="text-xl font-bold text-slate-900 tabular-nums dark:text-white"
           data-testid="stat-card-net-worth-value"
         >
           {formatCurrency(netWorth)}
@@ -119,7 +119,7 @@ export function StatCards({
          *   XPath: //div[@data-testid="stat-card" and @data-metric="income"]//p[@aria-label]
          */}
         <p
-          className="text-xl font-bold tabular-nums text-emerald-600 dark:text-emerald-400"
+          className="text-xl font-bold text-emerald-600 tabular-nums dark:text-emerald-400"
           aria-label="Monthly income amount"
         >
           +{formatCurrency(monthlyIncome)}
@@ -147,7 +147,7 @@ export function StatCards({
          * the card's data-metric attribute and match by class/position.
          * XPath: //div[@data-testid="stat-card" and @data-metric="expense"]//p[contains(@class,"text-xl")]
          */}
-        <p className="text-xl font-bold tabular-nums text-rose-600 dark:text-rose-400">
+        <p className="text-xl font-bold text-rose-600 tabular-nums dark:text-rose-400">
           -{formatCurrency(monthlyExpense)}
         </p>
         <p className="mt-0.5 text-xs text-slate-500">This month</p>

@@ -39,7 +39,11 @@ export default function TransactionsPage() {
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const hasActiveFilters = !!(search || filterType !== "all" || accountId !== "all");
+  const hasActiveFilters = !!(
+    search ||
+    filterType !== "all" ||
+    accountId !== "all"
+  );
 
   const handleClearFilters = () => {
     setSearch("");
@@ -91,10 +95,21 @@ export default function TransactionsPage() {
     }
 
     return result;
-  }, [allTransactions, accountNameById, search, accountId, filterType, sortField, sortOrder]);
+  }, [
+    allTransactions,
+    accountNameById,
+    search,
+    accountId,
+    filterType,
+    sortField,
+    sortOrder,
+  ]);
 
   // ── Pagination ─────────────────────────────────────────────────────────────
-  const totalPages = Math.max(1, Math.ceil(filteredAndSorted.length / PAGE_SIZE));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredAndSorted.length / PAGE_SIZE),
+  );
   const paginated = filteredAndSorted.slice(
     (currentPage - 1) * PAGE_SIZE,
     currentPage * PAGE_SIZE,
@@ -173,7 +188,10 @@ export default function TransactionsPage() {
         data-testid="all-txn-pagination-controls"
         aria-label="Transaction pagination"
       >
-        <p className="text-xs text-slate-500" data-testid="all-txn-pagination-info">
+        <p
+          className="text-xs text-slate-500"
+          data-testid="all-txn-pagination-info"
+        >
           {filteredAndSorted.length === 0
             ? "No transactions"
             : `Showing ${(currentPage - 1) * PAGE_SIZE + 1}–${Math.min(currentPage * PAGE_SIZE, filteredAndSorted.length)} of ${filteredAndSorted.length}`}
@@ -222,7 +240,9 @@ export default function TransactionsPage() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+            onClick={() =>
+              setCurrentPage(Math.min(totalPages, currentPage + 1))
+            }
             disabled={currentPage === totalPages}
             aria-label="Next page"
             data-testid="all-txn-pagination-next"
