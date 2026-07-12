@@ -81,13 +81,6 @@ const NAV_MAIN = [
     testid: "sidebar-link-apply-loan",
     nav: "apply-loan",
   },
-  {
-    label: "Test Cases",
-    href: "/bank/test-cases",
-    icon: ListChecks,
-    testid: "sidebar-link-test-cases",
-    nav: "test-cases",
-  },
 ];
 
 const NAV_ACCOUNT = [
@@ -104,6 +97,13 @@ const NAV_ACCOUNT = [
     icon: User,
     testid: "sidebar-link-profile",
     nav: "profile",
+  },
+  {
+    label: "Test Cases",
+    href: "/bank/test-cases",
+    icon: ListChecks,
+    testid: "sidebar-link-test-cases",
+    nav: "test-cases",
   },
 ];
 
