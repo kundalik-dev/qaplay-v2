@@ -59,6 +59,7 @@ export default function TestCasesPage() {
     const saved = localStorage.getItem("bank-test-cases-done");
     if (saved) {
       try {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setCompletedCases(JSON.parse(saved));
       } catch {
         // Ignore malformed localStorage data
