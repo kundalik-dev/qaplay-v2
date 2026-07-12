@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Landmark, ScrollText } from "lucide-react";
+import { ArrowLeft, Landmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -30,7 +30,10 @@ import {
 } from "../store/useBankAppStore";
 import { formatCurrency } from "../lib/utils";
 import type { LoanApplication, LoanType } from "../lib/types";
-import { LoanHistoryFilterBar } from "./_components/loan-history-filter-bar";
+import {
+  LoanHistoryFilterBar,
+  type LoanTypeFilter,
+} from "./_components/loan-history-filter-bar";
 import {
   LoanHistoryTable,
   type SortField,
@@ -66,15 +69,24 @@ export default function ApplyLoanPage() {
   const [showConfirm, setShowConfirm] = useState(false);
 
   // ── Loan history: filter, sort, paginate ────────────────────────────────
+  const [historySearch, setHistorySearch] = useState("");
+  const [loanTypeFilter, setLoanTypeFilter] = useState<LoanTypeFilter>("all");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [sortField, setSortField] = useState<SortField | null>("date");
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
   const [historyPage, setHistoryPage] = useState(1);
 
-  const hasActiveHistoryFilters = !!(dateFrom || dateTo);
+  const hasActiveHistoryFilters = !!(
+    historySearch ||
+    loanTypeFilter !== "all" ||
+    dateFrom ||
+    dateTo
+  );
 
   const handleClearHistoryFilters = () => {
+    setHistorySearch("");
+    setLoanTypeFilter("all");
     setDateFrom("");
     setDateTo("");
     setHistoryPage(1);
@@ -90,19 +102,29 @@ export default function ApplyLoanPage() {
     setHistoryPage(1);
   };
 
-  // Date-filtered, in original (newest-first) store order — the buggy
-  // total below relies on this order, independent of the column the
-  // table happens to be sorted by.
-  const dateFilteredHistory = useMemo<LoanApplication[]>(() => {
+  // Search + type + date filtered, in original (newest-first) store order —
+  // the buggy total below relies on this order, independent of the column
+  // the table happens to be sorted by.
+  const filteredHistory = useMemo<LoanApplication[]>(() => {
     let result = loanHistory;
+    if (historySearch) {
+      const q = historySearch.toLowerCase();
+      result = result.filter(
+        (l) =>
+          l.refId.toLowerCase().includes(q) ||
+          l.purpose.toLowerCase().includes(q),
+      );
+    }
+    if (loanTypeFilter !== "all")
+      result = result.filter((l) => l.loanType === loanTypeFilter);
     if (dateFrom) result = result.filter((l) => l.date >= dateFrom);
     if (dateTo) result = result.filter((l) => l.date <= dateTo);
     return result;
-  }, [loanHistory, dateFrom, dateTo]);
+  }, [loanHistory, historySearch, loanTypeFilter, dateFrom, dateTo]);
 
   const sortedHistory = useMemo<LoanApplication[]>(() => {
-    if (!sortField) return dateFilteredHistory;
-    return [...dateFilteredHistory].sort((a, b) => {
+    if (!sortField) return filteredHistory;
+    return [...filteredHistory].sort((a, b) => {
       if (sortField === "date") {
         return sortOrder === "asc"
           ? a.date.localeCompare(b.date)
@@ -110,7 +132,7 @@ export default function ApplyLoanPage() {
       }
       return sortOrder === "asc" ? a.amount - b.amount : b.amount - a.amount;
     });
-  }, [dateFilteredHistory, sortField, sortOrder]);
+  }, [filteredHistory, sortField, sortOrder]);
 
   const historyTotalPages = Math.max(
     1,
@@ -121,18 +143,15 @@ export default function ApplyLoanPage() {
     historyPage * PAGE_SIZE,
   );
 
-  const correctTotal = dateFilteredHistory.reduce(
-    (sum, l) => sum + l.amount,
-    0,
-  );
+  const correctTotal = filteredHistory.reduce((sum, l) => sum + l.amount, 0);
   // Bug: for BUGGY_TOTAL_USERNAME, the most-recently-added loan within the
-  // current date filter is silently dropped from the total, so it never
+  // current filters is silently dropped from the total, so it never
   // matches the sum of the visible rows — and stays wrong right after a
   // new application is added, since the new loan becomes that excluded
   // "most recent" entry.
   const displayedTotal =
     currentUsername === BUGGY_TOTAL_USERNAME
-      ? correctTotal - (dateFilteredHistory[0]?.amount ?? 0)
+      ? correctTotal - (filteredHistory[0]?.amount ?? 0)
       : correctTotal;
 
   const disbursementAccount = accounts.find((a) => a.id === accountId);
@@ -193,53 +212,46 @@ export default function ApplyLoanPage() {
 
   return (
     <div data-testid="apply-loan-page" data-section="apply-loan">
-      <Link
-        href="/bank/dashboard"
-        className="mb-4 inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-900"
-        data-testid="back-to-dashboard-link"
-      >
-        <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-        Dashboard
-      </Link>
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 dark:bg-amber-900/30">
+            <Landmark className="h-5 w-5 text-amber-600" aria-hidden="true" />
+          </div>
+          <div>
+            <h1
+              className="text-xl font-bold text-slate-900 dark:text-white"
+              data-testid="apply-loan-page-title"
+            >
+              Apply for a Loan
+            </h1>
+            <p className="text-sm text-slate-500">
+              Personal, auto, home, and student loans
+            </p>
+          </div>
+        </div>
 
-      <div className="mb-6 flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 dark:bg-amber-900/30">
-          <Landmark className="h-5 w-5 text-amber-600" aria-hidden="true" />
-        </div>
-        <div>
-          <h1
-            className="text-xl font-bold text-slate-900 dark:text-white"
-            data-testid="apply-loan-page-title"
-          >
-            Apply for a Loan
-          </h1>
-          <p className="text-sm text-slate-500">
-            Personal, auto, home, and student loans
-          </p>
-        </div>
+        {/* Apply trigger — Beginner: getByRole('button', { name: 'Apply for Loan' }) + getByTestId */}
+        <Button
+          type="button"
+          onClick={handleOpenApplyForm}
+          disabled={isFrozen}
+          data-testid="open-apply-loan-btn"
+          className="gap-1.5 bg-violet-600 hover:bg-violet-700"
+        >
+          <Landmark className="h-4 w-4" aria-hidden="true" />
+          Apply for Loan
+        </Button>
       </div>
 
       {isFrozen && (
         <div
-          className="mb-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800"
+          className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800"
           role="alert"
           data-testid="apply-loan-frozen-banner"
         >
           Loan applications are disabled while your account is frozen.
         </div>
       )}
-
-      {/* Apply trigger — Beginner: getByRole('button', { name: 'Apply for Loan' }) + getByTestId */}
-      <Button
-        type="button"
-        onClick={handleOpenApplyForm}
-        disabled={isFrozen}
-        data-testid="open-apply-loan-btn"
-        className="mb-2 gap-1.5 bg-violet-600 hover:bg-violet-700"
-      >
-        <Landmark className="h-4 w-4" aria-hidden="true" />
-        Apply for Loan
-      </Button>
 
       {/* Apply form dialog */}
       <Dialog open={showApplyForm} onOpenChange={setShowApplyForm}>
@@ -451,27 +463,17 @@ export default function ApplyLoanPage() {
 
       {/* Applied loans history */}
       <div className="mt-10" data-testid="loan-history-section">
-        <div className="mb-4 flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-100 dark:bg-violet-900/30">
-            <ScrollText
-              className="h-4.5 w-4.5 text-violet-600"
-              aria-hidden="true"
-            />
-          </div>
-          <div>
-            <h2
-              className="text-lg font-bold text-slate-900 dark:text-white"
-              data-testid="loan-history-title"
-            >
-              Applied Loans
-            </h2>
-            <p className="text-sm text-slate-500">
-              History of loan applications on this account
-            </p>
-          </div>
-        </div>
-
         <LoanHistoryFilterBar
+          search={historySearch}
+          onSearchChange={(v) => {
+            setHistorySearch(v);
+            setHistoryPage(1);
+          }}
+          loanTypeFilter={loanTypeFilter}
+          onLoanTypeFilterChange={(v) => {
+            setLoanTypeFilter(v);
+            setHistoryPage(1);
+          }}
           dateFrom={dateFrom}
           onDateFromChange={(v) => {
             setDateFrom(v);

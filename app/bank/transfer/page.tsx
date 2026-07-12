@@ -105,15 +105,6 @@ export default function TransferPage() {
 
   return (
     <div data-testid="transfer-page" data-section="transfer">
-      <Link
-        href="/bank/dashboard"
-        className="mb-4 inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-900"
-        data-testid="back-to-dashboard-link"
-      >
-        <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-        Dashboard
-      </Link>
-
       <div className="mb-6 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-100 dark:bg-violet-900/30">
           <ArrowLeftRight

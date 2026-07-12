@@ -361,6 +361,13 @@ export const SEED_PAYEES: Payee[] = [
     routingNumber: "026009593",
     bankName: "Bank of America",
   },
+  {
+    id: "payee-003",
+    name: "Amit Verma",
+    accountNumber: "456789123",
+    routingNumber: "071000013",
+    bankName: "Wells Fargo",
+  },
 ];
 
 // ─── Billers ──────────────────────────────────────────────────────────────────

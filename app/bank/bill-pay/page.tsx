@@ -114,14 +114,6 @@ export default function BillPayPage() {
 
   return (
     <div data-testid="bill-pay-page" data-section="bill-pay">
-      <Link
-        href="/bank/dashboard"
-        className="mb-4 inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-900"
-        data-testid="back-to-dashboard-link"
-      >
-        <ArrowLeft className="h-3.5 w-3.5" />
-        Back to Dashboard
-      </Link>
       <div className="mb-6 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-100">
           <Receipt className="h-5 w-5 text-violet-600" />

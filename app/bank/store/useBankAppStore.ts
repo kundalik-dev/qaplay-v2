@@ -111,8 +111,8 @@ interface BankAppActions {
   /** Delete an account and its transactions. */
   deleteAccount: (username: string, accountId: string) => void;
 
-  /** Save a new payee for a user. */
-  savePayee: (username: string, payee: Omit<Payee, "id">) => void;
+  /** Save a new payee for a user. Returns the new payee's id. */
+  savePayee: (username: string, payee: Omit<Payee, "id">) => string;
 
   /** Save a new biller for a user. Returns the new biller's id. */
   saveBiller: (username: string, biller: Omit<Biller, "id">) => string;
@@ -172,8 +172,7 @@ export const useBankAppStore = create<BankStore>()(
           }
           transactions[username] = userTxns;
 
-          payees[username] =
-            username === "standard_user" ? [...SEED_PAYEES] : [];
+          payees[username] = [...SEED_PAYEES];
           billers[username] = [...SEED_BILLERS];
           notifications[username] = createSeedNotifications(username);
           loanApplications[username] = createSeedLoanApplications(
@@ -234,10 +233,7 @@ export const useBankAppStore = create<BankStore>()(
         set((state) => ({
           accounts: { ...state.accounts, [username]: userAccounts },
           transactions: { ...state.transactions, [username]: userTxns },
-          payees: {
-            ...state.payees,
-            [username]: username === "standard_user" ? [...SEED_PAYEES] : [],
-          },
+          payees: { ...state.payees, [username]: [...SEED_PAYEES] },
           billers: { ...state.billers, [username]: [...SEED_BILLERS] },
           notifications: {
             ...state.notifications,
