@@ -280,7 +280,7 @@ export default function SendMoneyPage() {
                       onChange={() => handleSelectPayee("new")}
                       className="accent-violet-600"
                     />
-                    <span className="text-sm text-slate-600">
+                    <span className="text-sm text-slate-600 dark:text-slate-400">
                       Add a new payee
                     </span>
                     {selectedPayeeId === "new" ? (

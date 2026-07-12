@@ -655,7 +655,7 @@ export const useBankAppStore = create<BankStore>()(
     {
       // localStorage key — bumped whenever seed data / store shape changes so
       // existing sessions pick up new seed data instead of using stale state.
-      name: "bank-app-v2",
+      name: "bank-app-v3",
     },
   ),
 );

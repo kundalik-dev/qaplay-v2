@@ -279,7 +279,7 @@ export default function TransferPage() {
                  * XPath: //span[normalize-space()="Memo (optional)"]/following-sibling::div//input
                  *        //input[starts-with(@name,"transfer_memo_")]
                  */}
-                <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                <span className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
                   Memo (optional)
                 </span>
                 <div>

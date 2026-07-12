@@ -29,7 +29,7 @@ import {
   useUserLoanApplications,
 } from "../store/useBankAppStore";
 import { formatCurrency } from "../lib/utils";
-import type { LoanType } from "../lib/types";
+import type { LoanApplication, LoanType } from "../lib/types";
 import { LoanHistoryFilterBar } from "./_components/loan-history-filter-bar";
 import {
   LoanHistoryTable,
@@ -62,6 +62,7 @@ export default function ApplyLoanPage() {
   const [accountId, setAccountId] = useState("");
   const [purpose, setPurpose] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [showApplyForm, setShowApplyForm] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
   // ── Loan history: filter, sort, paginate ────────────────────────────────
@@ -162,6 +163,7 @@ export default function ApplyLoanPage() {
       return;
     }
 
+    setShowApplyForm(false);
     setShowConfirm(true);
   };
 
@@ -177,10 +179,16 @@ export default function ApplyLoanPage() {
     if (err) {
       setError(err);
       setShowConfirm(false);
+      setShowApplyForm(true);
     } else {
       setShowConfirm(false);
       router.push("/bank/apply-loan/confirmation");
     }
+  };
+
+  const handleOpenApplyForm = () => {
+    setError(null);
+    setShowApplyForm(true);
   };
 
   return (
@@ -221,11 +229,34 @@ export default function ApplyLoanPage() {
         </div>
       )}
 
-      <div className="max-w-lg">
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+      {/* Apply trigger — Beginner: getByRole('button', { name: 'Apply for Loan' }) + getByTestId */}
+      <Button
+        type="button"
+        onClick={handleOpenApplyForm}
+        disabled={isFrozen}
+        data-testid="open-apply-loan-btn"
+        className="mb-2 gap-1.5 bg-violet-600 hover:bg-violet-700"
+      >
+        <Landmark className="h-4 w-4" aria-hidden="true" />
+        Apply for Loan
+      </Button>
+
+      {/* Apply form dialog */}
+      <Dialog open={showApplyForm} onOpenChange={setShowApplyForm}>
+        <DialogContent
+          data-testid="apply-loan-dialog"
+          aria-label="Loan application form"
+          className="sm:max-w-lg"
+        >
+          <DialogHeader>
+            <DialogTitle data-testid="apply-loan-dialog-title">
+              Apply for a Loan
+            </DialogTitle>
+          </DialogHeader>
+
           {error && (
             <div
-              className="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700"
+              className="mb-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700"
               role="alert"
               data-testid="apply-loan-error-message"
             >
@@ -408,15 +439,15 @@ export default function ApplyLoanPage() {
               <Button
                 type="button"
                 variant="outline"
-                asChild
+                onClick={() => setShowApplyForm(false)}
                 data-testid="cancel-loan-btn"
               >
-                <Link href="/bank/dashboard">Cancel</Link>
+                Cancel
               </Button>
             </div>
           </form>
-        </div>
-      </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Applied loans history */}
       <div className="mt-10" data-testid="loan-history-section">
@@ -575,10 +606,13 @@ export default function ApplyLoanPage() {
           <DialogFooter className="gap-2">
             <Button
               variant="outline"
-              onClick={() => setShowConfirm(false)}
+              onClick={() => {
+                setShowConfirm(false);
+                setShowApplyForm(true);
+              }}
               data-testid="cancel-confirm-loan-btn"
             >
-              Cancel
+              Back
             </Button>
             <Button
               onClick={handleConfirm}
