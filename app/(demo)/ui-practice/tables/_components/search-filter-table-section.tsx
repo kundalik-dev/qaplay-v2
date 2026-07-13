@@ -2,7 +2,10 @@
 
 import { useMemo, useState } from "react";
 
-import { employees, type Department } from "@/data/ui-practice-data/tables-data";
+import {
+  employees,
+  type Department,
+} from "@/data/ui-practice-data/tables-data";
 import { StatusBadge } from "./status-badge";
 import { formatSalary } from "./table-utils";
 
@@ -21,7 +24,8 @@ export function SearchFilterTableSection() {
   const rows = useMemo(() => {
     const q = query.toLowerCase().trim();
     return SEARCH_DATA.filter(
-      (e) => (!q || e.name.toLowerCase().includes(q)) && (!dept || e.dept === dept),
+      (e) =>
+        (!q || e.name.toLowerCase().includes(q)) && (!dept || e.dept === dept),
     );
   }, [query, dept]);
 
@@ -33,12 +37,14 @@ export function SearchFilterTableSection() {
   return (
     <section className="section" id="sec-search">
       <h2>
-        3. Search &amp; filter table <span className="badge badge-blue">Intermediate</span>
+        3. Search &amp; filter table{" "}
+        <span className="badge badge-blue">Intermediate</span>
       </h2>
       <p className="hint">
-        Text search (by name) + department dropdown filter — both work together. Assert{" "}
-        <code>search-result-count</code> text and visible row count after each filter change.
-        Search for a non-existent name to trigger the empty state.
+        Text search (by name) + department dropdown filter — both work together.
+        Assert <code>search-result-count</code> text and visible row count after
+        each filter change. Search for a non-existent name to trigger the empty
+        state.
       </p>
       <div className="controls">
         <div className="ctrl-field">

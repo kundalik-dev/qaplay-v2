@@ -23,12 +23,14 @@ export function PaginatedTableSection() {
   return (
     <section className="section" id="sec-pagination">
       <h2>
-        4. Paginated table <span className="badge badge-orange">Intermediate → Advanced</span>
+        4. Paginated table{" "}
+        <span className="badge badge-orange">Intermediate → Advanced</span>
       </h2>
       <p className="hint">
         15 employees, 5 per page. Assert: row count per page,{" "}
-        <code>aria-current=&quot;page&quot;</code> on active button, Prev disabled on page 1, Next
-        disabled on last page, &quot;Showing X–Y of 15&quot; updates after navigation.
+        <code>aria-current=&quot;page&quot;</code> on active button, Prev
+        disabled on page 1, Next disabled on last page, &quot;Showing X–Y of
+        15&quot; updates after navigation.
       </p>
       <table data-testid="pag-table" aria-label="Paginated employee table">
         <thead>

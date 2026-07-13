@@ -21,12 +21,16 @@ import { CombinedGridSection } from "./combined-grid-section";
  */
 export function TablesPractice() {
   return (
-    <div className="ui-practice-tables-page" data-testid="ui-practice-tables-page">
+    <div
+      className="ui-practice-tables-page"
+      data-testid="ui-practice-tables-page"
+    >
       <div className="container">
         <h1>Tables Practice</h1>
         <p className="intro">
-          Static, sortable, searchable, paginated, row-action, and combined-grid tables — for
-          practicing Playwright table locators and real-world interaction patterns.
+          Static, sortable, searchable, paginated, row-action, and combined-grid
+          tables — for practicing Playwright table locators and real-world
+          interaction patterns.
         </p>
 
         <StaticTableSection />

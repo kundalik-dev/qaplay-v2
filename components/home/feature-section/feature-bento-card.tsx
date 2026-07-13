@@ -26,11 +26,13 @@ export function FeatureBentoCard({
   title,
 }: FeatureBentoCardProps) {
   return (
-    <article
+    <Link
+      href={href}
       className={cn(
         styles["feature-bento-card"],
         className ? styles[className] : undefined,
       )}
+      style={{ textDecoration: "none", color: "inherit" }}
     >
       {badge ? (
         <span className={cn(shared.homeBadge, styles["feature-bento-badge"])}>
@@ -46,10 +48,8 @@ export function FeatureBentoCard({
       <div className={styles["feature-bento-content"]}>
         <h3 className={styles["feature-bento-title"]}>{title}</h3>
         <p className={styles["feature-bento-description"]}>{description}</p>
-        <Link href={href} className={styles["feature-bento-link"]}>
-          {linkLabel}
-        </Link>
+        <span className={styles["feature-bento-link"]}>{linkLabel}</span>
       </div>
-    </article>
+    </Link>
   );
 }

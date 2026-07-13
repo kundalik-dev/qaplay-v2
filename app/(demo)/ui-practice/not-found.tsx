@@ -21,7 +21,7 @@ export default function UiPracticeNotFound() {
         className="mb-4 h-10 w-10 text-muted-foreground"
         aria-hidden="true"
       />
-      <h1 className="font-heading mb-2 text-2xl font-semibold">
+      <h1 className="mb-2 font-heading text-2xl font-semibold">
         Section not built yet
       </h1>
       <p className="mb-8 max-w-md text-sm text-muted-foreground">

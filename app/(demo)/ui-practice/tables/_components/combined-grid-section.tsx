@@ -2,7 +2,10 @@
 
 import { useMemo, useState } from "react";
 
-import { employees, type Department } from "@/data/ui-practice-data/tables-data";
+import {
+  employees,
+  type Department,
+} from "@/data/ui-practice-data/tables-data";
 import { PaginationControls } from "./pagination-controls";
 import { StatusBadge } from "./status-badge";
 import {
@@ -16,7 +19,11 @@ import {
 const PER_PAGE = 5;
 const DEPARTMENTS: Department[] = ["Engineering", "Marketing", "HR", "Sales"];
 
-const COLUMNS: { col: SortableEmployeeColumn; label: string; testId: string }[] = [
+const COLUMNS: {
+  col: SortableEmployeeColumn;
+  label: string;
+  testId: string;
+}[] = [
   { col: "name", label: "Name", testId: "grid-th-name" },
   { col: "dept", label: "Department", testId: "grid-th-dept" },
   { col: "salary", label: "Salary", testId: "grid-th-salary" },
@@ -38,7 +45,8 @@ export function CombinedGridSection() {
   const filteredSorted = useMemo(() => {
     const q = query.toLowerCase().trim();
     let rows = employees.filter(
-      (e) => (!q || e.name.toLowerCase().includes(q)) && (!dept || e.dept === dept),
+      (e) =>
+        (!q || e.name.toLowerCase().includes(q)) && (!dept || e.dept === dept),
     );
     if (sortCol && sortDir) rows = sortEmployees(rows, sortCol, sortDir);
     return rows;
@@ -83,9 +91,9 @@ export function CombinedGridSection() {
         <span className="badge badge-red">Advanced</span>
       </h2>
       <p className="hint">
-        Real-world data grid: all three features work together. Filtering or sorting resets to
-        page 1 automatically. Practice: chaining interactions across search → sort → page
-        navigation, asserting combined state.
+        Real-world data grid: all three features work together. Filtering or
+        sorting resets to page 1 automatically. Practice: chaining interactions
+        across search → sort → page navigation, asserting combined state.
       </p>
       <div className="controls">
         <div className="ctrl-field">
@@ -161,7 +169,9 @@ export function CombinedGridSection() {
               <tr key={e.id} data-testid={`grid-row-${e.id}`}>
                 <td data-testid={`grid-name-${e.id}`}>{e.name}</td>
                 <td>{e.dept}</td>
-                <td data-testid={`grid-salary-${e.id}`}>{formatSalary(e.salary)}</td>
+                <td data-testid={`grid-salary-${e.id}`}>
+                  {formatSalary(e.salary)}
+                </td>
                 <td>{e.joined}</td>
                 <td>
                   <StatusBadge status={e.status} />

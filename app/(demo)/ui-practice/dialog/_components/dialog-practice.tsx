@@ -1,7 +1,5 @@
 import "./dialog.css";
 
-import Link from "next/link";
-
 import { NativeAlertSection } from "./native-alert-section";
 import { NativeConfirmSection } from "./native-confirm-section";
 import { NativePromptSection } from "./native-prompt-section";

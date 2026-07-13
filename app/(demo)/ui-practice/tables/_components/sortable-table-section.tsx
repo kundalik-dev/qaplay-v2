@@ -14,7 +14,11 @@ import {
 
 const SORT_DATA = employees.slice(0, 10);
 
-const COLUMNS: { col: SortableEmployeeColumn; label: string; testId: string }[] = [
+const COLUMNS: {
+  col: SortableEmployeeColumn;
+  label: string;
+  testId: string;
+}[] = [
   { col: "name", label: "Name", testId: "sort-th-name" },
   { col: "dept", label: "Department", testId: "sort-th-dept" },
   { col: "salary", label: "Salary", testId: "sort-th-salary" },
@@ -44,7 +48,8 @@ export function SortableTableSection() {
     }
   }
 
-  const rows = sortCol && sortDir ? sortEmployees(SORT_DATA, sortCol, sortDir) : SORT_DATA;
+  const rows =
+    sortCol && sortDir ? sortEmployees(SORT_DATA, sortCol, sortDir) : SORT_DATA;
 
   return (
     <section className="section" id="sec-sort">
@@ -52,10 +57,11 @@ export function SortableTableSection() {
         2. Sortable table <span className="badge badge-blue">Intermediate</span>
       </h2>
       <p className="hint">
-        Click a column header → sort ascending; click again → descending; third click → unsorted.
-        Assert <code>aria-sort</code> attribute (<code>&quot;ascending&quot;</code> /{" "}
-        <code>&quot;descending&quot;</code> / <code>&quot;none&quot;</code>) and first-row cell
-        text after each click. Sort by text, number, and date columns.
+        Click a column header → sort ascending; click again → descending; third
+        click → unsorted. Assert <code>aria-sort</code> attribute (
+        <code>&quot;ascending&quot;</code> / <code>&quot;descending&quot;</code>{" "}
+        / <code>&quot;none&quot;</code>) and first-row cell text after each
+        click. Sort by text, number, and date columns.
       </p>
       <table data-testid="sort-table" aria-label="Sortable employee table">
         <thead>
@@ -81,7 +87,9 @@ export function SortableTableSection() {
             <tr key={e.id} data-testid={`sort-row-${e.id}`}>
               <td data-testid={`sort-name-${e.id}`}>{e.name}</td>
               <td>{e.dept}</td>
-              <td data-testid={`sort-salary-${e.id}`}>{formatSalary(e.salary)}</td>
+              <td data-testid={`sort-salary-${e.id}`}>
+                {formatSalary(e.salary)}
+              </td>
               <td>{e.joined}</td>
               <td>
                 <StatusBadge status={e.status} />

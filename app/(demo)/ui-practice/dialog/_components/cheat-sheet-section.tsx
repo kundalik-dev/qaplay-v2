@@ -24,7 +24,8 @@ export function CheatSheetSection() {
             </td>
             <td>No (browser-native)</td>
             <td>
-              <code>page.on(&apos;dialog&apos;, d =&gt; d.accept())</code> before click
+              <code>page.on(&apos;dialog&apos;, d =&gt; d.accept())</code>{" "}
+              before click
             </td>
             <td>
               <code>dialog.message()</code>, <code>accept()</code>
@@ -102,8 +103,8 @@ export function CheatSheetSection() {
       </table>
       <p className="hint hint-mt-12">
         ⭐ Golden rule: register <code>page.on(&apos;dialog&apos;, …)</code>{" "}
-        <strong>before</strong> the action that triggers a native dialog — otherwise it
-        auto-dismisses and your handler never runs.
+        <strong>before</strong> the action that triggers a native dialog —
+        otherwise it auto-dismisses and your handler never runs.
       </p>
     </section>
   );

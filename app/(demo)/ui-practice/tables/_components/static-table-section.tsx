@@ -8,15 +8,17 @@ export function StaticTableSection() {
   return (
     <section className="section" id="sec-static">
       <h2>
-        1. Basic static table <span className="badge badge-green">Beginner</span>
+        1. Basic static table{" "}
+        <span className="badge badge-green">Beginner</span>
       </h2>
       <p className="hint">
         Fixed hard-coded data. Practice all locator strategies:{" "}
         <code>getByRole(&apos;table&apos;)</code> ·{" "}
-        <code>getByRole(&apos;columnheader&apos;)</code> · <code>getByRole(&apos;row&apos;)</code>{" "}
-        · <code>getByRole(&apos;cell&apos;)</code> · <code>nth()</code> ·{" "}
-        <code>filter(&#123; hasText &#125;)</code> · <code>data-testid</code>. Also practice
-        locating a cell by its column index and by row context.
+        <code>getByRole(&apos;columnheader&apos;)</code> ·{" "}
+        <code>getByRole(&apos;row&apos;)</code> ·{" "}
+        <code>getByRole(&apos;cell&apos;)</code> · <code>nth()</code> ·{" "}
+        <code>filter(&#123; hasText &#125;)</code> · <code>data-testid</code>.
+        Also practice locating a cell by its column index and by row context.
       </p>
       <table data-testid="static-table" aria-label="Product inventory">
         <thead>

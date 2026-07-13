@@ -143,13 +143,28 @@ Instead:
    Next.js App Router allows importing a plain (non-module) stylesheet from
    any component, not just the root layout — but it still loads globally
    once the route is visited, which is exactly why the `.ui-practice-
-   [section]-page` wrapper prefix on every rule matters.
+[section]-page` wrapper prefix on every rule matters.
 6. In every component, use plain string `className`s exactly matching the
    source (`className="section"`, `className="badge badge-green"`,
-   `` className={`pag-btn${p === page ? " active" : ""}`} ``) — never
+   ``className={`pag-btn${p === page ? " active" : ""}`}``) — never
    `styles.xxx` / `styles["xxx"]` bracket access. The whole point is that
    `class="section"` in the browser DevTools matches the original prototype
    literally.
+7. **Font**: override the prototype's `font-family: Arial, Helvetica,
+sans-serif` on the `.ui-practice-[section]-page` wrapper to
+   `var(--font-inter), Arial, Helvetica, sans-serif` instead — Inter is the
+   route-wide default (also set on `.main` in
+   `app/(demo)/ui-practice/_components/ui-practice.module.css`), so this
+   just keeps the page self-contained/consistent rather than actually
+   changing anything visually.
+8. **Font sizes**: these prototypes are typically sized for a cramped
+   standalone page (11-13px body text) and read as too small once embedded
+   in the wider ui-practice shell. Bump every `font-size` up by roughly
+   1-2px per the existing pattern in `tables.css` / `dialog.css` — e.g.
+   `h1` 26px→30px, section `h2` 17px→19px, `.hint`/badges/table text
+   12-13px→14px, buttons/inputs/labels 13-14px→15px, small badges/pills
+   11px→12px — and set an explicit `font-size: 16px;` base on the wrapper
+   itself (the source usually leaves this implicit at the browser default).
 
 ---
 
@@ -178,7 +193,7 @@ IIFE per `<section>` in the HTML). For each one:
   `data-testid` template exactly the same (e.g. `` `sort-row-${e.id}` ``).
 - **Hardcoded arrays** (like an `EMPLOYEES` or `PRODUCTS` const in the
   script) move into a typed file under `data/ui-practice-data/[section]-
-  data.ts`, exporting an interface + the array. This is the single source
+data.ts`, exporting an interface + the array. This is the single source
   of truth — don't inline the data in a component.
 - **Pure helper functions** (formatters, sort comparators, `aria-sort`
   resolution) move into a small `[section]-utils.ts` (or reuse
@@ -205,7 +220,7 @@ IIFE per `<section>` in the HTML). For each one:
 
 Run these greps over the new `_components/` folder before finishing:
 
-1. Every `className="…"` / `` className={`…`} `` string used in the TSX
+1. Every `className="…"` / ``className={`…`}`` string used in the TSX
    resolves to an actual selector in `[section].css` (no typos, no
    leftover CSS-Module-style keys).
 2. No `styles.` / `styles[` / `.module.css` reference anywhere.

@@ -17,15 +17,17 @@ import { uiPracticeNavItems } from "@/data/ui-practice-nav-data";
  */
 export function UiPracticeOverview() {
   return (
-    <section data-testid="ui-practice-overview" data-section="ui-practice-overview">
+    <section
+      data-testid="ui-practice-overview"
+      data-section="ui-practice-overview"
+    >
       <div className="mb-8">
         <h1 className="font-heading text-2xl font-semibold tracking-tight">
           UI Practice
         </h1>
         <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-          A standalone set of UI elements for practicing Playwright,
-          Selenium, and Cypress locators. Pick a section from the sidebar
-          to get started.
+          A standalone set of UI elements for practicing Playwright, Selenium,
+          and Cypress locators. Pick a section from the sidebar to get started.
         </p>
       </div>
 

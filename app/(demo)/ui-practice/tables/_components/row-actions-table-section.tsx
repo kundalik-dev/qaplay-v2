@@ -3,7 +3,10 @@
 import { useState } from "react";
 import type { ChangeEvent } from "react";
 
-import { employees as allEmployees, type Employee } from "@/data/ui-practice-data/tables-data";
+import {
+  employees as allEmployees,
+  type Employee,
+} from "@/data/ui-practice-data/tables-data";
 import { StatusBadge } from "./status-badge";
 import { formatSalary } from "./table-utils";
 
@@ -68,19 +71,22 @@ export function RowActionsTableSection() {
         <span className="badge badge-orange">Intermediate → Advanced</span>
       </h2>
       <p className="hint">
-        Each row has Edit and Delete buttons. Edit replaces cells with inline inputs; Save commits
-        the change; Cancel reverts. Delete removes the row from the DOM. Practice: scoping buttons
-        by row (
+        Each row has Edit and Delete buttons. Edit replaces cells with inline
+        inputs; Save commits the change; Cancel reverts. Delete removes the row
+        from the DOM. Practice: scoping buttons by row (
         <code>
-          getByTestId(&apos;actions-row-2&apos;).getByRole(&apos;button&apos;, &#123; name:
-          &apos;Edit&apos; &#125;)
+          getByTestId(&apos;actions-row-2&apos;).getByRole(&apos;button&apos;,
+          &#123; name: &apos;Edit&apos; &#125;)
         </code>
         ), asserting DOM removal, inline input interactions.
       </p>
       <div className="result-info" data-testid="actions-row-count">
         {`${rows.length} employee${rows.length !== 1 ? "s" : ""} in table`}
       </div>
-      <table data-testid="actions-table" aria-label="Employee table with row actions">
+      <table
+        data-testid="actions-table"
+        aria-label="Employee table with row actions"
+      >
         <thead>
           <tr>
             <th scope="col">Name</th>
@@ -98,7 +104,11 @@ export function RowActionsTableSection() {
           ) : (
             rows.map((e) =>
               editingId === e.id ? (
-                <tr key={e.id} data-testid={`actions-row-${e.id}`} data-id={e.id}>
+                <tr
+                  key={e.id}
+                  data-testid={`actions-row-${e.id}`}
+                  data-id={e.id}
+                >
                   <td>
                     <input
                       className="inline-input"
@@ -147,10 +157,16 @@ export function RowActionsTableSection() {
                   </td>
                 </tr>
               ) : (
-                <tr key={e.id} data-testid={`actions-row-${e.id}`} data-id={e.id}>
+                <tr
+                  key={e.id}
+                  data-testid={`actions-row-${e.id}`}
+                  data-id={e.id}
+                >
                   <td data-testid={`actions-name-${e.id}`}>{e.name}</td>
                   <td data-testid={`actions-dept-${e.id}`}>{e.dept}</td>
-                  <td data-testid={`actions-salary-${e.id}`}>{formatSalary(e.salary)}</td>
+                  <td data-testid={`actions-salary-${e.id}`}>
+                    {formatSalary(e.salary)}
+                  </td>
                   <td>
                     <StatusBadge status={e.status} />
                   </td>

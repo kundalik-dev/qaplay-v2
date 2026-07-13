@@ -241,7 +241,7 @@ export const practiceCards: PracticeCard[] = [
     testId: "annotations",
   },
   {
-    href: "/demo/bank",
+    href: "/bank",
     iconSrc: "/mainicons/bank-v2.svg",
     iconAlt: "Bank Demo App icon",
     title: "Bank App",

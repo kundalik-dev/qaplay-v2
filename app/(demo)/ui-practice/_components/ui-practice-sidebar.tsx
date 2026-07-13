@@ -30,7 +30,10 @@ export function UiPracticeSidebar({
       aria-label="UI Practice navigation"
     >
       {/* ── Header ─────────────────────────────────────────────── */}
-      <div className={styles.sidebarHeader} data-testid="ui-practice-sidebar-header">
+      <div
+        className={styles.sidebarHeader}
+        data-testid="ui-practice-sidebar-header"
+      >
         {!isCollapsed && (
           <Link
             href="/ui-practice"
