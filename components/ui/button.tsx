@@ -63,6 +63,7 @@ function Button({
   variant = "default",
   size = "default",
   asChild,
+  nativeButton,
   children,
   ...props
 }: ButtonProps) {
@@ -72,6 +73,11 @@ function Button({
         data-slot="button"
         className={cn(buttonVariants({ variant, size, className }))}
         render={children as React.ReactElement}
+        // asChild almost always wraps a non-<button> element (e.g. next/link's
+        // <a>), so default nativeButton to false to avoid Base UI's
+        // "expected a native <button>" warning. Callers can still opt back in
+        // by passing nativeButton explicitly.
+        nativeButton={nativeButton ?? false}
         {...props}
       />
     );
@@ -81,6 +87,7 @@ function Button({
     <ButtonPrimitive
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
+      nativeButton={nativeButton}
       {...props}
     >
       {children}

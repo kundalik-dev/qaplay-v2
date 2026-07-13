@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -74,6 +75,7 @@ function AccountFormDialogFields({
   const [balance, setBalance] = useState(
     account ? String(account.balance) : "",
   );
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Reset the form to fresh values each time the dialog opens, instead of
@@ -83,6 +85,7 @@ function AccountFormDialogFields({
       setName(account?.name ?? "");
       setType(account?.type ?? "");
       setBalance(account ? String(account.balance) : "");
+      setAcceptedTerms(false);
       setError(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -101,6 +104,10 @@ function AccountFormDialogFields({
     const bal = parseFloat(balance);
     if (balance === "" || isNaN(bal)) {
       setError("Please enter a valid starting balance.");
+      return;
+    }
+    if (mode === "add" && !acceptedTerms) {
+      setError("Please accept the terms and conditions to continue.");
       return;
     }
 
@@ -188,7 +195,7 @@ function AccountFormDialogFields({
         </div>
 
         {/* Balance — Hard: span label, no for/id pair */}
-        <div className="mb-2">
+        <div className={mode === "add" ? "mb-4" : "mb-2"}>
           {/*
            * Hard locator: balance input — span label, no for/id pair
            * XPath: //span[normalize-space()="Starting Balance"]/following-sibling::div//input
@@ -212,6 +219,25 @@ function AccountFormDialogFields({
             />
           </div>
         </div>
+
+        {/* Accept terms — Beginner: getByTestId checkbox + accompanying label */}
+        {mode === "add" && (
+          <div className="mb-2 flex items-center gap-2">
+            <Checkbox
+              id="account-form-accept-terms"
+              checked={acceptedTerms}
+              onCheckedChange={(v) => setAcceptedTerms(!!v)}
+              data-testid="account-form-accept-terms-checkbox"
+              className="border-slate-300"
+            />
+            <label
+              htmlFor="account-form-accept-terms"
+              className="cursor-pointer text-sm text-slate-600 dark:text-slate-400"
+            >
+              I accept the terms and conditions
+            </label>
+          </div>
+        )}
       </form>
 
       <DialogFooter className="gap-2">
