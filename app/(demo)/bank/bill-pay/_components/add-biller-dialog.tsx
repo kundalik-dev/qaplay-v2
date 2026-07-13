@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -25,9 +25,14 @@ export function AddBillerDialog({
 }: AddBillerDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      {/* Keyed so the form remounts with fresh state each time the dialog opens */}
+      {/*
+       * Do NOT key/remount this subtree based on `open` — Base UI's Dialog
+       * needs the Popup node to stay mounted through the close transition,
+       * so remounting it here leaves the dialog stuck open (fixable only by
+       * a page refresh). Fields are reset via an effect below instead.
+       */}
       <AddBillerDialogFields
-        key={open ? "open" : "closed"}
+        open={open}
         onOpenChange={onOpenChange}
         onSubmit={onSubmit}
       />
@@ -36,12 +41,22 @@ export function AddBillerDialog({
 }
 
 function AddBillerDialogFields({
+  open,
   onOpenChange,
   onSubmit,
-}: Omit<AddBillerDialogProps, "open">) {
+}: AddBillerDialogProps) {
   const [name, setName] = useState("");
   const [referenceNumber, setReferenceNumber] = useState("");
   const [error, setError] = useState<string | null>(null);
+
+  // Reset fields each time the dialog opens instead of remounting it.
+  useEffect(() => {
+    if (open) {
+      setName("");
+      setReferenceNumber("");
+      setError(null);
+    }
+  }, [open]);
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();

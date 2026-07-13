@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -43,9 +43,16 @@ export function AccountFormDialog({
 }: AccountFormDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      {/* Keyed so the form remounts with fresh state each time the dialog opens */}
+      {/*
+       * Do NOT key/remount this subtree based on `open`. The dialog Popup
+       * needs to stay mounted across the close transition (Base UI listens
+       * for the transition to end on that exact DOM node before it fully
+       * unmounts). Remounting it here tears out that node mid-close, so the
+       * dialog gets stuck open until the page is refreshed. Fresh field
+       * state on each open is instead handled via an effect below.
+       */}
       <AccountFormDialogFields
-        key={open ? (account?.id ?? "new") : "closed"}
+        open={open}
         mode={mode}
         account={account}
         onOpenChange={onOpenChange}
@@ -56,17 +63,30 @@ export function AccountFormDialog({
 }
 
 function AccountFormDialogFields({
+  open,
   mode,
   account,
   onOpenChange,
   onSubmit,
-}: Omit<AccountFormDialogProps, "open">) {
+}: AccountFormDialogProps) {
   const [name, setName] = useState(account?.name ?? "");
   const [type, setType] = useState<AccountType | "">(account?.type ?? "");
   const [balance, setBalance] = useState(
     account ? String(account.balance) : "",
   );
   const [error, setError] = useState<string | null>(null);
+
+  // Reset the form to fresh values each time the dialog opens, instead of
+  // remounting the whole dialog subtree (see comment above).
+  useEffect(() => {
+    if (open) {
+      setName(account?.name ?? "");
+      setType(account?.type ?? "");
+      setBalance(account ? String(account.balance) : "");
+      setError(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, account]);
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
