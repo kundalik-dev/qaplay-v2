@@ -7,16 +7,13 @@ export async function POST(req: Request) {
     const { name, email, message } = body;
 
     if (!name || typeof name !== "string") {
-      return NextResponse.json(
-        { error: "Name is required." },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Name is required." }, { status: 400 });
     }
 
     if (!message || typeof message !== "string") {
       return NextResponse.json(
         { error: "Feedback message is required." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -30,13 +27,13 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       { message: "Feedback submitted successfully.", feedback },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Error submitting feedback:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

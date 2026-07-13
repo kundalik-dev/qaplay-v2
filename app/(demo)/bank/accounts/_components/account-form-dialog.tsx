@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -79,8 +79,11 @@ function AccountFormDialogFields({
   const [error, setError] = useState<string | null>(null);
 
   // Reset the form to fresh values each time the dialog opens, instead of
-  // remounting the whole dialog subtree (see comment above).
-  useEffect(() => {
+  // remounting the whole dialog subtree (see comment above). Adjusted
+  // during render instead of an effect to avoid an extra commit.
+  const [prevOpen, setPrevOpen] = useState(open);
+  if (open !== prevOpen) {
+    setPrevOpen(open);
     if (open) {
       setName(account?.name ?? "");
       setType(account?.type ?? "");
@@ -88,8 +91,7 @@ function AccountFormDialogFields({
       setAcceptedTerms(false);
       setError(null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, account]);
+  }
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();

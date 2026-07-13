@@ -52,7 +52,8 @@ const BUGGY_TOTAL_USERNAME = "error_user";
 
 export default function ApplyLoanPage() {
   const router = useRouter();
-  const { currentUsername, applyLoan, updateLoanApplication, resetUserData } = useBankAppStore();
+  const { currentUsername, applyLoan, updateLoanApplication, resetUserData } =
+    useBankAppStore();
   const currentUser = useCurrentUser();
   const accounts = useUserAccounts(currentUsername);
   const loanHistory = useUserLoanApplications(currentUsername);
@@ -63,12 +64,13 @@ export default function ApplyLoanPage() {
   const [termMonths, setTermMonths] = useState<string>("36");
   const [interestRate, setInterestRate] = useState("5.0");
   const [accountId, setAccountId] = useState("");
-  
+
   const [editingLoan, setEditingLoan] = useState<LoanApplication | null>(null);
   const [editAmount, setEditAmount] = useState("");
   const [editTermMonths, setEditTermMonths] = useState("36");
   const [editInterestRate, setEditInterestRate] = useState("5.0");
-  const [editStatus, setEditStatus] = useState<LoanApplication["status"]>("pending");
+  const [editStatus, setEditStatus] =
+    useState<LoanApplication["status"]>("pending");
   const [editError, setEditError] = useState<string | null>(null);
   const [purpose, setPurpose] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -290,7 +292,9 @@ export default function ApplyLoanPage() {
             type="button"
             variant="outline"
             onClick={() => {
-              if (confirm("Are you sure you want to reset all data to defaults?")) {
+              if (
+                confirm("Are you sure you want to reset all data to defaults?")
+              ) {
                 resetUserData(currentUsername!);
               }
             }}
@@ -726,7 +730,10 @@ export default function ApplyLoanPage() {
       </Dialog>
 
       {/* Edit Loan Dialog */}
-      <Dialog open={!!editingLoan} onOpenChange={(open) => !open && setEditingLoan(null)}>
+      <Dialog
+        open={!!editingLoan}
+        onOpenChange={(open) => !open && setEditingLoan(null)}
+      >
         <DialogContent data-testid="edit-loan-dialog">
           <DialogHeader>
             <DialogTitle>Edit Loan Application</DialogTitle>
@@ -749,27 +756,58 @@ export default function ApplyLoanPage() {
               <div>
                 <Label>Amount</Label>
                 <div className="relative">
-                  <span className="absolute top-1/2 left-3 -translate-y-1/2 text-sm text-slate-400">$</span>
-                  <Input type="number" min="0.01" step="0.01" value={editAmount} onChange={(e) => setEditAmount(e.target.value)} className="pl-7" />
+                  <span className="absolute top-1/2 left-3 -translate-y-1/2 text-sm text-slate-400">
+                    $
+                  </span>
+                  <Input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    value={editAmount}
+                    onChange={(e) => setEditAmount(e.target.value)}
+                    className="pl-7"
+                  />
                 </div>
               </div>
               <div>
                 <Label>Term (Months)</Label>
-                <Select value={editTermMonths} onValueChange={setEditTermMonths}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
+                <Select
+                  value={editTermMonths}
+                  onValueChange={setEditTermMonths}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
                   <SelectContent>
-                    {TERM_OPTIONS.map((m) => <SelectItem key={m} value={String(m)}>{m} months</SelectItem>)}
+                    {TERM_OPTIONS.map((m) => (
+                      <SelectItem key={m} value={String(m)}>
+                        {m} months
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
               <div>
                 <Label>Interest Rate (%)</Label>
-                <Input type="number" min="0.1" step="0.1" value={editInterestRate} onChange={(e) => setEditInterestRate(e.target.value)} />
+                <Input
+                  type="number"
+                  min="0.1"
+                  step="0.1"
+                  value={editInterestRate}
+                  onChange={(e) => setEditInterestRate(e.target.value)}
+                />
               </div>
               <div>
                 <Label>Status</Label>
-                <Select value={editStatus} onValueChange={(v) => setEditStatus(v as LoanApplication["status"])}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
+                <Select
+                  value={editStatus}
+                  onValueChange={(v) =>
+                    setEditStatus(v as LoanApplication["status"])
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="pending">Pending</SelectItem>
                     <SelectItem value="approved">Approved</SelectItem>
@@ -779,8 +817,19 @@ export default function ApplyLoanPage() {
                 </Select>
               </div>
               <DialogFooter>
-                <Button type="button" variant="outline" onClick={() => setEditingLoan(null)}>Cancel</Button>
-                <Button type="submit" className="bg-violet-600 hover:bg-violet-700">Save Changes</Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setEditingLoan(null)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="bg-violet-600 hover:bg-violet-700"
+                >
+                  Save Changes
+                </Button>
               </DialogFooter>
             </form>
           )}

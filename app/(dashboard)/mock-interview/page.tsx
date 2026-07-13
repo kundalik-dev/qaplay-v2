@@ -19,10 +19,7 @@ export const metadata: Metadata = {
 
 export default function MockInterviewPage() {
   return (
-    <div
-      className={styles.placeholderPage}
-      data-testid="page-mock-interview"
-    >
+    <div className={styles.placeholderPage} data-testid="page-mock-interview">
       <Mic className={styles.placeholderIcon} aria-hidden="true" />
       <h1 className={styles.placeholderTitle}>Mock Interviews</h1>
       <p className={styles.placeholderDesc}>

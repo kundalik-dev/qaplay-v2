@@ -41,10 +41,9 @@ export function NewPracticeGrid({ cards }: NewPracticeGridProps) {
             </h1>
 
             <p className={styles.subtitle}>
-              Search, scan, and open the exact interaction you want to
-              practice &mdash; hands-on Buttons, Forms, Tables, Alerts, File
-              Upload, and more, built for Selenium, Playwright, and Cypress
-              automation.
+              Search, scan, and open the exact interaction you want to practice
+              &mdash; hands-on Buttons, Forms, Tables, Alerts, File Upload, and
+              more, built for Selenium, Playwright, and Cypress automation.
             </p>
           </div>
 

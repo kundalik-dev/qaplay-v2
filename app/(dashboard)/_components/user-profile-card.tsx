@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronUp, LogOut, User } from "lucide-react";
@@ -28,10 +28,13 @@ export function UserProfileCard({ isCollapsed }: UserProfileCardProps) {
   const [avatarLoadFailed, setAvatarLoadFailed] = useState(false);
 
   // Reset the broken-image fallback whenever the avatar URL itself changes
-  // (e.g. a fresh Google photo after re-auth).
-  useEffect(() => {
+  // (e.g. a fresh Google photo after re-auth). Adjusted during render
+  // instead of an effect to avoid an extra commit.
+  const [prevImage, setPrevImage] = useState(user?.image);
+  if (user?.image !== prevImage) {
+    setPrevImage(user?.image);
     setAvatarLoadFailed(false);
-  }, [user?.image]);
+  }
 
   // ── Loading state ──────────────────────────────────────────────────────
   if (isPending) {

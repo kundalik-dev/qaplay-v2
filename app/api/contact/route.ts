@@ -61,7 +61,10 @@ export async function POST(request: Request) {
   // ── Content-Type guard ──────────────────────────────────────────────────────
   const contentType = request.headers.get("content-type") ?? "";
   if (!contentType.includes("application/json")) {
-    return fail(415, "Request must be sent with Content-Type: application/json.");
+    return fail(
+      415,
+      "Request must be sent with Content-Type: application/json.",
+    );
   }
 
   // ── Parse body ───────────────────────────────────────────────────────────────

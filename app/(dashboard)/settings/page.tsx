@@ -61,7 +61,9 @@ export default function SettingsPage() {
   // Tracks whether the user's avatar URL (e.g. Google photo) failed to
   // load, so we can fall back to initials instead of a broken <img>.
   const [avatarLoadFailed, setAvatarLoadFailed] = useState(false);
-  const [prevUserImage, setPrevUserImage] = useState<string | null | undefined>(undefined);
+  const [prevUserImage, setPrevUserImage] = useState<string | null | undefined>(
+    undefined,
+  );
 
   // API State
   const [key, setKey] = useState("");
@@ -79,7 +81,9 @@ export default function SettingsPage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [isSavingProfile, setIsSavingProfile] = useState(false);
-  const [prevUserName, setPrevUserName] = useState<string | null | undefined>(undefined);
+  const [prevUserName, setPrevUserName] = useState<string | null | undefined>(
+    undefined,
+  );
 
   const updateSettings = (updates: Record<string, unknown>) => {
     const current = JSON.parse(localStorage.getItem("qap_settings") || "{}");

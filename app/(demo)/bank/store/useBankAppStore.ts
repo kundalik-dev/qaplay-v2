@@ -100,7 +100,9 @@ interface BankAppActions {
   updateLoanApplication: (
     username: string,
     loanId: string,
-    patch: Partial<Pick<LoanApplication, "amount" | "status" | "termMonths" | "interestRate">>,
+    patch: Partial<
+      Pick<LoanApplication, "amount" | "status" | "termMonths" | "interestRate">
+    >,
   ) => void;
 
   /** Add a new account for a user. Returns the new account's id. */

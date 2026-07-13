@@ -144,7 +144,7 @@ export function LoanHistoryTable({
              */
             <tr
               key={loan.id}
-              className="transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/30 cursor-pointer"
+              className="cursor-pointer transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/30"
               data-testid="loan-history-row"
               data-loan-id={loan.id}
               data-loan-type={loan.loanType.toLowerCase()}
@@ -160,8 +160,11 @@ export function LoanHistoryTable({
                   <time dateTime={loan.date}>{formatDate(loan.date)}</time>
                 </div>
                 {loan.updatedAt && (
-                  <div className="text-[10px] text-slate-400 mt-0.5">
-                    Updated: <time dateTime={loan.updatedAt}>{formatDate(loan.updatedAt)}</time>
+                  <div className="mt-0.5 text-[10px] text-slate-400">
+                    Updated:{" "}
+                    <time dateTime={loan.updatedAt}>
+                      {formatDate(loan.updatedAt)}
+                    </time>
                   </div>
                 )}
               </td>
@@ -212,7 +215,7 @@ export function LoanHistoryTable({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-8 w-8 p-0 mr-1 text-slate-500 hover:text-violet-600"
+                  className="mr-1 h-8 w-8 p-0 text-slate-500 hover:text-violet-600"
                   onClick={(e) => {
                     e.stopPropagation();
                     onEdit?.(loan);

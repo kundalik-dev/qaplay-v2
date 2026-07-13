@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -58,7 +58,10 @@ function AddPayeeDialogFields({
   const [error, setError] = useState<string | null>(null);
 
   // Reset fields each time the dialog opens instead of remounting it.
-  useEffect(() => {
+  // Adjusted during render instead of an effect to avoid an extra commit.
+  const [prevOpen, setPrevOpen] = useState(open);
+  if (open !== prevOpen) {
+    setPrevOpen(open);
     if (open) {
       setName("");
       setBankName("");
@@ -66,7 +69,7 @@ function AddPayeeDialogFields({
       setAccountNumber("");
       setError(null);
     }
-  }, [open]);
+  }
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();

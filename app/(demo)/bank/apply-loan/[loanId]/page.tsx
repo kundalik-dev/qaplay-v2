@@ -2,11 +2,22 @@
 
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Landmark, FileText, Wallet, Percent, CalendarClock } from "lucide-react";
+import {
+  ArrowLeft,
+  Landmark,
+  FileText,
+  Wallet,
+  Percent,
+  CalendarClock,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useBankAppStore } from "../../store/useBankAppStore";
-import { formatCurrency, formatDate, calculateLoanPayment } from "../../lib/utils";
+import {
+  formatCurrency,
+  formatDate,
+  calculateLoanPayment,
+} from "../../lib/utils";
 
 const LOAN_TYPE_COLORS: Record<string, string> = {
   Personal: "bg-violet-100 text-violet-700",
@@ -27,15 +38,21 @@ export default function LoanDetailsPage() {
   const params = useParams();
   const loanId = params.loanId as string;
   const { currentUsername, loanApplications } = useBankAppStore();
-  
-  const userLoans = currentUsername ? loanApplications[currentUsername] ?? [] : [];
+
+  const userLoans = currentUsername
+    ? (loanApplications[currentUsername] ?? [])
+    : [];
   const loan = userLoans.find((l) => l.id === loanId);
 
   if (!loan) {
     return (
       <div className="p-8 text-center">
-        <h2 className="text-xl font-semibold mb-4 text-slate-800 dark:text-slate-200">Loan not found</h2>
-        <Button onClick={() => router.push("/bank/apply-loan")}>Return to Loans</Button>
+        <h2 className="mb-4 text-xl font-semibold text-slate-800 dark:text-slate-200">
+          Loan not found
+        </h2>
+        <Button onClick={() => router.push("/bank/apply-loan")}>
+          Return to Loans
+        </Button>
       </div>
     );
   }
@@ -50,18 +67,28 @@ export default function LoanDetailsPage() {
     {
       label: "Loan Type",
       node: (
-        <Badge className={`text-xs ${LOAN_TYPE_COLORS[loan.loanType] ?? "bg-slate-100 text-slate-600"}`}>
+        <Badge
+          className={`text-xs ${LOAN_TYPE_COLORS[loan.loanType] ?? "bg-slate-100 text-slate-600"}`}
+        >
           {loan.loanType}
         </Badge>
       ),
     },
     {
       label: "Term Length",
-      node: <span className="font-semibold text-slate-800 dark:text-slate-200">{loan.termMonths} months</span>,
+      node: (
+        <span className="font-semibold text-slate-800 dark:text-slate-200">
+          {loan.termMonths} months
+        </span>
+      ),
     },
     {
       label: "Interest Rate (APR)",
-      node: <span className="font-semibold text-slate-800 dark:text-slate-200">{loan.interestRate}%</span>,
+      node: (
+        <span className="font-semibold text-slate-800 dark:text-slate-200">
+          {loan.interestRate}%
+        </span>
+      ),
     },
     {
       label: "Disbursement Account",
@@ -78,14 +105,22 @@ export default function LoanDetailsPage() {
     },
     {
       label: "Created On",
-      node: <span className="font-medium text-slate-800 dark:text-slate-200">{formatDate(loan.date)}</span>,
+      node: (
+        <span className="font-medium text-slate-800 dark:text-slate-200">
+          {formatDate(loan.date)}
+        </span>
+      ),
     },
   ];
 
   if (loan.updatedAt) {
     detailRows.push({
       label: "Last Updated",
-      node: <span className="font-medium text-slate-800 dark:text-slate-200">{formatDate(loan.updatedAt)}</span>,
+      node: (
+        <span className="font-medium text-slate-800 dark:text-slate-200">
+          {formatDate(loan.updatedAt)}
+        </span>
+      ),
     });
   }
 
@@ -93,7 +128,13 @@ export default function LoanDetailsPage() {
     <div data-testid="loan-details-page" className="max-w-4xl">
       {/* Header */}
       <div className="mb-8 flex items-center gap-3">
-        <Button variant="ghost" size="icon" asChild className="mr-2" data-testid="loan-details-back-btn">
+        <Button
+          variant="ghost"
+          size="icon"
+          asChild
+          className="mr-2"
+          data-testid="loan-details-back-btn"
+        >
           <Link href="/bank/apply-loan">
             <ArrowLeft className="h-5 w-5" />
           </Link>
@@ -102,17 +143,18 @@ export default function LoanDetailsPage() {
           <Landmark className="h-5 w-5 text-amber-600" aria-hidden="true" />
         </div>
         <div>
-          <h1 className="text-xl font-bold text-slate-900 dark:text-white" data-testid="loan-details-title">
+          <h1
+            className="text-xl font-bold text-slate-900 dark:text-white"
+            data-testid="loan-details-title"
+          >
             Loan Details
           </h1>
-          <p className="text-sm text-slate-500 font-mono">
-            {loan.refId}
-          </p>
+          <p className="font-mono text-sm text-slate-500">{loan.refId}</p>
         </div>
         <div className="ml-auto">
           <Badge
             data-testid="loan-details-status-badge"
-            className={`text-sm capitalize px-3 py-1 ${STATUS_COLORS[loan.status] ?? "bg-slate-100 text-slate-600"}`}
+            className={`px-3 py-1 text-sm capitalize ${STATUS_COLORS[loan.status] ?? "bg-slate-100 text-slate-600"}`}
           >
             {loan.status}
           </Badge>
@@ -135,11 +177,16 @@ export default function LoanDetailsPage() {
 
         <div className="mt-6 flex flex-wrap gap-x-10 gap-y-5 border-t border-slate-100 pt-5 dark:border-slate-700">
           <div className="flex items-start gap-2.5">
-            <Wallet className="mt-0.5 h-4 w-4 text-violet-500" aria-hidden="true" />
+            <Wallet
+              className="mt-0.5 h-4 w-4 text-violet-500"
+              aria-hidden="true"
+            />
             <div>
-              <p className="text-xs font-medium text-slate-500">Est. Monthly Payment</p>
+              <p className="text-xs font-medium text-slate-500">
+                Est. Monthly Payment
+              </p>
               <p
-                className="text-lg font-semibold tabular-nums text-slate-900 dark:text-white"
+                className="text-lg font-semibold text-slate-900 tabular-nums dark:text-white"
                 data-testid="loan-monthly-payment-value"
               >
                 {formatCurrency(monthlyPayment)}
@@ -148,11 +195,16 @@ export default function LoanDetailsPage() {
           </div>
 
           <div className="flex items-start gap-2.5">
-            <Percent className="mt-0.5 h-4 w-4 text-violet-500" aria-hidden="true" />
+            <Percent
+              className="mt-0.5 h-4 w-4 text-violet-500"
+              aria-hidden="true"
+            />
             <div>
-              <p className="text-xs font-medium text-slate-500">Est. Total Repayment</p>
+              <p className="text-xs font-medium text-slate-500">
+                Est. Total Repayment
+              </p>
               <p
-                className="text-lg font-semibold tabular-nums text-slate-900 dark:text-white"
+                className="text-lg font-semibold text-slate-900 tabular-nums dark:text-white"
                 data-testid="loan-total-repayment-value"
               >
                 {formatCurrency(totalRepayment)}
@@ -161,7 +213,10 @@ export default function LoanDetailsPage() {
           </div>
 
           <div className="flex items-start gap-2.5">
-            <CalendarClock className="mt-0.5 h-4 w-4 text-violet-500" aria-hidden="true" />
+            <CalendarClock
+              className="mt-0.5 h-4 w-4 text-violet-500"
+              aria-hidden="true"
+            />
             <div>
               <p className="text-xs font-medium text-slate-500">Term</p>
               <p className="text-lg font-semibold text-slate-900 dark:text-white">
