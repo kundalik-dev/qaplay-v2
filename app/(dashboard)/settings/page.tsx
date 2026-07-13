@@ -14,7 +14,6 @@ import {
   User,
   Mail,
   Shield,
-  FileText,
   Upload,
 } from "lucide-react";
 import pageStyles from "./settings.module.css";
@@ -35,6 +34,10 @@ function splitName(name: string): { firstName: string; lastName: string } {
 }
 
 const COMING_SOON_DESCRIPTION = "This feature is still under development.";
+
+// Account deletion isn't wired up to a real backend flow yet — hide the
+// Danger Zone card until that's built, then flip this back to true.
+const DANGER_ZONE_ENABLED = false;
 
 const MODELS = [
   { id: "openai/gpt-4o-mini", name: "OpenAI GPT-4o Mini (Default)" },
@@ -72,10 +75,10 @@ export default function SettingsPage() {
   const [fontSize, setFontSize] = useState<number>(16);
 
   // Profile State
-  const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [isSavingProfile, setIsSavingProfile] = useState(false);
+  const [prevUserName, setPrevUserName] = useState<string | null | undefined>(undefined);
 
   const updateSettings = (updates: Record<string, unknown>) => {
     const current = JSON.parse(localStorage.getItem("qap_settings") || "{}");
@@ -117,12 +120,12 @@ export default function SettingsPage() {
   // Populate the profile form from the real logged-in user once the
   // session resolves (and whenever the underlying name changes elsewhere,
   // e.g. after a successful save).
-  useEffect(() => {
-    if (!user) return;
+  if (user && user.name !== prevUserName) {
     const { firstName: fn, lastName: ln } = splitName(user.name ?? "");
+    setPrevUserName(user.name);
     setFirstName(fn);
     setLastName(ln);
-  }, [user]);
+  }
 
   // Reset the broken-image fallback whenever the avatar URL itself changes
   // (e.g. a fresh Google photo after re-auth).
@@ -172,16 +175,16 @@ export default function SettingsPage() {
     }
 
     toast.success("Profile updated successfully.");
-
-    if (resumeFile) {
-      toast.info("Resume upload is coming soon!", {
-        description: COMING_SOON_DESCRIPTION,
-      });
-    }
   };
 
   const handleUploadPhoto = () => {
     toast.info("Photo upload is coming soon!", {
+      description: COMING_SOON_DESCRIPTION,
+    });
+  };
+
+  const handleUploadResume = () => {
+    toast.info("Resume upload is coming soon!", {
       description: COMING_SOON_DESCRIPTION,
     });
   };
@@ -431,45 +434,24 @@ export default function SettingsPage() {
                       gap: "12px",
                     }}
                   >
-                    <label
+                    <button
+                      type="button"
+                      onClick={handleUploadResume}
                       className={cn(pageStyles.btn, pageStyles.btnSecondary)}
-                      style={{ cursor: "pointer" }}
+                      style={{ opacity: 0.6, cursor: "not-allowed" }}
+                      aria-disabled="true"
+                      data-testid="settings-upload-resume"
                     >
                       <Upload size={14} /> Choose File
-                      <input
-                        type="file"
-                        accept=".pdf,.doc,.docx,.md"
-                        style={{ display: "none" }}
-                        onChange={(e) => {
-                          if (e.target.files && e.target.files.length > 0) {
-                            setResumeFile(e.target.files[0]);
-                          }
-                        }}
-                      />
-                    </label>
-                    {resumeFile ? (
-                      <span
-                        style={{
-                          fontSize: "13px",
-                          color: "var(--foreground)",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "6px",
-                        }}
-                      >
-                        <FileText size={14} className="text-primary" />{" "}
-                        {resumeFile.name}
-                      </span>
-                    ) : (
-                      <span
-                        style={{
-                          fontSize: "13px",
-                          color: "var(--muted-foreground)",
-                        }}
-                      >
-                        No file chosen (PDF, DOCX, MD)
-                      </span>
-                    )}
+                    </button>
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        color: "var(--muted-foreground)",
+                      }}
+                    >
+                      No file chosen (PDF, DOCX, MD)
+                    </span>
                   </div>
                 </div>
 
@@ -487,23 +469,26 @@ export default function SettingsPage() {
               </form>
             </div>
 
-            <div className={pageStyles.card}>
-              <div className={pageStyles.cardHeader}>
-                <h2 className={pageStyles.cardTitle}>
-                  <Shield size={18} className="text-destructive" /> Danger Zone
-                </h2>
-                <p className={pageStyles.cardDesc}>
-                  Permanently delete your account and all associated data.
-                </p>
+            {DANGER_ZONE_ENABLED && (
+              <div className={pageStyles.card}>
+                <div className={pageStyles.cardHeader}>
+                  <h2 className={pageStyles.cardTitle}>
+                    <Shield size={18} className="text-destructive" /> Danger
+                    Zone
+                  </h2>
+                  <p className={pageStyles.cardDesc}>
+                    Permanently delete your account and all associated data.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleDeleteAccount}
+                  className={cn(pageStyles.btn, pageStyles.btnDanger)}
+                >
+                  Delete Account
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={handleDeleteAccount}
-                className={cn(pageStyles.btn, pageStyles.btnDanger)}
-              >
-                Delete Account
-              </button>
-            </div>
+            )}
           </div>
         )}
 

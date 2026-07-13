@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronUp, LogOut, User } from "lucide-react";
@@ -22,6 +22,16 @@ export function UserProfileCard({ isCollapsed }: UserProfileCardProps) {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user ?? null;
   const isSignedIn = !!user;
+
+  // Tracks whether the user's avatar URL (e.g. Google photo) failed to
+  // load, so we can fall back to initials instead of a broken image.
+  const [avatarLoadFailed, setAvatarLoadFailed] = useState(false);
+
+  // Reset the broken-image fallback whenever the avatar URL itself changes
+  // (e.g. a fresh Google photo after re-auth).
+  useEffect(() => {
+    setAvatarLoadFailed(false);
+  }, [user?.image]);
 
   // ── Loading state ──────────────────────────────────────────────────────
   if (isPending) {
@@ -93,6 +103,7 @@ export function UserProfileCard({ isCollapsed }: UserProfileCardProps) {
 
   // ── Signed-in state ────────────────────────────────────────────────────
   const initials = getInitials(user.name ?? "", user.email);
+  const showImage = !!user.image && !avatarLoadFailed;
 
   async function handleSignOut() {
     setIsOpen(false);
@@ -137,7 +148,17 @@ export function UserProfileCard({ isCollapsed }: UserProfileCardProps) {
           aria-hidden="true"
           data-testid="sidebar-avatar"
         >
-          {initials}
+          {showImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={user.image as string}
+              alt=""
+              className={styles.profileAvatarImg}
+              onError={() => setAvatarLoadFailed(true)}
+            />
+          ) : (
+            initials
+          )}
         </span>
 
         {!isCollapsed && (

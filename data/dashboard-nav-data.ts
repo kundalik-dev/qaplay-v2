@@ -13,6 +13,7 @@ import {
   Wrench,
   Globe,
   Settings,
+  Mic,
 } from "lucide-react";
 
 export interface DashboardNavItem {
@@ -72,6 +73,12 @@ export const dashboardNavGroups: DashboardNavGroup[] = [
         href: "/interview-questions",
         icon: HelpCircle,
         testId: "nav-interview-questions",
+      },
+      {
+        label: "Mock Interview",
+        href: "/mock-interview",
+        icon: Mic,
+        testId: "nav-mock-interview",
       },
     ],
   },

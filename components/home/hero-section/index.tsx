@@ -96,7 +96,7 @@ const BtnStatsSection = () => {
           </ButtonContent>
         </Link>
         <Link
-          href="#interview"
+          href="/mock-interview"
           className={buttonVariants({ variant: "homeGhost", size: "home" })}
           data-testid="hero-mock-interview"
           data-cta="mock-interview"

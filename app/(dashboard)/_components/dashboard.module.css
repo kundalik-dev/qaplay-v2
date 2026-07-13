@@ -401,6 +401,13 @@
   flex-shrink: 0;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  overflow: hidden;
+}
+
+.profileAvatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .profileInfo {

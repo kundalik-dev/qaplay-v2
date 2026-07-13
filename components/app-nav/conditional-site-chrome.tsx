@@ -17,6 +17,7 @@ const DASHBOARD_PREFIXES = [
   "/challenges",
   "/job-crm",
   "/interview-questions",
+  "/mock-interview",
   "/resources",
   "/chrome",
   "/demo/bank",
