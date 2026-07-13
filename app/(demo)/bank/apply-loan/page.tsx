@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Landmark } from "lucide-react";
+import { Landmark, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -52,7 +52,7 @@ const BUGGY_TOTAL_USERNAME = "error_user";
 
 export default function ApplyLoanPage() {
   const router = useRouter();
-  const { currentUsername, applyLoan, updateLoanApplication } = useBankAppStore();
+  const { currentUsername, applyLoan, updateLoanApplication, resetUserData } = useBankAppStore();
   const currentUser = useCurrentUser();
   const accounts = useUserAccounts(currentUsername);
   const loanHistory = useUserLoanApplications(currentUsername);
@@ -285,17 +285,34 @@ export default function ApplyLoanPage() {
           </div>
         </div>
 
-        {/* Apply trigger — Beginner: getByRole('button', { name: 'Apply for Loan' }) + getByTestId */}
-        <Button
-          type="button"
-          onClick={handleOpenApplyForm}
-          disabled={isFrozen}
-          data-testid="open-apply-loan-btn"
-          className="gap-1.5 bg-violet-600 hover:bg-violet-700"
-        >
-          <Landmark className="h-4 w-4" aria-hidden="true" />
-          Apply for Loan
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => {
+              if (confirm("Are you sure you want to reset all data to defaults?")) {
+                resetUserData(currentUsername!);
+              }
+            }}
+            data-testid="reset-data-btn"
+            className="gap-1.5"
+          >
+            <RotateCcw className="h-4 w-4" />
+            Reset
+          </Button>
+
+          {/* Apply trigger — Beginner: getByRole('button', { name: 'Apply for Loan' }) + getByTestId */}
+          <Button
+            type="button"
+            onClick={handleOpenApplyForm}
+            disabled={isFrozen}
+            data-testid="open-apply-loan-btn"
+            className="gap-1.5 bg-violet-600 hover:bg-violet-700"
+          >
+            <Landmark className="h-4 w-4" aria-hidden="true" />
+            Apply for Loan
+          </Button>
+        </div>
       </div>
 
       {isFrozen && (

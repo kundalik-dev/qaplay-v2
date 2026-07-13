@@ -113,3 +113,26 @@ export function isValidPhone(value: string): boolean {
     value.trim(),
   );
 }
+
+/**
+ * Standard loan amortization estimate: monthly payment + total repayment.
+ * `annualRatePct` is the nominal annual interest rate as a percentage (e.g. 4.5).
+ */
+export function calculateLoanPayment(
+  principal: number,
+  annualRatePct: number,
+  termMonths: number,
+): { monthlyPayment: number; totalRepayment: number; totalInterest: number } {
+  const monthlyRate = annualRatePct / 100 / 12;
+
+  const monthlyPayment =
+    monthlyRate === 0
+      ? principal / termMonths
+      : (principal * monthlyRate * Math.pow(1 + monthlyRate, termMonths)) /
+        (Math.pow(1 + monthlyRate, termMonths) - 1);
+
+  const totalRepayment = monthlyPayment * termMonths;
+  const totalInterest = totalRepayment - principal;
+
+  return { monthlyPayment, totalRepayment, totalInterest };
+}
