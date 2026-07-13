@@ -1,0 +1,375 @@
+/* ─────────────────────────────────────────────────────────────
+   Tables Practice — ported 1:1 from the original static HTML
+   prototype's <style> block, class names kept exactly as authored
+   (no CSS-Modules hashing) so the rendered DOM matches the source
+   one-for-one. Everything is scoped under the highly-specific
+   `.ui-practice-tables-page` wrapper instead of the generic `.page`,
+   so nothing leaks into the rest of the app even though this is a
+   plain (non-module) stylesheet.
+   ───────────────────────────────────────────────────────────── */
+
+.ui-practice-tables-page,
+.ui-practice-tables-page *,
+.ui-practice-tables-page *::before,
+.ui-practice-tables-page *::after {
+  box-sizing: border-box;
+}
+
+.ui-practice-tables-page {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 24px;
+  background: #f0f4f8;
+  color: #1f2933;
+}
+
+.ui-practice-tables-page .container {
+  width: 90%;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.ui-practice-tables-page h1 {
+  margin-top: 0;
+  font-size: 26px;
+}
+
+.ui-practice-tables-page .intro {
+  font-size: 13px;
+  color: #486581;
+  margin-bottom: 24px;
+}
+
+.ui-practice-tables-page .section {
+  background: #fff;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.ui-practice-tables-page .section h2 {
+  margin-top: 0;
+  font-size: 17px;
+  color: #334e68;
+  border-bottom: 1px solid #e8f0f7;
+  padding-bottom: 8px;
+}
+
+.ui-practice-tables-page .hint {
+  font-size: 12px;
+  color: #829ab1;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.ui-practice-tables-page .badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  vertical-align: middle;
+}
+
+.ui-practice-tables-page .badge-green {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.ui-practice-tables-page .badge-blue {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.ui-practice-tables-page .badge-orange {
+  background: #fff3cd;
+  color: #92400e;
+}
+
+.ui-practice-tables-page .badge-red {
+  background: #fde2e1;
+  color: #b0101a;
+}
+
+/* ── Table base ── */
+.ui-practice-tables-page table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.ui-practice-tables-page thead {
+  background: #f0f4f8;
+}
+
+.ui-practice-tables-page th,
+.ui-practice-tables-page td {
+  border: 1px solid #d9e2ec;
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.ui-practice-tables-page tbody tr:hover {
+  background: #f7fafc;
+}
+
+.ui-practice-tables-page tbody tr.row-selected {
+  background: #eaf2fb;
+}
+
+.ui-practice-tables-page .empty-msg td {
+  text-align: center;
+  color: #829ab1;
+  font-style: italic;
+  padding: 20px;
+}
+
+/* ── Sortable headers ── */
+.ui-practice-tables-page th.sortable {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.ui-practice-tables-page th.sortable:hover {
+  background: #e2ebf5;
+}
+
+.ui-practice-tables-page .sort-icon {
+  font-size: 10px;
+  margin-left: 4px;
+}
+
+.ui-practice-tables-page th[aria-sort="none"] .sort-icon::after {
+  content: "\21C5";
+  color: #bcccdc;
+}
+
+.ui-practice-tables-page th[aria-sort="ascending"] .sort-icon::after {
+  content: "\25B2";
+  color: #4a90d9;
+}
+
+.ui-practice-tables-page th[aria-sort="descending"] .sort-icon::after {
+  content: "\25BC";
+  color: #4a90d9;
+}
+
+/* ── Status badges inside cells ── */
+.ui-practice-tables-page .status-active {
+  background: #dcfce7;
+  color: #166534;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+}
+
+.ui-practice-tables-page .status-inactive {
+  background: #fde2e1;
+  color: #b0101a;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+}
+
+.ui-practice-tables-page .stock-out {
+  background: #fde2e1;
+  color: #b0101a;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.ui-practice-tables-page .stock-in {
+  background: #dcfce7;
+  color: #166534;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+/* ── Controls / search row ── */
+.ui-practice-tables-page .controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.ui-practice-tables-page .ctrl-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ui-practice-tables-page .ctrl-field label {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.ui-practice-tables-page .ctrl-field input,
+.ui-practice-tables-page .ctrl-field select {
+  padding: 7px 10px;
+  border: 1px solid #bcccdc;
+  border-radius: 5px;
+  font-size: 13px;
+  min-width: 180px;
+}
+
+.ui-practice-tables-page .ctrl-field input:focus,
+.ui-practice-tables-page .ctrl-field select:focus {
+  outline: 2px solid #4a90d9;
+}
+
+.ui-practice-tables-page .result-info {
+  font-size: 12px;
+  color: #627d98;
+  margin-bottom: 8px;
+  min-height: 18px;
+}
+
+/* Non-inline replacement for the prototype's inline `style="align-self:flex-end"` */
+.ui-practice-tables-page .clear-btn-align {
+  align-self: flex-end;
+}
+
+/* ── Buttons ── */
+.ui-practice-tables-page .btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.ui-practice-tables-page .btn-sm {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.ui-practice-tables-page .btn-primary {
+  background: #4a90d9;
+  color: #fff;
+}
+
+.ui-practice-tables-page .btn-primary:hover {
+  background: #357ac0;
+}
+
+.ui-practice-tables-page .btn-danger {
+  background: #e05252;
+  color: #fff;
+}
+
+.ui-practice-tables-page .btn-danger:hover {
+  background: #c0392b;
+}
+
+.ui-practice-tables-page .btn-secondary {
+  background: #829ab1;
+  color: #fff;
+}
+
+.ui-practice-tables-page .btn-secondary:hover {
+  background: #627d98;
+}
+
+.ui-practice-tables-page .btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ui-practice-tables-page .actions-cell {
+  white-space: nowrap;
+}
+
+.ui-practice-tables-page .actions-cell .btn + .btn {
+  margin-left: 4px;
+}
+
+/* ── Inline edit inputs ── */
+.ui-practice-tables-page td input.inline-input {
+  padding: 4px 6px;
+  font-size: 12px;
+  border: 1px solid #4a90d9;
+  border-radius: 3px;
+  width: 100%;
+  min-width: 90px;
+}
+
+/* ── Pagination ── */
+.ui-practice-tables-page .pag-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.ui-practice-tables-page .pag-info {
+  font-size: 12px;
+  color: #627d98;
+  margin-right: 6px;
+}
+
+.ui-practice-tables-page .pag-btn {
+  padding: 5px 10px;
+  font-size: 12px;
+  border: 1px solid #bcccdc;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #334e68;
+  min-width: 34px;
+  text-align: center;
+}
+
+.ui-practice-tables-page .pag-btn:hover:not(:disabled) {
+  background: #eaf2fb;
+  border-color: #4a90d9;
+}
+
+.ui-practice-tables-page .pag-btn.active {
+  background: #4a90d9;
+  color: #fff;
+  border-color: #4a90d9;
+  font-weight: bold;
+}
+
+.ui-practice-tables-page .pag-btn:disabled {
+  color: #bcccdc;
+  cursor: not-allowed;
+}
+
+.ui-practice-tables-page .page-btns {
+  display: flex;
+  gap: 4px;
+}
+
+/* ── Bulk action bar (reserved — not used by current sections) ── */
+.ui-practice-tables-page .bulk-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #f0f4f8;
+  border: 1px solid #d9e2ec;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.ui-practice-tables-page .bulk-count {
+  font-weight: bold;
+  color: #334e68;
+}
+
+.ui-practice-tables-page input[type="checkbox"] {
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  accent-color: #4a90d9;
+}
