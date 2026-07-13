@@ -254,6 +254,13 @@
     position: relative;
     z-index: 1;
   }
+
+  /* Demo Apps page only: drop the teal/indigo glow tint but keep the same
+     grid-line pattern and everything else about the shared background. */
+  body:has([data-page="demo-apps"]) {
+    --hero-glow-1: transparent;
+    --hero-glow-2: transparent;
+  }
 }
 
 .home-shell {

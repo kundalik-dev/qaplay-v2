@@ -28,7 +28,11 @@ export function DemoAppCatalog() {
   );
 
   return (
-    <section className={styles.section} aria-labelledby="demo-apps-title">
+    <section
+      className={styles.section}
+      aria-labelledby="demo-apps-title"
+      data-page="demo-apps"
+    >
       <div className={cn("home-shell", styles.inner)}>
         <div className={styles.header}>
           <h1 id="demo-apps-title" className={styles.title}>
