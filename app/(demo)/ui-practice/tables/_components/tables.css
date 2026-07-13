@@ -18,7 +18,9 @@
 .ui-practice-tables-page {
   font-family: Arial, Helvetica, sans-serif;
   padding: 24px;
-  background: #f0f4f8;
+  /* No background here on purpose — lets the app's shared grid-line/glow
+     background (app/globals.css, applied on <body>) show through instead
+     of the original prototype's flat gray page background. */
   color: #1f2933;
 }
 
@@ -35,7 +37,7 @@
 
 .ui-practice-tables-page .intro {
   font-size: 13px;
-  color: #486581;
+  color: #1f2933;
   margin-bottom: 24px;
 }
 
@@ -58,7 +60,7 @@
 
 .ui-practice-tables-page .hint {
   font-size: 12px;
-  color: #829ab1;
+  color: #1f2933;
   margin-bottom: 12px;
   font-style: italic;
 }

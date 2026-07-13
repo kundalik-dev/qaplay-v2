@@ -1,0 +1,81 @@
+/* ─────────────────────────────────────────────────────────────
+   TestingTips — reusable collapsible "what to assert" panel.
+   Shared across every /ui-practice/[section] card, so it's a CSS Module
+   (unlike each section's own plain, pixel-ported [section].css) and
+   styled from the app's shared design tokens instead of hardcoded colors.
+   ───────────────────────────────────────────────────────────── */
+
+.testingTips {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  margin: 0;
+  padding: 2px 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.toggle:hover,
+.toggle:focus-visible {
+  color: var(--primary);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Height-animated collapse via the minmax(0, fr) grid trick — no JS
+   height measurement, and it still hides content from layout/AT when
+   collapsed because .list is clipped by overflow:hidden at 0 height. */
+.panel {
+  display: grid;
+  grid-template-rows: minmax(0, 0fr);
+  transition: grid-template-rows 0.25s ease;
+}
+
+.panelOpen {
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.list {
+  overflow: hidden;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.panelOpen .list {
+  padding-top: 6px;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 3px 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+.icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--primary);
+}

@@ -44,6 +44,23 @@ export const demoAppCards: DemoAppCard[] = [
     ],
   },
   {
+    title: "UI Practice Elements",
+    description:
+      "Practice interacting with various UI elements like buttons, forms, dropdowns, and more in a focused environment.",
+    href: "/ui-practice",
+    imageSrc:
+      "https://res.cloudinary.com/xn7znfot/image/upload/v1783866688/demo-qa_gttszl.webp",
+    imageAlt: "UI Practice Elements preview",
+    filters: ["all", "ui"],
+    badge: "Popular",
+    eyebrow: "Web Automation",
+    highlights: [
+      "22+ interactive elements",
+      "Focused POM practice",
+      "Stable targets for automation",
+    ],
+  },
+  {
     title: "GitHub User Search",
     description:
       "Practice automation locators on a real GitHub API integration. Search for GitHub users, view profiles, and solve intentional locator challenges.",

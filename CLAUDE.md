@@ -4,6 +4,10 @@
 
 `bank-claude.md` (repo root, next to this file) holds rules specific to the `app/bank` module — its purpose and locator strategy conventions, with more coding rules to be added over time. Read it before working on anything under `app/bank`.
 
+## UI Practice Route Conversion (HTML/CSS/JS Prototype → Route)
+
+`.claude/skills/new-ui-practice-route/SKILL.md` holds the exact conversion pattern for turning a static HTML/CSS/JS prototype the user shares into a page under `app/(demo)/ui-practice/[section]` — file structure, the plain-CSS (non-module) scoping approach so class names stay literal, how to port vanilla JS to React hooks, and the sidebar registration step. Read it before creating or converting anything under `app/(demo)/ui-practice/`. Reference implementation: `app/(demo)/ui-practice/tables/`.
+
 ## Project Intent
 
 This project is a modern, full-width QA learning platform focused on:

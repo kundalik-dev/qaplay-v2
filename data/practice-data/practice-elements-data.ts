@@ -251,4 +251,15 @@ export const practiceCards: PracticeCard[] = [
     tag: "E2E",
     testId: "bank-app",
   },
+  {
+    href: "/ui-practice",
+    iconSrc: "/mainicons/elements.svg",
+    iconAlt: "UI Practice Elements icon",
+    title: "UI Practice",
+    description:
+      "Practice interacting with various UI elements in a focused environment.",
+    level: "Beginner",
+    tag: "UI",
+    testId: "ui-practice",
+  },
 ];
