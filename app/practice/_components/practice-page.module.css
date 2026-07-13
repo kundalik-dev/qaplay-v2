@@ -7,7 +7,7 @@
 /* ── Hero / Header ─────────────────────────────────────────────────────── */
 
 .hero {
-  padding: 52px 0 40px;
+  padding: 24px 0 40px;
 }
 
 .heroInner {
@@ -46,7 +46,7 @@
   color: var(--muted-foreground);
   font-size: var(--home-type-body-size);
   line-height: var(--home-type-body-line);
-  max-width: 480px;
+  max-width: 100%;
   text-wrap: pretty;
 }
 

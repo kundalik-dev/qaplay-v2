@@ -61,6 +61,7 @@ export default function SettingsPage() {
   // Tracks whether the user's avatar URL (e.g. Google photo) failed to
   // load, so we can fall back to initials instead of a broken <img>.
   const [avatarLoadFailed, setAvatarLoadFailed] = useState(false);
+  const [prevUserImage, setPrevUserImage] = useState<string | null | undefined>(undefined);
 
   // API State
   const [key, setKey] = useState("");
@@ -129,9 +130,10 @@ export default function SettingsPage() {
 
   // Reset the broken-image fallback whenever the avatar URL itself changes
   // (e.g. a fresh Google photo after re-auth).
-  useEffect(() => {
+  if (user?.image !== prevUserImage) {
+    setPrevUserImage(user?.image);
     setAvatarLoadFailed(false);
-  }, [user?.image]);
+  }
 
   const handleSaveApi = (e: React.FormEvent) => {
     e.preventDefault();
