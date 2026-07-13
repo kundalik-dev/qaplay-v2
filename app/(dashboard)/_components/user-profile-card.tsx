@@ -6,28 +6,11 @@ import Link from "next/link";
 import { ChevronUp, LogOut, User } from "lucide-react";
 
 import { authClient } from "@/lib/auth-client";
+import { getInitials } from "@/lib/utils";
 import styles from "./dashboard.module.css";
 
 interface UserProfileCardProps {
   isCollapsed: boolean;
-}
-
-/**
- * Derive initials from a display name.
- * "John Doe" → "JD", "Alice" → "A", "" → "?"
- */
-function getInitials(name: string, email: string): string {
-  const trimmed = name.trim();
-  if (!trimmed) {
-    return email.charAt(0).toUpperCase() || "?";
-  }
-  const parts = trimmed.split(/\s+/);
-  if (parts.length >= 2) {
-    return (
-      parts[0].charAt(0) + parts[parts.length - 1].charAt(0)
-    ).toUpperCase();
-  }
-  return parts[0].charAt(0).toUpperCase();
 }
 
 export function UserProfileCard({ isCollapsed }: UserProfileCardProps) {

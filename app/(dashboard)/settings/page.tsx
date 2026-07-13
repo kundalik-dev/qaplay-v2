@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { toast } from "sonner";
 import {
   Save,
@@ -19,7 +20,19 @@ import {
 import pageStyles from "./settings.module.css";
 import dashboardStyles from "../_components/dashboard.module.css";
 import { Toaster } from "@/components/ui/sonner";
-import { cn } from "@/lib/utils";
+import { cn, getInitials } from "@/lib/utils";
+import { authClient } from "@/lib/auth-client";
+
+/**
+ * Best-effort split of a Better Auth `name` (single field) into first/last
+ * for the two-column form. Rejoined on save.
+ */
+function splitName(name: string): { firstName: string; lastName: string } {
+  const trimmed = name.trim();
+  if (!trimmed) return { firstName: "", lastName: "" };
+  const [firstName, ...rest] = trimmed.split(/\s+/);
+  return { firstName, lastName: rest.join(" ") };
+}
 
 const COMING_SOON_DESCRIPTION = "This feature is still under development.";
 
@@ -37,6 +50,15 @@ export default function SettingsPage() {
     "profile",
   );
 
+  // ── Auth / real user data ────────────────────────────────────────────────
+  const { data: session, isPending: isSessionPending } =
+    authClient.useSession();
+  const user = session?.user ?? null;
+
+  // Tracks whether the user's avatar URL (e.g. Google photo) failed to
+  // load, so we can fall back to initials instead of a broken <img>.
+  const [avatarLoadFailed, setAvatarLoadFailed] = useState(false);
+
   // API State
   const [key, setKey] = useState("");
   const [model, setModel] = useState("openai/gpt-4o-mini");
@@ -51,6 +73,9 @@ export default function SettingsPage() {
 
   // Profile State
   const [resumeFile, setResumeFile] = useState<File | null>(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [isSavingProfile, setIsSavingProfile] = useState(false);
 
   const updateSettings = (updates: Record<string, unknown>) => {
     const current = JSON.parse(localStorage.getItem("qap_settings") || "{}");
@@ -89,6 +114,22 @@ export default function SettingsPage() {
     });
   }, []);
 
+  // Populate the profile form from the real logged-in user once the
+  // session resolves (and whenever the underlying name changes elsewhere,
+  // e.g. after a successful save).
+  useEffect(() => {
+    if (!user) return;
+    const { firstName: fn, lastName: ln } = splitName(user.name ?? "");
+    setFirstName(fn);
+    setLastName(ln);
+  }, [user]);
+
+  // Reset the broken-image fallback whenever the avatar URL itself changes
+  // (e.g. a fresh Google photo after re-auth).
+  useEffect(() => {
+    setAvatarLoadFailed(false);
+  }, [user?.image]);
+
   const handleSaveApi = (e: React.FormEvent) => {
     e.preventDefault();
     const finalModel = isCustom ? customModel : model;
@@ -102,19 +143,41 @@ export default function SettingsPage() {
     setTimeout(() => setApiSaved(false), 3000);
   };
 
-  const handleSaveProfile = (e: React.FormEvent) => {
+  const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!user) {
+      toast.error("You need to be signed in to update your profile.");
+      return;
+    }
+
+    const fullName = [firstName.trim(), lastName.trim()]
+      .filter(Boolean)
+      .join(" ");
+
+    if (!fullName) {
+      toast.error("Please enter at least a first name.");
+      return;
+    }
+
+    setIsSavingProfile(true);
+    const { error } = await authClient.updateUser({ name: fullName });
+    setIsSavingProfile(false);
+
+    if (error) {
+      toast.error("Failed to update profile", {
+        description: error.message ?? "Please try again.",
+      });
+      return;
+    }
+
+    toast.success("Profile updated successfully.");
 
     if (resumeFile) {
       toast.info("Resume upload is coming soon!", {
         description: COMING_SOON_DESCRIPTION,
       });
-      return;
     }
-
-    toast.info("Profile updates are coming soon!", {
-      description: COMING_SOON_DESCRIPTION,
-    });
   };
 
   const handleUploadPhoto = () => {
@@ -204,7 +267,32 @@ export default function SettingsPage() {
       {/* Content */}
       <div style={{ animation: "fade-in 0.3s ease-out" }}>
         {/* PROFILE TAB */}
-        {activeTab === "profile" && (
+        {activeTab === "profile" && isSessionPending && (
+          <div className={pageStyles.card} aria-busy="true">
+            <p style={{ color: "var(--muted-foreground)", fontSize: "14px" }}>
+              Loading your profile…
+            </p>
+          </div>
+        )}
+
+        {activeTab === "profile" && !isSessionPending && !user && (
+          <div className={pageStyles.card} data-testid="settings-signed-out">
+            <div className={pageStyles.cardHeader}>
+              <h2 className={pageStyles.cardTitle}>Personal Information</h2>
+              <p className={pageStyles.cardDesc}>
+                Sign in to view and update your account details.
+              </p>
+            </div>
+            <Link
+              href="/auth/sign-in"
+              className={cn(pageStyles.btn, pageStyles.btnPrimary)}
+            >
+              Sign in
+            </Link>
+          </div>
+        )}
+
+        {activeTab === "profile" && !isSessionPending && user && (
           <div>
             <div className={pageStyles.card}>
               <div className={pageStyles.cardHeader}>
@@ -223,6 +311,7 @@ export default function SettingsPage() {
                 }}
               >
                 <div
+                  data-testid="settings-avatar"
                   style={{
                     width: "64px",
                     height: "64px",
@@ -235,9 +324,24 @@ export default function SettingsPage() {
                     fontSize: "24px",
                     fontWeight: 600,
                     fontFamily: "var(--font-space-grotesk)",
+                    overflow: "hidden",
                   }}
                 >
-                  KJ
+                  {user.image && !avatarLoadFailed ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={user.image}
+                      alt={user.name ?? user.email}
+                      onError={() => setAvatarLoadFailed(true)}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  ) : (
+                    getInitials(user.name ?? "", user.email)
+                  )}
                 </div>
                 <div>
                   <button
@@ -276,16 +380,20 @@ export default function SettingsPage() {
                     <label className={pageStyles.label}>First Name</label>
                     <input
                       type="text"
-                      defaultValue="Kundalik"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
                       className={pageStyles.input}
+                      data-testid="settings-first-name"
                     />
                   </div>
                   <div className={pageStyles.inputGroup}>
                     <label className={pageStyles.label}>Last Name</label>
                     <input
                       type="text"
-                      defaultValue="Jadhav"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
                       className={pageStyles.input}
+                      data-testid="settings-last-name"
                     />
                   </div>
                 </div>
@@ -304,10 +412,12 @@ export default function SettingsPage() {
                     />
                     <input
                       type="email"
-                      defaultValue="kundalik.dev@gmail.com"
+                      value={user.email}
                       readOnly
+                      title="Email address cannot be changed here."
                       className={pageStyles.input}
                       style={{ paddingLeft: "44px" }}
+                      data-testid="settings-email"
                     />
                   </div>
                 </div>
@@ -366,9 +476,12 @@ export default function SettingsPage() {
                 <div className={pageStyles.formActions}>
                   <button
                     type="submit"
+                    disabled={isSavingProfile}
                     className={cn(pageStyles.btn, pageStyles.btnPrimary)}
+                    style={{ opacity: isSavingProfile ? 0.7 : 1 }}
+                    data-testid="settings-save-profile"
                   >
-                    Save Changes
+                    {isSavingProfile ? "Saving…" : "Save Changes"}
                   </button>
                 </div>
               </form>
