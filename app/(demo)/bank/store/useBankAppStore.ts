@@ -91,9 +91,17 @@ interface BankAppActions {
     loanType: LoanType,
     amount: number,
     termMonths: number,
+    interestRate: number,
     purpose: string,
     disbursementAccountId: string,
   ) => string | null;
+
+  /** Update an existing loan application. */
+  updateLoanApplication: (
+    username: string,
+    loanId: string,
+    patch: Partial<Pick<LoanApplication, "amount" | "status" | "termMonths" | "interestRate">>,
+  ) => void;
 
   /** Add a new account for a user. Returns the new account's id. */
   addAccount: (
@@ -492,6 +500,7 @@ export const useBankAppStore = create<BankStore>()(
         loanType,
         amount,
         termMonths,
+        interestRate,
         purpose,
         disbursementAccountId,
       ) => {
@@ -504,6 +513,7 @@ export const useBankAppStore = create<BankStore>()(
         if (!disbursementAccount) return "Please select a valid account.";
         if (amount <= 0) return "Please enter a valid loan amount.";
         if (amount > 250000) return "Loan amount cannot exceed $250,000.";
+        if (interestRate <= 0) return "Please enter a valid interest rate.";
         if (!purpose.trim()) return "Please describe the purpose of the loan.";
 
         const refId = generateRefId("LOAN");
@@ -514,6 +524,7 @@ export const useBankAppStore = create<BankStore>()(
           loanType,
           amount,
           termMonths,
+          interestRate,
           purpose,
           disbursementAccount,
           status: "pending",
@@ -528,6 +539,18 @@ export const useBankAppStore = create<BankStore>()(
           lastLoanResult: application,
         }));
         return null;
+      },
+
+      // ── updateLoanApplication ────────────────────────────────────────
+      updateLoanApplication: (username, loanId, patch) => {
+        set((s) => ({
+          loanApplications: {
+            ...s.loanApplications,
+            [username]: (s.loanApplications[username] ?? []).map((l) =>
+              l.id === loanId ? { ...l, ...patch, updatedAt: todayISO() } : l,
+            ),
+          },
+        }));
       },
 
       // ── addAccount ───────────────────────────────────────────────────
@@ -652,7 +675,7 @@ export const useBankAppStore = create<BankStore>()(
     {
       // localStorage key — bumped whenever seed data / store shape changes so
       // existing sessions pick up new seed data instead of using stale state.
-      name: "bank-app-v3",
+      name: "bank-app-v4",
     },
   ),
 );

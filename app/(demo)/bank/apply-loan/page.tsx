@@ -52,7 +52,7 @@ const BUGGY_TOTAL_USERNAME = "error_user";
 
 export default function ApplyLoanPage() {
   const router = useRouter();
-  const { currentUsername, applyLoan } = useBankAppStore();
+  const { currentUsername, applyLoan, updateLoanApplication } = useBankAppStore();
   const currentUser = useCurrentUser();
   const accounts = useUserAccounts(currentUsername);
   const loanHistory = useUserLoanApplications(currentUsername);
@@ -61,7 +61,15 @@ export default function ApplyLoanPage() {
   const [loanType, setLoanType] = useState<LoanType | "">("");
   const [amount, setAmount] = useState("");
   const [termMonths, setTermMonths] = useState<string>("36");
+  const [interestRate, setInterestRate] = useState("5.0");
   const [accountId, setAccountId] = useState("");
+  
+  const [editingLoan, setEditingLoan] = useState<LoanApplication | null>(null);
+  const [editAmount, setEditAmount] = useState("");
+  const [editTermMonths, setEditTermMonths] = useState("36");
+  const [editInterestRate, setEditInterestRate] = useState("5.0");
+  const [editStatus, setEditStatus] = useState<LoanApplication["status"]>("pending");
+  const [editError, setEditError] = useState<string | null>(null);
   const [purpose, setPurpose] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [showApplyForm, setShowApplyForm] = useState(false);
@@ -142,7 +150,9 @@ export default function ApplyLoanPage() {
     historyPage * PAGE_SIZE,
   );
 
-  const correctTotal = filteredHistory.reduce((sum, l) => sum + l.amount, 0);
+  const correctTotal = filteredHistory
+    .filter((l) => l.status !== "closed" && l.status !== "rejected")
+    .reduce((sum, l) => sum + l.amount, 0);
   // Bug: for BUGGY_TOTAL_USERNAME, the most-recently-added loan within the
   // current filters is silently dropped from the total, so it never
   // matches the sum of the visible rows — and stays wrong right after a
@@ -154,6 +164,46 @@ export default function ApplyLoanPage() {
       : correctTotal;
 
   const disbursementAccount = accounts.find((a) => a.id === accountId);
+
+  const handleEdit = (loan: LoanApplication) => {
+    setEditingLoan(loan);
+    setEditAmount(loan.amount.toString());
+    setEditTermMonths(loan.termMonths.toString());
+    setEditInterestRate(loan.interestRate.toString());
+    setEditStatus(loan.status);
+    setEditError(null);
+  };
+
+  const handleSaveEdit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setEditError(null);
+    if (!editingLoan) return;
+
+    const amt = parseFloat(editAmount);
+    if (!editAmount || isNaN(amt) || amt <= 0) {
+      setEditError("Please enter a valid loan amount.");
+      return;
+    }
+    const ir = parseFloat(editInterestRate);
+    if (!editInterestRate || isNaN(ir) || ir <= 0) {
+      setEditError("Please enter a valid interest rate.");
+      return;
+    }
+
+    updateLoanApplication(currentUsername!, editingLoan.id, {
+      amount: amt,
+      termMonths: parseInt(editTermMonths, 10),
+      interestRate: ir,
+      status: editStatus,
+    });
+    setEditingLoan(null);
+  };
+
+  const handleClose = (loan: LoanApplication) => {
+    if (confirm("Are you sure you want to close this loan?")) {
+      updateLoanApplication(currentUsername!, loan.id, { status: "closed" });
+    }
+  };
 
   const handleReview = (e: React.FormEvent) => {
     e.preventDefault();
@@ -170,6 +220,11 @@ export default function ApplyLoanPage() {
     }
     if (amt > 250000) {
       setError("Loan amount cannot exceed $250,000.");
+      return;
+    }
+    const ir = parseFloat(interestRate);
+    if (!interestRate || isNaN(ir) || ir <= 0) {
+      setError("Please enter a valid interest rate.");
       return;
     }
     if (!accountId) {
@@ -191,6 +246,7 @@ export default function ApplyLoanPage() {
       loanType as LoanType,
       parseFloat(amount),
       parseInt(termMonths, 10),
+      parseFloat(interestRate),
       purpose,
       accountId,
     );
@@ -383,6 +439,28 @@ export default function ApplyLoanPage() {
               </Select>
             </div>
 
+            {/* Interest Rate */}
+            <div className="mb-4">
+              <Label
+                htmlFor="loan-interest-rate"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+              >
+                Interest Rate (%)
+              </Label>
+              <Input
+                id="loan-interest-rate"
+                name="interestRate"
+                type="number"
+                min="0.1"
+                step="0.1"
+                placeholder="5.0"
+                value={interestRate}
+                onChange={(e) => setInterestRate(e.target.value)}
+                disabled={isFrozen}
+                data-testid="loan-interest-rate-input"
+              />
+            </div>
+
             {/* Disbursement account — Beginner */}
             <div className="mb-4">
               <Label
@@ -493,6 +571,9 @@ export default function ApplyLoanPage() {
           sortOrder={sortOrder}
           onSort={handleHistorySort}
           totalAmount={displayedTotal}
+          onEdit={handleEdit}
+          onClose={handleClose}
+          onRowClick={(loan) => router.push(`/bank/apply-loan/${loan.id}`)}
         />
 
         {/* Pagination row */}
@@ -592,6 +673,7 @@ export default function ApplyLoanPage() {
                 value: amount ? formatCurrency(parseFloat(amount)) : "",
               },
               { label: "Term", value: `${termMonths} months` },
+              { label: "Interest Rate", value: `${interestRate}%` },
               { label: "Deposit To", value: disbursementAccount?.name },
               { label: "Purpose", value: purpose },
             ].map(({ label, value }) => (
@@ -623,6 +705,68 @@ export default function ApplyLoanPage() {
               Submit Application
             </Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Loan Dialog */}
+      <Dialog open={!!editingLoan} onOpenChange={(open) => !open && setEditingLoan(null)}>
+        <DialogContent data-testid="edit-loan-dialog">
+          <DialogHeader>
+            <DialogTitle>Edit Loan Application</DialogTitle>
+          </DialogHeader>
+          {editError && (
+            <div className="mb-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700">
+              {editError}
+            </div>
+          )}
+          {editingLoan && (
+            <form onSubmit={handleSaveEdit} className="space-y-4">
+              <div>
+                <Label>Reference ID</Label>
+                <Input value={editingLoan.refId} disabled />
+              </div>
+              <div>
+                <Label>Loan Type</Label>
+                <Input value={editingLoan.loanType} disabled />
+              </div>
+              <div>
+                <Label>Amount</Label>
+                <div className="relative">
+                  <span className="absolute top-1/2 left-3 -translate-y-1/2 text-sm text-slate-400">$</span>
+                  <Input type="number" min="0.01" step="0.01" value={editAmount} onChange={(e) => setEditAmount(e.target.value)} className="pl-7" />
+                </div>
+              </div>
+              <div>
+                <Label>Term (Months)</Label>
+                <Select value={editTermMonths} onValueChange={setEditTermMonths}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {TERM_OPTIONS.map((m) => <SelectItem key={m} value={String(m)}>{m} months</SelectItem>)}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label>Interest Rate (%)</Label>
+                <Input type="number" min="0.1" step="0.1" value={editInterestRate} onChange={(e) => setEditInterestRate(e.target.value)} />
+              </div>
+              <div>
+                <Label>Status</Label>
+                <Select value={editStatus} onValueChange={(v) => setEditStatus(v as LoanApplication["status"])}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="approved">Approved</SelectItem>
+                    <SelectItem value="rejected">Rejected</SelectItem>
+                    <SelectItem value="closed">Closed</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <DialogFooter>
+                <Button type="button" variant="outline" onClick={() => setEditingLoan(null)}>Cancel</Button>
+                <Button type="submit" className="bg-violet-600 hover:bg-violet-700">Save Changes</Button>
+              </DialogFooter>
+            </form>
+          )}
         </DialogContent>
       </Dialog>
     </div>

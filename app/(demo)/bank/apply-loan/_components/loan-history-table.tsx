@@ -1,7 +1,8 @@
 import type { LoanApplication } from "../../lib/types";
 import { formatCurrency, formatDate } from "../../lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUp, ArrowDown } from "lucide-react";
+import { ArrowUp, ArrowDown, Edit, XCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export type SortField = "date" | "amount";
 export type SortOrder = "asc" | "desc";
@@ -15,6 +16,9 @@ interface LoanHistoryTableProps {
    * total bug (see apply-loan/page.tsx) stays out of this presentational
    * component. */
   totalAmount: number;
+  onEdit?: (loan: LoanApplication) => void;
+  onClose?: (loan: LoanApplication) => void;
+  onRowClick?: (loan: LoanApplication) => void;
 }
 
 const LOAN_TYPE_COLORS: Record<string, string> = {
@@ -27,6 +31,8 @@ const LOAN_TYPE_COLORS: Record<string, string> = {
 const STATUS_COLORS: Record<string, string> = {
   pending: "bg-amber-100 text-amber-700",
   approved: "bg-emerald-100 text-emerald-700",
+  closed: "bg-slate-200 text-slate-600",
+  rejected: "bg-red-100 text-red-700",
 };
 
 function SortIcon({
@@ -53,6 +59,9 @@ export function LoanHistoryTable({
   sortOrder,
   onSort,
   totalAmount,
+  onEdit,
+  onClose,
+  onRowClick,
 }: LoanHistoryTableProps) {
   return (
     <div
@@ -95,6 +104,9 @@ export function LoanHistoryTable({
             <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400">
               Term
             </th>
+            <th className="px-4 py-3 text-right text-xs font-semibold text-slate-600 dark:text-slate-400">
+              Interest
+            </th>
             <th
               className="cursor-pointer px-4 py-3 text-right text-xs font-semibold text-slate-600 select-none hover:text-slate-900 dark:text-slate-400"
               onClick={() => onSort("amount")}
@@ -117,6 +129,9 @@ export function LoanHistoryTable({
             <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400">
               Status
             </th>
+            <th className="px-4 py-3 text-right text-xs font-semibold text-slate-600 dark:text-slate-400">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
@@ -129,18 +144,26 @@ export function LoanHistoryTable({
              */
             <tr
               key={loan.id}
-              className="transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/30"
+              className="transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/30 cursor-pointer"
               data-testid="loan-history-row"
               data-loan-id={loan.id}
               data-loan-type={loan.loanType.toLowerCase()}
               data-status={loan.status}
               data-amount={loan.amount}
+              onClick={() => onRowClick?.(loan)}
             >
               <td
                 className="px-4 py-3 text-xs whitespace-nowrap text-slate-600 dark:text-slate-400"
                 data-testid="loan-history-date"
               >
-                <time dateTime={loan.date}>{formatDate(loan.date)}</time>
+                <div>
+                  <time dateTime={loan.date}>{formatDate(loan.date)}</time>
+                </div>
+                {loan.updatedAt && (
+                  <div className="text-[10px] text-slate-400 mt-0.5">
+                    Updated: <time dateTime={loan.updatedAt}>{formatDate(loan.updatedAt)}</time>
+                  </div>
+                )}
               </td>
 
               {/*
@@ -164,6 +187,10 @@ export function LoanHistoryTable({
                 {loan.termMonths} mo
               </td>
 
+              <td className="px-4 py-3 text-right text-xs text-slate-500">
+                {loan.interestRate}%
+              </td>
+
               <td
                 className="px-4 py-3 text-right text-sm font-semibold text-slate-900 tabular-nums dark:text-white"
                 data-testid="loan-history-amount"
@@ -180,13 +207,41 @@ export function LoanHistoryTable({
                   {loan.status}
                 </Badge>
               </td>
+
+              <td className="px-4 py-3 text-right whitespace-nowrap">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 mr-1 text-slate-500 hover:text-violet-600"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEdit?.(loan);
+                  }}
+                  title="Edit Loan"
+                >
+                  <Edit className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 text-slate-500 hover:text-red-600 disabled:opacity-30"
+                  disabled={loan.status === "closed"}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onClose?.(loan);
+                  }}
+                  title="Close Loan"
+                >
+                  <XCircle className="h-4 w-4" />
+                </Button>
+              </td>
             </tr>
           ))}
 
           {loans.length === 0 && (
             <tr>
               <td
-                colSpan={6}
+                colSpan={8}
                 className="py-10 text-center text-sm text-slate-400"
                 data-testid="no-loan-history-message"
               >
@@ -199,10 +254,10 @@ export function LoanHistoryTable({
           <tfoot>
             <tr className="border-t border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-900/50">
               <td
-                colSpan={4}
+                colSpan={5}
                 className="px-4 py-3 text-right text-xs font-semibold text-slate-600 dark:text-slate-400"
               >
-                Total
+                Total (Active/Pending)
               </td>
               {/*
                * Beginner: getByTestId("loan-history-total-value")
@@ -215,7 +270,7 @@ export function LoanHistoryTable({
               >
                 {formatCurrency(totalAmount)}
               </td>
-              <td />
+              <td colSpan={2} />
             </tr>
           </tfoot>
         )}

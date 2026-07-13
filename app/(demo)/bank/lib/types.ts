@@ -111,10 +111,12 @@ export interface LoanApplication {
   loanType: LoanType;
   amount: number;
   termMonths: number;
+  interestRate: number;
   purpose: string;
   disbursementAccount: Account;
-  status: "pending" | "approved";
+  status: "pending" | "approved" | "closed" | "rejected";
   date: string; // ISO date string
+  updatedAt?: string; // ISO date string
 }
 
 // ─── Store Shape ─────────────────────────────────────────────────────────────

@@ -482,14 +482,17 @@ export function createSeedLoanApplications(
     loanType: LoanApplication["loanType"];
     amount: number;
     termMonths: number;
+    interestRate: number;
     purpose: string;
     status: LoanApplication["status"];
+    updatedAt?: string;
   }> = [
     {
       date: "2026-06-15",
       loanType: "Home",
       amount: 15000,
       termMonths: 36,
+      interestRate: 4.5,
       purpose: "Roof repair",
       status: "pending",
     },
@@ -498,14 +501,17 @@ export function createSeedLoanApplications(
       loanType: "Auto",
       amount: 9800,
       termMonths: 48,
+      interestRate: 6.2,
       purpose: "Used car — down payment assist",
       status: "approved",
+      updatedAt: "2026-06-01",
     },
     {
       date: "2026-05-07",
       loanType: "Personal",
       amount: 2500,
       termMonths: 12,
+      interestRate: 10.5,
       purpose: "Medical expenses",
       status: "pending",
     },
@@ -514,32 +520,30 @@ export function createSeedLoanApplications(
       loanType: "Student",
       amount: 12000,
       termMonths: 36,
+      interestRate: 5.0,
       purpose: "Tuition — Spring semester",
       status: "approved",
+      updatedAt: "2026-04-21",
     },
     {
       date: "2026-04-02",
       loanType: "Home",
       amount: 45000,
       termMonths: 60,
+      interestRate: 3.8,
       purpose: "Kitchen renovation",
-      status: "pending",
+      status: "closed",
+      updatedAt: "2026-06-10",
     },
     {
       date: "2026-03-11",
       loanType: "Personal",
       amount: 5000,
       termMonths: 24,
+      interestRate: 9.0,
       purpose: "Debt consolidation",
-      status: "approved",
-    },
-    {
-      date: "2026-02-03",
-      loanType: "Auto",
-      amount: 18500,
-      termMonths: 60,
-      purpose: "Vehicle purchase — 2023 Honda Civic",
-      status: "approved",
+      status: "closed",
+      updatedAt: "2026-05-15",
     },
   ];
 
@@ -549,9 +553,11 @@ export function createSeedLoanApplications(
     loanType: entry.loanType,
     amount: entry.amount,
     termMonths: entry.termMonths,
+    interestRate: entry.interestRate,
     purpose: entry.purpose,
     disbursementAccount,
     status: entry.status,
     date: entry.date,
+    updatedAt: entry.updatedAt,
   }));
 }
