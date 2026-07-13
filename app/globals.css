@@ -261,6 +261,13 @@
     --hero-glow-1: transparent;
     --hero-glow-2: transparent;
   }
+
+  /* Practice pages (index + every /practice/[element] page share this
+     layout wrapper): same treatment — no colored glow, same grid lines. */
+  body:has([data-section="practice"]) {
+    --hero-glow-1: transparent;
+    --hero-glow-2: transparent;
+  }
 }
 
 .home-shell {
