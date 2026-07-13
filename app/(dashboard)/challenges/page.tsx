@@ -204,7 +204,11 @@ export default function ChallengesDashboard() {
   }
 
   return (
-    <div className={styles.dashPage} data-testid="challenges-dashboard">
+    <div
+      className={styles.dashPage}
+      data-testid="challenges-dashboard"
+      data-page="challenges"
+    >
       {/* ── Page header ─────────────────────────────────────── */}
       <div className={styles.pageHeader} data-testid="challenges-header">
         <div className={styles.headerTop}>

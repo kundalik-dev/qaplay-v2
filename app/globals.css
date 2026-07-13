@@ -268,6 +268,13 @@
     --hero-glow-1: transparent;
     --hero-glow-2: transparent;
   }
+
+  /* Challenges pages (index + every /challenges/[challengeId] sub-page,
+     e.g. stubborn-api): same treatment — no colored glow, same grid lines. */
+  body:has([data-page="challenges"]) {
+    --hero-glow-1: transparent;
+    --hero-glow-2: transparent;
+  }
 }
 
 .home-shell {

@@ -1,0 +1,42 @@
+"use client";
+
+import { useState } from "react";
+import type { ReactNode } from "react";
+
+import { UiPracticeSidebar } from "./ui-practice-sidebar";
+import styles from "./ui-practice.module.css";
+
+interface UiPracticeShellProps {
+  children: ReactNode;
+}
+
+/**
+ * UiPracticeShell — client component that owns the sidebar collapse state.
+ *
+ * Keeping state here (rather than in layout.tsx) lets layout.tsx stay a
+ * Server Component while only this thin wrapper is a Client Component.
+ * The global QA Playground top nav is hidden for this route via
+ * components/app-nav/conditional-site-chrome.tsx (see DASHBOARD_PREFIXES).
+ */
+export function UiPracticeShell({ children }: UiPracticeShellProps) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  return (
+    <div className={styles.shell} data-testid="ui-practice-shell">
+      <UiPracticeSidebar
+        isCollapsed={isCollapsed}
+        onToggle={() => setIsCollapsed((prev) => !prev)}
+      />
+
+      <div className={styles.content} data-testid="ui-practice-content">
+        <main
+          id="ui-practice-main-content"
+          className={styles.main}
+          data-testid="ui-practice-main"
+        >
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+}

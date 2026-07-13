@@ -39,7 +39,11 @@ export default function ChallengeWorkspaceLayout({
 
   const showSubmitButton = false; // TODO: Implement logic to determine if the submit button should be shown
   return (
-    <div className={styles.challengePage} data-testid="challenge-workspace">
+    <div
+      className={styles.challengePage}
+      data-testid="challenge-workspace"
+      data-page="challenges"
+    >
       {/* ── Challenge Header ── */}
       <header className={styles.challengeHeader} data-testid="challenge-header">
         <nav className={styles.chBreadcrumbs} aria-label="Breadcrumb">
