@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { TestingTips } from "../../_components/testing-tips";
 
 interface ToastItem {
   id: number;
@@ -34,10 +35,7 @@ export function ToastSection() {
         <span className="badge badge-orange">Advanced</span>
       </h2>
       <p className="hint">
-        Appears then disappears after ~3s — a classic flaky-test trap. Assert with
-        web-first <code>expect(toast).toBeVisible()</code> immediately, then{" "}
-        <code>expect(toast).toBeHidden()</code>. Avoid hard{" "}
-        <code>waitForTimeout</code>.
+        Appears then disappears after ~3s — a classic flaky-test trap.
       </p>
       <div className="btn-row">
         <button
@@ -61,11 +59,27 @@ export function ToastSection() {
       {/* toast mount point */}
       <div className="toast-stack" id="toast-stack">
         {toasts.map((t) => (
-          <div key={t.id} className={`toast ${t.type}`} role="status" data-testid="toast">
+          <div
+            key={t.id}
+            className={`toast ${t.type}`}
+            role="status"
+            data-testid="toast"
+          >
             {t.message}
           </div>
         ))}
       </div>
+
+      {/* Show Tips  */}
+      <TestingTips
+        label="Tips"
+        tips={[
+          "Handle toast which appear for 3sec then disapper.",
+          "Check alert type, message, defaultValue, then provide input text.",
+          "Assert text value before disappearing.",
+          `Assert with web-first toBeVisible() immediately, then toBeHidden() after 3s. without hardcoding wait.`,
+        ]}
+      />
     </section>
   );
 }

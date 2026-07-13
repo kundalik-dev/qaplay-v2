@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { TestingTips } from "../../_components/testing-tips";
 
 /**
  * Section 6 — custom (div-based) modal (Intermediate -> Advanced).
@@ -36,10 +37,10 @@ export function CustomModalSection() {
         <span className="badge badge-orange">Advanced</span>
       </h2>
       <p className="hint">
-        The most common real-world case (React/Vue modals). It&apos;s just a styled{" "}
-        <code>div</code> with <code>role=&quot;dialog&quot;</code>. Locate by
-        role/testid; wait for it with <code>expect(modal).toBeVisible()</code>.
-        Closing via overlay-click / Esc / X are 3 paths to test.
+        The most common real-world case (React/Vue modals). It&apos;s just a
+        styled <code>div</code> with <code>role=&quot;dialog&quot;</code>.
+        Locate by role/testid; wait for it with{" "}
+        <code>expect(modal).toBeVisible()</code>.
       </p>
       <div className="btn-row">
         <button
@@ -53,7 +54,7 @@ export function CustomModalSection() {
       </div>
 
       <div
-        className={`modal-overlay${isOpen ? " open" : ""}`}
+        className={`modal-overlay${isOpen ? "open" : ""}`}
         id="custom-modal-overlay"
         data-testid="custom-modal-overlay"
         onClick={(e) => {
@@ -78,8 +79,8 @@ export function CustomModalSection() {
           </button>
           <h3 id="custom-modal-title">Custom Modal Title</h3>
           <p>
-            This modal lives in the DOM. Try closing via the ✕, the Cancel button,
-            clicking the dark overlay, or pressing <kbd>Esc</kbd>.
+            This modal lives in the DOM. Try closing via the ✕, the Cancel
+            button, clicking the dark overlay, or pressing <kbd>Esc</kbd>.
           </p>
           <div className="modal-actions">
             <button
@@ -102,9 +103,23 @@ export function CustomModalSection() {
         </div>
       </div>
 
-      <div className="output-box" id="custom-modal-result" data-testid="custom-modal-result">
+      <div
+        className="output-box"
+        id="custom-modal-result"
+        data-testid="custom-modal-result"
+      >
         {resultText}
       </div>
+
+      {/* Show Tips  */}
+      <TestingTips
+        label="Tips"
+        tips={[
+          "Try closing using via overlay-click | Esc | X are 3 paths to test.",
+          "Check alert type, message, defaultValue, then provide input text.",
+          "Assert text value after accepting or dismissing.",
+        ]}
+      />
     </section>
   );
 }

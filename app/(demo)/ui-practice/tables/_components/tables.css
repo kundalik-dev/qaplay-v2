@@ -16,7 +16,8 @@
 }
 
 .ui-practice-tables-page {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  font-size: 16px;
   padding: 24px;
   /* No background here on purpose — lets the app's shared grid-line/glow
      background (app/globals.css, applied on <body>) show through instead
@@ -32,11 +33,11 @@
 
 .ui-practice-tables-page h1 {
   margin-top: 0;
-  font-size: 26px;
+  font-size: 30px;
 }
 
 .ui-practice-tables-page .intro {
-  font-size: 13px;
+  font-size: 15px;
   color: #1f2933;
   margin-bottom: 24px;
 }
@@ -52,14 +53,14 @@
 
 .ui-practice-tables-page .section h2 {
   margin-top: 0;
-  font-size: 17px;
+  font-size: 19px;
   color: #334e68;
   border-bottom: 1px solid #e8f0f7;
   padding-bottom: 8px;
 }
 
 .ui-practice-tables-page .hint {
-  font-size: 12px;
+  font-size: 14px;
   color: #1f2933;
   margin-bottom: 12px;
   font-style: italic;
@@ -67,7 +68,7 @@
 
 .ui-practice-tables-page .badge {
   display: inline-block;
-  font-size: 11px;
+  font-size: 12px;
   padding: 2px 8px;
   border-radius: 20px;
   vertical-align: middle;
@@ -97,7 +98,7 @@
 .ui-practice-tables-page table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 14px;
   margin-top: 8px;
 }
 
@@ -140,7 +141,7 @@
 }
 
 .ui-practice-tables-page .sort-icon {
-  font-size: 10px;
+  font-size: 11px;
   margin-left: 4px;
 }
 
@@ -165,7 +166,7 @@
   color: #166534;
   padding: 2px 8px;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .ui-practice-tables-page .status-inactive {
@@ -173,7 +174,7 @@
   color: #b0101a;
   padding: 2px 8px;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .ui-practice-tables-page .stock-out {
@@ -181,7 +182,7 @@
   color: #b0101a;
   padding: 2px 6px;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .ui-practice-tables-page .stock-in {
@@ -189,7 +190,7 @@
   color: #166534;
   padding: 2px 6px;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 /* ── Controls / search row ── */
@@ -208,7 +209,7 @@
 }
 
 .ui-practice-tables-page .ctrl-field label {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: bold;
 }
 
@@ -217,7 +218,7 @@
   padding: 7px 10px;
   border: 1px solid #bcccdc;
   border-radius: 5px;
-  font-size: 13px;
+  font-size: 15px;
   min-width: 180px;
 }
 
@@ -227,7 +228,7 @@
 }
 
 .ui-practice-tables-page .result-info {
-  font-size: 12px;
+  font-size: 14px;
   color: #627d98;
   margin-bottom: 8px;
   min-height: 18px;
@@ -243,13 +244,13 @@
   padding: 6px 14px;
   border: none;
   border-radius: 4px;
-  font-size: 13px;
+  font-size: 15px;
   cursor: pointer;
 }
 
 .ui-practice-tables-page .btn-sm {
   padding: 4px 10px;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .ui-practice-tables-page .btn-primary {
@@ -295,7 +296,7 @@
 /* ── Inline edit inputs ── */
 .ui-practice-tables-page td input.inline-input {
   padding: 4px 6px;
-  font-size: 12px;
+  font-size: 13px;
   border: 1px solid #4a90d9;
   border-radius: 3px;
   width: 100%;
@@ -312,14 +313,14 @@
 }
 
 .ui-practice-tables-page .pag-info {
-  font-size: 12px;
+  font-size: 14px;
   color: #627d98;
   margin-right: 6px;
 }
 
 .ui-practice-tables-page .pag-btn {
   padding: 5px 10px;
-  font-size: 12px;
+  font-size: 13px;
   border: 1px solid #bcccdc;
   background: #fff;
   border-radius: 4px;
@@ -361,7 +362,7 @@
   border: 1px solid #d9e2ec;
   border-radius: 5px;
   margin-bottom: 10px;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .ui-practice-tables-page .bulk-count {

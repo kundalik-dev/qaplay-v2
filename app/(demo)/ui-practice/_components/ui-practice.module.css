@@ -198,4 +198,9 @@
   padding: 20px 28px 32px;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
+  /* Route-wide default font for every /ui-practice/[section] page. Ported
+     prototype pages (tables.css, dialog.css, ...) may still declare their
+     own font-family on their wrapper for self-containment, but this is the
+     baseline so any new section gets Inter without needing to repeat it. */
+  font-family: var(--font-inter), sans-serif;
 }

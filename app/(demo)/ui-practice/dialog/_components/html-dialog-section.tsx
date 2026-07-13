@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { TestingTips } from "../../_components/testing-tips";
 
 /**
  * Section 5 — native HTML `<dialog>` element (Intermediate).
@@ -14,7 +15,9 @@ export function HtmlDialogSection() {
 
   function handleClose() {
     const dialog = dialogRef.current;
-    setResultText(`Dialog closed. returnValue = "${dialog?.returnValue || "(none)"}"`);
+    setResultText(
+      `Dialog closed. returnValue = "${dialog?.returnValue || "(none)"}"`,
+    );
   }
 
   return (
@@ -23,13 +26,7 @@ export function HtmlDialogSection() {
         5. Native HTML <code>&lt;dialog&gt;</code> element
         <span className="badge badge-blue">Intermediate</span>
       </h2>
-      <p className="hint">
-        This is real DOM — NOT a JS dialog. Use normal locators:{" "}
-        <code>getByRole(&apos;dialog&apos;)</code>,{" "}
-        <code>getByRole(&apos;button&apos;, {"{name:'Confirm'}"})</code>.{" "}
-        <code>showModal()</code> adds a backdrop &amp; traps focus;{" "}
-        <code>show()</code> is non-modal.
-      </p>
+
       <div className="btn-row">
         <button
           type="button"
@@ -61,7 +58,11 @@ export function HtmlDialogSection() {
         <h3 id="html-dialog-title">Confirm Subscription</h3>
         <p>Do you want to subscribe to the newsletter?</p>
         <form method="dialog" className="dialog-actions">
-          <button value="cancel" className="secondary" data-testid="html-dialog-cancel">
+          <button
+            value="cancel"
+            className="secondary"
+            data-testid="html-dialog-cancel"
+          >
             Cancel
           </button>
           <button value="confirm" data-testid="html-dialog-confirm">
@@ -70,15 +71,28 @@ export function HtmlDialogSection() {
         </form>
       </dialog>
 
-      <div className="output-box" id="html-dialog-result" data-testid="html-dialog-result">
+      <div
+        className="output-box"
+        id="html-dialog-result"
+        data-testid="html-dialog-result"
+      >
         {resultText}
       </div>
       <p className="hint hint-mt-8">
-        <code>&lt;form method=&quot;dialog&quot;&gt;</code> closes the dialog and sets{" "}
-        <code>dialog.returnValue</code> to the clicked button&apos;s <code>value</code>.
-        Assert visibility with <code>expect(dialog).toBeVisible()</code> /{" "}
-        <code>toBeHidden()</code>.
+        <code>&lt;form method=&quot;dialog&quot;&gt;</code> closes the dialog
+        and sets <code>dialog.returnValue</code> to the clicked button&apos;s{" "}
+        <code>value</code>.
       </p>
+
+      {/* Show Tips  */}
+      <TestingTips
+        label="Tips"
+        tips={[
+          "Assert visibility of alert.",
+          "Check alert type, message, defaultValue, then provide input text.",
+          "Assert text value after accepting or dismissing.",
+        ]}
+      />
     </section>
   );
 }

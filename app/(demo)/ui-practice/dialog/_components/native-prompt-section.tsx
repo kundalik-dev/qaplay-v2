@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { TestingTips } from "../../_components/testing-tips";
 
 /**
  * Section 3 — native `prompt()` text input (Intermediate).
@@ -44,10 +45,16 @@ export function NativePromptSection() {
       >
         {resultText}
       </div>
-      <p className="hint hint-mt-8">
-        Tricky cases to cover: (a) accept with text, (b) accept with empty
-        string, (c) dismiss → returns <code>null</code>.
-      </p>
+
+      {/* Show Tips  */}
+      <TestingTips
+        label="Tips"
+        tips={[
+          "Handle prompt alert.",
+          "Check alert type, message, defaultValue, then provide input text.",
+          "Assert text value after accepting or dismissing.",
+        ]}
+      />
     </section>
   );
 }

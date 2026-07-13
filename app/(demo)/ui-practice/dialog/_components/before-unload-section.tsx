@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { TestingTips } from "../../_components/testing-tips";
 
 /**
  * Section 4 — `beforeunload` leave-page warning (Advanced).
@@ -40,15 +41,9 @@ export function BeforeUnloadSection() {
         4. <code>beforeunload</code> — leave-page warning
         <span className="badge badge-orange">Advanced</span>
       </h2>
-      <p className="hint">
-        Fires on navigation/close when there are unsaved changes. In Playwright the
-        dialog only appears if you trigger an actual unload; handle it via{" "}
-        <code>page.on(&apos;dialog&apos;)</code> with{" "}
-        <code>d.type() === &apos;beforeunload&apos;</code>, or pass{" "}
-        <code>runBeforeUnload</code> to <code>page.close()</code>.
-      </p>
+
       <div className="field">
-        <label htmlFor="draft-input">
+        <label htmlFor="draft-input" className="pt-1 pb-1">
           Edit this draft, then try to reload / navigate away
         </label>
         <input
@@ -61,13 +56,32 @@ export function BeforeUnloadSection() {
         />
       </div>
       <div className="btn-row">
-        <button type="button" className="secondary" id="reset-dirty-btn" onClick={handleReset}>
+        <button
+          type="button"
+          className="secondary"
+          id="reset-dirty-btn"
+          onClick={handleReset}
+        >
           Mark as Saved (clears warning)
         </button>
       </div>
       <p className="hint hint-mt-10" id="dirty-state" data-testid="dirty-state">
-        State: {isDirty ? "dirty — leaving the page will warn you" : "clean (no warning)"}
+        State:{" "}
+        {isDirty
+          ? "dirty — leaving the page will warn you"
+          : "clean (no warning)"}
       </p>
+
+      {/* Show Tips  */}
+      <TestingTips
+        label="Tips"
+        tips={[
+          "Handle before unload alert.",
+          "Enter text then try to reload / navigate away.",
+          "Check alert type, message, defaultValue, then provide input text.",
+          "Assert text value after accepting or dismissing.",
+        ]}
+      />
     </section>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { TestingTips } from "../../_components/testing-tips";
 
 type ConfirmOutcome = "accepted" | "dismissed" | null;
 
@@ -57,11 +58,16 @@ export function NativeConfirmSection() {
       >
         {resultText}
       </div>
-      <p className="hint hint-mt-8">
-        Best-practice assertion: don&apos;t just read{" "}
-        <code>dialog.message()</code> — verify the <strong>side effect</strong>{" "}
-        in <code>#confirm-result</code> after accept vs dismiss.
-      </p>
+
+      {/* Show Tips  */}
+      <TestingTips
+        label="Tips"
+        tips={[
+          "Handle confirm alert.",
+          "Check alert type, message, defaultValue of confirm alert.",
+          "Assert text value after accepting or dismissing.",
+        ]}
+      />
     </section>
   );
 }

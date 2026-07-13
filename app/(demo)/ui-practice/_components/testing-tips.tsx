@@ -25,8 +25,7 @@ export function TestingTips({ tips, label = "" }: TestingTipsProps) {
     <div className={styles.testingTips} data-testid="testing-tips">
       <button
         type="button"
-        className={"flex items-center gap-1 text-sm text-muted-foreground"}
-        // className={styles.toggle}
+        className={styles.toggle}
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
         aria-controls={panelId}
@@ -37,16 +36,10 @@ export function TestingTips({ tips, label = "" }: TestingTipsProps) {
         ) : (
           <ChevronsDown size={15} aria-hidden="true" />
         )}
-        {/* {isOpen ? (
-          <Info size={15} aria-hidden="true" />
-        ) : (
-          <Info size={15} aria-hidden="true" />
-        )} */}
         <span>
           {isOpen
             ? `Hide ${label.toLowerCase()}`
             : `Show ${label.toLowerCase()}`}
-          {/* {isOpen ? ` ${label.toLowerCase()}` : `${label.toLowerCase()}`} */}
         </span>
       </button>
 

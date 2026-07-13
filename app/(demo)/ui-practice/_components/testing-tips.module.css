@@ -11,31 +11,39 @@
   border-top: 1px dashed var(--border);
 }
 
-.toggle {
+/* Nested under .testingTips (specificity 0,2,0) so this reliably beats
+   ported prototypes' generic `.ui-practice-[section]-page button` rule
+   (specificity 0,1,1), which would otherwise paint every <button> solid. */
+.testingTips .toggle {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   background: transparent;
-  border: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
   margin: 0;
-  padding: 2px 0;
+  padding: 5px 10px;
   font-size: 13px;
   font-weight: 500;
   line-height: 1.4;
   color: var(--muted-foreground);
   cursor: pointer;
-  transition: color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
 }
 
-.toggle:hover,
-.toggle:focus-visible {
+.testingTips .toggle:hover {
   color: var(--primary);
+  border-color: var(--primary);
+  background: transparent;
 }
 
-.toggle:focus-visible {
+.testingTips .toggle:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
-  border-radius: var(--radius-sm);
+  background: transparent;
 }
 
 /* Height-animated collapse via the minmax(0, fr) grid trick — no JS
