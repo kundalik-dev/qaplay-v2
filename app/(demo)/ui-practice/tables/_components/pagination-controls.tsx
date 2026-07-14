@@ -1,5 +1,13 @@
 "use client";
 
+/**
+ * Drives every `data-testid` in this nav: "pag-*" for section 4,
+ * "grid-*" for section 6, "products-*" / "departments-*" for the
+ * merged all-in-one tables. Kept as a union (rather than a bare
+ * `string`) so new prefixes stay intentional and locator-friendly.
+ */
+export type PaginationTestIdPrefix = "pag" | "grid" | "products" | "departments";
+
 interface PaginationControlsProps {
   page: number;
   totalPages: number;
@@ -7,14 +15,15 @@ interface PaginationControlsProps {
   onPrev: () => void;
   onNext: () => void;
   onSelectPage: (page: number) => void;
-  /** Drives data-testid prefixes: "pag-*" for section 4, "grid-*" for section 6. */
-  testIdPrefix: "pag" | "grid";
+  testIdPrefix: PaginationTestIdPrefix;
+  /** Accessible name for the <nav>, e.g. "Departments pagination". */
+  navAriaLabel: string;
 }
 
 /**
- * Shared pagination nav used by the paginated table (section 4) and the
- * combined data grid (section 6). Mirrors the original `buildPageBtns` +
- * Prev/Next button logic from the vanilla JS prototype.
+ * Shared pagination nav used by every paginated table section. Mirrors
+ * the original `buildPageBtns` + Prev/Next button logic from the
+ * vanilla JS prototype.
  */
 export function PaginationControls({
   page,
@@ -24,6 +33,7 @@ export function PaginationControls({
   onNext,
   onSelectPage,
   testIdPrefix,
+  navAriaLabel,
 }: PaginationControlsProps) {
   const prevDisabled = page === 1;
   const nextDisabled = page === totalPages || totalPages === 0;
@@ -32,9 +42,7 @@ export function PaginationControls({
     <nav
       className="pag-row"
       data-testid={`${testIdPrefix}-controls`}
-      aria-label={
-        testIdPrefix === "pag" ? "Table pagination" : "Grid pagination"
-      }
+      aria-label={navAriaLabel}
     >
       <span className="pag-info" data-testid={`${testIdPrefix}-info`}>
         {infoText}
@@ -54,7 +62,7 @@ export function PaginationControls({
           <button
             type="button"
             key={p}
-            className={`pag-btn${p === page ? "active" : ""}`}
+            className={`pag-btn${p === page ? " active" : ""}`}
             data-testid={`${testIdPrefix}-btn-${p}`}
             aria-current={p === page ? "page" : undefined}
             onClick={() => onSelectPage(p)}

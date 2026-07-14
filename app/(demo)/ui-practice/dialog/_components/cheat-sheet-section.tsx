@@ -1,5 +1,5 @@
 /**
- * Section 8 — dialog handling cheat sheet (reference table).
+ * Section 4 — dialog handling cheat sheet (reference table).
  * Purely static reference content (rich inline <code> markup per cell),
  * so it's kept as plain JSX here rather than a data file — no
  * interactivity, so this stays a Server Component.
@@ -7,7 +7,7 @@
 export function CheatSheetSection() {
   return (
     <section className="section">
-      <h2>8. Dialog Handling Cheat Sheet</h2>
+      <h2>4. Dialog Handling Cheat Sheet</h2>
       <table>
         <thead>
           <tr>

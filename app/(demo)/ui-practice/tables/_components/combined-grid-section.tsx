@@ -193,6 +193,7 @@ export function CombinedGridSection() {
         onNext={() => setPage((p) => p + 1)}
         onSelectPage={setPage}
         testIdPrefix="grid"
+        navAriaLabel="Grid pagination"
       />
     </section>
   );

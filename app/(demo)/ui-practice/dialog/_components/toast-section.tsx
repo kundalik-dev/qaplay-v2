@@ -10,7 +10,7 @@ interface ToastItem {
 }
 
 /**
- * Section 7 — toast / snackbar auto-dismiss (Advanced).
+ * Section 3 — toast / snackbar auto-dismiss (Advanced).
  * Appears then disappears after ~3s — a classic flaky-test trap. The
  * original prototype's `#toast-stack` had no data-testid (only an id),
  * kept that way here; each toast keeps the source's shared,
@@ -31,13 +31,13 @@ export function ToastSection() {
   return (
     <section className="section">
       <h2>
-        7. Toast / Snackbar (auto-dismiss)
+        3. Toast / Snackbar (auto-dismiss)
         <span className="badge badge-orange">Advanced</span>
       </h2>
-      <p className="hint">
+      <p className="hint pt-2">
         Appears then disappears after ~3s — a classic flaky-test trap.
       </p>
-      <div className="btn-row">
+      <div className="btn-row pt-1 pb-1">
         <button
           type="button"
           className="secondary"

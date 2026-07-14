@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { TestingTips } from "../../_components/testing-tips";
 
 /**
- * Section 4 — `beforeunload` leave-page warning (Advanced).
+ * Section 2 — `beforeunload` leave-page warning (Advanced).
  * A ref mirrors the dirty flag so the native `beforeunload` listener
  * (registered once) always reads the latest value without re-subscribing.
  */
@@ -38,7 +38,7 @@ export function BeforeUnloadSection() {
   return (
     <section className="section">
       <h2>
-        4. <code>beforeunload</code> — leave-page warning
+        2. <code>beforeunload</code> — leave-page warning
         <span className="badge badge-orange">Advanced</span>
       </h2>
 

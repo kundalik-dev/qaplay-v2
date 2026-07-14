@@ -1,11 +1,7 @@
 import "./dialog.css";
 
 import { NativeAlertSection } from "./native-alert-section";
-import { NativeConfirmSection } from "./native-confirm-section";
-import { NativePromptSection } from "./native-prompt-section";
 import { BeforeUnloadSection } from "./before-unload-section";
-import { HtmlDialogSection } from "./html-dialog-section";
-import { CustomModalSection } from "./custom-modal-section";
 import { ToastSection } from "./toast-section";
 import { CheatSheetSection } from "./cheat-sheet-section";
 
@@ -15,9 +11,10 @@ import { CheatSheetSection } from "./cheat-sheet-section";
  * ./learn/page.tsx, driven by the shared UiPracticeTopBar in
  * app/(demo)/ui-practice/_components/ui-practice-topbar.tsx).
  *
- * Stays a Server Component - it only composes the eight section
+ * Stays a Server Component - it only composes the four section
  * components (each independently opts into "use client" only where it
- * actually needs state/browser APIs).
+ * actually needs state/browser APIs). NativeAlertSection merges the
+ * alert()/confirm()/prompt() native dialogs into one card.
  *
  * The "Hard Scenarios" link points at /ui-practice/dialog/hard-scenarios,
  * which isn't built yet - it will render the scoped ui-practice not-found
@@ -34,11 +31,7 @@ export function DialogPractice() {
         <h1 className="pb-2">Alerts / Dialogs — Playwright Practice</h1>
 
         <NativeAlertSection />
-        <NativeConfirmSection />
-        <NativePromptSection />
         <BeforeUnloadSection />
-        <HtmlDialogSection />
-        <CustomModalSection />
         <ToastSection />
         <CheatSheetSection />
       </div>

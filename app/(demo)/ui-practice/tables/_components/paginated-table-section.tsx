@@ -64,6 +64,7 @@ export function PaginatedTableSection() {
         onNext={() => setPage((p) => p + 1)}
         onSelectPage={setPage}
         testIdPrefix="pag"
+        navAriaLabel="Table pagination"
       />
     </section>
   );
