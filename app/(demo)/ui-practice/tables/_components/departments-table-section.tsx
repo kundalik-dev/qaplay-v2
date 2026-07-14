@@ -145,12 +145,7 @@ export function DepartmentsTableSection() {
       <h2>
         Departments <span className="badge badge-red">All-in-one</span>
       </h2>
-      <p className="hint">
-        Merges everything below into one table for the employee data: click a
-        column header to sort (<code>name</code>, <code>dept</code>,{" "}
-        <code>salary</code>, <code>joined</code>), search by name, filter by
-        department, page through results, and Edit/Delete a row inline.
-      </p>
+
       <div className="controls">
         <div className="ctrl-field">
           <label htmlFor="departments-search">Search by name</label>
@@ -268,9 +263,7 @@ export function DepartmentsTableSection() {
                       onChange={updateDraft("salary")}
                     />
                   </td>
-                  <td data-testid={`departments-joined-${e.id}`}>
-                    {e.joined}
-                  </td>
+                  <td data-testid={`departments-joined-${e.id}`}>{e.joined}</td>
                   <td>
                     <StatusBadge status={e.status} />
                   </td>
@@ -304,9 +297,7 @@ export function DepartmentsTableSection() {
                   <td data-testid={`departments-salary-${e.id}`}>
                     {formatSalary(e.salary)}
                   </td>
-                  <td data-testid={`departments-joined-${e.id}`}>
-                    {e.joined}
-                  </td>
+                  <td data-testid={`departments-joined-${e.id}`}>{e.joined}</td>
                   <td>
                     <StatusBadge status={e.status} />
                   </td>

@@ -3,7 +3,10 @@
 import { useMemo, useState } from "react";
 import type { ChangeEvent } from "react";
 
-import { products as allProducts, type Product } from "@/data/ui-practice-data/tables-data";
+import {
+  products as allProducts,
+  type Product,
+} from "@/data/ui-practice-data/tables-data";
 import { PaginationControls } from "./pagination-controls";
 import {
   ariaSortFor,
@@ -152,15 +155,9 @@ export function ShoppingProductsTableSection() {
       data-section="shopping-products-table"
     >
       <h2>
-        Shopping Products{" "}
-        <span className="badge badge-red">All-in-one</span>
+        Shopping Products <span className="badge badge-red">All-in-one</span>
       </h2>
-      <p className="hint">
-        Merges everything below into one table for the product data: click a
-        column header to sort (<code>product</code>, <code>category</code>,{" "}
-        <code>price</code>, <code>rating</code>), search by name, filter by
-        category, page through results, and Edit/Delete a row inline.
-      </p>
+
       <div className="controls">
         <div className="ctrl-field">
           <label htmlFor="products-search">Search by name</label>
@@ -213,7 +210,10 @@ export function ShoppingProductsTableSection() {
       <div className="result-info" data-testid="products-result-count">
         {`Showing ${filteredSorted.length} of ${rows.length} products`}
       </div>
-      <table data-testid="products-table" aria-label="Shopping products — all-in-one">
+      <table
+        data-testid="products-table"
+        aria-label="Shopping products — all-in-one"
+      >
         <thead>
           <tr>
             {COLUMNS.map((c) => (

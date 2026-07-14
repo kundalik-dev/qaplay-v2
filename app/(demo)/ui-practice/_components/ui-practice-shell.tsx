@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import { UiPracticeSidebar } from "./ui-practice-sidebar";
 import { UiPracticeTopBar } from "./ui-practice-topbar";
 import styles from "./ui-practice.module.css";
+import { cn } from "@/lib/utils";
 
 interface UiPracticeShellProps {
   children: ReactNode;
@@ -35,7 +36,7 @@ export function UiPracticeShell({ children }: UiPracticeShellProps) {
         onToggle={() => setIsCollapsed((prev) => !prev)}
       />
 
-      <div className={styles.content} data-testid="ui-practice-content">
+      <div className={cn(styles.content)} data-testid="ui-practice-content">
         <UiPracticeTopBar />
 
         <main
