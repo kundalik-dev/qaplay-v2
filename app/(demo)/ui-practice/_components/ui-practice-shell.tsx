@@ -12,7 +12,7 @@ interface UiPracticeShellProps {
 }
 
 /**
- * UiPracticeShell — client component that owns the sidebar collapse state.
+ * UiPracticeShell - client component that owns the sidebar collapse state.
  *
  * Keeping state here (rather than in layout.tsx) lets layout.tsx stay a
  * Server Component while only this thin wrapper is a Client Component.

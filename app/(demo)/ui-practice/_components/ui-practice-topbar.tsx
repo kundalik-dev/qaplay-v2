@@ -30,15 +30,15 @@ const TABS: TabDef[] = [
  *
  * - Left: "ui-practice / {section label}" breadcrumb, derived from the
  *   current pathname + data/ui-practice-nav-data.ts (single source of
- *   truth for section labels — same file the sidebar reads from).
- * - Middle: Practice / Test Cases / Learn — real routes
+ *   truth for section labels - same file the sidebar reads from).
+ * - Middle: Practice / Test Cases / Learn - real routes
  *   (/ui-practice/[section], [section]/test-cases, [section]/learn),
  *   not client-side tab state. Active tab is derived from the pathname,
  *   so this bar needs no shared state with the page it sits above.
  * - Right: the same NavThemeToggle used in the dashboard top nav.
  *
  * Sections that haven't built their test-cases/learn sub-routes yet
- * (e.g. tables) still get working links here — they fall through to
+ * (e.g. tables) still get working links here - they fall through to
  * the existing app/(demo)/ui-practice/[...rest]/page.tsx catch-all
  * (scoped not-found, sidebar still visible) until those routes exist.
  */

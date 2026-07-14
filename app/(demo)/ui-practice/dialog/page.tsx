@@ -2,7 +2,7 @@ import { createPageMetadata } from "@/data/meta-data/create-page-metadata";
 
 import { DialogPractice } from "./_components/dialog-practice";
 
-/** Static, framework-content-only page — safe to cache for a day. */
+/** Static, framework-content-only page - safe to cache for a day. */
 export const revalidate = 86400;
 
 export const metadata = createPageMetadata({

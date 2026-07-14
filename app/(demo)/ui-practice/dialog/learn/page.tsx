@@ -1,11 +1,11 @@
 import { createPageMetadata } from "@/data/meta-data/create-page-metadata";
 
 import { DialogLearnTab } from "../_components/dialog-learn-tab";
-import { alertsDialogsLearnCode } from "@/data/practice-data/alerts-dialogs/learn";
+import { dialogsLearnCode } from "@/data/ui-practice-data/dialogs";
 import { highlightLearnSnippet } from "@/lib/highlight";
 
 /**
- * Learn content (code snippets, method summary, FAQ) is static — the
+ * Learn content (code snippets, method summary, FAQ) is static - the
  * expensive part is server-side Shiki syntax highlighting below, so this
  * route is safe to cache for a day rather than re-highlighting on every
  * request.
@@ -22,13 +22,13 @@ export const metadata = createPageMetadata({
 export default async function DialogLearnPage() {
   const [openVerify, closeButton, confirm, ariaLabel, backdrop, escape, scoped] =
     await Promise.all([
-      highlightLearnSnippet(alertsDialogsLearnCode.openVerify),
-      highlightLearnSnippet(alertsDialogsLearnCode.closeButton),
-      highlightLearnSnippet(alertsDialogsLearnCode.confirm),
-      highlightLearnSnippet(alertsDialogsLearnCode.ariaLabel),
-      highlightLearnSnippet(alertsDialogsLearnCode.backdrop),
-      highlightLearnSnippet(alertsDialogsLearnCode.escape),
-      highlightLearnSnippet(alertsDialogsLearnCode.scoped),
+      highlightLearnSnippet(dialogsLearnCode.openVerify),
+      highlightLearnSnippet(dialogsLearnCode.closeButton),
+      highlightLearnSnippet(dialogsLearnCode.confirm),
+      highlightLearnSnippet(dialogsLearnCode.ariaLabel),
+      highlightLearnSnippet(dialogsLearnCode.backdrop),
+      highlightLearnSnippet(dialogsLearnCode.escape),
+      highlightLearnSnippet(dialogsLearnCode.scoped),
     ]);
 
   return (

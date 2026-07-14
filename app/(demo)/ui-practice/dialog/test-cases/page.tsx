@@ -2,7 +2,7 @@ import { createPageMetadata } from "@/data/meta-data/create-page-metadata";
 
 import { DialogTestCasesTab } from "../_components/dialog-test-cases-tab";
 
-/** Test case data is static — safe to cache for a day. */
+/** Test case data is static - safe to cache for a day. */
 export const revalidate = 86400;
 
 export const metadata = createPageMetadata({

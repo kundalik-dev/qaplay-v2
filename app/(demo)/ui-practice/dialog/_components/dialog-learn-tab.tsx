@@ -6,11 +6,11 @@ import {
   LearnToc,
 } from "@/components/practice";
 import {
-  alertsDialogsLearnDesc,
-  alertsDialogsMethodRows,
-  alertsDialogsFaq,
-  alertsDialogsTocItems,
-} from "@/data/practice-data/alerts-dialogs/learn";
+  dialogsLearnDesc,
+  dialogsMethodRows,
+  dialogsFaq,
+  dialogsTocItems,
+} from "@/data/ui-practice-data/dialogs";
 import type { HighlightedLearnCodeSnippet } from "@/data/practice-data/types";
 
 interface DialogLearnTabProps {
@@ -26,13 +26,13 @@ interface DialogLearnTabProps {
 }
 
 /**
- * Learn panel for /ui-practice/dialog. Mirrors the structure of
+ * Learn content for /ui-practice/dialog/learn. Mirrors the structure of
  * app/practice/buttons/_components/learn-tab.tsx (DocSection +
  * LearnCodeBlock + MethodSummaryTable + FaqBlock + LearnToc), sourced
- * from data/practice-data/alerts-dialogs/learn.ts. Stays a sync Server
- * Component — all syntax-highlighting happens in page.tsx and is passed
- * in as pre-highlighted `snippets` props (see CLAUDE.md server/client
- * boundary rule).
+ * from data/ui-practice-data/dialogs/learn.ts. Stays a sync Server
+ * Component - all syntax-highlighting happens in learn/page.tsx and is
+ * passed in as pre-highlighted `snippets` props (see CLAUDE.md
+ * server/client boundary rule).
  */
 export function DialogLearnTab({ snippets }: DialogLearnTabProps) {
   const {
@@ -53,7 +53,7 @@ export function DialogLearnTab({ snippets }: DialogLearnTabProps) {
           {/* Overview */}
           <DocSection id="learn-overview" heading="Overview">
             <p className="text-[13px] leading-[1.6] text-muted-foreground">
-              {alertsDialogsLearnDesc.overview}
+              {dialogsLearnDesc.overview}
             </p>
           </DocSection>
 
@@ -61,7 +61,7 @@ export function DialogLearnTab({ snippets }: DialogLearnTabProps) {
           <DocSection
             id="learn-open-verify"
             heading="1 · Open & Verify"
-            desc={alertsDialogsLearnDesc.openVerify}
+            desc={dialogsLearnDesc.openVerify}
           >
             <LearnCodeBlock snippets={openVerify} />
           </DocSection>
@@ -70,7 +70,7 @@ export function DialogLearnTab({ snippets }: DialogLearnTabProps) {
           <DocSection
             id="learn-close-button"
             heading="2 · Close via Button"
-            desc={alertsDialogsLearnDesc.closeButton}
+            desc={dialogsLearnDesc.closeButton}
           >
             <LearnCodeBlock snippets={closeButton} />
           </DocSection>
@@ -79,7 +79,7 @@ export function DialogLearnTab({ snippets }: DialogLearnTabProps) {
           <DocSection
             id="learn-confirm"
             heading="3 · Confirm Action"
-            desc={alertsDialogsLearnDesc.confirm}
+            desc={dialogsLearnDesc.confirm}
           >
             <LearnCodeBlock snippets={confirm} />
           </DocSection>
@@ -88,7 +88,7 @@ export function DialogLearnTab({ snippets }: DialogLearnTabProps) {
           <DocSection
             id="learn-aria-label"
             heading="4 · Aria-Label Targeting"
-            desc={alertsDialogsLearnDesc.ariaLabel}
+            desc={dialogsLearnDesc.ariaLabel}
           >
             <LearnCodeBlock snippets={ariaLabel} />
           </DocSection>
@@ -97,7 +97,7 @@ export function DialogLearnTab({ snippets }: DialogLearnTabProps) {
           <DocSection
             id="learn-backdrop"
             heading="5 · Backdrop Click"
-            desc={alertsDialogsLearnDesc.backdrop}
+            desc={dialogsLearnDesc.backdrop}
           >
             <LearnCodeBlock snippets={backdrop} />
           </DocSection>
@@ -106,7 +106,7 @@ export function DialogLearnTab({ snippets }: DialogLearnTabProps) {
           <DocSection
             id="learn-escape"
             heading="6 · Escape Key"
-            desc={alertsDialogsLearnDesc.escape}
+            desc={dialogsLearnDesc.escape}
           >
             <LearnCodeBlock snippets={escape} />
           </DocSection>
@@ -115,7 +115,7 @@ export function DialogLearnTab({ snippets }: DialogLearnTabProps) {
           <DocSection
             id="learn-scoped"
             heading="7 · Scoped Locators"
-            desc={alertsDialogsLearnDesc.scoped}
+            desc={dialogsLearnDesc.scoped}
           >
             <LearnCodeBlock snippets={scoped} />
           </DocSection>
@@ -125,17 +125,17 @@ export function DialogLearnTab({ snippets }: DialogLearnTabProps) {
             <p className="mb-4 text-[13px] leading-[1.6] text-muted-foreground">
               Quick reference across all three frameworks.
             </p>
-            <MethodSummaryTable rows={alertsDialogsMethodRows} />
+            <MethodSummaryTable rows={dialogsMethodRows} />
           </DocSection>
 
           {/* FAQ */}
           <DocSection id="learn-faq" heading="FAQ">
-            <FaqBlock items={alertsDialogsFaq} />
+            <FaqBlock items={dialogsFaq} />
           </DocSection>
         </main>
 
         {/* ── Right TOC ─────────────────────────────────────────────────── */}
-        <LearnToc items={alertsDialogsTocItems} />
+        <LearnToc items={dialogsTocItems} />
       </div>
     </div>
   );

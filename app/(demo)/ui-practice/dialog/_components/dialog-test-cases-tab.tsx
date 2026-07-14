@@ -1,17 +1,15 @@
 import { TestCasesTable } from "@/components/practice";
-import { alertsDialogsTestCases } from "@/data/practice-data/alerts-dialogs/test-cases";
+import { dialogsTestCases } from "@/data/ui-practice-data/dialogs";
 
 /**
- * Test Cases panel for /ui-practice/dialog. Reuses the same
- * TestCasesTable shared component and TestCase data shape as
- * /practice/[element] pages — sourced from
- * data/practice-data/alerts-dialogs/test-cases.ts — just rendered
- * under this page's own top nav bar instead of MainTabs.
+ * Test Cases content for /ui-practice/dialog/test-cases. Reuses the
+ * same shared TestCasesTable component as /practice/[element] pages -
+ * sourced from data/ui-practice-data/dialogs/test-cases.ts.
  */
 export function DialogTestCasesTab() {
   return (
     <div className="mx-auto w-full max-w-[820px] px-0 py-5 pb-16">
-      <TestCasesTable testCases={alertsDialogsTestCases} />
+      <TestCasesTable testCases={dialogsTestCases} />
     </div>
   );
 }

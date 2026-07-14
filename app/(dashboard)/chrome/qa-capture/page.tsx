@@ -11,7 +11,6 @@ import {
   qaCaptureExportFormats,
   qaCaptureFaqItems,
   qaCaptureFeatures,
-  qaCaptureHeroBadges,
   qaCaptureHeroStats,
   qaCaptureSessionHistoryHighlights,
   qaCaptureSessionHistoryPreview,
@@ -23,280 +22,312 @@ import {
   qaCaptureFaqJsonLd,
   qaCaptureWebPageJsonLd,
 } from "@/data/meta-data/chrome/qa-capture-structured-jsonld-data";
-
 import {
-  BadgeRow,
-  CtaLink,
-  ExportFormatCard,
-  FeatureCard,
-  FooterLinks,
-  SectionHeading,
-  SessionPreviewCard,
-  StatGrid,
-  UseCaseCard,
-} from "./components";
-import { chromeIconMap } from "../_shared/chrome-page-helpers";
+  ArrowRight,
+  Camera,
+  CheckCircle,
+  ChevronRight,
+  Download,
+  ExternalLink,
+  Globe,
+  History,
+  Layers,
+  Tag,
+  Zap,
+} from "lucide-react";
+import Link from "next/link";
+import styles from "./qa-capture.module.css";
 
 export const metadata = qaCapturePageMetadata;
 
-export default function QACapturePage() {
-  const ArrowRightIcon = chromeIconMap["arrow-right"];
-  const CameraIcon = chromeIconMap.camera;
-  const CheckCircleIcon = chromeIconMap["check-circle"];
-  const DownloadIcon = chromeIconMap.download;
-  const ExternalLinkIcon = chromeIconMap["external-link"];
-  const GlobeIcon = chromeIconMap.globe;
-  const TagIcon = chromeIconMap.tag;
+const FORMAT_ICONS: Record<string, string> = {
+  PDF: "📄",
+  Markdown: "📝",
+  HTML: "🌐",
+};
 
+const FORMAT_GRADIENTS: Record<string, string> = {
+  PDF: styles.cardGradientRed,
+  Markdown: styles.cardGradientViolet,
+  HTML: styles.cardGradientBlue,
+};
+
+const FEATURE_ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
+  camera: Camera,
+  tag: Tag,
+  download: Download,
+  history: History,
+  zap: Zap,
+  layers: Layers,
+};
+
+export default function QACapturePage() {
   return (
     <>
       <JsonLd data={qaCaptureWebPageJsonLd} />
       <JsonLd data={qaCaptureBreadcrumbJsonLd} />
       <JsonLd data={qaCaptureFaqJsonLd} />
 
-      <div className="capture-page min-h-screen pb-12">
-        {/* hero section */}
-        <section className="capture-grid relative border-b border-border/80">
-          <div className="capture-shell relative z-10 py-20 sm:py-24 lg:py-32">
-            <div className="mx-auto flex max-w-3xl flex-col items-center space-y-8 text-center">
-              <BadgeRow badges={qaCaptureHeroBadges} />
-
-              <div className="space-y-6">
-                <p className="capture-kicker">Capture · Label · Export</p>
-                <h1 className="font-heading text-5xl font-bold leading-[var(--home-type-hero-line)] tracking-[var(--home-type-hero-tracking)] text-balance text-foreground md:text-6xl">
-                  QA Capture turns browser testing into clean, export-ready proof.
-                </h1>
-                <p className="capture-copy mx-auto max-w-2xl text-pretty text-lg text-muted-foreground">
-                  QA Capture stores every screenshot locally while you test,
-                  lets you name each step as you capture it, and exports the
-                  full session as HTML, Markdown, or PDF. It is free to use
-                  and built for bug reports, regression evidence, and
-                  repeatable QA documentation.
-                </p>
-              </div>
-
-              {/* Buttons */}
-              <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap">
-                <CtaLink
-                  href={qaCaptureChromeWebStoreUrl}
-                  iconStart={<GlobeIcon className="h-5 w-5" />}
-                  iconEnd={<ExternalLinkIcon className="h-4 w-4 opacity-70" />}
-                >
-                  Add to Chrome - Free
-                </CtaLink>
-                <CtaLink
-                  href="#how-it-works"
-                  variant="secondary"
-                  iconEnd={<ArrowRightIcon className="h-4 w-4" />}
-                >
-                  See how it works
-                </CtaLink>
-              </div>
-
-              <div className="mt-8 pt-8">
-                <StatGrid stats={qaCaptureHeroStats} />
-              </div>
-            </div>
+      <div className={styles.page}>
+        {/* ── HERO ───────────────────────────────────────────── */}
+        <section className={styles.hero}>
+          <div className={styles.heroBg} aria-hidden="true">
+            <div className={styles.heroGlow1} />
+            <div className={styles.heroGlow2} />
+            <div className={styles.heroGrid} />
           </div>
-        </section>
 
-        {/* Workflow Preview (How it works) */}
-        <section
-          id="how-it-works"
-          aria-labelledby="how-it-works-title"
-          className="py-20 sm:py-24"
-        >
-          <div className="capture-shell">
-            <SectionHeading
-              id="how-it-works-title"
-              eyebrow="Workflow"
-              title="Capture, Label & Export"
-              description="A seamless workflow to document your testing sessions."
-              align="center"
-              className="mb-12 sm:mb-16"
-            />
-            
-            <div className="grid gap-8 md:grid-cols-3">
-               {[
-                    {
-                      step: "01",
-                      Icon: CameraIcon,
-                      title: "Capture the exact state",
-                      description:
-                        "Freeze the moment a bug appears, a form validates, or a flow reaches a key checkpoint.",
-                    },
-                    {
-                      step: "02",
-                      Icon: TagIcon,
-                      title: "Name every screenshot",
-                      description:
-                        "Add step labels that explain what the developer or reviewer is looking at without extra back-and-forth.",
-                    },
-                    {
-                      step: "03",
-                      Icon: DownloadIcon,
-                      title: "Export once the session is done",
-                      description:
-                        "Export the finished session as HTML, Markdown, or PDF for tickets, docs, sign-off, or handoff.",
-                    },
-                  ].map(({ step, Icon, title, description }) => (
-                    <div
-                      key={step}
-                      className="flex flex-col items-center rounded-[var(--home-card-radius-lg)] border border-border bg-card p-8 text-center shadow-[var(--home-card-shadow)]"
-                    >
-                        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                          <Icon className="h-8 w-8" />
-                        </div>
-                        <div className="mb-3 text-sm font-bold uppercase tracking-wider text-muted-foreground">
-                          Step {step}
-                        </div>
-                        <h3 className="mb-3 font-heading text-xl font-semibold tracking-[-0.03em] text-foreground">
-                          {title}
-                        </h3>
-                        <p className="text-base leading-7 text-muted-foreground">
-                          {description}
-                        </p>
-                    </div>
-               ))}
-            </div>
+          <div className={styles.shell}>
+            <div className={styles.heroInner}>
+              {/* Pill badge */}
+              <div className={styles.heroPill}>
+                <span className={styles.heroPillDot} />
+                Free Chrome Extension &middot; No account needed
+              </div>
 
-            <div className="mx-auto mt-12 max-w-3xl rounded-[22px] border border-primary/20 bg-primary/5 px-8 py-6 text-center">
-              <p className="text-base leading-7 text-muted-foreground">
-                Everything stays <span className="font-semibold text-foreground">local</span>, remains <span className="font-semibold text-foreground">free to use</span>, and works best for <span className="font-semibold text-foreground">bug reports</span>, <span className="font-semibold text-foreground">regression evidence</span>, and <span className="font-semibold text-foreground">reusable walkthroughs</span> that should not be recreated from scratch every sprint.
+              <h1 className={styles.heroTitle}>
+                Turn browser testing into{" "}
+                <span className={styles.heroAccent}>clean proof</span>
+              </h1>
+
+              <p className={styles.heroSub}>
+                QA Capture stores every screenshot locally, lets you name each
+                step, and exports your full session as PDF, Markdown, or HTML —
+                instantly, for free.
               </p>
+
+              <div className={styles.heroCtas}>
+                <a
+                  href={qaCaptureChromeWebStoreUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={styles.btnPrimary}
+                  id="qa-capture-install-cta"
+                >
+                  <Globe className={styles.btnIcon} />
+                  Add to Chrome — Free
+                  <ExternalLink className={styles.btnIconSm} />
+                </a>
+                <a href="#how-it-works" className={styles.btnGhost}>
+                  See how it works
+                  <ArrowRight className={styles.btnIcon} />
+                </a>
+              </div>
+
+              {/* Stats strip */}
+              <div className={styles.statsRow}>
+                {qaCaptureHeroStats.map(({ value, label }) => (
+                  <div key={label} className={styles.statItem}>
+                    <span className={styles.statValue}>{value}</span>
+                    <span className={styles.statLabel}>{label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Use cases */}
-        <section
-          aria-labelledby="qa-capture-use-cases-title"
-          className="border-y border-border/70 bg-muted/20 py-16 sm:py-20"
-        >
-          <div className="capture-shell">
-            <SectionHeading
-              id="qa-capture-use-cases-title"
-              eyebrow="Real QA workflows"
-              title="Where QA Capture fits into day-to-day testing work."
-              description="The extension is especially useful when evidence needs to be clear, sequential, and easy for someone else to understand fast."
-              align="center"
-              className="mb-10 sm:mb-12"
-            />
+        {/* ── HOW IT WORKS ───────────────────────────────────── */}
+        <section id="how-it-works" className={styles.section}>
+          <div className={styles.shell}>
+            <div className={styles.sectionLabel}>How it works</div>
+            <h2 className={styles.sectionTitle}>
+              Three steps. Zero friction.
+            </h2>
+            <p className={styles.sectionSub}>
+              Capture → Label → Export. That&apos;s the entire workflow.
+            </p>
 
-            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-              {qaCaptureUseCases.map((useCase) => (
-                <UseCaseCard key={useCase.title} {...useCase} />
+            <div className={styles.stepsGrid}>
+              {[
+                {
+                  num: "01",
+                  icon: Camera,
+                  title: "Capture the exact state",
+                  desc: "One click freezes the moment — bug, form state, API response, or milestone.",
+                  color: styles.stepBlue,
+                },
+                {
+                  num: "02",
+                  icon: Tag,
+                  title: "Name every screenshot",
+                  desc: "Add descriptive labels so anyone can follow the flow without re-running the test.",
+                  color: styles.stepViolet,
+                },
+                {
+                  num: "03",
+                  icon: Download,
+                  title: "Export & share",
+                  desc: "Export as PDF for tickets, Markdown for docs, or HTML for offline sharing.",
+                  color: styles.stepEmerald,
+                },
+              ].map(({ num, icon: Icon, title, desc, color }) => (
+                <div key={num} className={`${styles.stepCard} ${color}`}>
+                  <div className={styles.stepNum}>{num}</div>
+                  <div className={styles.stepIconWrap}>
+                    <Icon className={styles.stepIcon} />
+                  </div>
+                  <h3 className={styles.stepTitle}>{title}</h3>
+                  <p className={styles.stepDesc}>{desc}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Built for qa engineers */}
-        <section
-          aria-labelledby="qa-capture-features-title"
-          className="py-20 sm:py-24"
-        >
-          <div className="capture-shell">
-            <SectionHeading
-              id="qa-capture-features-title"
-              eyebrow="Built for QA engineers"
-              title="Features that make screenshots usable, not just collectable."
-              description="The page, the export, and the session history are all designed around how QA teams explain issues and share evidence."
-              align="center"
-              className="mb-10 sm:mb-12"
-            />
+        {/* ── FEATURES ────────────────────────────────────────── */}
+        <section className={`${styles.section} ${styles.sectionAlt}`}>
+          <div className={styles.shell}>
+            <div className={styles.sectionLabel}>Built for QA engineers</div>
+            <h2 className={styles.sectionTitle}>
+              Features that make screenshots work harder
+            </h2>
 
-            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {qaCaptureFeatures.map((feature) => (
-                <FeatureCard key={feature.title} {...feature} />
+            <div className={styles.featuresGrid}>
+              {qaCaptureFeatures.map((f) => {
+                const Icon = FEATURE_ICON_MAP[f.icon] ?? Camera;
+                return (
+                  <article key={f.title} className={styles.featureCard}>
+                    <div className={`${styles.featureIconWrap} ${styles[`tone_${f.tone}`]}`}>
+                      <Icon className={styles.featureIcon} />
+                    </div>
+                    <h3 className={styles.featureTitle}>{f.title}</h3>
+                    <p className={styles.featureDesc}>{f.description}</p>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ── USE CASES ───────────────────────────────────────── */}
+        <section className={styles.section}>
+          <div className={styles.shell}>
+            <div className={styles.sectionLabel}>Real QA workflows</div>
+            <h2 className={styles.sectionTitle}>
+              Where QA Capture fits in your day
+            </h2>
+
+            <div className={styles.useCasesGrid}>
+              {qaCaptureUseCases.map((uc) => (
+                <article key={uc.title} className={styles.useCaseCard}>
+                  <ChevronRight className={styles.useCaseArrow} />
+                  <h3 className={styles.useCaseTitle}>{uc.title}</h3>
+                  <p className={styles.useCaseDesc}>{uc.description}</p>
+                </article>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Export Options */}
-        <section
-          aria-labelledby="qa-capture-export-title"
-          className="border-y border-border/70 bg-muted/20 py-20 sm:py-24"
-        >
-          <div className="capture-shell">
-            <SectionHeading
-              id="qa-capture-export-title"
-              eyebrow="Export options"
-              title="One session, three output formats, zero duplicate work."
-              description="Use the same capture session wherever it needs to go next: bug tickets, internal docs, team archives, or stakeholder review."
-              align="center"
-              className="mb-10 sm:mb-12"
-            />
+        {/* ── EXPORT FORMATS ──────────────────────────────────── */}
+        <section className={`${styles.section} ${styles.sectionAlt}`}>
+          <div className={styles.shell}>
+            <div className={styles.sectionLabel}>Export options</div>
+            <h2 className={styles.sectionTitle}>
+              One session → three formats
+            </h2>
+            <p className={styles.sectionSub}>
+              Same capture. Whatever format your workflow needs.
+            </p>
 
-            <div className="grid gap-5 lg:grid-cols-3">
-              {qaCaptureExportFormats.map((format) => (
-                <ExportFormatCard key={format.label} {...format} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Session history */}
-        <section
-          aria-labelledby="qa-capture-history-title"
-          className="py-20 sm:py-24"
-        >
-          <div className="capture-shell">
-            <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
-              <div className="capture-card p-6 sm:p-8">
-                <SectionHeading
-                  id="qa-capture-history-title"
-                  eyebrow="Session history"
-                  title="Your captures stay reusable long after the first export."
-                  description="QA Capture stores sessions locally so you can reopen them, refine them, and export again when a bug comes back or a teammate needs context."
-                  className="max-w-none"
-                />
-
-                <ul className="mt-8 space-y-4">
-                  {qaCaptureSessionHistoryHighlights.map((item) => (
-                    <li key={item} className="flex items-start gap-3">
-                      <CheckCircleIcon className="mt-1 h-4 w-4 shrink-0 text-primary" />
-                      <span className="text-base leading-7 text-muted-foreground">
+            <div className={styles.formatsGrid}>
+              {qaCaptureExportFormats.map((fmt) => (
+                <article
+                  key={fmt.label}
+                  className={`${styles.formatCard} ${FORMAT_GRADIENTS[fmt.label] ?? ""}`}
+                >
+                  <div className={styles.formatEmoji}>{FORMAT_ICONS[fmt.label] ?? "📁"}</div>
+                  <div className={styles.formatLabel}>{fmt.label}</div>
+                  <p className={styles.formatDesc}>{fmt.description}</p>
+                  <ul className={styles.formatItems}>
+                    {fmt.items.map((item) => (
+                      <li key={item} className={styles.formatItem}>
+                        <CheckCircle className={styles.formatCheck} />
                         {item}
-                      </span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── SESSION HISTORY ─────────────────────────────────── */}
+        <section className={styles.section}>
+          <div className={styles.shell}>
+            <div className={styles.historyLayout}>
+              <div className={styles.historyLeft}>
+                <div className={styles.sectionLabel}>Session history</div>
+                <h2 className={styles.sectionTitle}>
+                  Every capture stays reusable
+                </h2>
+                <p className={styles.sectionSub}>
+                  Sessions are stored locally and can be reopened, refined, and
+                  re-exported whenever you need them.
+                </p>
+                <ul className={styles.historyList}>
+                  {qaCaptureSessionHistoryHighlights.map((item) => (
+                    <li key={item} className={styles.historyItem}>
+                      <CheckCircle className={styles.historyCheck} />
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <SessionPreviewCard sessions={qaCaptureSessionHistoryPreview} />
+              <div className={styles.historyRight}>
+                <div className={styles.previewCard}>
+                  <div className={styles.previewHeader}>
+                    <span className={styles.previewDot} style={{ background: "#ff5f56" }} />
+                    <span className={styles.previewDot} style={{ background: "#ffbd2e" }} />
+                    <span className={styles.previewDot} style={{ background: "#27c93f" }} />
+                    <span className={styles.previewTitle}>Session History</span>
+                  </div>
+                  {qaCaptureSessionHistoryPreview.map((s, i) => (
+                    <div key={s.name} className={`${styles.previewRow} ${i === 0 ? styles.previewRowActive : ""}`}>
+                      <div className={styles.previewRowLeft}>
+                        <div className={styles.previewSessionIcon}>
+                          <Camera className="h-3.5 w-3.5" />
+                        </div>
+                        <div>
+                          <p className={styles.previewSessionName}>{s.name}</p>
+                          <p className={styles.previewSessionMeta}>{s.date} &middot; {s.count} screenshots</p>
+                        </div>
+                      </div>
+                      <span className={`${styles.previewBadge} ${styles[`badge_${s.tone}`]}`}>
+                        {s.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* FAQ */}
-        <section
-          aria-labelledby="qa-capture-faq-title"
-          className="py-20 sm:py-24"
-        >
-          <div className="capture-shell">
-            <SectionHeading
-              id="qa-capture-faq-title"
-              eyebrow="FAQ"
-              title="Common questions before you install QA Capture."
-              description="Short answers on pricing, storage, limits, and how the extension behaves on real websites."
-              align="center"
-              className="mb-10 sm:mb-12"
-            />
+        {/* ── FAQ ──────────────────────────────────────────────── */}
+        <section className={`${styles.section} ${styles.sectionAlt}`}>
+          <div className={styles.shell}>
+            <div className={styles.sectionLabel}>FAQ</div>
+            <h2 className={styles.sectionTitle}>Common questions</h2>
+            <p className={styles.sectionSub}>
+              Everything you need to know before you install.
+            </p>
 
-            <div className="mx-auto max-w-4xl">
-              <Accordion defaultValue={[]} className="space-y-3">
+            <div className={styles.faqWrap}>
+              <Accordion defaultValue={[]} className={styles.faqAccordion}>
                 {qaCaptureFaqItems.map(({ question, answer }) => (
                   <AccordionItem
                     key={question}
                     value={question}
-                    className="capture-card overflow-hidden px-5 data-[state=open]:border-primary/30"
+                    className={styles.faqItem}
                   >
-                    <AccordionTrigger className="py-5 text-left font-heading text-lg font-semibold tracking-[-0.03em] text-foreground hover:no-underline">
+                    <AccordionTrigger className={styles.faqTrigger}>
                       {question}
                     </AccordionTrigger>
-                    <AccordionContent className="pb-5 text-base leading-7 text-muted-foreground">
+                    <AccordionContent className={styles.faqAnswer}>
                       {answer}
                     </AccordionContent>
                   </AccordionItem>
@@ -306,56 +337,54 @@ export default function QACapturePage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section
-          aria-labelledby="qa-capture-cta-title"
-          className="pt-4 pb-16 sm:pb-20"
-        >
-          <div className="capture-shell">
-            <div className="capture-card-strong px-6 py-8 text-center sm:px-10 sm:py-12">
-              <div className="mx-auto max-w-3xl">
-                <p className="capture-kicker">Start capturing today</p>
-                <h2
-                  id="qa-capture-cta-title"
-                  className="mt-4 font-heading text-[clamp(2rem,4vw,3.2rem)] leading-[0.98] font-bold tracking-[-0.05em] text-balance text-foreground"
+        {/* ── FINAL CTA ───────────────────────────────────────── */}
+        <section className={styles.ctaSection}>
+          <div className={styles.ctaBg} aria-hidden="true">
+            <div className={styles.ctaGlow} />
+          </div>
+          <div className={styles.shell}>
+            <div className={styles.ctaInner}>
+              <div className={styles.ctaLabel}>Start today</div>
+              <h2 className={styles.ctaTitle}>
+                Give every bug report a cleaner story
+              </h2>
+              <p className={styles.ctaSub}>
+                Install QA Capture, pin it in Chrome, and build reusable visual
+                documentation while you test — not after the context is gone.
+              </p>
+              <div className={styles.ctaButtons}>
+                <a
+                  href={qaCaptureChromeWebStoreUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={styles.btnPrimary}
+                  id="qa-capture-final-cta"
                 >
-                  Give every bug report and test walkthrough a cleaner story.
-                </h2>
-                <p className="capture-copy mx-auto mt-5 max-w-2xl text-pretty">
-                  Install QA Capture, pin it in Chrome, and start building
-                  reusable visual documentation while you test instead of after
-                  the context is already gone.
-                </p>
-
-                <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                  <CtaLink
-                    href={qaCaptureChromeWebStoreUrl}
-                    iconStart={<GlobeIcon className="h-5 w-5" />}
-                    iconEnd={
-                      <ExternalLinkIcon className="h-4 w-4 opacity-70" />
-                    }
-                  >
-                    Add to Chrome - It&apos;s Free
-                  </CtaLink>
-                  <CtaLink
-                    href="#qa-capture-use-cases-title"
-                    variant="secondary"
-                    iconEnd={<ArrowRightIcon className="h-4 w-4" />}
-                  >
-                    See real workflows
-                  </CtaLink>
-                </div>
+                  <Globe className={styles.btnIcon} />
+                  Add to Chrome — It&apos;s Free
+                  <ExternalLink className={styles.btnIconSm} />
+                </a>
+                <a href="#how-it-works" className={styles.btnGhost}>
+                  See how it works
+                  <ArrowRight className={styles.btnIcon} />
+                </a>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Footer nav */}
-        <div className="border-t border-border/80 px-4 py-6">
-          <div className="capture-shell">
-            <FooterLinks links={qaCaptureBackLinks} />
+        {/* ── FOOTER NAV ──────────────────────────────────────── */}
+        <footer className={styles.footer}>
+          <div className={styles.shell}>
+            <nav className={styles.footerNav} aria-label="Related pages">
+              {qaCaptureBackLinks.map(({ label, href }) => (
+                <Link key={href} href={href} className={styles.footerLink}>
+                  {label}
+                </Link>
+              ))}
+            </nav>
           </div>
-        </div>
+        </footer>
       </div>
     </>
   );
