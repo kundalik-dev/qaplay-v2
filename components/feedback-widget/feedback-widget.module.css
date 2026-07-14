@@ -1,0 +1,222 @@
+/* ── Floating trigger button ────────────────────────────────────────────── */
+
+.button {
+  position: fixed;
+  right: clamp(16px, 3vw, 28px);
+  /* Sits above the scroll-to-top button (bottom-right, ~52-56px tall) so the
+     two never overlap on pages where both can appear. */
+  bottom: clamp(86px, 10vw, 100px);
+  z-index: 45;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border));
+  border-radius: 999px;
+  color: var(--primary-foreground);
+  background:
+    radial-gradient(
+      circle at top,
+      color-mix(in srgb, var(--secondary) 20%, transparent),
+      transparent 62%
+    ),
+    linear-gradient(
+      135deg,
+      var(--primary),
+      color-mix(in srgb, var(--primary) 68%, var(--secondary))
+    );
+  box-shadow:
+    0 20px 42px color-mix(in srgb, var(--primary) 22%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    filter 180ms ease;
+}
+
+.button:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    0 24px 48px color-mix(in srgb, var(--primary) 28%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  filter: brightness(1.05);
+}
+
+.button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--primary) 32%, white);
+  outline-offset: 4px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 640px) {
+  .button {
+    width: 42px;
+    height: 42px;
+    right: 14px;
+    bottom: 78px;
+  }
+
+  .icon {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+
+  .button:hover,
+  .button:active {
+    transform: none;
+  }
+}
+
+/* ── Dialog content ──────────────────────────────────────────────────────── */
+
+.dialogContent {
+  width: 100%;
+  max-width: 26rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.messageLabelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.charCount {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+/* ── Type toggle (Feedback / Report an issue) ───────────────────────────── */
+
+.typeToggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.typeOption {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
+}
+
+.typeOption svg {
+  width: 13px;
+  height: 13px;
+}
+
+.typeOption:hover {
+  color: var(--foreground);
+  border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+}
+
+.typeOption:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.typeOptionActive {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+}
+
+/* ── Error banner ────────────────────────────────────────────────────────── */
+
+.errorBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--destructive) 30%, var(--border));
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--destructive) 8%, transparent);
+  color: var(--destructive);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.errorIcon {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  margin-top: 0.125rem;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ── Success state ───────────────────────────────────────────────────────── */
+
+.successState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0.5rem;
+  text-align: center;
+}
+
+.successIcon {
+  width: 32px;
+  height: 32px;
+  color: var(--success, var(--primary));
+  margin-bottom: 0.25rem;
+}
+
+.successTitle {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.successBody {
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  margin-bottom: 0.5rem;
+}

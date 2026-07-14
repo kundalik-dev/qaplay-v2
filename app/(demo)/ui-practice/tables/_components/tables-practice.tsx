@@ -30,10 +30,10 @@ export function TablesPractice() {
       <div className="container">
         <h1>Tables Practice</h1>
         <p className="intro">
-          Two all-in-one tables — shopping products and departments — each
-          with sortable columns, search &amp; filter, pagination, and inline
-          Edit/Delete, for practicing Playwright table locators and
-          real-world interaction patterns.
+          Two all-in-one tables — shopping products and departments — each with
+          sortable columns, search &amp; filter, pagination, and inline
+          Edit/Delete, for practicing Playwright table locators and real-world
+          interaction patterns.
         </p>
 
         <ShoppingProductsTableSection />

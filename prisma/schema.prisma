@@ -59,6 +59,11 @@ enum ContactStatus {
   REPLIED
 }
 
+enum FeedbackType {
+  FEEDBACK
+  ISSUE
+}
+
 // ─── better-auth required tables ────────────────────────────────────────────
 
 model User {
@@ -78,6 +83,7 @@ model User {
   telegramUser      TelegramUser?
   interviewProfile  UserInterviewProfile?
   interviewSessions InterviewPracticeSession[]
+  feedbacks         Feedback[]
 
   @@map("user")
 }
@@ -280,10 +286,23 @@ model ContactMessage {
 
 // ─── Feedback ────────────────────────────────────────────────────────────────
 
+// Submitted from the site-wide floating feedback button (app/layout.tsx).
+// Logged-in submissions are linked via userId and stamped with the user's
+// name/email at submission time; signed-out visitors are stored as a
+// "guest" entry — userId stays null and name defaults to "Guest User"
+// when they don't type one in.
 model Feedback {
-  id        String   @id @default(cuid())
-  name      String
-  email     String?
+  id        String       @id @default(cuid())
+  type      FeedbackType @default(FEEDBACK)
   message   String
-  createdAt DateTime @default(now())
+  name      String?
+  email     String?
+  pageUrl   String?
+  userId    String?
+  user      User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt DateTime     @default(now())
+
+  @@index([userId])
+  @@index([type])
+  @@index([createdAt])
 }

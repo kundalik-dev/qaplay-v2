@@ -62,7 +62,7 @@ export function PaginationControls({
           <button
             type="button"
             key={p}
-            className={`pag-btn${p === page ? " active" : ""}`}
+            className={`pag-btn${p === page ? "active" : ""}`}
             data-testid={`${testIdPrefix}-btn-${p}`}
             aria-current={p === page ? "page" : undefined}
             onClick={() => onSelectPage(p)}

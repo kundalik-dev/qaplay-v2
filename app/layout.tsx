@@ -11,6 +11,7 @@ import {
   ConditionalSiteChrome,
   ConditionalSiteFooter,
 } from "@/components/app-nav/conditional-site-chrome";
+import { FeedbackWidget } from "@/components/feedback-widget";
 import { JsonLd } from "@/components/seo";
 import { basicDetails } from "@/data/meta-data/basic-details-data";
 import {
@@ -118,6 +119,9 @@ export default function RootLayout({
 
         {/* Footer — hidden on dashboard routes. */}
         <ConditionalSiteFooter />
+
+        {/* Floating feedback / report-an-issue button — shown on every page. */}
+        <FeedbackWidget />
 
         {/* Umami Analytics */}
         <Script
