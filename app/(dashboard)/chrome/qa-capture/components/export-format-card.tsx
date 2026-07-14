@@ -21,7 +21,7 @@ export function ExportFormatCard({
       {/* Card header with colored top accent */}
       <div className={`h-1 w-full ${toneClasses.solid}`} aria-hidden="true" />
 
-      <div className="flex flex-1 flex-col p-6 sm:p-7">
+      <div className="flex flex-1 flex-col p-8">
         {/* Icon + label row */}
         <div className="mb-5 flex items-start justify-between gap-4">
           <div
@@ -37,7 +37,7 @@ export function ExportFormatCard({
         </div>
 
         {/* Description */}
-        <p className="text-sm leading-7 text-muted-foreground">{description}</p>
+        <p className="text-base leading-7 text-muted-foreground">{description}</p>
 
         {/* Spacer pushes use-cases to bottom */}
         <div className="flex-1" />

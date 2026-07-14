@@ -57,65 +57,67 @@ export default function QACapturePage() {
       <div className="capture-page min-h-screen pb-12">
         {/* hero section */}
         <section className="capture-grid relative border-b border-border/80">
-          <div className="capture-shell relative z-10 py-16 sm:py-20 lg:py-24">
-            <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(360px,32rem)] xl:gap-14">
-              <div className="max-w-172 space-y-8">
-                <BadgeRow badges={qaCaptureHeroBadges} />
+          <div className="capture-shell relative z-10 py-20 sm:py-24 lg:py-32">
+            <div className="mx-auto flex max-w-3xl flex-col items-center space-y-8 text-center">
+              <BadgeRow badges={qaCaptureHeroBadges} />
 
-                <div className="space-y-5">
-                  <p className="capture-kicker">Capture · Label · Export</p>
-                  <h1 className="font-heading text-5xl leading-[var(--home-type-hero-line)] font-bold tracking-[var(--home-type-hero-tracking)] text-balance text-foreground md:text-5xl">
-                    QA Capture turns browser testing into clean, export-ready
-                    proof.
-                  </h1>
-                  <p className="capture-copy max-w-156 text-pretty">
-                    QA Capture stores every screenshot locally while you test,
-                    lets you name each step as you capture it, and exports the
-                    full session as HTML, Markdown, or PDF. It is free to use
-                    and built for bug reports, regression evidence, and
-                    repeatable QA documentation.
-                  </p>
-                </div>
-
-                {/* Buttons */}
-                <div className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-                  <CtaLink
-                    href={qaCaptureChromeWebStoreUrl}
-                    iconStart={<GlobeIcon className="h-5 w-5" />}
-                    iconEnd={
-                      <ExternalLinkIcon className="h-4 w-4 opacity-70" />
-                    }
-                  >
-                    Add to Chrome - Free
-                  </CtaLink>
-                  <CtaLink
-                    href="#what-is-qa-capture"
-                    variant="secondary"
-                    iconEnd={<ArrowRightIcon className="h-4 w-4" />}
-                  >
-                    See what it actually does
-                  </CtaLink>
-                </div>
-
-                <StatGrid stats={qaCaptureHeroStats} />
+              <div className="space-y-6">
+                <p className="capture-kicker">Capture · Label · Export</p>
+                <h1 className="font-heading text-5xl font-bold leading-[var(--home-type-hero-line)] tracking-[var(--home-type-hero-tracking)] text-balance text-foreground md:text-6xl">
+                  QA Capture turns browser testing into clean, export-ready proof.
+                </h1>
+                <p className="capture-copy mx-auto max-w-2xl text-pretty text-lg text-muted-foreground">
+                  QA Capture stores every screenshot locally while you test,
+                  lets you name each step as you capture it, and exports the
+                  full session as HTML, Markdown, or PDF. It is free to use
+                  and built for bug reports, regression evidence, and
+                  repeatable QA documentation.
+                </p>
               </div>
 
-              {/* Workflow Preview */}
-              <div className="self-start p-0 md:rounded-[var(--home-card-radius-lg)] md:border md:border-[color-mix(in_srgb,var(--primary)_12%,var(--border))] md:bg-[color-mix(in_srgb,var(--card)_86%,transparent)] md:p-6 md:shadow-[var(--shadow-float)] lg:p-8">
-                <div className="mb-6 flex items-center justify-between gap-3">
-                  <div>
-                    <p className="capture-kicker">Workflow Preview</p>
-                    <h2 className="mt-2 font-heading text-2xl font-semibold tracking-[-0.04em] text-foreground">
-                      Capture, Label & Export
-                    </h2>
-                  </div>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary">
-                    <CameraIcon className="h-5 w-5" />
-                  </div>
-                </div>
+              {/* Buttons */}
+              <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap">
+                <CtaLink
+                  href={qaCaptureChromeWebStoreUrl}
+                  iconStart={<GlobeIcon className="h-5 w-5" />}
+                  iconEnd={<ExternalLinkIcon className="h-4 w-4 opacity-70" />}
+                >
+                  Add to Chrome - Free
+                </CtaLink>
+                <CtaLink
+                  href="#how-it-works"
+                  variant="secondary"
+                  iconEnd={<ArrowRightIcon className="h-4 w-4" />}
+                >
+                  See how it works
+                </CtaLink>
+              </div>
 
-                <ol className="space-y-1 md:space-y-4">
-                  {[
+              <div className="mt-8 pt-8">
+                <StatGrid stats={qaCaptureHeroStats} />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Workflow Preview (How it works) */}
+        <section
+          id="how-it-works"
+          aria-labelledby="how-it-works-title"
+          className="py-20 sm:py-24"
+        >
+          <div className="capture-shell">
+            <SectionHeading
+              id="how-it-works-title"
+              eyebrow="Workflow"
+              title="Capture, Label & Export"
+              description="A seamless workflow to document your testing sessions."
+              align="center"
+              className="mb-12 sm:mb-16"
+            />
+            
+            <div className="grid gap-8 md:grid-cols-3">
+               {[
                     {
                       step: "01",
                       Icon: CameraIcon,
@@ -138,58 +140,30 @@ export default function QACapturePage() {
                         "Export the finished session as HTML, Markdown, or PDF for tickets, docs, sign-off, or handoff.",
                     },
                   ].map(({ step, Icon, title, description }) => (
-                    <li
+                    <div
                       key={step}
-                      /* Mobile: no card bg — md+: card styles via Tailwind arbitrary values */
-                      className="px-4 py-5 md:rounded-[var(--home-card-radius)] md:border md:border-border md:bg-[color-mix(in_srgb,var(--card)_78%,transparent)] md:px-5 md:shadow-[var(--home-card-shadow)]"
+                      className="flex flex-col items-center rounded-[var(--home-card-radius-lg)] border border-border bg-card p-8 text-center shadow-[var(--home-card-shadow)]"
                     >
-                      {/* Mobile: icon in white box, centered, vertical — md+: number circle, horizontal grid */}
-                      <div className="flex flex-col items-center gap-3 text-center md:grid md:grid-cols-[auto_1fr] md:items-start md:gap-4 md:text-left">
-                        {/* Mobile icon box */}
-                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card shadow-sm md:hidden">
-                          <Icon className="h-6 w-6 text-foreground" />
+                        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                          <Icon className="h-8 w-8" />
                         </div>
-                        {/* Desktop number circle */}
-                        <div className="hidden h-11 w-11 items-center justify-center rounded-2xl bg-primary text-sm font-bold text-primary-foreground md:flex">
-                          {step}
+                        <div className="mb-3 text-sm font-bold uppercase tracking-wider text-muted-foreground">
+                          Step {step}
                         </div>
-                        <div>
-                          <h3 className="font-heading text-lg font-semibold tracking-[-0.03em] text-foreground">
-                            {title}
-                          </h3>
-                          <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                            {description}
-                          </p>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
+                        <h3 className="mb-3 font-heading text-xl font-semibold tracking-[-0.03em] text-foreground">
+                          {title}
+                        </h3>
+                        <p className="text-base leading-7 text-muted-foreground">
+                          {description}
+                        </p>
+                    </div>
+               ))}
+            </div>
 
-                <div className="mt-6 rounded-[22px] border border-primary/20 bg-primary/10 px-5 py-4">
-                  <p className="text-sm leading-7 text-muted-foreground">
-                    Everything stays{" "}
-                    <span className="font-semibold text-foreground">local</span>
-                    , remains{" "}
-                    <span className="font-semibold text-foreground">
-                      free to use
-                    </span>
-                    , and works best for{" "}
-                    <span className="font-semibold text-foreground">
-                      bug reports
-                    </span>
-                    ,{" "}
-                    <span className="font-semibold text-foreground">
-                      regression evidence
-                    </span>
-                    , and{" "}
-                    <span className="font-semibold text-foreground">
-                      reusable walkthroughs
-                    </span>{" "}
-                    that should not be recreated from scratch every sprint.
-                  </p>
-                </div>
-              </div>
+            <div className="mx-auto mt-12 max-w-3xl rounded-[22px] border border-primary/20 bg-primary/5 px-8 py-6 text-center">
+              <p className="text-base leading-7 text-muted-foreground">
+                Everything stays <span className="font-semibold text-foreground">local</span>, remains <span className="font-semibold text-foreground">free to use</span>, and works best for <span className="font-semibold text-foreground">bug reports</span>, <span className="font-semibold text-foreground">regression evidence</span>, and <span className="font-semibold text-foreground">reusable walkthroughs</span> that should not be recreated from scratch every sprint.
+              </p>
             </div>
           </div>
         </section>
@@ -220,7 +194,7 @@ export default function QACapturePage() {
         {/* Built for qa engineers */}
         <section
           aria-labelledby="qa-capture-features-title"
-          className="py-16 sm:py-20"
+          className="py-20 sm:py-24"
         >
           <div className="capture-shell">
             <SectionHeading
@@ -243,7 +217,7 @@ export default function QACapturePage() {
         {/* Export Options */}
         <section
           aria-labelledby="qa-capture-export-title"
-          className="border-y border-border/70 bg-muted/20 py-16 sm:py-20"
+          className="border-y border-border/70 bg-muted/20 py-20 sm:py-24"
         >
           <div className="capture-shell">
             <SectionHeading
@@ -266,7 +240,7 @@ export default function QACapturePage() {
         {/* Session history */}
         <section
           aria-labelledby="qa-capture-history-title"
-          className="py-16 sm:py-20"
+          className="py-20 sm:py-24"
         >
           <div className="capture-shell">
             <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
@@ -283,7 +257,7 @@ export default function QACapturePage() {
                   {qaCaptureSessionHistoryHighlights.map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <CheckCircleIcon className="mt-1 h-4 w-4 shrink-0 text-primary" />
-                      <span className="text-sm leading-7 text-muted-foreground">
+                      <span className="text-base leading-7 text-muted-foreground">
                         {item}
                       </span>
                     </li>
@@ -299,7 +273,7 @@ export default function QACapturePage() {
         {/* FAQ */}
         <section
           aria-labelledby="qa-capture-faq-title"
-          className="py-16 sm:py-20"
+          className="py-20 sm:py-24"
         >
           <div className="capture-shell">
             <SectionHeading
@@ -322,7 +296,7 @@ export default function QACapturePage() {
                     <AccordionTrigger className="py-5 text-left font-heading text-lg font-semibold tracking-[-0.03em] text-foreground hover:no-underline">
                       {question}
                     </AccordionTrigger>
-                    <AccordionContent className="pb-5 text-sm leading-7 text-muted-foreground">
+                    <AccordionContent className="pb-5 text-base leading-7 text-muted-foreground">
                       {answer}
                     </AccordionContent>
                   </AccordionItem>

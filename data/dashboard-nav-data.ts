@@ -86,6 +86,13 @@ export const dashboardNavGroups: DashboardNavGroup[] = [
     label: "Tools & Career",
     items: [
       {
+        label: "Resources",
+        href: "/resources",
+        icon: LibraryBig,
+        testId: "nav-resources",
+        requiresAuth: true,
+      },
+      {
         label: "QA Tools",
         href: "/qa-tools",
         icon: Wrench,
@@ -98,13 +105,7 @@ export const dashboardNavGroups: DashboardNavGroup[] = [
       //   testId: "nav-job-crm",
       //   requiresAuth: true,
       // },
-      {
-        label: "Resources",
-        href: "/resources",
-        icon: LibraryBig,
-        testId: "nav-resources",
-        requiresAuth: true,
-      },
+
       {
         label: "Chrome Extensions",
         href: "/chrome",

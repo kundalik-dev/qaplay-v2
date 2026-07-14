@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { ReactNode } from "react";
 
 import { UiPracticeSidebar } from "./ui-practice-sidebar";
+import { UiPracticeTopBar } from "./ui-practice-topbar";
 import styles from "./ui-practice.module.css";
 
 interface UiPracticeShellProps {
@@ -17,6 +18,12 @@ interface UiPracticeShellProps {
  * Server Component while only this thin wrapper is a Client Component.
  * The global QA Playground top nav is hidden for this route via
  * components/app-nav/conditional-site-chrome.tsx (see DASHBOARD_PREFIXES).
+ *
+ * UiPracticeTopBar renders once here (not per-page) as a sibling of
+ * <main>, same placement as app/(dashboard)/_components/dashboard-shell.tsx.
+ * Because it sits above <main> in this flex-column container rather than
+ * scrolling with the content, it stays visually "fixed at the top" with
+ * no extra positioning/offset needed.
  */
 export function UiPracticeShell({ children }: UiPracticeShellProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -29,6 +36,8 @@ export function UiPracticeShell({ children }: UiPracticeShellProps) {
       />
 
       <div className={styles.content} data-testid="ui-practice-content">
+        <UiPracticeTopBar />
+
         <main
           id="ui-practice-main-content"
           className={styles.main}

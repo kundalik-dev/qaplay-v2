@@ -141,6 +141,12 @@ export default function SettingsPage() {
 
   const handleSaveApi = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!key.trim()) {
+      toast.error("OpenRouter API Key is required.");
+      return;
+    }
+
     const finalModel = isCustom ? customModel : model;
 
     updateSettings({
@@ -181,12 +187,6 @@ export default function SettingsPage() {
     }
 
     toast.success("Profile updated successfully.");
-  };
-
-  const handleUploadPhoto = () => {
-    toast.info("Photo upload is coming soon!", {
-      description: COMING_SOON_DESCRIPTION,
-    });
   };
 
   const handleUploadResume = () => {
@@ -304,13 +304,6 @@ export default function SettingsPage() {
         {activeTab === "profile" && !isSessionPending && user && (
           <div>
             <div className={pageStyles.card}>
-              <div className={pageStyles.cardHeader}>
-                <h2 className={pageStyles.cardTitle}>Personal Information</h2>
-                <p className={pageStyles.cardDesc}>
-                  Update your name and email address.
-                </p>
-              </div>
-
               <div
                 style={{
                   display: "flex",
@@ -353,26 +346,9 @@ export default function SettingsPage() {
                   )}
                 </div>
                 <div>
-                  <button
-                    type="button"
-                    onClick={handleUploadPhoto}
-                    className={cn(
-                      pageStyles.btn,
-                      pageStyles.btnSecondary,
-                      pageStyles.btnSm,
-                    )}
-                  >
-                    Upload New Photo
-                  </button>
-                  <p
-                    style={{
-                      fontSize: "11px",
-                      color: "var(--muted-foreground)",
-                      marginTop: "8px",
-                      margin: "4px 0 0 0",
-                    }}
-                  >
-                    At least 256x256px PNG or JPG.
+                  <h2 className={pageStyles.cardTitle}>Personal Information</h2>
+                  <p className={pageStyles.cardDesc} style={{ marginTop: "4px" }}>
+                    Update your name and email address.
                   </p>
                 </div>
               </div>
@@ -698,6 +674,7 @@ export default function SettingsPage() {
                       onChange={(e) => setKey(e.target.value)}
                       className={pageStyles.input}
                       style={{ paddingLeft: "38px" }}
+                      required
                     />
                   </div>
                 </div>

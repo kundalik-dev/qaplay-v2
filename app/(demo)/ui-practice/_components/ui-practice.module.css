@@ -204,3 +204,99 @@
      baseline so any new section gets Inter without needing to repeat it. */
   font-family: var(--font-inter), sans-serif;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Shared top bar — common to every /ui-practice/[section] page.
+   Mirrors app/(dashboard)/_components/dashboard.module.css's .topNav:
+   a normal (non-fixed/non-sticky) flex child that sits above `.main`
+   inside `.content` (flex-direction: column), so it never scrolls away
+   and needs no manual top padding/offset — the "fixed at top, 0 padding"
+   look comes for free from the flex layout, same as the dashboard shell.
+   ───────────────────────────────────────────────────────────── */
+
+.topNav {
+  height: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--sidebar-border);
+  background: var(--sidebar);
+  font-family: var(--font-inter), sans-serif;
+}
+
+.topNavLeft {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  white-space: nowrap;
+}
+
+.breadcrumbLink {
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.breadcrumbLink:hover {
+  color: var(--foreground);
+}
+
+.breadcrumbSep {
+  color: var(--muted-foreground);
+  opacity: 0.5;
+}
+
+.breadcrumbCurrent {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.topNavTabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.topNavTabItem {
+  flex-shrink: 0;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.topNavTabItem:hover {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+.topNavTabItemActive,
+.topNavTabItemActive:hover {
+  color: var(--primary-foreground);
+  background: var(--primary);
+  font-weight: 600;
+}
+
+.topNavRight {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
