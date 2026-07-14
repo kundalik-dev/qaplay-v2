@@ -7,6 +7,7 @@ import { NavThemeToggle } from "@/components/app-nav/nav/nav-theme-toggle";
 import { uiPracticeNavItems } from "@/data/ui-practice-nav-data";
 import { cn } from "@/lib/utils";
 import styles from "./ui-practice.module.css";
+import { Home } from "lucide-react";
 
 type TabId = "practice" | "testcases" | "learn";
 
@@ -121,6 +122,14 @@ export function UiPracticeTopBar() {
         className={styles.topNavRight}
         data-testid="ui-practice-topbar-actions"
       >
+        <Link
+          href="/"
+          className={styles.topNavHomeLink}
+          aria-label="Go to Home"
+        >
+          <Home size={18} />
+          <span>Home</span>
+        </Link>
         <NavThemeToggle />
       </div>
     </header>

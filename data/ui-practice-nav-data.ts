@@ -15,6 +15,7 @@ import {
   CheckSquare,
   AppWindow,
   ChevronDown,
+  Home,
 } from "lucide-react";
 
 export interface UiPracticeNavItem {
@@ -28,6 +29,13 @@ export interface UiPracticeNavItem {
 }
 
 export const uiPracticeNavItems: UiPracticeNavItem[] = [
+  // {
+  //   label: "Home",
+  //   href: "/",
+  //   icon: Home,
+  //   testId: "home",
+  //   description: "qaplayground home page.",
+  // },
   {
     label: "Tables",
     href: "/ui-practice/tables",

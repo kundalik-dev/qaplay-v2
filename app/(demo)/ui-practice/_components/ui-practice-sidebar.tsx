@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { PanelLeft } from "lucide-react";
@@ -40,7 +41,15 @@ export function UiPracticeSidebar({
             className={styles.sidebarBrand}
             data-testid="ui-practice-sidebar-brand"
           >
-            <span className={styles.sidebarBrandName}>UI Practice</span>
+            <Image
+              src="/logo/logo.svg"
+              alt="QA Playground"
+              width={32}
+              height={32}
+              className={styles.sidebarBrandIcon}
+              priority
+            />
+            <span className={styles.sidebarBrandName}> QA Playground </span>
           </Link>
         )}
 

@@ -300,3 +300,19 @@
   align-items: center;
   flex-shrink: 0;
 }
+
+.topNavHomeLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+  margin-right: 16px;
+}
+
+.topNavHomeLink:hover {
+  color: var(--foreground);
+}

@@ -1,12 +1,12 @@
 "use client";
 
 /**
- * Drives every `data-testid` in this nav: "pag-*" for section 4,
- * "grid-*" for section 6, "products-*" / "departments-*" for the
- * merged all-in-one tables. Kept as a union (rather than a bare
- * `string`) so new prefixes stay intentional and locator-friendly.
+ * Drives every `data-testid` in this nav: "products-*" for the shopping
+ * products table, "departments-*" for the departments table. Kept as a
+ * union (rather than a bare `string`) so new prefixes stay intentional
+ * and locator-friendly.
  */
-export type PaginationTestIdPrefix = "pag" | "grid" | "products" | "departments";
+export type PaginationTestIdPrefix = "products" | "departments";
 
 interface PaginationControlsProps {
   page: number;
