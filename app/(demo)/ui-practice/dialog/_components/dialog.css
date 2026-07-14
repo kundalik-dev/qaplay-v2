@@ -33,6 +33,10 @@
 .ui-practice-dialog-page h1 {
   margin-top: 0;
   font-size: 30px;
+  /* Sits directly on the app's shared page background (not a white
+     .section card), so it must track the theme instead of the
+     hardcoded light-mode text color used inside the cards below. */
+  color: var(--foreground);
 }
 
 .ui-practice-dialog-page .section {
@@ -286,7 +290,7 @@
 /* ── Small utility classes (replace the source prototype's inline
    `style="..."` attributes — project rule: no inline CSS) ── */
 .ui-practice-dialog-page .intro-note {
-  color: #1f2933;
+  color: var(--foreground);
   font-size: 16px;
   margin-top: -8px;
 }

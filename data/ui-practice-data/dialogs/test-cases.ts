@@ -22,18 +22,6 @@ export const dialogsTestCases: TestCase[] = [
   },
   {
     id: "ALD_002",
-    scenario: "Dialog heading matches expected title",
-    expected: 'Heading inside dialog reads "Session Notice" exactly',
-    type: "positive",
-    priority: "high",
-    steps: [
-      'Open the info dialog via <code>[data-testid="open-info-dialog"]</code>',
-      'Assert <code>getByRole("heading", { name: "Session Notice" })</code> is visible',
-      "Verify the h2 element text matches exactly using <code>toHaveText</code>",
-    ],
-  },
-  {
-    id: "ALD_003",
     scenario: "Close button dismisses the info dialog",
     expected: "Dialog disappears from the DOM after clicking the × button",
     type: "positive",
@@ -46,7 +34,7 @@ export const dialogsTestCases: TestCase[] = [
     ],
   },
   {
-    id: "ALD_004",
+    id: "ALD_003",
     scenario: "Cancel button keeps dialog closed without triggering the action",
     expected: "Dialog closes and the confirm result is not updated",
     type: "negative",
@@ -59,7 +47,7 @@ export const dialogsTestCases: TestCase[] = [
     ],
   },
   {
-    id: "ALD_005",
+    id: "ALD_004",
     scenario: "Confirm button triggers the expected action and closes dialog",
     expected: 'Result reads "Submission confirmed!" and dialog disappears',
     type: "positive",
@@ -73,7 +61,7 @@ export const dialogsTestCases: TestCase[] = [
     ],
   },
   {
-    id: "ALD_006",
+    id: "ALD_005",
     scenario:
       "Destructive confirm button located by aria-label (no data-testid)",
     expected:
@@ -89,7 +77,7 @@ export const dialogsTestCases: TestCase[] = [
     ],
   },
   {
-    id: "ALD_007",
+    id: "ALD_006",
     scenario: "Backdrop click closes the modal dialog",
     expected: "Dialog closes when clicking the overlay behind the dialog box",
     type: "positive",
@@ -103,7 +91,7 @@ export const dialogsTestCases: TestCase[] = [
     ],
   },
   {
-    id: "ALD_008",
+    id: "ALD_007",
     scenario: "Escape key dismisses the dialog",
     expected: "Result confirms dialog closed via keyboard; dialog disappears",
     type: "positive",
@@ -116,47 +104,7 @@ export const dialogsTestCases: TestCase[] = [
     ],
   },
   {
-    id: "ALD_009",
-    scenario: "Dialog body text is assertable without data-testid",
-    expected: "Text 'Sunday' is found inside the dialog body",
-    type: "positive",
-    priority: "medium",
-    note: "The body paragraph has no data-testid — use scoped text locators.",
-    steps: [
-      'Open notification dialog via <code>[data-testid="open-notification-dialog"]</code>',
-      'Scope into <code>[data-testid="system-notification-dialog"]</code>',
-      "Assert <code>getByText(/Sunday/)</code> is visible inside the dialog",
-      "Click the Acknowledge button and assert result",
-    ],
-  },
-  {
-    id: "ALD_010",
-    scenario: "Dialog has correct aria attributes for accessibility",
-    expected: "role=dialog, aria-modal=true, and aria-labelledby are present",
-    type: "positive",
-    priority: "medium",
-    steps: [
-      'Open any dialog, e.g. <code>[data-testid="open-info-dialog"]</code>',
-      'Assert <code>getAttribute("role")</code> equals <code>dialog</code>',
-      'Assert <code>getAttribute("aria-modal")</code> equals <code>true</code>',
-      "Assert <code>aria-labelledby</code> points to a visible heading",
-    ],
-  },
-  {
-    id: "ALD_011",
-    scenario: "aria-labelledby attribute references the visible heading",
-    expected: "The heading element ID matches the dialog aria-labelledby value",
-    type: "positive",
-    priority: "medium",
-    steps: [
-      "Open the info dialog and read <code>aria-labelledby</code> attribute",
-      "Locate element by that ID",
-      "Assert the element is the visible <code>h2</code> heading",
-      "Assert its text is non-empty",
-    ],
-  },
-  {
-    id: "ALD_012",
+    id: "ALD_008",
     scenario: "Correct notification targeted from repeated Dismiss buttons",
     expected:
       "The 'Session Expiring Soon' notification is dismissed, not the others",
@@ -171,21 +119,7 @@ export const dialogsTestCases: TestCase[] = [
     ],
   },
   {
-    id: "ALD_013",
-    scenario: "Dismiss confirm dialog scoped by data-notif-id",
-    expected:
-      "Confirm button inside scoped dialog is clicked without ambiguity",
-    type: "positive",
-    priority: "medium",
-    steps: [
-      "Trigger dismiss for notif-2",
-      'Assert <code>[data-testid="dismiss-confirm-dialog"][data-notif-id="notif-2"]</code> is visible',
-      'Click <code>[aria-label*="Confirm dismiss"]</code> inside that dialog',
-      "Assert result confirms the correct notification",
-    ],
-  },
-  {
-    id: "ALD_014",
+    id: "ALD_009",
     scenario: "Clicking dialog box does not fire backdrop close handler",
     expected: "Dialog remains open after clicking inside the dialog box",
     type: "edge",
@@ -194,31 +128,6 @@ export const dialogsTestCases: TestCase[] = [
       'Open backdrop dialog via <code>[data-testid="open-backdrop-dialog"]</code>',
       'Click the centered dialog box (<code>[data-testid="backdrop-dialog-box"]</code>)',
       "Assert the dialog is still visible — click did not close it",
-    ],
-  },
-  {
-    id: "ALD_015",
-    scenario: "Escape key has no effect when no dialog is open",
-    expected:
-      "Page state remains unchanged when pressing Escape with no active dialog",
-    type: "edge",
-    priority: "low",
-    steps: [
-      "Ensure no dialog is currently open (initial page state)",
-      "Press <code>Escape</code> on the page",
-      "Assert no errors occur and no results change",
-    ],
-  },
-  {
-    id: "ALD_016",
-    scenario: "Page loads without console errors",
-    expected: "No uncaught errors are logged during initial load",
-    type: "positive",
-    priority: "high",
-    steps: [
-      "Attach listener to browser <code>console</code> and <code>pageerror</code> events",
-      "Navigate to <code>/ui-practice/dialog</code>",
-      "Assert no <code>error</code>-level messages were captured",
     ],
   },
 ];

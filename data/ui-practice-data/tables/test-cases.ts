@@ -21,18 +21,6 @@ export const tablesTestCases: TestCase[] = [
   },
   {
     id: "TBL_002",
-    scenario: "A specific cell can be located by row index and column",
-    expected: "The targeted cell resolves to the expected product's price",
-    type: "positive",
-    priority: "medium",
-    steps: [
-      'Locate <code>[data-testid="static-row-1"]</code>',
-      'Within it, locate <code>[data-testid="cell-1-price"]</code>',
-      "Assert its text matches the first product's price",
-    ],
-  },
-  {
-    id: "TBL_003",
     scenario: "Clicking a sortable header once sorts ascending",
     expected: 'Column header gets aria-sort="ascending" and rows reorder',
     type: "positive",
@@ -44,33 +32,7 @@ export const tablesTestCases: TestCase[] = [
     ],
   },
   {
-    id: "TBL_004",
-    scenario: "Clicking the same sortable header twice sorts descending",
-    expected: 'Column header gets aria-sort="descending" on the second click',
-    type: "positive",
-    priority: "high",
-    steps: [
-      'Click <code>[data-testid="sort-th-name"]</code> twice',
-      'Assert <code>aria-sort="descending"</code>',
-      "Assert the first row is now alphabetically last",
-    ],
-  },
-  {
-    id: "TBL_005",
-    scenario: "A third click on the same header clears the sort",
-    expected:
-      'Column returns to aria-sort="none" and rows return to original order',
-    type: "edge",
-    priority: "medium",
-    note: "Mirrors the 3-click cycle: unsorted → asc → desc → unsorted.",
-    steps: [
-      'Click <code>[data-testid="sort-th-name"]</code> three times',
-      'Assert <code>aria-sort="none"</code> (or attribute absent)',
-      "Assert row order matches the original unsorted data",
-    ],
-  },
-  {
-    id: "TBL_006",
+    id: "TBL_003",
     scenario: "Salary column sorts numerically, not lexically",
     expected: "Ascending sort orders salaries from lowest to highest number",
     type: "positive",
@@ -83,7 +45,7 @@ export const tablesTestCases: TestCase[] = [
     ],
   },
   {
-    id: "TBL_007",
+    id: "TBL_004",
     scenario: "Search input filters rows by employee name",
     expected: "Only rows whose name contains the query text remain visible",
     type: "positive",
@@ -95,7 +57,7 @@ export const tablesTestCases: TestCase[] = [
     ],
   },
   {
-    id: "TBL_008",
+    id: "TBL_005",
     scenario: "Department dropdown filters rows by department",
     expected: "Only rows matching the selected department remain visible",
     type: "positive",
@@ -107,19 +69,7 @@ export const tablesTestCases: TestCase[] = [
     ],
   },
   {
-    id: "TBL_009",
-    scenario: "Search text and department filter combine with AND logic",
-    expected: "Only rows matching both the query and the department remain",
-    type: "positive",
-    priority: "medium",
-    steps: [
-      'Type a name fragment into <code>[data-testid="search-input"]</code>',
-      'Select a department in <code>[data-testid="dept-filter"]</code>',
-      "Assert the visible rows satisfy both conditions simultaneously",
-    ],
-  },
-  {
-    id: "TBL_010",
+    id: "TBL_006",
     scenario: "Searching for a non-existent name shows the empty state",
     expected: '"No employees match your filters." message is shown',
     type: "negative",
@@ -131,20 +81,7 @@ export const tablesTestCases: TestCase[] = [
     ],
   },
   {
-    id: "TBL_011",
-    scenario: "Clear button resets the search input and department filter",
-    expected: "Both fields return to empty and the full row set reappears",
-    type: "positive",
-    priority: "low",
-    steps: [
-      "Apply a search query and a department filter",
-      'Click <code>[data-testid="search-clear-btn"]</code>',
-      'Assert <code>[data-testid="search-input"]</code> and <code>[data-testid="dept-filter"]</code> are both empty',
-      "Assert the full, unfiltered row set is visible again",
-    ],
-  },
-  {
-    id: "TBL_012",
+    id: "TBL_007",
     scenario: "Paginated table shows the correct rows and info text per page",
     expected: '"Showing 1–5 of 15" on page 1, with exactly 5 rows rendered',
     type: "positive",
@@ -156,18 +93,7 @@ export const tablesTestCases: TestCase[] = [
     ],
   },
   {
-    id: "TBL_013",
-    scenario: "Prev button is disabled on the first page",
-    expected: "The Prev control cannot be activated while on page 1",
-    type: "negative",
-    priority: "medium",
-    steps: [
-      'On page 1, assert <code>[data-testid="pag-prev"]</code> is disabled',
-      "Assert clicking it (if forced) does not change the page",
-    ],
-  },
-  {
-    id: "TBL_014",
+    id: "TBL_008",
     scenario: "Next button is disabled on the last page",
     expected: "The Next control cannot be activated on the final page",
     type: "negative",
@@ -178,7 +104,7 @@ export const tablesTestCases: TestCase[] = [
     ],
   },
   {
-    id: "TBL_015",
+    id: "TBL_009",
     scenario: "Edit → Save updates a row's values inline",
     expected: "Row exits edit mode and displays the newly saved values",
     type: "positive",
@@ -191,7 +117,7 @@ export const tablesTestCases: TestCase[] = [
     ],
   },
   {
-    id: "TBL_016",
+    id: "TBL_010",
     scenario: "Delete button removes the row from the DOM",
     expected: "The row no longer exists and the remaining row count decreases",
     type: "positive",
