@@ -20,15 +20,21 @@ export const metadata = createPageMetadata({
 });
 
 export default async function TablesLearnPage() {
-  const [staticSnippet, sortable, searchFilter, pagination, rowActions, combinedGrid] =
-    await Promise.all([
-      highlightLearnSnippet(tablesLearnCode.static),
-      highlightLearnSnippet(tablesLearnCode.sortable),
-      highlightLearnSnippet(tablesLearnCode.searchFilter),
-      highlightLearnSnippet(tablesLearnCode.pagination),
-      highlightLearnSnippet(tablesLearnCode.rowActions),
-      highlightLearnSnippet(tablesLearnCode.combinedGrid),
-    ]);
+  const [
+    staticSnippet,
+    sortable,
+    searchFilter,
+    pagination,
+    rowActions,
+    combinedGrid,
+  ] = await Promise.all([
+    highlightLearnSnippet(tablesLearnCode.static),
+    highlightLearnSnippet(tablesLearnCode.sortable),
+    highlightLearnSnippet(tablesLearnCode.searchFilter),
+    highlightLearnSnippet(tablesLearnCode.pagination),
+    highlightLearnSnippet(tablesLearnCode.rowActions),
+    highlightLearnSnippet(tablesLearnCode.combinedGrid),
+  ]);
 
   return (
     <div data-testid="ui-practice-tables-learn-page">

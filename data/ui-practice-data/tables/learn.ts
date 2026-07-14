@@ -242,7 +242,7 @@ export const tablesMethodRows: MethodRow[] = [
   },
   {
     action: "Assert sort state",
-    selenium: "getAttribute(\"aria-sort\")",
+    selenium: 'getAttribute("aria-sort")',
     playwrightJs: "toHaveAttribute('aria-sort', 'ascending')",
     playwrightPy: "to_have_attribute('aria-sort', 'ascending')",
     cypress: "should('have.attr', 'aria-sort', 'ascending')",

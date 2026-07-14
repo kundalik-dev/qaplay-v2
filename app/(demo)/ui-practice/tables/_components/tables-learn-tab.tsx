@@ -34,8 +34,14 @@ interface TablesLearnTabProps {
  * (see CLAUDE.md server/client boundary rule).
  */
 export function TablesLearnTab({ snippets }: TablesLearnTabProps) {
-  const { static: staticSnippet, sortable, searchFilter, pagination, rowActions, combinedGrid } =
-    snippets;
+  const {
+    static: staticSnippet,
+    sortable,
+    searchFilter,
+    pagination,
+    rowActions,
+    combinedGrid,
+  } = snippets;
 
   return (
     <div className="mx-auto w-full max-w-[1280px] px-4 py-6 pb-16 sm:px-7 sm:py-8">

@@ -20,16 +20,23 @@ export const metadata = createPageMetadata({
 });
 
 export default async function DialogLearnPage() {
-  const [openVerify, closeButton, confirm, ariaLabel, backdrop, escape, scoped] =
-    await Promise.all([
-      highlightLearnSnippet(dialogsLearnCode.openVerify),
-      highlightLearnSnippet(dialogsLearnCode.closeButton),
-      highlightLearnSnippet(dialogsLearnCode.confirm),
-      highlightLearnSnippet(dialogsLearnCode.ariaLabel),
-      highlightLearnSnippet(dialogsLearnCode.backdrop),
-      highlightLearnSnippet(dialogsLearnCode.escape),
-      highlightLearnSnippet(dialogsLearnCode.scoped),
-    ]);
+  const [
+    openVerify,
+    closeButton,
+    confirm,
+    ariaLabel,
+    backdrop,
+    escape,
+    scoped,
+  ] = await Promise.all([
+    highlightLearnSnippet(dialogsLearnCode.openVerify),
+    highlightLearnSnippet(dialogsLearnCode.closeButton),
+    highlightLearnSnippet(dialogsLearnCode.confirm),
+    highlightLearnSnippet(dialogsLearnCode.ariaLabel),
+    highlightLearnSnippet(dialogsLearnCode.backdrop),
+    highlightLearnSnippet(dialogsLearnCode.escape),
+    highlightLearnSnippet(dialogsLearnCode.scoped),
+  ]);
 
   return (
     <div data-testid="ui-practice-dialog-learn-page">

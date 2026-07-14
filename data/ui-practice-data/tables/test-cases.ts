@@ -64,7 +64,7 @@ export const tablesTestCases: TestCase[] = [
     priority: "medium",
     steps: [
       'Select a department in <code>[data-testid="dept-filter"]</code>',
-      'Assert every visible row belongs to that department',
+      "Assert every visible row belongs to that department",
       'Assert <code>[data-testid="search-result-count"]</code> reflects the filtered count',
     ],
   },

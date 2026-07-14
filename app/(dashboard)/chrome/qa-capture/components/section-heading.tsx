@@ -30,7 +30,9 @@ export function SectionHeading({
         {title}
       </h2>
       {description ? (
-        <p className="capture-copy text-pretty text-lg text-muted-foreground">{description}</p>
+        <p className="capture-copy text-lg text-pretty text-muted-foreground">
+          {description}
+        </p>
       ) : null}
     </div>
   );

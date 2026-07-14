@@ -117,7 +117,10 @@ export function UiPracticeTopBar() {
         </nav>
       )}
 
-      <div className={styles.topNavRight} data-testid="ui-practice-topbar-actions">
+      <div
+        className={styles.topNavRight}
+        data-testid="ui-practice-topbar-actions"
+      >
         <NavThemeToggle />
       </div>
     </header>

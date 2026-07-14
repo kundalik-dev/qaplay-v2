@@ -333,7 +333,8 @@ export const dialogsMethodRows: MethodRow[] = [
 
 export const dialogsFaq: FaqItem[] = [
   {
-    question: "How do I wait for a dialog to appear before interacting with it?",
+    question:
+      "How do I wait for a dialog to appear before interacting with it?",
     answer:
       "Use Playwright's expect(dialog).toBeVisible(), Selenium's WebDriverWait with visibilityOf, or Cypress's should('be.visible'). Never interact with elements before asserting visibility.",
     testId: "faq-1",

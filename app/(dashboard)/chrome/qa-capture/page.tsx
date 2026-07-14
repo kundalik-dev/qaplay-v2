@@ -52,7 +52,10 @@ const FORMAT_GRADIENTS: Record<string, string> = {
   HTML: styles.cardGradientBlue,
 };
 
-const FEATURE_ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
+const FEATURE_ICON_MAP: Record<
+  string,
+  React.ComponentType<{ className?: string }>
+> = {
   camera: Camera,
   tag: Tag,
   download: Download,
@@ -131,9 +134,7 @@ export default function QACapturePage() {
         <section id="how-it-works" className={styles.section}>
           <div className={styles.shell}>
             <div className={styles.sectionLabel}>How it works</div>
-            <h2 className={styles.sectionTitle}>
-              Three steps. Zero friction.
-            </h2>
+            <h2 className={styles.sectionTitle}>Three steps. Zero friction.</h2>
             <p className={styles.sectionSub}>
               Capture → Label → Export. That&apos;s the entire workflow.
             </p>
@@ -188,7 +189,9 @@ export default function QACapturePage() {
                 const Icon = FEATURE_ICON_MAP[f.icon] ?? Camera;
                 return (
                   <article key={f.title} className={styles.featureCard}>
-                    <div className={`${styles.featureIconWrap} ${styles[`tone_${f.tone}`]}`}>
+                    <div
+                      className={`${styles.featureIconWrap} ${styles[`tone_${f.tone}`]}`}
+                    >
                       <Icon className={styles.featureIcon} />
                     </div>
                     <h3 className={styles.featureTitle}>{f.title}</h3>
@@ -224,9 +227,7 @@ export default function QACapturePage() {
         <section className={`${styles.section} ${styles.sectionAlt}`}>
           <div className={styles.shell}>
             <div className={styles.sectionLabel}>Export options</div>
-            <h2 className={styles.sectionTitle}>
-              One session → three formats
-            </h2>
+            <h2 className={styles.sectionTitle}>One session → three formats</h2>
             <p className={styles.sectionSub}>
               Same capture. Whatever format your workflow needs.
             </p>
@@ -237,7 +238,9 @@ export default function QACapturePage() {
                   key={fmt.label}
                   className={`${styles.formatCard} ${FORMAT_GRADIENTS[fmt.label] ?? ""}`}
                 >
-                  <div className={styles.formatEmoji}>{FORMAT_ICONS[fmt.label] ?? "📁"}</div>
+                  <div className={styles.formatEmoji}>
+                    {FORMAT_ICONS[fmt.label] ?? "📁"}
+                  </div>
                   <div className={styles.formatLabel}>{fmt.label}</div>
                   <p className={styles.formatDesc}>{fmt.description}</p>
                   <ul className={styles.formatItems}>
@@ -280,23 +283,39 @@ export default function QACapturePage() {
               <div className={styles.historyRight}>
                 <div className={styles.previewCard}>
                   <div className={styles.previewHeader}>
-                    <span className={styles.previewDot} style={{ background: "#ff5f56" }} />
-                    <span className={styles.previewDot} style={{ background: "#ffbd2e" }} />
-                    <span className={styles.previewDot} style={{ background: "#27c93f" }} />
+                    <span
+                      className={styles.previewDot}
+                      style={{ background: "#ff5f56" }}
+                    />
+                    <span
+                      className={styles.previewDot}
+                      style={{ background: "#ffbd2e" }}
+                    />
+                    <span
+                      className={styles.previewDot}
+                      style={{ background: "#27c93f" }}
+                    />
                     <span className={styles.previewTitle}>Session History</span>
                   </div>
                   {qaCaptureSessionHistoryPreview.map((s, i) => (
-                    <div key={s.name} className={`${styles.previewRow} ${i === 0 ? styles.previewRowActive : ""}`}>
+                    <div
+                      key={s.name}
+                      className={`${styles.previewRow} ${i === 0 ? styles.previewRowActive : ""}`}
+                    >
                       <div className={styles.previewRowLeft}>
                         <div className={styles.previewSessionIcon}>
                           <Camera className="h-3.5 w-3.5" />
                         </div>
                         <div>
                           <p className={styles.previewSessionName}>{s.name}</p>
-                          <p className={styles.previewSessionMeta}>{s.date} &middot; {s.count} screenshots</p>
+                          <p className={styles.previewSessionMeta}>
+                            {s.date} &middot; {s.count} screenshots
+                          </p>
                         </div>
                       </div>
-                      <span className={`${styles.previewBadge} ${styles[`badge_${s.tone}`]}`}>
+                      <span
+                        className={`${styles.previewBadge} ${styles[`badge_${s.tone}`]}`}
+                      >
                         {s.label}
                       </span>
                     </div>

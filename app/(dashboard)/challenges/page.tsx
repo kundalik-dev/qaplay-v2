@@ -219,54 +219,13 @@ export default function ChallengesDashboard() {
               automation skills.
             </p>
           </div>
-
-          {/* Streak pill */}
-          {streak > 0 && (
-            <span className={styles.streakPill} data-testid="streak-pill">
-              🔥 {streak}-day streak
-            </span>
-          )}
         </div>
 
-        {/* Stats grid */}
+        {/* Stats grid — hidden for now (contains placeholder data)
         <div className={styles.statsGrid} data-testid="stats-grid">
-          <div className={styles.statCard} data-testid="stat-xp">
-            <span className={styles.statCardMeta}>XP Earned</span>
-            <strong className={styles.statCardValue}>
-              {totalXP}
-              <span className={styles.statCardUnit}> XP</span>
-            </strong>
-            <div className={styles.statCardBar}>
-              <div
-                className={styles.statCardBarFill}
-                style={{ width: `${xpProgress}%` }}
-              />
-            </div>
-            <span className={styles.statCardSub}>
-              {xpIntoLevel}/{XP_PER_LEVEL} to Level {level + 1}
-            </span>
-          </div>
-          <div className={styles.statCard} data-testid="stat-level">
-            <span className={styles.statCardMeta}>Level</span>
-            <strong className={styles.statCardValue}>{level}</strong>
-            <span className={styles.statCardSub}>⚡ Automation Engineer</span>
-          </div>
-          <div className={styles.statCard} data-testid="stat-done">
-            <span className={styles.statCardMeta}>Completed</span>
-            <strong className={styles.statCardValue}>
-              {completedIds.length}
-              <span className={styles.statCardUnit}>/{challenges.length}</span>
-            </strong>
-            <span className={styles.statCardSub}>challenges done</span>
-          </div>
-          <div className={styles.statCard} data-testid="stat-rank">
-            <span className={styles.statCardMeta}>Global Rank</span>
-            <strong className={styles.statCardValue}>
-              15<span className={styles.statCardUnit}>%</span>
-            </strong>
-            <span className={styles.statCardSub}>🏆 Top performers</span>
-          </div>
+          ...
         </div>
+        */}
       </div>
 
       {/* ── Filters + list ───────────────────────────────────── */}

@@ -347,7 +347,10 @@ export default function SettingsPage() {
                 </div>
                 <div>
                   <h2 className={pageStyles.cardTitle}>Personal Information</h2>
-                  <p className={pageStyles.cardDesc} style={{ marginTop: "4px" }}>
+                  <p
+                    className={pageStyles.cardDesc}
+                    style={{ marginTop: "4px" }}
+                  >
                     Update your name and email address.
                   </p>
                 </div>

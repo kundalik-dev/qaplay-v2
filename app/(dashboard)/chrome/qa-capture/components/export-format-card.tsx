@@ -37,7 +37,9 @@ export function ExportFormatCard({
         </div>
 
         {/* Description */}
-        <p className="text-base leading-7 text-muted-foreground">{description}</p>
+        <p className="text-base leading-7 text-muted-foreground">
+          {description}
+        </p>
 
         {/* Spacer pushes use-cases to bottom */}
         <div className="flex-1" />
